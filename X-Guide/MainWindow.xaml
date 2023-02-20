@@ -4,9 +4,47 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:X_Guide"
-        mc:Ignorable="d"
-        Title="MainWindow" Height="450" Width="800">
-    <Grid>
+        xmlns:views="clr-namespace:X_Guide.MVVM.View"
+        xmlns:vms="clr-namespace:X_Guide.MVVM.ViewModel"
         
-    </Grid>
+        mc:Ignorable="d"
+        Height="800" Width="1280"
+        WindowStyle="None"
+        WindowStartupLocation="CenterScreen"
+        ResizeMode="CanResizeWithGrip" 
+        AllowsTransparency="True"
+        WindowState="Normal">
+
+    <Border Background="#e6e6e6">
+        <Grid>
+
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="853*"/>
+                <ColumnDefinition Width="66*"/>
+                <ColumnDefinition Width="361*"/>
+            </Grid.ColumnDefinitions>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="423*"/>
+                <RowDefinition Height="188*"/>
+            </Grid.RowDefinitions>
+           
+            <DockPanel Margin="6" Grid.Row="1" Grid.ColumnSpan="3">
+                <DockPanel.Resources>
+                    <DataTemplate DataType="{x:Type vms:SettingViewModel}">
+                        <views:SettingsView/>
+                    </DataTemplate>
+                    <DataTemplate DataType="{x:Type vms:TestingViewModel}">
+                        <views:TestingView/>
+                    </DataTemplate>
+
+
+                </DockPanel.Resources>
+                <ContentControl Content="{Binding CurrentViewModel}"/>
+
+
+            </DockPanel>
+        </Grid>
+    </Border>
+
 </Window>
