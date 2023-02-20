@@ -24,7 +24,7 @@
         <SolidColorBrush x:Key="PrimaryBlackColor" Color="#000000"/>
         <Style x:Key="TextBoxStyle" TargetType="TextBox">
             <Setter Property="Background" Value="Transparent"/>
-            <Setter Property="Foreground" Value="{DynamicResource PrimaryBlackColor}"/>
+            <Setter Property="Foreground" Value="{DynamicResource PrimaryGrayColor}"/>
             <Setter Property="BorderThickness" Value="0"/>
             <Setter Property="BorderBrush" Value="Transparent"/>
         </Style>
@@ -75,7 +75,7 @@
 
                     <TextBox Foreground="{DynamicResource PrimaryGrayColor}"  Margin="5 5 0 5" Padding="2" Text="{Binding MachineDescription}" />
                     <TextBox Foreground="{DynamicResource PrimaryGrayColor}"  Margin="5 5 0 5" Padding="2" Text="{Binding SoftwareRevision}"/>
-                    <Border BorderThickness="1" BorderBrush="#FFABADB3" Background="White" Margin="5" Padding="3">
+                    <Border Margin="5" Padding="3">
                         <StackPanel Orientation="Horizontal">
                             <TextBox x:Name="txtRobotIP1" Tag="txtRobotIP2" Width="30" Margin="0"  Style="{DynamicResource TextBoxStyle}"  TextChanged="TxtIPLength_TextChanged" PreviewKeyDown="txtRobotIP1_PreviewKeyDown" PreviewTextInput="TxtIPAddress_PreviewTextInput" />
                         <TextBlock Text="." Margin="0,0,5,0" />
