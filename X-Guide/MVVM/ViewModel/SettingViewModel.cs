@@ -55,8 +55,8 @@ namespace X_Guide.MVVM.ViewModel
         }
 
 
-        private string _robotIP;
-        public string RobotIP
+        private string[] _robotIP;
+        public string[] RobotIP
         {
             get { return _robotIP; }
             set
@@ -88,8 +88,8 @@ namespace X_Guide.MVVM.ViewModel
             }
         }
 
-        private string _visionIP;
-        public string VisionIP
+        private string[] _visionIP;
+        public string[] VisionIP
         {
             get { return _visionIP; }
             set
@@ -148,10 +148,10 @@ namespace X_Guide.MVVM.ViewModel
             MachineID = "";
             MachineDescription = "";
             SoftwareRevision = "";
-            RobotIP = "";
+            RobotIP = new string[4];
             RobotPort = "";
             ShiftStartTime = "";
-            VisionIP = "";
+            VisionIP = new string[4];
             VisionPort = "";
             MaxScannerCapTime = "";
             LogFilePath = "";

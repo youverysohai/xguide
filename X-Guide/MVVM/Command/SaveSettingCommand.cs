@@ -27,9 +27,12 @@ namespace X_Guide.MVVM.Command
 
         public override void Execute(object parameter)
         {
-            var setting = new Setting(settingViewModel.MachineID, settingViewModel.MachineDescription, settingViewModel.SoftwareRevision, settingViewModel.RobotIP, settingViewModel.RobotPort, settingViewModel.ShiftStartTime, settingViewModel.VisionIP, settingViewModel.VisionPort, settingViewModel.MaxScannerCapTime, settingViewModel.LogFilePath);
+            string robotIP = string.Join(".", settingViewModel.RobotIP);
+            string visionIP = string.Join(".", settingViewModel.VisionIP);
+            var setting = new Setting(settingViewModel.MachineID, settingViewModel.MachineDescription, settingViewModel.SoftwareRevision, robotIP,
+                settingViewModel.RobotPort, settingViewModel.ShiftStartTime, visionIP,
+                settingViewModel.VisionPort, settingViewModel.MaxScannerCapTime, settingViewModel.LogFilePath);
             setting.WriteToXML(Directory.GetCurrentDirectory() + @"\Setting.xml");
-
         }
 
 
