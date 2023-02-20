@@ -88,7 +88,7 @@
                     </Border>
 
                     <TextBox Foreground="{DynamicResource PrimaryGrayColor}"  Margin="5 5 0 5" Padding="2" Text="{Binding RobotPort}"  PreviewTextInput="TxtPort_PreviewTextInput"/>
-                    <Border BorderThickness="1" BorderBrush="#FFABADB3" Background="White" Margin="5" Padding="3">
+                    <Border Margin="5" Padding="3">
                         <StackPanel Orientation="Horizontal">
                             <TextBox x:Name="txtScannerIP1"  Tag="txtScannerIP2" Width="30" Margin="0"  Style="{DynamicResource TextBoxStyle}" TextChanged="TxtScannerIPLength_TextChanged" PreviewTextInput="TxtIPAddress_PreviewTextInput"/>
                             <TextBlock Text="." Margin="0,0,5,0"/>
