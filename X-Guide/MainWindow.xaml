@@ -6,32 +6,108 @@
         xmlns:local="clr-namespace:X_Guide"
         xmlns:views="clr-namespace:X_Guide.MVVM.View"
         xmlns:vms="clr-namespace:X_Guide.MVVM.ViewModel"
-        
+        xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
         mc:Ignorable="d"
+        Title="X-Guide"         
         Height="800" Width="1280"
-        WindowStyle="None"
         WindowStartupLocation="CenterScreen"
         ResizeMode="CanResizeWithGrip" 
+        WindowStyle="None"
         AllowsTransparency="True"
-        WindowState="Normal">
+        WindowState="Normal"
+        Foreground="White">
 
-    <Border Background="#e6e6e6">
-        <Grid>
+    <Border Background="#202020">
+        <StackPanel Orientation="Vertical">
 
-            <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="853*"/>
-                <ColumnDefinition Width="66*"/>
-                <ColumnDefinition Width="361*"/>
-            </Grid.ColumnDefinitions>
-            <Grid.RowDefinitions>
-                <RowDefinition Height="Auto"/>
-                <RowDefinition Height="423*"/>
-                <RowDefinition Height="188*"/>
-            </Grid.RowDefinitions>
-           
-            <DockPanel Margin="6" Grid.Row="1" Grid.ColumnSpan="3">
-                <DockPanel.Resources>
-                    <DataTemplate DataType="{x:Type vms:SettingViewModel}">
+            <DockPanel x:Name="TitleBar" DockPanel.Dock="Top">
+                <Button x:Name="CloseButton"
+                    Click="CloseButton_Click"  Style="{DynamicResource MaterialDesignIconForegroundButton}" 
+                    DockPanel.Dock="Right" >
+                    <materialDesign:PackIcon Kind="WindowClose"></materialDesign:PackIcon>
+
+                </Button>
+                <Button x:Name="MaxButton" 
+                    Click="MaximizeButton_Click"  Style="{DynamicResource MaterialDesignIconForegroundButton}" 
+                    DockPanel.Dock="Right" >
+                    <materialDesign:PackIcon Kind="WindowMaximize"></materialDesign:PackIcon>
+                </Button>
+                <Button x:Name="MinButton" Style="{DynamicResource MaterialDesignIconForegroundButton}" 
+                    Click="MinimizeButton_Click"
+                    DockPanel.Dock="Right">
+                    <materialDesign:PackIcon Kind="WindowMinimize"></materialDesign:PackIcon>
+
+                </Button>
+
+                <TextBlock HorizontalAlignment="Center"  FontSize="30" TextAlignment="Center" FontWeight="Bold">X-Guide</TextBlock>
+            </DockPanel>
+
+            <Grid>
+                <Grid.Resources>
+                    <!-- Define the ExpanderStyle that collapses other expanders when one is expanded -->
+                    <Style TargetType="Expander" x:Key="ExpanderStyle">
+                        <Setter Property="IsExpanded" Value="False" />
+                        <Setter Property="HeaderTemplate">
+                            <Setter.Value>
+                                <DataTemplate>
+                                    <TextBlock Text="{Binding}" />
+                                </DataTemplate>
+                            </Setter.Value>
+                        </Setter>
+                        <EventSetter Event="Expanded" Handler="Expander_Expanded" />
+                    </Style>
+                </Grid.Resources>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="200"/>
+                    <ColumnDefinition />
+                </Grid.ColumnDefinitions>
+                <StackPanel Orientation="Vertical" Grid.Column="0" x:Name="stackPanel">
+                    <TextBlock x:Name="DateTimeTextBlock" Style="{DynamicResource MaterialDesignTitleTextBlock}"/>
+                    <!-- Production Section-->
+                    <Expander Header="Production" Background="#FF202020" Expanded="Expander_Expanded">
+                        <StackPanel>
+                            <Button  Margin="5,5,5,5" >title 1</Button>
+                            <Button  Margin="5,5,5,5" >title 2</Button>
+                            <Button  Margin="5,5,5,5" >title 3</Button>
+
+                        </StackPanel>
+                    </Expander>
+                    <!-- Engineering Section-->
+                    <Expander Header="Engineering" Background="#FF202020" Expanded="Expander_Expanded">
+                        <StackPanel>
+                            <Button  Margin="5,5,5,5" >title 1</Button>
+                            <Button  Margin="5,5,5,5" >title 2</Button>
+                            <Button  Margin="5,5,5,5" >title 3</Button>
+
+                        </StackPanel>
+                    </Expander>
+                    <!-- Security Section-->
+                    <Expander Header="Security" Background="#FF202020" Expanded="Expander_Expanded">
+                        <StackPanel>
+                            <Button  Margin="5,5,5,5" >title 1</Button>
+                            <Button  Margin="5,5,5,5" >title 2</Button>
+                            <Button  Margin="5,5,5,5" >title 3</Button>
+
+                        </StackPanel>
+                    </Expander>
+                    <!-- Settings Section-->
+                    <Expander Header="Settings" Background="#FF202020">
+                        <StackPanel>
+
+                            <Button  Margin="5,5,5,5" Background="#FF202020" Foreground="White" BorderBrush="#FF202020" HorizontalContentAlignment="Left">
+                                <StackPanel Orientation="Horizontal">
+                                    <materialDesign:PackIcon Kind="CogOutline" Width="20" Height="20" />
+                                    <TextBlock Text="Setup" Padding="33,0,0,0"/>
+                                </StackPanel>
+                            </Button>
+
+
+                        </StackPanel>
+                    </Expander>
+                </StackPanel>
+                <DockPanel Margin="6" Grid.Row="1" Grid.Column="2">
+                    <DockPanel.Resources>
+                        <DataTemplate DataType="{x:Type vms:SettingViewModel}">
                         <views:SettingsView/>
                     </DataTemplate>
                     <DataTemplate DataType="{x:Type vms:TestingViewModel}">
@@ -39,12 +115,14 @@
                     </DataTemplate>
 
 
-                </DockPanel.Resources>
-                <ContentControl Content="{Binding CurrentViewModel}"/>
+                    </DockPanel.Resources>
+                    <ContentControl Content="{Binding CurrentViewModel}"/>
 
 
-            </DockPanel>
-        </Grid>
+                </DockPanel>
+
+            </Grid>
+
+        </StackPanel>
     </Border>
-
 </Window>
