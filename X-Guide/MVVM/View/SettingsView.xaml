@@ -20,7 +20,7 @@
         <SolidColorBrush x:Key="PrimaryTextColor" Color="#FFFFFF"/>
         <SolidColorBrush x:Key="SecondaryTextColor" Color="#BBC1D1"/>
 
-        <SolidColorBrush x:Key="PrimaryGrayColor" Color="#000000"/>
+        <SolidColorBrush x:Key="PrimaryGrayColor" Color="#FFFFFF"/>
         <SolidColorBrush x:Key="PrimaryBlackColor" Color="#000000"/>
         <Style x:Key="TextBoxStyle" TargetType="TextBox">
             <Setter Property="Background" Value="Transparent"/>

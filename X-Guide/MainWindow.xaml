@@ -61,7 +61,10 @@
                     <ColumnDefinition Width="200"/>
                     <ColumnDefinition />
                 </Grid.ColumnDefinitions>
-                <StackPanel Orientation="Vertical" Grid.Column="0" x:Name="stackPanel">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="600"/>
+                </Grid.RowDefinitions>
+                <StackPanel Orientation="Vertical" Grid.Column="0" Grid.Row="0" x:Name="stackPanel">
                     <TextBlock x:Name="DateTimeTextBlock" Style="{DynamicResource MaterialDesignTitleTextBlock}"/>
                     <!-- Production Section-->
                     <Expander Header="Production" Background="#FF202020" Expanded="Expander_Expanded">

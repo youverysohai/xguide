@@ -25,7 +25,7 @@ namespace X_Guide.MVVM.View
 
         private void p_box_Loaded(object sender, RoutedEventArgs e)
         {
-            VmSolution.Import(@"C:\Users\Xlent_XIR02\Desktop\test.sol", "");
+            VmSolution.Import(@"C:\Users\Xlent-Tung\Desktop\test.sol", "");
             p = (VmProcedure)VmSolution.Instance["Flow1"];
             
             p_box.ModuleSource = p;
