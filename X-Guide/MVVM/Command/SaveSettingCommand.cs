@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Configuration;
 using System.IO;
 using System.Linq;
 using System.Text;
@@ -28,7 +29,7 @@ namespace X_Guide.MVVM.Command
         public override void Execute(object parameter)
         {
             var setting = new Setting(settingViewModel.MachineID, settingViewModel.MachineDescription, settingViewModel.SoftwareRevision, settingViewModel.RobotIP, settingViewModel.RobotPort, settingViewModel.ShiftStartTime, settingViewModel.VisionIP, settingViewModel.VisionPort, settingViewModel.MaxScannerCapTime, settingViewModel.LogFilePath);
-            setting.WriteToXML(Directory.GetCurrentDirectory() + @"\Setting.xml");
+            setting.WriteToXML(ConfigurationManager.AppSettings["SettingPath"]);
 
         }
 

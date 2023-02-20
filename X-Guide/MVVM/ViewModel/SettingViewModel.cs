@@ -149,19 +149,6 @@ namespace X_Guide.MVVM.ViewModel
 
         public void UpdateSettingUI()
         {
-
-            /*Null check is required here 
-                        MachineID = "";
-                        MachineDescription = "";
-                        SoftwareRevision = "";
-                        RobotIP = "";
-                        RobotPort = "";
-                        ShiftStartTime = "";
-                        VisionIP = "";
-                        VisionPort = "";
-                        MaxScannerCapTime = "";
-                        LogFilePath = "";*/
-
             MachineID = setting.MachineID;
             MachineDescription = setting.MachineDescription;
             SoftwareRevision = setting.SoftwareRevision;

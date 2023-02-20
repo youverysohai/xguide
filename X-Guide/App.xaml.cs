@@ -22,13 +22,22 @@ namespace X_Guide
 
         private Setting _setting;
         private readonly NavigationStore _navigationStore;
-
+        
 
 
         public App()
         {
-            _setting = Setting.ReadFromXML(Directory.GetCurrentDirectory() + @"\Setting.xml");
+
+            InitializeAppConfiguration();
+            _setting = Setting.ReadFromXML(ConfigurationManager.AppSettings["SettingPath"]);
             _navigationStore = new NavigationStore();
+        }
+
+        private void InitializeAppConfiguration()
+        {
+            string appDataPath = Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData);
+            string settingPath = Path.Combine(appDataPath, "X-Guide", "Settings.xml");
+            ConfigurationManager.AppSettings["SettingPath"] = settingPath;
         }
         protected override void OnStartup(StartupEventArgs e)
         {
