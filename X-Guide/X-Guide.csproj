@@ -571,6 +571,7 @@
     <Compile Include="FileLogger.cs" />
     <Compile Include="FileLoggerExtensions.cs" />
     <Compile Include="FileLoggerProvider.cs" />
+    <Compile Include="MVVM\Command\ConnectServerCommand.cs" />
     <Compile Include="Service\NavigationService.cs" />
     <Compile Include="System\Windows\Forms.cs" />
     <Compile Include="Validation\IPValidation.cs" />

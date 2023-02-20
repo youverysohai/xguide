@@ -17,7 +17,7 @@ namespace X_Guide.MVVM.Command
 
         public override bool CanExecute(object parameter)
         {
-            return false; 
+            return true; 
         }
         public SaveSettingCommand(SettingViewModel settingViewModel, Setting setting)
         {

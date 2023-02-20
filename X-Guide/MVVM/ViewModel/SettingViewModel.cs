@@ -2,6 +2,8 @@
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.Net;
+using System.Net.Sockets;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Input;
@@ -17,6 +19,8 @@ namespace X_Guide.MVVM.ViewModel
     {
         public ICommand SaveCommand { get; }
         public ICommand NavigateCommand { get; }
+
+        public ICommand ConnectServerCommand { get; set; }
 
         public Setting setting;
 
@@ -136,20 +140,29 @@ namespace X_Guide.MVVM.ViewModel
         {
             SaveCommand = new SaveSettingCommand(this, setting);
             NavigateCommand = new NavigateCommand(testingViewNavigationService);
+            ConnectServerCommand = new ConnectServerCommand("192.168.10.90", 7930);
             this.setting = setting;
+            UpdateSettingUI();
 
-            MachineID = "";
-            MachineDescription = "";
-            SoftwareRevision = "";
-            RobotIP = "";
-            RobotPort = "";
-            ShiftStartTime = "";
-            VisionIP = "";
-            VisionPort = "";
-            MaxScannerCapTime = "";
-            LogFilePath = "";
+         
+        }
 
-       /*     MachineID = setting.MachineID;
+        public void UpdateSettingUI()
+        {
+
+            /*Null check is required here 
+                        MachineID = "";
+                        MachineDescription = "";
+                        SoftwareRevision = "";
+                        RobotIP = "";
+                        RobotPort = "";
+                        ShiftStartTime = "";
+                        VisionIP = "";
+                        VisionPort = "";
+                        MaxScannerCapTime = "";
+                        LogFilePath = "";*/
+
+            MachineID = setting.MachineID;
             MachineDescription = setting.MachineDescription;
             SoftwareRevision = setting.SoftwareRevision;
             RobotIP = setting.RobotIP;
@@ -158,20 +171,16 @@ namespace X_Guide.MVVM.ViewModel
             VisionIP = setting.VisionIP;
             VisionPort = setting.VisionPort;
             MaxScannerCapTime = setting.MaxScannerCapTime;
-            LogFilePath = setting.LogFilePath;*/
-
-
-
-
+            LogFilePath = setting.LogFilePath;
         }
     }
 
 
-    
 
-    
 
-  
+
+
+
 }
 
 
