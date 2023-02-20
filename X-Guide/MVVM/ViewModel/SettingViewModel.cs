@@ -137,6 +137,13 @@ namespace X_Guide.MVVM.ViewModel
             SaveCommand = new SaveSettingCommand(this, setting);
             NavigateCommand = new NavigateCommand(testingViewNavigationService);
             this.setting = setting;
+            UpdateSettingUI();
+
+         
+        }
+
+        public void UpdateSettingUI()
+        {
 
             MachineID = "";
             MachineDescription = "";
