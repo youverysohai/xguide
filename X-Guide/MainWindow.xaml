@@ -15,6 +15,7 @@
         WindowStyle="None"
         AllowsTransparency="True"
         WindowState="Normal"
+        MouseLeftButtonDown="OnMouseLeftButtonDown"
         Foreground="White">
 
     <Border Background="#202020">
@@ -43,20 +44,7 @@
             </DockPanel>
 
             <Grid>
-                <Grid.Resources>
-                    <!-- Define the ExpanderStyle that collapses other expanders when one is expanded -->
-                    <Style TargetType="Expander" x:Key="ExpanderStyle">
-                        <Setter Property="IsExpanded" Value="False" />
-                        <Setter Property="HeaderTemplate">
-                            <Setter.Value>
-                                <DataTemplate>
-                                    <TextBlock Text="{Binding}" />
-                                </DataTemplate>
-                            </Setter.Value>
-                        </Setter>
-                        <EventSetter Event="Expanded" Handler="Expander_Expanded" />
-                    </Style>
-                </Grid.Resources>
+
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="200"/>
                     <ColumnDefinition />
@@ -67,7 +55,7 @@
                 <StackPanel Orientation="Vertical" Grid.Column="0" Grid.Row="0" x:Name="stackPanel">
                     <TextBlock x:Name="DateTimeTextBlock" Style="{DynamicResource MaterialDesignTitleTextBlock}"/>
                     <!-- Production Section-->
-                    <Expander Header="Production" Background="#FF202020" Expanded="Expander_Expanded">
+                    <Expander Header="Production" Background="#FF202020"  Expanded="Expander_Expanded">
                         <StackPanel>
                             <Button  Margin="5,5,5,5" >title 1</Button>
                             <Button  Margin="5,5,5,5" >title 2</Button>
@@ -76,7 +64,7 @@
                         </StackPanel>
                     </Expander>
                     <!-- Engineering Section-->
-                    <Expander Header="Engineering" Background="#FF202020" Expanded="Expander_Expanded">
+                    <Expander Header="Engineering" Background="#FF202020"  Expanded="Expander_Expanded">
                         <StackPanel>
                             <Button  Margin="5,5,5,5" >title 1</Button>
                             <Button  Margin="5,5,5,5" >title 2</Button>
@@ -85,7 +73,7 @@
                         </StackPanel>
                     </Expander>
                     <!-- Security Section-->
-                    <Expander Header="Security" Background="#FF202020" Expanded="Expander_Expanded">
+                    <Expander Header="Security" Background="#FF202020"  Expanded="Expander_Expanded">
                         <StackPanel>
                             <Button  Margin="5,5,5,5" >title 1</Button>
                             <Button  Margin="5,5,5,5" >title 2</Button>
@@ -94,7 +82,7 @@
                         </StackPanel>
                     </Expander>
                     <!-- Settings Section-->
-                    <Expander Header="Settings" Background="#FF202020">
+                    <Expander Header="Settings" Background="#FF202020"  Expanded="Expander_Expanded">
                         <StackPanel>
 
                             <Button  Margin="5,5,5,5" Background="#FF202020" Foreground="White" BorderBrush="#FF202020" HorizontalContentAlignment="Left">
