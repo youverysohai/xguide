@@ -3,7 +3,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Windows;
 using System.Windows.Controls;
-
+using System.Windows.Threading;
+using VM.Core;
 
 namespace X_Guide.MVVM.View
 {
@@ -12,21 +13,26 @@ namespace X_Guide.MVVM.View
     /// </summary>
     public partial class TestingView : UserControl
     {
-   /*     VmProcedure p;*/
+        VmProcedure p;
         public TestingView()
         {
+               
             InitializeComponent();
-/*            VmSolution.Import(@"C:\Users\Xlent_XIR02\Desktop\test.sol", "");
-            p = (VmProcedure)VmSolution.Instance["Flow1"];*/
+           
 
 
         }
 
         private void p_box_Loaded(object sender, RoutedEventArgs e)
         {
-          /*  p_box.ModuleSource = p;
-            p.Run();*/
+            VmSolution.Import(@"C:\Users\Xlent_XIR02\Desktop\test.sol", "");
+            p = (VmProcedure)VmSolution.Instance["Flow1"];
+            
+            p_box.ModuleSource = p;
+            p.Run();
         }
+
+      
     }
 }
 
