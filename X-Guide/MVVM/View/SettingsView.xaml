@@ -146,7 +146,7 @@
                     <TextBox Foreground="{DynamicResource PrimaryGrayColor}"  Margin="5 5 0 5" Padding="2" Text="{Binding MaxScannerCapTime}"/>
                     <StackPanel Orientation="Horizontal">
                         <TextBox Foreground="{DynamicResource PrimaryGrayColor}" Width="400" Margin="5 5 0 5" Padding="2" Text="{Binding LogFilePath}"/>
-                        <Button x:Name="Browse" Margin="20 0 0 0" Content="Browse"/>
+                        <Button x:Name="Browse" Margin="20 0 0 0" Content="Browse" Command="{Binding ConnectServerCommand}"/>
                     </StackPanel>
                     <StackPanel Orientation="Horizontal">
                         <CheckBox Margin="8 5"/>

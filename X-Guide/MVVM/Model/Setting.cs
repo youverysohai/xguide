@@ -5,6 +5,7 @@ using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows;
 using System.Xml.Serialization;
 
 namespace X_Guide.MVVM.Model
@@ -65,7 +66,20 @@ namespace X_Guide.MVVM.Model
 
           }*/
 
-        public Setting() { }
+        public Setting()
+        {
+            MachineID = "M01";
+            MachineDescription = "Machine Description";
+            SoftwareRevision = "v1.0";
+            RobotIP = "127.0.0.1";
+            RobotPort = "23";
+            ShiftStartTime = "00:00:00";
+            VisionIP = "127.0.0.1";
+            VisionPort = "23";
+            MaxScannerCapTime = "100";
+            LogFilePath = "";
+        }
+
         public Setting(string machineID, string machineDescription, string softwareRevision, string robotIP, string robotPort, string startTime, string visionIP, string visionPort, string maxScannerCapTime, string logFilePath)
         {
             MachineID = machineID;
@@ -87,22 +101,34 @@ namespace X_Guide.MVVM.Model
                 {
                     return (Setting)new XmlSerializer(typeof(Setting)).Deserialize(reader);
 
+
+
                 }
 
             }
             catch
             {
-                return null;
+
+                return new Setting();
             }
         }
         public void WriteToXML(string filePath)
         {
+            CheckDirectory(filePath);
+            filePath = Path.Combine(filePath);
+
             var writer = new XmlSerializer(typeof(Setting));
 
             using (TextWriter file = new StreamWriter(filePath))
             {
                 writer.Serialize(file, this);
             }
+        }
+
+        private void CheckDirectory(string filePath)
+        {
+            if (!Directory.Exists(Path.GetDirectoryName(filePath))) { Directory.CreateDirectory(filePath); }
+
         }
     }
 }

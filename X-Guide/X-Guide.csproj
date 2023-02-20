@@ -240,6 +240,7 @@
       <HintPath>..\..\..\..\..\..\Program Files\VisionMaster4.1.0\Applications\myLibs\Apps.ColorFun.dll</HintPath>
       <Private>False</Private>
     </Reference>
+    <Reference Include="System.Configuration" />
     <Reference Include="VM.Core">
       <HintPath>..\..\..\..\..\..\Program Files\VisionMaster4.1.0\Applications\myLibs\VM.Core.dll</HintPath>
       <Private>False</Private>
@@ -571,6 +572,7 @@
     <Compile Include="FileLogger.cs" />
     <Compile Include="FileLoggerExtensions.cs" />
     <Compile Include="FileLoggerProvider.cs" />
+    <Compile Include="MVVM\Command\ConnectServerCommand.cs" />
     <Compile Include="Service\NavigationService.cs" />
     <Compile Include="System\Windows\Forms.cs" />
     <Compile Include="Validation\IPValidation.cs" />

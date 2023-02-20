@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Configuration;
 using System.IO;
 using System.Linq;
 using System.Text;
@@ -17,7 +18,7 @@ namespace X_Guide.MVVM.Command
 
         public override bool CanExecute(object parameter)
         {
-            return false; 
+            return true; 
         }
         public SaveSettingCommand(SettingViewModel settingViewModel, Setting setting)
         {
@@ -32,7 +33,10 @@ namespace X_Guide.MVVM.Command
             var setting = new Setting(settingViewModel.MachineID, settingViewModel.MachineDescription, settingViewModel.SoftwareRevision, robotIP,
                 settingViewModel.RobotPort, settingViewModel.ShiftStartTime, visionIP,
                 settingViewModel.VisionPort, settingViewModel.MaxScannerCapTime, settingViewModel.LogFilePath);
-            setting.WriteToXML(Directory.GetCurrentDirectory() + @"\Setting.xml");
+ 
+            
+            setting.WriteToXML(ConfigurationManager.AppSettings["SettingPath"]);
+
         }
 
 
