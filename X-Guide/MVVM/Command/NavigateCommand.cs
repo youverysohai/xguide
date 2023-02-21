@@ -22,9 +22,9 @@ namespace X_Guide.MVVM.Command
 
         public override void Execute(object parameter)
         {
-            if (parameter is PageTitle pageTitle && _viewModels.TryGetValue(pageTitle, out var pageT))
+            if (parameter is PageTitle pageTitle && _viewModels.TryGetValue(pageTitle, out var page))
             {
-                pageT.Navigate();
+                page.Navigate();
             }
                 
         }

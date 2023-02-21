@@ -22,7 +22,7 @@ namespace X_Guide
 
         private Setting _setting;
         private readonly NavigationStore _navigationStore;
-        private readonly Dictionary<PageTitle, NavigationService> _viewModels;
+        private  Dictionary<PageTitle, NavigationService> _viewModels;
         
 
 
@@ -30,8 +30,17 @@ namespace X_Guide
         {
 
             InitializeAppConfiguration();
+            InitializeAppNavigation();
             _setting = Setting.ReadFromXML(ConfigurationManager.AppSettings["SettingPath"]);
             _navigationStore = new NavigationStore();
+
+
+            
+        }
+
+     
+        private void InitializeAppNavigation()
+        {
             _viewModels = new Dictionary<PageTitle, NavigationService>
             {
                 {PageTitle.Setting, new NavigationService (_navigationStore, CreateSettingViewModel) },
@@ -41,9 +50,6 @@ namespace X_Guide
                 {PageTitle.Undefined, new NavigationService(_navigationStore, CreateUndefinedViewModel) }
             };
         }
-
-     
-
         
         private void InitializeAppConfiguration()
         {
