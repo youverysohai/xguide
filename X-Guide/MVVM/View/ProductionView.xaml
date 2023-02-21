@@ -5,13 +5,21 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:X_Guide.MVVM.View"
              xmlns:v="clr-namespace:VMControls.WPF;assembly=VMControls.WPF"
-         
-             
-          
+             Background="White"
+             Opacity="100"
              mc:Ignorable="d" 
-             d:DesignHeight="450" d:DesignWidth="800">
+             d:DesignHeight="550" d:DesignWidth="800">
     <Grid>
-        <v:RenderControlBase Name="p_box" Loaded="p_box_Loaded"/>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="100"/>
+            <RowDefinition Height="*"/>
+            
+        </Grid.RowDefinitions>
+        <StackPanel Grid.Row="0" Orientation="Horizontal">
+            <TextBlock Style="{DynamicResource MaterialDesignHeadline6TextBlock}" Margin="10" Text="C:\user\"/>
+            <Button>Browse</Button>
+        </StackPanel>
+        <v:RenderControlBase Grid.Row="1" Name="p_box" Loaded="p_box_Loaded"/>
 
 
        
