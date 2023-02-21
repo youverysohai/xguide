@@ -152,10 +152,11 @@ namespace X_Guide.MVVM.ViewModel
             MachineID = setting.MachineID;
             MachineDescription = setting.MachineDescription;
             SoftwareRevision = setting.SoftwareRevision;
-            RobotIP = setting.RobotIP;
+
+            RobotIP = setting.RobotIP.Split('.');
             RobotPort = setting.RobotPort;
             ShiftStartTime = setting.ShiftStartTime;
-            VisionIP = setting.VisionIP;
+            VisionIP = setting.VisionIP.Split('.');
             VisionPort = setting.VisionPort;
             MaxScannerCapTime = setting.MaxScannerCapTime;
             LogFilePath = setting.LogFilePath;

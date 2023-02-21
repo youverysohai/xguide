@@ -47,6 +47,7 @@ namespace X_Guide
         /// </summary>
         private void CloseButton_Click(object sender, RoutedEventArgs e)
         {
+            System.Diagnostics.Process.GetCurrentProcess().Kill();
             Application.Current.Shutdown();
         }
 

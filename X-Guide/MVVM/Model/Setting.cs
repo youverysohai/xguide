@@ -6,6 +6,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
+
 using System.Xml.Serialization;
 
 namespace X_Guide.MVVM.Model
@@ -115,7 +116,7 @@ namespace X_Guide.MVVM.Model
         public void WriteToXML(string filePath)
         {
             CheckDirectory(filePath);
-            filePath = Path.Combine(filePath);
+ 
 
             var writer = new XmlSerializer(typeof(Setting));
 
@@ -126,8 +127,8 @@ namespace X_Guide.MVVM.Model
         }
 
         private void CheckDirectory(string filePath)
-        {
-            if (!Directory.Exists(Path.GetDirectoryName(filePath))) { Directory.CreateDirectory(filePath); }
+        { filePath = Path.GetDirectoryName(filePath);
+            if (!Directory.Exists(filePath)) { Directory.CreateDirectory(filePath); }
 
         }
     }

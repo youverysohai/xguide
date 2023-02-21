@@ -46,14 +46,14 @@
             <Grid>
 
                 <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="200"/>
+                    <ColumnDefinition Width="240"/>
                     <ColumnDefinition />
                 </Grid.ColumnDefinitions>
                 <Grid.RowDefinitions>
-                    <RowDefinition Height="600"/>
+                    <RowDefinition Height="700"/>
                 </Grid.RowDefinitions>
                 <StackPanel Orientation="Vertical" Grid.Column="0" Grid.Row="0" x:Name="stackPanel">
-                    <TextBlock x:Name="DateTimeTextBlock" Style="{DynamicResource MaterialDesignTitleTextBlock}"/>
+                    <TextBlock x:Name="DateTimeTextBlock" Margin="5" Style="{DynamicResource MaterialDesignSubtitle1TextBlock}"/>
                     <!-- Production Section-->
                     <Expander Header="Production" Background="#FF202020"  Expanded="Expander_Expanded">
                         <StackPanel>
@@ -95,6 +95,7 @@
 
                         </StackPanel>
                     </Expander>
+                    
                 </StackPanel>
                 <DockPanel Margin="6" Grid.Row="1" Grid.Column="2">
                     <DockPanel.Resources>
