@@ -7,8 +7,10 @@
              xmlns:local="clr-namespace:X_Guide.MVVM.View" 
              xmlns:valid="clr-namespace:X_Guide.Validation"
              mc:Ignorable="d" 
-             Background="#202020"
-             d:DesignHeight="750" d:DesignWidth="800">
+             Background="Transparent"
+             MaxHeight="1000"
+             d:DesignHeight="800" d:DesignWidth="880"
+             >
     <UserControl.Resources>
         <ControlTemplate x:Key="validationTemplate">
             <DockPanel>
@@ -16,7 +18,7 @@
             </DockPanel>
         </ControlTemplate>
 
-        <SolidColorBrush x:Key="PrimaryBlueColor" Color="#348EF6"/>
+        <SolidColorBrush x:Key="PrimaryBlueColor" Color="#80B9EE"/>
         <SolidColorBrush x:Key="SecondaryBlueColor" Color="#EFF2FF"/>
 
         <SolidColorBrush x:Key="PrimaryTextColor" Color="#FFFFFF"/>
@@ -29,7 +31,7 @@
             <Setter Property="Foreground" Value="white"/>
             <Setter Property="FontSize" Value="18"/>
             <Setter Property="Padding" Value="5"/>
-            <Setter Property="Margin" Value="5"/>
+            <Setter Property="Margin" Value="5 0 20 10"/>
         </Style>
         <Style x:Key="IPInputMaterialDesignTextBox" TargetType="{x:Type TextBox}" BasedOn="{StaticResource MaterialDesignFloatingHintTextBox}">
 
@@ -43,149 +45,219 @@
         <Style x:Key="HeaderGroupBox" TargetType="{x:Type GroupBox}" BasedOn="{x:Null}">
             <Setter Property="Foreground" Value="white"/>
             <Setter Property="FontSize" Value="30"/>
+            <Setter Property="Margin" Value="10"/>
+            <Setter Property="Width" Value="370"/>
         </Style>
     </UserControl.Resources>
 
-    <StackPanel Margin="10,10,10,10">
-        <StackPanel>
-            <!--<TextBlock Foreground="{DynamicResource PrimaryGrayColor}" Margin="0 10 0 0" Padding="3"   Text="Machine ID"/>
-                    <TextBlock Foreground="{DynamicResource PrimaryGrayColor}" Margin="0 10 0 0"  Padding="3"  Text="Machine Description"/>
-                    <TextBlock Foreground="{DynamicResource PrimaryGrayColor}" Margin="0 10 0 0"  Padding="3"  Text="Software Revision"/>
-                    <TextBlock Foreground="{DynamicResource PrimaryGrayColor}" Margin="0 10 0 0"  Padding="3"  Text="Robot IP"/>
-                    <TextBlock Foreground="{DynamicResource PrimaryGrayColor}" Margin="0 10 0 0"  Padding="3"  Text="Robot Port"/>
-                    <TextBlock Foreground="{DynamicResource PrimaryGrayColor}" Margin="0 10 0 0"  Padding="3"  Text="Vision IP"/>
-                    <TextBlock Foreground="{DynamicResource PrimaryGrayColor}" Margin="0 10 0 0"  Padding="3"  Text="Vision Port"/>
-                    <TextBlock Foreground="{DynamicResource PrimaryGrayColor}" Margin="0 10 0 0"  Padding="3"  Text="Shift Start Time"/>
-                    <TextBlock Foreground="{DynamicResource PrimaryGrayColor}" Margin="0 10 0 0"  Padding="3"  Text="Max Scanner Capture Time(s)"/>
-                    <TextBlock Foreground="{DynamicResource PrimaryGrayColor}" Margin="0 10 0 0"  Padding="3"  Text="Vision Recipe Path"/>-->
+    <DockPanel Margin="5" >
 
-        </StackPanel>
+        <Border CornerRadius="20" BorderThickness="1,1,1,1" BorderBrush="White" Background="#2d2d2d" >
+            <Border.Effect>
+                <DropShadowEffect Color="Gray" Opacity="0.5" />
+            </Border.Effect>
+            <ScrollViewer VerticalScrollBarVisibility="Hidden">
+                <StackPanel Margin="10,10,10,10">
 
-        <StackPanel>
-            <!-- Machine Info -->
 
-            <GroupBox Style="{DynamicResource HeaderGroupBox}">
-                <GroupBox.Header>
-                    <StackPanel Orientation="Horizontal">
-                        <materialDesign:PackIcon  Kind="WrenchCogOutline" VerticalAlignment="Center" Width="30" Height="30" Margin="5"/>
-                        <TextBlock >Machine Info</TextBlock>
+                    <StackPanel Orientation="Vertical">
+                        <Grid>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="*"/>
+                                <ColumnDefinition Width="*"/>
+                            </Grid.ColumnDefinitions>
+                            <!-- Machine Info -->
+                            <GroupBox Grid.Column="0" Style="{DynamicResource HeaderGroupBox}">
+                                <GroupBox.Header>
+                                    <StackPanel Orientation="Horizontal">
+                                        <materialDesign:PackIcon  Kind="WrenchCogOutline" VerticalAlignment="Center" Width="30" Height="30" Margin="5"/>
+                                        <TextBlock ><Run Text="Machine Info"/></TextBlock>
+                                    </StackPanel>
+                                </GroupBox.Header>
+
+                                <!--Input-->
+                                <StackPanel>
+                                    <!--Software Revision Input-->
+                                    <TextBox Style="{DynamicResource InputMaterialDesignTextBox}"  
+                                    materialDesign:HintAssist.Hint="Software Revision"  
+                                    Text="{Binding SoftwareRevision}"/>
+                                    <!--Machine ID Input-->
+                                    <TextBox 
+                                    Style="{DynamicResource InputMaterialDesignTextBox}"  
+                                    materialDesign:HintAssist.Hint="Machine ID"  
+                                    Text="{Binding MachineID}"
+                                    />
+                                    <!--Machine Description TextArea (scrollable)-->
+                                    <TextBox
+                                    AcceptsReturn="True"
+                                    Style="{DynamicResource InputMaterialDesignTextBox}"  
+                                    materialDesign:HintAssist.Hint="Machine Description"  
+                                    FontSize="16"
+                                    Height="175"
+                                    MaxHeight="150"
+                                    VerticalScrollBarVisibility="Auto"
+                                    HorizontalScrollBarVisibility="Auto"
+                                    BorderBrush="{DynamicResource MaterialDesignDivider}"
+                                    BorderThickness="1"
+                                    TextWrapping="Wrap"
+                                    Text ="{Binding MachineDescription}" />
+                                </StackPanel>
+
+                            </GroupBox>
+                            <!--Connection-->
+                            <StackPanel Grid.Column="1" Orientation="Vertical">
+
+                                <GroupBox Style="{DynamicResource HeaderGroupBox}">
+                                    <GroupBox.Header>
+                                        <StackPanel Orientation="Horizontal">
+                                            <materialDesign:PackIcon  Kind="Lan" VerticalAlignment="Center" Width="30" Height="30" Margin="5"/>
+                                            <TextBlock ><Run Text="Connection"/></TextBlock>
+                                        </StackPanel>
+                                    </GroupBox.Header>
+                                    <StackPanel Orientation="Vertical">
+                                        <!--Robot TCP -->
+                                        <StackPanel Orientation="Horizontal">
+
+                                            <TextBlock Text="Robot TCP IP address"  Style="{DynamicResource MaterialDesignTextBlock}" Foreground="LightGray" Margin="5 0 0 0"  VerticalAlignment="Bottom"/>
+                                            <TextBlock><InlineUIContainer>
+                                                <materialDesign:PackIcon Kind="RobotIndustrialOutline" Margin="8 4" Width="20" Height="20"/>
+                                            </InlineUIContainer></TextBlock>
+                                        </StackPanel>
+
+                                        <!-- Input IP -->
+                                        <StackPanel Orientation="Horizontal" >
+                                            <TextBox x:Name="txtRobotIP1" Style="{DynamicResource IPInputMaterialDesignTextBox}" HorizontalAlignment="Center"  GotFocus="txtIP_GotFocus" TextChanged="TxtIPLength_TextChanged" PreviewKeyDown="txtIP_PreviewKeyDown" PreviewTextInput="TxtIPAddress_PreviewTextInput">
+                                                <Binding Path="RobotIP[0]" UpdateSourceTrigger="PropertyChanged">
+                                                    <Binding.ValidationRules>
+                                                        <valid:TextBoxIPValidation/>
+                                                    </Binding.ValidationRules>
+                                                </Binding>
+                                            </TextBox>
+                                            <TextBlock Text="." FontSize="20" FontWeight="Bold"  VerticalAlignment="Bottom" Foreground="White" Margin="5,0,5,0" />
+                                            <TextBox x:Name="txtRobotIP2" Style="{DynamicResource IPInputMaterialDesignTextBox}" HorizontalAlignment="Center" GotFocus="txtIP_GotFocus" TextChanged="TxtIPLength_TextChanged" PreviewTextInput="TxtIPAddress_PreviewTextInput" PreviewKeyDown="txtIP_PreviewKeyDown">
+                                                <Binding Path="RobotIP[1]" UpdateSourceTrigger="PropertyChanged">
+                                                    <Binding.ValidationRules>
+                                                        <valid:TextBoxIPValidation/>
+                                                    </Binding.ValidationRules>
+                                                </Binding>
+                                            </TextBox>
+                                            <TextBlock Text="." FontSize="20" FontWeight="Bold"  VerticalAlignment="Bottom" Foreground="White" Margin="5,0,5,0" />
+
+                                            <TextBox x:Name="txtRobotIP3"  Style="{DynamicResource IPInputMaterialDesignTextBox}" HorizontalAlignment="Center" GotFocus="txtIP_GotFocus" TextChanged="TxtIPLength_TextChanged" PreviewTextInput="TxtIPAddress_PreviewTextInput" PreviewKeyDown="txtIP_PreviewKeyDown"   >
+                                                <Binding Path="RobotIP[2]" UpdateSourceTrigger="PropertyChanged">
+                                                    <Binding.ValidationRules>
+                                                        <valid:TextBoxIPValidation/>
+                                                    </Binding.ValidationRules>
+                                                </Binding>
+                                            </TextBox>
+                                            <TextBlock Text="." FontSize="20" FontWeight="Bold"  VerticalAlignment="Bottom" Foreground="White" Margin="5,0,5,0" />
+
+                                            <TextBox x:Name="txtRobotIP4"  Style="{DynamicResource IPInputMaterialDesignTextBox}" HorizontalAlignment="Center" GotFocus="txtIP_GotFocus" TextChanged="TxtIPLength_TextChanged" PreviewTextInput="TxtIPAddress_PreviewTextInput" PreviewKeyDown="txtIP_PreviewKeyDown"    >
+                                                <Binding Path="RobotIP[3]" UpdateSourceTrigger="PropertyChanged">
+                                                    <Binding.ValidationRules>
+                                                        <valid:TextBoxIPValidation/>
+                                                    </Binding.ValidationRules>
+                                                </Binding>
+                                            </TextBox>
+                                        </StackPanel>
+                                        <!-- Input Port Number-->
+                                        <TextBox Style="{DynamicResource InputMaterialDesignTextBox}" Text="{Binding RobotPort}"  PreviewTextInput="TxtPort_PreviewTextInput" 
+                                        materialDesign:HintAssist.Hint="Robot TCP Port Number"  />
+                                        <!--Vision TCP -->
+                                        <StackPanel Orientation="Horizontal">
+
+                                            <TextBlock Text="Vision TCP IP address"  Style="{DynamicResource MaterialDesignTextBlock}" Foreground="LightGray" Margin="5 0 0 0"  VerticalAlignment="Bottom"/>
+                                            <TextBlock><InlineUIContainer>
+                                                <materialDesign:PackIcon Kind="MonitorEye" Margin="8 4" Width="20" Height="20"/>
+                                            </InlineUIContainer></TextBlock>
+                                        </StackPanel>
+                                        <!-- Input IP -->
+                                        <StackPanel Orientation="Horizontal" >
+                                            <TextBox x:Name="txtVisionIP1" Style="{DynamicResource IPInputMaterialDesignTextBox}" HorizontalAlignment="Center"  GotFocus="txtIP_GotFocus" TextChanged="TxtIPLength_TextChanged" PreviewKeyDown="txtIP_PreviewKeyDown" PreviewTextInput="TxtIPAddress_PreviewTextInput">
+                                                <Binding Path="VisionIP[0]" UpdateSourceTrigger="PropertyChanged">
+                                                    <Binding.ValidationRules>
+                                                        <valid:TextBoxIPValidation/>
+                                                    </Binding.ValidationRules>
+                                                </Binding>
+                                            </TextBox>
+                                            <TextBlock Text="." FontSize="20" FontWeight="Bold"  VerticalAlignment="Bottom" Foreground="White" Margin="5,0,5,0" />
+                                            <TextBox x:Name="txtVisionIP2" Style="{DynamicResource IPInputMaterialDesignTextBox}" HorizontalAlignment="Center" GotFocus="txtIP_GotFocus" TextChanged="TxtIPLength_TextChanged" PreviewTextInput="TxtIPAddress_PreviewTextInput" PreviewKeyDown="txtIP_PreviewKeyDown">
+                                                <Binding Path="VisionIP[1]" UpdateSourceTrigger="PropertyChanged">
+                                                    <Binding.ValidationRules>
+                                                        <valid:TextBoxIPValidation/>
+                                                    </Binding.ValidationRules>
+                                                </Binding>
+                                            </TextBox>
+                                            <TextBlock Text="." FontSize="20" FontWeight="Bold"  VerticalAlignment="Bottom" Foreground="White" Margin="5,0,5,0" />
+
+                                            <TextBox x:Name="txtVisionIP3"  Style="{DynamicResource IPInputMaterialDesignTextBox}" HorizontalAlignment="Center" GotFocus="txtIP_GotFocus" TextChanged="TxtIPLength_TextChanged" PreviewTextInput="TxtIPAddress_PreviewTextInput" PreviewKeyDown="txtIP_PreviewKeyDown"   >
+                                                <Binding Path="VisionIP[2]" UpdateSourceTrigger="PropertyChanged">
+                                                    <Binding.ValidationRules>
+                                                        <valid:TextBoxIPValidation/>
+                                                    </Binding.ValidationRules>
+                                                </Binding>
+                                            </TextBox>
+                                            <TextBlock Text="." FontSize="20" FontWeight="Bold"  VerticalAlignment="Bottom" Foreground="White" Margin="5,0,5,0" />
+
+                                            <TextBox x:Name="txtVisionIP4"  Style="{DynamicResource IPInputMaterialDesignTextBox}" HorizontalAlignment="Center" GotFocus="txtIP_GotFocus" TextChanged="TxtIPLength_TextChanged" PreviewTextInput="TxtIPAddress_PreviewTextInput" PreviewKeyDown="txtIP_PreviewKeyDown"    >
+                                                <Binding Path="VisionIP[3]" UpdateSourceTrigger="PropertyChanged">
+                                                    <Binding.ValidationRules>
+                                                        <valid:TextBoxIPValidation/>
+                                                    </Binding.ValidationRules>
+                                                </Binding>
+                                            </TextBox>
+                                        </StackPanel>
+                                        <!-- Input Port Number-->
+                                        <TextBox Style="{DynamicResource InputMaterialDesignTextBox}"  Padding="2" Text="{Binding VisionPort}"  PreviewTextInput="TxtPort_PreviewTextInput"
+                                        materialDesign:HintAssist.Hint="Vision TCP Port Number"  />
+                                    </StackPanel>
+                                </GroupBox>
+                            </StackPanel>
+                        </Grid>
+
+                        <Expander Header="Additional Setup" Foreground="Black"  Style="{DynamicResource MaterialDesignExpander}" BorderBrush="White"
+                                  materialDesign:ExpanderAssist.HeaderFontSize="20"
+                                  materialDesign:ExpanderAssist.HeaderBackground="{DynamicResource PrimaryBlueColor}" Margin="15">
+
+                            <StackPanel Orientation="Vertical">
+                                <Grid>
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="*"/>
+                                        <ColumnDefinition Width="*"/>
+                                    </Grid.ColumnDefinitions>
+                                    <!--Shift Start Time-->
+                                    <TextBox Grid.Column="0" Style="{DynamicResource InputMaterialDesignTextBox}"  Text="{Binding ShiftStartTime}"
+                                materialDesign:HintAssist.Hint="Shift Start Time"/>
+                                    <!--Max Scanner Capture Time-->
+                                    <TextBox  Grid.Column="1"  Style="{DynamicResource InputMaterialDesignTextBox}"   Text="{Binding MaxScannerCapTime}"
+                                materialDesign:HintAssist.Hint="Max Scanner Capture Time"/>
+                                </Grid>
+
+                                <!--Log File Path-->
+                                <StackPanel Orientation="Horizontal">
+                                    <TextBox Style="{DynamicResource InputMaterialDesignTextBox}"   Width="500" Text="{Binding LogFilePath}"
+                                    materialDesign:HintAssist.Hint="LogFile Path (User Log, Communication Log)" />
+                                    <Button x:Name="Browse" Margin="10" Content="Browse" Command="{Binding ConnectServerCommand}"/>
+                                </StackPanel>
+                                <StackPanel Orientation="Horizontal">
+                                    <CheckBox Margin="8 5"/>
+                                    <TextBlock FontSize="16" VerticalAlignment="Center" Foreground="White"><Run Text="Debug Log (Developer use)"/></TextBlock>
+                                </StackPanel>
+                                <Button Width="100" Margin="5 10" Command="{Binding NavigateCommand}" Content="Navigate" />
+                            </StackPanel>
+                        </Expander>
+                        <Button Width="100" Margin="10" Command="{Binding SaveCommand}" HorizontalAlignment="Right" Content="Save" />
+
                     </StackPanel>
-                </GroupBox.Header>
-
-                <!--Input-->
-                <StackPanel>
-                    <!--Software Revision Input-->
-                    <TextBox Foreground="{DynamicResource PrimaryGrayColor}" Style="{DynamicResource InputMaterialDesignTextBox}"  
-                             materialDesign:HintAssist.Hint="Software Revision"  
-                              Text="{Binding SoftwareRevision}"/>
-                    <!--Machine ID Input-->
-                    <TextBox 
-                             Style="{DynamicResource InputMaterialDesignTextBox}"  
-                             materialDesign:HintAssist.Hint="Machine ID"  
-                             Text="{Binding MachineID}"
-                            />
-                    <!--Machine Description TextArea (scrollable)-->
-                    <TextBox Foreground="{DynamicResource PrimaryGrayColor}" AcceptsReturn="True" Style="{DynamicResource InputMaterialDesignTextBox}"  
-                             materialDesign:HintAssist.Hint="Machine Description"  
-                             FontSize="16"
-               
-                             Height="100"
-                             MaxHeight="150"
-                             VerticalScrollBarVisibility="Auto"
-                            HorizontalScrollBarVisibility="Auto"
-                            BorderBrush="{DynamicResource MaterialDesignDivider}"
-                            BorderThickness="1"
-                            TextWrapping="Wrap"
-                              Text ="{Binding MachineDescription}" />
 
 
                 </StackPanel>
 
-            </GroupBox>
+            </ScrollViewer>
+        </Border>
 
 
+    </DockPanel>
 
-            <Border Margin="5" Padding="5" BorderBrush="White" BorderThickness="1">
-                <StackPanel Orientation="Vertical">
-                    <TextBlock Text="Robot IP" Foreground="White" Style="{DynamicResource MaterialDesignTextBlock}"></TextBlock>
-                    <StackPanel Orientation="Horizontal" >
-                        <TextBox x:Name="txtRobotIP1" Style="{DynamicResource IPInputMaterialDesignTextBox}" HorizontalAlignment="Center"  GotFocus="txtIP_GotFocus" TextChanged="TxtIPLength_TextChanged" PreviewKeyDown="txtIP_PreviewKeyDown" PreviewTextInput="TxtIPAddress_PreviewTextInput">
-                            <TextBox.Text>
-                                <Binding Path="RobotIP[0]" UpdateSourceTrigger="PropertyChanged">
-                                    <Binding.ValidationRules>
-                                        <valid:TextBoxIPValidation/>
-                                    </Binding.ValidationRules>
-                                </Binding>
-                            </TextBox.Text>
-                        </TextBox>
-                        <TextBlock Text="." FontSize="20" FontWeight="Bold"  VerticalAlignment="Bottom" Foreground="White" Margin="5,0,5,0" />
-                        <TextBox x:Name="txtRobotIP2" HorizontalAlignment="Center" GotFocus="txtIP_GotFocus" TextChanged="TxtIPLength_TextChanged" PreviewTextInput="TxtIPAddress_PreviewTextInput" PreviewKeyDown="txtIP_PreviewKeyDown" Width="30" Margin="0">
-                            <TextBox.Text>
-                                <Binding Path="RobotIP[1]" UpdateSourceTrigger="PropertyChanged">
-                                    <Binding.ValidationRules>
-                                        <valid:TextBoxIPValidation/>
-                                    </Binding.ValidationRules>
-                                </Binding>
-                            </TextBox.Text>
-                        </TextBox>
-                        <TextBlock Text="." FontSize="20" FontWeight="Bold"  VerticalAlignment="Bottom" Foreground="White" Margin="5,0,5,0" />
-
-                        <TextBox x:Name="txtRobotIP3" HorizontalAlignment="Center" GotFocus="txtIP_GotFocus" TextChanged="TxtIPLength_TextChanged" PreviewTextInput="TxtIPAddress_PreviewTextInput" PreviewKeyDown="txtIP_PreviewKeyDown"   Width="30" Margin="0">
-                            <TextBox.Text>
-                                <Binding Path="RobotIP[2]" UpdateSourceTrigger="PropertyChanged">
-                                    <Binding.ValidationRules>
-                                        <valid:TextBoxIPValidation/>
-                                    </Binding.ValidationRules>
-                                </Binding>
-                            </TextBox.Text>
-                        </TextBox>
-                        <TextBlock Text="." FontSize="20" FontWeight="Bold"  VerticalAlignment="Bottom" Foreground="White" Margin="5,0,5,0" />
-
-                        <TextBox x:Name="txtRobotIP4" HorizontalAlignment="Center" GotFocus="txtIP_GotFocus" TextChanged="TxtIPLength_TextChanged" PreviewTextInput="TxtIPAddress_PreviewTextInput" PreviewKeyDown="txtIP_PreviewKeyDown"   Width="30" Margin="0" >
-                            <TextBox.Text>
-                                <Binding Path="RobotIP[3]" UpdateSourceTrigger="PropertyChanged">
-                                    <Binding.ValidationRules>
-                                        <valid:TextBoxIPValidation/>
-                                    </Binding.ValidationRules>
-                                </Binding>
-                            </TextBox.Text>
-                        </TextBox>
-                    </StackPanel>
-
-                </StackPanel>
-
-            </Border>
-
-            <TextBox Foreground="{DynamicResource PrimaryGrayColor}"  Margin="5 5 0 5" Padding="2" Text="{Binding RobotPort}"  PreviewTextInput="TxtPort_PreviewTextInput"/>
-            <Border Margin="5" Padding="3">
-                <StackPanel Orientation="Horizontal">
-                    <TextBox x:Name="txtVisionIP1" HorizontalAlignment="Center" Text="{Binding VisionIP[0]}" Tag="txtVisionIP2" Width="30" Margin="0"  GotFocus="txtIP_GotFocus" TextChanged="TxtIPLength_TextChanged" PreviewKeyDown="txtIP_PreviewKeyDown" PreviewTextInput="TxtIPAddress_PreviewTextInput"/>
-                    <TextBlock Text="." Margin="0,0,5,0"/>
-                    <TextBox x:Name="txtVisionIP2" HorizontalAlignment="Center" Text="{Binding VisionIP[1]}" Tag="txtVisionIP3" GotFocus="txtIP_GotFocus" TextChanged="TxtIPLength_TextChanged" PreviewKeyDown="txtIP_PreviewKeyDown"  PreviewTextInput="TxtIPAddress_PreviewTextInput" Width="30" Margin="0" />
-                    <TextBlock Text="." Margin="0,0,5,0" />
-                    <TextBox x:Name="txtVisionIP3" HorizontalAlignment="Center" Text="{Binding VisionIP[2]}" Tag="txtVisionIP4" GotFocus="txtIP_GotFocus" TextChanged="TxtIPLength_TextChanged" PreviewKeyDown="txtIP_PreviewKeyDown"  PreviewTextInput="TxtIPAddress_PreviewTextInput"   Width="30" Margin="0" />
-                    <TextBlock Text="." Margin="0,0,5,0" />
-                    <TextBox x:Name="txtVisionIP4" HorizontalAlignment="Center" Text="{Binding VisionIP[3]}" GotFocus="txtIP_GotFocus" TextChanged="TxtIPLength_TextChanged" PreviewTextInput="TxtIPAddress_PreviewTextInput" PreviewKeyDown="txtIP_PreviewKeyDown"   Width="30" Margin="0" />
-                </StackPanel>
-            </Border>
-            <TextBox Foreground="{DynamicResource PrimaryGrayColor}"  Margin="5 5 0 5" Padding="2" Text="{Binding VisionPort}"  PreviewTextInput="TxtPort_PreviewTextInput"/>
-            <TextBox Foreground="{DynamicResource PrimaryGrayColor}"  Margin="5 5 0 5" Padding="2" Text="{Binding ShiftStartTime}"/>
-            <TextBox Foreground="{DynamicResource PrimaryGrayColor}"  Margin="5 5 0 5" Padding="2" Text="{Binding MaxScannerCapTime}"/>
-            <StackPanel Orientation="Horizontal">
-                <TextBox Foreground="{DynamicResource PrimaryGrayColor}" Width="400" Margin="5 5 0 5" Padding="2" Text="{Binding LogFilePath}"/>
-                <Button x:Name="Browse" Margin="20 0 0 0" Content="Browse" Command="{Binding ConnectServerCommand}"/>
-            </StackPanel>
-            <StackPanel Orientation="Horizontal">
-                <CheckBox Margin="8 5"/>
-                <TextBlock FontSize="16" VerticalAlignment="Center" Foreground="White">Debug Log (Developer use)</TextBlock>
-            </StackPanel>
-
-
-        </StackPanel>
-
-        <Button Width="100" Margin="5 10" Command="{Binding SaveCommand}" >Save</Button>
-        <Button Width="100" Margin="5 10" Command="{Binding NavigateCommand}" >Navigate</Button>
-
-    </StackPanel>
 
 </UserControl>
