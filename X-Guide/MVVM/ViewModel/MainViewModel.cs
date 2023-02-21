@@ -23,7 +23,7 @@ namespace X_Guide.MVVM.ViewModel
         public ViewModelBase CurrentViewModel => _navigationStore.CurrentViewModel;
 
 
-        public MainViewModel(NavigationStore navigationStore, Dictionary<PageTitle, NavigationService> viewModels)
+        public MainViewModel(NavigationStore navigationStore, Dictionary<PageName, NavigationService> viewModels)
         {
             _navigationStore = navigationStore;
             _navigationStore.CurrentViewModelChanged += OnCurrentViewModelChanged;

@@ -12,9 +12,9 @@ namespace X_Guide.MVVM.Command
     internal class NavigateCommand : CommandBase
     {
 
-        private readonly Dictionary<PageTitle, NavigationService> _viewModels;
+        private readonly Dictionary<PageName, NavigationService> _viewModels;
 
-        public NavigateCommand(Dictionary<PageTitle, NavigationService> viewModels)
+        public NavigateCommand(Dictionary<PageName, NavigationService> viewModels)
         {
 
             _viewModels = viewModels;
@@ -22,7 +22,7 @@ namespace X_Guide.MVVM.Command
 
         public override void Execute(object parameter)
         {
-            if (parameter is PageTitle pageTitle && _viewModels.TryGetValue(pageTitle, out var page))
+            if (parameter is PageName pageTitle && _viewModels.TryGetValue(pageTitle, out var page))
             {
                 page.Navigate();
             }

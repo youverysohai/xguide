@@ -22,18 +22,19 @@ namespace X_Guide
 
         private Setting _setting;
         private readonly NavigationStore _navigationStore;
-        private  Dictionary<PageTitle, NavigationService> _viewModels;
+        private  Dictionary<PageName, NavigationService> _viewModels;
         
 
 
         public App()
         {
-            _navigationStore = new NavigationStore();
-            _setting = Setting.ReadFromXML(ConfigurationManager.AppSettings["SettingPath"]);
+ 
 
             //App specific settings
             InitializeAppConfiguration();
-     
+
+            _navigationStore = new NavigationStore();
+
             //Navigation setting      
             InitializeAppNavigation();
 
@@ -43,14 +44,16 @@ namespace X_Guide
      
         private void InitializeAppNavigation()
         {
-            _viewModels = new Dictionary<PageTitle, NavigationService>
+            _viewModels = new Dictionary<PageName, NavigationService>
             {
-                {PageTitle.Setting, new NavigationService (_navigationStore, CreateSettingViewModel) },
-                {PageTitle.Production, new NavigationService (_navigationStore, CreateProductionViewModel) },
-                {PageTitle.Engineering, new NavigationService (_navigationStore, CreateEngineeringViewModel) },
-                {PageTitle.Security, new NavigationService (_navigationStore, CreateSecurityViewModel) },
-                {PageTitle.Undefined, new NavigationService(_navigationStore, CreateUndefinedViewModel) }
+                {PageName.Setting, new NavigationService (_navigationStore, CreateSettingViewModel) },
+                {PageName.Production, new NavigationService (_navigationStore, CreateProductionViewModel) },
+                {PageName.Engineering, new NavigationService (_navigationStore, CreateEngineeringViewModel) },
+                {PageName.Security, new NavigationService (_navigationStore, CreateSecurityViewModel) },
+                {PageName.Undefined, new NavigationService(_navigationStore, CreateUndefinedViewModel) }
             };
+
+            _setting = Setting.ReadFromXML(ConfigurationManager.AppSettings["SettingPath"]);
         }
         
         private void InitializeAppConfiguration()
@@ -66,6 +69,8 @@ namespace X_Guide
             {
                 DataContext = new MainViewModel(_navigationStore, _viewModels)
             };
+
+
 
             MainWindow.Show();
 

@@ -60,27 +60,27 @@
                     <!-- Production Section-->
                     <Expander Header="Production" Background="#FF202020"  Expanded="Expander_Expanded">
                         <StackPanel>
-                            <Button Command="{Binding NavigateCommand}" CommandParameter="{x:Static local:PageTitle.Production}" Margin="5,5,5,5" >title 1</Button>
-                            <Button Command="{Binding NavigateCommand}" CommandParameter="{x:Static local:PageTitle.Undefined}" Margin="5,5,5,5" >title 2</Button>
-                            <Button Command="{Binding NavigateCommand}" CommandParameter="{x:Static local:PageTitle.Undefined}" Margin="5,5,5,5" >title 3</Button>
+                            <Button Command="{Binding NavigateCommand}" CommandParameter="{x:Static local:PageName.Production}" Margin="5,5,5,5" >title 1</Button>
+                            <Button Command="{Binding NavigateCommand}" CommandParameter="{x:Static local:PageName.Undefined}" Margin="5,5,5,5" >title 2</Button>
+                            <Button Command="{Binding NavigateCommand}" CommandParameter="{x:Static local:PageName.Undefined}" Margin="5,5,5,5" >title 3</Button>
 
                         </StackPanel>
                     </Expander>
                     <!-- Engineering Section-->
                     <Expander Header="Engineering" Background="#FF202020"  Expanded="Expander_Expanded">
                         <StackPanel>
-                            <Button Command="{Binding NavigateCommand}" CommandParameter="{x:Static local:PageTitle.Engineering}" Margin="5,5,5,5" >title 1</Button>
-                            <Button Command="{Binding NavigateCommand}" CommandParameter="{x:Static local:PageTitle.Undefined}" Margin="5,5,5,5" >title 2</Button>
-                            <Button Command="{Binding NavigateCommand}" CommandParameter="{x:Static local:PageTitle.Undefined}" Margin="5,5,5,5" >title 3</Button>
+                            <Button Command="{Binding NavigateCommand}" CommandParameter="{x:Static local:PageName.Engineering}" Margin="5,5,5,5" >title 1</Button>
+                            <Button Command="{Binding NavigateCommand}" CommandParameter="{x:Static local:PageName.Undefined}" Margin="5,5,5,5" >title 2</Button>
+                            <Button Command="{Binding NavigateCommand}" CommandParameter="{x:Static local:PageName.Undefined}" Margin="5,5,5,5" >title 3</Button>
 
                         </StackPanel>
                     </Expander>
                     <!-- Security Section-->
                     <Expander Header="Security" Background="#FF202020"  Expanded="Expander_Expanded">
                         <StackPanel>
-                            <Button Command="{Binding NavigateCommand}" CommandParameter="{x:Static local:PageTitle.Security}" Margin="5,5,5,5" >title 1</Button>
-                            <Button Command="{Binding NavigateCommand}" CommandParameter="{x:Static local:PageTitle.Undefined}" Margin="5,5,5,5" >title 2</Button>
-                            <Button Command="{Binding NavigateCommand}" CommandParameter="{x:Static local:PageTitle.Undefined}" Margin="5,5,5,5" >title 3</Button>
+                            <Button Command="{Binding NavigateCommand}" CommandParameter="{x:Static local:PageName.Security}" Margin="5,5,5,5" >title 1</Button>
+                            <Button Command="{Binding NavigateCommand}" CommandParameter="{x:Static local:PageName.Undefined}" Margin="5,5,5,5" >title 2</Button>
+                            <Button Command="{Binding NavigateCommand}" CommandParameter="{x:Static local:PageName.Undefined}" Margin="5,5,5,5" >title 3</Button>
 
                         </StackPanel>
                     </Expander>
@@ -88,7 +88,7 @@
                     <Expander Header="Setting" Background="#FF202020"  Expanded="Expander_Expanded">
                         <StackPanel>
 
-                            <Button Command="{Binding NavigateCommand}" CommandParameter="{x:Static local:PageTitle.Setting}" Margin="5,5,5,5" Background="#FF202020" Foreground="White" BorderBrush="#FF202020" HorizontalContentAlignment="Left">
+                            <Button Command="{Binding NavigateCommand}" CommandParameter="{x:Static local:PageName.Setting}" Margin="5,5,5,5" Background="#FF202020" Foreground="White" BorderBrush="#FF202020" HorizontalContentAlignment="Left">
                                 <StackPanel Orientation="Horizontal">
                                     <materialDesign:PackIcon Kind="CogOutline" Width="20" Height="20" />
                                     <TextBlock Text="Setup" Padding="33,0,0,0"/>

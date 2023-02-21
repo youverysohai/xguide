@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Linq;
+using System.Runtime.CompilerServices;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -16,7 +17,7 @@ namespace X_Guide.MVVM.ViewModel
 
         public bool HasErrors => _errors.Any();
 
-        public void AddError(string propertyName, string error)
+        public void AddError(string error, [CallerMemberName]string propertyName = null)
         {
             if (!_errors.ContainsKey(propertyName)) _errors[propertyName] = new List<string>();
             if (!_errors[propertyName].Contains(error))
@@ -26,7 +27,7 @@ namespace X_Guide.MVVM.ViewModel
             }
         }
 
-        public void RemoveError(string propertyName, string error)
+        public void RemoveError(string error, [CallerMemberName] string propertyName = null)
         {
             if (_errors.ContainsKey(propertyName) && _errors[propertyName].Contains(error))
             {

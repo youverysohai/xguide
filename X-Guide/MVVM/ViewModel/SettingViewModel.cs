@@ -15,6 +15,7 @@ using X_Guide.MVVM.Command;
 using X_Guide.MVVM.Model;
 using X_Guide.MVVM.Store;
 using X_Guide.Service;
+using X_Guide.Validation;
 
 namespace X_Guide.MVVM.ViewModel
 {
@@ -43,18 +44,27 @@ namespace X_Guide.MVVM.ViewModel
                 _machineID = value;
                 if (string.IsNullOrEmpty(value))
                 {
-                    _errorViewModel.AddError(nameof(MachineID), "MachineID cannot be empty");
+                    _errorViewModel.AddError("Please enter a valid value for this field. This field cannot be left blank.");
                 }
                 else
                 {
-                    _errorViewModel.RemoveError(nameof(MachineID), "MachineID cannot be empty");
+                    _errorViewModel.RemoveError("Please enter a valid value for this field. This field cannot be left blank.");
                 }
-                OnPropertyChanged(nameof(MachineID));
+
+                if(value.Length > 30)
+                {
+                    _errorViewModel.AddError("The field must not exceed 30 characters");
+                }
+                else
+                {
+                    _errorViewModel.RemoveError("The field must not exceed 30 characters");
+                }
+                OnPropertyChanged();
             }
         }
 
 
-
+        public bool CanExecute => !HasErrors;
 
 
         private string _machineDescription;
@@ -63,7 +73,16 @@ namespace X_Guide.MVVM.ViewModel
             get { return _machineDescription; }
             set
             {
+
                 _machineDescription = value;
+                if (string.IsNullOrEmpty(value))
+                {
+                    _errorViewModel.AddError("Please enter a valid value for this field. This field cannot be left blank.");
+                }
+                else
+                {
+                    _errorViewModel.RemoveError("Please enter a valid value for this field. This field cannot be left blank.");
+                }
                 OnPropertyChanged(nameof(MachineDescription));
             }
         }
@@ -80,14 +99,56 @@ namespace X_Guide.MVVM.ViewModel
         }
 
 
-        private string[] _robotIP;
-        public string[] RobotIP
+        private string _robotIPS1;
+        public string RobotIPS1
         {
-            get { return _robotIP; }
+            get { return _robotIPS1; }
             set
             {
-                _robotIP = value;
-                OnPropertyChanged(nameof(RobotIP));
+                
+                _robotIPS1 = value;
+                if (!IPValidation.ValidateIPSegment(value)) _errorViewModel.AddError("Please enter a valid value for this field.");
+                else _errorViewModel.RemoveError("Please enter a valid value for this field.");
+                OnPropertyChanged();
+            }
+        }
+        private string _robotIPS2;
+        public string RobotIPS2
+        {
+            get { return _robotIPS2; }
+            set
+            {
+
+                _robotIPS2 = value;
+                if (!IPValidation.ValidateIPSegment(value)) _errorViewModel.AddError("Please enter a valid value for this field.");
+                else _errorViewModel.RemoveError("Please enter a valid value for this field.");
+                OnPropertyChanged();
+            }
+        }
+        private string _robotIPS3;
+        public string RobotIPS3
+        {
+            get { return _robotIPS3; }
+            set
+            {
+
+                _robotIPS3 = value;
+                if (!IPValidation.ValidateIPSegment(value)) _errorViewModel.AddError("Please enter a valid value for this field.");
+                else _errorViewModel.RemoveError("Please enter a valid value for this field.");
+                OnPropertyChanged();
+            }
+        }
+        private string _robotIPS4;
+        public string RobotIPS4
+        {
+            get { return _robotIPS4; }
+            set
+            {
+
+                _robotIPS4 = value;
+                if (!IPValidation.ValidateIPSegment(value)) _errorViewModel.AddError("Please enter a valid value for this field.");
+                else _errorViewModel.RemoveError("Please enter a valid value for this field.");
+                OnPropertyChanged();
             }
         }
 
@@ -164,7 +225,7 @@ namespace X_Guide.MVVM.ViewModel
         public SettingViewModel(Setting setting)
         {
 
-            SaveCommand = new SaveSettingCommand(this, setting);
+            SaveCommand = new SaveSettingCommand(this);
             ConnectServerCommand = new ConnectServerCommand("192.168.10.90", 7930);
             this.setting = setting;
             _errorViewModel = new ErrorViewModel();
@@ -176,6 +237,7 @@ namespace X_Guide.MVVM.ViewModel
         private void OnErrorChanged(object sender, DataErrorsChangedEventArgs e)
         {
             ErrorsChanged?.Invoke(this, e);
+            OnPropertyChanged(nameof(CanExecute));
         }
 
         public IEnumerable GetErrors(string propertyName)
@@ -189,7 +251,12 @@ namespace X_Guide.MVVM.ViewModel
             MachineDescription = setting.MachineDescription;
             SoftwareRevision = setting.SoftwareRevision;
 
-            RobotIP = setting.RobotIP.Split('.');
+            var robotIP = setting.RobotIP.Split('.');
+            RobotIPS1 = robotIP[0];
+            RobotIPS2 = robotIP[1];
+            RobotIPS3 = robotIP[2];
+            RobotIPS4 = robotIP[3];
+               
             RobotPort = setting.RobotPort;
             ShiftStartTime = setting.ShiftStartTime;
             VisionIP = setting.VisionIP.Split('.');

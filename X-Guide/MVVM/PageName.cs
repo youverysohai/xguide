@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace X_Guide.MVVM
 {
-    public enum PageTitle
+    public enum PageName
     {
         Setting,
         Production,
