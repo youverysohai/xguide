@@ -31,10 +31,10 @@ namespace X_Guide
             _navigationStore = new NavigationStore();
             _setting = Setting.ReadFromXML(ConfigurationManager.AppSettings["SettingPath"]);
 
-
+            //App specific settings
             InitializeAppConfiguration();
      
-           
+            //Navigation setting      
             InitializeAppNavigation();
 
 

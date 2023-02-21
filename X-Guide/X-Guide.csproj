@@ -575,6 +575,7 @@
     <Compile Include="MVVM\Command\ConnectServerCommand.cs" />
     <Compile Include="MVVM\PageTitle.cs" />
     <Compile Include="MVVM\ViewModel\EngineeringViewModel.cs" />
+    <Compile Include="MVVM\ViewModel\ErrorViewModel.cs" />
     <Compile Include="MVVM\ViewModel\SecurityViewModel.cs" />
     <Compile Include="MVVM\ViewModel\UndefinedViewModel.cs" />
     <Compile Include="MVVM\View\EngineeringView.xaml.cs">

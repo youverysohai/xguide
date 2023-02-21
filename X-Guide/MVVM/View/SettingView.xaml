@@ -7,10 +7,21 @@
              xmlns:valid="clr-namespace:X_Guide.Validation"
              mc:Ignorable="d" 
              d:DesignHeight="450" d:DesignWidth="800">
-    <UserControl.Resources> 
-        <ControlTemplate x:Key="validationTemplate">
-            <DockPanel>
-                <TextBlock Text="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=(Validation.Errors)[0].ErrorContent}" Foreground="Red" />
+    <UserControl.Resources>
+        <ControlTemplate x:Key="ValidationErrorTemplate">
+            <DockPanel LastChildFill="True">
+                <TextBlock DockPanel.Dock="Right" Foreground="Red" 
+                   Margin="5,0,0,0" Text="*" />
+
+                <AdornedElementPlaceholder />
+                <ItemsControl ItemsSource="{Binding}">
+                    <ItemsControl.ItemTemplate>
+                        <DataTemplate>
+                            <TextBlock Text="{Binding ErrorContent}" Foreground="Red"/>
+                        </DataTemplate>
+                    </ItemsControl.ItemTemplate>
+                </ItemsControl>
+
             </DockPanel>
         </ControlTemplate>
 
@@ -62,27 +73,20 @@
                         </Binding>
                         </TextBox.Text>
                         <TextBox/>-->
-                    <TextBox Foreground="{DynamicResource PrimaryGrayColor}"  Margin="5 5 0 5" Padding="2">
-                        <TextBox.Text>
-                            <Binding Path="MachineID" UpdateSourceTrigger="PropertyChanged">
-                                <Binding.ValidationRules>
-                                    <valid:IPValidation/>
-                                </Binding.ValidationRules>
-                            </Binding>
-                        </TextBox.Text>
+                    <TextBox Foreground="{DynamicResource PrimaryGrayColor}" Text="{Binding MachineID, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True, NotifyOnValidationError=True}" Margin="5 5 0 5" Padding="2">
                     </TextBox>
-                    
+
 
                     <TextBox Foreground="{DynamicResource PrimaryGrayColor}"  Margin="5 5 0 5" Padding="2" Text="{Binding MachineDescription}" />
                     <TextBox Foreground="{DynamicResource PrimaryGrayColor}"  Margin="5 5 0 5" Padding="2" Text="{Binding SoftwareRevision}"/>
                     <Border BorderThickness="1" BorderBrush="#FFABADB3" Background="White" Margin="5" Padding="3">
                         <StackPanel Orientation="Horizontal">
                             <TextBox x:Name="txtRobotIP1" Tag="txtRobotIP2" Width="30" Margin="0"  Style="{DynamicResource TextBoxStyle}"  TextChanged="TxtIPLength_TextChanged" PreviewKeyDown="txtRobotIP1_PreviewKeyDown" PreviewTextInput="TxtIPAddress_PreviewTextInput" />
-                        <TextBlock Text="." Margin="0,0,5,0" />
+                            <TextBlock Text="." Margin="0,0,5,0" />
                             <TextBox x:Name="txtRobotIP2" Tag="txtRobotIP3" Style="{DynamicResource TextBoxStyle}" TextChanged="TxtIPLength_TextChanged" PreviewTextInput="TxtIPAddress_PreviewTextInput" PreviewKeyUp="txtRobotIP2_PreviewKeyUp" Width="30" Margin="0" />
-                        <TextBlock Text="." Margin="0,0,5,0" />
+                            <TextBlock Text="." Margin="0,0,5,0" />
                             <TextBox x:Name="txtRobotIP3"  Tag="txtRobotIP4" Style="{DynamicResource TextBoxStyle}"  TextChanged="TxtIPLength_TextChanged" PreviewTextInput="TxtIPAddress_PreviewTextInput" PreviewKeyUp="txtRobotIP2_PreviewKeyUp"  Width="30" Margin="0" />
-                        <TextBlock Text="." Margin="0,0,5,0" />
+                            <TextBlock Text="." Margin="0,0,5,0" />
                             <TextBox x:Name="txtRobotIP4"  Style="{DynamicResource TextBoxStyle}"  PreviewTextInput="TxtIPAddress_PreviewTextInput"  Width="30" Margin="0" />
                         </StackPanel>
                     </Border>
@@ -111,7 +115,7 @@
             </Grid>
             <Button HorizontalAlignment="Right" Width="50"  Margin="5 10" Command="{Binding SaveCommand}" >Save</Button>
             <Button HorizontalAlignment="Left" Width="50"  Margin="5 10" Command="{Binding NavigateCommand}" >Navigate</Button>
-         
+
         </StackPanel>
     </Grid>
 </UserControl>

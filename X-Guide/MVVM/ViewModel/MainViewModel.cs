@@ -26,10 +26,10 @@ namespace X_Guide.MVVM.ViewModel
         public MainViewModel(NavigationStore navigationStore, Dictionary<PageTitle, NavigationService> viewModels)
         {
             _navigationStore = navigationStore;
-            
-            NavigateCommand = new NavigateCommand(viewModels);
             _navigationStore.CurrentViewModelChanged += OnCurrentViewModelChanged;
-           
+
+            NavigateCommand = new NavigateCommand(viewModels);
+
 
         }
 

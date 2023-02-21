@@ -1,11 +1,14 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.IO;
 using System.Linq;
 using System.Net;
 using System.Net.Sockets;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows;
 using System.Windows.Input;
 using System.Xml.Serialization;
 using X_Guide.MVVM.Command;
@@ -15,14 +18,20 @@ using X_Guide.Service;
 
 namespace X_Guide.MVVM.ViewModel
 {
-    internal class SettingViewModel : ViewModelBase
+    internal class SettingViewModel : ViewModelBase, INotifyDataErrorInfo
     {
+       
         public ICommand SaveCommand { get; }
         public ICommand NavigateCommand { get; }
-
         public ICommand ConnectServerCommand { get; set; }
 
+
+
         public Setting setting;
+
+        private readonly ErrorViewModel _errorViewModel;
+
+        public event EventHandler<DataErrorsChangedEventArgs> ErrorsChanged;
 
         //SettingViewModel properties 
         private string _machineID;
@@ -32,9 +41,21 @@ namespace X_Guide.MVVM.ViewModel
             set
             {
                 _machineID = value;
+                if (string.IsNullOrEmpty(value))
+                {
+                    _errorViewModel.AddError(nameof(MachineID), "MachineID cannot be empty");
+                }
+                else
+                {
+                    _errorViewModel.RemoveError(nameof(MachineID), "MachineID cannot be empty");
+                }
                 OnPropertyChanged(nameof(MachineID));
             }
         }
+
+
+
+
 
         private string _machineDescription;
         public string MachineDescription
@@ -126,6 +147,8 @@ namespace X_Guide.MVVM.ViewModel
         }
 
         private string _logFilePath;
+
+
         public string LogFilePath
         {
             get { return _logFilePath; }
@@ -136,16 +159,28 @@ namespace X_Guide.MVVM.ViewModel
             }
         }
 
-        public SettingViewModel(Setting setting/*, NavigationService testingViewNavigationService*/)
+
+
+        public SettingViewModel(Setting setting)
         {
-           
+
             SaveCommand = new SaveSettingCommand(this, setting);
-        /*    NavigateCommand = new NavigateCommand(testingViewNavigationService);*/
             ConnectServerCommand = new ConnectServerCommand("192.168.10.90", 7930);
             this.setting = setting;
+            _errorViewModel = new ErrorViewModel();
+            _errorViewModel.ErrorsChanged += OnErrorChanged;
             UpdateSettingUI();
+        }
 
-         
+        public bool HasErrors => _errorViewModel.HasErrors;
+        private void OnErrorChanged(object sender, DataErrorsChangedEventArgs e)
+        {
+            ErrorsChanged?.Invoke(this, e);
+        }
+
+        public IEnumerable GetErrors(string propertyName)
+        {
+            return _errorViewModel.GetErrors(propertyName);
         }
 
         public void UpdateSettingUI()
@@ -161,6 +196,8 @@ namespace X_Guide.MVVM.ViewModel
             MaxScannerCapTime = setting.MaxScannerCapTime;
             LogFilePath = setting.LogFilePath;
         }
+
+      
     }
 
 
