@@ -39,8 +39,8 @@
                     <materialDesign:PackIcon Kind="WindowMinimize"></materialDesign:PackIcon>
 
                 </Button>
+                <TextBlock x:Name="DateTimeTextBlock" HorizontalAlignment="Center" Margin="5" Style="{DynamicResource MaterialDesignSubtitle1TextBlock}"/>
 
-                <TextBlock HorizontalAlignment="Center"  FontSize="30" TextAlignment="Center" FontWeight="Bold">X-Guide</TextBlock>
             </DockPanel>
 
             <Grid>
@@ -50,10 +50,12 @@
                     <ColumnDefinition />
                 </Grid.ColumnDefinitions>
                 <Grid.RowDefinitions>
-                    <RowDefinition Height="700"/>
+                    <RowDefinition MaxHeight="750"/>
                 </Grid.RowDefinitions>
                 <StackPanel Orientation="Vertical" Grid.Column="0" Grid.Row="0" x:Name="stackPanel">
-                    <TextBlock x:Name="DateTimeTextBlock" Margin="5" Style="{DynamicResource MaterialDesignSubtitle1TextBlock}"/>
+                    <TextBlock HorizontalAlignment="Center"  FontSize="30" TextAlignment="Center" VerticalAlignment="Center" FontWeight="Bold">X-Guide</TextBlock>
+
+                    
                     <!-- Production Section-->
                     <Expander Header="Production" Background="#FF202020"  Expanded="Expander_Expanded">
                         <StackPanel>
