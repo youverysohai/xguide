@@ -28,14 +28,16 @@ namespace X_Guide
 
         public App()
         {
+            _navigationStore = new NavigationStore();
+            _setting = Setting.ReadFromXML(ConfigurationManager.AppSettings["SettingPath"]);
+
 
             InitializeAppConfiguration();
+     
+           
             InitializeAppNavigation();
-            _setting = Setting.ReadFromXML(ConfigurationManager.AppSettings["SettingPath"]);
-            _navigationStore = new NavigationStore();
 
 
-            
         }
 
      
