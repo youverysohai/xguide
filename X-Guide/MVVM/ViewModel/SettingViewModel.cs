@@ -80,8 +80,8 @@ namespace X_Guide.MVVM.ViewModel
         }
 
 
-        private string _robotIP;
-        public string RobotIP
+        private string[] _robotIP;
+        public string[] RobotIP
         {
             get { return _robotIP; }
             set
@@ -113,8 +113,8 @@ namespace X_Guide.MVVM.ViewModel
             }
         }
 
-        private string _visionIP;
-        public string VisionIP
+        private string[] _visionIP;
+        public string[] VisionIP
         {
             get { return _visionIP; }
             set
@@ -188,10 +188,11 @@ namespace X_Guide.MVVM.ViewModel
             MachineID = setting.MachineID;
             MachineDescription = setting.MachineDescription;
             SoftwareRevision = setting.SoftwareRevision;
-            RobotIP = setting.RobotIP;
+
+            RobotIP = setting.RobotIP.Split('.');
             RobotPort = setting.RobotPort;
             ShiftStartTime = setting.ShiftStartTime;
-            VisionIP = setting.VisionIP;
+            VisionIP = setting.VisionIP.Split('.');
             VisionPort = setting.VisionPort;
             MaxScannerCapTime = setting.MaxScannerCapTime;
             LogFilePath = setting.LogFilePath;

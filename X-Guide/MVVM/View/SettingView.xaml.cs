@@ -25,21 +25,15 @@ namespace X_Guide.MVVM.View
     public partial class SettingView : UserControl
     {
 
-        //ILoggerFactory loggerFactory;
-        //ILogger logger;
+        
       
         public SettingView()
         {
             InitializeComponent();
-            //loggerFactory = new LoggerFactory();
-            //loggerFactory.AddFile(Path.Combine(Directory.GetCurrentDirectory(), "logs"));
-            //logger = loggerFactory.CreateLogger<MainWindow>();
-            //logger.LogDebug("Configuration loaded.");
-            //logger.LogDebug("User login into system.");
         }
 
-     
 
+        
         //Purpose: limit the number of characters that can be entered 
         private void TxtIPAddress_PreviewTextInput(object sender, TextCompositionEventArgs e)
         {
@@ -53,7 +47,7 @@ namespace X_Guide.MVVM.View
         private void TxtPort_PreviewTextInput(object sender, TextCompositionEventArgs e)
         {
             TextBox textBox = (TextBox)sender;
-            
+
             if (textBox.Text.Length >= 5)
             {
                 e.Handled = true; // cancel the input event
@@ -70,50 +64,10 @@ namespace X_Guide.MVVM.View
                 RequestFocusChange(FocusNavigationDirection.Next);
             }
 
-            //if (txtRobotIP1.Text.Length == 3)
-            //{
-            //    txtRobotIP2.Focus();
-            //    if (txtRobotIP2.Text.Length == 3)
-            //    {
-            //        txtRobotIP3.Focus();
-
-            //        if (txtRobotIP3.Text.Length == 3)
-            //        {
-            //            txtRobotIP4.Focus();
-            //        }
-            //    }
-            //}
-        }
-        private void TxtScannerIPLength_TextChanged(object sender, TextChangedEventArgs e)
-        {
-
-            if (txtScannerIP1.Text.Length == 3)
-            {
-                txtScannerIP2.Focus();
-                if (txtScannerIP2.Text.Length == 3)
-                {
-                    txtScannerIP3.Focus();
-                    if (txtScannerIP3.Text.Length == 3)
-                    {
-                        txtScannerIP4.Focus();
-                    }
-                }
-            }
-
         }
 
-        private void txtRobotIP2_PreviewKeyUp(object sender, KeyEventArgs e)
-        {
-            TextBox tb = (TextBox)sender;
-            if (e.Key == System.Windows.Input.Key.Back)
-            {
-                e.Handled = true;
-                if (tb.Text.Length == 0)
-                {
-                    RequestFocusChange(FocusNavigationDirection.Previous);
-                }
-            }
-        }
+
+
 
         private static bool RequestFocusChange(FocusNavigationDirection direction)
         {
@@ -122,13 +76,35 @@ namespace X_Guide.MVVM.View
             return false;
         }
 
-        private void txtRobotIP1_PreviewKeyDown(object sender, KeyEventArgs e)
+        private void txtIP_PreviewKeyDown(object sender, KeyEventArgs e)
         {
+            TextBox tb = (TextBox)sender;
             if (e.Key == Key.Space)
             {
                 e.Handled = true;
                 RequestFocusChange(FocusNavigationDirection.Next);
             }
+            if (e.Key == Key.Right && tb.CaretIndex == tb.Text.Length)
+            {
+                e.Handled = true;
+                RequestFocusChange(FocusNavigationDirection.Next);
+            }
+            if (e.Key == Key.Back && tb.Text.Length == 0 || e.Key == Key.Back && tb.CaretIndex == 0 && tb.Text.Length == 0)
+            {
+                e.Handled = true;
+                RequestFocusChange(FocusNavigationDirection.Previous);
+
+            }
+            if (e.Key == Key.Left && tb.CaretIndex == 0)
+            {
+                e.Handled = true;
+                RequestFocusChange(FocusNavigationDirection.Previous);
+            }
+        }
+        private void txtIP_GotFocus(object sender, RoutedEventArgs e)
+        {
+            TextBox textBox = (TextBox)sender;
+            textBox.SelectAll();
         }
     }
 }
