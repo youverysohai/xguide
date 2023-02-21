@@ -20,15 +20,15 @@ using X_Guide.MVVM.Model;
 namespace X_Guide.MVVM.View
 {
     /// <summary>
-    /// Interaction logic for SettingsView.xaml
+    /// Interaction logic for SettingView.xaml
     /// </summary>
-    public partial class SettingsView : UserControl
+    public partial class SettingView : UserControl
     {
 
         //ILoggerFactory loggerFactory;
         //ILogger logger;
       
-        public SettingsView()
+        public SettingView()
         {
             InitializeComponent();
             //loggerFactory = new LoggerFactory();

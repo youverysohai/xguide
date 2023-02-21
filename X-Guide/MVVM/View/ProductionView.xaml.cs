@@ -11,10 +11,10 @@ namespace X_Guide.MVVM.View
     /// <summary>
     /// Interaction logic for TestingView.xaml
     /// </summary>
-    public partial class TestingView : UserControl
+    public partial class ProductionView : UserControl
     {
         VmProcedure p;
-        public TestingView()
+        public ProductionView()
         {
                
             InitializeComponent();

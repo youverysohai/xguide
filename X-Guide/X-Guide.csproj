@@ -573,6 +573,19 @@
     <Compile Include="FileLoggerExtensions.cs" />
     <Compile Include="FileLoggerProvider.cs" />
     <Compile Include="MVVM\Command\ConnectServerCommand.cs" />
+    <Compile Include="MVVM\PageTitle.cs" />
+    <Compile Include="MVVM\ViewModel\EngineeringViewModel.cs" />
+    <Compile Include="MVVM\ViewModel\SecurityViewModel.cs" />
+    <Compile Include="MVVM\ViewModel\UndefinedViewModel.cs" />
+    <Compile Include="MVVM\View\EngineeringView.xaml.cs">
+      <DependentUpon>EngineeringView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="MVVM\View\SecurityView.xaml.cs">
+      <DependentUpon>SecurityView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="MVVM\View\UndefinedView.xaml.cs">
+      <DependentUpon>UndefinedView.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Service\NavigationService.cs" />
     <Compile Include="System\Windows\Forms.cs" />
     <Compile Include="Validation\IPValidation.cs" />
@@ -588,13 +601,25 @@
       <DependentUpon>MainWindow.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
-    <Page Include="MVVM\View\SettingsView.xaml">
+    <Page Include="MVVM\View\EngineeringView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="MVVM\View\SecurityView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="MVVM\View\SettingView.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
-    <Page Include="MVVM\View\TestingView.xaml">
+    <Page Include="MVVM\View\ProductionView.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
+    </Page>
+    <Page Include="MVVM\View\UndefinedView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
     </Page>
   </ItemGroup>
   <ItemGroup>
@@ -605,13 +630,13 @@
     <Compile Include="MVVM\Store\NavigationStore.cs" />
     <Compile Include="MVVM\ViewModel\MainViewModel.cs" />
     <Compile Include="MVVM\ViewModel\SettingViewModel.cs" />
-    <Compile Include="MVVM\ViewModel\TestingViewModel.cs" />
+    <Compile Include="MVVM\ViewModel\ProductionViewModel.cs" />
     <Compile Include="MVVM\ViewModel\ViewModelBase.cs" />
-    <Compile Include="MVVM\View\SettingsView.xaml.cs">
-      <DependentUpon>SettingsView.xaml</DependentUpon>
+    <Compile Include="MVVM\View\SettingView.xaml.cs">
+      <DependentUpon>SettingView.xaml</DependentUpon>
     </Compile>
-    <Compile Include="MVVM\View\TestingView.xaml.cs">
-      <DependentUpon>TestingView.xaml</DependentUpon>
+    <Compile Include="MVVM\View\ProductionView.xaml.cs">
+      <DependentUpon>ProductionView.xaml</DependentUpon>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs">
       <SubType>Code</SubType>

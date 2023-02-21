@@ -136,10 +136,11 @@ namespace X_Guide.MVVM.ViewModel
             }
         }
 
-        public SettingViewModel(Setting setting, NavigationService testingViewNavigationService)
+        public SettingViewModel(Setting setting/*, NavigationService testingViewNavigationService*/)
         {
+           
             SaveCommand = new SaveSettingCommand(this, setting);
-            NavigateCommand = new NavigateCommand(testingViewNavigationService);
+        /*    NavigateCommand = new NavigateCommand(testingViewNavigationService);*/
             ConnectServerCommand = new ConnectServerCommand("192.168.10.90", 7930);
             this.setting = setting;
             UpdateSettingUI();

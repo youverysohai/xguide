@@ -6,7 +6,7 @@ using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
 using System.Windows;
-
+using X_Guide.MVVM;
 using X_Guide.MVVM.Model;
 using X_Guide.MVVM.Store;
 using X_Guide.MVVM.ViewModel;
@@ -22,6 +22,7 @@ namespace X_Guide
 
         private Setting _setting;
         private readonly NavigationStore _navigationStore;
+        private readonly Dictionary<PageTitle, NavigationService> _viewModels;
         
 
 
@@ -31,8 +32,19 @@ namespace X_Guide
             InitializeAppConfiguration();
             _setting = Setting.ReadFromXML(ConfigurationManager.AppSettings["SettingPath"]);
             _navigationStore = new NavigationStore();
+            _viewModels = new Dictionary<PageTitle, NavigationService>
+            {
+                {PageTitle.Setting, new NavigationService (_navigationStore, CreateSettingViewModel) },
+                {PageTitle.Production, new NavigationService (_navigationStore, CreateProductionViewModel) },
+                {PageTitle.Engineering, new NavigationService (_navigationStore, CreateEngineeringViewModel) },
+                {PageTitle.Security, new NavigationService (_navigationStore, CreateSecurityViewModel) },
+                {PageTitle.Undefined, new NavigationService(_navigationStore, CreateUndefinedViewModel) }
+            };
         }
 
+     
+
+        
         private void InitializeAppConfiguration()
         {
             string appDataPath = Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData);
@@ -44,7 +56,7 @@ namespace X_Guide
             _navigationStore.CurrentViewModel = CreateSettingViewModel();
             MainWindow = new MainWindow()
             {
-                DataContext = new MainViewModel(_navigationStore)
+                DataContext = new MainViewModel(_navigationStore, _viewModels)
             };
 
             MainWindow.Show();
@@ -52,14 +64,29 @@ namespace X_Guide
             base.OnStartup(e);
         }
 
-        private SettingViewModel CreateSettingViewModel()
+
+        private ViewModelBase CreateSecurityViewModel()
         {
-            return new SettingViewModel(_setting, new NavigationService(_navigationStore, CreateTestingViewModel));
+            return new SecurityViewModel();
+        }
+        private ViewModelBase CreateEngineeringViewModel()
+        {
+            return new EngineeringViewModel();
         }
 
-        private TestingViewModel CreateTestingViewModel()
+        private ViewModelBase CreateUndefinedViewModel()
         {
-            return new TestingViewModel(new NavigationService(_navigationStore, CreateSettingViewModel));
+            return new UndefinedViewModel();
+        }
+
+        private ViewModelBase CreateSettingViewModel()
+        {
+            return new SettingViewModel(_setting);
+        }
+
+        private ViewModelBase CreateProductionViewModel()
+        {
+            return new ProductionViewModel();
         }
     }
 

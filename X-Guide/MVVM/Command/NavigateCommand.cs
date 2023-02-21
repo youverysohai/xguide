@@ -11,17 +11,22 @@ namespace X_Guide.MVVM.Command
 {
     internal class NavigateCommand : CommandBase
     {
-        private readonly NavigationService _navigationService;
 
-        public NavigateCommand(NavigationService navigationService)
+        private readonly Dictionary<PageTitle, NavigationService> _viewModels;
+
+        public NavigateCommand(Dictionary<PageTitle, NavigationService> viewModels)
         {
-            _navigationService = navigationService;
+
+            _viewModels = viewModels;
         }
 
         public override void Execute(object parameter)
         {
-            
-            _navigationService.Navigate(); 
+            if (parameter is PageTitle pageTitle && _viewModels.TryGetValue(pageTitle, out var pageT))
+            {
+                pageT.Navigate();
+            }
+                
         }
     }
 }

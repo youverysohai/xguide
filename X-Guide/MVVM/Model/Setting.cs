@@ -45,26 +45,6 @@ namespace X_Guide.MVVM.Model
         public string LogFilePath { get; set; }
 
 
-        /*  public string Error
-          {
-              get
-              {
-                  return null;
-              }
-          }
-
-          public string this[string columnName]
-          {
-              get
-              {
-                  string error = string.Empty;
-                  if (columnName == "MachineID")
-                      if (string.IsNullOrEmpty(MachineID)) error = "Machine ID is required.";
-
-                  return error;
-              }
-
-          }*/
 
         public Setting()
         {
@@ -108,14 +88,13 @@ namespace X_Guide.MVVM.Model
             }
             catch
             {
-
+                //Implement message
                 return new Setting();
             }
         }
         public void WriteToXML(string filePath)
         {
             CheckDirectory(filePath);
-            filePath = Path.Combine(filePath);
 
             var writer = new XmlSerializer(typeof(Setting));
 
@@ -127,7 +106,8 @@ namespace X_Guide.MVVM.Model
 
         private void CheckDirectory(string filePath)
         {
-            if (!Directory.Exists(Path.GetDirectoryName(filePath))) { Directory.CreateDirectory(filePath); }
+            string filepath = Path.GetDirectoryName(filePath);
+            if (!Directory.Exists(filepath)) { Directory.CreateDirectory(filePath); }
 
         }
     }
