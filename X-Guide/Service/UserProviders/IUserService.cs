@@ -10,7 +10,7 @@ namespace X_Guide.Service.UserProviders
     internal interface IUserService
     {
         Task<IEnumerable<UserModel>> GetAllUsersAsync();
-        bool CreateUser(UserModel user);
+        void CreateUser(UserModel user);
         bool CheckPassword(string password);
     }
 }

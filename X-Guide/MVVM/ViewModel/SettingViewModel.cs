@@ -227,18 +227,21 @@ namespace X_Guide.MVVM.ViewModel
         public SettingViewModel(Setting setting, IUserService userProvider)
         {
 
-            SaveCommand = new SaveSettingCommand(this);
+            SaveCommand = new SaveSettingCommand(this, userProvider);
             ConnectServerCommand = new ConnectServerCommand("192.168.10.90", 7930);
             this.setting = setting;
             _userProvider = userProvider;
 
-            CreateUser();
-            TestingAsync();
+
+
+ 
 
             _errorViewModel = new ErrorViewModel();
             _errorViewModel.ErrorsChanged += OnErrorChanged;
             UpdateSettingUI();
         }
+
+
         public void CreateUser()
         {
             _userProvider.CreateUser(new UserModel("Zhen Chun", "ongzc-pm19@student.tarc.edu.my", "123"));

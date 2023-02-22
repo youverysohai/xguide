@@ -4,6 +4,7 @@ using System.Data.Entity;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows;
 using X_Guide.MVVM.DBContext;
 using X_Guide.MVVM.DTOs;
 using X_Guide.MVVM.Model;
@@ -25,23 +26,24 @@ namespace X_Guide.Service.UserProviders
             throw new NotImplementedException();
         }
 
-        public bool CreateUser(UserModel userModel)
+        public void CreateUser(UserModel userModel)
         {
-            using (XGuideDBEntities context = _userDbContextFactory.CreateDbContext())
+            using (XGuideDBEntities context = _userDbContextFactory.CreateDbContext()) { ;
+
+            User user = new User
             {
-                User user = new User
-                {
-                    Email = userModel.Email,
-                    Username = userModel.Username,
-                    PasswordHash = new byte[] { 0, 1, 2, 3, 4, 5, 6, 7, 8, 9 },
-                    IsActive = true,
-                    CreatedAt = DateTime.Now,
-                    UpdatedAt = DateTime.Now
-                };
-                context.Users.Add(user);
-                context.SaveChanges();
+      
+                Email = userModel.Email,
+                Username = userModel.Username,
+                PasswordHash = new byte[] { 0, 1, 2, 3, 4, 5, 6, 7, 8, 9 },
+                IsActive = true,
+                CreatedAt = DateTime.Now,
+                UpdatedAt = DateTime.Now
+            };
+            context.Users.Add(user);
+            context.SaveChanges();
             }
-            return true;
+       
         }
 
         public async Task<IEnumerable<UserModel>> GetAllUsersAsync()
