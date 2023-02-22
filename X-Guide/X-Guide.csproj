@@ -15,6 +15,21 @@
     <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
     <Deterministic>true</Deterministic>
     <TargetFrameworkProfile />
+    <PublishUrl>publish\</PublishUrl>
+    <Install>true</Install>
+    <InstallFrom>Disk</InstallFrom>
+    <UpdateEnabled>false</UpdateEnabled>
+    <UpdateMode>Foreground</UpdateMode>
+    <UpdateInterval>7</UpdateInterval>
+    <UpdateIntervalUnits>Days</UpdateIntervalUnits>
+    <UpdatePeriodically>false</UpdatePeriodically>
+    <UpdateRequired>false</UpdateRequired>
+    <MapFileExtensions>true</MapFileExtensions>
+    <ApplicationRevision>0</ApplicationRevision>
+    <ApplicationVersion>1.0.0.%2a</ApplicationVersion>
+    <IsWebBootstrapper>false</IsWebBootstrapper>
+    <UseApplicationTrust>false</UseApplicationTrust>
+    <BootstrapperEnabled>true</BootstrapperEnabled>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <PlatformTarget>AnyCPU</PlatformTarget>
@@ -241,6 +256,8 @@
       <Private>False</Private>
     </Reference>
     <Reference Include="System.Configuration" />
+    <Reference Include="System.Runtime.Serialization" />
+    <Reference Include="System.Security" />
     <Reference Include="VM.Core">
       <HintPath>..\..\..\..\..\..\Program Files\VisionMaster4.1.0\Applications\myLibs\VM.Core.dll</HintPath>
       <Private>False</Private>
@@ -573,11 +590,15 @@
     <Compile Include="FileLoggerExtensions.cs" />
     <Compile Include="FileLoggerProvider.cs" />
     <Compile Include="MVVM\Command\ConnectServerCommand.cs" />
+    <Compile Include="MVVM\DBContext\UserDbContext.cs" />
+    <Compile Include="MVVM\DTO\UserDTO.cs" />
+    <Compile Include="MVVM\Model\User.cs" />
     <Compile Include="MVVM\PageName.cs" />
     <Compile Include="MVVM\ViewModel\EngineeringViewModel.cs" />
     <Compile Include="MVVM\ViewModel\ErrorViewModel.cs" />
     <Compile Include="MVVM\ViewModel\SecurityViewModel.cs" />
     <Compile Include="MVVM\ViewModel\UndefinedViewModel.cs" />
+    <Compile Include="MVVM\ViewModel\UserLoginViewModel.cs" />
     <Compile Include="MVVM\View\EngineeringView.xaml.cs">
       <DependentUpon>EngineeringView.xaml</DependentUpon>
     </Compile>
@@ -587,9 +608,30 @@
     <Compile Include="MVVM\View\UndefinedView.xaml.cs">
       <DependentUpon>UndefinedView.xaml</DependentUpon>
     </Compile>
+    <Compile Include="MVVM\View\UserLoginView.xaml.cs">
+      <DependentUpon>UserLoginView.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Service\NavigationService.cs" />
     <Compile Include="System\Windows\Forms.cs" />
+    <Compile Include="User.cs">
+      <DependentUpon>XGuideEDM.tt</DependentUpon>
+    </Compile>
     <Compile Include="Validation\IPValidation.cs" />
+    <Compile Include="XGuideEDM.Context.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>XGuideEDM.Context.tt</DependentUpon>
+    </Compile>
+    <Compile Include="XGuideEDM.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>XGuideEDM.tt</DependentUpon>
+    </Compile>
+    <Compile Include="XGuideEDM.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>XGuideEDM.edmx</DependentUpon>
+    </Compile>
     <Page Include="MainWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
@@ -619,6 +661,10 @@
       <SubType>Designer</SubType>
     </Page>
     <Page Include="MVVM\View\UndefinedView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="MVVM\View\UserLoginView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -660,6 +706,13 @@
       <Generator>SettingsSingleFileGenerator</Generator>
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>
     </None>
+    <EntityDeploy Include="XGuideEDM.edmx">
+      <Generator>EntityModelCodeGenerator</Generator>
+      <LastGenOutput>XGuideEDM.Designer.cs</LastGenOutput>
+    </EntityDeploy>
+    <None Include="XGuideEDM.edmx.diagram">
+      <DependentUpon>XGuideEDM.edmx</DependentUpon>
+    </None>
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
@@ -668,9 +721,46 @@
     <WCFMetadata Include="Connected Services\" />
   </ItemGroup>
   <ItemGroup>
+    <PackageReference Include="EntityFramework">
+      <Version>6.4.4</Version>
+    </PackageReference>
     <PackageReference Include="MaterialDesignThemes">
       <Version>4.7.1</Version>
     </PackageReference>
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="XGuideDB.mdf">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="XGuideDB_log.ldf">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      <DependentUpon>XGuideDB.mdf</DependentUpon>
+    </Content>
+    <Content Include="XGuideEDM.Context.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <DependentUpon>XGuideEDM.edmx</DependentUpon>
+      <LastGenOutput>XGuideEDM.Context.cs</LastGenOutput>
+    </Content>
+    <Content Include="XGuideEDM.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <DependentUpon>XGuideEDM.edmx</DependentUpon>
+      <LastGenOutput>XGuideEDM.cs</LastGenOutput>
+    </Content>
+  </ItemGroup>
+  <ItemGroup>
+    <BootstrapperPackage Include=".NETFramework,Version=v4.7.1">
+      <Visible>False</Visible>
+      <ProductName>Microsoft .NET Framework 4.7.1 %28x86 and x64%29</ProductName>
+      <Install>true</Install>
+    </BootstrapperPackage>
+    <BootstrapperPackage Include="Microsoft.Net.Framework.3.5.SP1">
+      <Visible>False</Visible>
+      <ProductName>.NET Framework 3.5 SP1</ProductName>
+      <Install>false</Install>
+    </BootstrapperPackage>
+  </ItemGroup>
+  <ItemGroup>
+    <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

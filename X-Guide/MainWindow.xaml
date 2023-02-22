@@ -117,6 +117,9 @@
                         <DataTemplate DataType="{x:Type vms:UndefinedViewModel}">
                             <views:UndefinedView/>
                         </DataTemplate>
+                        <DataTemplate DataType="{x:Type vms:UserLoginViewModel}">
+                            <views:UserLoginView/>
+                        </DataTemplate>
 
 
                     </DockPanel.Resources>

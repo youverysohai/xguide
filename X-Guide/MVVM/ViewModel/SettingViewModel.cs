@@ -41,6 +41,7 @@ namespace X_Guide.MVVM.ViewModel
             get { return _machineID; }
             set
             {
+           
                 _machineID = value;
                 if (string.IsNullOrEmpty(value))
                 {
