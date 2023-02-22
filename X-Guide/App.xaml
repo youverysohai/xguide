@@ -12,6 +12,9 @@
                 <!--<materialDesign:BundledTheme BaseTheme="Light" PrimaryColor="DeepPurple" SecondaryColor="Lime" />-->
                 <materialDesign:CustomColorTheme BaseTheme="Dark" PrimaryColor="#80B9EE" SecondaryColor="#FFFFFF" />
                 <ResourceDictionary Source="pack://application:,,,/MaterialDesignThemes.Wpf;component/Themes/MaterialDesignTheme.Defaults.xaml" />
+                <ResourceDictionary Source="Style/Color.xaml"/>
+                <ResourceDictionary Source="Style/Button.xaml"/>
+                <ResourceDictionary Source="Style/Text.xaml"/>
                 <!--<vm:ViewModelLocator x:Key="Locator" d:IsDataSource="True" xmlns:vm="clr-namespace:iAI.ViewModel" />-->
             </ResourceDictionary.MergedDictionaries>
         </ResourceDictionary>
