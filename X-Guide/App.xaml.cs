@@ -26,13 +26,13 @@ namespace X_Guide
         private readonly NavigationStore _navigationStore;
         private  Dictionary<PageName, NavigationService> _viewModels;
         private DbContextFactory _dbContextFactory;
-        private IUserProvider _userProvider;
+        private IUserService _userProvider;
 
 
         public App()
         {
             _dbContextFactory = new DbContextFactory();
-             _userProvider = new DatabaseUserProvider(_dbContextFactory);
+             _userProvider = new DatabaseUserService(_dbContextFactory);
 
             //App specific settings
             InitializeAppConfiguration();

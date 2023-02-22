@@ -7,8 +7,10 @@ using X_Guide.MVVM.Model;
 
 namespace X_Guide.Service.UserProviders
 {
-    internal interface IUserProvider
+    internal interface IUserService
     {
         Task<IEnumerable<UserModel>> GetAllUsersAsync();
+        bool CreateUser(UserModel user);
+        bool CheckPassword(string password);
     }
 }

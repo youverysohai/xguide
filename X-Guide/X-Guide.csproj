@@ -614,8 +614,8 @@
       <DependentUpon>UserLoginView.xaml</DependentUpon>
     </Compile>
     <Compile Include="Service\NavigationService.cs" />
-    <Compile Include="Service\UserProviders\DatabaseUserProvider.cs" />
-    <Compile Include="Service\UserProviders\IUserProvider.cs" />
+    <Compile Include="Service\UserProviders\DatabaseUserService.cs" />
+    <Compile Include="Service\UserProviders\IUserService.cs" />
     <Compile Include="System\Windows\Forms.cs" />
     <Compile Include="User.cs">
       <DependentUpon>XGuideEDM.tt</DependentUpon>

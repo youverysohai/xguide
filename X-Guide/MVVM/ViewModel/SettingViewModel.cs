@@ -30,7 +30,7 @@ namespace X_Guide.MVVM.ViewModel
 
 
         public Setting setting;
-        private readonly IUserProvider _userProvider;
+        private readonly IUserService _userProvider;
         private readonly ErrorViewModel _errorViewModel;
 
         public event EventHandler<DataErrorsChangedEventArgs> ErrorsChanged;
@@ -224,7 +224,7 @@ namespace X_Guide.MVVM.ViewModel
 
 
 
-        public SettingViewModel(Setting setting, IUserProvider userProvider)
+        public SettingViewModel(Setting setting, IUserService userProvider)
         {
 
             SaveCommand = new SaveSettingCommand(this);
@@ -232,14 +232,17 @@ namespace X_Guide.MVVM.ViewModel
             this.setting = setting;
             _userProvider = userProvider;
 
-
+            CreateUser();
             TestingAsync();
 
             _errorViewModel = new ErrorViewModel();
             _errorViewModel.ErrorsChanged += OnErrorChanged;
             UpdateSettingUI();
         }
-
+        public void CreateUser()
+        {
+            _userProvider.CreateUser(new UserModel("Zhen Chun", "ongzc-pm19@student.tarc.edu.my", "123"));
+        }
         public async void TestingAsync()
         {
             var i = await _userProvider.GetAllUsersAsync();
