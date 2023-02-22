@@ -566,7 +566,9 @@
       <HintPath>..\..\..\..\..\..\Program Files\VisionMaster4.1.0\Applications\Module(sp)\x64\Location\IMVSHPFeatureMatchModu\IMVSHPFeatureMatchModuCs.dll</HintPath>
       <Private>False</Private>
     </Reference>
-    <Reference Include="System" />
+    <Reference Include="System">
+      <HintPath>..\..\..\..\..\..\Program Files (x86)\Reference Assemblies\Microsoft\Framework\.NETFramework\v4.7.1\System.dll</HintPath>
+    </Reference>
     <Reference Include="System.Data" />
     <Reference Include="System.Xml" />
     <Reference Include="Microsoft.CSharp" />
@@ -590,9 +592,9 @@
     <Compile Include="FileLoggerExtensions.cs" />
     <Compile Include="FileLoggerProvider.cs" />
     <Compile Include="MVVM\Command\ConnectServerCommand.cs" />
-    <Compile Include="MVVM\DBContext\UserDbContext.cs" />
+    <Compile Include="MVVM\DBContext\DbContextFactory.cs" />
     <Compile Include="MVVM\DTO\UserDTO.cs" />
-    <Compile Include="MVVM\Model\User.cs" />
+    <Compile Include="MVVM\Model\UserModel.cs" />
     <Compile Include="MVVM\PageName.cs" />
     <Compile Include="MVVM\ViewModel\EngineeringViewModel.cs" />
     <Compile Include="MVVM\ViewModel\ErrorViewModel.cs" />
@@ -612,6 +614,8 @@
       <DependentUpon>UserLoginView.xaml</DependentUpon>
     </Compile>
     <Compile Include="Service\NavigationService.cs" />
+    <Compile Include="Service\UserProviders\DatabaseUserService.cs" />
+    <Compile Include="Service\UserProviders\IUserService.cs" />
     <Compile Include="System\Windows\Forms.cs" />
     <Compile Include="User.cs">
       <DependentUpon>XGuideEDM.tt</DependentUpon>

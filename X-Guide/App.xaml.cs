@@ -7,10 +7,12 @@ using System.Linq;
 using System.Threading.Tasks;
 using System.Windows;
 using X_Guide.MVVM;
+using X_Guide.MVVM.DBContext;
 using X_Guide.MVVM.Model;
 using X_Guide.MVVM.Store;
 using X_Guide.MVVM.ViewModel;
 using X_Guide.Service;
+using X_Guide.Service.UserProviders;
 
 namespace X_Guide
 {
@@ -23,12 +25,14 @@ namespace X_Guide
         private Setting _setting;
         private readonly NavigationStore _navigationStore;
         private  Dictionary<PageName, NavigationService> _viewModels;
-        
+        private DbContextFactory _dbContextFactory;
+        private IUserService _userProvider;
 
 
         public App()
         {
- 
+            _dbContextFactory = new DbContextFactory();
+             _userProvider = new DatabaseUserService(_dbContextFactory);
 
             //App specific settings
             InitializeAppConfiguration();
@@ -94,7 +98,7 @@ namespace X_Guide
 
         private ViewModelBase CreateSettingViewModel()
         {
-            return new SettingViewModel(_setting);
+            return new SettingViewModel(_setting, _userProvider);
         }
 
         private ViewModelBase CreateProductionViewModel()
