@@ -15,13 +15,14 @@ using X_Guide.MVVM.Command;
 using X_Guide.MVVM.Model;
 using X_Guide.MVVM.Store;
 using X_Guide.Service;
+using X_Guide.Service.UserProviders;
 using X_Guide.Validation;
 
 namespace X_Guide.MVVM.ViewModel
 {
     internal class SettingViewModel : ViewModelBase, INotifyDataErrorInfo
     {
-       
+
         public ICommand SaveCommand { get; }
         public ICommand NavigateCommand { get; }
         public ICommand ConnectServerCommand { get; set; }
@@ -29,7 +30,7 @@ namespace X_Guide.MVVM.ViewModel
 
 
         public Setting setting;
-
+        private readonly IUserProvider _userProvider;
         private readonly ErrorViewModel _errorViewModel;
 
         public event EventHandler<DataErrorsChangedEventArgs> ErrorsChanged;
@@ -41,7 +42,7 @@ namespace X_Guide.MVVM.ViewModel
             get { return _machineID; }
             set
             {
-           
+
                 _machineID = value;
                 if (string.IsNullOrEmpty(value))
                 {
@@ -52,7 +53,7 @@ namespace X_Guide.MVVM.ViewModel
                     _errorViewModel.RemoveError("Please enter a valid value for this field. This field cannot be left blank.");
                 }
 
-                if(value.Length > 30)
+                if (value.Length > 30)
                 {
                     _errorViewModel.AddError("The field must not exceed 30 characters");
                 }
@@ -106,7 +107,7 @@ namespace X_Guide.MVVM.ViewModel
             get { return _robotIPS1; }
             set
             {
-                
+
                 _robotIPS1 = value;
                 if (!IPValidation.ValidateIPSegment(value)) _errorViewModel.AddError("Please enter a valid value for this field.");
                 else _errorViewModel.RemoveError("Please enter a valid value for this field.");
@@ -223,15 +224,29 @@ namespace X_Guide.MVVM.ViewModel
 
 
 
-        public SettingViewModel(Setting setting)
+        public SettingViewModel(Setting setting, IUserProvider userProvider)
         {
 
             SaveCommand = new SaveSettingCommand(this);
             ConnectServerCommand = new ConnectServerCommand("192.168.10.90", 7930);
             this.setting = setting;
+            _userProvider = userProvider;
+
+
+            TestingAsync();
+
             _errorViewModel = new ErrorViewModel();
             _errorViewModel.ErrorsChanged += OnErrorChanged;
             UpdateSettingUI();
+        }
+
+        public async void TestingAsync()
+        {
+            var i = await _userProvider.GetAllUsersAsync();
+            foreach(var item in i)
+            {
+                MessageBox.Show(item.Email + " " + item.PasswordHash + " " + item.Username);
+            }
         }
 
         public bool HasErrors => _errorViewModel.HasErrors;
@@ -257,7 +272,7 @@ namespace X_Guide.MVVM.ViewModel
             RobotIPS2 = robotIP[1];
             RobotIPS3 = robotIP[2];
             RobotIPS4 = robotIP[3];
-               
+
             RobotPort = setting.RobotPort;
             ShiftStartTime = setting.ShiftStartTime;
             VisionIP = setting.VisionIP.Split('.');
@@ -266,7 +281,7 @@ namespace X_Guide.MVVM.ViewModel
             LogFilePath = setting.LogFilePath;
         }
 
-      
+
     }
 
 
