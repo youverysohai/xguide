@@ -116,6 +116,26 @@ namespace X_Guide
                 }
             }
         }
+        private void Login_Click(object sender, RoutedEventArgs e)
+        {
+            string username = usernameTextBox.Text;
+            string password = passwordBox.Password;
+
+            // TODO: Check credentials against authentication mechanism
+            // For example, you could use a database to validate the username and password
+            bool isValid = true;
+
+            if (isValid)
+            {
+                // If the credentials are valid, close the window and return a result of true
+                DialogResult = true;
+            }
+            else
+            {
+                // If the credentials are invalid, display an error message
+                MessageBox.Show("Invalid username or password.");
+            }
+        }
 
     }
 }

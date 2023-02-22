@@ -7,7 +7,7 @@
              xmlns:local="clr-namespace:X_Guide.MVVM.View" 
              xmlns:valid="clr-namespace:X_Guide.Validation"
              mc:Ignorable="d" 
-             Height="700"
+             Height="600"
              Background="Transparent"
              >
 
@@ -40,14 +40,14 @@
         <Style x:Key="InputMaterialDesignTextBox" TargetType="{x:Type TextBox}" BasedOn="{StaticResource MaterialDesignFloatingHintTextBox}">
 
             <Setter Property="Foreground" Value="white"/>
-            <Setter Property="FontSize" Value="28"/>
+            <Setter Property="FontSize" Value="20"/>
             <Setter Property="Padding" Value="5"/>
-            <Setter Property="Margin" Value="5 0 20 10"/>
+            <Setter Property="Margin" Value="15 0 80 15"/>
         </Style>
         <Style x:Key="IPInputMaterialDesignTextBox" TargetType="{x:Type TextBox}" BasedOn="{StaticResource MaterialDesignTextBox}">
 
             <Setter Property="Foreground" Value="white"/>
-            <Setter Property="FontSize" Value="30"/>
+            <Setter Property="FontSize" Value="17"/>
             <Setter Property="Width" Value="50"/>
             <Setter Property="Padding" Value="0"/>
             <Setter Property="HorizontalAlignment" Value="Center"/>
@@ -56,7 +56,7 @@
         </Style>
         <Style x:Key="HeaderGroupBox" TargetType="{x:Type GroupBox}" BasedOn="{x:Null}">
             <Setter Property="Foreground" Value="white"/>
-            <Setter Property="FontSize" Value="30"/>
+            <Setter Property="FontSize" Value="20"/>
             <Setter Property="Margin" Value="10"/>
             <Setter Property="Width" Value="370"/>
         </Style>
@@ -109,7 +109,7 @@
                                     AcceptsReturn="True"
                                     Style="{DynamicResource InputMaterialDesignTextBox}"  
                                     materialDesign:HintAssist.Hint="Machine Description"  
-                                    FontSize="24"
+                                    FontSize="18"
                                     Height="175"
                                     MaxHeight="150"
                                     VerticalScrollBarVisibility="Auto"
@@ -122,9 +122,9 @@
 
                         </GroupBox>
                         <!--Connection-->
-                        <StackPanel Grid.Column="1" Orientation="Vertical">
 
-                            <GroupBox Style="{DynamicResource HeaderGroupBox}">
+
+                            <GroupBox Grid.Column="1" Style="{DynamicResource HeaderGroupBox}" >
                                 <GroupBox.Header>
                                     <StackPanel Orientation="Horizontal">
                                         <materialDesign:PackIcon  Kind="Lan" VerticalAlignment="Center" Width="30" Height="30" Margin="5"/>
@@ -135,7 +135,7 @@
                                     <!--Robot TCP -->
                                     <StackPanel Orientation="Horizontal">
 
-                                        <TextBlock Text="Robot TCP IP address" FontSize="20" FontWeight="Light" Style="{DynamicResource MaterialDesignTextBlock}" Foreground="LightGray" Margin="15 0 0 0"  VerticalAlignment="Bottom"/>
+                                        <TextBlock Text="Manipulator TCP IP address" FontSize="20" FontWeight="Light" Style="{DynamicResource MaterialDesignTextBlock}" Foreground="LightGray" Margin="15 0 0 0"  VerticalAlignment="Bottom"/>
                                         <TextBlock>
                                                 <materialDesign:PackIcon Kind="RobotIndustrialOutline" Margin="8 0" Width="20" Height="20"/>
                                         </TextBlock>
@@ -167,10 +167,11 @@
                                                
                                             </Binding>
                                         </TextBox>
+
                                     </StackPanel>
                                     <!-- Input Port Number-->
                                     <TextBox Style="{DynamicResource InputMaterialDesignTextBox}" Text="{Binding RobotPort}"  PreviewTextInput="TxtPort_PreviewTextInput" 
-                                        materialDesign:HintAssist.Hint="Robot TCP Port Number"  />
+                                        materialDesign:HintAssist.Hint="Manipulator TCP Port"/>
 
 
                                     <Separator  Style="{DynamicResource MaterialDesignLightSeparator}"/>
@@ -213,9 +214,17 @@
                                     <!-- Input Port Number-->
                                     <TextBox Style="{DynamicResource InputMaterialDesignTextBox}"  Padding="2" Text="{Binding VisionPort}"  PreviewTextInput="TxtPort_PreviewTextInput"
                                         materialDesign:HintAssist.Hint="Vision TCP Port Number"  />
-                                </StackPanel>
+                                <ComboBox Margin="10"  Style="{DynamicResource MaterialDesignFloatingHintComboBox}"
+                                          Padding="5"
+                                          materialDesign:HintAssist.Hint="Vision Terminator">
+                                    <ComboBoxItem>NA</ComboBoxItem>
+                                    <ComboBoxItem>CR</ComboBoxItem>
+                                    <ComboBoxItem>LF</ComboBoxItem>
+                                    <ComboBoxItem>CRLF</ComboBoxItem>
+                                </ComboBox>
+                            </StackPanel>
                             </GroupBox>
-                        </StackPanel>
+
                     </Grid>
 
                     <Expander Grid.Row="1" Header="Additional Setup" Foreground="Black"  Style="{DynamicResource MaterialDesignExpander}"

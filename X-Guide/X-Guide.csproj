@@ -727,6 +727,9 @@
     <PackageReference Include="MaterialDesignThemes">
       <Version>4.7.1</Version>
     </PackageReference>
+    <PackageReference Include="MaterialDesignThemes.Wpf">
+      <Version>1.0.1</Version>
+    </PackageReference>
   </ItemGroup>
   <ItemGroup>
     <Content Include="XGuideDB.mdf">
