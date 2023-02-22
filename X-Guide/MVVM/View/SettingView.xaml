@@ -7,7 +7,7 @@
              xmlns:local="clr-namespace:X_Guide.MVVM.View" 
              xmlns:valid="clr-namespace:X_Guide.Validation"
              mc:Ignorable="d" 
-             Height="700"
+             Height="600"
              Background="Transparent"
              >
 
@@ -40,26 +40,30 @@
         <Style x:Key="InputMaterialDesignTextBox" TargetType="{x:Type TextBox}" BasedOn="{StaticResource MaterialDesignFloatingHintTextBox}">
 
             <Setter Property="Foreground" Value="white"/>
-            <Setter Property="FontSize" Value="28"/>
+            <Setter Property="FontSize" Value="16"/>
             <Setter Property="Padding" Value="5"/>
-            <Setter Property="Margin" Value="5 0 20 10"/>
+            
+            <Setter Property="Margin" Value="15 0 10 0"/>
         </Style>
-        <Style x:Key="IPInputMaterialDesignTextBox" TargetType="{x:Type TextBox}" BasedOn="{StaticResource MaterialDesignTextBox}">
+        <Style x:Key="IPInputMaterialDesignTextBox" TargetType="{x:Type TextBox}" BasedOn="{StaticResource MaterialDesignFloatingHintTextBox}">
 
             <Setter Property="Foreground" Value="white"/>
-            <Setter Property="FontSize" Value="30"/>
-            <Setter Property="Width" Value="50"/>
+            <Setter Property="FontSize" Value="16"/>
+            <Setter Property="Width" Value="35"/>
             <Setter Property="Padding" Value="0"/>
+            <Setter Property="VerticalContentAlignment" Value="Bottom"/>
+
             <Setter Property="HorizontalAlignment" Value="Center"/>
-            <Setter Property="Margin" Value="5 0 0 0"/>
+
 
         </Style>
         <Style x:Key="HeaderGroupBox" TargetType="{x:Type GroupBox}" BasedOn="{x:Null}">
             <Setter Property="Foreground" Value="white"/>
-            <Setter Property="FontSize" Value="30"/>
+            <Setter Property="FontSize" Value="20"/>
             <Setter Property="Margin" Value="10"/>
             <Setter Property="Width" Value="370"/>
         </Style>
+
     </UserControl.Resources>
     <ScrollViewer VerticalScrollBarVisibility="Hidden" >
         <DockPanel Margin="10" >
@@ -109,7 +113,7 @@
                                     AcceptsReturn="True"
                                     Style="{DynamicResource InputMaterialDesignTextBox}"  
                                     materialDesign:HintAssist.Hint="Machine Description"  
-                                    FontSize="24"
+                                    FontSize="18"
                                     Height="175"
                                     MaxHeight="150"
                                     VerticalScrollBarVisibility="Auto"
@@ -122,100 +126,120 @@
 
                         </GroupBox>
                         <!--Connection-->
-                        <StackPanel Grid.Column="1" Orientation="Vertical">
 
-                            <GroupBox Style="{DynamicResource HeaderGroupBox}">
-                                <GroupBox.Header>
-                                    <StackPanel Orientation="Horizontal">
-                                        <materialDesign:PackIcon  Kind="Lan" VerticalAlignment="Center" Width="30" Height="30" Margin="5"/>
-                                        <TextBlock ><Run Text="Connection"/></TextBlock>
+
+                        <GroupBox Grid.Column="1" Style="{DynamicResource HeaderGroupBox}" >
+                            <GroupBox.Header>
+                                <StackPanel Orientation="Horizontal">
+                                    <materialDesign:PackIcon  Kind="Lan" VerticalAlignment="Center" Width="30" Height="30" Margin="5"/>
+                                    <TextBlock ><Run Text="Connection"/></TextBlock>
+                                </StackPanel>
+                            </GroupBox.Header>
+                            <StackPanel Orientation="Vertical">
+                                <!--Manipulator/Robot TCP -->
+                                <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
+                                    <TextBlock>
+                                                <materialDesign:PackIcon Kind="RobotIndustrialOutline" Width="30" Height="30"/>
+                                    </TextBlock>
+                                    <TextBlock Text="Manipulator TCP" FontSize="20" FontWeight="Light" Style="{DynamicResource MaterialDesignTextBlock}" Foreground="LightGray" Margin="15 0 0 0"  VerticalAlignment="Bottom"/>
+
+                                </StackPanel>
+                               
+                                <StackPanel Orientation="Horizontal">
+                                    <StackPanel Orientation="Vertical">
+                                        <!-- Label IP Address-->
+                                        <TextBlock Margin="15 0 0 0" FontSize="15" Foreground="{DynamicResource PrimaryBlueColor}">IP Address</TextBlock>
+                                        <!-- Input IP -->
+                                        <StackPanel Orientation="Horizontal" Margin="15 0 0 0" >
+                                            <TextBox x:Name="txtRobotIP1" Style="{DynamicResource IPInputMaterialDesignTextBox}" HorizontalAlignment="Center"  GotFocus="txtIP_GotFocus" TextChanged="TxtIPLength_TextChanged" PreviewKeyDown="txtIP_PreviewKeyDown" PreviewTextInput="TxtIPAddress_PreviewTextInput">
+                                                <Binding Path="RobotIPS1" UpdateSourceTrigger="PropertyChanged">
+                                                </Binding>
+                                            </TextBox>
+                                            <materialDesign:PackIcon VerticalAlignment="Bottom" Width="20" Height="20" Kind="CircleSmall"/>
+                                            <TextBox x:Name="txtRobotIP2" Style="{DynamicResource IPInputMaterialDesignTextBox}" HorizontalAlignment="Center" GotFocus="txtIP_GotFocus" TextChanged="TxtIPLength_TextChanged" PreviewTextInput="TxtIPAddress_PreviewTextInput" PreviewKeyDown="txtIP_PreviewKeyDown">
+                                                <Binding Path="RobotIPS2" UpdateSourceTrigger="PropertyChanged">
+
+                                                </Binding>
+                                            </TextBox>
+                                            <materialDesign:PackIcon VerticalAlignment="Bottom" Width="20" Height="20" Kind="CircleSmall"/>
+
+
+
+
+                                            <TextBox x:Name="txtRobotIP3"  Style="{DynamicResource IPInputMaterialDesignTextBox}" HorizontalAlignment="Center" GotFocus="txtIP_GotFocus" TextChanged="TxtIPLength_TextChanged" PreviewTextInput="TxtIPAddress_PreviewTextInput" PreviewKeyDown="txtIP_PreviewKeyDown"   >
+                                                <Binding Path="RobotIPS3" UpdateSourceTrigger="PropertyChanged">
+
+                                                </Binding>
+                                            </TextBox>
+                                            <materialDesign:PackIcon VerticalAlignment="Bottom" Width="20" Height="20" Kind="CircleSmall"/>
+
+                                            <TextBox x:Name="txtRobotIP4"  Style="{DynamicResource IPInputMaterialDesignTextBox}" HorizontalAlignment="Center" GotFocus="txtIP_GotFocus" TextChanged="TxtIPLength_TextChanged" PreviewTextInput="TxtIPAddress_PreviewTextInput" PreviewKeyDown="txtIP_PreviewKeyDown"    >
+                                                <Binding Path="RobotIPS4" UpdateSourceTrigger="PropertyChanged">
+
+                                                </Binding>
+                                            </TextBox>
+                                            <!-- Input Port Number-->
+
+                                        </StackPanel>
                                     </StackPanel>
-                                </GroupBox.Header>
-                                <StackPanel Orientation="Vertical">
-                                    <!--Robot TCP -->
-                                    <StackPanel Orientation="Horizontal">
-
-                                        <TextBlock Text="Robot TCP IP address" FontSize="20" FontWeight="Light" Style="{DynamicResource MaterialDesignTextBlock}" Foreground="LightGray" Margin="15 0 0 0"  VerticalAlignment="Bottom"/>
-                                        <TextBlock>
-                                                <materialDesign:PackIcon Kind="RobotIndustrialOutline" Margin="8 0" Width="20" Height="20"/>
-                                        </TextBlock>
-                                    </StackPanel>
-
-                                    <!-- Input IP -->
-                                    <StackPanel Orientation="Horizontal" Margin="10 0 0 0" >
-                                        <TextBox x:Name="txtRobotIP1" Style="{DynamicResource IPInputMaterialDesignTextBox}" HorizontalAlignment="Center"  GotFocus="txtIP_GotFocus" TextChanged="TxtIPLength_TextChanged" PreviewKeyDown="txtIP_PreviewKeyDown" PreviewTextInput="TxtIPAddress_PreviewTextInput">
-                                            <Binding Path="RobotIPS1" UpdateSourceTrigger="PropertyChanged">
-                                            </Binding>
-                                        </TextBox>   
-                                        <TextBlock Text="." FontSize="20" FontWeight="Bold"  VerticalAlignment="Bottom" Foreground="White" Margin="5,0,5,0" />
-                                        <TextBox x:Name="txtRobotIP2" Style="{DynamicResource IPInputMaterialDesignTextBox}" HorizontalAlignment="Center" GotFocus="txtIP_GotFocus" TextChanged="TxtIPLength_TextChanged" PreviewTextInput="TxtIPAddress_PreviewTextInput" PreviewKeyDown="txtIP_PreviewKeyDown">
-                                            <Binding Path="RobotIPS2" UpdateSourceTrigger="PropertyChanged">
-                                           
-                                            </Binding>
-                                        </TextBox>
-                                        <TextBlock Text="." FontSize="20" FontWeight="Bold"  VerticalAlignment="Bottom" Foreground="White" Margin="5,0,5,0" />
-
-                                        <TextBox x:Name="txtRobotIP3"  Style="{DynamicResource IPInputMaterialDesignTextBox}" HorizontalAlignment="Center" GotFocus="txtIP_GotFocus" TextChanged="TxtIPLength_TextChanged" PreviewTextInput="TxtIPAddress_PreviewTextInput" PreviewKeyDown="txtIP_PreviewKeyDown"   >
-                                            <Binding Path="RobotIPS3" UpdateSourceTrigger="PropertyChanged">
-                                            
-                                            </Binding>
-                                        </TextBox>
-                                        <TextBlock Text="." FontSize="20" FontWeight="Bold"  VerticalAlignment="Bottom" Foreground="White" Margin="5,0,5,0" />
-
-                                        <TextBox x:Name="txtRobotIP4"  Style="{DynamicResource IPInputMaterialDesignTextBox}" HorizontalAlignment="Center" GotFocus="txtIP_GotFocus" TextChanged="TxtIPLength_TextChanged" PreviewTextInput="TxtIPAddress_PreviewTextInput" PreviewKeyDown="txtIP_PreviewKeyDown"    >
-                                            <Binding Path="RobotIPS4" UpdateSourceTrigger="PropertyChanged">
-                                               
-                                            </Binding>
-                                        </TextBox>
-                                    </StackPanel>
-                                    <!-- Input Port Number-->
                                     <TextBox Style="{DynamicResource InputMaterialDesignTextBox}" Text="{Binding RobotPort}"  PreviewTextInput="TxtPort_PreviewTextInput" 
-                                        materialDesign:HintAssist.Hint="Robot TCP Port Number"  />
+                                        materialDesign:HintAssist.Hint="Port" MinWidth="85"/>
+                                </StackPanel>
 
+                                <Separator  Style="{DynamicResource MaterialDesignLightSeparator}"/>
+                                <!--Vision TCP -->
+                                <StackPanel Orientation="Horizontal" >
 
-                                    <Separator  Style="{DynamicResource MaterialDesignLightSeparator}"/>
-                                    <!--Vision TCP -->
-                                    <StackPanel Orientation="Horizontal" >
-
-                                        <TextBlock Text="Vision TCP IP address" FontSize="20" FontWeight="Light" Style="{DynamicResource MaterialDesignTextBlock}" Foreground="LightGray" Margin="15 0 0 0"  VerticalAlignment="Bottom"/>
-                                        <TextBlock><InlineUIContainer>
+                                    <TextBlock Text="Vision TCP IP address" FontSize="20" FontWeight="Light" Style="{DynamicResource MaterialDesignTextBlock}" Foreground="LightGray" Margin="15 0 0 0"  VerticalAlignment="Bottom"/>
+                                    <TextBlock><InlineUIContainer>
                                                 <materialDesign:PackIcon Kind="MonitorEye" Margin="8 4" Width="20" Height="20"/>
                                             </InlineUIContainer></TextBlock>
-                                    </StackPanel>
-                                    <!-- Input IP -->
-                                    <StackPanel Orientation="Horizontal" Margin="10 0 0 0">
-                                        <TextBox x:Name="txtVisionIP1" Style="{DynamicResource IPInputMaterialDesignTextBox}" HorizontalAlignment="Center"  GotFocus="txtIP_GotFocus" TextChanged="TxtIPLength_TextChanged" PreviewKeyDown="txtIP_PreviewKeyDown" PreviewTextInput="TxtIPAddress_PreviewTextInput">
-                                            <Binding Path="VisionIP[0]" UpdateSourceTrigger="PropertyChanged">
-                                              
-                                            </Binding>
-                                        </TextBox>
-                                        <TextBlock Text="." FontSize="20" FontWeight="Bold"  VerticalAlignment="Bottom" Foreground="White" Margin="5,0,5,0" />
-                                        <TextBox x:Name="txtVisionIP2" Style="{DynamicResource IPInputMaterialDesignTextBox}" HorizontalAlignment="Center" GotFocus="txtIP_GotFocus" TextChanged="TxtIPLength_TextChanged" PreviewTextInput="TxtIPAddress_PreviewTextInput" PreviewKeyDown="txtIP_PreviewKeyDown">
-                                            <Binding Path="VisionIP[1]" UpdateSourceTrigger="PropertyChanged">
-                                              
-                                            </Binding>
-                                        </TextBox>
-                                        <TextBlock Text="." FontSize="20" FontWeight="Bold"  VerticalAlignment="Bottom" Foreground="White" Margin="5,0,5,0" />
-
-                                        <TextBox x:Name="txtVisionIP3"  Style="{DynamicResource IPInputMaterialDesignTextBox}" HorizontalAlignment="Center" GotFocus="txtIP_GotFocus" TextChanged="TxtIPLength_TextChanged" PreviewTextInput="TxtIPAddress_PreviewTextInput" PreviewKeyDown="txtIP_PreviewKeyDown"   >
-                                            <Binding Path="VisionIP[2]" UpdateSourceTrigger="PropertyChanged">
-                                               
-                                            </Binding>
-                                        </TextBox>
-                                        <TextBlock Text="." FontSize="20" FontWeight="Bold"  VerticalAlignment="Bottom" Foreground="White" Margin="5,0,5,0" />
-
-                                        <TextBox x:Name="txtVisionIP4"  Style="{DynamicResource IPInputMaterialDesignTextBox}" HorizontalAlignment="Center" GotFocus="txtIP_GotFocus" TextChanged="TxtIPLength_TextChanged" PreviewTextInput="TxtIPAddress_PreviewTextInput" PreviewKeyDown="txtIP_PreviewKeyDown"    >
-                                            <Binding Path="VisionIP[3]" UpdateSourceTrigger="PropertyChanged">
-                                               
-                                            </Binding>
-                                        </TextBox>
-                                    </StackPanel>
-                                    <!-- Input Port Number-->
-                                    <TextBox Style="{DynamicResource InputMaterialDesignTextBox}"  Padding="2" Text="{Binding VisionPort}"  PreviewTextInput="TxtPort_PreviewTextInput"
-                                        materialDesign:HintAssist.Hint="Vision TCP Port Number"  />
                                 </StackPanel>
-                            </GroupBox>
-                        </StackPanel>
+                                <!-- Input Vision IP -->
+                                <StackPanel Orientation="Horizontal" Margin="15 0 0 0">
+                                    <TextBox x:Name="txtVisionIP1" Style="{DynamicResource IPInputMaterialDesignTextBox}" HorizontalAlignment="Center"  GotFocus="txtIP_GotFocus" TextChanged="TxtIPLength_TextChanged" PreviewKeyDown="txtIP_PreviewKeyDown" PreviewTextInput="TxtIPAddress_PreviewTextInput">
+                                        <Binding Path="VisionIP[0]" UpdateSourceTrigger="PropertyChanged">
+
+                                        </Binding>
+                                    </TextBox>
+                                    <materialDesign:PackIcon VerticalAlignment="Bottom" Width="20" Height="20" Kind="CircleSmall"/>
+                                    <TextBox x:Name="txtVisionIP2" Style="{DynamicResource IPInputMaterialDesignTextBox}" HorizontalAlignment="Center" GotFocus="txtIP_GotFocus" TextChanged="TxtIPLength_TextChanged" PreviewTextInput="TxtIPAddress_PreviewTextInput" PreviewKeyDown="txtIP_PreviewKeyDown">
+                                        <Binding Path="VisionIP[1]" UpdateSourceTrigger="PropertyChanged">
+
+                                        </Binding>
+                                    </TextBox>
+                                    <materialDesign:PackIcon VerticalAlignment="Bottom" Width="20" Height="20" Kind="CircleSmall"/>
+
+                                    <TextBox x:Name="txtVisionIP3"  Style="{DynamicResource IPInputMaterialDesignTextBox}" HorizontalAlignment="Center" GotFocus="txtIP_GotFocus" TextChanged="TxtIPLength_TextChanged" PreviewTextInput="TxtIPAddress_PreviewTextInput" PreviewKeyDown="txtIP_PreviewKeyDown"   >
+                                        <Binding Path="VisionIP[2]" UpdateSourceTrigger="PropertyChanged">
+
+                                        </Binding>
+                                    </TextBox>
+                                    <materialDesign:PackIcon VerticalAlignment="Bottom" Width="20" Height="20" Kind="CircleSmall"/>
+
+                                    <TextBox x:Name="txtVisionIP4"  Style="{DynamicResource IPInputMaterialDesignTextBox}" HorizontalAlignment="Center" GotFocus="txtIP_GotFocus" TextChanged="TxtIPLength_TextChanged" PreviewTextInput="TxtIPAddress_PreviewTextInput" PreviewKeyDown="txtIP_PreviewKeyDown"    >
+                                        <Binding Path="VisionIP[3]" UpdateSourceTrigger="PropertyChanged">
+
+                                        </Binding>
+                                    </TextBox>
+                                </StackPanel>
+                                <!-- Input Vision Port Number-->
+                                <TextBox Style="{DynamicResource InputMaterialDesignTextBox}"  Padding="2" Text="{Binding VisionPort}"  PreviewTextInput="TxtPort_PreviewTextInput"
+                                        materialDesign:HintAssist.Hint="Port"  />
+                                <ComboBox Margin="15"  Style="{DynamicResource MaterialDesignFloatingHintComboBox}"
+                                          Padding="5"
+                                          FontSize="16"
+                                          HorizontalAlignment="Left"
+                                          Width="300"
+                                          materialDesign:HintAssist.Hint="Vision Terminator">
+                                    <ComboBoxItem>NA</ComboBoxItem>
+                                    <ComboBoxItem>CR</ComboBoxItem>
+                                    <ComboBoxItem>LF</ComboBoxItem>
+                                    <ComboBoxItem>CRLF</ComboBoxItem>
+                                </ComboBox>
+                            </StackPanel>
+                        </GroupBox>
+
                     </Grid>
 
                     <Expander Grid.Row="1" Header="Additional Setup" Foreground="Black"  Style="{DynamicResource MaterialDesignExpander}"

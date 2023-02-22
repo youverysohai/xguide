@@ -51,12 +51,12 @@
                     <ColumnDefinition />
                 </Grid.ColumnDefinitions>
                 <Grid.RowDefinitions>
-                    <RowDefinition MaxHeight="750" Height="*"/>
+                    <RowDefinition MaxHeight="650" Height="*"/>
                 </Grid.RowDefinitions>
                 <StackPanel Orientation="Vertical" Grid.Column="0" Grid.Row="0" x:Name="stackPanel">
                     <TextBlock HorizontalAlignment="Center"  FontSize="30" TextAlignment="Center" VerticalAlignment="Center" FontWeight="Bold">X-Guide</TextBlock>
 
-                    
+
                     <!-- Production Section-->
                     <Expander Header="Production" Background="#FF202020"  Expanded="Expander_Expanded">
                         <StackPanel>
@@ -98,7 +98,7 @@
 
                         </StackPanel>
                     </Expander>
-                    
+
                 </StackPanel>
                 <DockPanel Margin="6" Grid.Row="0" Grid.Column="1">
                     <DockPanel.Resources>
@@ -117,6 +117,9 @@
                         <DataTemplate DataType="{x:Type vms:UndefinedViewModel}">
                             <views:UndefinedView/>
                         </DataTemplate>
+                        <DataTemplate DataType="{x:Type vms:UserLoginViewModel}">
+                            <views:UserLoginView/>
+                        </DataTemplate>
 
 
                     </DockPanel.Resources>
@@ -126,6 +129,16 @@
                 </DockPanel>
 
             </Grid>
+            <StackPanel Orientation="Horizontal" Margin="10">
+                <TextBox x:Name="usernameTextBox" Width="300" Margin="10" Grid.Row="0" Grid.Column="1" 
+                         Style="{DynamicResource MaterialDesignFloatingHintTextBox}"
+                         materialDesign:HintAssist.Hint="Username"/>
+
+                <PasswordBox x:Name="passwordBox"  Width="300" Margin="10" Grid.Row="0" Grid.Column="1" 
+                             Style="{DynamicResource MaterialDesignFloatingHintPasswordBox}"
+                             materialDesign:HintAssist.Hint="Password"/>
+                <Button Grid.Row="2" Grid.Column="1" Content="Login" Click="Login_Click"/>
+            </StackPanel>
 
         </StackPanel>
     </Border>
