@@ -61,7 +61,6 @@
             <Setter Property="Foreground" Value="white"/>
             <Setter Property="FontSize" Value="20"/>
             <Setter Property="Margin" Value="10"/>
-            <Setter Property="Width" Value="370"/>
         </Style>
 
     </UserControl.Resources>
@@ -82,7 +81,7 @@
                         <RowDefinition Height="*"/>
                         <RowDefinition Height="*"/>
                     </Grid.RowDefinitions>
-                    <Grid Grid.Row="0">
+
                         <Grid.ColumnDefinitions>
                             <ColumnDefinition Width="*"/>
                             <ColumnDefinition Width="*"/>
@@ -240,9 +239,9 @@
                             </StackPanel>
                         </GroupBox>
 
-                    </Grid>
+                    
 
-                    <Expander Grid.Row="1" Header="Additional Setup" Foreground="Black"  Style="{DynamicResource MaterialDesignExpander}"
+                    <Expander Grid.Row="1" Grid.ColumnSpan="2" Header="Additional Setup" Foreground="Black"  Style="{DynamicResource MaterialDesignExpander}"
                                   materialDesign:ExpanderAssist.HeaderFontSize="20"
                                   BorderBrush="#202020"
                                   BorderThickness="1"
