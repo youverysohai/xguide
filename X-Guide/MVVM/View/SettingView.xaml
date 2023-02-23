@@ -7,7 +7,6 @@
              xmlns:local="clr-namespace:X_Guide.MVVM.View" 
              xmlns:valid="clr-namespace:X_Guide.Validation"
              mc:Ignorable="d" 
-             Height="600"
              Background="Transparent"
              >
 
@@ -35,11 +34,11 @@
 
     </UserControl.Resources>
     <ScrollViewer VerticalScrollBarVisibility="Hidden" >
-        <DockPanel Margin="10" >
+        <DockPanel Margin="0 0 10 10" >
 
-            <Border CornerRadius="16" BorderThickness="2,2,2,2" BorderBrush="White" Background="#2d2d2d">
+            <Border CornerRadius="16" Background="#2d2d30">
                 <Border.Effect>
-                    <DropShadowEffect Color="Gray" Opacity="0.5" />
+                    <DropShadowEffect Color="LightGray" Opacity="0.5" ShadowDepth="4"/>
                 </Border.Effect>
 
 
@@ -66,7 +65,7 @@
                         </GroupBox.Header>
 
                         <!--Input-->
-                        <StackPanel MinWidth="300">
+                        <StackPanel>
                             <!--Software Revision Input-->
                             <TextBox Style="{DynamicResource InputMaterialDesignTextBox}"  
                                     materialDesign:HintAssist.Hint="Software Revision"  
@@ -107,8 +106,8 @@
                         <Grid>
                             <Grid.ColumnDefinitions>
                                 <ColumnDefinition Width="7*"/>
-                                <ColumnDefinition Width="3*"/>
                                 <ColumnDefinition Width="2*"/>
+ 
 
                             </Grid.ColumnDefinitions>
                             <Grid.RowDefinitions>
@@ -135,7 +134,7 @@
                             <!-- Label IP Address-->
                             <TextBlock Grid.Row="1"  FontSize="13" Foreground="#C8C8C8" FontWeight="Light" Margin="10 5 0 0">IP Address</TextBlock>
                             <!-- Input IP -->
-                            <StackPanel Grid.Row="1" Orientation="Horizontal" Margin="10 6 0 0">
+                            <StackPanel Grid.Row="1" Orientation="Horizontal" Margin="10 0 0 0">
                                 <TextBox x:Name="txtRobotIP1" Style="{DynamicResource IPInputMaterialDesignTextBox}" HorizontalAlignment="Center"  GotFocus="txtIP_GotFocus" TextChanged="TxtIPLength_TextChanged" PreviewKeyDown="txtIP_PreviewKeyDown" PreviewTextInput="TxtIPAddress_PreviewTextInput">
                                     <Binding Path="RobotIPS1" UpdateSourceTrigger="PropertyChanged">
                                     </Binding>
@@ -161,8 +160,8 @@
                                 </TextBox>
                             </StackPanel>
                             <!-- Input Port Number-->
-                            <TextBox Grid.Row="1" Grid.Column="1" Style="{DynamicResource InputMaterialDesignTextBox}" Text="{Binding RobotPort}"  PreviewTextInput="TxtPort_PreviewTextInput" 
-                                        materialDesign:HintAssist.Hint="Port" MaxWidth="100" Width="60" HorizontalAlignment="Center"/>
+                            <TextBox Width="70" Grid.Row="1" Grid.Column="1" Style="{DynamicResource InputMaterialDesignTextBox}" Text="{Binding RobotPort}"  PreviewTextInput="TxtPort_PreviewTextInput" 
+                                        materialDesign:HintAssist.Hint="Port" HorizontalAlignment="Center"/>
                             <ComboBox Grid.Row="3" Grid.Column="0"  Margin="15"  Style="{DynamicResource MaterialDesignFloatingHintComboBox}"
                                           Padding="5"
                                           FontSize="16"

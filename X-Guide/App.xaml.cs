@@ -75,7 +75,8 @@ namespace X_Guide
                 {PageName.Production, new NavigationService (_navigationStore, CreateProductionViewModel) },
                 {PageName.Engineering, new NavigationService (_navigationStore, CreateEngineeringViewModel) },
                 {PageName.Security, new NavigationService (_navigationStore, CreateSecurityViewModel) },
-                {PageName.Undefined, new NavigationService(_navigationStore, CreateUndefinedViewModel) }
+                {PageName.Undefined, new NavigationService(_navigationStore, CreateUndefinedViewModel) } ,
+                {PageName.Login, new NavigationService(_navigationStore, CreateUserLoginViewModel) }
             };
 
             _setting = Setting.ReadFromXML(ConfigurationManager.AppSettings["SettingPath"]);
@@ -125,6 +126,10 @@ namespace X_Guide
         private ViewModelBase CreateProductionViewModel()
         {
             return new ProductionViewModel();
+        }
+        private ViewModelBase CreateUserLoginViewModel()
+        {
+            return new UserLoginViewModel();
         }
     }
 
