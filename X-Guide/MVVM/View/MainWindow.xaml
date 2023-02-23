@@ -242,8 +242,8 @@
         <!-- Bottom info bar-->
         <StackPanel Grid.Row="2" Grid.ColumnSpan="3" Orientation="Horizontal"  VerticalAlignment="Center" HorizontalAlignment="Right"  >
  
-            <materialDesign:PackIcon  x:Name="ConnectionColor" Foreground="{DynamicResource DisconnectedColor}" ToolTip="Disconnected" Kind="Connection"/>
-            <TextBlock x:Name="ConnectionText"  Margin="10 0 10 0" FontWeight="Bold" Foreground="{DynamicResource DisconnectedColor}" >Connection Status :</TextBlock>
+            <materialDesign:PackIcon  Foreground="{DynamicResource DisconnectedColor}" ToolTip="Disconnected" Kind="LanDisconnect"/>
+            <TextBlock  Margin="10 0 10 0" FontWeight="Bold" Foreground="{DynamicResource DisconnectedColor}" >Connection Status :</TextBlock>
             <materialDesign:PackIcon Kind="RobotIndustrial" Foreground="{DynamicResource DisconnectedColor}" />
             <TextBlock  Margin="10 0 15 0" Foreground="{DynamicResource DisconnectedColor}" >Manipulator</TextBlock>
             <materialDesign:PackIcon Kind="MonitorEye" Foreground="{DynamicResource DisconnectedColor}" />
