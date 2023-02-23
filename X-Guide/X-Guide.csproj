@@ -621,7 +621,6 @@
     <Compile Include="Service\ServerService.cs" />
     <Compile Include="Service\UserProviders\DatabaseUserService.cs" />
     <Compile Include="Service\UserProviders\IUserService.cs" />
-    <Compile Include="System\Windows\Forms.cs" />
     <Compile Include="User.cs">
       <DependentUpon>XGuideModel.tt</DependentUpon>
     </Compile>

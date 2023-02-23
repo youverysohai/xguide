@@ -244,8 +244,8 @@
             <Button x:Name="RefreshButton" Margin="10 0 10 5" Click="RefreshButton_Click">
                 <materialDesign:PackIcon Kind="Refresh" ></materialDesign:PackIcon>
             </Button>
-            <materialDesign:PackIcon  x:Name="ConnectionColor" Foreground="{DynamicResource DisconnectedColor}" ToolTip="Disconnected" Kind="Connection"/>
-            <TextBlock x:Name="ConnectionText"  Margin="10 0 10 0" FontWeight="Bold" Foreground="{DynamicResource DisconnectedColor}" >Connection Status :</TextBlock>
+            <materialDesign:PackIcon  x:Name="ConnectionColor" Foreground="{Binding ConnectionColor}" ToolTip="Disconnected" Kind="Connection"/>
+            <TextBlock x:Name="ConnectionText"  Margin="10 0 10 0" FontWeight="Bold" Foreground="{Binding ConnectionColor}" Text="{Binding ConnectionStatus}"/>
             <materialDesign:PackIcon Kind="RobotIndustrial" Foreground="{DynamicResource DisconnectedColor}" />
             <TextBlock  Margin="10 0 15 0" Foreground="{DynamicResource DisconnectedColor}" >Manipulator</TextBlock>
             <materialDesign:PackIcon Kind="MonitorEye" Foreground="{DynamicResource DisconnectedColor}" />
