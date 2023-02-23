@@ -156,31 +156,6 @@ namespace X_Guide
             }
         }
 
-        private void RefreshButton_Click(object sender, RoutedEventArgs e)
-        {
-            ResourceDictionary resourceDictionary = new ResourceDictionary();
-            resourceDictionary.Source = new Uri("/Style/Color.xaml", UriKind.RelativeOrAbsolute);
 
-            // Get the Style from the ResourceDictionary
-            SolidColorBrush ConnectedColor = (SolidColorBrush)resourceDictionary["ConnectedColor"];
-            SolidColorBrush DisconnectedColor = (SolidColorBrush)resourceDictionary["DisconnectedColor"];
-            SolidColorBrush foregroundBrush = ConnectionColor.Foreground as SolidColorBrush;
-            if (foregroundBrush.Color == DisconnectedColor.Color)
-            {
-                
-                ConnectionColor.Foreground = ConnectedColor;
-                ConnectionText.Foreground = ConnectedColor;
-                ConnectionText.Text = "Connected";
-            }
-            else
-            {
-                ConnectionColor.Foreground = DisconnectedColor;
-                ConnectionText.Foreground = DisconnectedColor;
-                ConnectionText.Text = "Disconnected";
-
-            }
-            
-           
-        }
     }
 }
