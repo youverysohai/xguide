@@ -30,7 +30,7 @@ namespace X_Guide.MVVM.ViewModel
 
 
         public Setting _setting;
-        private readonly IUserService _userProvider;
+
         private readonly ErrorViewModel _errorViewModel;
 
         public event EventHandler<DataErrorsChangedEventArgs> ErrorsChanged;

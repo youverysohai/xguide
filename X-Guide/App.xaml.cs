@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Configuration;
 using System.Data;
+using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
@@ -31,6 +32,9 @@ namespace X_Guide
 
         public App()
         {
+
+            serverConnections();
+            Debug.WriteLine("Exit!");
             using(var context = new XGuideDBEntities())
             {
                 context.Users.Add(new User
@@ -58,7 +62,10 @@ namespace X_Guide
 
         }
 
-     
+      private async void serverConnections()
+        {
+            await ServerService.Main();
+        }
         private void InitializeAppNavigation()
         {
             _viewModels = new Dictionary<PageName, NavigationService>
