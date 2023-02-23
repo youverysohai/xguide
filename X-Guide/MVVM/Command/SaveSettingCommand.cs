@@ -22,34 +22,34 @@ namespace X_Guide.MVVM.Command
         {
             return true;
         }
-        public SaveSettingCommand(SettingViewModel settingViewModel, IUserService userProvider)
+        public SaveSettingCommand(SettingViewModel settingViewModel)
         {
             this.settingViewModel = settingViewModel;
-            _userProvider = userProvider;
+    
         }
 
         public override void Execute(object parameter)
         {
-            _userProvider.CreateUser(new UserModel("Zhen Chun", "ongzc-pm19@student.tarc.edu.my", "123"));
             
-            TestingAsync();
-            /*  string robotIP = string.Join(".", settingViewModel.RobotIPS1, settingViewModel.RobotIPS2, settingViewModel.RobotIPS3, settingViewModel.RobotIPS4);
-              MessageBox.Show(robotIP);
-              string visionIP = string.Join(".", settingViewModel.VisionIP);
-              var setting = new Setting(settingViewModel.MachineID, settingViewModel.MachineDescription, settingViewModel.SoftwareRevision, robotIP,
-                  settingViewModel.RobotPort, settingViewModel.ShiftStartTime, visionIP,
-                  settingViewModel.VisionPort, settingViewModel.MaxScannerCapTime, settingViewModel.LogFilePath);
 
-               _userProvider.CreateUser(new UserModel("Zhen Chun", "ongzc-pm19@student.tarc.edu.my", "123"));
-              setting.WriteToXML(ConfigurationManager.AppSettings["SettingPath"]);
-              MessageBox.Show("Setting saved! Please restart the application for the setting to take effect.");*/
+
+            string robotIP = string.Join(".", settingViewModel.RobotIPS1, settingViewModel.RobotIPS2, settingViewModel.RobotIPS3, settingViewModel.RobotIPS4);
+            MessageBox.Show(robotIP);
+            string visionIP = string.Join(".", settingViewModel.VisionIP);
+            var setting = new Setting(settingViewModel.MachineID, settingViewModel.MachineDescription, settingViewModel.SoftwareRevision, robotIP,
+                settingViewModel.RobotPort, settingViewModel.ShiftStartTime, visionIP,
+                settingViewModel.VisionPort, settingViewModel.MaxScannerCapTime, settingViewModel.LogFilePath);
+
+            _userProvider.CreateUser(new UserModel("Zhen Chun", "ongzc-pm19@student.tarc.edu.my", "123"));
+            setting.WriteToXML(ConfigurationManager.AppSettings["SettingPath"]);
+            MessageBox.Show("Setting saved! Please restart the application for the setting to take effect.");
         }
         public async void TestingAsync()
         {
             var i = await _userProvider.GetAllUsersAsync();
             foreach (var item in i)
             {
-                MessageBox.Show(item.Email + " " + item.PasswordHash + " " + item.Username);
+                MessageBox.Show(item.Email + " "  + item.Username);
             }
         }
 

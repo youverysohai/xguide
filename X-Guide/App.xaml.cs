@@ -31,6 +31,19 @@ namespace X_Guide
 
         public App()
         {
+            using(var context = new XGuideDBEntities())
+            {
+                context.Users.Add(new User
+                {
+                    CreatedAt = DateTime.Now,
+                    UpdatedAt = DateTime.Now,
+                    IsActive = true,
+                    Email = "Lalazai",
+                    PasswordHash = "Whatever",
+                    Username = "Why is this happening.."
+                });
+                context.SaveChanges();
+            }
             _dbContextFactory = new DbContextFactory();
              _userProvider = new DatabaseUserService(_dbContextFactory);
 

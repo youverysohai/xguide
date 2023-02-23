@@ -29,7 +29,7 @@ namespace X_Guide.MVVM.ViewModel
 
 
 
-        public Setting setting;
+        public Setting _setting;
         private readonly IUserService _userProvider;
         private readonly ErrorViewModel _errorViewModel;
 
@@ -224,17 +224,13 @@ namespace X_Guide.MVVM.ViewModel
 
 
 
-        public SettingViewModel(Setting setting, IUserService userProvider)
+        public SettingViewModel(Setting setting)
         {
 
-            SaveCommand = new SaveSettingCommand(this, userProvider);
+            SaveCommand = new SaveSettingCommand(this);
             ConnectServerCommand = new ConnectServerCommand("192.168.10.90", 7930);
-            this.setting = setting;
-            _userProvider = userProvider;
+            _setting = setting;
 
-
-
- 
 
             _errorViewModel = new ErrorViewModel();
             _errorViewModel.ErrorsChanged += OnErrorChanged;
@@ -249,7 +245,7 @@ namespace X_Guide.MVVM.ViewModel
         public async void TestingAsync()
         {
             var i = await _userProvider.GetAllUsersAsync();
-            foreach(var item in i)
+            foreach (var item in i)
             {
                 MessageBox.Show(item.Email + " " + item.PasswordHash + " " + item.Username);
             }
@@ -269,22 +265,22 @@ namespace X_Guide.MVVM.ViewModel
 
         public void UpdateSettingUI()
         {
-            MachineID = setting.MachineID;
-            MachineDescription = setting.MachineDescription;
-            SoftwareRevision = setting.SoftwareRevision;
+            MachineID = _setting.MachineID;
+            MachineDescription = _setting.MachineDescription;
+            SoftwareRevision = _setting.SoftwareRevision;
 
-            var robotIP = setting.RobotIP.Split('.');
+            var robotIP = _setting.RobotIP.Split('.');
             RobotIPS1 = robotIP[0];
             RobotIPS2 = robotIP[1];
             RobotIPS3 = robotIP[2];
             RobotIPS4 = robotIP[3];
 
-            RobotPort = setting.RobotPort;
-            ShiftStartTime = setting.ShiftStartTime;
-            VisionIP = setting.VisionIP.Split('.');
-            VisionPort = setting.VisionPort;
-            MaxScannerCapTime = setting.MaxScannerCapTime;
-            LogFilePath = setting.LogFilePath;
+            RobotPort = _setting.RobotPort;
+            ShiftStartTime = _setting.ShiftStartTime;
+            VisionIP = _setting.VisionIP.Split('.');
+            VisionPort = _setting.VisionPort;
+            MaxScannerCapTime = _setting.MaxScannerCapTime;
+            LogFilePath = _setting.LogFilePath;
         }
 
 

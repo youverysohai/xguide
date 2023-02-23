@@ -15,6 +15,7 @@
     <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
     <Deterministic>true</Deterministic>
     <TargetFrameworkProfile />
+    <IsWebBootstrapper>false</IsWebBootstrapper>
     <PublishUrl>publish\</PublishUrl>
     <Install>true</Install>
     <InstallFrom>Disk</InstallFrom>
@@ -27,7 +28,6 @@
     <MapFileExtensions>true</MapFileExtensions>
     <ApplicationRevision>0</ApplicationRevision>
     <ApplicationVersion>1.0.0.%2a</ApplicationVersion>
-    <IsWebBootstrapper>false</IsWebBootstrapper>
     <UseApplicationTrust>false</UseApplicationTrust>
     <BootstrapperEnabled>true</BootstrapperEnabled>
   </PropertyGroup>
@@ -618,23 +618,23 @@
     <Compile Include="Service\UserProviders\IUserService.cs" />
     <Compile Include="System\Windows\Forms.cs" />
     <Compile Include="User.cs">
-      <DependentUpon>XGuideEDM.tt</DependentUpon>
+      <DependentUpon>XGuideModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Validation\IPValidation.cs" />
-    <Compile Include="XGuideEDM.Context.cs">
+    <Compile Include="XGuideModel.Context.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
-      <DependentUpon>XGuideEDM.Context.tt</DependentUpon>
+      <DependentUpon>XGuideModel.Context.tt</DependentUpon>
     </Compile>
-    <Compile Include="XGuideEDM.cs">
+    <Compile Include="XGuideModel.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
-      <DependentUpon>XGuideEDM.tt</DependentUpon>
+      <DependentUpon>XGuideModel.tt</DependentUpon>
     </Compile>
-    <Compile Include="XGuideEDM.Designer.cs">
+    <Compile Include="XGuideModel.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
-      <DependentUpon>XGuideEDM.edmx</DependentUpon>
+      <DependentUpon>XGuideModel.edmx</DependentUpon>
     </Compile>
     <Page Include="MainWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
@@ -710,12 +710,12 @@
       <Generator>SettingsSingleFileGenerator</Generator>
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>
     </None>
-    <EntityDeploy Include="XGuideEDM.edmx">
+    <EntityDeploy Include="XGuideModel.edmx">
       <Generator>EntityModelCodeGenerator</Generator>
-      <LastGenOutput>XGuideEDM.Designer.cs</LastGenOutput>
+      <LastGenOutput>XGuideModel.Designer.cs</LastGenOutput>
     </EntityDeploy>
-    <None Include="XGuideEDM.edmx.diagram">
-      <DependentUpon>XGuideEDM.edmx</DependentUpon>
+    <None Include="XGuideModel.edmx.diagram">
+      <DependentUpon>XGuideModel.edmx</DependentUpon>
     </None>
   </ItemGroup>
   <ItemGroup>
@@ -736,25 +736,6 @@
     </PackageReference>
   </ItemGroup>
   <ItemGroup>
-    <Content Include="XGuideDB.mdf">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
-    <Content Include="XGuideDB_log.ldf">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-      <DependentUpon>XGuideDB.mdf</DependentUpon>
-    </Content>
-    <Content Include="XGuideEDM.Context.tt">
-      <Generator>TextTemplatingFileGenerator</Generator>
-      <DependentUpon>XGuideEDM.edmx</DependentUpon>
-      <LastGenOutput>XGuideEDM.Context.cs</LastGenOutput>
-    </Content>
-    <Content Include="XGuideEDM.tt">
-      <Generator>TextTemplatingFileGenerator</Generator>
-      <DependentUpon>XGuideEDM.edmx</DependentUpon>
-      <LastGenOutput>XGuideEDM.cs</LastGenOutput>
-    </Content>
-  </ItemGroup>
-  <ItemGroup>
     <BootstrapperPackage Include=".NETFramework,Version=v4.7.1">
       <Visible>False</Visible>
       <ProductName>Microsoft .NET Framework 4.7.1 %28x86 and x64%29</ProductName>
@@ -768,6 +749,25 @@
   </ItemGroup>
   <ItemGroup>
     <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="XGuideDB.mdf">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="XGuideDB_log.ldf">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      <DependentUpon>XGuideDB.mdf</DependentUpon>
+    </Content>
+    <Content Include="XGuideModel.Context.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <DependentUpon>XGuideModel.edmx</DependentUpon>
+      <LastGenOutput>XGuideModel.Context.cs</LastGenOutput>
+    </Content>
+    <Content Include="XGuideModel.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <DependentUpon>XGuideModel.edmx</DependentUpon>
+      <LastGenOutput>XGuideModel.cs</LastGenOutput>
+    </Content>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
