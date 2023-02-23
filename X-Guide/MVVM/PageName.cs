@@ -13,6 +13,7 @@ namespace X_Guide.MVVM
         Engineering,
         Security,
         Undefined,
+        Login
 
     }
 }

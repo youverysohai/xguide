@@ -8,5 +8,7 @@
 
     <SolidColorBrush x:Key="PrimaryGrayColor" Color="#FFFFFF"/>
     <SolidColorBrush x:Key="PrimaryBlackColor" Color="#000000"/>
+    <SolidColorBrush x:Key="DisconnectedColor" Color="#c6c6c6"/>
+    <SolidColorBrush x:Key="ConnectedColor" Color="#52ff00"/>
 
 </ResourceDictionary>

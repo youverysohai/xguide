@@ -154,7 +154,7 @@
 
                         </hc:SideMenuItem.Icon>
                     </hc:SideMenuItem>
-                    <hc:SideMenuItem Header="Login">
+                    <hc:SideMenuItem Header="Login" Command="{Binding NavigateCommand}" CommandParameter="{x:Static local:PageName.Login}">
                         <hc:SideMenuItem.Icon>
                             <materialDesign:PackIcon Kind="LoginVariant" Width="24" Height="24"/>
 
@@ -168,6 +168,7 @@
                     </hc:SideMenuItem>
 
                 </hc:SideMenuItem>
+                <!-- Settings Section -->
                 <hc:SideMenuItem Header="Settings">
                     <hc:SideMenuItem.Icon>
                         <materialDesign:PackIcon Kind="SettingsOutline" Width="24" Height="24"/>
@@ -239,23 +240,19 @@
         </DockPanel>
 
         <!-- Bottom info bar-->
-        <Grid Grid.Row="2" Grid.ColumnSpan="3"  Background="#202020">
-            <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="25"/>
-                <ColumnDefinition Width="*"/>
-                <ColumnDefinition Width="3.5*"/>
-                <ColumnDefinition Width="200"/>
-            </Grid.ColumnDefinitions>
-            <materialDesign:PackIcon Grid.Column="0" HorizontalAlignment="Right" Foreground="Red" ToolTip="Disconnected" Kind="Connection"/>
-            <TextBlock Grid.Column="1" Margin="10 0 0 0" FontWeight="Bold" Foreground="Red">Connection Status :</TextBlock>
-            <StackPanel Grid.Column="2" Orientation="Horizontal" >
-                <materialDesign:PackIcon Kind="RobotIndustrial" Foreground="Red"/>
-                <TextBlock  Margin="10 0 15 0" Foreground="Red" >Manipulator</TextBlock>
-                <materialDesign:PackIcon Kind="MonitorEye" Foreground="Red"/>
-                <TextBlock  Margin="10 0 0 0" Foreground="Red">Vision</TextBlock>
-            </StackPanel>
-            <TextBlock Grid.Column="3" Foreground="White" x:Name="DateTimeTextBlock" >Thursday, 23 Feb 2023 9:46 am</TextBlock>
-        </Grid>
+        <StackPanel Grid.Row="2" Grid.ColumnSpan="3" Orientation="Horizontal"  VerticalAlignment="Center" HorizontalAlignment="Right"  >
+            <Button x:Name="RefreshButton" Margin="10 0 10 5" Click="RefreshButton_Click">
+                <materialDesign:PackIcon Kind="Refresh" ></materialDesign:PackIcon>
+            </Button>
+            <materialDesign:PackIcon  x:Name="ConnectionColor" Foreground="{DynamicResource DisconnectedColor}" ToolTip="Disconnected" Kind="Connection"/>
+            <TextBlock x:Name="ConnectionText"  Margin="10 0 10 0" FontWeight="Bold" Foreground="{DynamicResource DisconnectedColor}" >Connection Status :</TextBlock>
+            <materialDesign:PackIcon Kind="RobotIndustrial" Foreground="{DynamicResource DisconnectedColor}" />
+            <TextBlock  Margin="10 0 15 0" Foreground="{DynamicResource DisconnectedColor}" >Manipulator</TextBlock>
+            <materialDesign:PackIcon Kind="MonitorEye" Foreground="{DynamicResource DisconnectedColor}" />
+            <TextBlock  Margin="10 0 0 0" Foreground="{DynamicResource DisconnectedColor}" >Vision</TextBlock>
+            <TextBlock  Foreground="White" x:Name="DateTimeTextBlock" Margin="50 0 20 0" >Thursday, 23 Feb 2023 9:46 am</TextBlock>
+        </StackPanel>
+
 
     </Grid>
 </Window>
