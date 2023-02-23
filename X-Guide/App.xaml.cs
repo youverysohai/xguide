@@ -28,12 +28,13 @@ namespace X_Guide
         private  Dictionary<PageName, NavigationService> _viewModels;
         private DbContextFactory _dbContextFactory;
         private IUserService _userProvider;
+        private ServerService _serverService;
 
 
         public App()
         {
 
-            serverConnections();
+          
             Debug.WriteLine("Exit!");
             using(var context = new XGuideDBEntities())
             {
@@ -53,18 +54,18 @@ namespace X_Guide
 
             //App specific settings
             InitializeAppConfiguration();
-
+            _serverService = new ServerService(8000);
             _navigationStore = new NavigationStore();
 
             //Navigation setting      
             InitializeAppNavigation();
 
-
+            serverConnections();
         }
 
       private async void serverConnections()
         {
-            await ServerService.Main();
+            await _serverService.StartServer();
         }
         private void InitializeAppNavigation()
         {
@@ -91,7 +92,7 @@ namespace X_Guide
             _navigationStore.CurrentViewModel = CreateSettingViewModel();
             MainWindow = new MainWindow()
             {
-                DataContext = new MainViewModel(_navigationStore, _viewModels)
+                DataContext = new MainViewModel(_navigationStore, _viewModels, _serverService)
             };
 
 

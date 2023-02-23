@@ -588,6 +588,7 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="CustomEventArgs\TcpClientEventArgs.cs" />
     <Compile Include="FileLogger.cs" />
     <Compile Include="FileLoggerExtensions.cs" />
     <Compile Include="FileLoggerProvider.cs" />

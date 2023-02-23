@@ -6,37 +6,54 @@ using System.Net;
 using System.Net.Sockets;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows;
+using X_Guide.CustomEventArgs;
+
 
 namespace X_Guide.Service
 {
-    public static class ServerService
+    public class ServerService
     {
-
-        public static async Task Main()
+        private int _port { get; }
+        private bool _connected = false;
+        private TcpListener _server;
+        public event EventHandler<TcpClientEventArgs> ClientConnected;
+        public ServerService(int port)
         {
+            _port = port;
+        }
+
+        public async Task StartServer()
+        {
+
             // Specify the port number to listen on.
-            int port = 1234;
+
 
             // Create a TcpListener object.
-            TcpListener server = new TcpListener(IPAddress.Any, 3000);
-
+            _server = new TcpListener(IPAddress.Any, _port);
+          
             // Start listening for incoming connections.
-            server.Start();
-            Debug.WriteLine("Server started, waiting for clients...");
+
+            _server.Start();
+            
+          Debug.WriteLine("Server started, waiting for clients...");
 
             // Enter the listening loop.
             while (true)
             {
                 // Wait for a client to connect.
-                TcpClient client = await server.AcceptTcpClientAsync();
+                TcpClient client = await _server.AcceptTcpClientAsync();
                 Debug.WriteLine("Client connected.");
-
+                ClientConnected?.Invoke(this, new TcpClientEventArgs(client));
+                
                 // Handle the client connection in a separate task.
-                await Task.Run(() => HandleClientConnection(client));
+#pragma warning disable CS4014 // This warning has to be suppressed to disallow the await keyword from blocking the task
+                Task.Run(() => HandleClientConnection(client));
+#pragma warning restore CS4014 
             }
         }
 
-        static async Task HandleClientConnection(TcpClient client)
+        private async Task HandleClientConnection(TcpClient client)
         {
             // Get the stream for reading and writing data.
             NetworkStream stream = client.GetStream();
@@ -44,11 +61,27 @@ namespace X_Guide.Service
             // Buffer for storing incoming data.
             byte[] buffer = new byte[1024];
 
+            string data = "";
             // Enter the data reading loop.
             while (true)
             {
                 // Read incoming data.
                 int bytesRead = await stream.ReadAsync(buffer, 0, buffer.Length);
+                data += Encoding.ASCII.GetString(buffer, 0, bytesRead);
+
+                if (data.EndsWith("\n"))
+                {
+                    string[] messages = data.Split(new[] { "\n" }, StringSplitOptions.RemoveEmptyEntries);
+                    foreach (string message in messages)
+                    {
+                        // Handle the received message
+                        // Convert the incoming data to a string and display it.
+                        Debug.WriteLine("Received message: {0}", message);
+                        byte[] responseBuffer = Encoding.ASCII.GetBytes(data);
+                        await stream.WriteAsync(responseBuffer, 0, responseBuffer.Length);
+                    }
+                    data = "";
+                }
 
                 // If no data was read, the connection was closed by the client.
                 if (bytesRead == 0)
@@ -57,15 +90,9 @@ namespace X_Guide.Service
                     break;
                 }
 
-                // Convert the incoming data to a string and display it.
-                string data = Encoding.ASCII.GetString(buffer, 0, bytesRead);
-                Debug.WriteLine("Received: {0}", data);
-
                 // Echo the data back to the client.
-                byte[] responseBuffer = Encoding.ASCII.GetBytes(data);
-                await stream.WriteAsync(responseBuffer, 0, responseBuffer.Length);
             }
-
+            _connected = false;
             // Close the client connection.
             client.Close();
         }

@@ -8,5 +8,6 @@ namespace X_Guide.Service
 {
     internal interface IServerService
     {
+
     }
 }

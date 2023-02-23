@@ -252,7 +252,7 @@
                 <materialDesign:PackIcon Kind="RobotIndustrial" Foreground="Red"/>
                 <TextBlock  Margin="10 0 15 0" Foreground="Red" >Manipulator</TextBlock>
                 <materialDesign:PackIcon Kind="MonitorEye" Foreground="Red"/>
-                <TextBlock  Margin="10 0 0 0" Foreground="Red">Vision</TextBlock>
+                <TextBlock  Margin="10 0 0 0" Foreground="Red" Text="{Binding ConnectionStatus}"></TextBlock>
             </StackPanel>
             <TextBlock Grid.Column="3" Foreground="White" x:Name="DateTimeTextBlock" >Thursday, 23 Feb 2023 9:46 am</TextBlock>
         </Grid>
