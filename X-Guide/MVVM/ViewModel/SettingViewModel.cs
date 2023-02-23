@@ -23,7 +23,7 @@ namespace X_Guide.MVVM.ViewModel
     internal class SettingViewModel : ViewModelBase, INotifyDataErrorInfo
     {
 
-        public ICommand SaveCommand { get; }
+        public SaveSettingCommand SaveCommand { get; }
         public ICommand NavigateCommand { get; }
         public ICommand ConnectServerCommand { get; set; }
 
@@ -64,9 +64,6 @@ namespace X_Guide.MVVM.ViewModel
                 OnPropertyChanged();
             }
         }
-
-
-        public bool CanExecute => !HasErrors;
 
 
         private string _machineDescription;
@@ -233,29 +230,25 @@ namespace X_Guide.MVVM.ViewModel
 
 
             _errorViewModel = new ErrorViewModel();
+            var command = (CommandBase)SaveCommand;
+            
+
             _errorViewModel.ErrorsChanged += OnErrorChanged;
+  
+
+
             UpdateSettingUI();
         }
 
 
-        public void CreateUser()
-        {
-            _userProvider.CreateUser(new UserModel("Zhen Chun", "ongzc-pm19@student.tarc.edu.my", "123"));
-        }
-        public async void TestingAsync()
-        {
-            var i = await _userProvider.GetAllUsersAsync();
-            foreach (var item in i)
-            {
-                MessageBox.Show(item.Email + " " + item.PasswordHash + " " + item.Username);
-            }
-        }
+
 
         public bool HasErrors => _errorViewModel.HasErrors;
         private void OnErrorChanged(object sender, DataErrorsChangedEventArgs e)
         {
             ErrorsChanged?.Invoke(this, e);
-            OnPropertyChanged(nameof(CanExecute));
+            (SaveCommand as CommandBase)?.OnCanExecutedChanged();
+       
         }
 
         public IEnumerable GetErrors(string propertyName)
@@ -289,7 +282,18 @@ namespace X_Guide.MVVM.ViewModel
 
 
 
-
+    /* public void CreateUser()
+        {
+            _userProvider.CreateUser(new UserModel("Zhen Chun", "ongzc-pm19@student.tarc.edu.my", "123"));
+        }
+        public async void TestingAsync()
+        {
+            var i = await _userProvider.GetAllUsersAsync();
+            foreach (var item in i)
+            {
+                MessageBox.Show(item.Email + " " + item.PasswordHash + " " + item.Username);
+            }
+        }*/
 
 
 }

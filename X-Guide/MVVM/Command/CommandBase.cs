@@ -19,7 +19,7 @@ namespace X_Guide.MVVM.Command
 
         public abstract void Execute(object parameter);
 
-        protected void OnCanExecutedChanged()
+        public void OnCanExecutedChanged()
         {
             CanExecuteChanged?.Invoke(this, new EventArgs());
         }

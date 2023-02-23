@@ -8,6 +8,7 @@ using System.Windows;
 using X_Guide.MVVM.DBContext;
 using X_Guide.MVVM.DTOs;
 using X_Guide.MVVM.Model;
+using X_Guide.Validation;
 
 namespace X_Guide.Service.UserProviders
 {
@@ -21,29 +22,45 @@ namespace X_Guide.Service.UserProviders
         }
 
 
-        public bool CheckPassword(string password)
+     /*   This method checks if the provided password matches the hashed password stored in the database for the specified user.*/
+        public bool CheckPassword(string username, string password)
         {
-            throw new NotImplementedException();
+            using (XGuideDBEntities context = _userDbContextFactory.CreateDbContext())
+            {
+                var user = context.Users.SingleOrDefault(r => r.Username == username);
+                if (user != null)
+                {
+                    var hashedPassword = PasswordHashUtility.HashPassword(password);
+                    if (hashedPassword == user.PasswordHash)
+                    {
+                        return true;
+                    }
+                }
+
+                return false;
+
+            }
         }
 
         public void CreateUser(UserModel userModel)
         {
-            using (XGuideDBEntities context = _userDbContextFactory.CreateDbContext()) { ;
-
-            User user = new User
+            using (XGuideDBEntities context = _userDbContextFactory.CreateDbContext())
             {
-      
-                Email = userModel.Email,
-                Username = userModel.Username,
-                PasswordHash = "Password",
-                IsActive = true,
-                CreatedAt = DateTime.Now,
-                UpdatedAt = DateTime.Now
-            };
-            context.Users.Add(user);
-            context.SaveChanges();
+
+                User user = new User
+                {
+
+                    Email = userModel.Email,
+                    Username = userModel.Username,
+                    PasswordHash = PasswordHashUtility.HashPassword(userModel.PasswordHash),
+                    IsActive = true,
+                    CreatedAt = DateTime.Now,
+                    UpdatedAt = DateTime.Now
+                };
+                context.Users.Add(user);
+                context.SaveChanges();
             }
-       
+
         }
 
         public async Task<IEnumerable<UserModel>> GetAllUsersAsync()

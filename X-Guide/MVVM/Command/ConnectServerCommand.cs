@@ -37,6 +37,8 @@ namespace X_Guide.MVVM.Command
             {
                 MessageBox.Show("An error occurred: " + ex.Message);
             }
+
+            
         }
 
         private async Task RecieveDataAsync()

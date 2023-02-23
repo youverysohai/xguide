@@ -11,6 +11,6 @@ namespace X_Guide.Service.UserProviders
     {
         Task<IEnumerable<UserModel>> GetAllUsersAsync();
         void CreateUser(UserModel user);
-        bool CheckPassword(string password);
+        bool CheckPassword(string username, string password);
     }
 }
