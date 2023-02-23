@@ -111,7 +111,7 @@ namespace X_Guide
 
         private ViewModelBase CreateSettingViewModel()
         {
-            return new SettingViewModel(_setting, _userProvider);
+            return new SettingViewModel(_setting);
         }
 
         private ViewModelBase CreateProductionViewModel()
