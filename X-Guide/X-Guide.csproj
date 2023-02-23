@@ -677,6 +677,18 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="Style\Button.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Style\Color.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Style\Text.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
   </ItemGroup>
   <ItemGroup>
     <Compile Include="MVVM\Command\CommandBase.cs" />
@@ -732,6 +744,9 @@
   <ItemGroup>
     <PackageReference Include="EntityFramework">
       <Version>6.4.4</Version>
+    </PackageReference>
+    <PackageReference Include="HandyControls">
+      <Version>3.4.4</Version>
     </PackageReference>
     <PackageReference Include="MaterialDesignThemes">
       <Version>4.7.1</Version>

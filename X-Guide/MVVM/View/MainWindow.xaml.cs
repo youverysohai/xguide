@@ -118,8 +118,8 @@ namespace X_Guide
         }
         private void Login_Click(object sender, RoutedEventArgs e)
         {
-            string username = usernameTextBox.Text;
-            string password = passwordBox.Password;
+            //string username = usernameTextBox.Text;
+            //string password = passwordBox.Password;
 
             // TODO: Check credentials against authentication mechanism
             // For example, you could use a database to validate the username and password
@@ -136,6 +136,24 @@ namespace X_Guide
                 MessageBox.Show("Invalid username or password.");
             }
         }
+        private void Button_Click(object sender, RoutedEventArgs e)
+        {
+            if (SideMenu.Width > 50)
+            {
+                SideMenu.Width = 50;
+                TextTitle.Visibility = Visibility.Collapsed;
+                UserControlContent.SetValue(Grid.ColumnProperty, 2);
+                UserControlContent.SetValue(Grid.ColumnSpanProperty, 3);
 
+            }
+            else
+            {
+                SideMenu.Width = 180;
+                TextTitle.Visibility = Visibility.Visible;
+                UserControlContent.SetValue(Grid.ColumnProperty, 3);
+                UserControlContent.SetValue(Grid.ColumnSpanProperty, 1);
+
+            }
+        }
     }
 }
