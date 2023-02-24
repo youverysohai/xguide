@@ -28,27 +28,16 @@ namespace X_Guide
         private  Dictionary<PageName, NavigationService> _viewModels;
         private DbContextFactory _dbContextFactory;
         private IUserService _userProvider;
-        private ServerService _serverService;
+        private IServerService _serverService;
+        private ResourceDictionary _resourceDictionary;
 
 
         public App()
         {
 
           
-            Debug.WriteLine("Exit!");
-            using(var context = new XGuideDBEntities())
-            {
-                context.Users.Add(new User
-                {
-                    CreatedAt = DateTime.Now,
-                    UpdatedAt = DateTime.Now,
-                    IsActive = true,
-                    Email = "Lalazai",
-                    PasswordHash = "Whatever",
-                    Username = "Why is this happening.."
-                });
-                context.SaveChanges();
-            }
+    
+         
             _dbContextFactory = new DbContextFactory();
              _userProvider = new DatabaseUserService(_dbContextFactory);
 
@@ -56,6 +45,10 @@ namespace X_Guide
             InitializeAppConfiguration();
             _serverService = new ServerService(8000);
             _navigationStore = new NavigationStore();
+            _resourceDictionary = new ResourceDictionary
+            {
+                Source = new Uri("/Style/Color.xaml", UriKind.RelativeOrAbsolute)
+            };
 
             //Navigation setting      
             InitializeAppNavigation();
@@ -65,7 +58,7 @@ namespace X_Guide
 
       private async void serverConnections()
         {
-            await _serverService.StartServer();
+           await _serverService.StartServer();
         }
         private void InitializeAppNavigation()
         {
@@ -93,7 +86,7 @@ namespace X_Guide
             _navigationStore.CurrentViewModel = CreateSettingViewModel();
             MainWindow = new MainWindow()
             {
-                DataContext = new MainViewModel(_navigationStore, _viewModels, _serverService)
+                DataContext = new MainViewModel(_navigationStore, _viewModels, _serverService, _resourceDictionary)
             };
 
 

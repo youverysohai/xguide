@@ -3,13 +3,11 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using X_Guide.CustomEventArgs;
 
 namespace X_Guide.Service
 {
-    public interface IServerService
+    public interface IClientService
     {
-        event EventHandler<TcpClientEventArgs> ClientConnected;
-        Task StartServer();
+        Task ConnectServer();
     }
 }

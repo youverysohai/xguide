@@ -616,12 +616,13 @@
       <DependentUpon>UserLoginView.xaml</DependentUpon>
     </Compile>
     <Compile Include="Service\AuthenticationService.cs" />
+    <Compile Include="Service\ClientService.cs" />
+    <Compile Include="Service\IClientService.cs" />
     <Compile Include="Service\IServerService.cs" />
     <Compile Include="Service\NavigationService.cs" />
     <Compile Include="Service\ServerService.cs" />
     <Compile Include="Service\UserProviders\DatabaseUserService.cs" />
     <Compile Include="Service\UserProviders\IUserService.cs" />
-    <Compile Include="System\Windows\Forms.cs" />
     <Compile Include="User.cs">
       <DependentUpon>XGuideModel.tt</DependentUpon>
     </Compile>

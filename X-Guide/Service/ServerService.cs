@@ -12,12 +12,13 @@ using X_Guide.CustomEventArgs;
 
 namespace X_Guide.Service
 {
-    public class ServerService
+    public class ServerService : IServerService
     {
         private int _port { get; }
-        private bool _connected = false;
         private TcpListener _server;
+
         public event EventHandler<TcpClientEventArgs> ClientConnected;
+
         public ServerService(int port)
         {
             _port = port;
@@ -86,15 +87,17 @@ namespace X_Guide.Service
                 // If no data was read, the connection was closed by the client.
                 if (bytesRead == 0)
                 {
+             
                     Debug.WriteLine("Client disconnected.");
                     break;
                 }
 
                 // Echo the data back to the client.
             }
-            _connected = false;
+   
             // Close the client connection.
             client.Close();
+            ClientConnected?.Invoke(this, new TcpClientEventArgs(client));
         }
     }
 
