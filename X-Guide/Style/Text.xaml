@@ -15,8 +15,8 @@
         <Setter Property="Padding" Value="5 15 0 0"/>
         <Setter Property="HorizontalAlignment" Value="Center"/>
     </Style>
-    <Style x:Key="HeaderGroupBox" TargetType="{x:Type GroupBox}" BasedOn="{x:Null}">
-        <Setter Property="Foreground" Value="white"/>
+    <Style x:Key="HeaderGroupBox" TargetType="{x:Type GroupBox}" BasedOn="{StaticResource MaterialDesignCardGroupBox}">
+        <Setter Property="Foreground" Value="{StaticResource SecondaryTextColor}"/>
         <Setter Property="FontSize" Value="20"/>
         <Setter Property="Margin" Value="10"/>
     </Style>

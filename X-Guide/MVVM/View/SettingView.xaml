@@ -59,8 +59,8 @@
                 <GroupBox Grid.Column="0" Style="{DynamicResource HeaderGroupBox}">
                     <GroupBox.Header>
                         <StackPanel Orientation="Horizontal">
-                            <materialDesign:PackIcon  Kind="WrenchCogOutline" VerticalAlignment="Center" Width="30" Height="30" Margin="5"/>
-                            <TextBlock ><Run Text="Machine Info"/></TextBlock>
+                            <TextBlock><materialDesign:PackIcon Foreground="{DynamicResource PrimaryBlackColor}"  Kind="WrenchCogOutline" VerticalAlignment="Center" Width="30" Height="30" Margin="5"/></TextBlock>
+                            <TextBlock Foreground="{DynamicResource PrimaryBlackColor}" VerticalAlignment="Center" ><Run Text="Machine Info"/></TextBlock>
                         </StackPanel>
                     </GroupBox.Header>
 
@@ -100,8 +100,12 @@
                 <GroupBox Grid.Column="1" Style="{DynamicResource HeaderGroupBox}" >
                     <GroupBox.Header>
                         <StackPanel Orientation="Horizontal">
-                            <materialDesign:PackIcon  Kind="Lan" VerticalAlignment="Center" Width="30" Height="30" Margin="5"/>
-                            <TextBlock ><Run Text="Connection"/></TextBlock>
+                            <TextBlock>
+                               <materialDesign:PackIcon Foreground="{DynamicResource PrimaryBlackColor}" Kind="Lan"  Width="30" Height="30" Margin="5"/> 
+                             
+                            </TextBlock>
+                            <TextBlock  VerticalAlignment="Center" Foreground="{DynamicResource PrimaryBlackColor}" Text="Connection"/>
+
                         </StackPanel>
                     </GroupBox.Header>
                     <Grid>
@@ -187,7 +191,7 @@
                             <materialDesign:PackIcon  Margin="10 0 0 4"  Kind="MonitorEye" Width="25" Height="25" VerticalAlignment="Bottom"/>
                         </StackPanel>
                         <!-- Label IP Address-->
-                        <TextBlock Grid.Row="6"  FontSize="13" Foreground="#C8C8C8" FontWeight="Light" Margin="10 5 0 0">IP Address</TextBlock>
+                        <TextBlock Grid.Row="6"  FontSize="13"  FontWeight="Light" Margin="10 5 0 0">IP Address</TextBlock>
                         <!-- Input IP -->
                         <StackPanel Grid.Row="6" Orientation="Horizontal" Margin="10 6 0 0">
                             <TextBox x:Name="txtVisionIP1" Style="{DynamicResource IPInputMaterialDesignTextBox}" HorizontalAlignment="Center"  GotFocus="txtIP_GotFocus" TextChanged="TxtIPLength_TextChanged" PreviewKeyDown="txtIP_PreviewKeyDown" PreviewTextInput="TxtIPAddress_PreviewTextInput">
@@ -237,9 +241,9 @@
 
 
 
-                <Expander Grid.Row="1" Grid.ColumnSpan="2" Header="Additional Setup" Foreground="Black"  Style="{DynamicResource MaterialDesignExpander}"
+                <Expander Grid.Row="1" Grid.ColumnSpan="2" Header="Additional Setup" Foreground="{DynamicResource PrimaryBlackColor}"  Style="{DynamicResource MaterialDesignExpander}"
                                   materialDesign:ExpanderAssist.HeaderFontSize="20"
-                                  BorderBrush="#202020"
+                                  BorderBrush="{DynamicResource PrimaryBlackColor}"
                                   BorderThickness="1"
                                   materialDesign:ExpanderAssist.HeaderBackground="{DynamicResource PrimaryBlueColor}" Margin="15">
 
