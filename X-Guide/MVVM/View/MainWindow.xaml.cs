@@ -1,4 +1,6 @@
-﻿using System;
+﻿
+using MaterialDesignThemes.Wpf;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -13,6 +15,8 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 using System.Windows.Threading;
+
+
 
 namespace X_Guide
 {
@@ -116,32 +120,14 @@ namespace X_Guide
                 }
             }
         }
-        private void Login_Click(object sender, RoutedEventArgs e)
-        {
-            //string username = usernameTextBox.Text;
-            //string password = passwordBox.Password;
 
-            // TODO: Check credentials against authentication mechanism
-            // For example, you could use a database to validate the username and password
-            bool isValid = true;
-
-            if (isValid)
-            {
-                // If the credentials are valid, close the window and return a result of true
-                DialogResult = true;
-            }
-            else
-            {
-                // If the credentials are invalid, display an error message
-                MessageBox.Show("Invalid username or password.");
-            }
-        }
         private void Button_Click(object sender, RoutedEventArgs e)
         {
             if (SideMenu.Width > 50)
             {
                 SideMenu.Width = 50;
                 TextTitle.Visibility = Visibility.Collapsed;
+                Username.Visibility = Visibility.Collapsed;
                 UserControlContent.SetValue(Grid.ColumnProperty, 2);
                 UserControlContent.SetValue(Grid.ColumnSpanProperty, 3);
 
@@ -150,6 +136,7 @@ namespace X_Guide
             {
                 SideMenu.Width = 180;
                 TextTitle.Visibility = Visibility.Visible;
+                Username.Visibility = Visibility.Visible;
                 UserControlContent.SetValue(Grid.ColumnProperty, 3);
                 UserControlContent.SetValue(Grid.ColumnSpanProperty, 1);
 
@@ -158,4 +145,6 @@ namespace X_Guide
 
 
     }
+
 }
+
