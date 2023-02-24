@@ -225,8 +225,8 @@ namespace X_Guide.MVVM.ViewModel
         {
 
             SaveCommand = new SaveSettingCommand(this);
-            ConnectServerCommand = new ConnectServerCommand("192.168.10.90", 7930);
             _setting = setting;
+
 
 
             _errorViewModel = new ErrorViewModel();
@@ -234,9 +234,6 @@ namespace X_Guide.MVVM.ViewModel
             
 
             _errorViewModel.ErrorsChanged += OnErrorChanged;
-  
-
-
             UpdateSettingUI();
         }
 

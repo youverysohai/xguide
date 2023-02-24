@@ -12,11 +12,13 @@ using X_Guide.CustomEventArgs;
 
 namespace X_Guide.Service
 {
-    public class ServerService
+    public class ServerService : IServerService
     {
         private int _port { get; }
         private TcpListener _server;
+
         public event EventHandler<TcpClientEventArgs> ClientConnected;
+
         public ServerService(int port)
         {
             _port = port;

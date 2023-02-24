@@ -55,7 +55,7 @@ namespace X_Guide.MVVM.ViewModel
         public ViewModelBase CurrentViewModel => _navigationStore.CurrentViewModel;
 
 
-        public MainViewModel(NavigationStore navigationStore, Dictionary<PageName, NavigationService> viewModels, ServerService serverService, ResourceDictionary resourceDictionary)
+        public MainViewModel(NavigationStore navigationStore, Dictionary<PageName, NavigationService> viewModels, IServerService serverService, ResourceDictionary resourceDictionary)
         {
 
             _resourceDictionary = resourceDictionary;

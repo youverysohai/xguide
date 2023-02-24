@@ -28,7 +28,7 @@ namespace X_Guide
         private  Dictionary<PageName, NavigationService> _viewModels;
         private DbContextFactory _dbContextFactory;
         private IUserService _userProvider;
-        private ServerService _serverService;
+        private IServerService _serverService;
         private ResourceDictionary _resourceDictionary;
 
 
@@ -49,6 +49,7 @@ namespace X_Guide
             {
                 Source = new Uri("/Style/Color.xaml", UriKind.RelativeOrAbsolute)
             };
+
             //Navigation setting      
             InitializeAppNavigation();
 
