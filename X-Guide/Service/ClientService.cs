@@ -22,7 +22,7 @@ namespace X_Guide.Service
             _port = port;
         }
 
-        private async Task ConnectServer()
+        public async Task ConnectServer()
         {
             try
             {
