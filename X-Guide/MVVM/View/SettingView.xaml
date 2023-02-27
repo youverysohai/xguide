@@ -70,7 +70,7 @@
                                 <ColumnDefinition Width="*"/>
                             </Grid.ColumnDefinitions>
 
-                        <ComboBox 
+                            <ComboBox 
                             ItemsSource="{Binding MachineNameList}"
                             IsTextSearchEnabled="False"
                             
@@ -80,10 +80,7 @@
                             IsEditable="{Binding CanEdit}"
                             Style="{DynamicResource ComboBoxStyle}"  
                                     materialDesign:HintAssist.Hint="Manipulator Name"  
-                                    Text="{Binding SoftwareRevision}">
-                                <ComboBoxItem>a</ComboBoxItem>
-                                <ComboBoxItem>b</ComboBoxItem>
-                                <ComboBoxItem>c</ComboBoxItem>
+                                    >
                             </ComboBox>
                             <StackPanel Orientation="Horizontal" Grid.Column="1">
                                 <Button Command="{Binding EditManipulatorNameCommand}" Visibility="{Binding EditBtnVisibility}">
@@ -111,9 +108,7 @@
                                     materialDesign:HintAssist.Hint="Manipulator Type"  
                                    
                                     >
-                            <ComboBoxItem>Gantry</ComboBoxItem>
-                            <ComboBoxItem>SCARA</ComboBoxItem>
-                            <ComboBoxItem>6-Axis</ComboBoxItem>
+
                             <!--Text="{Binding MachineID,UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=False, NotifyOnValidationError=True}"-->
                         </ComboBox>
                         <!--Machine Description TextArea (scrollable)-->

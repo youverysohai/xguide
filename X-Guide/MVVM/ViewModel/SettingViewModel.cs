@@ -94,7 +94,7 @@ namespace X_Guide.MVVM.ViewModel
 
         //SettingViewModel properties 
         private string _machineID;
-        public string MachineID
+        public string MachineID;
         private List<MachineModel> _machines;
         private MachineModel _machine;
         public  MachineModel Machine => _machine;
@@ -113,15 +113,7 @@ namespace X_Guide.MVVM.ViewModel
             }
         }
 
-        private bool _canEdit;
 
-        public bool CanEdit
-        {
-            get { return _canEdit; }
-            set { _canEdit = value;
-                OnPropertyChanged();
-            }
-        }
 
         private IEnumerable<ValueDescription> _machineTypeList;
 
@@ -403,10 +395,9 @@ namespace X_Guide.MVVM.ViewModel
             RobotIPS2 = manipulatorIP[1];
             RobotIPS3 = manipulatorIP[2];
             RobotIPS4 = manipulatorIP[3];
-            RobotPort = _machine.ManipulatorPort;
+            
      
-            VisionIP = _machine.VisionIP.Split('.');
-            VisionPort = _machine.VisionPort;
+
 
             SaveBtnVisibility = Visibility.Collapsed;
             CancelBtnVisibility = Visibility.Collapsed;
