@@ -33,7 +33,7 @@
                              materialDesign:HintAssist.Hint="Username"></TextBox>  
                     <PasswordBox Margin="10" FontSize="16" Style="{DynamicResource MaterialDesignFloatingHintRevealPasswordBox}"
                              materialDesign:HintAssist.Hint="Password"></PasswordBox>
-                    <Button Margin="10" Command="{x:Static materialDesign:DialogHost.CloseDialogCommand}" Style="{DynamicResource MaterialDesignOutlinedButton}">Login</Button>
+                    <Button Margin="10" x:Name="LoginBtn" Click="LoginBtn_Click" Style="{DynamicResource MaterialDesignOutlinedButton}">Login</Button>
 
                     <Button  Margin="10 5"  Command="{x:Static materialDesign:DialogHost.CloseDialogCommand}" Style="{StaticResource MaterialDesignFlatSecondaryButton}" IsCancel="True" >Cancel</Button>
                 </StackPanel>
@@ -53,6 +53,24 @@
                 <RowDefinition Height="*"/>
 
             </Grid.RowDefinitions>
+
+            <StackPanel Orientation="Horizontal" Grid.Row="0" Grid.Column="1" Panel.ZIndex="1">
+                <!-- User Profile bottom side menu -->
+                <Button x:Name="LoginIcon" Width="56" Command="{x:Static materialDesign:DialogHost.OpenDialogCommand}"  Margin="0 0 0 0" MinHeight="44"  Style="{DynamicResource MaterialDesignFlatButton}"  VerticalAlignment="Bottom" >
+                    <!--<materialDesign:PackIcon Kind="WorkerOutline" Width="24" Height="24" VerticalAlignment="Center"/>-->
+                    <materialDesign:PackIcon Kind="LoginVariant" Width="24" Height="24" VerticalAlignment="Center" ToolTip="Login"/>
+                </Button>
+                <Button x:Name="LogoutIcon" Visibility="Collapsed"  Width="56" Click="LogoutIcon_Click"  Margin="0 0 0 0" MinHeight="44"  Style="{DynamicResource MaterialDesignFlatButton}"  VerticalAlignment="Bottom" >
+                    <!--<materialDesign:PackIcon Kind="WorkerOutline" Width="24" Height="24" VerticalAlignment="Center"/>-->
+                    <materialDesign:PackIcon  Kind="LogoutVariant"  Width="24" Height="24" VerticalAlignment="Center" ToolTip="Logout"/>
+                </Button>
+                <TextBlock x:Name="Username" Text="Hi, Guest"  VerticalAlignment="Center"  FontSize="14"  TextAlignment="Center" Background="#1c1c1c" Foreground="White" Margin="10 0 0 0"/>
+                <TextBlock VerticalAlignment="Center" Margin="10 0" x:Name="TxtRoleIcon">
+                    <materialDesign:PackIcon x:Name="RoleIcon" Kind="Redhat" Width="24" Height="24" ToolTip="Please Login"/>
+
+                </TextBlock>
+
+            </StackPanel>
 
             <!--Min Max Close-->
             <DockPanel x:Name="TitleBar" Grid.ColumnSpan="3" Grid.Row="0" Background="#1c1c1c" MouseLeftButtonDown="OnMouseLeftButtonDown">
@@ -76,11 +94,12 @@
                 <TextBlock  HorizontalAlignment="Center" Margin="5" Foreground="White" Text="Xlent X-Guide version 1.0" Style="{DynamicResource MaterialDesignHeadline6TextBlock}"/>
 
             </DockPanel>
-
+               <!-- sidemenu and content -->
             <Grid Grid.Row="1" Grid.Column="1" Panel.ZIndex="1"  Background="#1c1c1c">
                 <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="auto">
-                    </ColumnDefinition>
+                    <ColumnDefinition Width="auto"/>
+                    <ColumnDefinition Width="*"/>
+
 
                     <ColumnDefinition Width="*"/>
                 </Grid.ColumnDefinitions>
@@ -88,22 +107,22 @@
                     <RowDefinition Height="4*"/>
                     <RowDefinition Height="41*"/>
                 </Grid.RowDefinitions>
-                <Button Click="Button_Click" Grid.Column="0" Grid.Row="0" MinHeight="44" Style="{DynamicResource MaterialDesignFlatButton}" >
+                <Button Click="HamburgerMenuButton_Click" x:Name="HambergerMenuBtn" Grid.Column="0" Grid.Row="0" MinHeight="44" Style="{DynamicResource MaterialDesignFlatButton}" >
                     <materialDesign:PackIcon Kind="HamburgerMenu" Width="24" Height="24" VerticalAlignment="Center"/>
                 </Button>
-                <TextBlock Grid.Row="0" Grid.Column="1" x:Name="TextTitle" Text="X-Guide" VerticalAlignment="Center" FontSize="20"  TextAlignment="Center" Background="#1c1c1c" Foreground="White"/>
+                <TextBlock Grid.Row="0" Grid.Column="1" x:Name="TextTitle" Text="X-Guide" VerticalAlignment="Center" FontSize="28"  TextAlignment="Center" Background="#1c1c1c" Foreground="White"/>
 
 
-                <hc:SideMenu Grid.Row="1" Grid.ColumnSpan="2" x:Name="SideMenu" AutoSelect="True" HorizontalAlignment="Left" MinHeight="400" Width="180">
+                <hc:SideMenu  Grid.Row="1" Grid.ColumnSpan="2" x:Name="SideMenu" AutoSelect="True" HorizontalAlignment="Left" MinHeight="400" Width="180">
+
                     <hc:Interaction.Triggers>
                         <!--<hc:EventTrigger EventName="SelectionChanged">
                         <hc:EventToCommand Command="{Binding SwitchItemCmd}" PassEventArgsToCommand="False" />
                     </hc:EventTrigger>-->
                     </hc:Interaction.Triggers>
-
-                    <hc:SideMenuItem Header="Production">
+                    <hc:SideMenuItem Header="Production" FontSize="16">
                         <hc:SideMenuItem.Icon>
-                            <materialDesign:PackIcon Kind="SitemapOutline" Width="24" Height="24"/>
+                            <materialDesign:PackIcon Kind="SitemapOutline" Width="33" Height="33"/>
                         </hc:SideMenuItem.Icon>
                         <hc:SideMenuItem Header="Base Image" Command="{Binding NavigateCommand}" CommandParameter="{x:Static local:PageName.Production}">
                             <hc:SideMenuItem.Icon>
@@ -124,9 +143,9 @@
                             </hc:SideMenuItem.Icon>
                         </hc:SideMenuItem>
                     </hc:SideMenuItem>
-                    <hc:SideMenuItem Header="Engineering">
+                    <hc:SideMenuItem Header="Engineering"  FontSize="16">
                         <hc:SideMenuItem.Icon>
-                            <materialDesign:PackIcon Kind="CalculatorVariantOutline" Width="24" Height="24"/>
+                            <materialDesign:PackIcon Kind="CalculatorVariantOutline" Width="33" Height="33"/>
 
                         </hc:SideMenuItem.Icon>
                         <hc:SideMenuItem Header="Work Items">
@@ -160,9 +179,9 @@
                             </hc:SideMenuItem.Icon>
                         </hc:SideMenuItem>
                     </hc:SideMenuItem>
-                    <hc:SideMenuItem Header="Security">
+                    <hc:SideMenuItem Header="Security"  FontSize="16">
                         <hc:SideMenuItem.Icon>
-                            <materialDesign:PackIcon Kind="SecureOutline" Width="24" Height="24"/>
+                            <materialDesign:PackIcon Kind="SecureOutline" Width="33" Height="33"/>
 
                         </hc:SideMenuItem.Icon>
                         <hc:SideMenuItem Header="User Admin" ToolTip="Manage user accounts, create new users, and remove existing ones" >
@@ -192,9 +211,9 @@
 
                     </hc:SideMenuItem>
                     <!-- Settings Section -->
-                    <hc:SideMenuItem Header="Settings">
+                    <hc:SideMenuItem Header="Settings" FontSize="16">
                         <hc:SideMenuItem.Icon>
-                            <materialDesign:PackIcon Kind="SettingsOutline" Width="24" Height="24"/>
+                            <materialDesign:PackIcon Kind="SettingsOutline" Width="33" Height="33"/>
 
                         </hc:SideMenuItem.Icon>
                         <hc:SideMenuItem Header="Setup" Command="{Binding NavigateCommand}" CommandParameter="{x:Static local:PageName.Setting}">
@@ -235,15 +254,6 @@
             </Grid>
 
 
-            <StackPanel Orientation="Horizontal" Grid.Row="0" Grid.Column="1" >
-                <!-- User Profile bottom side menu -->
-                <Button Width="70" Command="{x:Static materialDesign:DialogHost.OpenDialogCommand}" x:Name="LoginBtn" Margin="0 0 0 0" MinHeight="44"  Style="{DynamicResource MaterialDesignFlatButton}"  VerticalAlignment="Bottom" >
-                    <!--<materialDesign:PackIcon Kind="WorkerOutline" Width="24" Height="24" VerticalAlignment="Center"/>-->
-                    <materialDesign:PackIcon Kind="Login" Width="24" Height="24" VerticalAlignment="Center" ToolTip="Login"/>
-                </Button>
-                <TextBlock x:Name="Username" Text="Hi, Guest"  VerticalAlignment="Center"  FontSize="16"  TextAlignment="Center" Background="#1c1c1c" Foreground="White" Margin="10 0 0 0"/>
-
-            </StackPanel>
 
 
 
