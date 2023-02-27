@@ -27,6 +27,8 @@ namespace X_Guide.MVVM.ViewModel
 
         public SaveSettingCommand SaveCommand { get; }
         public ICommand NavigateCommand { get; }
+
+        public ICommand EditManipulatorNameCommand { get; set; }
         public ICommand ConnectServerCommand { get; set; }
 
         private string _testing;
@@ -46,6 +48,53 @@ namespace X_Guide.MVVM.ViewModel
 
         public event EventHandler<DataErrorsChangedEventArgs> ErrorsChanged;
 
+        private Visibility _cancelBtnVisibility;
+
+        public Visibility CancelBtnVisibility
+        {
+            get { return _cancelBtnVisibility; }
+            set { _cancelBtnVisibility = value;
+                OnPropertyChanged();
+            }
+        }
+
+
+        private Visibility _saveBtnVisibility;
+
+        public Visibility SaveBtnVisibility
+        {
+            get { return _saveBtnVisibility; }
+            set { _saveBtnVisibility = value;
+                OnPropertyChanged();
+            }
+        }
+
+
+
+        private Visibility _editBtnVisibility;
+
+        public Visibility EditBtnVisibility
+        {
+            get { return _editBtnVisibility; }
+            set { _editBtnVisibility = value;
+                OnPropertyChanged();
+            }
+        }
+
+
+        private bool _canEdit;
+
+        public bool CanEdit
+        {
+            get { return _canEdit; }
+            set { _canEdit = value;
+                OnPropertyChanged();
+            }
+        }
+
+        //SettingViewModel properties 
+        private string _machineID;
+        public string MachineID
         private List<MachineModel> _machines;
         private MachineModel _machine;
         public  MachineModel Machine => _machine;
@@ -300,6 +349,7 @@ namespace X_Guide.MVVM.ViewModel
           
       
             SaveCommand = new SaveSettingCommand(this, _machineDB);
+            EditManipulatorNameCommand = new EditManipulatorNameCommand(this);
 
 
             var command = (CommandBase)SaveCommand;
@@ -353,6 +403,13 @@ namespace X_Guide.MVVM.ViewModel
             RobotIPS2 = manipulatorIP[1];
             RobotIPS3 = manipulatorIP[2];
             RobotIPS4 = manipulatorIP[3];
+            RobotPort = _machine.ManipulatorPort;
+     
+            VisionIP = _machine.VisionIP.Split('.');
+            VisionPort = _machine.VisionPort;
+
+            SaveBtnVisibility = Visibility.Collapsed;
+            CancelBtnVisibility = Visibility.Collapsed;
             RobotPort = machine.ManipulatorPort;
             VisionIP = machine.VisionIP.Split('.');
             VisionPort = machine.VisionPort;

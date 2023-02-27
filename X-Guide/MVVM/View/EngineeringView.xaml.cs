@@ -1,5 +1,7 @@
-﻿using System;
+﻿using HandyControl.Controls;
+using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -23,6 +25,13 @@ namespace X_Guide.MVVM.View
         public EngineeringView()
         {
             InitializeComponent();
+
+           
+
         }
+      
     }
+
+
+
 }
