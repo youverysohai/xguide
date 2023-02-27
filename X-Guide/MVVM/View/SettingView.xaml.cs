@@ -1,4 +1,5 @@
 ﻿
+using Microsoft.Win32;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -105,6 +106,14 @@ namespace X_Guide.MVVM.View
         {
             TextBox textBox = (TextBox)sender;
             textBox.SelectAll();
+        }
+
+        private void BrowseBtn_Click(object sender, RoutedEventArgs e)
+        {
+            OpenFileDialog openFileDialog = new OpenFileDialog();
+            openFileDialog.Filter = "xml files (*.xml)|*.xml|All files (*.*)|*.*";
+            if (openFileDialog.ShowDialog() == true)
+                TxtLogFilePath.Text = File.ReadAllText(openFileDialog.FileName);
         }
     }
 }

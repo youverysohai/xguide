@@ -5,7 +5,6 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:X_Guide.MVVM"
         xmlns:hc="https://handyorg.github.io/handycontrol"
-       
         xmlns:views="clr-namespace:X_Guide.MVVM.View"
         xmlns:vms="clr-namespace:X_Guide.MVVM.ViewModel"
         xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
@@ -33,7 +32,7 @@
 
         </Grid.RowDefinitions>
 
-
+        <!--Min Max Close-->
         <DockPanel x:Name="TitleBar" Grid.ColumnSpan="3" Grid.Row="0" Background="#1c1c1c" MouseLeftButtonDown="OnMouseLeftButtonDown">
             <Button x:Name="CloseButton"
                     Click="CloseButton_Click"  Style="{DynamicResource MaterialDesignIconForegroundButton}" 
@@ -55,6 +54,7 @@
             <TextBlock  HorizontalAlignment="Center" Margin="5" Foreground="White" Text="Xlent X-Guide version 1.0" Style="{DynamicResource MaterialDesignHeadline6TextBlock}"/>
 
         </DockPanel>
+
         <Grid Grid.Row="1" Grid.Column="1" Panel.ZIndex="1"  Background="#1c1c1c">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="auto">
@@ -78,6 +78,7 @@
                         <hc:EventToCommand Command="{Binding SwitchItemCmd}" PassEventArgsToCommand="False" />
                     </hc:EventTrigger>-->
                 </hc:Interaction.Triggers>
+
                 <hc:SideMenuItem Header="Production">
                     <hc:SideMenuItem.Icon>
                         <materialDesign:PackIcon Kind="SitemapOutline" Width="24" Height="24"/>
@@ -204,11 +205,40 @@
 
                         </hc:SideMenuItem.Icon>
                     </hc:SideMenuItem>
-                </hc:SideMenuItem>
 
+                </hc:SideMenuItem>
             </hc:SideMenu>
 
+
         </Grid>
+        <!--Login Form Dialog-->
+        <materialDesign:DialogHost Grid.Row="0" Grid.Column="1" CloseOnClickAway="True" VerticalAlignment="Bottom" Panel.ZIndex="1"  BorderBrush="{DynamicResource MaterialDesignShadowBrush}" >
+            <!-- pop out login-->
+            <materialDesign:DialogHost.DialogContent>
+                <materialDesign:Card UniformCornerRadius="16" >
+                    <StackPanel Orientation="Vertical" HorizontalAlignment="Right"  VerticalAlignment="Bottom" Margin="15">
+                        <TextBox Margin="10" Style="{DynamicResource InputMaterialDesignTextBox}"
+                             materialDesign:HintAssist.Hint="Username"></TextBox>
+
+                        <Button Command="{x:Static materialDesign:DialogHost.CloseDialogCommand}" Style="{StaticResource MaterialDesignFlatAccentButton}" IsCancel="True" >Cancel</Button>
+                        <Button Command="{x:Static materialDesign:DialogHost.CloseDialogCommand}" Style="{DynamicResource MaterialDesignOutlinedButton}">Login</Button>
+                    </StackPanel>
+                </materialDesign:Card>
+
+            </materialDesign:DialogHost.DialogContent>
+            <StackPanel Orientation="Horizontal">
+                <!-- User Profile bottom side menu -->
+                <Button Width="70" Command="{x:Static materialDesign:DialogHost.OpenDialogCommand}" x:Name="LoginBtn" Margin="0 0 0 0" MinHeight="44"  Style="{DynamicResource MaterialDesignFlatButton}"  VerticalAlignment="Bottom" >
+                    <!--<materialDesign:PackIcon Kind="WorkerOutline" Width="24" Height="24" VerticalAlignment="Center"/>-->
+                    <materialDesign:PackIcon Kind="Login" Width="24" Height="24" VerticalAlignment="Center" ToolTip="Login"/>
+                </Button>
+                <TextBlock x:Name="Username" Text="Hi, Guest"  VerticalAlignment="Center"  FontSize="16"  TextAlignment="Center" Background="#1c1c1c" Foreground="White" Margin="10 0 0 0"/>
+
+            </StackPanel>
+
+
+
+        </materialDesign:DialogHost>
         <!-- content-->
 
         <DockPanel x:Name="UserControlContent" Grid.Row="1" Grid.Column="2" >

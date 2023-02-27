@@ -33,7 +33,7 @@
 
 
     </UserControl.Resources>
-    <ScrollViewer VerticalScrollBarVisibility="Hidden" >
+    <ScrollViewer VerticalScrollBarVisibility="Hidden" Margin="5">
 
 
         <Border CornerRadius="16" Background="#2d2d30" Margin="0 0 10 10">
@@ -44,7 +44,7 @@
 
 
 
-            <Grid>
+            <Grid Margin="15">
                 <Grid.RowDefinitions>
                     <RowDefinition Height="*"/>
                     <RowDefinition Height="*"/>
@@ -60,27 +60,35 @@
                     <GroupBox.Header>
                         <StackPanel Orientation="Horizontal">
                             <TextBlock><materialDesign:PackIcon Foreground="{DynamicResource PrimaryBlackColor}"  Kind="WrenchCogOutline" VerticalAlignment="Center" Width="30" Height="30" Margin="5"/></TextBlock>
-                            <TextBlock Foreground="{DynamicResource PrimaryBlackColor}" VerticalAlignment="Center" ><Run Text="Machine Info"/></TextBlock>
+                            <TextBlock Foreground="{DynamicResource PrimaryBlackColor}" VerticalAlignment="Center" ><Run Text="Configure Manipulator"/></TextBlock>
                         </StackPanel>
                     </GroupBox.Header>
 
                     <!--Input-->
                     <StackPanel>
                         <!--Software Revision Input-->
-                        <TextBox Style="{DynamicResource InputMaterialDesignTextBox}"  
-                                    materialDesign:HintAssist.Hint="Software Revision"  
+                        <ComboBox 
+                            IsEditable="True"
+                            Style="{DynamicResource ComboBoxStyle}"  
+                                    materialDesign:HintAssist.Hint="Manipulator Name"  
                                     Text="{Binding SoftwareRevision}"/>
                         <!--Machine ID Input-->
-                        <TextBox 
-                                    Style="{DynamicResource InputMaterialDesignTextBox}"  
-                                    materialDesign:HintAssist.Hint="Machine ID"  
-                                    Text="{Binding MachineID,UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=False, NotifyOnValidationError=True}"
-                                    />
+                        <ComboBox 
+                                    Style="{DynamicResource ComboBoxStyle}" 
+                                    
+                                    materialDesign:HintAssist.Hint="Manipulator Type"  
+                                   
+                                    >
+                            <ComboBoxItem>Gantry</ComboBoxItem>
+                            <ComboBoxItem>SCARA</ComboBoxItem>
+                            <ComboBoxItem>6-Axis</ComboBoxItem>
+                                    <!--Text="{Binding MachineID,UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=False, NotifyOnValidationError=True}"-->
+                        </ComboBox>
                         <!--Machine Description TextArea (scrollable)-->
                         <TextBox
                                     AcceptsReturn="True"
                                     Style="{DynamicResource InputMaterialDesignTextBox}"  
-                                    materialDesign:HintAssist.Hint="Machine Description"  
+                                    materialDesign:HintAssist.Hint="Manipulator Description"  
                                     FontSize="18"
                                     Height="175"
                                     MaxHeight="150"
@@ -169,7 +177,7 @@
                                         materialDesign:HintAssist.Hint="Port" HorizontalAlignment="Center"/>
                         <ComboBox Grid.Row="3" Grid.Column="0"  Margin="15"  Style="{DynamicResource MaterialDesignFloatingHintComboBox}"
                                           Padding="5"
-                                          FontSize="16"
+                                          FontSize="15"
                                           HorizontalAlignment="Left"  
                                           Width="160"
                                           materialDesign:HintAssist.Hint="Terminator">
@@ -226,7 +234,7 @@
                                         materialDesign:HintAssist.Hint="Port"  MaxWidth="100" HorizontalAlignment="Center"/>
                         <ComboBox Grid.Row="7" Grid.Column="0"  Margin="15"  Style="{DynamicResource MaterialDesignFloatingHintComboBox}"
                                           Padding="5"
-                                          FontSize="16"
+                                          FontSize="15"
                                           HorizontalAlignment="Left"  
                                           Width="160"
                                           materialDesign:HintAssist.Hint="Terminator">
@@ -241,43 +249,40 @@
 
 
 
-                <Expander Grid.Row="1" Grid.ColumnSpan="2" Header="Additional Setup" Foreground="{DynamicResource PrimaryBlackColor}"  Style="{DynamicResource MaterialDesignExpander}"
+                <Expander Grid.Row="1" Grid.ColumnSpan="2" Header="Additional Setup" Foreground="{DynamicResource PrimaryBlackColor}" 
                                   materialDesign:ExpanderAssist.HeaderFontSize="20"
+                                  Style="{DynamicResource MaterialDesignExpander}"
                                   BorderBrush="{DynamicResource PrimaryBlackColor}"
                                   BorderThickness="1"
                                   materialDesign:ExpanderAssist.HeaderBackground="{DynamicResource PrimaryBlueColor}" Margin="15">
 
 
-                    <StackPanel Orientation="Vertical">
-                        <Grid>
-                            <Grid.ColumnDefinitions>
-                                <ColumnDefinition Width="311*"/>
-                                <ColumnDefinition Width="213*"/>
-                                <ColumnDefinition Width="99*"/>
-                            </Grid.ColumnDefinitions>
-                            <!--Shift Start Time-->
-                            <TextBox Grid.Column="0" Style="{DynamicResource InputMaterialDesignTextBox}"  Text="{Binding ShiftStartTime}"
-                                materialDesign:HintAssist.Hint="Shift Start Time" Margin="15,0,10,0"/>
-                            <!--Max Scanner Capture Time-->
-                            <TextBox  Grid.Column="1"  Style="{DynamicResource InputMaterialDesignTextBox}"   Text="{Binding MaxScannerCapTime}"
-                                materialDesign:HintAssist.Hint="Max Scanner Capture Time" Grid.ColumnSpan="2" Margin="15,0,10,0"/>
-                        </Grid>
-
+                    <StackPanel Orientation="Vertical" VerticalAlignment="Center">
+                        <!--Browse Open Vision-->
+                        <ComboBox Style="{DynamicResource ComboBoxStyle}"
+                                  materialDesign:HintAssist.Hint="Vision Software"
+                                  Foreground="#C6C6C6">
+                            
+                            <!--<TextBox x:Name="TxtVisionSoftware" Style="{DynamicResource InputMaterialDesignTextBox}"   Width="500" Text="{Binding LogFilePath}"
+                                    materialDesign:HintAssist.Hint="Vision Software Path (.sol)" />
+                            <Button x:Name="BrowseBtn" Margin="10" Content="Browse" Style="{DynamicResource MaterialDesignOutlinedButton}" Click="BrowseBtn_Click"/>-->
+                            <ComboBoxItem>Vision Master</ComboBoxItem>
+                        </ComboBox>
                         <!--Log File Path-->
-                        <StackPanel Orientation="Horizontal">
-                            <TextBox Style="{DynamicResource InputMaterialDesignTextBox}"   Width="500" Text="{Binding LogFilePath}"
-                                    materialDesign:HintAssist.Hint="LogFile Path (User Log, Communication Log)" />
-                            <Button x:Name="Browse" Margin="10" Content="Browse" Style="{DynamicResource MaterialDesignOutlinedDarkButton}" Command="{Binding ConnectServerCommand}"/>
+                        <StackPanel Orientation="Horizontal" >
+                            <TextBox  x:Name="TxtLogFilePath" Style="{DynamicResource InputMaterialDesignTextBox}"   MinWidth="400" Text="{Binding LogFilePath}"
+                                    materialDesign:HintAssist.Hint="Log File Path (User Log, Communication Log)" />
+                            <Button x:Name="BrowseBtn" Margin="10" Content="Browse" Style="{DynamicResource MaterialDesignOutlinedButton}" Command="{Binding ConnectServerCommand}"/>
                         </StackPanel>
                         <StackPanel Orientation="Horizontal">
-                            <CheckBox Margin="8 5"/>
+                            <ToggleButton Style="{DynamicResource MaterialDesignSwitchLightToggleButton}" Margin="12"  />
                             <TextBlock FontSize="16" VerticalAlignment="Center" Foreground="White"><Run Text="Debug Log (Developer use)"/></TextBlock>
                         </StackPanel>
                         <Button Width="100" Margin="5 10" Command="{Binding NavigateCommand}" Content="Navigate" />
                     </StackPanel>
                 </Expander>
 
-                <Button Grid.Column="1" Style="{DynamicResource MaterialDesignOutlinedDarkButton}" Grid.Row="2" Width="100" Margin="10" IsEnabled="{Binding CanExecute}" Command="{Binding SaveCommand}" HorizontalAlignment="Right" Content="Save" />
+                <Button Grid.Column="1" Style="{DynamicResource MaterialDesignOutlinedButton}" Grid.Row="2" Width="100" Margin="10" IsEnabled="{Binding CanExecute}" Command="{Binding SaveCommand}" HorizontalAlignment="Right" Content="Save" />
 
             </Grid>
 
