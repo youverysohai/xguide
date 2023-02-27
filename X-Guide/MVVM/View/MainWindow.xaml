@@ -212,8 +212,7 @@
 
         </Grid>
         <!--Login Form Dialog-->
-        <materialDesign:DialogHost Style="{DynamicResource MaterialDesignEmbeddedDialogHost}" Grid.Row="0" Grid.Column="1" CloseOnClickAway="True" VerticalAlignment="Bottom" Panel.ZIndex="1"  BorderBrush="{DynamicResource MaterialDesignShadowBrush}" >
-
+        <materialDesign:DialogHost Grid.Row="0" Grid.Column="1" CloseOnClickAway="True" VerticalAlignment="Bottom" Panel.ZIndex="1"  BorderBrush="{DynamicResource MaterialDesignShadowBrush}" >
             <!-- pop out login-->
             <materialDesign:DialogHost.DialogContent>
                 <materialDesign:Card UniformCornerRadius="16" >
