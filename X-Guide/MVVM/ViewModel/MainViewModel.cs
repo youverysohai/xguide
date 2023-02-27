@@ -24,6 +24,18 @@ namespace X_Guide.MVVM.ViewModel
     {
         private readonly NavigationStore _navigationStore;
 
+        private string _iconConnection;
+
+        public string IconConnection
+        {
+            get { return _iconConnection; }
+            set { _iconConnection = value;
+
+                OnPropertyChanged();
+            }
+
+        }
+
         private string _connectionColor;
 
         public ICommand NavigateCommand { get; set; }
@@ -83,6 +95,7 @@ namespace X_Guide.MVVM.ViewModel
             NavigateCommand = new NavigateCommand(viewModels);
             ServerCommand = new ConnectServerCommand(serverService);
             ConnectionStatus = "Disconnected!";
+            IconConnection = "LanDisconnect";
 
             SConnectionColor = ((SolidColorBrush)_resourceDictionary["DisconnectedColor"]).ToString();
             ConnectionColor = ((SolidColorBrush)_resourceDictionary["DisconnectedColor"]).ToString();
