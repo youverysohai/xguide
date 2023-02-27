@@ -5,7 +5,6 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:X_Guide.MVVM"
         xmlns:hc="https://handyorg.github.io/handycontrol"
-       
         xmlns:views="clr-namespace:X_Guide.MVVM.View"
         xmlns:vms="clr-namespace:X_Guide.MVVM.ViewModel"
         xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
@@ -213,17 +212,19 @@
 
         </Grid>
         <!--Login Form Dialog-->
-        <materialDesign:DialogHost Grid.Row="0" Grid.Column="1" VerticalAlignment="Bottom" Panel.ZIndex="1" BorderBrush="{DynamicResource MaterialDesignShadowBrush}" >
+        <materialDesign:DialogHost Style="{DynamicResource MaterialDesignEmbeddedDialogHost}" Grid.Row="0" Grid.Column="1" CloseOnClickAway="True" VerticalAlignment="Bottom" Panel.ZIndex="1"  BorderBrush="{DynamicResource MaterialDesignShadowBrush}" >
+
             <!-- pop out login-->
             <materialDesign:DialogHost.DialogContent>
-                <Grid>
-                    <TextBox Style="{DynamicResource InputMaterialDesignTextBox}"
+                <materialDesign:Card UniformCornerRadius="16" >
+                    <StackPanel Orientation="Vertical" HorizontalAlignment="Right"  VerticalAlignment="Bottom" Margin="15">
+                        <TextBox Margin="10" Style="{DynamicResource InputMaterialDesignTextBox}"
                              materialDesign:HintAssist.Hint="Username"></TextBox>
-                    <StackPanel Orientation="Horizontal" HorizontalAlignment="Right"  VerticalAlignment="Bottom" Margin="15">
-                        <Button Command="{x:Static materialDesign:DialogHost.CloseDialogCommand}" Style="{DynamicResource MaterialDesignOutlinedButton}">Cancel</Button>
-                        <Button Command="{x:Static materialDesign:DialogHost.CloseDialogCommand}" Style="{DynamicResource MaterialDesignToolButton}">Login</Button>
+
+                        <Button Command="{x:Static materialDesign:DialogHost.CloseDialogCommand}" Style="{StaticResource MaterialDesignFlatAccentButton}" IsCancel="True" >Cancel</Button>
+                        <Button Command="{x:Static materialDesign:DialogHost.CloseDialogCommand}" Style="{DynamicResource MaterialDesignOutlinedButton}">Login</Button>
                     </StackPanel>
-                </Grid>
+                </materialDesign:Card>
 
             </materialDesign:DialogHost.DialogContent>
             <StackPanel Orientation="Horizontal">

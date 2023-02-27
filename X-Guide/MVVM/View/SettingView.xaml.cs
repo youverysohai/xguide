@@ -111,9 +111,9 @@ namespace X_Guide.MVVM.View
         private void BrowseBtn_Click(object sender, RoutedEventArgs e)
         {
             OpenFileDialog openFileDialog = new OpenFileDialog();
-            openFileDialog.Filter = "soulution files (*.sol)|*.sol|All files (*.*)|*.*";
-            //if (openFileDialog.ShowDialog() == true)
-                //TxtVisionSoftwarePath.Text = File.ReadAllText(openFileDialog.FileName);
+            openFileDialog.Filter = "xml files (*.xml)|*.xml|All files (*.*)|*.*";
+            if (openFileDialog.ShowDialog() == true)
+                TxtLogFilePath.Text = File.ReadAllText(openFileDialog.FileName);
         }
     }
 }
