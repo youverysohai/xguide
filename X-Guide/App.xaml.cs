@@ -7,13 +7,15 @@ using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
 using System.Windows;
+using X_Guide.Communication.Service;
 using X_Guide.MVVM;
 using X_Guide.MVVM.DBContext;
 using X_Guide.MVVM.Model;
 using X_Guide.MVVM.Store;
 using X_Guide.MVVM.ViewModel;
 using X_Guide.Service;
-using X_Guide.Service.UserProviders;
+using X_Guide.Service.DatabaseProvider;
+
 
 namespace X_Guide
 {
@@ -23,24 +25,25 @@ namespace X_Guide
     public partial class App : Application
     {
 
-        private Setting _setting;
+   
         private readonly NavigationStore _navigationStore;
-        private  Dictionary<PageName, NavigationService> _viewModels;
+        private Dictionary<PageName, NavigationService> _viewModels;
         private DbContextFactory _dbContextFactory;
         private IUserService _userProvider;
         private IServerService _serverService;
         private ResourceDictionary _resourceDictionary;
+        private IMachineService _machineDb;
 
 
         public App()
         {
 
-          
-    
-         
-            _dbContextFactory = new DbContextFactory();
-             _userProvider = new DatabaseUserService(_dbContextFactory);
 
+
+
+            _dbContextFactory = new DbContextFactory();
+            _userProvider = new DatabaseUserService(_dbContextFactory);
+            _machineDb = new DatabaseMachineService(_dbContextFactory);
             //App specific settings
             InitializeAppConfiguration();
             _serverService = new ServerService(8000);
@@ -53,13 +56,10 @@ namespace X_Guide
             //Navigation setting      
             InitializeAppNavigation();
 
-            serverConnections();
+
         }
 
-      private async void serverConnections()
-        {
-           await _serverService.StartServer();
-        }
+
         private void InitializeAppNavigation()
         {
             _viewModels = new Dictionary<PageName, NavigationService>
@@ -71,10 +71,10 @@ namespace X_Guide
                 {PageName.Undefined, new NavigationService(_navigationStore, CreateUndefinedViewModel) } ,
                 {PageName.Login, new NavigationService(_navigationStore, CreateUserLoginViewModel) }
             };
-
-            _setting = Setting.ReadFromXML(ConfigurationManager.AppSettings["SettingPath"]);
+/*
+            _setting = SettingModel.ReadFromXML(ConfigurationManager.AppSettings["SettingPath"]);*/
         }
-        
+
         private void InitializeAppConfiguration()
         {
             string appDataPath = Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData);
@@ -113,7 +113,7 @@ namespace X_Guide
 
         private ViewModelBase CreateSettingViewModel()
         {
-            return new SettingViewModel(_setting);
+            return new SettingViewModel(_machineDb);
         }
 
         private ViewModelBase CreateProductionViewModel()

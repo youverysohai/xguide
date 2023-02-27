@@ -15,7 +15,7 @@ using X_Guide.MVVM.Command;
 using X_Guide.MVVM.Model;
 using X_Guide.MVVM.Store;
 using X_Guide.Service;
-using X_Guide.Service.UserProviders;
+using X_Guide.Service.DatabaseProvider;
 using X_Guide.Validation;
 
 namespace X_Guide.MVVM.ViewModel
@@ -29,7 +29,8 @@ namespace X_Guide.MVVM.ViewModel
 
 
 
-        public Setting _setting;
+        private IMachineService _machineDB;
+        public MachineModel _machine;
 
         private readonly ErrorViewModel _errorViewModel;
 
@@ -221,13 +222,14 @@ namespace X_Guide.MVVM.ViewModel
 
 
 
-        public SettingViewModel(Setting setting)
+        public SettingViewModel(IMachineService machineDB)
         {
 
-            SaveCommand = new SaveSettingCommand(this);
-            _setting = setting;
 
+            _machineDB = machineDB;
 
+            _machine = _machineDB.GetMachine("Limpeh"); //debug
+            SaveCommand = new SaveSettingCommand(this, _machineDB);
 
             _errorViewModel = new ErrorViewModel();
             var command = (CommandBase)SaveCommand;
@@ -255,22 +257,19 @@ namespace X_Guide.MVVM.ViewModel
 
         public void UpdateSettingUI()
         {
-            MachineID = _setting.MachineID;
-            MachineDescription = _setting.MachineDescription;
-            SoftwareRevision = _setting.SoftwareRevision;
+            MachineID = _machine.Name;
+            MachineDescription = _machine.Description;
+            SoftwareRevision = _machine.Type.ToString();
 
-            var robotIP = _setting.RobotIP.Split('.');
-            RobotIPS1 = robotIP[0];
-            RobotIPS2 = robotIP[1];
-            RobotIPS3 = robotIP[2];
-            RobotIPS4 = robotIP[3];
-
-            RobotPort = _setting.RobotPort;
-            ShiftStartTime = _setting.ShiftStartTime;
-            VisionIP = _setting.VisionIP.Split('.');
-            VisionPort = _setting.VisionPort;
-            MaxScannerCapTime = _setting.MaxScannerCapTime;
-            LogFilePath = _setting.LogFilePath;
+            var manipulatorIP = _machine.ManipulatorIP.Split('.');
+            RobotIPS1 = manipulatorIP[0];
+            RobotIPS2 = manipulatorIP[1];
+            RobotIPS3 = manipulatorIP[2];
+            RobotIPS4 = manipulatorIP[3];
+            RobotPort = _machine.ManipulatorPort;
+     
+            VisionIP = _machine.VisionIP.Split('.');
+            VisionPort = _machine.VisionPort;
         }
 
 

@@ -9,11 +9,11 @@ namespace X_Guide.CustomEventArgs
 {
     public class TcpClientEventArgs : EventArgs
     {
-        public TcpClient Client { get;}
+        public TcpClient TcpClient { get;}
 
-        public TcpClientEventArgs(TcpClient client)
+        public TcpClientEventArgs(TcpClient tcpClient)
         {
-            Client = client;
+            TcpClient = tcpClient;
         }
     }
 }

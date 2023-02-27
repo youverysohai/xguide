@@ -9,6 +9,7 @@ using System.Windows;
 using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Threading;
+using X_Guide.Communication.Service;
 using X_Guide.CustomEventArgs;
 using X_Guide.MVVM.Command;
 using X_Guide.MVVM.Model;
@@ -25,13 +26,26 @@ namespace X_Guide.MVVM.ViewModel
 
         private string _connectionColor;
 
+        public ICommand NavigateCommand { get; set; }
 
+        public ICommand ServerCommand { get; set; }
         public string ConnectionColor
         {
             get { return _connectionColor; }
             set
             {
                 _connectionColor = value;
+                OnPropertyChanged();
+            }
+        }
+        private string _sConnectionColor;
+
+        public string SConnectionColor
+        {
+            get { return _sConnectionColor; }
+            set
+            {
+                _sConnectionColor = value;
                 OnPropertyChanged();
             }
         }
@@ -51,7 +65,7 @@ namespace X_Guide.MVVM.ViewModel
         }
 
 
-        public ICommand NavigateCommand { get; set; }
+
         public ViewModelBase CurrentViewModel => _navigationStore.CurrentViewModel;
 
 
@@ -64,45 +78,63 @@ namespace X_Guide.MVVM.ViewModel
 
             _navigationStore = navigationStore;
             _navigationStore.CurrentViewModelChanged += OnCurrentViewModelChanged;
-            serverService.ClientConnected += OnConnected;
+            serverService.ClientEvent += ClientEventHandler;
+            serverService.ListenerEvent += ServerEventHandler;
             NavigateCommand = new NavigateCommand(viewModels);
+            ServerCommand = new ConnectServerCommand(serverService);
             ConnectionStatus = "Disconnected!";
 
-           
+            SConnectionColor = ((SolidColorBrush)_resourceDictionary["DisconnectedColor"]).ToString();
             ConnectionColor = ((SolidColorBrush)_resourceDictionary["DisconnectedColor"]).ToString();
 
 
         }
-   
 
-    private void OnConnected(object sender, TcpClientEventArgs e)
-    {
 
-        Application.Current.Dispatcher.Invoke(() =>
+        private void ServerEventHandler(object sender, TcpListenerEventArgs e)
         {
-            if (e.Client.Connected)
+
+            Application.Current.Dispatcher.Invoke(() =>
             {
-                ConnectionStatus = "Connected!";
-                ConnectionColor = ((SolidColorBrush)_resourceDictionary["ConnectedColor"]).ToString();
-            }
-            else
+                if ((sender as ServerService).getServerStatus())
+                {
+                    SConnectionColor = ((SolidColorBrush)_resourceDictionary["ConnectedColor"]).ToString();
+                }
+                else
+                {
+                    
+                    SConnectionColor = ((SolidColorBrush)_resourceDictionary["DisconnectedColor"]).ToString();
+                }
+            });
+        }
+
+
+        private void ClientEventHandler(object sender, TcpClientEventArgs e)
+        {
+
+            Application.Current.Dispatcher.Invoke(() =>
             {
-                ConnectionStatus = "Disconnected!";
-                ConnectionColor = ((SolidColorBrush)_resourceDictionary["DisconnectedColor"]).ToString();
-            }
-        });
+                if (e.TcpClient.Connected)
+                {
+                    ConnectionStatus = "Connected!";
+                    ConnectionColor = ((SolidColorBrush)_resourceDictionary["ConnectedColor"]).ToString();
+                }
+                else
+                {
+                    ConnectionStatus = "Disconnected!";
+                    ConnectionColor = ((SolidColorBrush)_resourceDictionary["DisconnectedColor"]).ToString();
+                }
+            });
+        }
 
 
-        // Get the Style from the ResourceDictionary
-
-    }
 
 
 
-    private void OnCurrentViewModelChanged()
-    {
-        OnPropertyChanged(nameof(CurrentViewModel));
-    }
+        private void OnCurrentViewModelChanged()
+        {
+            OnPropertyChanged(nameof(CurrentViewModel));
+        }
 
     }
 

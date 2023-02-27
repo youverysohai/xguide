@@ -9,37 +9,38 @@ using System.Windows;
 using System.Xml.Serialization;
 using X_Guide.MVVM.Model;
 using X_Guide.MVVM.ViewModel;
-using X_Guide.Service.UserProviders;
+using X_Guide.Service.DatabaseProvider;
 
 namespace X_Guide.MVVM.Command
 {
     internal class SaveSettingCommand : CommandBase
     {
-        private readonly SettingViewModel settingViewModel;
+        private readonly SettingViewModel _settingViewModel;
+        private readonly IMachineService _machineDB;
 
         public override bool CanExecute(object parameter)
         {
-            return !settingViewModel.HasErrors;
+            return !_settingViewModel.HasErrors;
         }
-        public SaveSettingCommand(SettingViewModel settingViewModel)
+        public SaveSettingCommand(SettingViewModel settingViewModel, IMachineService machineDB)
         {
-            this.settingViewModel = settingViewModel;
-  
+            _settingViewModel = settingViewModel;
+            _machineDB = machineDB;
         }
 
        
         public override void Execute(object parameter)
         {
-            
 
 
-            string robotIP = string.Join(".", settingViewModel.RobotIPS1, settingViewModel.RobotIPS2, settingViewModel.RobotIPS3, settingViewModel.RobotIPS4);
-            MessageBox.Show(robotIP);
-            string visionIP = string.Join(".", settingViewModel.VisionIP);
-            var setting = new Setting(settingViewModel.MachineID, settingViewModel.MachineDescription, settingViewModel.SoftwareRevision, robotIP,
-                settingViewModel.RobotPort, settingViewModel.ShiftStartTime, visionIP,
-                settingViewModel.VisionPort, settingViewModel.MaxScannerCapTime, settingViewModel.LogFilePath);
-            setting.WriteToXML(ConfigurationManager.AppSettings["SettingPath"]);
+
+            string robotIP = string.Join(".", _settingViewModel.RobotIPS1, _settingViewModel.RobotIPS2, _settingViewModel.RobotIPS3, _settingViewModel.RobotIPS4);
+            string visionIP = string.Join(".", _settingViewModel.VisionIP);
+            var machine = new MachineModel(_settingViewModel._machine.Id, _settingViewModel.MachineID, int.Parse(_settingViewModel.SoftwareRevision), _settingViewModel.MachineDescription, robotIP,
+                _settingViewModel.RobotPort, visionIP,
+                _settingViewModel.VisionPort);
+            _machineDB.SaveMachine(machine);
+/*            setting.WriteToXML(ConfigurationManager.AppSettings["SettingPath"]);*/
             MessageBox.Show("Setting saved! Please restart the application for the setting to take effect.");
         }
        

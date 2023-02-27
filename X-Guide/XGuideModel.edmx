@@ -4,7 +4,31 @@
   <edmx:Runtime>
     <!-- SSDL content -->
     <edmx:StorageModels>
-      <Schema Namespace="XGuideDBModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+    <Schema Namespace="XGuideDBModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="Machine">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Type" Type="int" Nullable="false" />
+          <Property Name="Name" Type="varchar" MaxLength="30" Nullable="false" />
+          <Property Name="Description" Type="varchar" MaxLength="100" />
+          <Property Name="ManipulatorIP" Type="varchar" MaxLength="50" />
+          <Property Name="ManipulatorPort" Type="varchar" MaxLength="30" />
+          <Property Name="VisionIP" Type="varchar" MaxLength="30" />
+          <Property Name="VisionPort" Type="varchar" MaxLength="30" />
+        </EntityType>
+        <EntityType Name="Setting">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" Nullable="false" />
+          <Property Name="RobotIP" Type="varchar" MaxLength="20" />
+          <Property Name="RobotPort" Type="varchar" MaxLength="20" />
+          <Property Name="VisionIP" Type="varchar" MaxLength="20" />
+          <Property Name="VisionPort" Type="varchar" MaxLength="20" />
+          <Property Name="LogfilePath" Type="varchar" MaxLength="40" />
+        </EntityType>
         <EntityType Name="User">
           <Key>
             <PropertyRef Name="Id" />
@@ -18,44 +42,97 @@
           <Property Name="UpdatedAt" Type="datetime" Nullable="false" />
         </EntityType>
         <EntityContainer Name="XGuideDBModelStoreContainer">
+          <EntitySet Name="Machine" EntityType="Self.Machine" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Setting" EntityType="Self.Setting" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="User" EntityType="Self.User" Schema="dbo" store:Type="Tables" />
         </EntityContainer>
-      </Schema>
-    </edmx:StorageModels>
+      </Schema></edmx:StorageModels>
     <!-- CSDL content -->
     <edmx:ConceptualModels>
       <Schema Namespace="XGuideDBModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityContainer Name="XGuideDBEntities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="Settings" EntityType="XGuideDBModel.Setting" />
+          <EntitySet Name="Users" EntityType="XGuideDBModel.User" />
+          <EntitySet Name="Machines" EntityType="XGuideDBModel.Machine" />
+        </EntityContainer>
+        <EntityType Name="Setting">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" />
+          <Property Name="RobotIP" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Name="RobotPort" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Name="VisionIP" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Name="VisionPort" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Name="LogfilePath" Type="String" MaxLength="40" FixedLength="false" Unicode="false" />
+        </EntityType>
         <EntityType Name="User">
           <Key>
             <PropertyRef Name="Id" />
           </Key>
           <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="Username" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
-          <Property Name="Email" Type="String" MaxLength="100" FixedLength="false" Unicode="false" Nullable="false" />
-          <Property Name="PasswordHash" Type="String" MaxLength="100" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="Username" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="Email" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="PasswordHash" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="false" />
           <Property Name="IsActive" Type="Boolean" Nullable="false" />
           <Property Name="CreatedAt" Type="DateTime" Nullable="false" Precision="3" />
           <Property Name="UpdatedAt" Type="DateTime" Nullable="false" Precision="3" />
         </EntityType>
-        <EntityContainer Name="XGuideDBEntities" annotation:LazyLoadingEnabled="true">
-          <EntitySet Name="Users" EntityType="Self.User" />
-        </EntityContainer>
+        <EntityType Name="Machine">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Type" Type="Int32" Nullable="false" />
+          <Property Name="Name" Type="String" Nullable="false" MaxLength="30" FixedLength="false" Unicode="false" />
+          <Property Name="Description" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="ManipulatorIP" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="ManipulatorPort" Type="String" MaxLength="30" FixedLength="false" Unicode="false" />
+          <Property Name="VisionIP" Type="String" MaxLength="30" FixedLength="false" Unicode="false" />
+          <Property Name="VisionPort" Type="String" MaxLength="30" FixedLength="false" Unicode="false" />
+        </EntityType>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
     <edmx:Mappings>
       <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
         <EntityContainerMapping StorageEntityContainer="XGuideDBModelStoreContainer" CdmEntityContainer="XGuideDBEntities">
+          <EntitySetMapping Name="Settings">
+            <EntityTypeMapping TypeName="XGuideDBModel.Setting">
+              <MappingFragment StoreEntitySet="Setting">
+                <ScalarProperty Name="LogfilePath" ColumnName="LogfilePath" />
+                <ScalarProperty Name="VisionPort" ColumnName="VisionPort" />
+                <ScalarProperty Name="VisionIP" ColumnName="VisionIP" />
+                <ScalarProperty Name="RobotPort" ColumnName="RobotPort" />
+                <ScalarProperty Name="RobotIP" ColumnName="RobotIP" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
           <EntitySetMapping Name="Users">
             <EntityTypeMapping TypeName="XGuideDBModel.User">
               <MappingFragment StoreEntitySet="User">
-                <ScalarProperty Name="Id" ColumnName="Id" />
-                <ScalarProperty Name="Username" ColumnName="Username" />
-                <ScalarProperty Name="Email" ColumnName="Email" />
-                <ScalarProperty Name="PasswordHash" ColumnName="PasswordHash" />
-                <ScalarProperty Name="IsActive" ColumnName="IsActive" />
-                <ScalarProperty Name="CreatedAt" ColumnName="CreatedAt" />
                 <ScalarProperty Name="UpdatedAt" ColumnName="UpdatedAt" />
+                <ScalarProperty Name="CreatedAt" ColumnName="CreatedAt" />
+                <ScalarProperty Name="IsActive" ColumnName="IsActive" />
+                <ScalarProperty Name="PasswordHash" ColumnName="PasswordHash" />
+                <ScalarProperty Name="Email" ColumnName="Email" />
+                <ScalarProperty Name="Username" ColumnName="Username" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Machines">
+            <EntityTypeMapping TypeName="XGuideDBModel.Machine">
+              <MappingFragment StoreEntitySet="Machine">
+                <ScalarProperty Name="VisionPort" ColumnName="VisionPort" />
+                <ScalarProperty Name="VisionIP" ColumnName="VisionIP" />
+                <ScalarProperty Name="ManipulatorPort" ColumnName="ManipulatorPort" />
+                <ScalarProperty Name="ManipulatorIP" ColumnName="ManipulatorIP" />
+                <ScalarProperty Name="Description" ColumnName="Description" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="Type" ColumnName="Type" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>

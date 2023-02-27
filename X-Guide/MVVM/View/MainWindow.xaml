@@ -241,7 +241,7 @@
 
         <!-- Bottom info bar-->
         <StackPanel Grid.Row="2" Grid.ColumnSpan="3" Orientation="Horizontal"  VerticalAlignment="Center" HorizontalAlignment="Right"  >
-            <Button x:Name="RefreshButton" Margin="10 0 10 5" Click="RefreshButton_Click">
+            <Button x:Name="RefreshButton" Margin="10 0 10 5" Command="{Binding ServerCommand}" Foreground="{Binding SConnectionColor}">
                 <materialDesign:PackIcon Kind="Refresh" ></materialDesign:PackIcon>
             </Button>
             <materialDesign:PackIcon  x:Name="ConnectionColor" Foreground="{Binding ConnectionColor}" ToolTip="Disconnected" Kind="Connection"/>

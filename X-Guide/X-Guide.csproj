@@ -589,13 +589,20 @@
       <SubType>Designer</SubType>
     </ApplicationDefinition>
     <Compile Include="CustomEventArgs\TcpClientEventArgs.cs" />
+    <Compile Include="CustomEventArgs\TcpListenerEventArgs.cs" />
+    <Compile Include="Enum\MachineType.cs" />
+    <Compile Include="Extension\TaskExtensions.cs" />
     <Compile Include="FileLogger.cs" />
     <Compile Include="FileLoggerExtensions.cs" />
     <Compile Include="FileLoggerProvider.cs" />
+    <Compile Include="Machine.cs">
+      <DependentUpon>XGuideModel.tt</DependentUpon>
+    </Compile>
     <Compile Include="MVVM\Command\ConnectServerCommand.cs" />
-    <Compile Include="MVVM\Command\LoginCommand.cs" />
+    <Compile Include="MVVM\Command\ServerCommand.cs" />
     <Compile Include="MVVM\DBContext\DbContextFactory.cs" />
     <Compile Include="MVVM\DTO\UserDTO.cs" />
+    <Compile Include="MVVM\Model\MachineModel.cs" />
     <Compile Include="MVVM\Model\UserModel.cs" />
     <Compile Include="MVVM\PageName.cs" />
     <Compile Include="MVVM\ViewModel\EngineeringViewModel.cs" />
@@ -616,13 +623,18 @@
       <DependentUpon>UserLoginView.xaml</DependentUpon>
     </Compile>
     <Compile Include="Service\AuthenticationService.cs" />
-    <Compile Include="Service\ClientService.cs" />
-    <Compile Include="Service\IClientService.cs" />
-    <Compile Include="Service\IServerService.cs" />
+    <Compile Include="Service\Communication\ClientService.cs" />
+    <Compile Include="Service\Communication\IClientService.cs" />
+    <Compile Include="Service\Communication\IServerService.cs" />
+    <Compile Include="Service\DatabaseProvider\DatabaseMachineService.cs" />
+    <Compile Include="Service\DatabaseProvider\IMachineService.cs" />
     <Compile Include="Service\NavigationService.cs" />
-    <Compile Include="Service\ServerService.cs" />
-    <Compile Include="Service\UserProviders\DatabaseUserService.cs" />
-    <Compile Include="Service\UserProviders\IUserService.cs" />
+    <Compile Include="Service\Communication\ServerService.cs" />
+    <Compile Include="Service\DatabaseProvider\DatabaseUserService.cs" />
+    <Compile Include="Service\DatabaseProvider\IUserService.cs" />
+    <Compile Include="Setting.cs">
+      <DependentUpon>XGuideModel.tt</DependentUpon>
+    </Compile>
     <Compile Include="User.cs">
       <DependentUpon>XGuideModel.tt</DependentUpon>
     </Compile>
@@ -696,7 +708,7 @@
     <Compile Include="MVVM\Command\CommandBase.cs" />
     <Compile Include="MVVM\Command\NavigateCommand.cs" />
     <Compile Include="MVVM\Command\SaveSettingCommand.cs" />
-    <Compile Include="MVVM\Model\Setting.cs" />
+    <Compile Include="MVVM\Model\SettingModel.cs" />
     <Compile Include="MVVM\Store\NavigationStore.cs" />
     <Compile Include="MVVM\ViewModel\MainViewModel.cs" />
     <Compile Include="MVVM\ViewModel\SettingViewModel.cs" />
@@ -774,10 +786,10 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="XGuideDB.mdf">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
     <Content Include="XGuideDB_log.ldf">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
       <DependentUpon>XGuideDB.mdf</DependentUpon>
     </Content>
     <Content Include="XGuideModel.Context.tt">
