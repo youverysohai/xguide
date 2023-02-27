@@ -30,22 +30,50 @@ namespace X_Guide.MVVM.ViewModel
 
 
         private IMachineService _machineDB;
-        public MachineModel _machine;
 
         private readonly ErrorViewModel _errorViewModel;
 
         public event EventHandler<DataErrorsChangedEventArgs> ErrorsChanged;
 
-        //SettingViewModel properties 
-        private string _machineID;
-        public string MachineID
+        private List<MachineModel> _machines;
+        private MachineModel _machine;
+        public  MachineModel Machine => _machine;
+
+
+        //SettingViewModel properties
+        private List<string> _machineNameList;
+
+        public List<string> MachineNameList
         {
-            get { return _machineID; }
+            get { return _machineNameList; }
+            set
+            {
+                _machineNameList = value;
+                OnPropertyChanged();
+            }
+        }
+
+        private IEnumerable<ValueDescription> _machineTypeList;
+
+        public IEnumerable<ValueDescription> MachineTypeList
+        {
+            get { return _machineTypeList; }
+            set
+            {
+                _machineTypeList = value;
+                OnPropertyChanged();
+            }
+        }
+
+        private string _machineName;
+        public string MachineName
+        {
+            get { return _machineName; }
             set
             {
 
-                _machineID = value;
-                if (string.IsNullOrEmpty(value))
+                _machineName = value;
+                /*if (string.IsNullOrEmpty(value))
                 {
                     _errorViewModel.AddError("Please enter a valid value for this field. This field cannot be left blank.");
                 }
@@ -61,7 +89,7 @@ namespace X_Guide.MVVM.ViewModel
                 else
                 {
                     _errorViewModel.RemoveError("The field must not exceed 30 characters");
-                }
+                }*/
                 OnPropertyChanged();
             }
         }
@@ -87,14 +115,14 @@ namespace X_Guide.MVVM.ViewModel
             }
         }
 
-        private string _softwareRevision;
-        public string SoftwareRevision
+        private string _machineType;
+        public string MachineType
         {
-            get { return _softwareRevision; }
+            get { return _machineType; }
             set
             {
-                _softwareRevision = value;
-                OnPropertyChanged(nameof(SoftwareRevision));
+                _machineType = value;
+                OnPropertyChanged(nameof(MachineType));
             }
         }
 
@@ -163,16 +191,6 @@ namespace X_Guide.MVVM.ViewModel
             }
         }
 
-        private string _shiftStartTime;
-        public string ShiftStartTime
-        {
-            get { return _shiftStartTime; }
-            set
-            {
-                _shiftStartTime = value;
-                OnPropertyChanged(nameof(ShiftStartTime));
-            }
-        }
 
         private string[] _visionIP;
         public string[] VisionIP
@@ -196,17 +214,6 @@ namespace X_Guide.MVVM.ViewModel
             }
         }
 
-        private string _maxScannerCapTime;
-        public string MaxScannerCapTime
-        {
-            get { return _maxScannerCapTime; }
-            set
-            {
-                _maxScannerCapTime = value;
-                OnPropertyChanged(nameof(MaxScannerCapTime));
-            }
-        }
-
         private string _logFilePath;
 
 
@@ -220,34 +227,87 @@ namespace X_Guide.MVVM.ViewModel
             }
         }
 
+        private IEnumerable<ValueDescription> _terminatorList;
+
+        public IEnumerable<ValueDescription> TerminatorList
+        {
+            get { return _terminatorList; }
+            set
+            {
+                _terminatorList = value;
+                OnPropertyChanged();
+            }
+        }
+
+        private string _manipulatorTerminator;
+
+        public string ManipulatorTerminator
+        {
+            get { return _manipulatorTerminator; }
+            set
+            {
+                _manipulatorTerminator = value;
+                OnPropertyChanged();
+            }
+        }
+
+        private string _visionTerminator;
+
+        public string VisionTerminator
+        {
+            get { return _visionTerminator; }
+            set
+            {
+                _visionTerminator = value;
+                OnPropertyChanged();
+            }
+        }
 
 
         public SettingViewModel(IMachineService machineDB)
         {
-
+            PropertyChanged += ChangeEventHandler;
+            _errorViewModel = new ErrorViewModel();
 
             _machineDB = machineDB;
 
-            _machine = _machineDB.GetMachine("Limpeh"); //debug
+            _machines = _machineDB.GetAllMachine().ToList();
+            MachineNameList = _machines.Select(r => r.Name).ToList();
+
+            MachineTypeList = EnumHelperClass.GetAllValuesAndDescriptions(typeof(MachineType));
+            TerminatorList = EnumHelperClass.GetAllValuesAndDescriptions(typeof(Terminator));
+            MachineName = "Kibo";
+
+
             SaveCommand = new SaveSettingCommand(this, _machineDB);
 
-            _errorViewModel = new ErrorViewModel();
+
             var command = (CommandBase)SaveCommand;
-            
+
+
 
             _errorViewModel.ErrorsChanged += OnErrorChanged;
-            UpdateSettingUI();
+
         }
 
 
 
+        private void ChangeEventHandler(object sender, PropertyChangedEventArgs e)
+        {
+            if (e.PropertyName == nameof(MachineName))
+            {
+                _machines = _machineDB.GetAllMachine().ToList();
+                _machine = _machines.First(r => { return r.Name == MachineName; });
+                UpdateSettingUI(_machine);
+            }
+        }
 
         public bool HasErrors => _errorViewModel.HasErrors;
         private void OnErrorChanged(object sender, DataErrorsChangedEventArgs e)
         {
             ErrorsChanged?.Invoke(this, e);
             (SaveCommand as CommandBase)?.OnCanExecutedChanged();
-       
+
         }
 
         public IEnumerable GetErrors(string propertyName)
@@ -255,41 +315,33 @@ namespace X_Guide.MVVM.ViewModel
             return _errorViewModel.GetErrors(propertyName);
         }
 
-        public void UpdateSettingUI()
+        public void UpdateSettingUI(MachineModel machine)
         {
-            MachineID = _machine.Name;
-            MachineDescription = _machine.Description;
-            SoftwareRevision = _machine.Type.ToString();
 
-            var manipulatorIP = _machine.ManipulatorIP.Split('.');
+            MachineDescription = machine.Description;
+
+
+
+
+
+            MachineType = Enum.GetName(typeof(MachineType), machine.Type);
+            VisionTerminator = machine.VisionTerminator;
+            ManipulatorTerminator = machine.ManipulatorTerminator;
+            var manipulatorIP = machine.ManipulatorIP.Split('.');
             RobotIPS1 = manipulatorIP[0];
             RobotIPS2 = manipulatorIP[1];
             RobotIPS3 = manipulatorIP[2];
             RobotIPS4 = manipulatorIP[3];
-            RobotPort = _machine.ManipulatorPort;
-     
-            VisionIP = _machine.VisionIP.Split('.');
-            VisionPort = _machine.VisionPort;
+
+            RobotPort = machine.ManipulatorPort;
+
+            VisionIP = machine.VisionIP.Split('.');
+            VisionPort = machine.VisionPort;
         }
 
 
     }
 
-
-
-
-    /* public void CreateUser()
-        {
-            _userProvider.CreateUser(new UserModel("Zhen Chun", "ongzc-pm19@student.tarc.edu.my", "123"));
-        }
-        public async void TestingAsync()
-        {
-            var i = await _userProvider.GetAllUsersAsync();
-            foreach (var item in i)
-            {
-                MessageBox.Show(item.Email + " " + item.PasswordHash + " " + item.Username);
-            }
-        }*/
 
 
 }

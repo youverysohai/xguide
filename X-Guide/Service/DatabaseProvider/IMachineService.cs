@@ -13,7 +13,9 @@ namespace X_Guide.Service.DatabaseProvider
         Task<IEnumerable<MachineModel>> GetAllUsersAsync();
         void CreateMachine(MachineModel machine);
 
-        void SaveMachine(MachineModel machine);
+        IEnumerable<MachineModel> GetAllMachine();
         MachineModel GetMachine(string name);
+        void SaveMachine(MachineModel machine);
+        
     }
 }

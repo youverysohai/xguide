@@ -4,7 +4,7 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
-             xmlns:local="clr-namespace:X_Guide.MVVM.View" 
+             xmlns:local="clr-namespace:X_Guide.MVVM" 
              xmlns:valid="clr-namespace:X_Guide.Validation"
              mc:Ignorable="d" 
              Background="Transparent"
@@ -68,21 +68,28 @@
                     <StackPanel>
                         <!--Software Revision Input-->
                         <ComboBox 
+                            ItemsSource="{Binding MachineNameList}"
+                       
+                            SelectedItem="{Binding MachineName, Mode=TwoWay}"
+                            SelectedValue="{Binding MachineName}"
                             IsEditable="True"
                             Style="{DynamicResource ComboBoxStyle}"  
                                     materialDesign:HintAssist.Hint="Manipulator Name"  
-                                    Text="{Binding SoftwareRevision}"/>
+                                    />
                         <!--Machine ID Input-->
                         <ComboBox 
+                            ItemsSource="{Binding MachineTypeList}"
+                            DisplayMemberPath="Description"
+                            SelectedValuePath="Value"
+                            SelectedItem="{Binding MachineType}"
+                            SelectedValue="{Binding MachineType}"
                                     Style="{DynamicResource ComboBoxStyle}" 
                                     
                                     materialDesign:HintAssist.Hint="Manipulator Type"  
                                    
                                     >
-                            <ComboBoxItem>Gantry</ComboBoxItem>
-                            <ComboBoxItem>SCARA</ComboBoxItem>
-                            <ComboBoxItem>6-Axis</ComboBoxItem>
-                                    <!--Text="{Binding MachineID,UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=False, NotifyOnValidationError=True}"-->
+
+                            <!--Text="{Binding MachineID,UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=False, NotifyOnValidationError=True}"-->
                         </ComboBox>
                         <!--Machine Description TextArea (scrollable)-->
                         <TextBox
@@ -109,8 +116,8 @@
                     <GroupBox.Header>
                         <StackPanel Orientation="Horizontal">
                             <TextBlock>
-                               <materialDesign:PackIcon Foreground="{DynamicResource PrimaryBlackColor}" Kind="Lan"  Width="30" Height="30" Margin="5"/> 
-                             
+                               <materialDesign:PackIcon Foreground="{DynamicResource PrimaryBlackColor}" Kind="Lan"  Width="30" Height="30" Margin="5"/>
+
                             </TextBlock>
                             <TextBlock  VerticalAlignment="Center" Foreground="{DynamicResource PrimaryBlackColor}" Text="Connection"/>
 
@@ -175,16 +182,14 @@
                         <!-- Input Port Number-->
                         <TextBox Width="70" Grid.Row="1" Grid.Column="1" Style="{DynamicResource InputMaterialDesignTextBox}" Text="{Binding RobotPort}"  PreviewTextInput="TxtPort_PreviewTextInput" 
                                         materialDesign:HintAssist.Hint="Port" HorizontalAlignment="Center"/>
-                        <ComboBox Grid.Row="3" Grid.Column="0"  Margin="15"  Style="{DynamicResource MaterialDesignFloatingHintComboBox}"
+                        <ComboBox ItemsSource="{Binding TerminatorList}" DisplayMemberPath="Description"
+                            SelectedValuePath="Value" SelectedItem="{Binding ManipulatorTerminator}" SelectedValue="{Binding ManipulatorTerminator}"  Grid.Row="3" Grid.Column="0"  Margin="15"  Style="{DynamicResource MaterialDesignFloatingHintComboBox}"
                                           Padding="5"
                                           FontSize="15"
                                           HorizontalAlignment="Left"  
                                           Width="160"
                                           materialDesign:HintAssist.Hint="Terminator">
-                            <ComboBoxItem>NA</ComboBoxItem>
-                            <ComboBoxItem>CR</ComboBoxItem>
-                            <ComboBoxItem>LF</ComboBoxItem>
-                            <ComboBoxItem>CRLF</ComboBoxItem>
+
                         </ComboBox>
                         <Separator Grid.ColumnSpan="3" Grid.Row="4" Style="{DynamicResource MaterialDesignLightSeparator}"/>
                         <!--Vision TCP title icon-->
@@ -232,16 +237,14 @@
                         <!-- Input Vision Port Number-->
                         <TextBox Width="70"  Grid.Column="1" Grid.Row="6" Style="{DynamicResource InputMaterialDesignTextBox}"  Padding="2" Text="{Binding VisionPort}"  PreviewTextInput="TxtPort_PreviewTextInput"
                                         materialDesign:HintAssist.Hint="Port"  MaxWidth="100" HorizontalAlignment="Center"/>
-                        <ComboBox Grid.Row="7" Grid.Column="0"  Margin="15"  Style="{DynamicResource MaterialDesignFloatingHintComboBox}"
+                        <ComboBox ItemsSource="{Binding TerminatorList}" DisplayMemberPath="Description"
+                            SelectedValuePath="Value" SelectedItem="{Binding VisionTerminator}" SelectedValue="{Binding VisionTerminator}"  Grid.Row="7" Grid.Column="0"  Margin="15"  Style="{DynamicResource MaterialDesignFloatingHintComboBox}"
                                           Padding="5"
                                           FontSize="15"
                                           HorizontalAlignment="Left"  
                                           Width="160"
                                           materialDesign:HintAssist.Hint="Terminator">
-                            <ComboBoxItem>NA</ComboBoxItem>
-                            <ComboBoxItem>CR</ComboBoxItem>
-                            <ComboBoxItem>LF</ComboBoxItem>
-                            <ComboBoxItem>CRLF</ComboBoxItem>
+
                         </ComboBox>
 
                     </Grid>
@@ -262,7 +265,7 @@
                         <ComboBox Style="{DynamicResource ComboBoxStyle}"
                                   materialDesign:HintAssist.Hint="Vision Software"
                                   Foreground="#C6C6C6">
-                            
+
                             <!--<TextBox x:Name="TxtVisionSoftware" Style="{DynamicResource InputMaterialDesignTextBox}"   Width="500" Text="{Binding LogFilePath}"
                                     materialDesign:HintAssist.Hint="Vision Software Path (.sol)" />
                             <Button x:Name="BrowseBtn" Margin="10" Content="Browse" Style="{DynamicResource MaterialDesignOutlinedButton}" Click="BrowseBtn_Click"/>-->

@@ -17,6 +17,8 @@
           <Property Name="ManipulatorPort" Type="varchar" MaxLength="30" />
           <Property Name="VisionIP" Type="varchar" MaxLength="30" />
           <Property Name="VisionPort" Type="varchar" MaxLength="30" />
+          <Property Name="ManipulatorTerminator" Type="varchar" MaxLength="5" />
+          <Property Name="VisionTerminator" Type="varchar" MaxLength="5" />
         </EntityType>
         <EntityType Name="Setting">
           <Key>
@@ -90,6 +92,8 @@
           <Property Name="ManipulatorPort" Type="String" MaxLength="30" FixedLength="false" Unicode="false" />
           <Property Name="VisionIP" Type="String" MaxLength="30" FixedLength="false" Unicode="false" />
           <Property Name="VisionPort" Type="String" MaxLength="30" FixedLength="false" Unicode="false" />
+          <Property Name="ManipulatorTerminator" Type="String" MaxLength="5" FixedLength="false" Unicode="false" />
+          <Property Name="VisionTerminator" Type="String" MaxLength="5" FixedLength="false" Unicode="false" />
         </EntityType>
       </Schema>
     </edmx:ConceptualModels>
@@ -125,6 +129,8 @@
           <EntitySetMapping Name="Machines">
             <EntityTypeMapping TypeName="XGuideDBModel.Machine">
               <MappingFragment StoreEntitySet="Machine">
+                <ScalarProperty Name="VisionTerminator" ColumnName="VisionTerminator" />
+                <ScalarProperty Name="ManipulatorTerminator" ColumnName="ManipulatorTerminator" />
                 <ScalarProperty Name="VisionPort" ColumnName="VisionPort" />
                 <ScalarProperty Name="VisionIP" ColumnName="VisionIP" />
                 <ScalarProperty Name="ManipulatorPort" ColumnName="ManipulatorPort" />

@@ -22,5 +22,7 @@ namespace X_Guide
         public string ManipulatorPort { get; set; }
         public string VisionIP { get; set; }
         public string VisionPort { get; set; }
+        public string ManipulatorTerminator { get; set; }
+        public string VisionTerminator { get; set; }
     }
 }

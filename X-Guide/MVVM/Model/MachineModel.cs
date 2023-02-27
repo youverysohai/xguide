@@ -18,6 +18,8 @@ namespace X_Guide.MVVM.Model
 
         public string VisionPort { get; set; }
 
+        public string ManipulatorTerminator { get; set; }
+        public string VisionTerminator { get; set; }
 
         public MachineModel()
         {
@@ -28,9 +30,11 @@ namespace X_Guide.MVVM.Model
             ManipulatorPort = "8000";
             VisionIP = "127.0.0.1";
             VisionPort = "8000";
+            ManipulatorTerminator = "NA";
+            VisionTerminator = "NA";
         }
 
-        public MachineModel(int id, string name, int type, string description, string manipulatorIP, string manipulatorPort, string visionIP, string visionPort)
+        public MachineModel(int id, string name, int type, string description, string manipulatorIP, string manipulatorPort, string visionIP, string visionPort, string manipulatorTerminator, string visionTerminator)
         {
             Id = id;
             Name = name;
@@ -40,6 +44,8 @@ namespace X_Guide.MVVM.Model
             ManipulatorPort = manipulatorPort;
             VisionIP = visionIP;
             VisionPort = visionPort;
+            ManipulatorTerminator = manipulatorTerminator;
+            VisionTerminator = visionTerminator;
         }
     }
 }

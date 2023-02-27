@@ -590,7 +590,11 @@
     </ApplicationDefinition>
     <Compile Include="CustomEventArgs\TcpClientEventArgs.cs" />
     <Compile Include="CustomEventArgs\TcpListenerEventArgs.cs" />
+    <Compile Include="Enum\Terminator.cs" />
+    <Compile Include="Enum\EnumHelperClass.cs" />
+    <Compile Include="Enum\EnumToCollectionConverter.cs" />
     <Compile Include="Enum\MachineType.cs" />
+    <Compile Include="Enum\ValueDescription.cs" />
     <Compile Include="Extension\TaskExtensions.cs" />
     <Compile Include="FileLogger.cs" />
     <Compile Include="FileLoggerExtensions.cs" />
@@ -604,7 +608,7 @@
     <Compile Include="MVVM\DTO\UserDTO.cs" />
     <Compile Include="MVVM\Model\MachineModel.cs" />
     <Compile Include="MVVM\Model\UserModel.cs" />
-    <Compile Include="MVVM\PageName.cs" />
+    <Compile Include="Enum\PageName.cs" />
     <Compile Include="MVVM\ViewModel\EngineeringViewModel.cs" />
     <Compile Include="MVVM\ViewModel\ErrorViewModel.cs" />
     <Compile Include="MVVM\ViewModel\SecurityViewModel.cs" />
@@ -786,10 +790,10 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="XGuideDB.mdf">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <Content Include="XGuideDB_log.ldf">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
       <DependentUpon>XGuideDB.mdf</DependentUpon>
     </Content>
     <Content Include="XGuideModel.Context.tt">

@@ -35,13 +35,23 @@ namespace X_Guide.Service.DatabaseProvider
             }
         }
 
+        public IEnumerable<MachineModel> GetAllMachine()
+        {
+            using (var context = _contextFactory.CreateDbContext())
+            {
+                IEnumerable<Machine> machines = context.Machines.ToList();
+                return machines.Select(r => DBToModel(r));
+            }
+        }
+
+
         public void SaveMachine(MachineModel machine)
         {
-            using(var context = _contextFactory.CreateDbContext())
+            using (var context = _contextFactory.CreateDbContext())
             {
                 var result = context.Machines.Find(machine.Id);
- 
-               
+
+
                 if (result != null)
                 {
 
@@ -62,24 +72,34 @@ namespace X_Guide.Service.DatabaseProvider
                 ManipulatorPort = machine.ManipulatorPort,
                 Type = machine.Type,
                 VisionIP = machine.VisionIP,
-                VisionPort = machine.VisionPort
+                VisionPort = machine.VisionPort,
+                ManipulatorTerminator = machine.ManipulatorTerminator,
+                VisionTerminator = machine.VisionTerminator
             };
         }
 
         MachineModel DBToModel(Machine machine)
         {
-            return new MachineModel
+            if (machine != null)
             {
-                Id = machine.Id,
-                Name = machine.Name,
-                Description = machine.Description,
-                Type = machine.Type,
-                ManipulatorIP = machine.ManipulatorIP,
-                ManipulatorPort = machine.ManipulatorPort,
-                VisionIP = machine.VisionIP,
-                VisionPort = machine.VisionPort
+                return new MachineModel
+                {
+                    Id = machine.Id,
+                    Name = machine.Name,
+                    Description = machine.Description,
+                    Type = machine.Type,
+                    ManipulatorIP = machine.ManipulatorIP,
+                    ManipulatorPort = machine.ManipulatorPort,
+                    VisionIP = machine.VisionIP,
+                    VisionPort = machine.VisionPort,
+                    ManipulatorTerminator = machine.ManipulatorTerminator,
+                    VisionTerminator = machine.VisionTerminator
 
-            };
+                };
+            }
+            return null;
         }
+
+
     }
 }

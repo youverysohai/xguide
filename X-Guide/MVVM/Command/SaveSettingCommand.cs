@@ -32,15 +32,15 @@ namespace X_Guide.MVVM.Command
         public override void Execute(object parameter)
         {
 
-
+        
 
             string robotIP = string.Join(".", _settingViewModel.RobotIPS1, _settingViewModel.RobotIPS2, _settingViewModel.RobotIPS3, _settingViewModel.RobotIPS4);
             string visionIP = string.Join(".", _settingViewModel.VisionIP);
-            var machine = new MachineModel(_settingViewModel._machine.Id, _settingViewModel.MachineID, int.Parse(_settingViewModel.SoftwareRevision), _settingViewModel.MachineDescription, robotIP,
-                _settingViewModel.RobotPort, visionIP,
-                _settingViewModel.VisionPort);
+            var machine = new MachineModel(_settingViewModel.Machine.Id, _settingViewModel.MachineName,(int)Enum.Parse(typeof(MachineType),_settingViewModel.MachineType), _settingViewModel.MachineDescription, robotIP, _settingViewModel.RobotPort, visionIP, _settingViewModel.VisionPort, _settingViewModel.ManipulatorTerminator, _settingViewModel.VisionTerminator);
             _machineDB.SaveMachine(machine);
-/*            setting.WriteToXML(ConfigurationManager.AppSettings["SettingPath"]);*/
+
+            /*setting.WriteToXML(ConfigurationManager.AppSettings["SettingPath"]);*/
+
             MessageBox.Show("Setting saved! Please restart the application for the setting to take effect.");
         }
        
