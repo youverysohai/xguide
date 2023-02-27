@@ -7,6 +7,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
 using X_Guide.Communication.Service;
+using X_Guide.MVVM.ViewModel;
 
 namespace X_Guide.MVVM.Command
 {
@@ -14,22 +15,30 @@ namespace X_Guide.MVVM.Command
     {
         IServerService _serverService;
 
-        public ConnectServerCommand(IServerService serverService)
+        public ConnectServerCommand(SettingViewModel svm)
         {
-            _serverService = serverService;
+            Svm = svm;
         }
 
+        private SettingViewModel Svm;
 
         public override void Execute(object parameter)
         {
-            if (!_serverService.getServerStatus())
+
+            if (Svm.CanEdit) Svm.CanEdit = false;
+            else
+            {
+                Svm.CanEdit = true;
+            }
+                
+           /* if (!_serverService.getServerStatus())
             {
                 _serverService.StartServer();
             }
             else
             {
                 _serverService.StopServer();
-            }
+            }*/
             
             
         }

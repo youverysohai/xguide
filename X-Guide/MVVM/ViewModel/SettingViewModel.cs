@@ -1,7 +1,9 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.ComponentModel;
+using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.Net;
@@ -27,6 +29,15 @@ namespace X_Guide.MVVM.ViewModel
         public ICommand NavigateCommand { get; }
         public ICommand ConnectServerCommand { get; set; }
 
+        private string _testing;
+
+        public string Testing
+        {
+            get { return _testing; }
+            set { _testing = value;
+                OnPropertyChanged();
+            }
+        }
 
 
         private IMachineService _machineDB;
@@ -41,14 +52,24 @@ namespace X_Guide.MVVM.ViewModel
 
 
         //SettingViewModel properties
-        private List<string> _machineNameList;
+        private ObservableCollection<string> _machineNameList;
 
-        public List<string> MachineNameList
+        public ObservableCollection<string> MachineNameList
         {
             get { return _machineNameList; }
             set
             {
                 _machineNameList = value;
+                OnPropertyChanged();
+            }
+        }
+
+        private bool _canEdit;
+
+        public bool CanEdit
+        {
+            get { return _canEdit; }
+            set { _canEdit = value;
                 OnPropertyChanged();
             }
         }
@@ -266,19 +287,18 @@ namespace X_Guide.MVVM.ViewModel
 
         public SettingViewModel(IMachineService machineDB)
         {
-            PropertyChanged += ChangeEventHandler;
+            PropertyChanged += ChangeManipulatorEventHandler;
             _errorViewModel = new ErrorViewModel();
 
             _machineDB = machineDB;
-
+            ConnectServerCommand = new ConnectServerCommand(this);
             _machines = _machineDB.GetAllMachine().ToList();
-            MachineNameList = _machines.Select(r => r.Name).ToList();
-
+            MachineNameList = new ObservableCollection<string>(_machines.Select(r => r.Name));
             MachineTypeList = EnumHelperClass.GetAllValuesAndDescriptions(typeof(MachineType));
             TerminatorList = EnumHelperClass.GetAllValuesAndDescriptions(typeof(Terminator));
-            MachineName = "Kibo";
-
-
+      
+          
+      
             SaveCommand = new SaveSettingCommand(this, _machineDB);
 
 
@@ -292,13 +312,19 @@ namespace X_Guide.MVVM.ViewModel
 
 
 
-        private void ChangeEventHandler(object sender, PropertyChangedEventArgs e)
+        private void ChangeManipulatorEventHandler(object sender, PropertyChangedEventArgs e)
         {
             if (e.PropertyName == nameof(MachineName))
             {
+                if(_machines.FirstOrDefault(r => r.Name == MachineName) == null) return;
                 _machines = _machineDB.GetAllMachine().ToList();
                 _machine = _machines.First(r => { return r.Name == MachineName; });
+                
                 UpdateSettingUI(_machine);
+            }
+            else if(e.PropertyName == nameof(MachineNameList))
+            {
+           
             }
         }
 
@@ -319,11 +345,6 @@ namespace X_Guide.MVVM.ViewModel
         {
 
             MachineDescription = machine.Description;
-
-
-
-
-
             MachineType = Enum.GetName(typeof(MachineType), machine.Type);
             VisionTerminator = machine.VisionTerminator;
             ManipulatorTerminator = machine.ManipulatorTerminator;
@@ -332,13 +353,18 @@ namespace X_Guide.MVVM.ViewModel
             RobotIPS2 = manipulatorIP[1];
             RobotIPS3 = manipulatorIP[2];
             RobotIPS4 = manipulatorIP[3];
-
             RobotPort = machine.ManipulatorPort;
-
             VisionIP = machine.VisionIP.Split('.');
             VisionPort = machine.VisionPort;
         }
 
+        public void UpdateComboBox(string defaultSelection)
+        {
+            _machines = _machineDB.GetAllMachine().ToList();
+            MachineNameList.Clear();
+            _machines.ForEach(r => { MachineNameList.Add(r.Name); });
+            MachineName = defaultSelection;
+        }
 
     }
 

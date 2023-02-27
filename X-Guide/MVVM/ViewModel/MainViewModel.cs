@@ -93,7 +93,7 @@ namespace X_Guide.MVVM.ViewModel
             serverService.ClientEvent += ClientEventHandler;
             serverService.ListenerEvent += ServerEventHandler;
             NavigateCommand = new NavigateCommand(viewModels);
-            ServerCommand = new ConnectServerCommand(serverService);
+        /*    ServerCommand = new ConnectServerCommand(serverService);*/
             ConnectionStatus = "Disconnected!";
             IconConnection = "LanDisconnect";
 

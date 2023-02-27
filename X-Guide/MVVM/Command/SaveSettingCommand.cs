@@ -38,7 +38,8 @@ namespace X_Guide.MVVM.Command
             string visionIP = string.Join(".", _settingViewModel.VisionIP);
             var machine = new MachineModel(_settingViewModel.Machine.Id, _settingViewModel.MachineName,(int)Enum.Parse(typeof(MachineType),_settingViewModel.MachineType), _settingViewModel.MachineDescription, robotIP, _settingViewModel.RobotPort, visionIP, _settingViewModel.VisionPort, _settingViewModel.ManipulatorTerminator, _settingViewModel.VisionTerminator);
             _machineDB.SaveMachine(machine);
-
+            _settingViewModel.UpdateComboBox(_settingViewModel.MachineName);
+            
             /*setting.WriteToXML(ConfigurationManager.AppSettings["SettingPath"]);*/
 
             MessageBox.Show("Setting saved! Please restart the application for the setting to take effect.");

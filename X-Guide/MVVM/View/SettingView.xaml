@@ -69,10 +69,12 @@
                         <!--Software Revision Input-->
                         <ComboBox 
                             ItemsSource="{Binding MachineNameList}"
-                       
-                            SelectedItem="{Binding MachineName, Mode=TwoWay}"
+                            IsTextSearchEnabled="False"
+                            
+                            Text="{Binding MachineName}"
+                            SelectedItem="{Binding MachineName}"
                             SelectedValue="{Binding MachineName}"
-                            IsEditable="True"
+                            IsEditable="{Binding CanEdit}"
                             Style="{DynamicResource ComboBoxStyle}"  
                                     materialDesign:HintAssist.Hint="Manipulator Name"  
                                     />
