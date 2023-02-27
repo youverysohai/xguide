@@ -122,7 +122,7 @@
                     </hc:Interaction.Triggers>
                     <hc:SideMenuItem Header="Production" FontSize="16">
                         <hc:SideMenuItem.Icon>
-                            <materialDesign:PackIcon Kind="SitemapOutline" Width="33" Height="33"/>
+                            <materialDesign:PackIcon Kind="SitemapOutline" Width="36" Height="36"/>
                         </hc:SideMenuItem.Icon>
                         <hc:SideMenuItem Header="Base Image" Command="{Binding NavigateCommand}" CommandParameter="{x:Static local:PageName.Production}">
                             <hc:SideMenuItem.Icon>
@@ -145,43 +145,32 @@
                     </hc:SideMenuItem>
                     <hc:SideMenuItem Header="Engineering"  FontSize="16">
                         <hc:SideMenuItem.Icon>
-                            <materialDesign:PackIcon Kind="CalculatorVariantOutline" Width="33" Height="33"/>
+                            <materialDesign:PackIcon Kind="CalculatorVariantOutline" Width="36" Height="36"/>
 
                         </hc:SideMenuItem.Icon>
-                        <hc:SideMenuItem Header="Work Items">
+                        <hc:SideMenuItem Header="Calibration Wizard"  Command="{Binding NavigateCommand}" CommandParameter="{x:Static local:PageName.Engineering}">
                             <hc:SideMenuItem.Icon>
-                                <materialDesign:PackIcon Kind="PokemonGo" Width="24" Height="24"/>
+                                <materialDesign:PackIcon Kind="VectorSquareEdit" Width="24" Height="24"/>
 
                             </hc:SideMenuItem.Icon>
                         </hc:SideMenuItem>
-                        <hc:SideMenuItem Header="Boards">
+                        <hc:SideMenuItem Header="Work Items" Command="{Binding NavigateCommand}" CommandParameter="{x:Static local:PageName.Undefined}">
                             <hc:SideMenuItem.Icon>
-                                <materialDesign:PackIcon Kind="PokemonGo" Width="24" Height="24"/>
+                                <materialDesign:PackIcon Kind="WorkOutline" Width="24" Height="24"/>
 
                             </hc:SideMenuItem.Icon>
                         </hc:SideMenuItem>
-                        <hc:SideMenuItem Header="Backlogs">
+                        <hc:SideMenuItem Header="Backlogs" Command="{Binding NavigateCommand}" CommandParameter="{x:Static local:PageName.Undefined}">
                             <hc:SideMenuItem.Icon>
-                                <materialDesign:PackIcon Kind="PokemonGo" Width="24" Height="24"/>
+                                <materialDesign:PackIcon Kind="FileOutline"  Width="24" Height="24" />
 
                             </hc:SideMenuItem.Icon>
                         </hc:SideMenuItem>
-                        <hc:SideMenuItem Header="Sprints">
-                            <hc:SideMenuItem.Icon>
-                                <materialDesign:PackIcon Kind="PokemonGo" Width="24" Height="24"/>
 
-                            </hc:SideMenuItem.Icon>
-                        </hc:SideMenuItem>
-                        <hc:SideMenuItem Header="Queries">
-                            <hc:SideMenuItem.Icon>
-                                <materialDesign:PackIcon Kind="PokemonGo" Width="24" Height="24"/>
-
-                            </hc:SideMenuItem.Icon>
-                        </hc:SideMenuItem>
                     </hc:SideMenuItem>
                     <hc:SideMenuItem Header="Security"  FontSize="16">
                         <hc:SideMenuItem.Icon>
-                            <materialDesign:PackIcon Kind="SecureOutline" Width="33" Height="33"/>
+                            <materialDesign:PackIcon Kind="SecureOutline" Width="36" Height="36"/>
 
                         </hc:SideMenuItem.Icon>
                         <hc:SideMenuItem Header="User Admin" ToolTip="Manage user accounts, create new users, and remove existing ones" >
@@ -213,7 +202,7 @@
                     <!-- Settings Section -->
                     <hc:SideMenuItem Header="Settings" FontSize="16">
                         <hc:SideMenuItem.Icon>
-                            <materialDesign:PackIcon Kind="SettingsOutline" Width="33" Height="33"/>
+                            <materialDesign:PackIcon Kind="SettingsOutline" Width="36" Height="36"/>
 
                         </hc:SideMenuItem.Icon>
                         <hc:SideMenuItem Header="Setup" Command="{Binding NavigateCommand}" CommandParameter="{x:Static local:PageName.Setting}">

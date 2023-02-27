@@ -25,6 +25,8 @@ namespace X_Guide.MVVM.ViewModel
 
         public SaveSettingCommand SaveCommand { get; }
         public ICommand NavigateCommand { get; }
+
+        public ICommand EditManipulatorNameCommand { get; set; }
         public ICommand ConnectServerCommand { get; set; }
 
 
@@ -35,6 +37,50 @@ namespace X_Guide.MVVM.ViewModel
         private readonly ErrorViewModel _errorViewModel;
 
         public event EventHandler<DataErrorsChangedEventArgs> ErrorsChanged;
+
+        private Visibility _cancelBtnVisibility;
+
+        public Visibility CancelBtnVisibility
+        {
+            get { return _cancelBtnVisibility; }
+            set { _cancelBtnVisibility = value;
+                OnPropertyChanged();
+            }
+        }
+
+
+        private Visibility _saveBtnVisibility;
+
+        public Visibility SaveBtnVisibility
+        {
+            get { return _saveBtnVisibility; }
+            set { _saveBtnVisibility = value;
+                OnPropertyChanged();
+            }
+        }
+
+
+
+        private Visibility _editBtnVisibility;
+
+        public Visibility EditBtnVisibility
+        {
+            get { return _editBtnVisibility; }
+            set { _editBtnVisibility = value;
+                OnPropertyChanged();
+            }
+        }
+
+
+        private bool _canEdit;
+
+        public bool CanEdit
+        {
+            get { return _canEdit; }
+            set { _canEdit = value;
+                OnPropertyChanged();
+            }
+        }
 
         //SettingViewModel properties 
         private string _machineID;
@@ -230,6 +276,7 @@ namespace X_Guide.MVVM.ViewModel
 
             _machine = _machineDB.GetMachine("Limpeh"); //debug
             SaveCommand = new SaveSettingCommand(this, _machineDB);
+            EditManipulatorNameCommand = new EditManipulatorNameCommand(this);
 
             _errorViewModel = new ErrorViewModel();
             var command = (CommandBase)SaveCommand;
@@ -270,6 +317,9 @@ namespace X_Guide.MVVM.ViewModel
      
             VisionIP = _machine.VisionIP.Split('.');
             VisionPort = _machine.VisionPort;
+
+            SaveBtnVisibility = Visibility.Collapsed;
+            CancelBtnVisibility = Visibility.Collapsed;
         }
 
 
