@@ -25,17 +25,17 @@
             <materialDesign:Card UniformCornerRadius="16" Background="{x:Null}" Height="700" Width="380" Margin="25">
                 <StackPanel Orientation="Vertical" HorizontalAlignment="Center" Margin="15" Background="{DynamicResource MaterialDesignPaper}" >
                     <TextBlock FontSize="48" Margin="10 40 0 0" HorizontalAlignment="Center">X-Guide</TextBlock>
-                    <TextBlock FontSize="28" Margin="10 10" FontWeight="Bold" >Welcome Back!</TextBlock>
-                    <TextBlock FontSize="18" >Login to your existing account</TextBlock>
+                    <TextBlock FontSize="28" Margin="10" FontWeight="Bold" HorizontalAlignment="Center" >Welcome Back!</TextBlock>
+                    <TextBlock FontSize="18" HorizontalAlignment="Center">Login to your existing account</TextBlock>
                     
                     
                     <TextBox Margin="10" Style="{DynamicResource InputMaterialDesignTextBox}"
                              materialDesign:HintAssist.Hint="Username"></TextBox>  
-                    <PasswordBox Margin="10" Style="{DynamicResource MaterialDesignPasswordBox}"
+                    <PasswordBox Margin="10" FontSize="16" Style="{DynamicResource MaterialDesignFloatingHintRevealPasswordBox}"
                              materialDesign:HintAssist.Hint="Password"></PasswordBox>
+                    <Button Margin="10" Command="{x:Static materialDesign:DialogHost.CloseDialogCommand}" Style="{DynamicResource MaterialDesignOutlinedButton}">Login</Button>
 
-                    <Button Command="{x:Static materialDesign:DialogHost.CloseDialogCommand}" Style="{StaticResource MaterialDesignFlatAccentButton}" IsCancel="True" >Cancel</Button>
-                    <Button Command="{x:Static materialDesign:DialogHost.CloseDialogCommand}" Style="{DynamicResource MaterialDesignOutlinedButton}">Login</Button>
+                    <Button  Margin="10 5"  Command="{x:Static materialDesign:DialogHost.CloseDialogCommand}" Style="{StaticResource MaterialDesignFlatSecondaryButton}" IsCancel="True" >Cancel</Button>
                 </StackPanel>
             </materialDesign:Card>
 
