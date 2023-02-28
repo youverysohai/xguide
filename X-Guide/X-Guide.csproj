@@ -616,6 +616,12 @@
     <Compile Include="MVVM\ViewModel\SecurityViewModel.cs" />
     <Compile Include="MVVM\ViewModel\UndefinedViewModel.cs" />
     <Compile Include="MVVM\ViewModel\UserLoginViewModel.cs" />
+    <Compile Include="MVVM\View\CalibrationWizardSteps\Step1.xaml.cs">
+      <DependentUpon>Step1.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="MVVM\View\CalibrationWizardSteps\Step2.xaml.cs">
+      <DependentUpon>Step2.xaml</DependentUpon>
+    </Compile>
     <Compile Include="MVVM\View\EngineeringView.xaml.cs">
       <DependentUpon>EngineeringView.xaml</DependentUpon>
     </Compile>
@@ -661,6 +667,14 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>XGuideModel.edmx</DependentUpon>
     </Compile>
+    <Page Include="MVVM\View\CalibrationWizardSteps\Step1.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="MVVM\View\CalibrationWizardSteps\Step2.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="MVVM\View\MainWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>

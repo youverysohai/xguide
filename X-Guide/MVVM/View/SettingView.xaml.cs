@@ -118,8 +118,10 @@ namespace X_Guide.MVVM.View
 
         private void BrowseBtn_Click(object sender, RoutedEventArgs e)
         {
-            OpenFileDialog openFileDialog = new OpenFileDialog();
-            openFileDialog.Filter = "xml files (*.xml)|*.xml|All files (*.*)|*.*";
+            OpenFileDialog openFileDialog = new OpenFileDialog
+            {
+                Filter = "xml files (*.xml)|*.xml|All files (*.*)|*.*"
+            };
             if (openFileDialog.ShowDialog() == true)
                 TxtLogFilePath.Text = File.ReadAllText(openFileDialog.FileName);
         }
