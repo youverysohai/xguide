@@ -21,9 +21,12 @@ namespace X_Guide.Service.DatabaseProvider
             throw new NotImplementedException();
         }
 
-        public Task<IEnumerable<MachineModel>> GetAllUsersAsync()
+        public IEnumerable<string> GetAllMachineName()
         {
-            throw new NotImplementedException();
+            using (var context = _contextFactory.CreateDbContext())
+            {
+                return context.Machines.Select(r => r.Name).ToList();
+            }
         }
 
         public MachineModel GetMachine(string name)
@@ -100,6 +103,6 @@ namespace X_Guide.Service.DatabaseProvider
             return null;
         }
 
-
+       
     }
 }

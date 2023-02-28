@@ -610,7 +610,6 @@
     </Compile>
     <Compile Include="MVVM\Command\ConnectServerCommand.cs" />
     <Compile Include="MVVM\Command\EditManipulatorNameCommand.cs" />
-    <Compile Include="MVVM\Command\ServerCommand.cs" />
     <Compile Include="MVVM\DBContext\DbContextFactory.cs" />
     <Compile Include="MVVM\DTO\UserDTO.cs" />
     <Compile Include="MVVM\Model\MachineModel.cs" />
@@ -637,8 +636,10 @@
     <Compile Include="Service\Communication\ClientService.cs" />
     <Compile Include="Service\Communication\IClientService.cs" />
     <Compile Include="Service\Communication\IServerService.cs" />
+    <Compile Include="Service\Communication\ServerViewModelService.cs" />
     <Compile Include="Service\DatabaseProvider\DatabaseMachineService.cs" />
     <Compile Include="Service\DatabaseProvider\IMachineService.cs" />
+    <Compile Include="Service\Communication\ServerCommand.cs" />
     <Compile Include="Service\NavigationService.cs" />
     <Compile Include="Service\Communication\ServerService.cs" />
     <Compile Include="Service\DatabaseProvider\DatabaseUserService.cs" />

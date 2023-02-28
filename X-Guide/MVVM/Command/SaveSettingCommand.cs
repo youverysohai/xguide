@@ -20,7 +20,7 @@ namespace X_Guide.MVVM.Command
 
         public override bool CanExecute(object parameter)
         {
-            return _settingViewModel.HasErrors;
+            return !_settingViewModel.HasErrors;
         }
         public SaveSettingCommand(SettingViewModel settingViewModel, IMachineService machineDB)
         {
@@ -40,8 +40,7 @@ namespace X_Guide.MVVM.Command
             var machine = new MachineModel(_settingViewModel.Machine.Id, _settingViewModel.MachineName, (int)Enum.Parse(typeof(MachineType), _settingViewModel.MachineType), _settingViewModel.MachineDescription, robotIP, _settingViewModel.RobotPort, visionIP, _settingViewModel.VisionPort, _settingViewModel.ManipulatorTerminator, _settingViewModel.VisionTerminator);
 
             _machineDB.SaveMachine(machine);
-            _settingViewModel.UpdateMachineNameList(_settingViewModel.MachineName);
-
+            _settingViewModel.UpdateManipulatorNameList(_settingViewModel.MachineName);
             /*setting.WriteToXML(ConfigurationManager.AppSettings["SettingPath"]);*/
 
             MessageBox.Show(ConfigurationManager.AppSettings["SaveSettingCommand_SaveMessage"]);

@@ -13,6 +13,8 @@ using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Input;
 using System.Xml.Serialization;
+using X_Guide.Communication.Service;
+using X_Guide.CustomEventArgs;
 using X_Guide.MVVM.Command;
 using X_Guide.MVVM.Model;
 using X_Guide.MVVM.Store;
@@ -38,7 +40,7 @@ namespace X_Guide.MVVM.ViewModel
         public event EventHandler<DataErrorsChangedEventArgs> ErrorsChanged;
 
         public bool HasErrors => _errorViewModel.HasErrors;
-        
+
         private Visibility _cancelBtnVisibility;
 
         public Visibility CancelBtnVisibility
@@ -64,7 +66,7 @@ namespace X_Guide.MVVM.ViewModel
             }
         }
 
-       
+
 
         private Visibility _editBtnVisibility;
 
@@ -91,8 +93,7 @@ namespace X_Guide.MVVM.ViewModel
             }
         } //Setting View UI properties
 
-        
-        private List<MachineModel> _machines;
+
         private MachineModel _machine;
         public MachineModel Machine => _machine;
 
@@ -322,20 +323,18 @@ namespace X_Guide.MVVM.ViewModel
             }
         }//SettingViewModel properties 
 
-        public void UpdateMachineNameList(string machineName)
-        {
-           MachineNameList[MachineNameList.IndexOf(_machine.Name)] = machineName;
-        }
 
-        public SettingViewModel(IMachineService machineDB)
+        public SettingViewModel(IMachineService machineDB, IServerService serverService)
         {
-            PropertyChanged += ChangeManipulatorEventHandler;
+            PropertyChanged += OnManipulatorChangeEvent;
+            serverService.CommandEvent += OnCommandEvent;
+
             _errorViewModel = new ErrorViewModel();
 
             _machineDB = machineDB;
-            ConnectServerCommand = new ConnectServerCommand(this);
-            _machines = _machineDB.GetAllMachine().ToList();
-            MachineNameList = new ObservableCollection<string>(_machines.Select(r => r.Name));
+
+           
+            MachineNameList = new ObservableCollection<string>(_machineDB.GetAllMachineName());
             MachineTypeList = EnumHelperClass.GetAllValuesAndDescriptions(typeof(MachineType));
             TerminatorList = EnumHelperClass.GetAllValuesAndDescriptions(typeof(Terminator));
 
@@ -350,19 +349,20 @@ namespace X_Guide.MVVM.ViewModel
 
 
             _errorViewModel.ErrorsChanged += OnErrorChanged;
-
+            ConnectServerCommand = new ConnectServerCommand(this);
         }
 
+        private void OnCommandEvent(object sender, TcpClientEventArgs e)
+        {
+            MessageBox.Show($"{e.TcpClient.Client.AddressFamily} : Client triggered a command!");
+        }
 
-
-        private void ChangeManipulatorEventHandler(object sender, PropertyChangedEventArgs e)
+        private void OnManipulatorChangeEvent(object sender, PropertyChangedEventArgs e)
         {
             if (e.PropertyName == nameof(MachineName))
             {
-                if (_machines.FirstOrDefault(r => r.Name == MachineName) == null) return;
-                _machines = _machineDB.GetAllMachine().ToList();
-                _machine = _machines.First(r => { return r.Name == MachineName; });
-
+                if (!MachineNameList.Contains(MachineName)) return;
+                UpdateMachine();
                 UpdateSettingUI(_machine);
             }
             else if (e.PropertyName == nameof(MachineNameList))
@@ -371,7 +371,10 @@ namespace X_Guide.MVVM.ViewModel
             }
         }
 
-       
+        public void UpdateMachine()
+        {
+            _machine = _machineDB.GetMachine(MachineName);
+        }
         private void OnErrorChanged(object sender, DataErrorsChangedEventArgs e)
         {
             ErrorsChanged?.Invoke(this, e);
@@ -405,6 +408,11 @@ namespace X_Guide.MVVM.ViewModel
             VisionPort = machine.VisionPort;
         }
 
+        public void UpdateManipulatorNameList(string name)
+        {
+            MachineNameList[MachineNameList.IndexOf(_machine.Name)] = name;
+            MachineName = name;
+        }
 
 
     }

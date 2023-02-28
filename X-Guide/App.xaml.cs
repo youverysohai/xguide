@@ -5,6 +5,7 @@ using System.Data;
 using System.Diagnostics;
 using System.IO;
 using System.Linq;
+using System.Net;
 using System.Threading.Tasks;
 using System.Windows;
 using X_Guide.Communication.Service;
@@ -46,7 +47,8 @@ namespace X_Guide
             _machineDb = new DatabaseMachineService(_dbContextFactory);
             //App specific settings
             InitializeAppConfiguration();
-            _serverService = new ServerService(8000);
+            _serverService = new ServerService(IPAddress.Any, 8000);
+       
             _navigationStore = new NavigationStore();
             _resourceDictionary = new ResourceDictionary
             {
@@ -113,7 +115,7 @@ namespace X_Guide
 
         private ViewModelBase CreateSettingViewModel()
         {
-            return new SettingViewModel(_machineDb);
+            return new SettingViewModel(_machineDb, _serverService);
         }
 
         private ViewModelBase CreateProductionViewModel()
