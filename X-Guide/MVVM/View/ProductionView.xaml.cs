@@ -33,13 +33,7 @@ namespace X_Guide.MVVM.View
         //    p_box.ModuleSource = p;
         //    p.Run();
         //}
-        private void BrowseBtn_Click(object sender, RoutedEventArgs e)
-        {
-            OpenFileDialog openFileDialog = new OpenFileDialog();
-            openFileDialog.Filter = "solution files (*.sol)|*.xml|All files (*.*)|*.*";
-            if (openFileDialog.ShowDialog() == true)
-                TxtLogFilePath.Text = File.ReadAllText(openFileDialog.FileName);
-        }
+
 
     }
 }

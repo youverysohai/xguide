@@ -18,15 +18,31 @@
             </StackPanel>
         </DataTemplate>
     </UserControl.Resources>
-    <materialDesign:Card>
+    <materialDesign:Card Background="#2d3030">
         <Grid>
             <Grid.RowDefinitions>
                 <RowDefinition Height="*"/>
-                <RowDefinition Height="2*"/>
+                <RowDefinition Height="10*"/>
+                <RowDefinition Height="*"/>
             </Grid.RowDefinitions>
+            <hc:Card Background="#777777" >
+          <hc:StepBar Name="step" Grid.Row="0" IsMouseSelectable="True" >
+                <hc:StepBarItem  Content="Select Robot"/>
+                <hc:StepBarItem  Content="Camera Mounting,Orientation"/>
+                <hc:StepBarItem  Content="Vision Flow for calibration"/>
+                <hc:StepBarItem  Content="Robot Motion Parameters"/>
+                <hc:StepBarItem  Content="Log Robot to desired calibration point"/>
+                <hc:StepBarItem  Content="Start calibration"/>
+                <hc:StepBarItem  Content="Complete"/>
+            </hc:StepBar>
+            </hc:Card>
 
-      
-
+            
+            <StackPanel Grid.Row="2" Orientation="Horizontal" HorizontalAlignment="Center">
+                <Button Click="Button_Prev" Width="180" Content="Prev"/>
+                <Button Click="Button_Next" Width="180"  Content="Next"/>
+            </StackPanel>
         </Grid>
+
     </materialDesign:Card>
 </UserControl>

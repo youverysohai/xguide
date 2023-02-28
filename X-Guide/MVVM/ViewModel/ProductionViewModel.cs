@@ -13,10 +13,23 @@ namespace X_Guide.MVVM.ViewModel
     public class ProductionViewModel : ViewModelBase
     {
         public ICommand NavigateCommand { get; }
-       
+
+        public ICommand BrowseFileDialogCommand { get; }
+
+        private string _visionSolutionFilePath;
+
+        public string VisionSolutionFilePath
+        {
+            get { return _visionSolutionFilePath; }
+            set { _visionSolutionFilePath = value; 
+            OnPropertyChanged();    
+            }
+        }
+
+
         public ProductionViewModel()
         {
-            
+            BrowseFileDialogCommand = new BrowseFileDialogCommand(this);
         }
     }
 }

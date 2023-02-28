@@ -29,7 +29,16 @@ namespace X_Guide.MVVM.View
            
 
         }
-      
+        private void Button_Prev(object sender, RoutedEventArgs e)
+        {
+            step.Prev();
+        }
+
+        private void Button_Next(object sender, RoutedEventArgs e)
+        {
+            step.Next();
+        }
+
     }
 
 

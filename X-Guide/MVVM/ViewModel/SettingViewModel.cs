@@ -345,7 +345,8 @@ namespace X_Guide.MVVM.ViewModel
 
 
             var command = (CommandBase)SaveCommand;
-
+            SaveBtnVisibility = Visibility.Collapsed;
+            CancelBtnVisibility = Visibility.Collapsed;
 
 
             _errorViewModel.ErrorsChanged += OnErrorChanged;
@@ -399,8 +400,8 @@ namespace X_Guide.MVVM.ViewModel
      
 
 
-            SaveBtnVisibility = Visibility.Collapsed;
-            CancelBtnVisibility = Visibility.Collapsed;
+            
+            
             RobotPort = machine.ManipulatorPort;
             VisionIP = machine.VisionIP.Split('.');
             VisionPort = machine.VisionPort;
