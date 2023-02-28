@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
@@ -9,28 +10,30 @@ using System.Threading;
 using System.Threading.Tasks;
 using System.Windows;
 using X_Guide.CustomEventArgs;
-
+using X_Guide.Service.Communation;
 
 namespace X_Guide.Communication.Service
 {
     public class ServerService : IServerService
     {
         private int _port { get; }
+        private IPAddress _ip { get; }
         private TcpListener _server;
-        private int _activeClients = 0;
-        public int ActiveClients => _activeClients;
+
         private bool started = false;
 
         public event EventHandler<TcpClientEventArgs> ClientEvent;
         public event EventHandler<TcpListenerEventArgs> ListenerEvent;
+        public event EventHandler<TcpClientEventArgs> CommandEvent;
 
+        private readonly ConcurrentDictionary<int, TcpClient> _connectedClient = new ConcurrentDictionary<int, TcpClient>();
         CancellationTokenSource cts;
 
 
-        public ServerService(int port)
+        public ServerService(IPAddress ip, int port)
         {
             _port = port;
-
+            _ip = ip;
         }
 
         public bool getServerStatus()
@@ -50,9 +53,9 @@ namespace X_Guide.Communication.Service
             cts = new CancellationTokenSource();
             // Specify the port number to listen on.
 
-
+            
             // Create a TcpListener object.
-            _server = new TcpListener(IPAddress.Any, _port);
+            _server = new TcpListener(_ip, _port);
 
             // Start listening for incoming connections.
             try
@@ -97,14 +100,21 @@ namespace X_Guide.Communication.Service
             }
 
         }
+       
 
         private async Task HandleClientConnection(TcpClient client, CancellationToken ct)
         {
-
+           
             ClientEvent?.Invoke(this, new TcpClientEventArgs(client));
+          
             // Get the stream for reading and writing data.
             NetworkStream stream = client.GetStream();
+            _connectedClient.TryAdd(client.GetHashCode(), client);
+            SendMessageAsync("Connected to the server end. Please enjoy your stay!\n", stream);
+            ServerCommand serverCommand = new ServerCommand(client, this);
+            serverCommand.CommandEvent += OnCommandEvent;
             ct.Register(() => stream.Close());
+                
             // Buffer for storing incoming data.
             byte[] buffer = new byte[1024];
 
@@ -113,18 +123,18 @@ namespace X_Guide.Communication.Service
             try
             {
 
-                Interlocked.Increment(ref _activeClients);
+             
                 while (!cts.IsCancellationRequested)
                 {
                     // Wait for data to be available
                     await Task.Delay(100, ct);
 
                     // Read incoming data.
-
+                  
                     int bytesRead = await stream.ReadAsync(buffer, 0, buffer.Length);
-
+                    
                     data += Encoding.ASCII.GetString(buffer, 0, bytesRead);
-
+  
                     if (data.EndsWith("\n"))
                     {
                         string[] messages = data.Split(new[] { "\n" }, StringSplitOptions.RemoveEmptyEntries);
@@ -133,8 +143,9 @@ namespace X_Guide.Communication.Service
                             // Handle the received message
                             // Convert the incoming data to a string and display it.
                             Debug.WriteLine("Received message: {0}", message);
-                            /*     byte[] responseBuffer = Encoding.ASCII.GetBytes(data);
-                                 await stream.WriteAsync(responseBuffer, 0, responseBuffer.Length);*/
+                            
+                            serverCommand.ValidateSyntax(message);
+                            
                         }
                         data = "";
                     }
@@ -148,9 +159,7 @@ namespace X_Guide.Communication.Service
 
 
                 }
-                client.Close();
-                ClientEvent?.Invoke(this, new TcpClientEventArgs(client));
-                client.Dispose();
+                DisposeClient(client);
             }
 
             //throws object dispose exception here
@@ -159,16 +168,32 @@ namespace X_Guide.Communication.Service
                 /*var errorResponse = Encoding.ASCII.GetBytes("The server connection was forcefully closed!");
                 client.GetStream().Write(errorResponse, 0, errorResponse.Length);*/
                 Debug.WriteLine($"The connection was forcefully closed by the server.");
-                Interlocked.Decrement(ref _activeClients);
-                ClientEvent?.Invoke(this, new TcpClientEventArgs(client));
-                client.Dispose();
+                DisposeClient(client);
             }
 
 
 
         }
 
+        private void OnCommandEvent(object sender, TcpClientEventArgs e)
+        {
+            CommandEvent?.Invoke(sender, e);
+        }
 
+        public void DisposeClient(TcpClient client)
+        {
+            client.Close();
+            _connectedClient.TryRemove(client.GetHashCode(), out _);
+            ClientEvent?.Invoke(this, new TcpClientEventArgs(client));
+            client.Dispose();
+        }
+
+        public async void SendMessageAsync(string message, NetworkStream networkStream)
+        {
+            var bytes = Encoding.ASCII.GetBytes(message);
+            await networkStream.WriteAsync(bytes, 0, bytes.Length);
+        }
+        
     }
 
 }

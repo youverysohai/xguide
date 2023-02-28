@@ -10,9 +10,9 @@ namespace X_Guide.Service.DatabaseProvider
     internal interface IMachineService
     {
 
-        Task<IEnumerable<MachineModel>> GetAllUsersAsync();
+        
         void CreateMachine(MachineModel machine);
-
+        IEnumerable<string> GetAllMachineName();
         IEnumerable<MachineModel> GetAllMachine();
         MachineModel GetMachine(string name);
         void SaveMachine(MachineModel machine);

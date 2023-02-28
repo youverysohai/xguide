@@ -11,17 +11,16 @@ namespace X_Guide.Communication.Service
 {
     public class ClientService : IClientService
     {
-        private readonly string _ipAddress;
-        private readonly char _terminator;
+   
         private readonly int _port;
         private TcpClient _client;
         private NetworkStream _stream;
+        private IPAddress _ipAddress;
 
-        public ClientService(string ipAddress, int port, char terminator)
+        public ClientService(IPAddress ipAddress, int port)
         {
             _ipAddress = ipAddress;
             _port = port;
-            _terminator = terminator;
         }
 
         public async Task ConnectServer()
@@ -29,7 +28,7 @@ namespace X_Guide.Communication.Service
             try
             {
                 _client = new TcpClient();
-                _client.Connect(IPAddress.Parse(_ipAddress), _port);
+                _client.Connect(_ipAddress, _port);
                 _stream = _client.GetStream();
                 string message = "Hello Server!";
                 byte[] data = Encoding.ASCII.GetBytes(message);

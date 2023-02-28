@@ -13,32 +13,22 @@ namespace X_Guide.MVVM.Command
 {
     internal class ConnectServerCommand : CommandBase
     {
-       
-        public ConnectServerCommand(SettingViewModel svm)
+        public IClientService _clientService;
+        public SettingViewModel _settingViewModel { get; }
+        public ConnectServerCommand(SettingViewModel settingViewModel)
         {
-            Svm = svm;
+           
+            _settingViewModel = settingViewModel;
+    
         }
 
-        private SettingViewModel Svm;
+       
 
         public override void Execute(object parameter)
         {
-
-            if (Svm.CanEdit) Svm.CanEdit = false;
-            else
-            {
-                Svm.CanEdit = true;
-            }
-                
-           /* if (!_serverService.getServerStatus())
-            {
-                _serverService.StartServer();
-            }
-            else
-            {
-                _serverService.StopServer();
-            }*/
-            
+            MessageBox.Show("Start connecting...");
+            _clientService = new ClientService(IPAddress.Parse(_settingViewModel.Machine.ManipulatorIP), int.Parse(_settingViewModel.Machine.ManipulatorPort));
+            _clientService.ConnectServer();
             
         }
     }
