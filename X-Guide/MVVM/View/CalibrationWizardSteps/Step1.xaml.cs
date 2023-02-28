@@ -1,5 +1,4 @@
-﻿using HandyControl.Controls;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
@@ -14,38 +13,21 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
-using X_Guide.MVVM.View.CalibrationWizardSteps;
 
-namespace X_Guide.MVVM.View
+namespace X_Guide.MVVM.View.CalibrationWizardSteps
 {
-    /// <summary>
-    /// Interaction logic for EngineeringView.xaml
-    /// </summary>
-    public partial class EngineeringView : UserControl
-    {
 
-        public EngineeringView()
+    /// <summary>
+    /// Interaction logic for Step1.xaml
+    /// </summary>
+    public partial class Step1 : UserControl
+    {
+        public Step1()
         {
             InitializeComponent();
-
-
-
         }
-        private void Button_Prev(object sender, RoutedEventArgs e)
-        {
-            step.Prev();
-        }
-
-        private void Button_Next(object sender, RoutedEventArgs e)
-        {
-            step.Next();
-        }
-
-
-
-
+      
     }
-
 
 
 }

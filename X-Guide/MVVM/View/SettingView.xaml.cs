@@ -42,7 +42,15 @@ namespace X_Guide.MVVM.View
 
             if (textBox.Text.Length >= 3)
             {
-                e.Handled = true; // cancel the input event
+                if (textBox.SelectionLength == textBox.Text.Length)
+                {
+                    e.Handled = false; // do not cancel the input event
+                }   
+                else
+                {
+                    e.Handled = true; // cancel the input event
+                }
+                   
             }
         }
         private void TxtPort_PreviewTextInput(object sender, TextCompositionEventArgs e)
@@ -110,8 +118,10 @@ namespace X_Guide.MVVM.View
 
         private void BrowseBtn_Click(object sender, RoutedEventArgs e)
         {
-            OpenFileDialog openFileDialog = new OpenFileDialog();
-            openFileDialog.Filter = "xml files (*.xml)|*.xml|All files (*.*)|*.*";
+            OpenFileDialog openFileDialog = new OpenFileDialog
+            {
+                Filter = "xml files (*.xml)|*.xml|All files (*.*)|*.*"
+            };
             if (openFileDialog.ShowDialog() == true)
                 TxtLogFilePath.Text = File.ReadAllText(openFileDialog.FileName);
         }

@@ -28,9 +28,9 @@
                     <RowDefinition Height="20*"/>
                 </Grid.RowDefinitions>
                 <StackPanel Margin="10" Orientation="Horizontal" Grid.Row="0"  Grid.ColumnSpan="2">
-                    <TextBox Margin="10"  x:Name="TxtLogFilePath" Style="{DynamicResource InputMaterialDesignTextBox}"   MinWidth="400" 
+                    <TextBox Margin="10"  x:Name="TxtLogFilePath" Style="{DynamicResource InputMaterialDesignTextBox}" Text="{Binding VisionSolutionFilePath}"   MinWidth="400" 
                                     materialDesign:HintAssist.Hint="Vision Software Solution Path (.sol)" />
-                    <Button x:Name="BrowseBtn" Margin="10" Content="Browse" Style="{DynamicResource MaterialDesignOutlinedButton}" Command="{Binding ConnectServerCommand}"/>
+                    <Button  Margin="10" Content="Browse" Style="{DynamicResource MaterialDesignOutlinedButton}" Command="{Binding BrowseFileDialogCommand}"/>
                 </StackPanel>
                 <Rectangle  Grid.Row="1" Grid.ColumnSpan="2" Fill="#212121" Margin="15"/>
                 <!--<v:RenderControlBase Name="p_box" Loaded="p_box_Loaded"/>-->

@@ -345,7 +345,8 @@ namespace X_Guide.MVVM.ViewModel
             CancelBtnVisibility = Visibility.Collapsed;
 
             var command = (CommandBase)SaveCommand;
-
+            SaveBtnVisibility = Visibility.Collapsed;
+            CancelBtnVisibility = Visibility.Collapsed;
 
 
             _errorViewModel.ErrorsChanged += OnErrorChanged;

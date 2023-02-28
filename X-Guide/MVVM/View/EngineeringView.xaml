@@ -4,29 +4,56 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:X_Guide.MVVM.View"
+             xmlns:stepsUI="clr-namespace:X_Guide.MVVM.View.CalibrationWizardSteps"
              xmlns:hc="https://handyorg.github.io/handycontrol"
 
              mc:Ignorable="d"      
              xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
              d:DesignHeight="450" d:DesignWidth="800">
-    <UserControl.Resources>
-        <!-- Define a DataTemplate for displaying a customer object -->
-        <DataTemplate DataType="{x:Type local:EngineeringView}">
-            <StackPanel>
-                <TextBlock Text="{Binding Name}" FontWeight="Bold" />
-                <TextBlock Text="{Binding Email}" Margin="0,5,0,0" />
-            </StackPanel>
-        </DataTemplate>
-    </UserControl.Resources>
-    <materialDesign:Card>
+
+    <materialDesign:Card Background="#2d2d30">
         <Grid>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="6*"/>
+            </Grid.ColumnDefinitions>
             <Grid.RowDefinitions>
                 <RowDefinition Height="*"/>
-                <RowDefinition Height="2*"/>
+                <RowDefinition Height="12*"/>
+
             </Grid.RowDefinitions>
+            <Border Margin="10" Grid.Row="1" Grid.Column="0">
+                <hc:StepBar Name="step" IsMouseSelectable="True" ItemsSource="{Binding DataList}" Dock="Left">
 
-      
+                    <hc:StepBar.ItemTemplate>
+                        <DataTemplate>
+                            <StackPanel >
+                                <StackPanel Orientation="Horizontal">
+                                    
+                                    <TextBlock VerticalAlignment="Center" FontSize="16" FontWeight="Bold" HorizontalAlignment="Left" Margin="0 0 5 0">
+                                            <Run Text="Step"/>
+                                            <Run Text="{Binding Index,RelativeSource={RelativeSource AncestorType=hc:StepBarItem}}"/>
+                                    </TextBlock>
+                                    <TextBlock> <materialDesign:PackIcon Width="30" Height="30" Kind="{Binding Icon}"></materialDesign:PackIcon></TextBlock>
 
+                                </StackPanel>
+                                <TextBlock Text="{Binding Content}" />
+
+                            </StackPanel>
+                        </DataTemplate>
+                    </hc:StepBar.ItemTemplate>
+                </hc:StepBar>
+
+            </Border>
+            <ContentControl Grid.Row="1" Grid.Column="1">
+                <stepsUI:Step1></stepsUI:Step1>
+            </ContentControl>
+
+            <StackPanel Grid.Row="2" Orientation="Horizontal" HorizontalAlignment="Center" Visibility="Collapsed">
+                <Button Click="Button_Prev" Width="180" Content="Prev"/>
+                <Button Click="Button_Next" Width="180"  Content="Next"/>
+            </StackPanel>
         </Grid>
+
     </materialDesign:Card>
 </UserControl>
