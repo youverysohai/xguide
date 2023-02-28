@@ -13,8 +13,7 @@ namespace X_Guide.MVVM.Command
 {
     internal class ConnectServerCommand : CommandBase
     {
-        IServerService _serverService;
-
+       
         public ConnectServerCommand(SettingViewModel svm)
         {
             Svm = svm;

@@ -14,6 +14,12 @@ namespace X_Guide
     
     public partial class Machine
     {
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
+        public Machine()
+        {
+            this.Calibrations = new HashSet<Calibration>();
+        }
+    
         public int Id { get; set; }
         public int Type { get; set; }
         public string Name { get; set; }
@@ -24,5 +30,8 @@ namespace X_Guide
         public string VisionPort { get; set; }
         public string ManipulatorTerminator { get; set; }
         public string VisionTerminator { get; set; }
+    
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<Calibration> Calibrations { get; set; }
     }
 }
