@@ -20,7 +20,7 @@ namespace X_Guide.MVVM.Command
 
         public override bool CanExecute(object parameter)
         {
-            return !_settingViewModel.HasErrors;
+            return _settingViewModel.HasErrors;
         }
         public SaveSettingCommand(SettingViewModel settingViewModel, IMachineService machineDB)
         {
@@ -28,23 +28,25 @@ namespace X_Guide.MVVM.Command
             _machineDB = machineDB;
         }
 
-       
+
         public override void Execute(object parameter)
         {
 
-        
 
-            string robotIP = string.Join(".", _settingViewModel.RobotIPS1, _settingViewModel.RobotIPS2, _settingViewModel.RobotIPS3, _settingViewModel.RobotIPS4);
-            string visionIP = string.Join(".", _settingViewModel.VisionIP);
-            var machine = new MachineModel(_settingViewModel.Machine.Id, _settingViewModel.MachineName,(int)Enum.Parse(typeof(MachineType),_settingViewModel.MachineType), _settingViewModel.MachineDescription, robotIP, _settingViewModel.RobotPort, visionIP, _settingViewModel.VisionPort, _settingViewModel.ManipulatorTerminator, _settingViewModel.VisionTerminator);
+
+            string robotIP = $"{_settingViewModel.RobotIPS1}.{_settingViewModel.RobotIPS2}.{_settingViewModel.RobotIPS3}.{_settingViewModel.RobotIPS4}";
+            string visionIP = $"{_settingViewModel.VisionIP[0]}.{_settingViewModel.VisionIP[1]}.{_settingViewModel.VisionIP[2]}.{_settingViewModel.VisionIP[3]}";
+
+            var machine = new MachineModel(_settingViewModel.Machine.Id, _settingViewModel.MachineName, (int)Enum.Parse(typeof(MachineType), _settingViewModel.MachineType), _settingViewModel.MachineDescription, robotIP, _settingViewModel.RobotPort, visionIP, _settingViewModel.VisionPort, _settingViewModel.ManipulatorTerminator, _settingViewModel.VisionTerminator);
+
             _machineDB.SaveMachine(machine);
-            _settingViewModel.UpdateComboBox(_settingViewModel.MachineName);
-            
+            _settingViewModel.UpdateMachineNameList(_settingViewModel.MachineName);
+
             /*setting.WriteToXML(ConfigurationManager.AppSettings["SettingPath"]);*/
 
-            MessageBox.Show("Setting saved! Please restart the application for the setting to take effect.");
+            MessageBox.Show(ConfigurationManager.AppSettings["SaveSettingCommand_SaveMessage"]);
         }
-       
+
 
 
     }

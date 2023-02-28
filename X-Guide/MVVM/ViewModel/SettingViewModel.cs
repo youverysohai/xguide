@@ -31,29 +31,22 @@ namespace X_Guide.MVVM.ViewModel
         public ICommand EditManipulatorNameCommand { get; set; }
         public ICommand ConnectServerCommand { get; set; }
 
-        private string _testing;
-
-        public string Testing
-        {
-            get { return _testing; }
-            set { _testing = value;
-                OnPropertyChanged();
-            }
-        }
-
-
         private IMachineService _machineDB;
 
         private readonly ErrorViewModel _errorViewModel;
 
         public event EventHandler<DataErrorsChangedEventArgs> ErrorsChanged;
 
+        public bool HasErrors => _errorViewModel.HasErrors;
+        
         private Visibility _cancelBtnVisibility;
 
         public Visibility CancelBtnVisibility
         {
             get { return _cancelBtnVisibility; }
-            set { _cancelBtnVisibility = value;
+            set
+            {
+                _cancelBtnVisibility = value;
                 OnPropertyChanged();
             }
         }
@@ -64,19 +57,23 @@ namespace X_Guide.MVVM.ViewModel
         public Visibility SaveBtnVisibility
         {
             get { return _saveBtnVisibility; }
-            set { _saveBtnVisibility = value;
+            set
+            {
+                _saveBtnVisibility = value;
                 OnPropertyChanged();
             }
         }
 
-
+       
 
         private Visibility _editBtnVisibility;
 
         public Visibility EditBtnVisibility
         {
             get { return _editBtnVisibility; }
-            set { _editBtnVisibility = value;
+            set
+            {
+                _editBtnVisibility = value;
                 OnPropertyChanged();
             }
         }
@@ -87,17 +84,17 @@ namespace X_Guide.MVVM.ViewModel
         public bool CanEdit
         {
             get { return _canEdit; }
-            set { _canEdit = value;
+            set
+            {
+                _canEdit = value;
                 OnPropertyChanged();
             }
-        }
+        } //Setting View UI properties
 
-        //SettingViewModel properties 
-        private string _machineID;
-        public string MachineID;
+        
         private List<MachineModel> _machines;
         private MachineModel _machine;
-        public  MachineModel Machine => _machine;
+        public MachineModel Machine => _machine;
 
 
         //SettingViewModel properties
@@ -323,8 +320,12 @@ namespace X_Guide.MVVM.ViewModel
                 _visionTerminator = value;
                 OnPropertyChanged();
             }
-        }
+        }//SettingViewModel properties 
 
+        public void UpdateMachineNameList(string machineName)
+        {
+           MachineNameList[MachineNameList.IndexOf(_machine.Name)] = machineName;
+        }
 
         public SettingViewModel(IMachineService machineDB)
         {
@@ -337,12 +338,12 @@ namespace X_Guide.MVVM.ViewModel
             MachineNameList = new ObservableCollection<string>(_machines.Select(r => r.Name));
             MachineTypeList = EnumHelperClass.GetAllValuesAndDescriptions(typeof(MachineType));
             TerminatorList = EnumHelperClass.GetAllValuesAndDescriptions(typeof(Terminator));
-      
-          
-      
+
             SaveCommand = new SaveSettingCommand(this, _machineDB);
             EditManipulatorNameCommand = new EditManipulatorNameCommand(this);
 
+            SaveBtnVisibility = Visibility.Collapsed;
+            CancelBtnVisibility = Visibility.Collapsed;
 
             var command = (CommandBase)SaveCommand;
 
@@ -358,19 +359,19 @@ namespace X_Guide.MVVM.ViewModel
         {
             if (e.PropertyName == nameof(MachineName))
             {
-                if(_machines.FirstOrDefault(r => r.Name == MachineName) == null) return;
+                if (_machines.FirstOrDefault(r => r.Name == MachineName) == null) return;
                 _machines = _machineDB.GetAllMachine().ToList();
                 _machine = _machines.First(r => { return r.Name == MachineName; });
-                
+
                 UpdateSettingUI(_machine);
             }
-            else if(e.PropertyName == nameof(MachineNameList))
+            else if (e.PropertyName == nameof(MachineNameList))
             {
-           
+
             }
         }
 
-        public bool HasErrors => _errorViewModel.HasErrors;
+       
         private void OnErrorChanged(object sender, DataErrorsChangedEventArgs e)
         {
             ErrorsChanged?.Invoke(this, e);
@@ -395,24 +396,16 @@ namespace X_Guide.MVVM.ViewModel
             RobotIPS2 = manipulatorIP[1];
             RobotIPS3 = manipulatorIP[2];
             RobotIPS4 = manipulatorIP[3];
-            
-     
 
 
-            SaveBtnVisibility = Visibility.Collapsed;
-            CancelBtnVisibility = Visibility.Collapsed;
+
+
             RobotPort = machine.ManipulatorPort;
             VisionIP = machine.VisionIP.Split('.');
             VisionPort = machine.VisionPort;
         }
 
-        public void UpdateComboBox(string defaultSelection)
-        {
-            _machines = _machineDB.GetAllMachine().ToList();
-            MachineNameList.Clear();
-            _machines.ForEach(r => { MachineNameList.Add(r.Name); });
-            MachineName = defaultSelection;
-        }
+
 
     }
 

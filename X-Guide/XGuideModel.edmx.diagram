@@ -8,6 +8,8 @@
         <EntityTypeShape EntityType="XGuideDBModel.Setting" Width="1.5" PointX="0.75" PointY="4.75" />
         <EntityTypeShape EntityType="XGuideDBModel.User" Width="1.5" PointX="0.75" PointY="0.75" />
         <EntityTypeShape EntityType="XGuideDBModel.Machine" Width="1.5" PointX="3.375" PointY="0.75" />
+        <EntityTypeShape EntityType="XGuideDBModel.Calibration" Width="1.5" PointX="5.75" PointY="6.25" />
+        <AssociationConnector Association="XGuideDBModel.FK_Calibration_To_Machine" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

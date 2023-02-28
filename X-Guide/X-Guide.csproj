@@ -588,8 +588,14 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="Calibration.cs">
+      <DependentUpon>XGuideModel.tt</DependentUpon>
+    </Compile>
     <Compile Include="CustomEventArgs\TcpClientEventArgs.cs" />
     <Compile Include="CustomEventArgs\TcpListenerEventArgs.cs" />
+    <Compile Include="Enum\MountingOrient6Axis.cs" />
+    <Compile Include="Enum\MountingOrientGantry.cs" />
+    <Compile Include="Enum\MountingOrientSCARA.cs" />
     <Compile Include="Enum\Terminator.cs" />
     <Compile Include="Enum\EnumHelperClass.cs" />
     <Compile Include="Enum\EnumToCollectionConverter.cs" />
