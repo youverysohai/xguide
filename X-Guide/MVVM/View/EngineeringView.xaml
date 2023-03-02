@@ -48,7 +48,7 @@
                     <SolidColorBrush Color="#2d2d30" />
 
                 </Border.Background>
-                <hc:StepBar Margin="10" Name="step" IsMouseSelectable="True" Dock="Right">
+                <hc:StepBar Margin="10" Name="step" IsMouseSelectable="True" Dock="Right" StepChanged="step_StepChanged" StepIndex="{Binding StepIndex}">
                    
                     <!--Step 1-->
                     <hc:StepBarItem>
