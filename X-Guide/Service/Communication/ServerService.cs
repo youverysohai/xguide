@@ -25,6 +25,7 @@ namespace X_Guide.Communication.Service
         public event EventHandler<TcpClientEventArgs> ClientEvent;
         public event EventHandler<TcpListenerEventArgs> ListenerEvent;
         public event EventHandler<TcpClientEventArgs> CommandEvent;
+        public event EventHandler<TcpClientEventArgs> MessageEvent;
 
         private readonly ConcurrentDictionary<int, TcpClient> _connectedClient = new ConcurrentDictionary<int, TcpClient>();
         CancellationTokenSource cts;
@@ -49,11 +50,9 @@ namespace X_Guide.Communication.Service
 
         public async Task StartServer()
         {
-
             cts = new CancellationTokenSource();
             // Specify the port number to listen on.
-
-            
+   
             // Create a TcpListener object.
             _server = new TcpListener(_ip, _port);
 
@@ -83,6 +82,7 @@ namespace X_Guide.Communication.Service
                     TcpClient client = await Task.Run(() => _server.AcceptTcpClientAsync(), sct);
                     Debug.WriteLine("Client connected.");
 
+                    _connectedClient.TryAdd(client.GetHashCode(), client);
 
                     // Handle the client connection in a separate task.
 #pragma warning disable CS4014 // This warning has to be suppressed to disallow the await keyword from blocking the task
@@ -94,7 +94,6 @@ namespace X_Guide.Communication.Service
             catch
             {
                 Debug.WriteLine($"Server is closed.");
-
                 started = false;
                 ListenerEvent?.Invoke(this, new TcpListenerEventArgs(_server));
             }
@@ -111,8 +110,7 @@ namespace X_Guide.Communication.Service
             NetworkStream stream = client.GetStream();
             _connectedClient.TryAdd(client.GetHashCode(), client);
             SendMessageAsync("Connected to the server end. Please enjoy your stay!\n", stream);
-            ServerCommand serverCommand = new ServerCommand(client, this);
-            serverCommand.CommandEvent += OnCommandEvent;
+ 
             ct.Register(() => stream.Close());
                 
             // Buffer for storing incoming data.
@@ -143,8 +141,9 @@ namespace X_Guide.Communication.Service
                             // Handle the received message
                             // Convert the incoming data to a string and display it.
                             Debug.WriteLine("Received message: {0}", message);
+                            MessageEvent.Invoke(this, new TcpClientEventArgs(client, message));
+                          
                             
-                            serverCommand.ValidateSyntax(message);
                             
                         }
                         data = "";
@@ -175,10 +174,7 @@ namespace X_Guide.Communication.Service
 
         }
 
-        private void OnCommandEvent(object sender, TcpClientEventArgs e)
-        {
-            CommandEvent?.Invoke(sender, e);
-        }
+ 
 
         public void DisposeClient(TcpClient client)
         {

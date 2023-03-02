@@ -38,7 +38,6 @@ namespace X_Guide.MVVM.Command
             {
 
                 MessageBox.Show("This is the first page!");
-
             }
 
         }

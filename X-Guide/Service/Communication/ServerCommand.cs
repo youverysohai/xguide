@@ -13,38 +13,41 @@ namespace X_Guide.Service.Communation
     public class ServerCommand
     {
         public event EventHandler<TcpClientEventArgs> CommandEvent;
-        public TcpClient _tcpClient { get; }
+
         public IServerService _serverService { get; }
-        public ServerCommand(TcpClient tcpClient, IServerService serverService)
+        public ServerCommand(IServerService serverService)
         {
-            _tcpClient = tcpClient;
+       
             _serverService = serverService;
+            _serverService.MessageEvent += ValidateSyntax;
         }
 
-        
+      
 
-        public void ValidateSyntax(string message)
+        public void ValidateSyntax(object sender, TcpClientEventArgs tcpClientEventArgs)
         {
+            string message = tcpClientEventArgs.Message;
+            TcpClient client = tcpClientEventArgs.TcpClient;
             var commands = message.Split(' ');
             switch (commands[0].Trim().ToLower())
             {
-                case "status": CheckStatus(); break;
-                case "xguide": XGuideCommand(message);  break;
-                case "getpose" : GetPoseCommand(message); break;
+                case "status": CheckStatus(client); break;
+                case "xguide": XGuideCommand(client, message);  break;
+                case "getpose" : GetPoseCommand(client, message); break;
                  
                 
-                default: ReturnErrorMessage();  break;
+                default: ReturnErrorMessage(client);  break;
 
                    
             }
         }
 
-        private void GetPoseCommand(string message)
+        private void GetPoseCommand(TcpClient client, string message)
         {
             var commands = message.Split(',');
         }
 
-        private void XGuideCommand(string message)
+        private void XGuideCommand(TcpClient client, string message)
         {
             var commands = message.Split(',');
             string GlobalTool = commands[1];
@@ -55,15 +58,15 @@ namespace X_Guide.Service.Communation
             throw new NotImplementedException();
         }
 
-        public void ReturnErrorMessage()
+        public void ReturnErrorMessage(TcpClient client)
         {
-            _serverService.SendMessageAsync("Unknown command :< \n", _tcpClient.GetStream());
+            _serverService.SendMessageAsync("Unknown command :< \n", client.GetStream());
         }
 
-        public void CheckStatus()
+        public void CheckStatus(TcpClient client)
         {
-            _serverService.SendMessageAsync("Received your message!\n", _tcpClient.GetStream());
-            CommandEvent?.Invoke(this, new TcpClientEventArgs(_tcpClient));
+            _serverService.SendMessageAsync("Received your message!\n", client.GetStream());
+            CommandEvent?.Invoke(this, new TcpClientEventArgs(client));
         }
     }
 }
