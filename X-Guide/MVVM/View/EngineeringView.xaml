@@ -128,9 +128,18 @@
 
             </Border>
                <!-- Content -->
-            <ContentControl Grid.Row="0" Grid.Column="1" Content="{Binding CurrentViewModel}">
+            <ContentControl Grid.Row="0" Grid.Column="1" Content="{Binding CurrentViewModel}" Visibility="Collapsed" x:Name="ContentControl">
 
             </ContentControl>
+            <StackPanel Orientation="Vertical" VerticalAlignment="Center" Grid.Row="0" Grid.Column="1" x:Name="StartStepPage">
+                <TextBlock HorizontalAlignment="Center" FontSize="35" >Calibration Wizard</TextBlock>
+                <TextBox Width="250" Margin="50"  FontSize="16"  Style="{DynamicResource MaterialDesignFloatingHintTextBox }"
+                         materialDesign:HintAssist.Hint="Enter New Calibration Name" Text="{Binding Name}"/>
+
+                <TextBlock Margin="0 0 0 50" HorizontalAlignment="Center" VerticalAlignment="Bottom">Press Start to Begin <materialDesign:PackIcon Kind="ArrowDownBoldOutline"></materialDesign:PackIcon></TextBlock>
+                <Button Click="BtnStart_Click" Style="{DynamicResource MaterialDesignOutlinedButton}" Width="200">Start</Button>
+
+            </StackPanel>
             <materialDesign:Card Grid.Row="1" Grid.Column="1" UniformCornerRadius="16" Margin="0 0 15 10" >
                 <StackPanel  Orientation="Horizontal" HorizontalAlignment="Center" Visibility="Visible" >
 

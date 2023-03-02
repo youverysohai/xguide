@@ -826,6 +826,9 @@
     <PackageReference Include="MaterialDesignThemes.Wpf">
       <Version>1.0.1</Version>
     </PackageReference>
+    <PackageReference Include="WpfAnimatedGif">
+      <Version>2.0.2</Version>
+    </PackageReference>
   </ItemGroup>
   <ItemGroup>
     <BootstrapperPackage Include=".NETFramework,Version=v4.7.1">
@@ -843,6 +846,7 @@
     <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
   </ItemGroup>
   <ItemGroup>
+    <Resource Include="Style\ImageSource\hamster-cute.gif" />
     <Content Include="XGuideDB.mdf">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>

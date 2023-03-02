@@ -11,7 +11,7 @@
         <materialDesign:Card UniformCornerRadius="20" Margin="0 10 15 0">
 
             <StackPanel Orientation="Vertical" VerticalAlignment="Center" >
-                <TextBlock Text="Camera Mounting &amp; Orientation" HorizontalAlignment="Center" FontSize="35" Margin="0 0 0 25"/>
+                
                 <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" >
                     <TextBox   Width="350" FontSize="20" Foreground="{DynamicResource PrimaryBlueColor}" Text="Gantry 1" IsReadOnly="True"   Style="{DynamicResource  MaterialDesignFloatingHintTextBox}"
                          materialDesign:HintAssist.Hint="Manipulator's name :" TextAlignment="Center"/>
@@ -19,7 +19,12 @@
                     <TextBox Width="350" FontSize="20" Foreground="{DynamicResource PrimaryBlueColor}" Text="Gantry System" IsReadOnly="True"   Style="{DynamicResource  MaterialDesignFloatingHintTextBox }"
                          materialDesign:HintAssist.Hint="Manipulator's Type :" TextAlignment="Center"/>
                 </StackPanel>
-
+                <TextBlock Text="Camera Mounting &amp; Orientation" HorizontalAlignment="Center" FontSize="35" Margin="0 0 0 25"/>
+                <StackPanel Orientation="Vertical" HorizontalAlignment="Center" >
+                    <RadioButton Style="{DynamicResource MaterialDesignChoiceChipPrimaryOutlineRadioButton}">Look Downward</RadioButton>
+                    <RadioButton Style="{DynamicResource MaterialDesignChoiceChipPrimaryOutlineRadioButton}">Look Upward</RadioButton>
+                    <RadioButton Style="{DynamicResource MaterialDesignChoiceChipPrimaryOutlineRadioButton}">Eye On Hand</RadioButton>
+                </StackPanel>
 
 
             </StackPanel>

@@ -51,6 +51,12 @@ namespace X_Guide.MVVM.View
                 viewModel.OnIndexChanged(e);
             }
         }
+
+        private void BtnStart_Click(object sender, RoutedEventArgs e)
+        {
+            ContentControl.Visibility = Visibility.Visible;
+            StartStepPage.Visibility = Visibility.Collapsed;
+        }
     }
 
 
