@@ -20,7 +20,7 @@
                     <ComboBoxItem>2</ComboBoxItem>
                     <ComboBoxItem>3</ComboBoxItem>
                 </ComboBox>
-                <StackPanel  Orientation="Horizontal" HorizontalAlignment="Center" Margin="0 0 0 40" Height="100">
+                <StackPanel  Orientation="Horizontal" HorizontalAlignment="Center" Margin="0 0 0 40">
                     <TextBlock  VerticalAlignment="Center" Text="New Manipulator? "/>
                     <Button  Style="{DynamicResource MaterialDesignFlatAccentButton}" Padding="5"  Margin="5">Create New</Button>
                 </StackPanel>
