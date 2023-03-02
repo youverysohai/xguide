@@ -33,9 +33,9 @@
 
 
     </UserControl.Resources>
-    <ScrollViewer VerticalScrollBarVisibility="Hidden" Margin="5">
+    <ScrollViewer VerticalScrollBarVisibility="Hidden" >
 
-        <materialDesign:Card Background="#2d2d30" UniformCornerRadius="16"  Margin="0 10 10 10">
+        <materialDesign:Card Background="#2d2d30" UniformCornerRadius="20"  Margin="0 10 10 10">
 
 
 

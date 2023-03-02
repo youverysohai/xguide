@@ -6,35 +6,42 @@
              xmlns:local="clr-namespace:X_Guide.MVVM.View.CalibrationWizardSteps"
              mc:Ignorable="d" 
              d:DesignHeight="450" d:DesignWidth="800"
-                       xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes">
-    
-    <Grid>
-        <GroupBox Style="{DynamicResource MaterialDesignGroupBox}"  Margin="20">
-            <GroupBox.Header>
-                <TextBlock Foreground="{StaticResource PrimaryBlackColor}" TextAlignment="Center" FontWeight="DemiBold" FontSize="36"  Text="Select Manipulator"/>
-            </GroupBox.Header>
-            <StackPanel  Margin="60 10 60 10" >
-                <ComboBox Margin="50 50 50 0" FontSize="20" Style="{DynamicResource MaterialDesignOutlinedComboBox}"
+             FontSize="16"
+             xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes">
+    <Grid Margin="15 10">
+        <materialDesign:Card Margin="0 0 0 10">
+            <materialDesign:Card.Background>
+                <RadialGradientBrush
+                      GradientOrigin="0.3,0.9"
+                    Center="0,0"
+                    RadiusX="0.4" RadiusY="0.5">
+
+                    <GradientStop Color="#2d2d30" Offset="0.6" />
+
+                    <GradientStop Color="#A0A0A0" Offset="0" />
+
+                </RadialGradientBrush>
+            </materialDesign:Card.Background>
+
+            <StackPanel Orientation="Vertical" VerticalAlignment="Center" >
+                <TextBlock Text="Select Manipulator" HorizontalAlignment="Center" FontSize="40" Margin="30"/>
+                <ComboBox Width="300"  Style="{DynamicResource MaterialDesignOutlinedComboBox}"
                     materialDesign:HintAssist.Hint="Manipulator Name"
                           >
-                    <ComboBoxItem>1</ComboBoxItem>
-                    <ComboBoxItem>2</ComboBoxItem>
-                    <ComboBoxItem>3</ComboBoxItem>
-                </ComboBox>
-                <StackPanel Margin="10 0 50 0" Orientation="Horizontal" HorizontalAlignment="Right">
-                    <TextBlock FontSize="16" VerticalAlignment="Center" Text="New Manipulator?"/>
-                    <Button Style="{DynamicResource MaterialDesignFlatButton}" Padding="5"  Margin="5">Create New</Button>
-                </StackPanel>
-                <TextBox Margin="50" Text="Gantry System" IsReadOnly="True" FontSize="20"  Style="{DynamicResource MaterialDesignFilledTextBox }"
-                         materialDesign:HintAssist.Hint="Selected Manipulator's Type" TextAlignment="Center"/>
-                <StackPanel Margin="10 0 50 0" Orientation="Horizontal" HorizontalAlignment="Center">
-                    <Button Style="{DynamicResource MaterialDesignFlatButton}" Padding="5"  Margin="5">Cancel</Button>
-                    <Button Style="{DynamicResource MaterialDesignOutlinedButton}" Padding="5"  Margin="5">Apply</Button>
+                        <ComboBoxItem>1</ComboBoxItem>
+                        <ComboBoxItem>2</ComboBoxItem>
+                        <ComboBoxItem>3</ComboBoxItem>
+                    </ComboBox>
+                    <StackPanel  Orientation="Horizontal" HorizontalAlignment="Center" Margin="0 0 0 40">
+                        <TextBlock  VerticalAlignment="Center" Text="New Manipulator? "/>
+                        <Button  Style="{DynamicResource MaterialDesignFlatAccentButton}" Padding="5"  Margin="5">Create New</Button>
+                    </StackPanel>
+                    <TextBox Width="350" FontSize="20" Foreground="{DynamicResource PrimaryBlueColor}" Text="Gantry System" IsReadOnly="True"   Style="{DynamicResource MaterialDesignOutlinedTextBox }"
+                         materialDesign:HintAssist.Hint="Selected Manipulator's Type :" TextAlignment="Center"/>
+
 
                 </StackPanel>
-
-            </StackPanel>
-
-        </GroupBox>
+        </materialDesign:Card>
     </Grid>
+
 </UserControl>
