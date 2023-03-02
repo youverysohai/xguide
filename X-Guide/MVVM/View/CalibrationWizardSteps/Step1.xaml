@@ -9,16 +9,12 @@
              Background="Transparent"
               xmlns:hc="https://handyorg.github.io/handycontrol"
              xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes">
-    <UserControl.Resources>
-        <Style TargetType="GroupBox" BasedOn="{StaticResource MaterialDesignCardGroupBox}">
 
-        </Style>
-    </UserControl.Resources>
     <Grid Margin="10">
         <materialDesign:Card Margin="10">
             <StackPanel  >
 
-                <TextBox Margin="50"  FontSize="20"  Style="{DynamicResource MaterialDesignFloatingHintTextBox }"
+                <TextBox Text="{Binding Name}" Margin="50"  FontSize="20"  Style="{DynamicResource MaterialDesignFloatingHintTextBox }"
                          materialDesign:HintAssist.Hint="New Calibration Name" TextAlignment="Center"/>
 
 

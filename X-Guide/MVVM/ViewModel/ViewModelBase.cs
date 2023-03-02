@@ -11,7 +11,10 @@ namespace X_Guide.MVVM.ViewModel
     public class ViewModelBase : INotifyPropertyChanged
     {
         public event PropertyChangedEventHandler PropertyChanged;
-
+        public virtual ViewModelBase GetNextViewModel()
+        {
+            return null;
+        }
         protected void OnPropertyChanged([CallerMemberName]string propertyName = null)
         {
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));

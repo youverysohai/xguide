@@ -611,6 +611,8 @@
     <Compile Include="MVVM\Command\BrowseFileDialogCommand.cs" />
     <Compile Include="MVVM\Command\ConnectServerCommand.cs" />
     <Compile Include="MVVM\Command\EditManipulatorNameCommand.cs" />
+    <Compile Include="MVVM\Command\WizNextCommand.cs" />
+    <Compile Include="MVVM\Command\WizPrevCommand.cs" />
     <Compile Include="MVVM\DBContext\DbContextFactory.cs" />
     <Compile Include="MVVM\DTO\UserDTO.cs" />
     <Compile Include="MVVM\Model\MachineModel.cs" />
@@ -619,6 +621,11 @@
     <Compile Include="MVVM\ViewModel\EngineeringViewModel.cs" />
     <Compile Include="MVVM\ViewModel\ErrorViewModel.cs" />
     <Compile Include="MVVM\ViewModel\SecurityViewModel.cs" />
+    <Compile Include="MVVM\ViewModel\Step1ViewModel.cs" />
+    <Compile Include="MVVM\ViewModel\Step2ViewModel.cs" />
+    <Compile Include="MVVM\ViewModel\Step3ViewModel.cs" />
+    <Compile Include="MVVM\ViewModel\Step4ViewModel.cs" />
+    <Compile Include="MVVM\ViewModel\Step5ViewModel.cs" />
     <Compile Include="MVVM\ViewModel\UndefinedViewModel.cs" />
     <Compile Include="MVVM\ViewModel\UserLoginViewModel.cs" />
     <Compile Include="MVVM\View\CalibrationWizardSteps\Step1.xaml.cs">
@@ -626,6 +633,15 @@
     </Compile>
     <Compile Include="MVVM\View\CalibrationWizardSteps\Step2.xaml.cs">
       <DependentUpon>Step2.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="MVVM\View\CalibrationWizardSteps\Step3.xaml.cs">
+      <DependentUpon>Step3.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="MVVM\View\CalibrationWizardSteps\Step4.xaml.cs">
+      <DependentUpon>Step4.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="MVVM\View\CalibrationWizardSteps\Step5.xaml.cs">
+      <DependentUpon>Step5.xaml</DependentUpon>
     </Compile>
     <Compile Include="MVVM\View\EngineeringView.xaml.cs">
       <DependentUpon>EngineeringView.xaml</DependentUpon>
@@ -679,6 +695,18 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="MVVM\View\CalibrationWizardSteps\Step2.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="MVVM\View\CalibrationWizardSteps\Step3.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="MVVM\View\CalibrationWizardSteps\Step4.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="MVVM\View\CalibrationWizardSteps\Step5.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

@@ -14,6 +14,10 @@ namespace X_Guide.MVVM
         Security,
         Undefined,
         Login,
+        StepOne,
+        StepTwo,
+    
+    
 
     }
 }

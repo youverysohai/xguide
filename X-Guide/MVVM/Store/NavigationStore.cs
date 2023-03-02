@@ -16,16 +16,20 @@ namespace X_Guide.MVVM.Store
 
         private ViewModelBase _currentViewModel;
 
+
+
         public ViewModelBase CurrentViewModel
         {
             get { return _currentViewModel; }
             set { _currentViewModel = value;
+
                 OnCurrentViewModelChanged();
             }
         }
 
         private void OnCurrentViewModelChanged()
         {
+           
             CurrentViewModelChanged?.Invoke();
         }
     }

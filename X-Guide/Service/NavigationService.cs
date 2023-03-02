@@ -18,7 +18,15 @@ namespace X_Guide.Service
             _navigationStore = navigationStore;
             _createViewModel = createViewModel;
         }
-        public void Navigate()
+        public void Navigate<T>() where T : ViewModelBase
+        {
+            _navigationStore.CurrentViewModel = Activator.CreateInstance<T>();
+        }
+        public void Navigate(ViewModelBase viewModel)
+        {
+            _navigationStore.CurrentViewModel = viewModel;
+        }
+        public void Navigate() 
         {
             _navigationStore.CurrentViewModel = _createViewModel();
         }

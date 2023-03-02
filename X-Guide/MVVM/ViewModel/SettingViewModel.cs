@@ -341,6 +341,8 @@ namespace X_Guide.MVVM.ViewModel
             SaveCommand = new SaveSettingCommand(this, _machineDB);
             EditManipulatorNameCommand = new EditManipulatorNameCommand(this);
 
+
+            //UI
             SaveBtnVisibility = Visibility.Collapsed;
             CancelBtnVisibility = Visibility.Collapsed;
 

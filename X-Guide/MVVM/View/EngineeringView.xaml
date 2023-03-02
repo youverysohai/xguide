@@ -3,9 +3,11 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
-             xmlns:local="clr-namespace:X_Guide.MVVM.View"
+             xmlns:local="clr-namespace:X_Guide.MVVM"
              xmlns:stepsUI="clr-namespace:X_Guide.MVVM.View.CalibrationWizardSteps"
              xmlns:hc="https://handyorg.github.io/handycontrol"
+             xmlns:vms="clr-namespace:X_Guide.MVVM.ViewModel"
+ 
 
              mc:Ignorable="d"      
              xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
@@ -13,6 +15,23 @@
 
     <materialDesign:Card Background="#2d2d30">
         <Grid>
+            <Grid.Resources>
+                <DataTemplate DataType="{x:Type vms:Step1ViewModel}">
+                    <stepsUI:Step1/>
+                </DataTemplate>
+                <DataTemplate DataType="{x:Type vms:Step2ViewModel}">
+                    <stepsUI:Step2/>
+                </DataTemplate>
+                <DataTemplate DataType="{x:Type vms:Step3ViewModel}">
+                    <stepsUI:Step3/>
+                </DataTemplate>
+                <DataTemplate DataType="{x:Type vms:Step4ViewModel}">
+                    <stepsUI:Step4/>
+                </DataTemplate>
+                <DataTemplate DataType="{x:Type vms:Step5ViewModel}">
+                    <stepsUI:Step5/>
+                </DataTemplate>
+            </Grid.Resources>
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="*"/>
                 <ColumnDefinition Width="6*"/>
@@ -45,13 +64,14 @@
                 </hc:StepBar>
 
             </Border>
-            <ContentControl Grid.Row="1" Grid.Column="1">
-                <stepsUI:Step1></stepsUI:Step1>
+           
+            <ContentControl Grid.Row="1" Grid.Column="1" Content="{Binding CurrentViewModel}">
+                
             </ContentControl>
 
-            <StackPanel Grid.Row="2" Orientation="Horizontal" HorizontalAlignment="Center" Visibility="Collapsed">
-                <Button Click="Button_Prev" Width="180" Content="Prev"/>
-                <Button Click="Button_Next" Width="180"  Content="Next"/>
+            <StackPanel Grid.Row="0" Grid.Column="2" Orientation="Horizontal" HorizontalAlignment="Center" Visibility="Visible">
+                <Button Command="{Binding WizPrevCommand}" CommandParameter="{x:Static local:PageName.StepOne}" Width="180" Content="Prev"/>
+                <Button Command="{Binding WizNextCommand}" CommandParameter="{x:Static local:PageName.StepTwo}" Width="180"  Content="Next"/>
             </StackPanel>
         </Grid>
 

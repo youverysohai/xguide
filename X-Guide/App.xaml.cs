@@ -28,7 +28,9 @@ namespace X_Guide
 
    
         private readonly NavigationStore _navigationStore;
+        private readonly NavigationStore _wizardNavigationStore;
         private Dictionary<PageName, NavigationService> _viewModels;
+        private Dictionary<PageName, NavigationService> _wizardViewModels;
         private DbContextFactory _dbContextFactory;
         private IUserService _userProvider;
         private IServerService _serverService;
@@ -50,6 +52,7 @@ namespace X_Guide
             _serverService = new ServerService(IPAddress.Any, 8000);
        
             _navigationStore = new NavigationStore();
+            _wizardNavigationStore = new NavigationStore();
             _resourceDictionary = new ResourceDictionary
             {
                 Source = new Uri("/Style/Color.xaml", UriKind.RelativeOrAbsolute)
@@ -73,8 +76,15 @@ namespace X_Guide
                 {PageName.Undefined, new NavigationService(_navigationStore, CreateUndefinedViewModel) } ,
                 {PageName.Login, new NavigationService(_navigationStore, CreateUserLoginViewModel) }
             };
-/*
-            _setting = SettingModel.ReadFromXML(ConfigurationManager.AppSettings["SettingPath"]);*/
+
+            _wizardViewModels = new Dictionary<PageName, NavigationService>
+            {
+                {PageName.StepOne, new NavigationService (_wizardNavigationStore, CreateStepOneViewModel) },
+                {PageName.StepTwo, new NavigationService (_wizardNavigationStore, CreateStepTwoViewModel) },
+            
+            };
+            /*
+                        _setting = SettingModel.ReadFromXML(ConfigurationManager.AppSettings["SettingPath"]);*/
         }
 
         private void InitializeAppConfiguration()
@@ -105,7 +115,7 @@ namespace X_Guide
         }
         private ViewModelBase CreateEngineeringViewModel()
         {
-            return new EngineeringViewModel();
+            return new EngineeringViewModel(_wizardNavigationStore);
         }
 
         private ViewModelBase CreateUndefinedViewModel()
@@ -125,6 +135,15 @@ namespace X_Guide
         private ViewModelBase CreateUserLoginViewModel()
         {
             return new UserLoginViewModel();
+        }
+
+        private ViewModelBase CreateStepOneViewModel()
+        {
+            return new Step1ViewModel();
+        }
+        private ViewModelBase CreateStepTwoViewModel()
+        {
+            return new Step2ViewModel();
         }
     }
 
