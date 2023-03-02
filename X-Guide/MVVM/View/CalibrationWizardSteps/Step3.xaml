@@ -7,36 +7,19 @@
              mc:Ignorable="d" 
              d:DesignHeight="450" d:DesignWidth="800"
              xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes">
-    <Grid Margin="15 10">
-        <materialDesign:Card Margin="0 0 0 10">
-            <materialDesign:Card.Background>
-                <RadialGradientBrush
-                      GradientOrigin="0.67,0.6"
-                    Center="0,0"
-                    RadiusX="0.4" RadiusY="0.5">
-
-                    <GradientStop Color="#2d2d30" Offset="0.6" />
-
-                    <GradientStop Color="#A0A0A0" Offset="0" />
-
-                </RadialGradientBrush>
-            </materialDesign:Card.Background>
+    <Grid Margin="0 0 0 10">
+        <materialDesign:Card UniformCornerRadius="20" Margin="0 10 15 0">
 
             <StackPanel Orientation="Vertical" VerticalAlignment="Center" >
-                <TextBlock Text="Select Manipulator" HorizontalAlignment="Center" FontSize="40" Margin="30"/>
-                <ComboBox Width="300"  Style="{DynamicResource MaterialDesignOutlinedComboBox}"
-                    materialDesign:HintAssist.Hint="Manipulator Name"
-                          >
-                    <ComboBoxItem>1</ComboBoxItem>
-                    <ComboBoxItem>2</ComboBoxItem>
-                    <ComboBoxItem>3</ComboBoxItem>
-                </ComboBox>
-                <StackPanel  Orientation="Horizontal" HorizontalAlignment="Center">
-                    <TextBlock  VerticalAlignment="Center" Text="New Manipulator? "/>
-                    <Button Style="{DynamicResource MaterialDesignFlatAccentButton}" Padding="5"  Margin="5">Create New</Button>
+                <TextBlock Text="Camera Mounting &amp; Orientation" HorizontalAlignment="Center" FontSize="35" Margin="0 0 0 25"/>
+                <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" >
+                    <TextBox   Width="350" FontSize="20" Foreground="{DynamicResource PrimaryBlueColor}" Text="Gantry 1" IsReadOnly="True"   Style="{DynamicResource MaterialDesignOutlinedTextBox }"
+                         materialDesign:HintAssist.Hint="Manipulator's name :" TextAlignment="Center"/>
+
+                    <TextBox Width="350" FontSize="20" Foreground="{DynamicResource PrimaryBlueColor}" Text="Gantry System" IsReadOnly="True"   Style="{DynamicResource MaterialDesignOutlinedTextBox }"
+                         materialDesign:HintAssist.Hint="Manipulator's Type :" TextAlignment="Center"/>
                 </StackPanel>
-                <TextBox Margin="220 10" Text="Gantry System" IsReadOnly="True"   Style="{DynamicResource MaterialDesignOutlinedTextBox }"
-                         materialDesign:HintAssist.Hint="Selected Manipulator's Type :" TextAlignment="Center"/>
+
 
 
             </StackPanel>
