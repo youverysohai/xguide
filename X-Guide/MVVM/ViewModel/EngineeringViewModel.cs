@@ -1,7 +1,10 @@
-﻿using System;
+﻿using HandyControl.Controls;
+using HandyControl.Data;
+using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Data.Entity.Infrastructure;
+using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -16,7 +19,7 @@ namespace X_Guide.MVVM.ViewModel
 {
     public class EngineeringViewModel : ViewModelBase
     {
-        
+
 
         public LinkedList<ViewModelBase> _navigationHistory = new LinkedList<ViewModelBase>();
         public LinkedList<ViewModelBase> NavigationHistory => _navigationHistory;
@@ -27,22 +30,76 @@ namespace X_Guide.MVVM.ViewModel
         public ICommand WizPrevCommand { get; set; }
         public ViewModelBase CurrentViewModel => _navigationStore.CurrentViewModel;
 
-        public LinkedListNode<ViewModelBase> CurrentNode { get; set; } 
+
+        private int _stepIndex;
+
+        public int StepIndex
+        {
+            get { return _stepIndex; }
+            set
+            {
+                _stepIndex = value;
+                OnPropertyChanged();
+            }
+        }
+
+        private int _currentStep;
+
+        public int CurrentStep
+        {
+            get { return _currentStep; }
+            set
+            {
+                _currentStep = value;
+                StepIndex = _currentStep;
+            }
+        }
+
+
+
+
+
+        public void OnIndexChanged(FunctionEventArgs<int> e)
+        {
+            if (e.Info == CurrentStep) return;
+            LinkedListNode<ViewModelBase> node = _navigationHistory.First;
+            for (int i = 0; i < e.Info; i++)
+            {
+                node = node?.Next;
+            }
+
+            if (node != null)
+            {
+                var _navigationService = new NavigationService(_navigationStore, null);
+                _navigationService.Navigate(node.Value);
+                CurrentNode = node;
+                CurrentStep = e.Info;
+            }
+            else
+            {
+                StepIndex = CurrentStep;
+                MessageBox.Show("Page not found");
+                
+            }
+        }
+
+        public LinkedListNode<ViewModelBase> CurrentNode { get; set; }
 
         public ObservableCollection<DataItem> DataList { get; set; } = new ObservableCollection<DataItem>
         {
-            
+
             new DataItem {  Content = "Manipulator"      , Icon = "RobotIndustrialOutline"       },
             new DataItem {  Content = "Camera"           , Icon = "CameraOutline"          },
             new DataItem {  Content = "Vision Flow"      , Icon = "ViewListOutline"       },
             new DataItem {  Content = "Robot Motion"     , Icon = "MotionOutline"        } ,
             new DataItem {  Content = "Jog Robot"        , Icon = "GamepadOutline"       } ,
             new DataItem {  Content = "Start Calibration", Icon = "CheckOutline"  } ,
-        };                                                                
+        };
 
-        public EngineeringViewModel(NavigationStore navigationStore) {
+        public EngineeringViewModel(NavigationStore navigationStore)
+        {
 
-         
+
             _navigationStore = navigationStore;
             _navigationStore.CurrentViewModelChanged += OnCurrentViewModelChanged;
             WizNextCommand = new WizNextCommand(this, _navigationStore);
@@ -50,12 +107,14 @@ namespace X_Guide.MVVM.ViewModel
 
             _navigationStore.CurrentViewModel = new Step1ViewModel();
             CurrentNode = _navigationHistory.AddLast(CurrentViewModel);
-            
 
-                
+
+
+
+
         }
 
-        
+
 
         private void OnCurrentViewModelChanged()
         {
@@ -65,7 +124,7 @@ namespace X_Guide.MVVM.ViewModel
     }
     public class DataItem
     {
-    
+
         public string Content { get; set; }
         public string Icon { get; set; }
     }

@@ -1,4 +1,5 @@
 ﻿using HandyControl.Controls;
+using HandyControl.Data;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -15,6 +16,7 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 using X_Guide.MVVM.View.CalibrationWizardSteps;
+using X_Guide.MVVM.ViewModel;
 
 namespace X_Guide.MVVM.View
 {
@@ -41,9 +43,14 @@ namespace X_Guide.MVVM.View
             step.Next();
         }
 
-
-
-
+        private void step_StepChanged(object sender, FunctionEventArgs<int> e)
+        {
+            EngineeringViewModel viewModel = DataContext as EngineeringViewModel;
+            if(viewModel != null)
+            {
+                viewModel.OnIndexChanged(e);
+            }
+        }
     }
 
 

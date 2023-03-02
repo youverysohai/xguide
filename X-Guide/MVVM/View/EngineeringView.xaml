@@ -55,9 +55,10 @@
 
                     </LinearGradientBrush>
                 </Border.Background>
-                <hc:StepBar Margin="10" StepIndex="4" Name="step" IsMouseSelectable="True" ItemsSource="{Binding DataList}" Dock="Right">
+                <hc:StepBar Margin="10" StepIndex="{Binding StepIndex}" Name="step" IsMouseSelectable="True" ItemsSource="{Binding DataList}" Dock="Right" StepChanged="step_StepChanged">
 
                     <hc:StepBar.ItemTemplate>
+                        
                         <DataTemplate>
                             <StackPanel >
                                 <StackPanel Orientation="Horizontal">

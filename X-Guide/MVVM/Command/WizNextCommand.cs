@@ -35,6 +35,7 @@ namespace X_Guide.MVVM.Command
             {
                 _navigationService.Navigate(nextNode.Value);
                 _viewModel.CurrentNode = nextNode;
+                _viewModel.CurrentStep += 1;
             }
             else
             {
@@ -43,6 +44,7 @@ namespace X_Guide.MVVM.Command
                 {
                     _navigationService.Navigate(viewModel);
                     _viewModel.CurrentNode = _viewModel.NavigationHistory.AddLast(viewModel);
+                    _viewModel.CurrentStep += 1;
                 }
                 else
                 {
