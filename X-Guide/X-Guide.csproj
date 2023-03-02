@@ -627,6 +627,9 @@
     <Compile Include="MVVM\View\CalibrationWizardSteps\Step2.xaml.cs">
       <DependentUpon>Step2.xaml</DependentUpon>
     </Compile>
+    <Compile Include="MVVM\View\CalibrationWizardSteps\Step3.xaml.cs">
+      <DependentUpon>Step3.xaml</DependentUpon>
+    </Compile>
     <Compile Include="MVVM\View\EngineeringView.xaml.cs">
       <DependentUpon>EngineeringView.xaml</DependentUpon>
     </Compile>
@@ -679,6 +682,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="MVVM\View\CalibrationWizardSteps\Step2.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="MVVM\View\CalibrationWizardSteps\Step3.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

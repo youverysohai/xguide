@@ -8,18 +8,32 @@
              d:DesignHeight="450" d:DesignWidth="800"
              Background="Transparent"
               xmlns:hc="https://handyorg.github.io/handycontrol"
-             xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes">
+             xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
+             FontSize="16">
     <UserControl.Resources>
         <Style TargetType="GroupBox" BasedOn="{StaticResource MaterialDesignCardGroupBox}">
 
         </Style>
     </UserControl.Resources>
-    <Grid Margin="10">
-        <materialDesign:Card Margin="10">
-            <StackPanel  >
+    <Grid Margin="15 10">
+        <materialDesign:Card Margin="0 0 0 10">
+            <materialDesign:Card.Background>
+                <RadialGradientBrush
+                      GradientOrigin="0.67,0.6"
+                    Center="0,0"
+                    RadiusX="0.4" RadiusY="0.5">
 
-                <TextBox Margin="50"  FontSize="20"  Style="{DynamicResource MaterialDesignFloatingHintTextBox }"
-                         materialDesign:HintAssist.Hint="New Calibration Name" TextAlignment="Center"/>
+                    <GradientStop Color="#2d2d30" Offset="0.6" />
+
+                    <GradientStop Color="#A0A0A0" Offset="0" />
+
+                </RadialGradientBrush>
+            </materialDesign:Card.Background>
+            <StackPanel  >
+                <TextBlock HorizontalAlignment="Center" FontSize="30" Margin="0 100 0 50">Calibration Wizard</TextBlock>
+                <TextBox Width="250" Margin="50"  FontSize="16"  Style="{DynamicResource MaterialDesignFloatingHintTextBox }"
+                         materialDesign:HintAssist.Hint="Enter New Calibration Name" />
+                <TextBlock Margin="50" HorizontalAlignment="Center">Press Start to Begin <materialDesign:PackIcon Kind="ArrowDownBoldOutline"></materialDesign:PackIcon></TextBlock>
 
 
             </StackPanel>

@@ -1,4 +1,4 @@
-﻿<UserControl x:Class="X_Guide.MVVM.View.CalibrationWizardSteps.Step2"
+﻿<UserControl x:Class="X_Guide.MVVM.View.CalibrationWizardSteps.Step3"
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
@@ -6,13 +6,12 @@
              xmlns:local="clr-namespace:X_Guide.MVVM.View.CalibrationWizardSteps"
              mc:Ignorable="d" 
              d:DesignHeight="450" d:DesignWidth="800"
-             FontSize="16"
              xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes">
     <Grid Margin="15 10">
         <materialDesign:Card Margin="0 0 0 10">
             <materialDesign:Card.Background>
                 <RadialGradientBrush
-                      GradientOrigin="0.3,0.9"
+                      GradientOrigin="0.67,0.6"
                     Center="0,0"
                     RadiusX="0.4" RadiusY="0.5">
 
@@ -28,20 +27,19 @@
                 <ComboBox Width="300"  Style="{DynamicResource MaterialDesignOutlinedComboBox}"
                     materialDesign:HintAssist.Hint="Manipulator Name"
                           >
-                        <ComboBoxItem>1</ComboBoxItem>
-                        <ComboBoxItem>2</ComboBoxItem>
-                        <ComboBoxItem>3</ComboBoxItem>
-                    </ComboBox>
-                    <StackPanel  Orientation="Horizontal" HorizontalAlignment="Center" Margin="0 0 0 40">
-                        <TextBlock  VerticalAlignment="Center" Text="New Manipulator? "/>
-                        <Button  Style="{DynamicResource MaterialDesignFlatAccentButton}" Padding="5"  Margin="5">Create New</Button>
-                    </StackPanel>
-                    <TextBox Width="350" FontSize="20" Foreground="{DynamicResource PrimaryBlueColor}" Text="Gantry System" IsReadOnly="True"   Style="{DynamicResource MaterialDesignOutlinedTextBox }"
+                    <ComboBoxItem>1</ComboBoxItem>
+                    <ComboBoxItem>2</ComboBoxItem>
+                    <ComboBoxItem>3</ComboBoxItem>
+                </ComboBox>
+                <StackPanel  Orientation="Horizontal" HorizontalAlignment="Center">
+                    <TextBlock  VerticalAlignment="Center" Text="New Manipulator? "/>
+                    <Button Style="{DynamicResource MaterialDesignFlatAccentButton}" Padding="5"  Margin="5">Create New</Button>
+                </StackPanel>
+                <TextBox Margin="220 10" Text="Gantry System" IsReadOnly="True"   Style="{DynamicResource MaterialDesignOutlinedTextBox }"
                          materialDesign:HintAssist.Hint="Selected Manipulator's Type :" TextAlignment="Center"/>
 
 
-                </StackPanel>
+            </StackPanel>
         </materialDesign:Card>
     </Grid>
-
 </UserControl>
