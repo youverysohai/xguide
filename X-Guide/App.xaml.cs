@@ -15,6 +15,7 @@ using X_Guide.MVVM.Model;
 using X_Guide.MVVM.Store;
 using X_Guide.MVVM.ViewModel;
 using X_Guide.Service;
+using X_Guide.Service.Communation;
 using X_Guide.Service.DatabaseProvider;
 
 
@@ -35,6 +36,7 @@ namespace X_Guide
         private IServerService _serverService;
         private ResourceDictionary _resourceDictionary;
         private IMachineService _machineDb;
+        private ServerCommand _serverCommand;
 
 
         public App()
@@ -49,7 +51,8 @@ namespace X_Guide
             //App specific settings
             InitializeAppConfiguration();
             _serverService = new ServerService(IPAddress.Any, 8000);
-            
+            _serverCommand = new ServerCommand(_serverService);
+            _serverCommand.StartServer();
        
             _navigationStore = new NavigationStore();
             _wizardNavigationStore = new NavigationStore();

@@ -34,15 +34,19 @@ namespace X_Guide.MVVM.View.CalibrationWizardSteps
 
         public async void loadImage()
         {
+
             var image = new BitmapImage();
             image.BeginInit();
-            image.UriSource = new Uri(@"C:\Users\Admin\source\repos\X-Guide\X-Guide\Style\ImageSource\hamster-cute.gif");
+            image.CacheOption = BitmapCacheOption.OnLoad;
+           
+            image.UriSource = new Uri(@"C:\Users\Xlent_XIR02\source\repos\X-Guide\X-Guide\Style\ImageSource\hamster-cute.gif");
             image.EndInit();
-            ImageBehavior.SetAnimatedSource(img, image);
+
             await Task.Run(() =>
             {
-                Dispatcher.BeginInvoke(new Action(() =>
+                Dispatcher.BeginInvoke(new Action(async () =>
                 {
+                    await Task.Delay(1000);
                     ImageBehavior.SetAnimatedSource(img, image);
                 }));
             });
