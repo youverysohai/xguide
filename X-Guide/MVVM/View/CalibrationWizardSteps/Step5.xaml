@@ -7,7 +7,7 @@
              mc:Ignorable="d" 
              d:DesignHeight="450" d:DesignWidth="800">
     <Grid>
-        <TextBox HorizontalAlignment="Left" Margin="281,185,0,0" TextWrapping="Wrap" Text="I am Step 5" VerticalAlignment="Top" Width="120"/>
+        <Grid.RowDefinitions></Grid.RowDefinitions>
 
     </Grid>
 </UserControl>
