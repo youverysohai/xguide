@@ -57,7 +57,7 @@ namespace X_Guide.MVVM.View.CalibrationWizardSteps
  
         public Step5()
         {
-
+            InitializeComponent();
             this.DataContext = this;
             GetVideoDevices();
 
