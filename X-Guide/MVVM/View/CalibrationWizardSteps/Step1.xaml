@@ -27,9 +27,11 @@
                     <TextBlock  VerticalAlignment="Center" Text="New Manipulator? "/>
                     <Button  Style="{DynamicResource MaterialDesignFlatAccentButton}" Padding="5"  Margin="5">Create New</Button>
                 </StackPanel>
-                <TextBox Width="350" FontSize="20" Foreground="{DynamicResource PrimaryBlueColor}" Text="Gantry System" IsReadOnly="True"   Style="{DynamicResource MaterialDesignOutlinedTextBox }"
-                         materialDesign:HintAssist.Hint="Selected Manipulator's Type :" TextAlignment="Center"/>
+                <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
+                    <Label Content="Manipulator Type: " Style="{DynamicResource MaterialDesignLabel}"/>
+                    <TextBlock Text="Gantry System" Style="{DynamicResource ReadOnlyTextBlock}"/>
 
+                </StackPanel>
 
             </StackPanel>
         </materialDesign:Card>
