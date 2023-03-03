@@ -11,6 +11,7 @@ using System.Threading.Tasks;
 using System.Windows;
 using X_Guide.CustomEventArgs;
 using X_Guide.Service.Communation;
+using X_Guide.Service.Communication;
 
 namespace X_Guide.Communication.Service
 {
@@ -29,7 +30,8 @@ namespace X_Guide.Communication.Service
 
         private List<string> pendingCommand = new List<string>();
 
-        private readonly ConcurrentDictionary<int, TcpClient> _connectedClient = new ConcurrentDictionary<int, TcpClient>();
+        private readonly ConcurrentDictionary<int, TcpClientInfo> _connectedClient = new ConcurrentDictionary<int, TcpClientInfo>();
+
         CancellationTokenSource cts;
 
 
@@ -84,8 +86,9 @@ namespace X_Guide.Communication.Service
                     TcpClient client = await Task.Run(() => _server.AcceptTcpClientAsync(), sct);
                     Debug.WriteLine("Client connected.");
 
-                    _connectedClient.TryAdd(client.GetHashCode(), client);
+                    _connectedClient.TryAdd(client.GetHashCode(), new TcpClientInfo(client));
                     ClientEvent?.Invoke(this, new TcpClientEventArgs(client));
+
                     // Handle the client connection in a separate task.
 #pragma warning disable CS4014 // This warning has to be suppressed to disallow the await keyword from blocking the task
                     Task.Run(() => ReadClientCommand(client, cts.Token));
@@ -107,16 +110,17 @@ namespace X_Guide.Communication.Service
         {
 
 
-           
+
             // Get the stream for reading and writing data.
             NetworkStream stream = client.GetStream();
-            _connectedClient.TryAdd(client.GetHashCode(), client);
-            SendMessageAsync("Connected to the server end. Please enjoy your stay!\n", stream);
+            _connectedClient.TryAdd(client.GetHashCode(), new TcpClientInfo(client));
+            SendMessageAsync("Connected to the server. Please enjoy your stay!\n", stream);
 
             ct.Register(() => stream.Close());
 
 
-            Queue<string> commandList = new Queue<string>();
+            Queue<TcpClientEventArgs> commandList = new Queue<TcpClientEventArgs>();
+
             try
             {
                 while (!cts.IsCancellationRequested)
@@ -125,14 +129,10 @@ namespace X_Guide.Communication.Service
                     bool run = true;
                     while (run)
                     {
-                        run = await ReadAsync(commandList, ct, stream, '\n');
+                        run = await ReadAsync(commandList, ct, client, '\n');
+                        RunCommand(commandList);
+
                     }
-
-
-
-
-
-
 
 
 
@@ -156,11 +156,19 @@ namespace X_Guide.Communication.Service
 
         }
 
-        public async Task<bool> ReadAsync(Queue<string> commandList, CancellationToken ct, NetworkStream stream, char delimiter)
+        private async void RunCommand(Queue<TcpClientEventArgs> commandList)
+        {
+            while (commandList.Count > 0)
+            {
+                await Task.Run(() => MessageEvent?.Invoke(this, commandList.Dequeue()));
+            }
+        }
+
+        public async Task<bool> ReadAsync(Queue<TcpClientEventArgs> commandList, CancellationToken ct, TcpClient client, char delimiter)
         {
             byte[] buffer = new byte[1024];
             string data = "";
-
+            NetworkStream stream = client.GetStream();
             while (!data.EndsWith(delimiter.ToString()))
             {
                 int bytesRead = await stream.ReadAsync(buffer, 0, buffer.Length);
@@ -173,19 +181,15 @@ namespace X_Guide.Communication.Service
 
             }
 
-            string[] messages = data.Split(new[] { "\n" }, StringSplitOptions.RemoveEmptyEntries);
+            string[] messages = data.Split(new[] { delimiter.ToString() }, StringSplitOptions.RemoveEmptyEntries);
             foreach (string message in messages)
             {
                 Debug.WriteLine(message);
-                commandList.Enqueue(message);
-                /*MessageEvent.Invoke(this, new TcpClientEventArgs(client, message));*/
+                commandList.Enqueue(new TcpClientEventArgs(client, message));
+
             }
             return true;
         }
-
-
-
-
 
 
 
@@ -203,6 +207,18 @@ namespace X_Guide.Communication.Service
             await networkStream.WriteAsync(bytes, 0, bytes.Length);
         }
 
+        public ConcurrentDictionary<int, TcpClientInfo> GetConnectedClient()
+        {
+            return _connectedClient;
+        }
+
+        public TcpClientInfo GetConnectedClientInfo(TcpClient tcpClient)
+        {
+            TcpClientInfo tcpClientInfo;
+            _connectedClient.TryGetValue(tcpClient.GetHashCode(), out tcpClientInfo);
+            return tcpClientInfo;
+
+        }
     }
 
 }

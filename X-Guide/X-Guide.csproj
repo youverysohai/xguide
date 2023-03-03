@@ -661,6 +661,7 @@
     <Compile Include="Service\Communication\IClientService.cs" />
     <Compile Include="Service\Communication\IServerService.cs" />
     <Compile Include="Service\Communication\ServerViewModelService.cs" />
+    <Compile Include="Service\Communication\TcpClientInfo.cs" />
     <Compile Include="Service\DatabaseProvider\DatabaseMachineService.cs" />
     <Compile Include="Service\DatabaseProvider\IMachineService.cs" />
     <Compile Include="Service\Communication\ServerCommand.cs" />
