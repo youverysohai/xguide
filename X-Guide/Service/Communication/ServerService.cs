@@ -13,10 +13,12 @@ using X_Guide.CustomEventArgs;
 using X_Guide.Service.Communation;
 using X_Guide.Service.Communication;
 
+
 namespace X_Guide.Communication.Service
 {
     public class ServerService : IServerService
     {
+ 
         private int _port { get; }
         private IPAddress _ip { get; }
         private TcpListener _server;
@@ -145,11 +147,11 @@ namespace X_Guide.Communication.Service
 
             //throws object dispose exception here
             catch
-            {
-                /*var errorResponse = Encoding.ASCII.GetBytes("The server connection was forcefully closed!");
+            {/*
+                var errorResponse = Encoding.ASCII.GetBytes("The server connection was forcefully closed!");
                 client.GetStream().Write(errorResponse, 0, errorResponse.Length);*/
                 Debug.WriteLine($"The connection was forcefully closed by the server.");
-                /*              DisposeClient(client);*/
+                DisposeClient(client);
             }
 
 
