@@ -852,6 +852,7 @@
   </ItemGroup>
   <ItemGroup>
     <Resource Include="Style\ImageSource\hamster-cute.gif" />
+    <Resource Include="Style\ImageSource\mtg.jpg" />
     <Content Include="XGuideDB.mdf">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>

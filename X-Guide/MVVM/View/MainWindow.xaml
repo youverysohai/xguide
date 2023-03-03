@@ -16,6 +16,7 @@
         WindowStyle="None"
         AllowsTransparency="True"
         WindowState="Normal"
+        BorderBrush="{StaticResource PrimaryBlueColor}"
         Foreground="White">
     <!--Login Form Dialog-->
     <materialDesign:DialogHost CloseOnClickAway="True" Panel.ZIndex="1" 
