@@ -4,51 +4,96 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:X_Guide.MVVM.View.CalibrationWizardSteps"
+             xmlns:dshow="clr-namespace:DirectShowLib;assembly=DirectShowLib"
              mc:Ignorable="d" 
-             d:DesignHeight="450" d:DesignWidth="800"
-              xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes">
+             xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"     
+             d:DesignHeight="350" d:DesignWidth="422.669">
+    <UserControl.Resources>
+
+        <Style TargetType="Button" BasedOn="{x:Null}"></Style>
+        <Style TargetType="Label" BasedOn="{x:Null}"></Style>
+        <Style TargetType="ComboBox" BasedOn="{x:Null}"></Style>
+    </UserControl.Resources>
     <Grid Margin="0 0 0 10">
         <materialDesign:Card UniformCornerRadius="20" Margin="0 10 15 0">
 
-            <StackPanel Orientation="Vertical" VerticalAlignment="Center" >
-                <Label Content="Based on Step 1 and Step 2, you have selected..." HorizontalAlignment="Center" Style="{DynamicResource MaterialDesignLabel}"/>
-                <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" >
-                    <Label Content="Name:" Style="{DynamicResource MaterialDesignLabel}"/>
-                    <TextBlock Style="{StaticResource ReadOnlyTextBlock}" Text="Gantry 1"/>
-                    <Label Content="Type:" Style="{DynamicResource MaterialDesignLabel}"/>
-                    <TextBlock Style="{StaticResource ReadOnlyTextBlock}" Text="Gantry System"/>
-                    <Label Content="Orientation:" Style="{DynamicResource MaterialDesignLabel}"/>
-                    <TextBlock Style="{StaticResource ReadOnlyTextBlock}" Text="Look Upward"/>
-                </StackPanel>
-                <TextBlock Text="Jog Robot To Desired Calibration Point" HorizontalAlignment="Center" FontSize="35" Margin="0 0 0 25"/>
-                <Grid Margin="10">
+            <Grid Margin="20">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="*"/>
+                    <RowDefinition Height="5*"/>
+                    <RowDefinition Height="*"/>
+                </Grid.RowDefinitions>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="2*"/>
+                    <ColumnDefinition Width="*"/>
+                </Grid.ColumnDefinitions>
+                <TextBlock Grid.ColumnSpan="2" Grid.Row="0"  Text="Jog to Desired Calibration Point" HorizontalAlignment="Center" FontSize="35" />
+                <Grid Grid.Row="1">
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition Width="*"/>
                         <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="*"/>
                     </Grid.ColumnDefinitions>
-                     <!-- Live Image and overlay border-->
-                    <Grid>
-                        <Image Source="../../../Style/ImageSource/mtg.jpg" Stretch="UniformToFill" />
-                        <Grid Background="#50000000">
-                            <Grid.RowDefinitions>
-                                <RowDefinition Height="*"/>
-                                <RowDefinition Height="*"/>
-                                <RowDefinition Height="*"/>
-                            </Grid.RowDefinitions>
-                            <Grid.ColumnDefinitions>
-                                <ColumnDefinition Width="*"/>
-                                <ColumnDefinition Width="*"/>
-                                <ColumnDefinition Width="*"/>
-                            </Grid.ColumnDefinitions>
-                            <Border Grid.Row="1" Grid.Column="1" BorderBrush="{StaticResource ConnectedColor}" BorderThickness="2"></Border>
-                        </Grid>
-                    </Grid>
-                    
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="*"/>
+                        <RowDefinition Height="*"/>
+                        <RowDefinition Height="*"/>
+                    </Grid.RowDefinitions>
+                    <Image Grid.ColumnSpan="3" Grid.RowSpan="3" x:Name="videoPlayer" Stretch="Uniform"/>
+                    <Border Grid.Row="1" Grid.Column="1" BorderThickness="2" BorderBrush="Yellow"></Border>
+                    <!--<Border Grid.Row="2" Grid.Column="1" BorderThickness="2" BorderBrush="Yellow"></Border>
+                    <Border Grid.Row="0" Grid.Column="1" BorderThickness="2" BorderBrush="Yellow"></Border>
+                    <Border Grid.Row="1" Grid.Column="0" BorderThickness="2" BorderBrush="Yellow"></Border>
+                    <Border Grid.Row="2" Grid.Column="0" BorderThickness="2" BorderBrush="Yellow"></Border>
+                    <Border Grid.Row="0" Grid.Column="0" BorderThickness="2" BorderBrush="Yellow"></Border>
+                    <Border Grid.Row="1" Grid.Column="2" BorderThickness="2" BorderBrush="Yellow"></Border>
+                    <Border Grid.Row="2" Grid.Column="2" BorderThickness="2" BorderBrush="Yellow"></Border>
+                    <Border Grid.Row="0" Grid.Column="2" BorderThickness="2" BorderBrush="Yellow"></Border>-->
+
                 </Grid>
+                <StackPanel Grid.Row="2">
+                    <ComboBox x:Name="comboBox"
+                  
+                  DisplayMemberPath="Name"
+                  ItemsSource="{Binding VideoDevices}"
+                  SelectedItem="{Binding CurrentDevice}" />
+                    <Label   
+               Content="Select video source" />
+                    <Button  
+                Click="btnStart_Click"
+                Content="Start" />
+                    <Button   
+                Click="btnStop_Click"
+                Content="Stop" />
+                </StackPanel>
+                <Grid Grid.Row="1" Grid.Column="2">
+                    <Grid.RowDefinitions >
+                        <RowDefinition Height="*"/>
+                        <RowDefinition Height="3*"/>
+                        <RowDefinition Height="*"/>
+                    </Grid.RowDefinitions>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="*"/>
+                    </Grid.ColumnDefinitions>
+                    <Image  Grid.Column="0" Grid.Row="0" Stretch="Uniform" Source="C:\Users\Admin\source\repos\X-Guide\X-Guide\Style\ImageSource\up.png"/>
+                    <Ellipse Fill="Black" Grid.Column="0" Grid.Row="0" Width="40" Height="75" VerticalAlignment="Center"/>
+                    <Image  Grid.Column="2" Grid.Row="0" Stretch="Uniform" Source="C:\Users\Admin\source\repos\X-Guide\X-Guide\Style\ImageSource\down.png"/>
+                    <Ellipse Fill="Black" Grid.Column="2" Grid.Row="0" Width="40" Height="75" VerticalAlignment="Center"/>
+                    <Canvas Width="250" Grid.Row="1" Grid.ColumnSpan="3" >
+                        <Image  Height="200"  Source="C:\Users\Admin\source\repos\X-Guide\X-Guide\Style\ImageSource\arrow.png">
+
+                        </Image>
+                        <Rectangle Name="Area1" Width="50" Height="50" Canvas.Left="10" Canvas.Top="10" Fill="Transparent"  />
+                        <Rectangle Name="Area2" Width="50" Height="50" Canvas.Left="100" Canvas.Top="150" Fill="Transparent"  />
+                        <Rectangle Name="Area3" Width="50" Height="50" Canvas.Left="250" Canvas.Top="100" Fill="Transparent"  />
+                    </Canvas>
 
 
+                </Grid>
+            </Grid>
 
-            </StackPanel>
         </materialDesign:Card>
     </Grid>
 
