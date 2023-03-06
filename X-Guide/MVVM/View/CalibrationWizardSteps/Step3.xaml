@@ -22,7 +22,7 @@
                     </StackPanel>
                     <ComboBox Style="{DynamicResource ComboBoxStyle}"
                               Width="200"
-                              materialDesign:HintAssist.Hint="Type of Vision Software">
+                              materialDesign:HintAssist.Hint="Vision Software">
                         <ComboBoxItem IsSelected="True">Vision Master</ComboBoxItem>
 
                     </ComboBox>
