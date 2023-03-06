@@ -6,50 +6,86 @@
              xmlns:local="clr-namespace:X_Guide.MVVM.View.CalibrationWizardSteps"
              xmlns:dshow="clr-namespace:DirectShowLib;assembly=DirectShowLib"
              mc:Ignorable="d" 
-              Width="422.669"
-            
-                Height="350"
+             xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"     
              d:DesignHeight="350" d:DesignWidth="422.669">
     <UserControl.Resources>
-        
+
         <Style TargetType="Button" BasedOn="{x:Null}"></Style>
         <Style TargetType="Label" BasedOn="{x:Null}"></Style>
         <Style TargetType="ComboBox" BasedOn="{x:Null}"></Style>
     </UserControl.Resources>
-    
-    <Grid>
-        
-        <Image x:Name="videoPlayer" Margin="10,0,10,70" />
-        <ComboBox x:Name="comboBox"
-                  Width="167"
-                  Height="21"
-                  Margin="10,0,0,25"
-                  HorizontalAlignment="Left"
-                  VerticalAlignment="Bottom"
+    <Grid Margin="0 0 0 10">
+        <materialDesign:Card UniformCornerRadius="20" Margin="0 10 15 0">
+            <Grid>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="*"/>
+                    <RowDefinition Height="1.4*"/>
+                </Grid.RowDefinitions>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="*"/>
+                </Grid.ColumnDefinitions>
+                
+                <Grid >
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="*"/>
+                    </Grid.ColumnDefinitions>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="*"/>
+                        <RowDefinition Height="*"/>
+                        <RowDefinition Height="*"/>
+                    </Grid.RowDefinitions>
+                    <Image Grid.ColumnSpan="3" Grid.RowSpan="3" x:Name="videoPlayer" Stretch="UniformToFill"/>
+                    <Border Grid.Row="1" Grid.Column="1" BorderThickness="2" BorderBrush="Yellow"></Border>
+                    <!--<Border Grid.Row="2" Grid.Column="1" BorderThickness="2" BorderBrush="Yellow"></Border>
+                    <Border Grid.Row="0" Grid.Column="1" BorderThickness="2" BorderBrush="Yellow"></Border>
+                    <Border Grid.Row="1" Grid.Column="0" BorderThickness="2" BorderBrush="Yellow"></Border>
+                    <Border Grid.Row="2" Grid.Column="0" BorderThickness="2" BorderBrush="Yellow"></Border>
+                    <Border Grid.Row="0" Grid.Column="0" BorderThickness="2" BorderBrush="Yellow"></Border>
+                    <Border Grid.Row="1" Grid.Column="2" BorderThickness="2" BorderBrush="Yellow"></Border>
+                    <Border Grid.Row="2" Grid.Column="2" BorderThickness="2" BorderBrush="Yellow"></Border>
+                    <Border Grid.Row="0" Grid.Column="2" BorderThickness="2" BorderBrush="Yellow"></Border>-->
+
+                </Grid>
+                <StackPanel Grid.Row="1">
+                    <ComboBox x:Name="comboBox"
+                  
                   DisplayMemberPath="Name"
                   ItemsSource="{Binding VideoDevices}"
                   SelectedItem="{Binding CurrentDevice}" />
-        <Label Width="167"
-               Height="24"
-               Margin="10,0,0,46"
-               Foreground="White"
-               HorizontalAlignment="Left"
-               VerticalAlignment="Bottom"
+                    <Label   
                Content="Select video source" />
-        <Button Width="67"
-                Height="21"
-                Margin="213,0,0,25"
-                HorizontalAlignment="Left"
-                VerticalAlignment="Bottom"
+                    <Button  
                 Click="btnStart_Click"
                 Content="Start" />
-        <Button Width="67"
-                Height="21"
-                Margin="296,0,0,25"
-                HorizontalAlignment="Left"
-                VerticalAlignment="Bottom"
+                    <Button   
                 Click="btnStop_Click"
                 Content="Stop" />
+                </StackPanel>
+                <Image Grid.Row="1" Grid.Column="2" Stretch="UniformToFill" Source="C:\Users\Admin\source\repos\X-Guide\X-Guide\Style\ImageSource\arrow.png"/>
+                <Grid Grid.Row="1" Grid.Column="2">
+                    <Grid.RowDefinitions >
+                        <RowDefinition Height="1.5*"/>
+                        <RowDefinition Height="*"/>
+                        <RowDefinition Height="2*"/>
+                    </Grid.RowDefinitions>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="*"/>
+                    </Grid.ColumnDefinitions>
+                    <Border  Grid.Row="1" CornerRadius="100" BorderBrush="Black" BorderThickness="2">
+                        <Button Background="Transparent" Style="{x:Null}"  BorderBrush="Transparent" >
+                            X+
+                        </Button>
+                    </Border>
+
+                </Grid>
+            </Grid>
+
+        </materialDesign:Card>
     </Grid>
 
 
