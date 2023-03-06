@@ -30,7 +30,7 @@ namespace X_Guide
             InitializeComponent();
             DispatcherTimer timer = new DispatcherTimer(new TimeSpan(0, 0, 1), DispatcherPriority.Normal, delegate
             {
-                this.DateTimeTextBlock.Text = DateTime.Now.ToString("dddd , MMM dd yyyy,hh:mm:ss");
+                this.DateTimeTextBlock.Text = DateTime.Now.ToString("dddd, MMM dd yyyy, hh:mm:ss");
             }, this.Dispatcher);
         }
 
