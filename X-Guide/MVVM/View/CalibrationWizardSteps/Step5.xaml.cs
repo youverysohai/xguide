@@ -150,11 +150,47 @@ namespace X_Guide.MVVM.View.CalibrationWizardSteps
         }
 
 
+
         #endregion
 
-        private void leftButton_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
+        private void Left_MouseDown(object sender, MouseButtonEventArgs e)
         {
+            PressedButtonText.Text = "X-";
+        }
 
+        private void Down_MouseDown(object sender, MouseButtonEventArgs e)
+        {
+            PressedButtonText.Text = "Y-";
+        }
+
+        private void Up_MouseDown(object sender, MouseButtonEventArgs e)
+        {
+            PressedButtonText.Text = "Y+";
+        }
+
+        private void Right_MouseDown(object sender, MouseButtonEventArgs e)
+        {
+            PressedButtonText.Text = "X+";
+        }
+
+        private void Ellipse_MouseDown(object sender, MouseButtonEventArgs e)
+        {      
+            Ellipse ellipse = (Ellipse)sender;
+            switch (ellipse.Tag.ToString())
+            {
+                case "Z+":
+                    PressedButtonText.Text = "You pressed Z+"; break;
+                case "Z-":
+                    PressedButtonText.Text = "You pressed Z-"; break; 
+                case "Y+":
+                    PressedButtonText.Text = "You pressed Y+"; break;
+                case "Y-":
+                    PressedButtonText.Text = "You pressed Y-"; break;
+                case "X+":
+                    PressedButtonText.Text = "You pressed X+"; break;
+                case "X-":
+                    PressedButtonText.Text = "You pressed X-"; break;
+            }
         }
     }
 
