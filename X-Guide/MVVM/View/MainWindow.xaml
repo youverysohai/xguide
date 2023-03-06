@@ -16,7 +16,7 @@
         WindowStyle="None"
         AllowsTransparency="True"
         WindowState="Normal"
-        BorderBrush="White"
+        BorderBrush="{DynamicResource PrimaryBlackColor}"
         BorderThickness="1"
         Foreground="White">
     <!--Login Form Dialog-->

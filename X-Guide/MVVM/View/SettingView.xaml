@@ -286,20 +286,22 @@
 
                     <StackPanel Orientation="Vertical" VerticalAlignment="Center">
                         <!--Browse Open Vision-->
-                        <ComboBox Style="{DynamicResource ComboBoxStyle}"
+                        <ComboBox Style="{DynamicResource ComboBoxStyle}"  Width="400" HorizontalAlignment="Left"
                                   materialDesign:HintAssist.Hint="Vision Software"
                                   Foreground="#C6C6C6">
-
-                            <!--<TextBox x:Name="TxtVisionSoftware" Style="{DynamicResource InputMaterialDesignTextBox}"   Width="500" Text="{Binding LogFilePath}"
-                                    materialDesign:HintAssist.Hint="Vision Software Path (.sol)" />
-                            <Button x:Name="BrowseBtn" Margin="10" Content="Browse" Style="{DynamicResource MaterialDesignOutlinedButton}" Click="BrowseBtn_Click"/>-->
                             <ComboBoxItem>Vision Master</ComboBoxItem>
                         </ComboBox>
+                        <StackPanel Orientation="Horizontal">
+                            <TextBox x:Name="TxtVisionSoftware" Style="{DynamicResource InputMaterialDesignTextBox}"   Width="500" Text="{Binding LogFilePath}"
+                                    materialDesign:HintAssist.Hint="Vision Software Path (.sol)" />
+                            <Button x:Name="BrowseBtn" Margin="10" Content="Browse" Style="{DynamicResource MaterialDesignOutlinedButton}" Click="BrowseBtn_Click"/>
+
+                        </StackPanel>
                         <!--Log File Path-->
                         <StackPanel Orientation="Horizontal" >
                             <TextBox  x:Name="TxtLogFilePath" Style="{DynamicResource InputMaterialDesignTextBox}"   MinWidth="400" Text="{Binding LogFilePath}"
                                     materialDesign:HintAssist.Hint="Log File Path (User Log, Communication Log)" />
-                            <Button x:Name="BrowseBtn" Margin="10" Content="Browse" Style="{DynamicResource MaterialDesignOutlinedButton}" Command="{Binding ConnectServerCommand}"/>
+                            <Button Margin="10" Content="Browse" Style="{DynamicResource MaterialDesignOutlinedButton}" Command="{Binding ConnectServerCommand}"/>
                         </StackPanel>
                         <StackPanel Orientation="Horizontal">
                             <ToggleButton Style="{DynamicResource MaterialDesignSwitchLightToggleButton}" Margin="12"  />
