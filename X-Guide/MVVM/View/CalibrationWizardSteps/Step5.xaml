@@ -42,14 +42,6 @@
                     </Grid.RowDefinitions>
                     <Image Grid.ColumnSpan="3" Grid.RowSpan="3" x:Name="videoPlayer" Stretch="Uniform"/>
                     <Border Grid.Row="1" Grid.Column="1" BorderThickness="2" BorderBrush="Yellow"></Border>
-                    <!--<Border Grid.Row="2" Grid.Column="1" BorderThickness="2" BorderBrush="Yellow"></Border>
-                    <Border Grid.Row="0" Grid.Column="1" BorderThickness="2" BorderBrush="Yellow"></Border>
-                    <Border Grid.Row="1" Grid.Column="0" BorderThickness="2" BorderBrush="Yellow"></Border>
-                    <Border Grid.Row="2" Grid.Column="0" BorderThickness="2" BorderBrush="Yellow"></Border>
-                    <Border Grid.Row="0" Grid.Column="0" BorderThickness="2" BorderBrush="Yellow"></Border>
-                    <Border Grid.Row="1" Grid.Column="2" BorderThickness="2" BorderBrush="Yellow"></Border>
-                    <Border Grid.Row="2" Grid.Column="2" BorderThickness="2" BorderBrush="Yellow"></Border>
-                    <Border Grid.Row="0" Grid.Column="2" BorderThickness="2" BorderBrush="Yellow"></Border>-->
 
                 </Grid>
                 <StackPanel Grid.Row="2">
@@ -93,12 +85,12 @@
                         <Ellipse Tag="Y-" Cursor="Hand" Name="Down" Width="66" Height="80" Canvas.Left="100" Canvas.Top="108"    Fill="Transparent" Panel.ZIndex="1"  MouseDown="Ellipse_MouseDown" />
                         <Ellipse Tag="Y+" Cursor="Hand" Name="Up" Width="60" Height="50" Canvas.Left="102" Canvas.Top="5"        Fill="Transparent" Panel.ZIndex="1"  MouseDown="Ellipse_MouseDown" />
                         <Ellipse  Tag="X+" Cursor="Hand" Name="Right" Width="70" Height="50" Canvas.Left="176" Canvas.Top="50"    Fill="Transparent" Panel.ZIndex="1"   MouseDown="Ellipse_MouseDown"/>
-                        <TextBlock  FontSize="16" Canvas.Left="200" Canvas.Top="60">X+</TextBlock>
-                        <TextBlock  FontSize="16" Canvas.Left="40" Canvas.Top="60">X-</TextBlock>
-                        <TextBlock  FontSize="16" Canvas.Left="125" Canvas.Top="130">Y-</TextBlock>
-                        <TextBlock  FontSize="16" Canvas.Left="125" Canvas.Top="20">Y+</TextBlock>
+                        <TextBlock Canvas.Left="200" Canvas.Top="60">X+</TextBlock>
+                        <TextBlock Canvas.Left="40" Canvas.Top="60">X-</TextBlock>
+                        <TextBlock Canvas.Left="125" Canvas.Top="130">Y-</TextBlock>
+                        <TextBlock Canvas.Left="125" Canvas.Top="20">Y+</TextBlock>
                     </Canvas>
-                    <TextBlock Grid.Row="2" x:Name="PressedButtonText"></TextBlock>
+                    <TextBlock Grid.Row="2" Grid.ColumnSpan="2" x:Name="PressedButtonText"></TextBlock>
                 </Grid>
             </Grid>
 
