@@ -310,8 +310,11 @@
                         <Button Width="100" Margin="5 10" Command="{Binding NavigateCommand}" Content="Navigate" />
                     </StackPanel>
                 </Expander>
+                <StackPanel Orientation="Horizontal" Grid.Column="1" Grid.Row="2" HorizontalAlignment="Right">
+                    <Button  Style="{DynamicResource MaterialDesignOutlinedButton}" Width="100" Margin="10" IsEnabled="{Binding CanExecute}" Command="{Binding SaveCommand}" HorizontalAlignment="Right" Content="Save" />
+                    <Button  Style="{DynamicResource MaterialDesignOutlinedSecondaryDarkButton}"  Width="120" Margin="10" IsEnabled="{Binding CanExecute}" Command="{Binding }" Content="Create New" />
 
-                <Button Grid.Column="1" Style="{DynamicResource MaterialDesignOutlinedButton}" Grid.Row="2" Width="100" Margin="10" IsEnabled="{Binding CanExecute}" Command="{Binding SaveCommand}" HorizontalAlignment="Right" Content="Save" />
+                </StackPanel>
 
             </Grid>
 
