@@ -593,6 +593,7 @@
     <Compile Include="Calibration.cs">
       <DependentUpon>XGuideModel.tt</DependentUpon>
     </Compile>
+    <Compile Include="CustomEventArgs\BitMapImageArgs.cs" />
     <Compile Include="CustomEventArgs\TcpClientEventArgs.cs" />
     <Compile Include="CustomEventArgs\TcpListenerEventArgs.cs" />
     <Compile Include="Enum\MountingOrient6Axis.cs" />
@@ -607,13 +608,15 @@
     <Compile Include="FileLogger.cs" />
     <Compile Include="FileLoggerExtensions.cs" />
     <Compile Include="FileLoggerProvider.cs" />
-    <Compile Include="HelperClass\ServerHelperClass.cs" />
+    <Compile Include="HelperClass\BitMapHelper.cs" />
+    <Compile Include="HelperClass\ServerHelper.cs" />
     <Compile Include="Machine.cs">
       <DependentUpon>XGuideModel.tt</DependentUpon>
     </Compile>
     <Compile Include="MVVM\Command\BrowseFileDialogCommand.cs" />
     <Compile Include="MVVM\Command\ConnectServerCommand.cs" />
     <Compile Include="MVVM\Command\EditManipulatorNameCommand.cs" />
+    <Compile Include="MVVM\Command\VideoCommand.cs" />
     <Compile Include="MVVM\Command\WizNextCommand.cs" />
     <Compile Include="MVVM\Command\WizPrevCommand.cs" />
     <Compile Include="MVVM\DBContext\DbContextFactory.cs" />
@@ -666,6 +669,7 @@
     <Compile Include="Service\DatabaseProvider\DatabaseMachineService.cs" />
     <Compile Include="Service\DatabaseProvider\IMachineService.cs" />
     <Compile Include="Service\Communication\ServerCommand.cs" />
+    <Compile Include="Service\ImageService.cs" />
     <Compile Include="Service\NavigationService.cs" />
     <Compile Include="Service\Communication\ServerService.cs" />
     <Compile Include="Service\DatabaseProvider\DatabaseUserService.cs" />
