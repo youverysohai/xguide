@@ -132,19 +132,19 @@
                         </hc:SideMenuItem.Icon>
                         <hc:SideMenuItem Header="Base Image" Command="{Binding NavigateCommand}" CommandParameter="{x:Static local:PageName.Production}">
                             <hc:SideMenuItem.Icon>
-                                <materialDesign:PackIcon Kind="ImageFilterCentreFocusWeak" Width="24" Height="24"/>
-
+                                <materialDesign:PackIcon Kind="ImageFilterCentreFocusWeak" Width="24" Height="24" Margin="16 0 0 0"/>
+                                                                                                                        
                             </hc:SideMenuItem.Icon>
                         </hc:SideMenuItem>
                         <hc:SideMenuItem Header="Dashboards" Command="{Binding NavigateCommand}" CommandParameter="{x:Static local:PageName.Undefined}">
                             <hc:SideMenuItem.Icon>
-                                <materialDesign:PackIcon Kind="MarkerCancel" Width="24" Height="24"/>
+                                <materialDesign:PackIcon Kind="MarkerCancel" Width="24" Height="24" Margin="16 0 0 0"/>
 
                             </hc:SideMenuItem.Icon>
                         </hc:SideMenuItem>
                         <hc:SideMenuItem Header="Wiki" Command="{Binding NavigateCommand}" CommandParameter="{x:Static local:PageName.Undefined}">
                             <hc:SideMenuItem.Icon>
-                                <materialDesign:PackIcon Kind="Pokeball" Width="24" Height="24"/>
+                                <materialDesign:PackIcon Kind="Pokeball" Width="24" Height="24" Margin="16 0 0 0"/>
 
                             </hc:SideMenuItem.Icon>
                         </hc:SideMenuItem>
@@ -156,19 +156,19 @@
                         </hc:SideMenuItem.Icon>
                         <hc:SideMenuItem Header="Calibration Wizard"  Command="{Binding NavigateCommand}" CommandParameter="{x:Static local:PageName.Engineering}">
                             <hc:SideMenuItem.Icon>
-                                <materialDesign:PackIcon Kind="VectorSquareEdit" Width="24" Height="24"/>
+                                <materialDesign:PackIcon Kind="VectorSquareEdit" Width="24" Height="24" Margin="16 0 0 0"/>
 
                             </hc:SideMenuItem.Icon>
                         </hc:SideMenuItem>
                         <hc:SideMenuItem Header="Work Items" Command="{Binding NavigateCommand}" CommandParameter="{x:Static local:PageName.Undefined}">
                             <hc:SideMenuItem.Icon>
-                                <materialDesign:PackIcon Kind="WorkOutline" Width="24" Height="24"/>
+                                <materialDesign:PackIcon Kind="WorkOutline" Width="24" Height="24" Margin="16 0 0 0"/>
 
                             </hc:SideMenuItem.Icon>
                         </hc:SideMenuItem>
                         <hc:SideMenuItem Header="Backlogs" Command="{Binding NavigateCommand}" CommandParameter="{x:Static local:PageName.Undefined}">
                             <hc:SideMenuItem.Icon>
-                                <materialDesign:PackIcon Kind="FileOutline"  Width="24" Height="24" />
+                                <materialDesign:PackIcon Kind="FileOutline"  Width="24" Height="24" Margin="16 0 0 0"/>
 
                             </hc:SideMenuItem.Icon>
                         </hc:SideMenuItem>
@@ -181,25 +181,13 @@
                         </hc:SideMenuItem.Icon>
                         <hc:SideMenuItem Header="User Admin" ToolTip="Manage user accounts, create new users, and remove existing ones" >
                             <hc:SideMenuItem.Icon>
-                                <materialDesign:PackIcon Kind="AccountMultipleOutline" Width="24" Height="24"/>
+                                <materialDesign:PackIcon Kind="AccountMultipleOutline" Width="24" Height="24" Margin="16 0 0 0"/>
 
                             </hc:SideMenuItem.Icon>
                         </hc:SideMenuItem>
                         <hc:SideMenuItem Header="Pemission">
                             <hc:SideMenuItem.Icon>
-                                <materialDesign:PackIcon Kind="License" Width="24" Height="24"/>
-
-                            </hc:SideMenuItem.Icon>
-                        </hc:SideMenuItem>
-                        <hc:SideMenuItem Header="Login" Command="{Binding NavigateCommand}" CommandParameter="{x:Static local:PageName.Login}">
-                            <hc:SideMenuItem.Icon>
-                                <materialDesign:PackIcon Kind="LoginVariant" Width="24" Height="24"/>
-
-                            </hc:SideMenuItem.Icon>
-                        </hc:SideMenuItem>
-                        <hc:SideMenuItem Header="Logout">
-                            <hc:SideMenuItem.Icon>
-                                <materialDesign:PackIcon Kind="LogoutVariant" Width="24" Height="24"/>
+                                <materialDesign:PackIcon Kind="License" Width="24" Height="24" Margin="16 0 0 0"/>
 
                             </hc:SideMenuItem.Icon>
                         </hc:SideMenuItem>
@@ -213,31 +201,19 @@
                         </hc:SideMenuItem.Icon>
                         <hc:SideMenuItem Header="Setup" Command="{Binding NavigateCommand}" CommandParameter="{x:Static local:PageName.Setting}">
                             <hc:SideMenuItem.Icon>
-                                <materialDesign:PackIcon Kind="DatabaseCogOutline" Width="24" Height="24"/>
+                                <materialDesign:PackIcon Kind="DatabaseCogOutline" Width="24" Height="24" Margin="16 0 0 0"/>
 
                             </hc:SideMenuItem.Icon>
                         </hc:SideMenuItem>
                         <hc:SideMenuItem Header="Releases">
                             <hc:SideMenuItem.Icon>
-                                <materialDesign:PackIcon Kind="PokemonGo" Width="24" Height="24"/>
+                                <materialDesign:PackIcon Kind="PokemonGo" Width="24" Height="24" Margin="16 0 0 0"/>
 
                             </hc:SideMenuItem.Icon>
                         </hc:SideMenuItem>
                         <hc:SideMenuItem Header="Library">
                             <hc:SideMenuItem.Icon>
-                                <materialDesign:PackIcon Kind="PokemonGo" Width="24" Height="24"/>
-
-                            </hc:SideMenuItem.Icon>
-                        </hc:SideMenuItem>
-                        <hc:SideMenuItem Header="Task groups">
-                            <hc:SideMenuItem.Icon>
-                                <materialDesign:PackIcon Kind="PokemonGo" Width="24" Height="24"/>
-
-                            </hc:SideMenuItem.Icon>
-                        </hc:SideMenuItem>
-                        <hc:SideMenuItem Header="Deployment groups">
-                            <hc:SideMenuItem.Icon>
-                                <materialDesign:PackIcon Kind="PokemonGo" Width="24" Height="24"/>
+                                <materialDesign:PackIcon Kind="PokemonGo" Width="24" Height="24" Margin="16 0 0 0"/>
 
                             </hc:SideMenuItem.Icon>
                         </hc:SideMenuItem>
