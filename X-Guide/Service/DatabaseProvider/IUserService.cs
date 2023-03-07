@@ -7,7 +7,7 @@ using X_Guide.MVVM.Model;
 
 namespace X_Guide.Service.DatabaseProvider
 {
-    internal interface IUserService
+    public interface IUserService
     {
         Task<IEnumerable<UserModel>> GetAllUsersAsync();
         void CreateUser(UserModel user);
