@@ -46,8 +46,8 @@ namespace X_Guide
 
 
             _dbContextFactory = new DbContextFactory();
-            _userProvider = new UserService(_dbContextFactory);
-            _machineDb = new MachineService(_dbContextFactory);
+            _userProvider = new DatabaseUserService(_dbContextFactory);
+            _machineDb = new DatabaseMachineService(_dbContextFactory);
             //App specific settings
             InitializeAppConfiguration();
             _serverService = new ServerService(IPAddress.Any, 8000);
@@ -96,7 +96,7 @@ namespace X_Guide
             _navigationStore.CurrentViewModel = CreateSettingViewModel();
             MainWindow = new MainWindow()
             {
-                DataContext = new MainViewModel(_navigationStore, _viewModels, _serverService, _resourceDictionary, _userProvider)
+                DataContext = new MainViewModel(_navigationStore, _viewModels, _serverService, _resourceDictionary)
             };
 
 
