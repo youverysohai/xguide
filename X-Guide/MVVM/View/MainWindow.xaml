@@ -32,10 +32,10 @@
                     
                     
                     <TextBox Margin="10" Style="{DynamicResource InputMaterialDesignTextBox}"
-                             materialDesign:HintAssist.Hint="Username" Text="{Binding Username}"></TextBox>  
+                             materialDesign:HintAssist.Hint="Username"></TextBox>  
                     <PasswordBox Margin="10" FontSize="16" Style="{DynamicResource MaterialDesignFloatingHintRevealPasswordBox}"
-                             materialDesign:HintAssist.Hint="Password" PasswordChanged="PasswordBox_PasswordChanged"></PasswordBox>
-                    <Button Margin="10" x:Name="LoginBtn" Command="{Binding LoginCommand}" Style="{DynamicResource MaterialDesignOutlinedButton}">Login</Button>
+                             materialDesign:HintAssist.Hint="Password"></PasswordBox>
+                    <Button Margin="10" x:Name="LoginBtn" Click="LoginBtn_Click" Style="{DynamicResource MaterialDesignOutlinedButton}">Login</Button>
 
                     <Button  Margin="10 5"  Command="{x:Static materialDesign:DialogHost.CloseDialogCommand}" Style="{StaticResource MaterialDesignFlatSecondaryButton}" IsCancel="True" >Cancel</Button>
                 </StackPanel>

@@ -8,11 +8,11 @@ using X_Guide.MVVM.Model;
 
 namespace X_Guide.Service.DatabaseProvider
 {
-    internal class MachineService : IMachineService
+    internal class DatabaseMachineService : IMachineService
     {
         private readonly DbContextFactory _contextFactory;
 
-        public MachineService(DbContextFactory contextFactory)
+        public DatabaseMachineService(DbContextFactory contextFactory)
         {
             _contextFactory = contextFactory;
         }
