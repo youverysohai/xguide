@@ -46,8 +46,8 @@ namespace X_Guide
 
 
             _dbContextFactory = new DbContextFactory();
-            _userProvider = new DatabaseUserService(_dbContextFactory);
-            _machineDb = new DatabaseMachineService(_dbContextFactory);
+            _userProvider = new UserService(_dbContextFactory);
+            _machineDb = new MachineService(_dbContextFactory);
             //App specific settings
             InitializeAppConfiguration();
             _serverService = new ServerService(IPAddress.Any, 8000);
