@@ -616,6 +616,7 @@
     <Compile Include="MVVM\Command\BrowseFileDialogCommand.cs" />
     <Compile Include="MVVM\Command\ConnectServerCommand.cs" />
     <Compile Include="MVVM\Command\EditManipulatorNameCommand.cs" />
+    <Compile Include="MVVM\Command\RelayCommand.cs" />
     <Compile Include="MVVM\Command\VideoCommand.cs" />
     <Compile Include="MVVM\Command\WizNextCommand.cs" />
     <Compile Include="MVVM\Command\WizPrevCommand.cs" />
