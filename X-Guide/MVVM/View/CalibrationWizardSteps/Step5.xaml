@@ -47,7 +47,7 @@
                 </Grid>-->
                 <Grid Grid.Row="1">
                     <Canvas>
-                        <Image Width="650" Height="300" x:Name="videoPlayer"/>
+                        <Image Width="650" Height="300" x:Name="videoPlayer" Source="{Binding VideoSource}"/>
                         <Border Canvas.Left="200" Canvas.Top="80" Width="250" Height="140" BorderThickness="3" BorderBrush="{DynamicResource PrimaryBlueColor}"></Border>
                     </Canvas> 
                 </Grid>
