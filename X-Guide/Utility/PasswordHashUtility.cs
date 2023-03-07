@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Runtime.InteropServices;
+using System.Security;
 using System.Security.Cryptography;
 using System.Text;
 using System.Threading.Tasks;
@@ -9,13 +11,25 @@ namespace X_Guide.Validation
 {
     public static class PasswordHashUtility
     {
-        public static string HashPassword(string password)
+        public static string HashSecureString(SecureString secureString)
         {
-            using (var sha256 = SHA256.Create())
+            byte[] passwordBytes = new byte[secureString.Length * 2];
+
+            IntPtr ptr = IntPtr.Zero;
+            try
             {
-                var hashedBytes = sha256.ComputeHash(Encoding.UTF8.GetBytes(password));
-                var hashedString = Convert.ToBase64String(hashedBytes);
-                return hashedString;
+                ptr = Marshal.SecureStringToGlobalAllocUnicode(secureString);
+                Marshal.Copy(ptr, passwordBytes, 0, passwordBytes.Length);
+            }
+            finally
+            {
+                Marshal.ZeroFreeGlobalAllocUnicode(ptr);
+            }
+
+            using (SHA256 sha256 = SHA256.Create())
+            {
+                byte[] hashBytes = sha256.ComputeHash(passwordBytes);
+                return BitConverter.ToString(hashBytes).Replace("-", "").ToLower();
             }
         }
     }

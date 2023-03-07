@@ -30,7 +30,7 @@ namespace X_Guide.Service.DatabaseProvider
                 var user = context.Users.SingleOrDefault(r => r.Username == username);
                 if (user != null)
                 {
-                    var hashedPassword = PasswordHashUtility.HashPassword(password);
+                    var hashedPassword = PasswordHashUtility.HashSecureString(password);
                     if (hashedPassword == user.PasswordHash)
                     {
                         return true;
