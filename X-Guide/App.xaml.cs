@@ -27,7 +27,7 @@ namespace X_Guide
     public partial class App : Application
     {
 
-   
+
         private readonly NavigationStore _navigationStore;
         private readonly NavigationStore _wizardNavigationStore;
         private Dictionary<PageName, NavigationService> _viewModels;
@@ -53,7 +53,7 @@ namespace X_Guide
             _serverService = new ServerService(IPAddress.Any, 8000);
             _serverCommand = new ServerCommand(_serverService);
             _serverCommand.StartServer();
-       
+
             _navigationStore = new NavigationStore();
             _wizardNavigationStore = new NavigationStore();
             _resourceDictionary = new ResourceDictionary
@@ -80,7 +80,7 @@ namespace X_Guide
                 {PageName.Login, new NavigationService(_navigationStore, CreateUserLoginViewModel) }
             };
 
-            
+
             /*
                         _setting = SettingModel.ReadFromXML(ConfigurationManager.AppSettings["SettingPath"]);*/
         }
@@ -96,7 +96,7 @@ namespace X_Guide
             _navigationStore.CurrentViewModel = CreateSettingViewModel();
             MainWindow = new MainWindow()
             {
-                DataContext = new MainViewModel(_navigationStore, _viewModels, _serverService, _resourceDictionary)
+                DataContext = new MainViewModel(_navigationStore, _viewModels, _serverService, _resourceDictionary, _userProvider)
             };
 
 
@@ -135,7 +135,7 @@ namespace X_Guide
             return new UserLoginViewModel();
         }
 
-    
+
     }
 
 }
