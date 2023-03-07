@@ -15,8 +15,7 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 using System.Windows.Threading;
-
-
+using X_Guide.MVVM.ViewModel;
 
 namespace X_Guide
 {
@@ -201,6 +200,14 @@ namespace X_Guide
             TextElement.SetForeground(TxtRoleIcon, foregroundBrush);
             LoginIcon.Visibility = Visibility.Visible;
             LogoutIcon.Visibility = Visibility.Collapsed;
+        }
+
+        private void PasswordBox_PasswordChanged(object sender, RoutedEventArgs e)
+        {
+            if (DataContext != null)
+            {
+                ((dynamic)DataContext).Password = ((PasswordBox)sender).SecurePassword; 
+            }
         }
     }
 

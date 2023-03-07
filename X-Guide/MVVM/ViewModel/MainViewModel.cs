@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
 using System.Net;
+using System.Security;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
@@ -15,13 +16,19 @@ using X_Guide.MVVM.Command;
 using X_Guide.MVVM.Model;
 using X_Guide.MVVM.Store;
 using X_Guide.Service;
+using X_Guide.Service.DatabaseProvider;
 
 namespace X_Guide.MVVM.ViewModel
 {
     //displaying the current viewmodel of the application
 
+
     public class MainViewModel : ViewModelBase
     {
+        #region CLR properties
+
+        private AuthenticationService _auth;
+
         private readonly NavigationStore _navigationStore;
 
         private string _iconConnection;
@@ -29,18 +36,22 @@ namespace X_Guide.MVVM.ViewModel
         public string IconConnection
         {
             get { return _iconConnection; }
-            set { _iconConnection = value;
+            set
+            {
+                _iconConnection = value;
 
                 OnPropertyChanged();
             }
 
         }
-
+     
         private string _connectionColor;
 
-        public ICommand NavigateCommand { get; set; }
+        public ICommand NavigateCommand { get; }
 
-        public ICommand ServerCommand { get; set; }
+        public ICommand LoginCommand { get; }
+
+        public ICommand ServerCommand { get; }
         public string ConnectionColor
         {
             get { return _connectionColor; }
@@ -76,16 +87,38 @@ namespace X_Guide.MVVM.ViewModel
             }
         }
 
+        private string _username;
+
+        public string Username
+        {
+            get { return _username; }
+            set
+            {
+                _username = value;
+                OnPropertyChanged();
+            }
+        }
+
+        private SecureString _password;
+
+        public SecureString Password
+        {
+            private get { return _password; }
+            set
+            {
+                _password = value;
+                OnPropertyChanged();
+            }
+        }
 
 
         public ViewModelBase CurrentViewModel => _navigationStore.CurrentViewModel;
+        #endregion
 
-
-        public MainViewModel(NavigationStore navigationStore, Dictionary<PageName, NavigationService> viewModels, IServerService serverService, ResourceDictionary resourceDictionary)
+        public MainViewModel(NavigationStore navigationStore, Dictionary<PageName, NavigationService> viewModels, IServerService serverService, ResourceDictionary resourceDictionary, IUserService userService)
         {
-
             _resourceDictionary = resourceDictionary;
-
+            _auth = new AuthenticationService(userService);
 
 
             _navigationStore = navigationStore;
@@ -93,7 +126,8 @@ namespace X_Guide.MVVM.ViewModel
             serverService.ClientEvent += ClientEventHandler;
             serverService.ListenerEvent += ServerEventHandler;
             NavigateCommand = new NavigateCommand(viewModels);
-        /*    ServerCommand = new ConnectServerCommand(serverService);*/
+            LoginCommand = new RelayCommand(Login);
+            /*    ServerCommand = new ConnectServerCommand(serverService);*/
             ConnectionStatus = "Disconnected!";
             IconConnection = "LanDisconnect";
 
@@ -103,6 +137,13 @@ namespace X_Guide.MVVM.ViewModel
 
         }
 
+        private async void Login(object parameter)
+        {
+            bool status = await _auth.Login(Username, Password);
+            if (status) MessageBox.Show($"Welcome back! {_auth.CurrentUser.Username}");
+            else MessageBox.Show("Invalid login");
+            
+        }
 
         private void ServerEventHandler(object sender, TcpListenerEventArgs e)
         {
@@ -115,7 +156,7 @@ namespace X_Guide.MVVM.ViewModel
                 }
                 else
                 {
-                    
+
                     SConnectionColor = ((SolidColorBrush)_resourceDictionary["DisconnectedColor"]).ToString();
                 }
             });

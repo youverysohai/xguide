@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Data.Entity;
 using System.Linq;
+using System.Security;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
@@ -12,34 +13,39 @@ using X_Guide.Validation;
 
 namespace X_Guide.Service.DatabaseProvider
 {
-    internal class DatabaseUserService : IUserService
+    internal class UserService : IUserService
     {
         private readonly DbContextFactory _userDbContextFactory;
 
-        public DatabaseUserService(DbContextFactory userDbContextFactory)
+        public UserService(DbContextFactory userDbContextFactory)
         {
             _userDbContextFactory = userDbContextFactory;
         }
 
 
      /*   This method checks if the provided password matches the hashed password stored in the database for the specified user.*/
-        public bool CheckPassword(string username, string password)
+        public async Task<User> AuthenticateUser(string username, SecureString password)
         {
-            using (XGuideDBEntities context = _userDbContextFactory.CreateDbContext())
+
+            return await Task.Run(() =>
             {
-                var user = context.Users.SingleOrDefault(r => r.Username == username);
-                if (user != null)
+                using (XGuideDBEntities context = _userDbContextFactory.CreateDbContext())
                 {
-                    var hashedPassword = PasswordHashUtility.HashPassword(password);
-                    if (hashedPassword == user.PasswordHash)
+                    var user = context.Users.SingleOrDefault(r => r.Username == username);
+                    if (user != null)
                     {
-                        return true;
+                        var hashedPassword = PasswordHashUtility.HashSecureString(password);
+                        if (hashedPassword == user.PasswordHash)
+                        {
+                            return user;
+                        }
                     }
+
+                    return null;
+
                 }
-
-                return false;
-
-            }
+            });
+           
         }
 
         public void CreateUser(UserModel userModel)
@@ -52,7 +58,7 @@ namespace X_Guide.Service.DatabaseProvider
 
                     Email = userModel.Email,
                     Username = userModel.Username,
-                    PasswordHash = PasswordHashUtility.HashPassword(userModel.PasswordHash),
+                    PasswordHash = PasswordHashUtility.HashSecureString(new SecureString()),
                     IsActive = true,
                     CreatedAt = DateTime.Now,
                     UpdatedAt = DateTime.Now
