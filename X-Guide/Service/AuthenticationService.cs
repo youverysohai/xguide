@@ -4,6 +4,7 @@ using System.Linq;
 using System.Security;
 using System.Text;
 using System.Threading.Tasks;
+using X_Guide.MVVM.Model;
 using X_Guide.Service.DatabaseProvider;
 
 namespace X_Guide.Service
@@ -11,9 +12,22 @@ namespace X_Guide.Service
     public class AuthenticationService
     {
         private IUserService _userService;
+        public event Action CurrentUserChanged;
 
+        private UserModel userModel;
 
-        public User CurrentUser { get; set; }
+        public UserModel CurrentUser
+        {
+            get { return userModel; }
+            set { userModel = value;
+                OnCurrentUserChanged();
+            }
+        }
+
+        private void OnCurrentUserChanged()
+        {
+            CurrentUserChanged?.Invoke();
+        }
         public bool IsLoggedIn => CurrentUser != null;
 
         public AuthenticationService(IUserService userService)
@@ -22,7 +36,7 @@ namespace X_Guide.Service
         }
         public async Task<bool> Login(string username, SecureString password)
         {
-            User user = await _userService.AuthenticateUser(username, password);
+            UserModel user = await _userService.AuthenticateUser(username, password);
             if (user != null)
             {
                 CurrentUser = user;
@@ -31,9 +45,10 @@ namespace X_Guide.Service
             return false;
         }
 
-        public async Task<bool> Register()
+        public async Task<bool> Register(UserModel user, SecureString password)
         {
-            throw new NotImplementedException();
+            bool success = await _userService.CreateUser(user, password);
+            return success;
         }
     }
 }

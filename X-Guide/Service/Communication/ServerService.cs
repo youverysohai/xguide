@@ -27,7 +27,7 @@ namespace X_Guide.Communication.Service
 
         public event EventHandler<TcpClientEventArgs> ClientEvent;
         public event EventHandler<TcpListenerEventArgs> ListenerEvent;
-        public event EventHandler<TcpClientEventArgs> CommandEvent;
+
         public event EventHandler<TcpClientEventArgs> MessageEvent;
 
         private List<string> pendingCommand = new List<string>();

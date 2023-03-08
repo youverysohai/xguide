@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Diagnostics;
 using System.Linq;
 using System.Net;
@@ -27,12 +28,27 @@ namespace X_Guide.MVVM.ViewModel
     {
         #region CLR properties
 
-        private AuthenticationService _auth;
-
-        private readonly NavigationStore _navigationStore;
+      
 
         private string _iconConnection;
 
+        private bool _isLoggedIn;
+
+        public bool IsLoggedIn
+        {
+            get { return _isLoggedIn; }
+            set { _isLoggedIn = value; }
+        }
+
+        public ICommand NavigateCommand { get; }
+
+        public ICommand LoginCommand { get; }
+
+        public ICommand ServerCommand { get; }
+
+        public ICommand RegisterCommand { get; }
+
+        #region ToTrigger
         public string IconConnection
         {
             get { return _iconConnection; }
@@ -44,14 +60,7 @@ namespace X_Guide.MVVM.ViewModel
             }
 
         }
-
         private string _connectionColor;
-
-        public ICommand NavigateCommand { get; }
-
-        public ICommand LoginCommand { get; }
-
-        public ICommand ServerCommand { get; }
         public string ConnectionColor
         {
             get { return _connectionColor; }
@@ -61,6 +70,8 @@ namespace X_Guide.MVVM.ViewModel
                 OnPropertyChanged();
             }
         }
+
+
         private string _sConnectionColor;
 
         public string SConnectionColor
@@ -87,63 +98,110 @@ namespace X_Guide.MVVM.ViewModel
             }
         }
 
-        private string _username;
+        #endregion
 
-        public string Username
+        private string _inputUsername;
+        public string InputUsername
         {
-            get { return _username; }
+            get { return _inputUsername; }
             set
             {
-                _username = value;
+                _inputUsername = value;
                 OnPropertyChanged();
             }
         }
 
-        private SecureString _password;
-
-        public SecureString Password
+        private SecureString _inputPassword;
+        public SecureString InputPassword
         {
-            private get { return _password; }
+            private get { return _inputPassword; }
             set
             {
-                _password = value;
+                _inputPassword = value;
                 OnPropertyChanged();
             }
         }
 
+        private readonly AuthenticationService _auth;
+
+        private readonly NavigationStore _navigationStore;
 
         public ViewModelBase CurrentViewModel => _navigationStore.CurrentViewModel;
+        public UserModel CurrentUser => _auth.CurrentUser;
         #endregion
 
         public MainViewModel(NavigationStore navigationStore, Dictionary<PageName, NavigationService> viewModels, IServerService serverService, ResourceDictionary resourceDictionary, IUserService userService)
         {
+            
             _resourceDictionary = resourceDictionary;
             _auth = new AuthenticationService(userService);
-
-
+            _auth.CurrentUserChanged += OnCurrentUserChanged;
+            
             _navigationStore = navigationStore;
             _navigationStore.CurrentViewModelChanged += OnCurrentViewModelChanged;
+
             serverService.ClientEvent += ClientEventHandler;
             serverService.ListenerEvent += ServerEventHandler;
             NavigateCommand = new NavigateCommand(viewModels);
             LoginCommand = new RelayCommand(Login);
-            /*    ServerCommand = new ConnectServerCommand(serverService);*/
+            RegisterCommand = new RelayCommand(Register);
+
+            #region ToTrigger
             ConnectionStatus = "Disconnected!";
             IconConnection = "LanDisconnect";
 
             SConnectionColor = ((SolidColorBrush)_resourceDictionary["DisconnectedColor"]).ToString();
             ConnectionColor = ((SolidColorBrush)_resourceDictionary["DisconnectedColor"]).ToString();
-
+            #endregion
 
         }
 
-        private async void Login(object parameter)
+        private void CurrentUser_PropertyChanged(object sender, PropertyChangedEventArgs e)
         {
-            bool status = await _auth.Login(Username, Password);
-            if (status) MessageBox.Show($"Welcome back! {_auth.CurrentUser.Username}");
-            else MessageBox.Show("Invalid login");
+            OnPropertyChanged(e.PropertyName);
+        }
+
+        private void OnCurrentUserChanged()
+        {
+            OnPropertyChanged(nameof(CurrentUser));
+            
+        }
+        
+        private async void Register(object obj)
+        {
+            bool success = await _auth.Register(new UserModel
+            {
+                Username = "123",
+                Email = "Akimoputo.DotCom",
+                Role = 1,
+
+            }, InputPassword);
+            if (success)
+            {
+                MessageBox.Show("Added successfully");
+        
+            }
+            else MessageBox.Show("User is not added!");
+        }
+
+     
+
+        private async void Login(object obj)
+        {
+            bool status = await _auth.Login(InputUsername, InputPassword);
+
+            if (status)
+            {
+                MessageBox.Show($"Welcome back! {_auth.CurrentUser.Username}");
+            }
+            else
+            {
+                MessageBox.Show("Invalid login");
+            }
 
         }
+
+
 
         private void ServerEventHandler(object sender, TcpListenerEventArgs e)
         {
@@ -181,10 +239,7 @@ namespace X_Guide.MVVM.ViewModel
             });
         }
 
-
-
-
-
+      
         private void OnCurrentViewModelChanged()
         {
             OnPropertyChanged(nameof(CurrentViewModel));

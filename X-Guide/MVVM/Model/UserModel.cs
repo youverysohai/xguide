@@ -6,21 +6,85 @@ using System.Threading.Tasks;
 
 namespace X_Guide.MVVM.Model
 {
-    public class UserModel
+    public class UserModel : ModelBase
     {
-        public string Username { get; set; }
-        public string Email { get; set; }
-        public string PasswordHash { get; set; }
-        public bool IsActive { get; set; }
-        public DateTime CreatedAt { get; set; }
-        public DateTime UpdatedAt { get; set; }
+        private string _Username;
 
-        public UserModel(string username, string email, string passwordHash)
+        public string Username
+        {
+            get { return _Username; }
+            set
+            {
+                _Username = value;
+                OnPropertyChanged();
+            }
+        }
+
+        private string _email;
+
+        public string Email
+        {
+            get { return _email; }
+            set
+            {
+                _email = value;
+                OnPropertyChanged();
+            }
+        }
+
+        private int _role;
+
+        public int Role
+        {
+            get { return _role; }
+            set
+            {
+                _role = value;
+                OnPropertyChanged();
+            }
+        }
+
+        private bool _isActive;
+
+        public bool IsActive
+        {
+            get { return _isActive; }
+            set
+            {
+                _isActive = value;
+                OnPropertyChanged();
+            }
+        }
+
+        private DateTime _createdAt;
+
+        public DateTime CreatedAt
+        {
+            get { return _createdAt; }
+            set
+            {
+                _createdAt = value;
+                OnPropertyChanged();
+            }
+        }
+
+        private DateTime _updatedAt;
+
+        public DateTime UpdatedAt
+        {
+            get { return _updatedAt; }
+            set
+            {
+                _updatedAt = value;
+                OnPropertyChanged();
+            }
+        }
+
+        public UserModel(string username, string email)
         {
 
             Username = username;
             Email = email;
-            PasswordHash = passwordHash;
         }
 
         // Optional: additional properties or methods here

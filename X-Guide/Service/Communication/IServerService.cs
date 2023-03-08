@@ -15,7 +15,6 @@ namespace X_Guide.Communication.Service
     {
         event EventHandler<TcpClientEventArgs> ClientEvent;
         event EventHandler<TcpListenerEventArgs> ListenerEvent;
-        event EventHandler<TcpClientEventArgs> CommandEvent;
         event EventHandler<TcpClientEventArgs> MessageEvent;
 
         TcpClientInfo GetConnectedClientInfo(TcpClient tcpClient);

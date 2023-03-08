@@ -327,7 +327,7 @@ namespace X_Guide.MVVM.ViewModel
         public SettingViewModel(IMachineService machineDB, IServerService serverService)
         {
             PropertyChanged += OnManipulatorChangeEvent;
-            serverService.CommandEvent += OnCommandEvent;
+        
 
             _errorViewModel = new ErrorViewModel();
 

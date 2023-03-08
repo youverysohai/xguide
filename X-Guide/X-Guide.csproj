@@ -596,14 +596,15 @@
     <Compile Include="CustomEventArgs\BitMapImageArgs.cs" />
     <Compile Include="CustomEventArgs\TcpClientEventArgs.cs" />
     <Compile Include="CustomEventArgs\TcpListenerEventArgs.cs" />
-    <Compile Include="Enum\MountingOrient6Axis.cs" />
-    <Compile Include="Enum\MountingOrientGantry.cs" />
-    <Compile Include="Enum\MountingOrientSCARA.cs" />
-    <Compile Include="Enum\Terminator.cs" />
-    <Compile Include="Enum\EnumHelperClass.cs" />
-    <Compile Include="Enum\EnumToCollectionConverter.cs" />
-    <Compile Include="Enum\MachineType.cs" />
-    <Compile Include="Enum\ValueDescription.cs" />
+    <Compile Include="EnumClass\MountingOrient6Axis.cs" />
+    <Compile Include="EnumClass\MountingOrientGantry.cs" />
+    <Compile Include="EnumClass\MountingOrientSCARA.cs" />
+    <Compile Include="EnumClass\Terminator.cs" />
+    <Compile Include="EnumClass\EnumHelperClass.cs" />
+    <Compile Include="EnumClass\EnumToCollectionConverter.cs" />
+    <Compile Include="EnumClass\MachineType.cs" />
+    <Compile Include="EnumClass\UserRole.cs" />
+    <Compile Include="EnumClass\ValueDescription.cs" />
     <Compile Include="Extension\TaskExtensions.cs" />
     <Compile Include="FileLogger.cs" />
     <Compile Include="FileLoggerExtensions.cs" />
@@ -625,7 +626,8 @@
     <Compile Include="MVVM\Model\MachineModel.cs" />
     <Compile Include="MVVM\Model\Point.cs" />
     <Compile Include="MVVM\Model\UserModel.cs" />
-    <Compile Include="Enum\PageName.cs" />
+    <Compile Include="EnumClass\PageName.cs" />
+    <Compile Include="MVVM\Model\ModelBase.cs" />
     <Compile Include="MVVM\Model\VisionGuided.cs" />
     <Compile Include="MVVM\ViewModel\EngineeringViewModel.cs" />
     <Compile Include="MVVM\ViewModel\ErrorViewModel.cs" />
@@ -897,6 +899,9 @@
       <DependentUpon>XGuideModel.edmx</DependentUpon>
       <LastGenOutput>XGuideModel.cs</LastGenOutput>
     </Content>
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="DP\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

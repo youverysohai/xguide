@@ -60,6 +60,7 @@
           <Property Name="IsActive" Type="bit" Nullable="false" />
           <Property Name="CreatedAt" Type="datetime" Nullable="false" />
           <Property Name="UpdatedAt" Type="datetime" Nullable="false" />
+          <Property Name="Role" Type="int" />
         </EntityType>
         <Association Name="FK_Calibration_To_Machine">
           <End Role="Machine" Type="Self.Machine" Multiplicity="1" />
@@ -119,6 +120,7 @@
           <Property Name="IsActive" Type="Boolean" Nullable="false" />
           <Property Name="CreatedAt" Type="DateTime" Nullable="false" Precision="3" />
           <Property Name="UpdatedAt" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="Role" Type="Int32" />
         </EntityType>
         <EntityType Name="Machine">
           <Key>
@@ -188,6 +190,7 @@
           <EntitySetMapping Name="Users">
             <EntityTypeMapping TypeName="XGuideDBModel.User">
               <MappingFragment StoreEntitySet="User">
+                <ScalarProperty Name="Role" ColumnName="Role" />
                 <ScalarProperty Name="UpdatedAt" ColumnName="UpdatedAt" />
                 <ScalarProperty Name="CreatedAt" ColumnName="CreatedAt" />
                 <ScalarProperty Name="IsActive" ColumnName="IsActive" />

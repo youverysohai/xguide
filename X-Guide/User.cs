@@ -21,5 +21,6 @@ namespace X_Guide
         public bool IsActive { get; set; }
         public System.DateTime CreatedAt { get; set; }
         public System.DateTime UpdatedAt { get; set; }
+        public Nullable<int> Role { get; set; }
     }
 }

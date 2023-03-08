@@ -15,7 +15,6 @@ namespace X_Guide.MVVM.Model
         public string ManipulatorIP { get; set; }
         public string ManipulatorPort { get; set; }
         public string VisionIP { get; set; }
-
         public string VisionPort { get; set; }
 
         public string ManipulatorTerminator { get; set; }

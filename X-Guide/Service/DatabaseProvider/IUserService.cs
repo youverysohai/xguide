@@ -11,7 +11,7 @@ namespace X_Guide.Service.DatabaseProvider
     public interface IUserService
     {
         Task<IEnumerable<UserModel>> GetAllUsersAsync();
-        void CreateUser(UserModel user);
-        Task<User>AuthenticateUser(string username, SecureString password);
+        Task<bool> CreateUser(UserModel user, SecureString password);
+        Task<UserModel>AuthenticateUser(string username, SecureString password);
     }
 }
