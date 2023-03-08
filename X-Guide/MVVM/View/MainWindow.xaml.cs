@@ -137,7 +137,7 @@ namespace X_Guide
                 SideMenu.Width = 50;
                 TextTitle.Visibility = Visibility.Collapsed;
                 Username.Visibility = Visibility.Collapsed;
-                RoleIcon.Visibility = Visibility.Collapsed;
+                TxtRoleIcon.Visibility = Visibility.Collapsed;
                 UserControlContent.SetValue(Grid.ColumnProperty, 2);
                 UserControlContent.SetValue(Grid.ColumnSpanProperty, 3);
 
@@ -148,60 +148,14 @@ namespace X_Guide
                 SideMenu.Width = 180;
                 TextTitle.Visibility = Visibility.Visible;
                 Username.Visibility = Visibility.Visible;
-                RoleIcon.Visibility = Visibility.Visible;
+                TxtRoleIcon.Visibility = Visibility.Visible;
                 UserControlContent.SetValue(Grid.ColumnProperty, 3);
                 UserControlContent.SetValue(Grid.ColumnSpanProperty, 1);
 
             }
         }
 
-        private void LoginBtn_Click(object sender, RoutedEventArgs e)
-        {
-            Username.Text = "Hi, Admin";
-            PackIconKind icon = (PackIconKind)System.Enum.Parse(typeof(PackIconKind), "AccountTieHatOutline");
-          
-            RoleIcon.Kind = icon;
-            
-            // Get a reference to the application resources
-            ResourceDictionary resources = Application.Current.Resources;
-            Color foregroundColor = (Color)resources["PrimaryTextColor"]; //white
-
-
-            // Get the SolidColorBrush resource from the resource dictionary
-            SolidColorBrush foregroundBrush = (SolidColorBrush)resources["PrimaryBlueColor"];
-            SolidColorBrush foregroundWhiteBrush = new SolidColorBrush(foregroundColor);
-
-            // Set the foreground color of the TextBlock using the brush
-            TextElement.SetForeground(LogoutIcon, foregroundWhiteBrush);
-            TextElement.SetForeground(Username, foregroundBrush);
-            TextElement.SetForeground(TxtRoleIcon, foregroundBrush);
-            LoginIcon.Visibility = Visibility.Collapsed;
-            LogoutIcon.Visibility = Visibility.Visible;
-
-        }
-
-        private void LogoutIcon_Click(object sender, RoutedEventArgs e)
-        {
-            
-            
-            Username.Text = "Hi, Guest";
-            PackIconKind icon = (PackIconKind)System.Enum.Parse(typeof(PackIconKind), "Redhat");
-
-            RoleIcon.Kind = icon;
-
-            // Get a reference to the application resources
-            ResourceDictionary resources = Application.Current.Resources;
-
-            // Get the SolidColorBrush resource from the resource dictionary
-            Color foregroundColor = (Color)resources["PrimaryTextColor"];
-            SolidColorBrush foregroundBrush = new SolidColorBrush(foregroundColor);
-
-            // Set the foreground color of the TextBlock using the brush
-            TextElement.SetForeground(Username, foregroundBrush);
-            TextElement.SetForeground(TxtRoleIcon, foregroundBrush);
-            LoginIcon.Visibility = Visibility.Visible;
-            LogoutIcon.Visibility = Visibility.Collapsed;
-        }
+    
     }
 
 }

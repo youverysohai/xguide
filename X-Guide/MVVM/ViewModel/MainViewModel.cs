@@ -26,52 +26,33 @@ namespace X_Guide.MVVM.ViewModel
     public class MainViewModel : ViewModelBase
     {
         #region CLR properties
+        private bool _isLoggedIn = false;
+
+        public bool IsLoggedIn
+        {
+            get { return _isLoggedIn; }
+            set
+            {
+                _isLoggedIn = value;
+                OnPropertyChanged();
+            }
+        }
+
 
         private AuthenticationService _auth;
 
         private readonly NavigationStore _navigationStore;
 
-        private string _iconConnection;
 
-        public string IconConnection
-        {
-            get { return _iconConnection; }
-            set
-            {
-                _iconConnection = value;
 
-                OnPropertyChanged();
-            }
-
-        }
-
-        private string _connectionColor;
 
         public ICommand NavigateCommand { get; }
 
         public ICommand LoginCommand { get; }
 
         public ICommand ServerCommand { get; }
-        public string ConnectionColor
-        {
-            get { return _connectionColor; }
-            set
-            {
-                _connectionColor = value;
-                OnPropertyChanged();
-            }
-        }
-        private string _sConnectionColor;
 
-        public string SConnectionColor
-        {
-            get { return _sConnectionColor; }
-            set
-            {
-                _sConnectionColor = value;
-                OnPropertyChanged();
-            }
-        }
+
 
 
 
@@ -128,20 +109,23 @@ namespace X_Guide.MVVM.ViewModel
             NavigateCommand = new NavigateCommand(viewModels);
             LoginCommand = new RelayCommand(Login);
             /*    ServerCommand = new ConnectServerCommand(serverService);*/
-            ConnectionStatus = "Disconnected!";
-            IconConnection = "LanDisconnect";
-
-            SConnectionColor = ((SolidColorBrush)_resourceDictionary["DisconnectedColor"]).ToString();
-            ConnectionColor = ((SolidColorBrush)_resourceDictionary["DisconnectedColor"]).ToString();
 
 
         }
 
         private async void Login(object parameter)
         {
-            bool status = await _auth.Login(Username, Password);
-            if (status) MessageBox.Show($"Welcome back! {_auth.CurrentUser.Username}");
-            else MessageBox.Show("Invalid login");
+            //bool status = await _auth.Login(Username, Password);
+            //if (status) MessageBox.Show($"Welcome back! {_auth.CurrentUser.Username}");
+            //else MessageBox.Show("Invalid login");
+            if (IsLoggedIn == true)
+            {
+                IsLoggedIn = false;
+            }
+            else
+            {
+                IsLoggedIn = true;
+            }
 
         }
 
@@ -152,12 +136,12 @@ namespace X_Guide.MVVM.ViewModel
             {
                 if ((sender as ServerService).getServerStatus())
                 {
-                    SConnectionColor = ((SolidColorBrush)_resourceDictionary["ConnectedColor"]).ToString();
+                    //SConnectionColor = ((SolidColorBrush)_resourceDictionary["ConnectedColor"]).ToString();
                 }
                 else
                 {
 
-                    SConnectionColor = ((SolidColorBrush)_resourceDictionary["DisconnectedColor"]).ToString();
+                    //SConnectionColor = ((SolidColorBrush)_resourceDictionary["DisconnectedColor"]).ToString();
                 }
             });
         }
@@ -171,12 +155,12 @@ namespace X_Guide.MVVM.ViewModel
                 if (e.TcpClient.Connected)
                 {
                     ConnectionStatus = "Connected!";
-                    ConnectionColor = ((SolidColorBrush)_resourceDictionary["ConnectedColor"]).ToString();
+                    //ConnectionColor = ((SolidColorBrush)_resourceDictionary["ConnectedColor"]).ToString();
                 }
                 else
                 {
                     ConnectionStatus = "Disconnected!";
-                    ConnectionColor = ((SolidColorBrush)_resourceDictionary["DisconnectedColor"]).ToString();
+                    //ConnectionColor = ((SolidColorBrush)_resourceDictionary["DisconnectedColor"]).ToString();
                 }
             });
         }

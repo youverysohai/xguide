@@ -4,11 +4,10 @@
 
     <SolidColorBrush x:Key="SecondaryBlueColor" Color="#EFF2FF"/>
 
-    <SolidColorBrush x:Key="PrimaryTextColor" Color="#FFFFFF"/>
 
-    <SolidColorBrush x:Key="PrimaryGrayColor" Color="#FFFFFF"/>
     <SolidColorBrush x:Key="PrimaryBlackColor" Color="#2d2d2d"/>
-    <SolidColorBrush x:Key="DisconnectedColor" Color="#c6c6c6"/>
-    <SolidColorBrush x:Key="ConnectedColor" Color="#52ff00"/>
+    <SolidColorBrush x:Key="DisconnectedColor" Color="#707070"/>
+    <SolidColorBrush x:Key="ConnectedColor" Color="#6CA580"/>
+    <SolidColorBrush x:Key="ErrorColor" Color="#AA4450"/>
 
 </ResourceDictionary>

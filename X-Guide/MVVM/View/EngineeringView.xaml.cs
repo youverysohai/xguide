@@ -33,15 +33,15 @@ namespace X_Guide.MVVM.View
 
 
         }
-        private void Button_Prev(object sender, RoutedEventArgs e)
-        {
-            step.Prev();
-        }
+        //private void Button_Prev(object sender, RoutedEventArgs e)
+        //{
+        //    step.Prev();
+        //}
 
-        private void Button_Next(object sender, RoutedEventArgs e)
-        {
-            step.Next();
-        }
+        //private void Button_Next(object sender, RoutedEventArgs e)
+        //{
+        //    step.Next();
+        //}
 
         private void step_StepChanged(object sender, FunctionEventArgs<int> e)
         {
@@ -52,11 +52,11 @@ namespace X_Guide.MVVM.View
             }
         }
 
-        private void BtnStart_Click(object sender, RoutedEventArgs e)
-        {
-            ContentControl.Visibility = Visibility.Visible;
-            StartStepPage.Visibility = Visibility.Collapsed;
-        }
+        //private void BtnStart_Click(object sender, RoutedEventArgs e)
+        //{
+        //    ContentControl.Visibility = Visibility.Visible;
+        //    StartStepPage.Visibility = Visibility.Collapsed;
+        //}
     }
 
 

@@ -19,6 +19,13 @@ namespace X_Guide.MVVM.ViewModel
 {
     public class EngineeringViewModel : ViewModelBase
     {
+        private bool _isStarted;
+
+        public bool IsStarted
+        {
+            get { return _isStarted; }
+            set { _isStarted = value; OnPropertyChanged(); }
+        }
 
 
         public LinkedList<ViewModelBase> _navigationHistory = new LinkedList<ViewModelBase>();
@@ -28,6 +35,7 @@ namespace X_Guide.MVVM.ViewModel
         public NavigationStore _navigationStore;
         public ICommand WizNextCommand { get; set; }
         public ICommand WizPrevCommand { get; set; }
+        public ICommand StartCommand { get; set; }
         public ViewModelBase CurrentViewModel => _navigationStore.CurrentViewModel;
 
 
@@ -95,7 +103,7 @@ namespace X_Guide.MVVM.ViewModel
             _navigationStore.CurrentViewModelChanged += OnCurrentViewModelChanged;
             WizNextCommand = new WizNextCommand(this, _navigationStore);
             WizPrevCommand = new WizPrevCommand(this, _navigationStore);
-
+            StartCommand = new RelayCommand(start);
             _navigationStore.CurrentViewModel = new Step1ViewModel();
             CurrentNode = _navigationHistory.AddLast(CurrentViewModel);
 
@@ -105,7 +113,10 @@ namespace X_Guide.MVVM.ViewModel
 
         }
 
-
+        private void start(object arg)
+        {
+            IsStarted = true;
+        }
 
         private void OnCurrentViewModelChanged()
         {

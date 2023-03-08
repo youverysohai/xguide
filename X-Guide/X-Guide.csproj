@@ -763,7 +763,11 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Style\Button.xaml">
+    <Page Include="Style\BehaviorStyles.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Style\Icon.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -880,6 +884,8 @@
   <ItemGroup>
     <Resource Include="Style\ImageSource\hamster-cute.gif" />
     <Resource Include="Style\ImageSource\arrow.png" />
+    <Resource Include="Style\ImageSource\down.png" />
+    <Resource Include="Style\ImageSource\up.png" />
     <Content Include="XGuideDB.mdf">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>

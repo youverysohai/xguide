@@ -39,8 +39,8 @@
                         <RadioButton Style="{StaticResource RadioButton }" IsChecked="True">Look Downward</RadioButton>
                         <RadioButton Style="{StaticResource RadioButton}">Look Upward</RadioButton>
                         <RadioButton Style="{StaticResource  RadioButton }">Eye On Hand</RadioButton>
-                        <RadioButton Style="{StaticResource  RadioButton }">Mounted on Joint 2</RadioButton>
-                        <RadioButton Style="{StaticResource  RadioButton }">Mounted on Joint 5</RadioButton>
+                        <RadioButton Style="{StaticResource  RadioButton }" IsEnabled="False" >Mounted on Joint 2</RadioButton>
+                        <RadioButton Style="{StaticResource  RadioButton }" IsEnabled="False" >Mounted on Joint 5</RadioButton>
                     
                     </StackPanel>
                     <Border Grid.Column="1"  >
