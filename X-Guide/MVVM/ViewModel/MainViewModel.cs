@@ -96,9 +96,9 @@ namespace X_Guide.MVVM.ViewModel
         public ViewModelBase CurrentViewModel => _navigationStore.CurrentViewModel;
         #endregion
 
-        public MainViewModel(NavigationStore navigationStore, Dictionary<PageName, NavigationService> viewModels, IServerService serverService, ResourceDictionary resourceDictionary, IUserService userService)
+        public MainViewModel(NavigationStore navigationStore, Dictionary<PageName, NavigationService> viewModels, IServerService serverService, IUserService userService)
         {
-            _resourceDictionary = resourceDictionary;
+
             _auth = new AuthenticationService(userService);
 
 

@@ -14,18 +14,13 @@ using X_Guide.MVVM.Command;
 using X_Guide.MVVM.Store;
 using X_Guide.MVVM.View.CalibrationWizardSteps;
 using X_Guide.Service;
+using X_Guide.Service.DatabaseProvider;
 
 namespace X_Guide.MVVM.ViewModel
 {
     public class EngineeringViewModel : ViewModelBase
     {
-        private bool _isStarted;
 
-        public bool IsStarted
-        {
-            get { return _isStarted; }
-            set { _isStarted = value; OnPropertyChanged(); }
-        }
 
 
         public LinkedList<ViewModelBase> _navigationHistory = new LinkedList<ViewModelBase>();
@@ -35,7 +30,7 @@ namespace X_Guide.MVVM.ViewModel
         public NavigationStore _navigationStore;
         public ICommand WizNextCommand { get; set; }
         public ICommand WizPrevCommand { get; set; }
-        public ICommand StartCommand { get; set; }
+    
         public ViewModelBase CurrentViewModel => _navigationStore.CurrentViewModel;
 
 
@@ -95,16 +90,15 @@ namespace X_Guide.MVVM.ViewModel
 
                                                             
 
-        public EngineeringViewModel(NavigationStore navigationStore)
+        public EngineeringViewModel(IMachineService machineService)
         {
 
 
-            _navigationStore = navigationStore;
+            _navigationStore = new NavigationStore();
             _navigationStore.CurrentViewModelChanged += OnCurrentViewModelChanged;
             WizNextCommand = new WizNextCommand(this, _navigationStore);
             WizPrevCommand = new WizPrevCommand(this, _navigationStore);
-            StartCommand = new RelayCommand(start);
-            _navigationStore.CurrentViewModel = new Step1ViewModel();
+            _navigationStore.CurrentViewModel = new Step1ViewModel(machineService);
             CurrentNode = _navigationHistory.AddLast(CurrentViewModel);
 
 
@@ -113,10 +107,7 @@ namespace X_Guide.MVVM.ViewModel
 
         }
 
-        private void start(object arg)
-        {
-            IsStarted = true;
-        }
+
 
         private void OnCurrentViewModelChanged()
         {

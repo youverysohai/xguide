@@ -7,7 +7,7 @@ using X_Guide.MVVM.Model;
 
 namespace X_Guide.Service.DatabaseProvider
 {
-    internal interface IMachineService
+    public interface IMachineService
     {
 
         

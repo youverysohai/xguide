@@ -16,6 +16,8 @@ namespace X_Guide.MVVM
         Login,
         StepOne,
         StepTwo,
+        JogRobot,
+        CalibrationWizardStart,
     
     
 

@@ -17,7 +17,7 @@
         </Style.Triggers>   
     </Style>
     <!-- Login Logout Button Behavior -->
-    <Style TargetType="Button" x:Key="LoginLogoutButton" BasedOn="{StaticResource MaterialDesignFlatButton}">
+    <Style TargetType="Button" x:Key="LoginLogoutButton" BasedOn="{StaticResource MaterialDesignIconForegroundButton}">
         <Style.Triggers>
             <DataTrigger Binding="{Binding IsLoggedIn}" Value="True">
                 <Setter Property="Foreground"  Value="White"/>

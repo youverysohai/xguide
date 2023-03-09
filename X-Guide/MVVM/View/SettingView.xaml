@@ -35,7 +35,7 @@
     </UserControl.Resources>
     <ScrollViewer VerticalScrollBarVisibility="Hidden" >
 
-        <materialDesign:Card Background="#2d2d30" UniformCornerRadius="20"  Margin="0 10 10 10">
+        <materialDesign:Card Style="{DynamicResource CardLayout}">
 
 
 

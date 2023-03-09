@@ -7,15 +7,7 @@
              mc:Ignorable="d" 
              d:DesignHeight="700" d:DesignWidth="800"
              xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes">
-    <UserControl.Resources>
-        <Style x:Key="OutlineTextStyle" TargetType="TextBox" BasedOn="{StaticResource MaterialDesignOutlinedTextBox}">
-            <Setter Property="FontSize" Value="16"></Setter>
-            <Setter Property="Margin" Value="5 0 5 30"></Setter>
 
-            <Setter Property="TextAlignment" Value="Center"></Setter>
-        </Style>
-
-    </UserControl.Resources>
 
     <Grid Margin="0 0 0 10">
         <materialDesign:Card UniformCornerRadius="20" Margin="0 10 15 0">
@@ -26,7 +18,7 @@
                     <ColumnDefinition Width="*"/>
                 </Grid.ColumnDefinitions>
                 <Grid.RowDefinitions>
-                    <RowDefinition Height="2*"/>
+                    <RowDefinition Height="1.5*"/>
                     <RowDefinition Height="*"/>
                 </Grid.RowDefinitions>
                 <StackPanel Orientation="Vertical" Grid.ColumnSpan="2">
@@ -43,7 +35,7 @@
                             <RowDefinition Height="*"/>
                             <RowDefinition Height="*"/>
                         </Grid.RowDefinitions>
-                        <!-- Row 1 -->
+                        <!-- Row 1: Speed-->
                         <StackPanel Orientation="Horizontal" Grid.Row="0" Grid.Column="0" >
                             <Label Content="1" Style="{DynamicResource MaterialDesignLabel}"/>
                             <Slider  Value="{Binding Value}" Style="{StaticResource MaterialDesignSlider}"   Minimum="1" Maximum="100" Width="250"></Slider>
@@ -55,7 +47,7 @@
                                     materialDesign:HintAssist.FloatingOffset="-15,-20">
 
                         </TextBox>
-                        <!-- Row 2 -->
+                        <!-- Row 2: Acceleration -->
                         <StackPanel Orientation="Horizontal" Grid.Row="1" Grid.Column="0" >
                             <Label Content="1" Style="{DynamicResource MaterialDesignLabel}"/>
                             <Slider  Value="{Binding ValueAcceleration}" Style="{StaticResource MaterialDesignSlider}"   Minimum="1" Maximum="100" Width="250"></Slider>
@@ -65,12 +57,13 @@
                                    Padding="10 1"      MinWidth="100"  
                                   materialDesign:HintAssist.Hint="Acceleration %" materialDesign:HintAssist.FloatingScale=".63" 
                                     materialDesign:HintAssist.FloatingOffset="-15,-17"/>
-                        <!-- Row 3 -->
+                        <!-- Row 3: Motion Delay-->
                         <StackPanel Orientation="Horizontal" Grid.Row="2" Grid.Column="0" >
                             <Label Content="0" Style="{DynamicResource MaterialDesignLabel}"/>
                             <Slider   Style="{StaticResource MaterialDesignSlider}" Minimum="0" Maximum="2000" Width="250"></Slider>
                             <Label Content="2000" Style="{DynamicResource MaterialDesignLabel}"/>
                         </StackPanel>
+                        <!--X Y offset-->
                         <TextBox  Grid.Row="2" Grid.Column="1" Style="{StaticResource OutlineTextStyle}" 
                                    Padding="10 1"      MinWidth="100"  
                                   materialDesign:HintAssist.Hint="Motion Delay ms" materialDesign:HintAssist.FloatingScale=".55" 

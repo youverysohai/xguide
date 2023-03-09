@@ -41,44 +41,7 @@ namespace X_Guide.MVVM.ViewModel
 
         public bool HasErrors => _errorViewModel.HasErrors;
 
-        private Visibility _cancelBtnVisibility;
-
-        public Visibility CancelBtnVisibility
-        {
-            get { return _cancelBtnVisibility; }
-            set
-            {
-                _cancelBtnVisibility = value;
-                OnPropertyChanged();
-            }
-        }
-
-
-        private Visibility _saveBtnVisibility;
-
-        public Visibility SaveBtnVisibility
-        {
-            get { return _saveBtnVisibility; }
-            set
-            {
-                _saveBtnVisibility = value;
-                OnPropertyChanged();
-            }
-        }
-
-
-
-        private Visibility _editBtnVisibility;
-
-        public Visibility EditBtnVisibility
-        {
-            get { return _editBtnVisibility; }
-            set
-            {
-                _editBtnVisibility = value;
-                OnPropertyChanged();
-            }
-        }
+        
 
 
         private bool _canEdit;
@@ -339,16 +302,12 @@ namespace X_Guide.MVVM.ViewModel
             TerminatorList = EnumHelperClass.GetAllValuesAndDescriptions(typeof(Terminator));
 
             SaveCommand = new SaveSettingCommand(this, _machineDB);
-            EditManipulatorNameCommand = new EditManipulatorNameCommand(this);
 
 
-            //UI
-            SaveBtnVisibility = Visibility.Collapsed;
-            CancelBtnVisibility = Visibility.Collapsed;
+
+
 
             var command = (CommandBase)SaveCommand;
-            SaveBtnVisibility = Visibility.Collapsed;
-            CancelBtnVisibility = Visibility.Collapsed;
 
 
             _errorViewModel.ErrorsChanged += OnErrorChanged;
