@@ -7,7 +7,7 @@
              xmlns:local="clr-namespace:X_Guide.MVVM.View"
               Background="Transparent"
              
-          
+          xmlns:v="clr-namespace:VMControls.WPF;assembly=VMControls.WPF"
              mc:Ignorable="d" 
              d:DesignHeight="450" d:DesignWidth="800">
     <!--xmlns:v="clr-namespace:VMControls.WPF;assembly=VMControls.WPF"-->
@@ -29,7 +29,7 @@
                     <Button Grid.Column="1"   Margin="10" Content="Browse" Style="{DynamicResource MaterialDesignOutlinedButton}" Command="{Binding BrowseFileDialogCommand}"/>
               
                 <Rectangle  Grid.Row="1" Grid.ColumnSpan="2" Fill="#212121" Margin="15"/>
-                <!--<v:RenderControlBase Name="p_box" Loaded="p_box_Loaded"/>-->
+            <!--<v:RenderControlBase Grid.Row="1" Grid.ColumnSpan="2" Name="p_box" Loaded="p_box_Loaded"/>-->
 
 
 

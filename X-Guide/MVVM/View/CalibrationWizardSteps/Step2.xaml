@@ -17,10 +17,10 @@
         </Style>
         <Style x:Key="RadioButtonSCARA" TargetType="RadioButton" BasedOn="{StaticResource RadioButtonStyle}">
             <Style.Triggers>
-                <DataTrigger Binding="{Binding IsTypeSCARA}" Value="True" >
+                <DataTrigger Binding="{Binding IsLoggedIn}" Value="True" >
                     <Setter Property="Visibility" Value="Visible"></Setter>
                 </DataTrigger>
-                <DataTrigger Binding="{Binding IsTypeSCARA}" Value="False" >
+                <DataTrigger Binding="{Binding IsLoggedIn}" Value="False" >
                     <Setter Property="Visibility" Value="Collapsed"></Setter>
                 </DataTrigger>
             </Style.Triggers>

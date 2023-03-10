@@ -17,6 +17,7 @@
         WindowStyle="None"
         AllowsTransparency="True"
         WindowState="Normal"
+         
         BorderBrush="{DynamicResource PrimaryBlackColor}"
         BorderThickness="1"
         Foreground="White">
@@ -48,7 +49,6 @@
         <Grid Background="#1c1c1c">
 
             <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="*"/>
                 <ColumnDefinition Width="auto"/>
                 <ColumnDefinition Width="70*"/>
             </Grid.ColumnDefinitions>
@@ -59,7 +59,7 @@
 
             </Grid.RowDefinitions>
 
-            <StackPanel Orientation="Horizontal" Grid.Row="0" Grid.Column="1"  Margin="0 0 0 0" Panel.ZIndex="1">
+            <StackPanel Orientation="Horizontal" Grid.Row="0" Grid.Column="0"  Margin="8 0 0 0" Panel.ZIndex="1">
 
                 <!-- login logout user role -->
                 <Button x:Name="LoginIcon" Style="{DynamicResource LoginLogoutButton}"
@@ -103,7 +103,7 @@
 
             </DockPanel>
             <!-- sidemenu -->
-            <Grid Grid.Row="1" Grid.Column="1"  >
+            <Grid Grid.Row="1" Grid.Column="0"  Margin="8 0 0 0">
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="auto"/>
                     <ColumnDefinition Width="*"/>
