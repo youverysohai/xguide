@@ -1,4 +1,5 @@
-﻿using System;
+﻿using AutoMapper;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Security.Permissions;
@@ -18,14 +19,14 @@ namespace X_Guide.MVVM.Model
         public string ManipulatorPort { get; set; }
         public string VisionIP { get; set; }
         public string VisionPort { get; set; }
-
         public string ManipulatorTerminator { get; set; }
 
         public string VisionTerminator { get; set; }
 
-
+        
         public MachineModel()
         {
+          
             Name = "Default";
             Type = 1;
             Description = "Default";

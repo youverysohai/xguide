@@ -1,4 +1,5 @@
-﻿using HandyControl.Controls;
+﻿using AutoMapper;
+using HandyControl.Controls;
 using HandyControl.Data;
 using System;
 using System.Collections.Generic;
@@ -90,7 +91,7 @@ namespace X_Guide.MVVM.ViewModel
 
                                                             
 
-        public EngineeringViewModel(IMachineService machineService)
+        public EngineeringViewModel(IMachineService machineService, IMapper mapper)
         {
 
 
@@ -98,13 +99,9 @@ namespace X_Guide.MVVM.ViewModel
             _navigationStore.CurrentViewModelChanged += OnCurrentViewModelChanged;
             WizNextCommand = new WizNextCommand(this, _navigationStore);
             WizPrevCommand = new WizPrevCommand(this, _navigationStore);
-            _navigationStore.CurrentViewModel = new Step1ViewModel(machineService);
+
+            _navigationStore.CurrentViewModel = new Step1ViewModel(machineService, mapper);
             CurrentNode = _navigationHistory.AddLast(CurrentViewModel);
-
-
-
-
-
         }
 
 

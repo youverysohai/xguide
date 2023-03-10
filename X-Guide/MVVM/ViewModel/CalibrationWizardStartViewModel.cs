@@ -1,4 +1,5 @@
-﻿using System;
+﻿using AutoMapper;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -13,6 +14,7 @@ namespace X_Guide.MVVM.ViewModel
 {
     internal class CalibrationWizardStartViewModel :ViewModelBase
     {
+        private IMapper _mapper;
         private string _name;
 
         public string Name
@@ -32,7 +34,7 @@ namespace X_Guide.MVVM.ViewModel
         public NavigationStore _navigationStore { get; }
         private  IMachineService _machineDB { get; }
 
-        public CalibrationWizardStartViewModel(NavigationStore navigationStore, IMachineService machineService) { 
+        public CalibrationWizardStartViewModel(NavigationStore navigationStore, IMachineService machineService, IMapper mapper) { 
             StartCommand = new RelayCommand(start);
             _navigationStore = navigationStore;
             _machineDB = machineService;
@@ -40,7 +42,7 @@ namespace X_Guide.MVVM.ViewModel
         private void start(object arg)
         {
             IsStarted = true;
-            _navigationStore.CurrentViewModel = new EngineeringViewModel(_machineDB);
+            _navigationStore.CurrentViewModel = new EngineeringViewModel(_machineDB, _mapper);
         }
         //public override ViewModelBase GetNextViewModel()
         //{
