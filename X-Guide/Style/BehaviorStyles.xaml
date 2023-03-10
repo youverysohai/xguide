@@ -140,4 +140,26 @@
     </Style>
 
     <!--#endregion-->
+    
+    <!--#region Wizard : Step 2-->
+    <!-- Set Radio Button Visibility Based on Machine Type-->
+    <Style x:Key="RadioButtonSCARA" TargetType="RadioButton" BasedOn="{StaticResource RadioButtonStyle}">
+        <Setter Property="Visibility" Value="Collapsed"/>
+        <Style.Triggers>
+            <DataTrigger Binding="{Binding IsType}" Value="SCARA" >
+                <Setter Property="Visibility" Value="Visible"></Setter>
+            </DataTrigger>
+        </Style.Triggers>
+    </Style>
+    <Style x:Key="RadioButtonSixAxis" TargetType="RadioButton" BasedOn="{StaticResource RadioButtonStyle}">
+        <Setter Property="Visibility" Value="Collapsed"/>
+        <Style.Triggers>
+            <DataTrigger Binding="{Binding IsType}" Value="SixAxis" >
+                <Setter Property="Visibility" Value="Visible"></Setter>
+            </DataTrigger>
+        </Style.Triggers>
+    </Style>
+    
+    <!--Preview GIF Image Based on Selected Radio Button-->
+    
 </ResourceDictionary>
