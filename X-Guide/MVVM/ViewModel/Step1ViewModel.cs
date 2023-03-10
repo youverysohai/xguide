@@ -53,7 +53,7 @@ namespace X_Guide.MVVM.ViewModel
 
         private void OnNameChanged(string name)
         {
-            //_machine = _machineService.GetMachine(name);
+            _machine = _machineService.GetMachine(name);
             Type = Enum.GetName(typeof(MachineType), _machine.Type);
         }
 

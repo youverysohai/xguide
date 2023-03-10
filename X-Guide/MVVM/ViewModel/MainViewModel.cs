@@ -27,13 +27,11 @@ namespace X_Guide.MVVM.ViewModel
     public class MainViewModel : ViewModelBase
     {
         #region CLR properties
+  
+
+
+
         private bool _isLoggedIn = false;
-
-      
-
-        private string _iconConnection;
-
-        private bool _isLoggedIn;
 
         public bool IsLoggedIn
         {
@@ -49,47 +47,6 @@ namespace X_Guide.MVVM.ViewModel
 
         public ICommand RegisterCommand { get; }
 
-        #region ToTrigger
-        public string IconConnection
-        {
-            get { return _isLoggedIn; }
-            set
-            {
-                _isLoggedIn = value;
-                OnPropertyChanged();
-            }
-        }
-        private string _connectionColor;
-        public string ConnectionColor
-        {
-            get { return _connectionColor; }
-            set
-            {
-                _connectionColor = value;
-                OnPropertyChanged();
-            }
-        }
-
-
-        private string _sConnectionColor;
-
-
-
-
-
-        private string _connectionStatus;
-        private ResourceDictionary _resourceDictionary;
-        public string ConnectionStatus
-        {
-            get { return _connectionStatus; }
-            set
-            {
-                _connectionStatus = value;
-                OnPropertyChanged();
-            }
-        }
-
-        #endregion
 
         private string _inputUsername;
         public string InputUsername
@@ -136,15 +93,7 @@ namespace X_Guide.MVVM.ViewModel
             LoginCommand = new RelayCommand(Login);
             RegisterCommand = new RelayCommand(Register);
 
-            #region ToTrigger
-            ConnectionStatus = "Disconnected!";
-            IconConnection = "LanDisconnect";
-
-            SConnectionColor = ((SolidColorBrush)_resourceDictionary["DisconnectedColor"]).ToString();
-            ConnectionColor = ((SolidColorBrush)_resourceDictionary["DisconnectedColor"]).ToString();
-            #endregion
-
-        }
+          }
 
         private void CurrentUser_PropertyChanged(object sender, PropertyChangedEventArgs e)
         {
@@ -214,19 +163,6 @@ namespace X_Guide.MVVM.ViewModel
         private void ClientEventHandler(object sender, TcpClientEventArgs e)
         {
 
-            Application.Current.Dispatcher.Invoke(() =>
-            {
-                if (e.TcpClient.Connected)
-                {
-                    ConnectionStatus = "Connected!";
-                    //ConnectionColor = ((SolidColorBrush)_resourceDictionary["ConnectedColor"]).ToString();
-                }
-                else
-                {
-                    ConnectionStatus = "Disconnected!";
-                    //ConnectionColor = ((SolidColorBrush)_resourceDictionary["DisconnectedColor"]).ToString();
-                }
-            });
         }
 
       

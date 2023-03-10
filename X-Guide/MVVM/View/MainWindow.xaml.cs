@@ -154,7 +154,13 @@ namespace X_Guide
             }
         }
 
-    
+        private void PasswordBox_PasswordChanged(object sender, RoutedEventArgs e)
+        {
+            if(sender != null)
+            {
+                ((dynamic)DataContext).SecurePassword = ((PasswordBox)sender).SecurePassword;
+            }
+        }
     }
 
 }
