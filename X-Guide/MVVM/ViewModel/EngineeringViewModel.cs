@@ -14,11 +14,13 @@ using X_Guide.MVVM.Command;
 using X_Guide.MVVM.Store;
 using X_Guide.MVVM.View.CalibrationWizardSteps;
 using X_Guide.Service;
+using X_Guide.Service.DatabaseProvider;
 
 namespace X_Guide.MVVM.ViewModel
 {
     public class EngineeringViewModel : ViewModelBase
     {
+
 
 
         public LinkedList<ViewModelBase> _navigationHistory = new LinkedList<ViewModelBase>();
@@ -28,6 +30,7 @@ namespace X_Guide.MVVM.ViewModel
         public NavigationStore _navigationStore;
         public ICommand WizNextCommand { get; set; }
         public ICommand WizPrevCommand { get; set; }
+    
         public ViewModelBase CurrentViewModel => _navigationStore.CurrentViewModel;
 
 
@@ -87,16 +90,15 @@ namespace X_Guide.MVVM.ViewModel
 
                                                             
 
-        public EngineeringViewModel(NavigationStore navigationStore)
+        public EngineeringViewModel(IMachineService machineService)
         {
 
 
-            _navigationStore = navigationStore;
+            _navigationStore = new NavigationStore();
             _navigationStore.CurrentViewModelChanged += OnCurrentViewModelChanged;
             WizNextCommand = new WizNextCommand(this, _navigationStore);
             WizPrevCommand = new WizPrevCommand(this, _navigationStore);
-
-            _navigationStore.CurrentViewModel = new Step1ViewModel();
+            _navigationStore.CurrentViewModel = new Step1ViewModel(machineService);
             CurrentNode = _navigationHistory.AddLast(CurrentViewModel);
 
 

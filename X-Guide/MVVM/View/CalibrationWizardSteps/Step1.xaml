@@ -7,7 +7,6 @@
              mc:Ignorable="d" 
              d:DesignHeight="550" d:DesignWidth="800"
              Background="Transparent"
-              xmlns:hc="https://handyorg.github.io/handycontrol"
              xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
              FontSize="16">
 
@@ -16,12 +15,11 @@
 
             <StackPanel Orientation="Vertical" VerticalAlignment="Center" >
                 <TextBlock Text="Select Manipulator" HorizontalAlignment="Center" FontSize="35" Margin="0 0 0 25"/>
-                <ComboBox Width="300"  Style="{DynamicResource MaterialDesignOutlinedComboBox}"
+                <ComboBox  Width="300" SelectedItem="{Binding Name}" 
+                          Style="{DynamicResource MaterialDesignOutlinedComboBox}"
                     materialDesign:HintAssist.Hint="Manipulator Name"
+                        ItemsSource="{Binding MachineNames}"
                           >
-                    <ComboBoxItem>1</ComboBoxItem>
-                    <ComboBoxItem>2</ComboBoxItem>
-                    <ComboBoxItem>3</ComboBoxItem>
                 </ComboBox>
                 <StackPanel  Orientation="Horizontal" HorizontalAlignment="Center" Margin="0 0 0 40">
                     <TextBlock  VerticalAlignment="Center" Text="New Manipulator? "/>
@@ -29,7 +27,7 @@
                 </StackPanel>
                 <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
                     <Label Content="Manipulator Type: " Style="{DynamicResource MaterialDesignLabel}"/>
-                    <TextBlock Text="Gantry System" Style="{DynamicResource ReadOnlyTextBlock}"/>
+                    <TextBlock Text="{Binding Type}" Style="{DynamicResource ReadOnlyTextBlock}"/>
 
                 </StackPanel>
 

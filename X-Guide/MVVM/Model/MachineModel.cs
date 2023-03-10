@@ -1,8 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Security.Permissions;
 using System.Text;
 using System.Threading.Tasks;
+using VM.Core;
 
 namespace X_Guide.MVVM.Model
 {
@@ -17,8 +19,6 @@ namespace X_Guide.MVVM.Model
         public string VisionIP { get; set; }
         public string VisionPort { get; set; }
 
-        public string ManipulatorTerminator { get; set; }
-        public string VisionTerminator { get; set; }
 
         public MachineModel()
         {

@@ -58,7 +58,7 @@ namespace X_Guide
             _wizardNavigationStore = new NavigationStore();
             _resourceDictionary = new ResourceDictionary
             {
-                Source = new Uri("/Style/Color.xaml", UriKind.RelativeOrAbsolute)
+                Source = new Uri("/Style/Colors.xaml", UriKind.RelativeOrAbsolute)
             };
 
             //Navigation setting      
@@ -77,7 +77,10 @@ namespace X_Guide
                 {PageName.Engineering, new NavigationService (_navigationStore, CreateEngineeringViewModel) },
                 {PageName.Security, new NavigationService (_navigationStore, CreateSecurityViewModel) },
                 {PageName.Undefined, new NavigationService(_navigationStore, CreateUndefinedViewModel) } ,
-                {PageName.Login, new NavigationService(_navigationStore, CreateUserLoginViewModel) }
+                {PageName.JogRobot, new NavigationService(_navigationStore, CreateJogRobotViewModel) } ,
+                {PageName.Login, new NavigationService(_navigationStore, CreateUserLoginViewModel) },
+                {PageName.CalibrationWizardStart, new NavigationService(_navigationStore, CreateCalibrationWizardStart)} ,
+
             };
 
 
@@ -91,12 +94,13 @@ namespace X_Guide
             string settingPath = Path.Combine(appDataPath, "X-Guide", "Settings.xml");
             ConfigurationManager.AppSettings["SettingPath"] = settingPath;
         }
+          //        Startup Page
         protected override void OnStartup(StartupEventArgs e)
         {
-            _navigationStore.CurrentViewModel = CreateSettingViewModel();
+            _navigationStore.CurrentViewModel = CreateEngineeringViewModel();
             MainWindow = new MainWindow()
             {
-                DataContext = new MainViewModel(_navigationStore, _viewModels, _serverService, _resourceDictionary, _userProvider)
+                DataContext = new MainViewModel(_navigationStore, _viewModels, _serverService, _userProvider)
             };
 
 
@@ -113,7 +117,7 @@ namespace X_Guide
         }
         private ViewModelBase CreateEngineeringViewModel()
         {
-            return new EngineeringViewModel(_wizardNavigationStore);
+            return new EngineeringViewModel(_machineDb);
         }
 
         private ViewModelBase CreateUndefinedViewModel()
@@ -133,6 +137,14 @@ namespace X_Guide
         private ViewModelBase CreateUserLoginViewModel()
         {
             return new UserLoginViewModel();
+        }
+        private ViewModelBase CreateJogRobotViewModel()
+        {
+            return new JogRobotViewModel();
+        }
+        private ViewModelBase CreateCalibrationWizardStart()
+        {
+            return new CalibrationWizardStartViewModel(_navigationStore, _machineDb);
         }
 
 

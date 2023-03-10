@@ -4,26 +4,26 @@ using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
 using System.Text;
-using System.Threading;
 using System.Threading.Tasks;
-using System.Windows;
 using System.Windows.Input;
 using System.Windows.Media.Imaging;
-using System.Windows.Threading;
+using System.Windows;
 using X_Guide.CustomEventArgs;
 using X_Guide.MVVM.Command;
 using X_Guide.Service;
 
 namespace X_Guide.MVVM.ViewModel
 {
-    internal class Step5ViewModel : ViewModelBase
+    internal class JogRobotViewModel:ViewModelBase
     {
         private BitmapImage _videoSource;
 
         public BitmapImage VideoSource
         {
             get { return _videoSource; }
-            set { _videoSource = value;
+            set
+            {
+                _videoSource = value;
                 OnPropertyChanged();
             }
         }
@@ -48,13 +48,13 @@ namespace X_Guide.MVVM.ViewModel
 
 
 
-        public Step5ViewModel()
+        public JogRobotViewModel()
         {
             GetVideoDevices();
             _imageService = new ImageService(CurrentDevice);
             _imageService.videoFrameChanged += OnVideoFrameChanged;
             VideoCommand = new VideoCommand(_imageService);
-      
+
         }
 
         private void OnVideoFrameChanged(object sender, BitMapImageArgs e)
@@ -77,12 +77,6 @@ namespace X_Guide.MVVM.ViewModel
             {
                 MessageBox.Show("No video sources found", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
             }
-        }
-
-
-        public override ViewModelBase GetNextViewModel()
-        {
-            return new Step6ViewModel();
         }
     }
 }

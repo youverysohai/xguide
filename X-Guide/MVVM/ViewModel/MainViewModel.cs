@@ -27,6 +27,7 @@ namespace X_Guide.MVVM.ViewModel
     public class MainViewModel : ViewModelBase
     {
         #region CLR properties
+        private bool _isLoggedIn = false;
 
       
 
@@ -51,14 +52,12 @@ namespace X_Guide.MVVM.ViewModel
         #region ToTrigger
         public string IconConnection
         {
-            get { return _iconConnection; }
+            get { return _isLoggedIn; }
             set
             {
-                _iconConnection = value;
-
+                _isLoggedIn = value;
                 OnPropertyChanged();
             }
-
         }
         private string _connectionColor;
         public string ConnectionColor
@@ -74,15 +73,7 @@ namespace X_Guide.MVVM.ViewModel
 
         private string _sConnectionColor;
 
-        public string SConnectionColor
-        {
-            get { return _sConnectionColor; }
-            set
-            {
-                _sConnectionColor = value;
-                OnPropertyChanged();
-            }
-        }
+
 
 
 
@@ -130,10 +121,9 @@ namespace X_Guide.MVVM.ViewModel
         public UserModel CurrentUser => _auth.CurrentUser;
         #endregion
 
-        public MainViewModel(NavigationStore navigationStore, Dictionary<PageName, NavigationService> viewModels, IServerService serverService, ResourceDictionary resourceDictionary, IUserService userService)
+        public MainViewModel(NavigationStore navigationStore, Dictionary<PageName, NavigationService> viewModels, IServerService serverService, IUserService userService)
         {
-            
-            _resourceDictionary = resourceDictionary;
+
             _auth = new AuthenticationService(userService);
             _auth.CurrentUserChanged += OnCurrentUserChanged;
             
@@ -210,12 +200,12 @@ namespace X_Guide.MVVM.ViewModel
             {
                 if ((sender as ServerService).getServerStatus())
                 {
-                    SConnectionColor = ((SolidColorBrush)_resourceDictionary["ConnectedColor"]).ToString();
+                    //SConnectionColor = ((SolidColorBrush)_resourceDictionary["ConnectedColor"]).ToString();
                 }
                 else
                 {
 
-                    SConnectionColor = ((SolidColorBrush)_resourceDictionary["DisconnectedColor"]).ToString();
+                    //SConnectionColor = ((SolidColorBrush)_resourceDictionary["DisconnectedColor"]).ToString();
                 }
             });
         }
@@ -229,12 +219,12 @@ namespace X_Guide.MVVM.ViewModel
                 if (e.TcpClient.Connected)
                 {
                     ConnectionStatus = "Connected!";
-                    ConnectionColor = ((SolidColorBrush)_resourceDictionary["ConnectedColor"]).ToString();
+                    //ConnectionColor = ((SolidColorBrush)_resourceDictionary["ConnectedColor"]).ToString();
                 }
                 else
                 {
                     ConnectionStatus = "Disconnected!";
-                    ConnectionColor = ((SolidColorBrush)_resourceDictionary["DisconnectedColor"]).ToString();
+                    //ConnectionColor = ((SolidColorBrush)_resourceDictionary["DisconnectedColor"]).ToString();
                 }
             });
         }

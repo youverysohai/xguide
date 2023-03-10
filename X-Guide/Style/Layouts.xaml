@@ -1,0 +1,83 @@
+﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                    xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
+             
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                    >
+    <!--related to layout and positioning of controls in the application.-->
+    <!--Layout control : Grid Stack Dock Wrap Canvas...-->
+    <!--Content control : Button TextBlock Label Image ComboBox...-->
+    
+    <!--#region Main Window -->
+    <Style TargetType="TextBlock" x:Key="MainBottomInfoTextBlock">
+        <Setter Property="FontSize" Value="14"/>
+        <Setter Property="Margin" Value="10 0 10 0"/>
+        <Setter Property="FontWeight" Value="Bold"/>
+    </Style>
+    <Style TargetType="TextBlock" x:Key="MainTopTitleTextBlock" BasedOn="{StaticResource MaterialDesignHeadline6TextBlock}"> 
+        <!-- Xlent X-Guide Version 1.0 -->
+        <Setter Property="Text" Value="Xlent X-Guide version 1.0"/>
+        <Setter Property="TextAlignment" Value="Center"/>
+        <Setter Property="Margin" Value="5"/>
+        <Setter Property="Foreground" Value="{DynamicResource SecondaryBlueColor}"/>
+    </Style>
+    <Style TargetType="TextBlock" x:Key="MainProjectNameTextBlock" BasedOn="{StaticResource MaterialDesignHeadline6TextBlock}">
+        <!-- X-Guide -->
+        <Setter Property="Text" Value="X-Guide"/>
+        <Setter Property="FontSize" Value="25"/>
+        <Setter Property="TextAlignment" Value="Left"/>
+        <Setter Property="VerticalAlignment" Value="Center"/>
+        <Setter Property="Margin" Value="5"/>
+        <Setter Property="Foreground" Value="{DynamicResource SecondaryBlueColor}"/>
+    </Style>
+
+    <!--#endregion-->
+
+    <!--#region Global Styles-->
+    <!--Outline Text Style: Step 4, ProductionView-->
+    <Style x:Key="OutlineTextStyle" TargetType="TextBox" BasedOn="{StaticResource MaterialDesignOutlinedTextBox}">
+        <Setter Property="FontSize" Value="16"></Setter>
+        <Setter Property="Margin" Value="5 0 5 30"></Setter>
+        <Setter Property="TextAlignment" Value="Center"></Setter>
+        <Setter Property="Padding" Value="10 1"/>   
+    </Style>
+    <!-- Cards Layout: SettingView, Production View-->
+    <Style x:Key="CardLayout" TargetType="materialDesign:Card">
+        <Setter Property="Background" Value="{DynamicResource SecondaryBlackColor}" />
+        <Setter Property="UniformCornerRadius" Value="20" />
+        <Setter Property="Margin" Value="0 10 10 10" />
+    </Style>
+    <Style x:Key="InputMaterialDesignTextBox" TargetType="{x:Type TextBox}" BasedOn="{StaticResource MaterialDesignFloatingHintTextBox }">
+        <Setter Property="Foreground" Value="white"/>
+        <Setter Property="FontSize" Value="16"/>
+        <Setter Property="Padding" Value="5"/>
+        <Setter Property="Margin" Value="15 0 10 0"/>
+    </Style>
+    <Style x:Key="IPInputMaterialDesignTextBox" TargetType="{x:Type TextBox}"  BasedOn="{StaticResource MaterialDesignTextBox }">
+        <Setter Property="Foreground" Value="white"/>
+        <Setter Property="FontSize" Value="16"/>
+        <Setter Property="Width"  Value="48"/>
+        <Setter Property="Padding" Value="5 15 0 0"/>
+        <Setter Property="HorizontalAlignment" Value="Center"/>
+    </Style>
+    <Style x:Key="HeaderGroupBox" TargetType="{x:Type GroupBox}" BasedOn="{StaticResource MaterialDesignCardGroupBox}">
+
+        <Setter Property="FontSize" Value="20"/>
+        <Setter Property="Margin" Value="10"/>
+    </Style>
+    <Style x:Key="ComboBoxStyle" TargetType="{x:Type ComboBox}" BasedOn="{StaticResource MaterialDesignFloatingHintComboBox}">
+
+        <Setter Property="FontSize" Value="16"/>
+        <Setter Property="Margin" Value="15"/>
+    </Style>
+    <Style x:Key="ReadOnlyTextBlock" TargetType="TextBlock" BasedOn="{StaticResource MaterialDesignHeadline6TextBlock}" >
+        <Setter Property="Foreground" Value="{DynamicResource PrimaryBlueColor }"/>
+        <Setter Property="Margin" Value="10 0"/>
+    </Style>
+    <!-- STEP 5 : Rotation Button -->
+    <Style x:Key="RotationButtonStyle" TargetType="Button" BasedOn="{StaticResource  MaterialDesignIconButton }">
+        
+        
+    </Style>
+    <!--#endregion-->
+
+</ResourceDictionary>

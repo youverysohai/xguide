@@ -6,6 +6,7 @@
         xmlns:local="clr-namespace:X_Guide.MVVM"
         xmlns:hc="https://handyorg.github.io/handycontrol"
         xmlns:views="clr-namespace:X_Guide.MVVM.View"
+        xmlns:stepsViews="clr-namespace:X_Guide.MVVM.View.CalibrationWizardSteps"
         xmlns:vms="clr-namespace:X_Guide.MVVM.ViewModel"
         xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
         mc:Ignorable="d"
@@ -19,6 +20,8 @@
         BorderBrush="{DynamicResource PrimaryBlackColor}"
         BorderThickness="1"
         Foreground="White">
+
+
     <!--Login Form Dialog-->
     <materialDesign:DialogHost CloseOnClickAway="True" Panel.ZIndex="1" 
                                BorderBrush="{DynamicResource MaterialDesignShadowBrush}" >
@@ -29,8 +32,8 @@
                     <TextBlock FontSize="48" Margin="10 40 0 0" HorizontalAlignment="Center">X-Guide</TextBlock>
                     <TextBlock FontSize="28" Margin="10" FontWeight="Bold" HorizontalAlignment="Center" >Welcome Back!</TextBlock>
                     <TextBlock FontSize="18" HorizontalAlignment="Center">Login to your existing account</TextBlock>
-                    
-                    
+
+
                     <TextBox Margin="10" Style="{DynamicResource InputMaterialDesignTextBox}"
                              materialDesign:HintAssist.Hint="Username" Text="{Binding InputUsername}"></TextBox>  
                     <PasswordBox Margin="10" FontSize="16" Style="{DynamicResource MaterialDesignFloatingHintRevealPasswordBox}"
@@ -56,17 +59,14 @@
 
             </Grid.RowDefinitions>
 
-            <StackPanel Orientation="Horizontal" Grid.Row="0" Grid.Column="1" Panel.ZIndex="1">
+            <StackPanel Orientation="Horizontal" Grid.Row="0" Grid.Column="1"  Margin="0 0 0 0" Panel.ZIndex="1">
+
                 <!-- login logout user role -->
-                <Button x:Name="LoginIcon" Width="56" Command="{x:Static materialDesign:DialogHost.OpenDialogCommand}"  Margin="0 0 0 0" MinHeight="44"  Style="{DynamicResource MaterialDesignFlatButton}"  VerticalAlignment="Bottom" >
-                    <!--<materialDesign:PackIcon Kind="WorkerOutline" Width="24" Height="24" VerticalAlignment="Center"/>-->  
-                    <hc:Poptip.Instance>
-                        <hc:Poptip Content="Login" PlacementType="Bottom" Delay="0.1"/>
-                    </hc:Poptip.Instance>
-                    <materialDesign:PackIcon Kind="LoginVariant" Width="24" Height="24" VerticalAlignment="Center"/>
+                <Button x:Name="LoginIcon" Style="{DynamicResource LoginLogoutButton}"
+                          Command="{x:Static materialDesign:DialogHost.OpenDialogCommand}" 
+                           ToolTipService.InitialShowDelay="90" >
                     
-                </Button>
-                <Button x:Name="LogoutIcon" Visibility="Collapsed"  Width="56" Click="LogoutIcon_Click"  Margin="0 0 0 0" MinHeight="44"  Style="{DynamicResource MaterialDesignFlatButton}"  VerticalAlignment="Bottom" >
+
                     <!--<materialDesign:PackIcon Kind="WorkerOutline" Width="24" Height="24" VerticalAlignment="Center"/>-->
                     <materialDesign:PackIcon  Kind="LogoutVariant"  Width="24" Height="24" VerticalAlignment="Center" ToolTip="Logout"/>
                 </Button>
@@ -79,7 +79,7 @@
             </StackPanel>
 
             <!--Min Max Close-->
-            <DockPanel x:Name="TitleBar" Grid.ColumnSpan="3" Grid.Row="0" Background="#1c1c1c" MouseLeftButtonDown="OnMouseLeftButtonDown">
+            <DockPanel x:Name="TitleBar" Grid.ColumnSpan="3" Grid.Row="0" MouseLeftButtonDown="OnMouseLeftButtonDown">
                 <Button x:Name="CloseButton"
                     Click="CloseButton_Click"  Style="{DynamicResource MaterialDesignIconForegroundButton}" 
                     DockPanel.Dock="Right" >
@@ -97,26 +97,23 @@
                     <materialDesign:PackIcon Kind="WindowMinimize"></materialDesign:PackIcon>
 
                 </Button>
-                <TextBlock  HorizontalAlignment="Center" Margin="5" Foreground="White" Text="Xlent X-Guide version 1.0" Style="{DynamicResource MaterialDesignHeadline6TextBlock}"/>
+                <TextBlock  Style="{DynamicResource MainTopTitleTextBlock}"/>
 
             </DockPanel>
-               <!-- sidemenu and content -->
-            <Grid MinWidth="50" Grid.Row="1" Grid.Column="1" Panel.ZIndex="1"  Background="#1c1c1c">
+            <!-- sidemenu -->
+            <Grid Grid.Row="1" Grid.Column="1"  >
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="auto"/>
-                    <ColumnDefinition Width="*"/>
-
-
                     <ColumnDefinition Width="*"/>
                 </Grid.ColumnDefinitions>
                 <Grid.RowDefinitions>
                     <RowDefinition Height="4*"/>
                     <RowDefinition Height="41*"/>
                 </Grid.RowDefinitions>
-                <Button Click="HamburgerMenuButton_Click" x:Name="HambergerMenuBtn" Grid.Column="0" Grid.Row="0" MinHeight="44" Style="{DynamicResource MaterialDesignFlatButton}" >
-                    <materialDesign:PackIcon Kind="HamburgerMenu" Width="24" Height="24" VerticalAlignment="Center"/>
+                <Button Click="HamburgerMenuButton_Click" x:Name="HambergerMenuBtn" Grid.Column="0" Grid.Row="0" Style="{DynamicResource MaterialDesignIconButton}" >
+                    <materialDesign:PackIcon Kind="HamburgerMenu" Style="{DynamicResource IconStyle24}"/>
                 </Button>
-                <TextBlock Grid.Row="0" Grid.Column="1" x:Name="TextTitle" Text="X-Guide" VerticalAlignment="Center" FontSize="28"  TextAlignment="Center" Background="#1c1c1c" Foreground="White"/>
+                <TextBlock Grid.Row="0" Grid.Column="1" Style="{DynamicResource MainProjectNameTextBlock}"  x:Name="TextTitle" />
 
 
                 <hc:SideMenu  Grid.Row="1" Grid.ColumnSpan="2" x:Name="SideMenu" AutoSelect="True" HorizontalAlignment="Left" MinHeight="400" Width="180">
@@ -126,37 +123,39 @@
                         <hc:EventToCommand Command="{Binding SwitchItemCmd}" PassEventArgsToCommand="False" />
                     </hc:EventTrigger>-->
                     </hc:Interaction.Triggers>
+                    <!--Production Section-->
                     <hc:SideMenuItem Header="Production" FontSize="16">
                         <hc:SideMenuItem.Icon>
                             <materialDesign:PackIcon Kind="SitemapOutline" Width="36" Height="36"/>
                         </hc:SideMenuItem.Icon>
                         <hc:SideMenuItem Header="Base Image" Command="{Binding NavigateCommand}" CommandParameter="{x:Static local:PageName.Production}">
                             <hc:SideMenuItem.Icon>
-                                <materialDesign:PackIcon Kind="ImageFilterCentreFocusWeak" Width="24" Height="24" Margin="16 0 0 0"/>
-                                                                                                                        
+                                <materialDesign:PackIcon Kind="ImageFilterCentreFocusWeak"  Style="{DynamicResource IconStyleSideMenuSelection}"/>
+
                             </hc:SideMenuItem.Icon>
                         </hc:SideMenuItem>
                         <hc:SideMenuItem Header="Dashboards" Command="{Binding NavigateCommand}" CommandParameter="{x:Static local:PageName.Undefined}">
                             <hc:SideMenuItem.Icon>
-                                <materialDesign:PackIcon Kind="MarkerCancel" Width="24" Height="24" Margin="16 0 0 0"/>
+                                <materialDesign:PackIcon Kind="MarkerCancel" Style="{DynamicResource IconStyleSideMenuSelection}"/>
 
                             </hc:SideMenuItem.Icon>
                         </hc:SideMenuItem>
                         <hc:SideMenuItem Header="Wiki" Command="{Binding NavigateCommand}" CommandParameter="{x:Static local:PageName.Undefined}">
                             <hc:SideMenuItem.Icon>
-                                <materialDesign:PackIcon Kind="Pokeball" Width="24" Height="24" Margin="16 0 0 0"/>
+                                <materialDesign:PackIcon Kind="Pokeball" Style="{DynamicResource IconStyleSideMenuSelection}"/>
 
                             </hc:SideMenuItem.Icon>
                         </hc:SideMenuItem>
                     </hc:SideMenuItem>
+                    <!--Engineering Section-->
                     <hc:SideMenuItem Header="Engineering"  FontSize="16">
                         <hc:SideMenuItem.Icon>
                             <materialDesign:PackIcon Kind="CalculatorVariantOutline" Width="36" Height="36"/>
 
                         </hc:SideMenuItem.Icon>
-                        <hc:SideMenuItem Header="Calibration Wizard"  Command="{Binding NavigateCommand}" CommandParameter="{x:Static local:PageName.Engineering}">
+                        <hc:SideMenuItem Header="Calibration Wizard"  Command="{Binding NavigateCommand}" CommandParameter="{x:Static local:PageName.CalibrationWizardStart}">
                             <hc:SideMenuItem.Icon>
-                                <materialDesign:PackIcon Kind="VectorSquareEdit" Width="24" Height="24" Margin="16 0 0 0"/>
+                                <materialDesign:PackIcon Kind="VectorSquareEdit" Style="{DynamicResource IconStyleSideMenuSelection}"/>
 
                             </hc:SideMenuItem.Icon>
                         </hc:SideMenuItem>
@@ -166,7 +165,7 @@
 
                             </hc:SideMenuItem.Icon>
                         </hc:SideMenuItem>
-                        <hc:SideMenuItem Header="Backlogs" Command="{Binding NavigateCommand}" CommandParameter="{x:Static local:PageName.Undefined}">
+                        <hc:SideMenuItem Header="Jog Robot" Command="{Binding NavigateCommand}" CommandParameter="{x:Static local:PageName.JogRobot}">
                             <hc:SideMenuItem.Icon>
                                 <materialDesign:PackIcon Kind="FileOutline"  Width="24" Height="24" Margin="16 0 0 0"/>
 
@@ -174,6 +173,7 @@
                         </hc:SideMenuItem>
 
                     </hc:SideMenuItem>
+                    <!--Security Section-->
                     <hc:SideMenuItem Header="Security"  FontSize="16">
                         <hc:SideMenuItem.Icon>
                             <materialDesign:PackIcon Kind="SecureOutline" Width="36" Height="36"/>
@@ -244,6 +244,9 @@
                     </DataTemplate>
                     <DataTemplate DataType="{x:Type vms:EngineeringViewModel}">
                         <views:EngineeringView/>
+                    </DataTemplate> 
+                    <DataTemplate DataType="{x:Type vms:CalibrationWizardStartViewModel}">
+                        <stepsViews:CalibrationWizardStart/>
                     </DataTemplate>
                     <DataTemplate DataType="{x:Type vms:UndefinedViewModel}">
                         <views:UndefinedView/>
@@ -251,6 +254,10 @@
                     <DataTemplate DataType="{x:Type vms:UserLoginViewModel}">
                         <views:UserLoginView/>
                     </DataTemplate>
+                    <DataTemplate DataType="{x:Type vms:JogRobotViewModel}">
+                        <views:JogRobotView/>
+                    </DataTemplate>
+
 
 
                 </DockPanel.Resources>
@@ -260,14 +267,13 @@
             </DockPanel>
 
             <!-- Bottom info bar-->
-            <StackPanel Grid.Row="2" Grid.ColumnSpan="3" Orientation="Horizontal"  VerticalAlignment="Center" HorizontalAlignment="Right"  >
-
-                <materialDesign:PackIcon Height="23" Width="23" Foreground="{Binding ConnectionColor}" ToolTip="Disconnected" Kind="{Binding IconConnection}"/>
-                <TextBlock  FontSize="14" Margin="10 0 10 0" FontWeight="Bold" Foreground="{Binding ConnectionColor}" Text="{Binding CurrentUser.Email}"><!--Connection Status :--></TextBlock>
-                <materialDesign:PackIcon Height="23" Width="23" Kind="RobotIndustrial" Foreground="{DynamicResource DisconnectedColor}" />
-                <TextBlock   FontSize="14"   Margin="10 0 15 0" Foreground="{DynamicResource DisconnectedColor}" >Manipulator</TextBlock>
-                <materialDesign:PackIcon Height="23" Width="23" Kind="MonitorEye" Foreground="{DynamicResource DisconnectedColor}" />
-                <TextBlock  FontSize="14"   Margin="10 0 0 0" Foreground="{DynamicResource DisconnectedColor}" >Vision</TextBlock>
+            <StackPanel Grid.Row="2" Grid.ColumnSpan="3" Orientation="Horizontal" VerticalAlignment="Center" HorizontalAlignment="Right"  >
+                <materialDesign:PackIcon Style="{DynamicResource ConnectionStatusIcon}"/>
+                <TextBlock  Style="{DynamicResource ConnectionStatusTextBlock}">Connection Status :</TextBlock>
+                <materialDesign:PackIcon  Kind="RobotIndustrialOutline" Style="{DynamicResource ConnectionStatusIconForeground}" />
+                <TextBlock  Style="{DynamicResource ConnectionStatusTextBlockForeground}" >Manipulator</TextBlock>
+                <materialDesign:PackIcon Style="{DynamicResource ConnectionStatusIconForeground}" Kind="MonitorEye" />
+                <TextBlock  Style="{DynamicResource ConnectionStatusTextBlockForeground}">Vision</TextBlock>
                 <TextBlock FontSize="13" Foreground="White" x:Name="DateTimeTextBlock" Margin="50 0 20 0" >Thursday, 23 Feb 2023 9:46 am</TextBlock>
             </StackPanel>
 
