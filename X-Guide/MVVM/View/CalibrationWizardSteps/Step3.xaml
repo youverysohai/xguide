@@ -17,8 +17,8 @@
                 <TextBlock  Text="Select Vision Flow for Calibration" HorizontalAlignment="Center" FontSize="35" Margin="0 0 0 25"/>
                 <StackPanel Orientation="Vertical" HorizontalAlignment="Center" >
                     <StackPanel Orientation="Horizontal">
-                        <TextBlock Style="{DynamicResource ReadOnlyTextBlock}">Solution File Path</TextBlock>
-                        <Button Style="{DynamicResource MaterialDesignOutlinedButton}">Browse</Button>
+                        <TextBlock Style="{DynamicResource ReadOnlyTextBlock}" Text="{Binding FilePath}"></TextBlock>
+                        <Button Style="{DynamicResource MaterialDesignOutlinedButton}" Command="{Binding OpenFileCommand}">Browse</Button>
                     </StackPanel>
                     <ComboBox Style="{DynamicResource ComboBoxStyle}"
                               Width="200"

@@ -28,8 +28,8 @@
                                     materialDesign:HintAssist.Hint="Vision Software Solution Path (.sol)" />
                     <Button Grid.Column="1"   Margin="10" Content="Browse" Style="{DynamicResource MaterialDesignOutlinedButton}" Command="{Binding BrowseFileDialogCommand}"/>
               
-                <Rectangle  Grid.Row="1" Grid.ColumnSpan="2" Fill="#212121" Margin="15"/>
-            <!--<v:RenderControlBase Grid.Row="1" Grid.ColumnSpan="2" Name="p_box" Loaded="p_box_Loaded"/>-->
+                <!--<Rectangle  Grid.Row="1" Grid.ColumnSpan="2" Fill="#212121" Margin="15"/>-->
+            <v:RenderControlBase Grid.Row="1" Grid.ColumnSpan="2" Name="p_box" Loaded="p_box_Loaded"/>
 
 
 
