@@ -6,7 +6,7 @@ using System.Linq;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Threading;
-//using VM.Core;
+using VM.Core;
 
 namespace X_Guide.MVVM.View
 {
@@ -15,24 +15,24 @@ namespace X_Guide.MVVM.View
     /// </summary>
     public partial class ProductionView : UserControl
     {
-        //VmProcedure p;
+        VmProcedure p;
         public ProductionView()
         {
                
             InitializeComponent();
-           
+            VmSolution.Import(@"Cest.sol", "");
+            p = (VmProcedure)VmSolution.Instance["Flow1"];
 
 
         }
 
-        //private void p_box_loaded(object sender, routedeventargs e)
-        //{
-        //    vmsolution.import(@"c:\users\xlent_xir02\desktop\test.sol", "");
-        //    p = (vmprocedure)vmsolution.instance["flow1"];
+        private void p_box_Loaded(object sender, RoutedEventArgs e)
+        {
 
-        //    p_box.modulesource = p;
-        //    p.run();
-        //}
+
+            p_box.ModuleSource = p;
+            p.Run();
+        }
 
 
     }
