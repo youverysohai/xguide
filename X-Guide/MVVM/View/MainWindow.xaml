@@ -59,7 +59,7 @@
 
             </Grid.RowDefinitions>
 
-            <StackPanel Orientation="Horizontal" Grid.Row="0" Grid.Column="0"  Margin="8 0 0 0" Panel.ZIndex="1">
+            <StackPanel Orientation="Horizontal" Grid.Row="0" Grid.Column="1"  Margin="0 0 0 0" Panel.ZIndex="1">
 
                 <!-- login logout user role -->
                 <Button x:Name="LoginIcon" Style="{DynamicResource LoginLogoutButton}"
@@ -68,14 +68,12 @@
                     
 
                     <!--<materialDesign:PackIcon Kind="WorkerOutline" Width="24" Height="24" VerticalAlignment="Center"/>-->
-                    
-                    <materialDesign:PackIcon Style="{StaticResource LoginLogoutIcon}">
-                    </materialDesign:PackIcon>
-
+                    <materialDesign:PackIcon  Kind="LogoutVariant"  Width="24" Height="24" VerticalAlignment="Center" ToolTip="Logout"/>
                 </Button>
-                <TextBlock x:Name="Username"  Style="{DynamicResource UsernameTextBlock}"/>
-                <TextBlock  VerticalAlignment="Center" Margin="10 0" x:Name="TxtRoleIcon">
-                    <materialDesign:PackIcon Style="{DynamicResource UserRoleIcon}"/>
+                <TextBlock x:Name="Username" Text="{Binding SplashText}"  VerticalAlignment="Center"  FontSize="14"  TextAlignment="Center" Background="#1c1c1c" Foreground="White" Margin="10 0 0 0"/>
+                <TextBlock VerticalAlignment="Center" Margin="10 0" x:Name="TxtRoleIcon">
+                    <materialDesign:PackIcon x:Name="RoleIcon" Kind="Redhat" Width="24" Height="24" ToolTip="Please Login"/>
+
                 </TextBlock>
 
             </StackPanel>

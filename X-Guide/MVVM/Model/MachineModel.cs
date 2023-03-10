@@ -8,92 +8,20 @@ using VM.Core;
 
 namespace X_Guide.MVVM.Model
 {
-    public class MachineModel : ModelBase
+    public class MachineModel
     {
+        public int Id { get; set; }
+        public string Name { get; set; }
+        public int Type { get; set; }
+        public string Description { get; set; }
+        public string ManipulatorIP { get; set; }
+        public string ManipulatorPort { get; set; }
+        public string VisionIP { get; set; }
+        public string VisionPort { get; set; }
 
-        private int _id;
+        public string ManipulatorTerminator { get; set; }
 
-        public int Id
-        {
-            get { return _id; }
-            set { _id = value;
-                OnPropertyChanged();
-            }
-        }
-
-        private string _name;
-
-        public string Name
-        {
-            get { return _name; }
-            set { _name = value;
-                OnPropertyChanged();
-            }
-        }
-        private int _type;
-
-        public int Type
-        {
-            get { return _type; }
-            set { _type = value;
-                OnPropertyChanged();
-            }
-        }
-        private string _description;
-
-        public string Description
-        {
-            get { return _description; }
-            set { _description = value; OnPropertyChanged(); }
-        }
-        private string _manipulatorIP;
-
-        public string ManipulatorIP
-        {
-            get { return _manipulatorIP; }
-            set { _manipulatorIP = value; OnPropertyChanged(); }
-        }
-
-        private string _manipulatorPort;
-
-        public string ManipulatorPort
-        {
-            get { return _manipulatorPort; }
-            set { _manipulatorPort = value; OnPropertyChanged(); }
-        }
-        private string _visionIP;
-
-        public string VisionIP
-        {
-            get { return _visionIP; }
-            set { _visionIP = value; OnPropertyChanged(); }
-        }
-        private string _visionPort;
-
-        public string VisionPort
-        {
-            get { return _visionPort; }
-            set { _visionPort = value; OnPropertyChanged(); }
-        }
-
-        private string _manipulatorTerminator;
-
-        public string ManipulatorTerminator
-        {
-            get { return _manipulatorTerminator; }
-            set { _manipulatorTerminator = value; OnPropertyChanged(); }
-        }
-        private string _visionTerminator;
-
-        public string VisionTerminator
-        {
-            get { return _visionTerminator; }
-            set { _visionTerminator = value; OnPropertyChanged(); }
-        }
-
-
-
-
+        public string VisionTerminator { get; set; }
 
 
         public MachineModel()

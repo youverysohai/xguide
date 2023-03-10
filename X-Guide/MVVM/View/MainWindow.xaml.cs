@@ -154,35 +154,11 @@ namespace X_Guide
             }
         }
 
-
-        private void LogoutIcon_Click(object sender, RoutedEventArgs e)
-        {
-            
-            
-            Username.Text = "Hi, Guest";
-            PackIconKind icon = (PackIconKind)System.Enum.Parse(typeof(PackIconKind), "Redhat");
-
-            RoleIcon.Kind = icon;
-
-            // Get a reference to the application resources
-            ResourceDictionary resources = Application.Current.Resources;
-
-            // Get the SolidColorBrush resource from the resource dictionary
-            Color foregroundColor = (Color)resources["PrimaryTextColor"];
-            SolidColorBrush foregroundBrush = new SolidColorBrush(foregroundColor);
-
-            // Set the foreground color of the TextBlock using the brush
-            TextElement.SetForeground(Username, foregroundBrush);
-            TextElement.SetForeground(TxtRoleIcon, foregroundBrush);
-            LoginIcon.Visibility = Visibility.Visible;
-            LogoutIcon.Visibility = Visibility.Collapsed;
-        }
-
         private void PasswordBox_PasswordChanged(object sender, RoutedEventArgs e)
         {
-            if (DataContext != null)
+            if(sender != null)
             {
-                ((MainViewModel)DataContext).InputPassword = ((PasswordBox)sender).SecurePassword;
+                ((dynamic)DataContext).SecurePassword = ((PasswordBox)sender).SecurePassword;
             }
         }
     }
