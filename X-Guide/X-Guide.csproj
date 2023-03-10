@@ -15,6 +15,7 @@
     <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
     <Deterministic>true</Deterministic>
     <TargetFrameworkProfile />
+    <IsWebBootstrapper>false</IsWebBootstrapper>
     <PublishUrl>publish\</PublishUrl>
     <Install>true</Install>
     <InstallFrom>Disk</InstallFrom>
@@ -27,7 +28,6 @@
     <MapFileExtensions>true</MapFileExtensions>
     <ApplicationRevision>0</ApplicationRevision>
     <ApplicationVersion>1.0.0.%2a</ApplicationVersion>
-    <IsWebBootstrapper>false</IsWebBootstrapper>
     <UseApplicationTrust>false</UseApplicationTrust>
     <BootstrapperEnabled>true</BootstrapperEnabled>
   </PropertyGroup>
@@ -256,8 +256,10 @@
       <Private>False</Private>
     </Reference>
     <Reference Include="System.Configuration" />
+    <Reference Include="System.Drawing" />
     <Reference Include="System.Runtime.Serialization" />
     <Reference Include="System.Security" />
+    <Reference Include="System.Windows.Forms" />
     <Reference Include="VM.Core">
       <HintPath>..\..\..\..\..\..\Program Files\VisionMaster4.1.0\Applications\myLibs\VM.Core.dll</HintPath>
       <Private>False</Private>
@@ -588,19 +590,73 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="Calibration.cs">
+      <DependentUpon>XGuideModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="CustomEventArgs\BitMapImageArgs.cs" />
+    <Compile Include="CustomEventArgs\TcpClientEventArgs.cs" />
+    <Compile Include="CustomEventArgs\TcpListenerEventArgs.cs" />
+    <Compile Include="EnumClass\MountingOrient6Axis.cs" />
+    <Compile Include="EnumClass\MountingOrientGantry.cs" />
+    <Compile Include="EnumClass\MountingOrientSCARA.cs" />
+    <Compile Include="EnumClass\Terminator.cs" />
+    <Compile Include="EnumClass\EnumHelperClass.cs" />
+    <Compile Include="EnumClass\EnumToCollectionConverter.cs" />
+    <Compile Include="EnumClass\MachineType.cs" />
+    <Compile Include="EnumClass\UserRole.cs" />
+    <Compile Include="EnumClass\ValueDescription.cs" />
+    <Compile Include="Extension\TaskExtensions.cs" />
     <Compile Include="FileLogger.cs" />
     <Compile Include="FileLoggerExtensions.cs" />
     <Compile Include="FileLoggerProvider.cs" />
+    <Compile Include="HelperClass\BitMapHelper.cs" />
+    <Compile Include="HelperClass\ServerHelper.cs" />
+    <Compile Include="Machine.cs">
+      <DependentUpon>XGuideModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="MVVM\Command\BrowseFileDialogCommand.cs" />
     <Compile Include="MVVM\Command\ConnectServerCommand.cs" />
+    <Compile Include="MVVM\Command\EditManipulatorNameCommand.cs" />
+    <Compile Include="MVVM\Command\RelayCommand.cs" />
+    <Compile Include="MVVM\Command\VideoCommand.cs" />
+    <Compile Include="MVVM\Command\WizNextCommand.cs" />
+    <Compile Include="MVVM\Command\WizPrevCommand.cs" />
     <Compile Include="MVVM\DBContext\DbContextFactory.cs" />
     <Compile Include="MVVM\DTO\UserDTO.cs" />
+    <Compile Include="MVVM\Model\MachineModel.cs" />
+    <Compile Include="MVVM\Model\Point.cs" />
     <Compile Include="MVVM\Model\UserModel.cs" />
-    <Compile Include="MVVM\PageName.cs" />
+    <Compile Include="EnumClass\PageName.cs" />
+    <Compile Include="MVVM\Model\ModelBase.cs" />
+    <Compile Include="MVVM\Model\VisionGuided.cs" />
     <Compile Include="MVVM\ViewModel\EngineeringViewModel.cs" />
     <Compile Include="MVVM\ViewModel\ErrorViewModel.cs" />
     <Compile Include="MVVM\ViewModel\SecurityViewModel.cs" />
+    <Compile Include="MVVM\ViewModel\Step1ViewModel.cs" />
+    <Compile Include="MVVM\ViewModel\Step2ViewModel.cs" />
+    <Compile Include="MVVM\ViewModel\Step3ViewModel.cs" />
+    <Compile Include="MVVM\ViewModel\Step4ViewModel.cs" />
+    <Compile Include="MVVM\ViewModel\Step5ViewModel.cs" />
     <Compile Include="MVVM\ViewModel\UndefinedViewModel.cs" />
     <Compile Include="MVVM\ViewModel\UserLoginViewModel.cs" />
+    <Compile Include="MVVM\View\CalibrationWizardSteps\Step1.xaml.cs">
+      <DependentUpon>Step1.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="MVVM\View\CalibrationWizardSteps\Step2.xaml.cs">
+      <DependentUpon>Step2.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="MVVM\View\CalibrationWizardSteps\Step3.xaml.cs">
+      <DependentUpon>Step3.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="MVVM\View\CalibrationWizardSteps\Step4.xaml.cs">
+      <DependentUpon>Step4.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="MVVM\View\CalibrationWizardSteps\Step5.xaml.cs">
+      <DependentUpon>Step5.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="MVVM\View\CalibrationWizardSteps\Step6.xaml.cs">
+      <DependentUpon>Step6.xaml</DependentUpon>
+    </Compile>
     <Compile Include="MVVM\View\EngineeringView.xaml.cs">
       <DependentUpon>EngineeringView.xaml</DependentUpon>
     </Compile>
@@ -613,30 +669,67 @@
     <Compile Include="MVVM\View\UserLoginView.xaml.cs">
       <DependentUpon>UserLoginView.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Service\AuthenticationService.cs" />
+    <Compile Include="Service\Communication\ClientService.cs" />
+    <Compile Include="Service\Communication\IClientService.cs" />
+    <Compile Include="Service\Communication\IServerService.cs" />
+    <Compile Include="Service\Communication\TcpClientInfo.cs" />
+    <Compile Include="Service\DatabaseProvider\MachineService.cs" />
+    <Compile Include="Service\DatabaseProvider\IMachineService.cs" />
+    <Compile Include="Service\Communication\ServerCommand.cs" />
+    <Compile Include="Service\ImageService.cs" />
     <Compile Include="Service\NavigationService.cs" />
-    <Compile Include="Service\UserProviders\DatabaseUserService.cs" />
-    <Compile Include="Service\UserProviders\IUserService.cs" />
-    <Compile Include="System\Windows\Forms.cs" />
+    <Compile Include="Service\Communication\ServerService.cs" />
+    <Compile Include="Service\DatabaseProvider\UserService.cs" />
+    <Compile Include="Service\DatabaseProvider\IUserService.cs" />
+    <Compile Include="Setting.cs">
+      <DependentUpon>XGuideModel.tt</DependentUpon>
+    </Compile>
     <Compile Include="User.cs">
-      <DependentUpon>XGuideEDM.tt</DependentUpon>
+      <DependentUpon>XGuideModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Validation\IPValidation.cs" />
-    <Compile Include="XGuideEDM.Context.cs">
+    <Compile Include="Utility\PasswordHashUtility.cs" />
+    <Compile Include="XGuideModel.Context.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
-      <DependentUpon>XGuideEDM.Context.tt</DependentUpon>
+      <DependentUpon>XGuideModel.Context.tt</DependentUpon>
     </Compile>
-    <Compile Include="XGuideEDM.cs">
+    <Compile Include="XGuideModel.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
-      <DependentUpon>XGuideEDM.tt</DependentUpon>
+      <DependentUpon>XGuideModel.tt</DependentUpon>
     </Compile>
-    <Compile Include="XGuideEDM.Designer.cs">
+    <Compile Include="XGuideModel.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
-      <DependentUpon>XGuideEDM.edmx</DependentUpon>
+      <DependentUpon>XGuideModel.edmx</DependentUpon>
     </Compile>
-    <Page Include="MainWindow.xaml">
+    <Page Include="MVVM\View\CalibrationWizardSteps\Step1.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="MVVM\View\CalibrationWizardSteps\Step2.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="MVVM\View\CalibrationWizardSteps\Step3.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="MVVM\View\CalibrationWizardSteps\Step4.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="MVVM\View\CalibrationWizardSteps\Step5.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="MVVM\View\CalibrationWizardSteps\Step6.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="MVVM\View\MainWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
@@ -644,7 +737,7 @@
       <DependentUpon>App.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="MainWindow.xaml.cs">
+    <Compile Include="MVVM\View\MainWindow.xaml.cs">
       <DependentUpon>MainWindow.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
@@ -672,12 +765,24 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="Style\Button.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Style\Color.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Style\Text.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
   </ItemGroup>
   <ItemGroup>
     <Compile Include="MVVM\Command\CommandBase.cs" />
     <Compile Include="MVVM\Command\NavigateCommand.cs" />
     <Compile Include="MVVM\Command\SaveSettingCommand.cs" />
-    <Compile Include="MVVM\Model\Setting.cs" />
+    <Compile Include="MVVM\Model\SettingModel.cs" />
     <Compile Include="MVVM\Store\NavigationStore.cs" />
     <Compile Include="MVVM\ViewModel\MainViewModel.cs" />
     <Compile Include="MVVM\ViewModel\SettingViewModel.cs" />
@@ -706,16 +811,19 @@
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
     </EmbeddedResource>
+    <None Include="..\.editorconfig">
+      <Link>.editorconfig</Link>
+    </None>
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>
     </None>
-    <EntityDeploy Include="XGuideEDM.edmx">
+    <EntityDeploy Include="XGuideModel.edmx">
       <Generator>EntityModelCodeGenerator</Generator>
-      <LastGenOutput>XGuideEDM.Designer.cs</LastGenOutput>
+      <LastGenOutput>XGuideModel.Designer.cs</LastGenOutput>
     </EntityDeploy>
-    <None Include="XGuideEDM.edmx.diagram">
-      <DependentUpon>XGuideEDM.edmx</DependentUpon>
+    <None Include="XGuideModel.edmx.diagram">
+      <DependentUpon>XGuideModel.edmx</DependentUpon>
     </None>
   </ItemGroup>
   <ItemGroup>
@@ -725,8 +833,23 @@
     <WCFMetadata Include="Connected Services\" />
   </ItemGroup>
   <ItemGroup>
+    <PackageReference Include="AForge.Controls">
+      <Version>2.2.5</Version>
+    </PackageReference>
+    <PackageReference Include="AForge.Video">
+      <Version>2.2.5</Version>
+    </PackageReference>
+    <PackageReference Include="AForge.Video.DirectShow">
+      <Version>2.2.5</Version>
+    </PackageReference>
+    <PackageReference Include="DirectShowLib">
+      <Version>1.0.0</Version>
+    </PackageReference>
     <PackageReference Include="EntityFramework">
       <Version>6.4.4</Version>
+    </PackageReference>
+    <PackageReference Include="HandyControls">
+      <Version>3.4.4</Version>
     </PackageReference>
     <PackageReference Include="MaterialDesignThemes">
       <Version>4.7.1</Version>
@@ -734,25 +857,12 @@
     <PackageReference Include="MaterialDesignThemes.Wpf">
       <Version>1.0.1</Version>
     </PackageReference>
-  </ItemGroup>
-  <ItemGroup>
-    <Content Include="XGuideDB.mdf">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
-    <Content Include="XGuideDB_log.ldf">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-      <DependentUpon>XGuideDB.mdf</DependentUpon>
-    </Content>
-    <Content Include="XGuideEDM.Context.tt">
-      <Generator>TextTemplatingFileGenerator</Generator>
-      <DependentUpon>XGuideEDM.edmx</DependentUpon>
-      <LastGenOutput>XGuideEDM.Context.cs</LastGenOutput>
-    </Content>
-    <Content Include="XGuideEDM.tt">
-      <Generator>TextTemplatingFileGenerator</Generator>
-      <DependentUpon>XGuideEDM.edmx</DependentUpon>
-      <LastGenOutput>XGuideEDM.cs</LastGenOutput>
-    </Content>
+    <PackageReference Include="WpfAnimatedGif">
+      <Version>2.0.2</Version>
+    </PackageReference>
+    <PackageReference Include="XamlAnimatedGif">
+      <Version>2.1.1</Version>
+    </PackageReference>
   </ItemGroup>
   <ItemGroup>
     <BootstrapperPackage Include=".NETFramework,Version=v4.7.1">
@@ -768,6 +878,30 @@
   </ItemGroup>
   <ItemGroup>
     <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Style\ImageSource\hamster-cute.gif" />
+    <Resource Include="Style\ImageSource\arrow.png" />
+    <Content Include="XGuideDB.mdf">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="XGuideDB_log.ldf">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      <DependentUpon>XGuideDB.mdf</DependentUpon>
+    </Content>
+    <Content Include="XGuideModel.Context.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <DependentUpon>XGuideModel.edmx</DependentUpon>
+      <LastGenOutput>XGuideModel.Context.cs</LastGenOutput>
+    </Content>
+    <Content Include="XGuideModel.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <DependentUpon>XGuideModel.edmx</DependentUpon>
+      <LastGenOutput>XGuideModel.cs</LastGenOutput>
+    </Content>
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="DP\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

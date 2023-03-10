@@ -1,5 +1,8 @@
-﻿using System;
+﻿using HandyControl.Controls;
+using HandyControl.Data;
+using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -12,6 +15,8 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using X_Guide.MVVM.View.CalibrationWizardSteps;
+using X_Guide.MVVM.ViewModel;
 
 namespace X_Guide.MVVM.View
 {
@@ -20,9 +25,40 @@ namespace X_Guide.MVVM.View
     /// </summary>
     public partial class EngineeringView : UserControl
     {
+
         public EngineeringView()
         {
             InitializeComponent();
+
+
+
+        }
+        private void Button_Prev(object sender, RoutedEventArgs e)
+        {
+            step.Prev();
+        }
+
+        private void Button_Next(object sender, RoutedEventArgs e)
+        {
+            step.Next();
+        }
+
+        private void step_StepChanged(object sender, FunctionEventArgs<int> e)
+        {
+            EngineeringViewModel viewModel = DataContext as EngineeringViewModel;
+            if(viewModel != null)
+            {
+                viewModel.OnIndexChanged(e);
+            }
+        }
+
+        private void BtnStart_Click(object sender, RoutedEventArgs e)
+        {
+            ContentControl.Visibility = Visibility.Visible;
+            StartStepPage.Visibility = Visibility.Collapsed;
         }
     }
+
+
+
 }

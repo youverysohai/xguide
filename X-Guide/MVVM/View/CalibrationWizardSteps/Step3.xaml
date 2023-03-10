@@ -1,0 +1,43 @@
+﻿<UserControl x:Class="X_Guide.MVVM.View.CalibrationWizardSteps.Step3"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:X_Guide.MVVM.View.CalibrationWizardSteps"
+             mc:Ignorable="d" 
+             d:DesignHeight="450" d:DesignWidth="800"
+             xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes">
+
+    <Grid Margin="0 0 0 10">
+        <materialDesign:Card UniformCornerRadius="20" Margin="0 10 15 0">
+
+            <StackPanel Orientation="Vertical" VerticalAlignment="Center" >
+                
+                
+                <TextBlock  Text="Select Vision Flow for Calibration" HorizontalAlignment="Center" FontSize="35" Margin="0 0 0 25"/>
+                <StackPanel Orientation="Vertical" HorizontalAlignment="Center" >
+                    <StackPanel Orientation="Horizontal">
+                        <TextBlock Style="{DynamicResource ReadOnlyTextBlock}">Solution File Path</TextBlock>
+                        <Button Style="{DynamicResource MaterialDesignOutlinedButton}">Browse</Button>
+                    </StackPanel>
+                    <ComboBox Style="{DynamicResource ComboBoxStyle}"
+                              Width="200"
+                              materialDesign:HintAssist.Hint="Vision Software">
+                        <ComboBoxItem IsSelected="True">Vision Master</ComboBoxItem>
+
+                    </ComboBox>
+
+                    <ComboBox Style="{DynamicResource ComboBoxStyle}"
+                              Width="200"
+                              materialDesign:HintAssist.Hint="Select Vision Flow">
+                        <ComboBoxItem>1</ComboBoxItem>
+                        <ComboBoxItem>2</ComboBoxItem>
+                        <ComboBoxItem>3</ComboBoxItem>
+                    </ComboBox>
+                </StackPanel>
+
+
+            </StackPanel>
+        </materialDesign:Card>
+    </Grid>
+</UserControl>

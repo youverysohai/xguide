@@ -1,7 +1,9 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.ComponentModel;
+using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.Net;
@@ -11,11 +13,13 @@ using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Input;
 using System.Xml.Serialization;
+using X_Guide.Communication.Service;
+using X_Guide.CustomEventArgs;
 using X_Guide.MVVM.Command;
 using X_Guide.MVVM.Model;
 using X_Guide.MVVM.Store;
 using X_Guide.Service;
-using X_Guide.Service.UserProviders;
+using X_Guide.Service.DatabaseProvider;
 using X_Guide.Validation;
 
 namespace X_Guide.MVVM.ViewModel
@@ -23,28 +27,113 @@ namespace X_Guide.MVVM.ViewModel
     internal class SettingViewModel : ViewModelBase, INotifyDataErrorInfo
     {
 
-        public ICommand SaveCommand { get; }
+        public SaveSettingCommand SaveCommand { get; }
         public ICommand NavigateCommand { get; }
+
+        public ICommand EditManipulatorNameCommand { get; set; }
         public ICommand ConnectServerCommand { get; set; }
 
+        private IMachineService _machineDB;
 
-
-        public Setting setting;
-        private readonly IUserService _userProvider;
         private readonly ErrorViewModel _errorViewModel;
 
         public event EventHandler<DataErrorsChangedEventArgs> ErrorsChanged;
 
-        //SettingViewModel properties 
-        private string _machineID;
-        public string MachineID
+        public bool HasErrors => _errorViewModel.HasErrors;
+
+        private Visibility _cancelBtnVisibility;
+
+        public Visibility CancelBtnVisibility
         {
-            get { return _machineID; }
+            get { return _cancelBtnVisibility; }
+            set
+            {
+                _cancelBtnVisibility = value;
+                OnPropertyChanged();
+            }
+        }
+
+
+        private Visibility _saveBtnVisibility;
+
+        public Visibility SaveBtnVisibility
+        {
+            get { return _saveBtnVisibility; }
+            set
+            {
+                _saveBtnVisibility = value;
+                OnPropertyChanged();
+            }
+        }
+
+
+
+        private Visibility _editBtnVisibility;
+
+        public Visibility EditBtnVisibility
+        {
+            get { return _editBtnVisibility; }
+            set
+            {
+                _editBtnVisibility = value;
+                OnPropertyChanged();
+            }
+        }
+
+
+        private bool _canEdit;
+
+        public bool CanEdit
+        {
+            get { return _canEdit; }
+            set
+            {
+                _canEdit = value;
+                OnPropertyChanged();
+            }
+        } //Setting View UI properties
+
+
+        private MachineModel _machine;
+        public MachineModel Machine => _machine;
+
+
+        //SettingViewModel properties
+        private ObservableCollection<string> _machineNameList;
+
+        public ObservableCollection<string> MachineNameList
+        {
+            get { return _machineNameList; }
+            set
+            {
+                _machineNameList = value;
+                OnPropertyChanged();
+            }
+        }
+
+
+
+        private IEnumerable<ValueDescription> _machineTypeList;
+
+        public IEnumerable<ValueDescription> MachineTypeList
+        {
+            get { return _machineTypeList; }
+            set
+            {
+                _machineTypeList = value;
+                OnPropertyChanged();
+            }
+        }
+
+        private string _machineName;
+        public string MachineName
+        {
+            get { return _machineName; }
             set
             {
 
-                _machineID = value;
-                if (string.IsNullOrEmpty(value))
+                _machineName = value;
+                /*if (string.IsNullOrEmpty(value))
                 {
                     _errorViewModel.AddError("Please enter a valid value for this field. This field cannot be left blank.");
                 }
@@ -60,13 +149,10 @@ namespace X_Guide.MVVM.ViewModel
                 else
                 {
                     _errorViewModel.RemoveError("The field must not exceed 30 characters");
-                }
+                }*/
                 OnPropertyChanged();
             }
         }
-
-
-        public bool CanExecute => !HasErrors;
 
 
         private string _machineDescription;
@@ -89,14 +175,14 @@ namespace X_Guide.MVVM.ViewModel
             }
         }
 
-        private string _softwareRevision;
-        public string SoftwareRevision
+        private string _machineType;
+        public string MachineType
         {
-            get { return _softwareRevision; }
+            get { return _machineType; }
             set
             {
-                _softwareRevision = value;
-                OnPropertyChanged(nameof(SoftwareRevision));
+                _machineType = value;
+                OnPropertyChanged(nameof(MachineType));
             }
         }
 
@@ -165,16 +251,6 @@ namespace X_Guide.MVVM.ViewModel
             }
         }
 
-        private string _shiftStartTime;
-        public string ShiftStartTime
-        {
-            get { return _shiftStartTime; }
-            set
-            {
-                _shiftStartTime = value;
-                OnPropertyChanged(nameof(ShiftStartTime));
-            }
-        }
 
         private string[] _visionIP;
         public string[] VisionIP
@@ -198,17 +274,6 @@ namespace X_Guide.MVVM.ViewModel
             }
         }
 
-        private string _maxScannerCapTime;
-        public string MaxScannerCapTime
-        {
-            get { return _maxScannerCapTime; }
-            set
-            {
-                _maxScannerCapTime = value;
-                OnPropertyChanged(nameof(MaxScannerCapTime));
-            }
-        }
-
         private string _logFilePath;
 
 
@@ -222,41 +287,102 @@ namespace X_Guide.MVVM.ViewModel
             }
         }
 
+        private IEnumerable<ValueDescription> _terminatorList;
 
-
-        public SettingViewModel(Setting setting, IUserService userProvider)
+        public IEnumerable<ValueDescription> TerminatorList
         {
-
-            SaveCommand = new SaveSettingCommand(this);
-            ConnectServerCommand = new ConnectServerCommand("192.168.10.90", 7930);
-            this.setting = setting;
-            _userProvider = userProvider;
-
-            CreateUser();
-            TestingAsync();
-
-            _errorViewModel = new ErrorViewModel();
-            _errorViewModel.ErrorsChanged += OnErrorChanged;
-            UpdateSettingUI();
-        }
-        public void CreateUser()
-        {
-            _userProvider.CreateUser(new UserModel("Zhen Chun", "ongzc-pm19@student.tarc.edu.my", "123"));
-        }
-        public async void TestingAsync()
-        {
-            var i = await _userProvider.GetAllUsersAsync();
-            foreach(var item in i)
+            get { return _terminatorList; }
+            set
             {
-                MessageBox.Show(item.Email + " " + item.PasswordHash + " " + item.Username);
+                _terminatorList = value;
+                OnPropertyChanged();
             }
         }
 
-        public bool HasErrors => _errorViewModel.HasErrors;
+        private string _manipulatorTerminator;
+
+        public string ManipulatorTerminator
+        {
+            get { return _manipulatorTerminator; }
+            set
+            {
+                _manipulatorTerminator = value;
+                OnPropertyChanged();
+            }
+        }
+
+        private string _visionTerminator;
+
+        public string VisionTerminator
+        {
+            get { return _visionTerminator; }
+            set
+            {
+                _visionTerminator = value;
+                OnPropertyChanged();
+            }
+        }//SettingViewModel properties 
+
+
+        public SettingViewModel(IMachineService machineDB, IServerService serverService)
+        {
+            PropertyChanged += OnManipulatorChangeEvent;
+        
+
+            _errorViewModel = new ErrorViewModel();
+
+            _machineDB = machineDB;
+
+           
+            MachineNameList = new ObservableCollection<string>(_machineDB.GetAllMachineName());
+            MachineTypeList = EnumHelperClass.GetAllValuesAndDescriptions(typeof(MachineType));
+            TerminatorList = EnumHelperClass.GetAllValuesAndDescriptions(typeof(Terminator));
+
+            SaveCommand = new SaveSettingCommand(this, _machineDB);
+            EditManipulatorNameCommand = new EditManipulatorNameCommand(this);
+
+
+            //UI
+            SaveBtnVisibility = Visibility.Collapsed;
+            CancelBtnVisibility = Visibility.Collapsed;
+
+            var command = (CommandBase)SaveCommand;
+            SaveBtnVisibility = Visibility.Collapsed;
+            CancelBtnVisibility = Visibility.Collapsed;
+
+
+            _errorViewModel.ErrorsChanged += OnErrorChanged;
+            ConnectServerCommand = new ConnectServerCommand(this);
+        }
+
+        private void OnCommandEvent(object sender, TcpClientEventArgs e)
+        {
+            MessageBox.Show($"{e.TcpClient.Client.AddressFamily} : Client triggered a command!");
+        }
+
+        private void OnManipulatorChangeEvent(object sender, PropertyChangedEventArgs e)
+        {
+            if (e.PropertyName == nameof(MachineName))
+            {
+                if (!MachineNameList.Contains(MachineName)) return;
+                UpdateMachine();
+                UpdateSettingUI(_machine);
+            }
+            else if (e.PropertyName == nameof(MachineNameList))
+            {
+
+            }
+        }
+
+        public void UpdateMachine()
+        {
+            _machine = _machineDB.GetMachine(MachineName);
+        }
         private void OnErrorChanged(object sender, DataErrorsChangedEventArgs e)
         {
             ErrorsChanged?.Invoke(this, e);
-            OnPropertyChanged(nameof(CanExecute));
+            (SaveCommand as CommandBase)?.OnCanExecutedChanged();
+
         }
 
         public IEnumerable GetErrors(string propertyName)
@@ -264,32 +390,35 @@ namespace X_Guide.MVVM.ViewModel
             return _errorViewModel.GetErrors(propertyName);
         }
 
-        public void UpdateSettingUI()
+        public void UpdateSettingUI(MachineModel machine)
         {
-            MachineID = setting.MachineID;
-            MachineDescription = setting.MachineDescription;
-            SoftwareRevision = setting.SoftwareRevision;
 
-            var robotIP = setting.RobotIP.Split('.');
-            RobotIPS1 = robotIP[0];
-            RobotIPS2 = robotIP[1];
-            RobotIPS3 = robotIP[2];
-            RobotIPS4 = robotIP[3];
+            MachineDescription = machine.Description;
+            MachineType = Enum.GetName(typeof(MachineType), machine.Type);
+            VisionTerminator = machine.VisionTerminator;
+            ManipulatorTerminator = machine.ManipulatorTerminator;
+            var manipulatorIP = machine.ManipulatorIP.Split('.');
+            RobotIPS1 = manipulatorIP[0];
+            RobotIPS2 = manipulatorIP[1];
+            RobotIPS3 = manipulatorIP[2];
+            RobotIPS4 = manipulatorIP[3];
 
-            RobotPort = setting.RobotPort;
-            ShiftStartTime = setting.ShiftStartTime;
-            VisionIP = setting.VisionIP.Split('.');
-            VisionPort = setting.VisionPort;
-            MaxScannerCapTime = setting.MaxScannerCapTime;
-            LogFilePath = setting.LogFilePath;
+
+
+
+            RobotPort = machine.ManipulatorPort;
+            VisionIP = machine.VisionIP.Split('.');
+            VisionPort = machine.VisionPort;
+        }
+
+        public void UpdateManipulatorNameList(string name)
+        {
+            MachineNameList[MachineNameList.IndexOf(_machine.Name)] = name;
+            MachineName = name;
         }
 
 
     }
-
-
-
-
 
 
 

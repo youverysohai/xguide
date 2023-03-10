@@ -17,9 +17,10 @@ namespace X_Guide
         public int Id { get; set; }
         public string Username { get; set; }
         public string Email { get; set; }
-        public byte[] PasswordHash { get; set; }
+        public string PasswordHash { get; set; }
         public bool IsActive { get; set; }
         public System.DateTime CreatedAt { get; set; }
         public System.DateTime UpdatedAt { get; set; }
+        public Nullable<int> Role { get; set; }
     }
 }

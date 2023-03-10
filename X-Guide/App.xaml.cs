@@ -2,17 +2,22 @@
 using System.Collections.Generic;
 using System.Configuration;
 using System.Data;
+using System.Diagnostics;
 using System.IO;
 using System.Linq;
+using System.Net;
 using System.Threading.Tasks;
 using System.Windows;
+using X_Guide.Communication.Service;
 using X_Guide.MVVM;
 using X_Guide.MVVM.DBContext;
 using X_Guide.MVVM.Model;
 using X_Guide.MVVM.Store;
 using X_Guide.MVVM.ViewModel;
 using X_Guide.Service;
-using X_Guide.Service.UserProviders;
+using X_Guide.Service.Communation;
+using X_Guide.Service.DatabaseProvider;
+
 
 namespace X_Guide
 {
@@ -22,22 +27,39 @@ namespace X_Guide
     public partial class App : Application
     {
 
-        private Setting _setting;
+
         private readonly NavigationStore _navigationStore;
-        private  Dictionary<PageName, NavigationService> _viewModels;
+        private readonly NavigationStore _wizardNavigationStore;
+        private Dictionary<PageName, NavigationService> _viewModels;
         private DbContextFactory _dbContextFactory;
         private IUserService _userProvider;
+        private IServerService _serverService;
+        private ResourceDictionary _resourceDictionary;
+        private IMachineService _machineDb;
+        private ServerCommand _serverCommand;
 
 
         public App()
         {
-            _dbContextFactory = new DbContextFactory();
-             _userProvider = new DatabaseUserService(_dbContextFactory);
 
+
+
+
+            _dbContextFactory = new DbContextFactory();
+            _userProvider = new UserService(_dbContextFactory);
+            _machineDb = new MachineService(_dbContextFactory);
             //App specific settings
             InitializeAppConfiguration();
+            _serverService = new ServerService(IPAddress.Any, 8000);
+            _serverCommand = new ServerCommand(_serverService);
+            _serverCommand.StartServer();
 
             _navigationStore = new NavigationStore();
+            _wizardNavigationStore = new NavigationStore();
+            _resourceDictionary = new ResourceDictionary
+            {
+                Source = new Uri("/Style/Color.xaml", UriKind.RelativeOrAbsolute)
+            };
 
             //Navigation setting      
             InitializeAppNavigation();
@@ -45,7 +67,7 @@ namespace X_Guide
 
         }
 
-     
+
         private void InitializeAppNavigation()
         {
             _viewModels = new Dictionary<PageName, NavigationService>
@@ -54,12 +76,15 @@ namespace X_Guide
                 {PageName.Production, new NavigationService (_navigationStore, CreateProductionViewModel) },
                 {PageName.Engineering, new NavigationService (_navigationStore, CreateEngineeringViewModel) },
                 {PageName.Security, new NavigationService (_navigationStore, CreateSecurityViewModel) },
-                {PageName.Undefined, new NavigationService(_navigationStore, CreateUndefinedViewModel) }
+                {PageName.Undefined, new NavigationService(_navigationStore, CreateUndefinedViewModel) } ,
+                {PageName.Login, new NavigationService(_navigationStore, CreateUserLoginViewModel) }
             };
 
-            _setting = Setting.ReadFromXML(ConfigurationManager.AppSettings["SettingPath"]);
+
+            /*
+                        _setting = SettingModel.ReadFromXML(ConfigurationManager.AppSettings["SettingPath"]);*/
         }
-        
+
         private void InitializeAppConfiguration()
         {
             string appDataPath = Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData);
@@ -71,7 +96,7 @@ namespace X_Guide
             _navigationStore.CurrentViewModel = CreateSettingViewModel();
             MainWindow = new MainWindow()
             {
-                DataContext = new MainViewModel(_navigationStore, _viewModels)
+                DataContext = new MainViewModel(_navigationStore, _viewModels, _serverService, _resourceDictionary, _userProvider)
             };
 
 
@@ -88,7 +113,7 @@ namespace X_Guide
         }
         private ViewModelBase CreateEngineeringViewModel()
         {
-            return new EngineeringViewModel();
+            return new EngineeringViewModel(_wizardNavigationStore);
         }
 
         private ViewModelBase CreateUndefinedViewModel()
@@ -98,13 +123,19 @@ namespace X_Guide
 
         private ViewModelBase CreateSettingViewModel()
         {
-            return new SettingViewModel(_setting, _userProvider);
+            return new SettingViewModel(_machineDb, _serverService);
         }
 
         private ViewModelBase CreateProductionViewModel()
         {
             return new ProductionViewModel();
         }
+        private ViewModelBase CreateUserLoginViewModel()
+        {
+            return new UserLoginViewModel();
+        }
+
+
     }
 
 }

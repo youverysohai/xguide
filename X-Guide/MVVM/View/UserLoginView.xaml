@@ -4,9 +4,25 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:X_Guide.MVVM.View"
+             xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
              mc:Ignorable="d" 
+             Background="Transparent"
              d:DesignHeight="450" d:DesignWidth="800">
-    <Grid>
-            
-    </Grid>
+    <Border CornerRadius="16" Background="#2d2d30" Margin="0 0 10 10">
+        <Border.Effect>
+            <DropShadowEffect Color="LightGray" Opacity="0.5" ShadowDepth="4"/>
+        </Border.Effect>
+
+        <Grid>
+            <StackPanel Margin="20">
+                <TextBox Style="{DynamicResource MaterialDesignFloatingHintTextBox}"
+                materialDesign:HintAssist.HelperText="Username" />
+                <TextBox Style="{DynamicResource MaterialDesignFloatingHintTextBox}"
+                  materialDesign:HintAssist.HelperText="Password"/>
+            </StackPanel>
+
+        </Grid>
+
+    </Border>
+
 </UserControl>

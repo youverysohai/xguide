@@ -11,6 +11,8 @@ namespace X_Guide.MVVM.Command
     {
         public event EventHandler CanExecuteChanged;
 
+
+
         //tells if a command can execute; if return false control is disabled
         public virtual bool CanExecute(object parameter)
         {
@@ -19,7 +21,7 @@ namespace X_Guide.MVVM.Command
 
         public abstract void Execute(object parameter);
 
-        protected void OnCanExecutedChanged()
+        public void OnCanExecutedChanged()
         {
             CanExecuteChanged?.Invoke(this, new EventArgs());
         }
