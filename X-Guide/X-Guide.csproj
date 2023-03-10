@@ -908,7 +908,9 @@
     <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
   </ItemGroup>
   <ItemGroup>
-    <Resource Include="Style\ImageSource\hamster-cute.gif" />
+    <Resource Include="Style\ImageSource\hamster-cute.gif">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Resource>
     <Resource Include="Style\ImageSource\arrow.png" />
     <Resource Include="Style\ImageSource\down.png" />
     <Resource Include="Style\ImageSource\up.png" />

@@ -95,7 +95,7 @@
                     <!-- Arrow Button-->
 
                     <Canvas  Grid.Row="1" Grid.RowSpan="2" Grid.ColumnSpan="3"  HorizontalAlignment="Center" VerticalAlignment="Center" Width="250" Height="200" >
-                        <Image Height="200" Source="pack://application:,,,/Style/ImageSource/arrow.png"/>
+                        <Image Width="240" Source="pack://application:,,,/Style/ImageSource/arrows.png"/>
 
                         <Ellipse Tag="X-" Cursor="Hand" Name="Left" Width="70" Height="50" Canvas.Left="20" Canvas.Top="50"      Fill="Transparent" Panel.ZIndex="1" />
                         <Ellipse Tag="Y-" Cursor="Hand" Name="Down" Width="66" Height="80" Canvas.Left="100" Canvas.Top="108"    Fill="Transparent" Panel.ZIndex="1" />
@@ -104,7 +104,7 @@
                         <TextBlock Canvas.Left="200" Canvas.Top="60">X+</TextBlock>
                         <TextBlock Canvas.Left="40" Canvas.Top="60">X-</TextBlock>
                         <TextBlock Canvas.Left="125" Canvas.Top="130">Y-</TextBlock>
-                        <TextBlock Canvas.Left="125" Canvas.Top="20">Y+</TextBlock>
+                        <TextBlock Canvas.Left="115" Canvas.Top="10">Y+</TextBlock>
                     </Canvas>
 
                 </Grid>

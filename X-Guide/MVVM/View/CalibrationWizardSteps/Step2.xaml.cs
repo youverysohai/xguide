@@ -29,9 +29,6 @@ namespace X_Guide.MVVM.View.CalibrationWizardSteps
         public Step2()
         {
             InitializeComponent();
-            // loadImage();
-            Uri uri = new Uri(@"Style/ImageSource/hamster-cute.gif",UriKind.Relative);
-            AnimationBehavior.SetSourceUri(img,uri);
 
 
         }
