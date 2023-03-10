@@ -27,6 +27,7 @@ namespace X_Guide.MVVM.ViewModel
     public class MainViewModel : ViewModelBase
     {
         #region CLR properties
+        private bool _isLoggedIn = false;
 
       
 
@@ -51,38 +52,33 @@ namespace X_Guide.MVVM.ViewModel
         #region ToTrigger
         public string IconConnection
         {
-            get { return _iconConnection; }
+            get { return _isLoggedIn; }
             set
             {
-                _iconConnection = value;
-
-                OnPropertyChanged();
-            }
-
-        }
-        private string _connectionColor;
-        public string ConnectionColor
-        {
-            get { return _connectionColor; }
-            set
-            {
-                _connectionColor = value;
+                _isLoggedIn = value;
                 OnPropertyChanged();
             }
         }
 
 
+        private AuthenticationService _auth;
+
+        private readonly NavigationStore _navigationStore;
+
+
+
+
+        public ICommand NavigateCommand { get; }
+
+        public ICommand LoginCommand { get; }
+
+        public ICommand ServerCommand { get; }
+                OnPropertyChanged();
+            }
+        }
         private string _sConnectionColor;
 
-        public string SConnectionColor
-        {
-            get { return _sConnectionColor; }
-            set
-            {
-                _sConnectionColor = value;
-                OnPropertyChanged();
-            }
-        }
+
 
 
 
@@ -128,11 +124,11 @@ namespace X_Guide.MVVM.ViewModel
 
         public ViewModelBase CurrentViewModel => _navigationStore.CurrentViewModel;
         public UserModel CurrentUser => _auth.CurrentUser;
-        #endregion
-
-        public MainViewModel(NavigationStore navigationStore, Dictionary<PageName, NavigationService> viewModels, IServerService serverService, ResourceDictionary resourceDictionary, IUserService userService)
-        {
             
+            _resourceDictionary = resourceDictionary;
+
+        public MainViewModel(NavigationStore navigationStore, Dictionary<PageName, NavigationService> viewModels, IServerService serverService, IUserService userService)
+        {
             _resourceDictionary = resourceDictionary;
             _auth = new AuthenticationService(userService);
             _auth.CurrentUserChanged += OnCurrentUserChanged;
@@ -140,10 +136,6 @@ namespace X_Guide.MVVM.ViewModel
             _navigationStore = navigationStore;
             _navigationStore.CurrentViewModelChanged += OnCurrentViewModelChanged;
 
-            serverService.ClientEvent += ClientEventHandler;
-            serverService.ListenerEvent += ServerEventHandler;
-            NavigateCommand = new NavigateCommand(viewModels);
-            LoginCommand = new RelayCommand(Login);
             RegisterCommand = new RelayCommand(Register);
 
             #region ToTrigger
@@ -174,30 +166,33 @@ namespace X_Guide.MVVM.ViewModel
                 Username = "123",
                 Email = "Akimoputo.DotCom",
                 Role = 1,
+            IconConnection = "LanDisconnect";
+
+            SConnectionColor = ((SolidColorBrush)_resourceDictionary["DisconnectedColor"]).ToString();
+            ConnectionColor = ((SolidColorBrush)_resourceDictionary["DisconnectedColor"]).ToString();
 
             }, InputPassword);
             if (success)
             {
                 MessageBox.Show("Added successfully");
         
-            }
-            else MessageBox.Show("User is not added!");
-        }
-
-     
-
-        private async void Login(object obj)
+        private async void Login(object parameter)
         {
-            bool status = await _auth.Login(InputUsername, InputPassword);
-
-            if (status)
+            //bool status = await _auth.Login(Username, Password);
+            //if (status) MessageBox.Show($"Welcome back! {_auth.CurrentUser.Username}");
+            //else MessageBox.Show("Invalid login");
+            if (IsLoggedIn == true)
             {
-                MessageBox.Show($"Welcome back! {_auth.CurrentUser.Username}");
+                IsLoggedIn = false;
             }
             else
             {
-                MessageBox.Show("Invalid login");
+                IsLoggedIn = true;
             }
+        {
+            bool status = await _auth.Login(Username, Password);
+            if (status) MessageBox.Show($"Welcome back! {_auth.CurrentUser.Username}");
+            else MessageBox.Show("Invalid login");
 
         }
 
@@ -210,12 +205,12 @@ namespace X_Guide.MVVM.ViewModel
             {
                 if ((sender as ServerService).getServerStatus())
                 {
-                    SConnectionColor = ((SolidColorBrush)_resourceDictionary["ConnectedColor"]).ToString();
+                    //SConnectionColor = ((SolidColorBrush)_resourceDictionary["ConnectedColor"]).ToString();
                 }
                 else
                 {
 
-                    SConnectionColor = ((SolidColorBrush)_resourceDictionary["DisconnectedColor"]).ToString();
+                    //SConnectionColor = ((SolidColorBrush)_resourceDictionary["DisconnectedColor"]).ToString();
                 }
             });
         }
@@ -229,12 +224,12 @@ namespace X_Guide.MVVM.ViewModel
                 if (e.TcpClient.Connected)
                 {
                     ConnectionStatus = "Connected!";
-                    ConnectionColor = ((SolidColorBrush)_resourceDictionary["ConnectedColor"]).ToString();
+                    //ConnectionColor = ((SolidColorBrush)_resourceDictionary["ConnectedColor"]).ToString();
                 }
                 else
                 {
                     ConnectionStatus = "Disconnected!";
-                    ConnectionColor = ((SolidColorBrush)_resourceDictionary["DisconnectedColor"]).ToString();
+                    //ConnectionColor = ((SolidColorBrush)_resourceDictionary["DisconnectedColor"]).ToString();
                 }
             });
         }

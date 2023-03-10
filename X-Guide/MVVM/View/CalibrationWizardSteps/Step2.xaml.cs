@@ -30,7 +30,7 @@ namespace X_Guide.MVVM.View.CalibrationWizardSteps
         {
             InitializeComponent();
             // loadImage();
-            Uri uri = new Uri(@"C:\Users\Admin\source\repos\X-Guide\X-Guide\Style\ImageSource\hamster-cute.gif");
+            Uri uri = new Uri(@"Style/ImageSource/hamster-cute.gif",UriKind.Relative);
             AnimationBehavior.SetSourceUri(img,uri);
 
 

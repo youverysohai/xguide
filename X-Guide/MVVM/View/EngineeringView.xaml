@@ -13,8 +13,9 @@
              xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
              d:DesignHeight="450" d:DesignWidth="1000">
 
-    <materialDesign:Card  UniformCornerRadius="20" Background="#2d2d30">
-        <Grid>
+    <materialDesign:Card Style="{DynamicResource CardLayout}" >
+
+        <Grid Margin="20" >
             <Grid.Resources>
                 <DataTemplate DataType="{x:Type vms:Step1ViewModel}">
                     <stepsUI:Step1/>
@@ -30,7 +31,11 @@
                 </DataTemplate>
                 <DataTemplate DataType="{x:Type vms:Step5ViewModel}">
                     <stepsUI:Step5/>
-                    
+
+                </DataTemplate>
+                <DataTemplate DataType="{x:Type vms:Step6ViewModel}">
+                    <stepsUI:Step6/>
+
                 </DataTemplate>
             </Grid.Resources>
             <Grid.ColumnDefinitions>
@@ -44,13 +49,14 @@
                 <RowDefinition Height="2*"/>
             </Grid.RowDefinitions>
             <!--  Side Step bar  -->
-            <Border Grid.Row="0" Grid.RowSpan="3" Grid.Column="0" CornerRadius="20 0 0 20">
+            <Border Name="Stepbar" d:Visibility="Visible" Grid.Row="0" Grid.RowSpan="3" Grid.Column="0" CornerRadius="20 0 0 20">
+
                 <Border.Background>
                     <SolidColorBrush Color="#2d2d30" />
 
                 </Border.Background>
                 <hc:StepBar Margin="10" Name="step" IsMouseSelectable="True" Dock="Right" StepChanged="step_StepChanged" StepIndex="{Binding StepIndex}">
-                   
+
                     <!--Step 1-->
                     <hc:StepBarItem>
                         <StackPanel Cursor="Hand">
@@ -63,7 +69,7 @@
                             <TextBlock Text="Manipulator" />
 
                         </StackPanel>
-                        
+
                     </hc:StepBarItem>
                     <!--Step 2-->
                     <hc:StepBarItem>
@@ -128,21 +134,14 @@
                 </hc:StepBar>
 
             </Border>
-               <!-- Content -->
-            <ContentControl Grid.Row="0" Grid.Column="1" Content="{Binding CurrentViewModel}" Visibility="Collapsed" x:Name="ContentControl">
-
+            <!-- Content Steps-->
+            <ContentControl Grid.Row="0" Grid.Column="1" Content="{Binding CurrentViewModel}"
+                         Name="ContentControl"  >  
             </ContentControl>
-            <StackPanel Orientation="Vertical" VerticalAlignment="Center" Grid.Row="0" Grid.Column="1" x:Name="StartStepPage">
-                <TextBlock HorizontalAlignment="Center" FontSize="35" >Calibration Wizard</TextBlock>
-                <TextBox Width="250" Margin="50"  FontSize="16"  Style="{DynamicResource MaterialDesignFloatingHintTextBox }"
-                         materialDesign:HintAssist.Hint="Enter New Calibration Name" Text="{Binding Name}"/>
 
-                <TextBlock Margin="0 0 0 50" HorizontalAlignment="Center" VerticalAlignment="Bottom">Press Start to Begin <materialDesign:PackIcon Kind="ArrowDownBoldOutline"></materialDesign:PackIcon></TextBlock>
-                <Button Click="BtnStart_Click" Style="{DynamicResource MaterialDesignOutlinedButton}" Width="200">Start</Button>
-
-            </StackPanel>
-            <materialDesign:Card Grid.Row="1" Grid.Column="1" UniformCornerRadius="16" Margin="0 0 15 10" >
-                <StackPanel  Orientation="Horizontal" HorizontalAlignment="Center" Visibility="Visible" >
+            <!-- Buttons Next and Prev-->
+            <materialDesign:Card Grid.Row="1" Grid.Column="1" UniformCornerRadius="16" Margin="0 0 15 10" Name="BottomNextPrev">
+                <StackPanel  Orientation="Horizontal" HorizontalAlignment="Center"  >
 
                     <Button Style="{DynamicResource MaterialDesignOutlinedButton}" Margin="10" Command="{Binding WizPrevCommand}" CommandParameter="{x:Static local:PageName.StepOne}" Width="180" Content="Prev"/>
                     <Button Style="{DynamicResource MaterialDesignOutlinedButton}" Command="{Binding WizNextCommand}" CommandParameter="{x:Static local:PageName.StepTwo}" Width="180"  Content="Next"/>
@@ -150,6 +149,5 @@
             </materialDesign:Card>
 
         </Grid>
-
     </materialDesign:Card>
 </UserControl>

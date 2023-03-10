@@ -25,13 +25,13 @@ namespace X_Guide.MVVM.View
 
         }
 
-        //private void p_box_Loaded(object sender, RoutedEventArgs e)
+        //private void p_box_loaded(object sender, routedeventargs e)
         //{
-        //    VmSolution.Import(@"C:\Users\Xlent_XIR02\Desktop\test.sol", "");
-        //    p = (VmProcedure)VmSolution.Instance["Flow1"];
+        //    vmsolution.import(@"c:\users\xlent_xir02\desktop\test.sol", "");
+        //    p = (vmprocedure)vmsolution.instance["flow1"];
 
-        //    p_box.ModuleSource = p;
-        //    p.Run();
+        //    p_box.modulesource = p;
+        //    p.run();
         //}
 
 

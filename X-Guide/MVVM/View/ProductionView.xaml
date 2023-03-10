@@ -7,37 +7,32 @@
              xmlns:local="clr-namespace:X_Guide.MVVM.View"
               Background="Transparent"
              
-          
+          xmlns:v="clr-namespace:VMControls.WPF;assembly=VMControls.WPF"
              mc:Ignorable="d" 
              d:DesignHeight="450" d:DesignWidth="800">
     <!--xmlns:v="clr-namespace:VMControls.WPF;assembly=VMControls.WPF"-->
-    <ScrollViewer VerticalScrollBarVisibility="Hidden" Margin="5">
 
 
-        <Border CornerRadius="16" Background="#2d2d30" Margin="0 0 10 10">
-            <Border.Effect>
-                <DropShadowEffect Color="LightGray" Opacity="0.5" ShadowDepth="4"/>
-            </Border.Effect>
-            <Grid Margin="0 0 20 20">
+    <materialDesign:Card Style="{DynamicResource CardLayout}">
+            <Grid Margin="20">
                  <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="7*"/>
                     <ColumnDefinition Width="*"/>
                 </Grid.ColumnDefinitions>
                 <Grid.RowDefinitions>
-                    <RowDefinition Height="*"/>
+                    <RowDefinition Height="4*"/>
                     <RowDefinition Height="20*"/>
                 </Grid.RowDefinitions>
-                <StackPanel Margin="10" Orientation="Horizontal" Grid.Row="0"  Grid.ColumnSpan="2">
-                    <TextBox Margin="10"  x:Name="TxtLogFilePath" Style="{DynamicResource InputMaterialDesignTextBox}" Text="{Binding VisionSolutionFilePath}"   MinWidth="400" 
+        
+                    <TextBox Margin="10" Style="{DynamicResource OutlineTextStyle}" MaxHeight="54"  Padding="0 10 0 0"  MinWidth="800" x:Name="TxtLogFilePath"  Text="{Binding VisionSolutionFilePath}" 
                                     materialDesign:HintAssist.Hint="Vision Software Solution Path (.sol)" />
-                    <Button  Margin="10" Content="Browse" Style="{DynamicResource MaterialDesignOutlinedButton}" Command="{Binding BrowseFileDialogCommand}"/>
-                </StackPanel>
+                    <Button Grid.Column="1"   Margin="10" Content="Browse" Style="{DynamicResource MaterialDesignOutlinedButton}" Command="{Binding BrowseFileDialogCommand}"/>
+              
                 <Rectangle  Grid.Row="1" Grid.ColumnSpan="2" Fill="#212121" Margin="15"/>
-                <!--<v:RenderControlBase Name="p_box" Loaded="p_box_Loaded"/>-->
+            <!--<v:RenderControlBase Grid.Row="1" Grid.ColumnSpan="2" Name="p_box" Loaded="p_box_Loaded"/>-->
 
 
 
             </Grid>
-        </Border>
-    </ScrollViewer>
+     </materialDesign:Card>
 </UserControl>

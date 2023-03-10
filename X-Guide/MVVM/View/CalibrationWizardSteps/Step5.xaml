@@ -23,7 +23,7 @@
                     <RowDefinition Height="*"/>
                     <RowDefinition Height="4*"/>
                     <RowDefinition Height="2*"/>
-                </Grid.RowDefinitions>      
+                </Grid.RowDefinitions>
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="2*"/>
                     <ColumnDefinition Width="*"/>
@@ -47,30 +47,36 @@
                 </Grid>-->
                 <Grid Grid.Row="1">
                     <Canvas>
-                        <Image Width="650" Height="300" x:Name="videoPlayer" Source="{Binding VideoSource}"/>
+                        <Image Width="630" Height="280" x:Name="videoPlayer" Source="{Binding VideoSource}"/>
                         <Border Canvas.Left="200" Canvas.Top="80" Width="250" Height="140" BorderThickness="3" BorderBrush="{DynamicResource PrimaryBlueColor}"></Border>
-                    </Canvas> 
+                    </Canvas>
                 </Grid>
-               <StackPanel Grid.Row="2">
+                <StackPanel Grid.Row="2">
                     <ComboBox x:Name="comboBox"
-                  
+                          Style="{DynamicResource ComboBoxStyle}"
                   DisplayMemberPath="Name"
+                              materialDesign:HintAssist.Hint="Select Video Source"
                   ItemsSource="{Binding VideoDevices}"
                   SelectedItem="{Binding CurrentDevice}" />
-                    <Label   
-               Content="Select video source" />
-                    <Button  
+                    
+                    <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
+                        <Button  
+                            Style="{DynamicResource MaterialDesignOutlinedButton}"
                 Command="{Binding VideoCommand}" CommandParameter="Start"
-                Content="Start" />
-                    <Button   
-                
-                        Command="{Binding VideoCommand}" CommandParameter="Stop"
-                Content="Stop" />
+                Content="Play" />
+                        <Button
+                            Margin="10 0 0 0"
+                          Style="{DynamicResource MaterialDesignOutlinedDarkButton}"
+                        Command="{Binding VideoCommand}" CommandParameter="Stop" 
+                Content="Pause" />
+                    </StackPanel>
+
                 </StackPanel>
                 <Grid Grid.Row="1" Grid.Column="2">
                     <Grid.RowDefinitions >
+                        <RowDefinition Height="2*"/>
+                        <RowDefinition Height="5*"/>
                         <RowDefinition Height="*"/>
-                        <RowDefinition Height="3*"/>
                         <RowDefinition Height="*"/>
                     </Grid.RowDefinitions>
                     <Grid.ColumnDefinitions>
@@ -79,16 +85,18 @@
                         <ColumnDefinition Width="*"/>
                     </Grid.ColumnDefinitions>
                     <!--UP -->
-                    <Image  Grid.Column="0" Grid.Row="0" Stretch="Uniform" Source="C:\Users\Admin\source\repos\X-Guide\X-Guide\Style\ImageSource\up.png"/>
+                    <Image  Grid.Column="0" Grid.Row="0" Stretch="Uniform" Source="pack://application:,,,/Style/ImageSource/up.png"/>
                     <Ellipse Panel.ZIndex="1" Tag="Z+" Cursor="Hand" Fill="Transparent" Grid.Column="0" Grid.Row="0" Width="40" Height="75" VerticalAlignment="Center" />
                     <TextBlock Text="Z+"  Grid.Column="0" Grid.Row="0" VerticalAlignment="Center" HorizontalAlignment="Center" Foreground="Black"/>
                     <!--Down -->
-                    <Image  Grid.Column="2" Grid.Row="0" Stretch="Uniform" Source="C:\Users\Admin\source\repos\X-Guide\X-Guide\Style\ImageSource\down.png"/>
+                    <Image  Grid.Column="2" Grid.Row="0" Stretch="Uniform" Source="pack://application:,,,/Style/ImageSource/down.png"/>
                     <Ellipse Panel.ZIndex="1" Tag="Z-" Cursor="Hand" Fill="Transparent" Grid.Column="2" Grid.Row="0" Width="40" Height="75" VerticalAlignment="Center" />
                     <TextBlock Text="Z-"  Grid.Column="2" Grid.Row="0" VerticalAlignment="Center" HorizontalAlignment="Center" Foreground="Black"/>
                     <!-- Arrow Button-->
-                    <Canvas Width="250" Grid.Row="1" Grid.ColumnSpan="3" >
-                        <Image  Height="200"  Source="C:\Users\Admin\source\repos\X-Guide\X-Guide\Style\ImageSource\arrow.png"/>
+
+                    <Canvas  Grid.Row="1" Grid.RowSpan="2" Grid.ColumnSpan="3"  HorizontalAlignment="Center" VerticalAlignment="Center" Width="250" Height="200" >
+                        <Image Height="200" Source="pack://application:,,,/Style/ImageSource/arrow.png"/>
+
                         <Ellipse Tag="X-" Cursor="Hand" Name="Left" Width="70" Height="50" Canvas.Left="20" Canvas.Top="50"      Fill="Transparent" Panel.ZIndex="1" />
                         <Ellipse Tag="Y-" Cursor="Hand" Name="Down" Width="66" Height="80" Canvas.Left="100" Canvas.Top="108"    Fill="Transparent" Panel.ZIndex="1" />
                         <Ellipse Tag="Y+" Cursor="Hand" Name="Up" Width="60" Height="50" Canvas.Left="102" Canvas.Top="5"        Fill="Transparent" Panel.ZIndex="1"   />
@@ -98,7 +106,69 @@
                         <TextBlock Canvas.Left="125" Canvas.Top="130">Y-</TextBlock>
                         <TextBlock Canvas.Left="125" Canvas.Top="20">Y+</TextBlock>
                     </Canvas>
-                    <TextBlock Grid.Row="2" Grid.ColumnSpan="2" x:Name="PressedButtonText"></TextBlock>
+
+                </Grid>
+                <!-- Rotation RightBottom Grid -->
+                <Grid Grid.Row="2" Grid.Column="1">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="3*"/>
+                        <ColumnDefinition Width="*"/>
+                    </Grid.ColumnDefinitions>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="*"/>
+                        <RowDefinition Height="*"/>
+                        <RowDefinition Height="*"/>
+                    </Grid.RowDefinitions>
+                    <!-- Row 0 : Rotation X -->
+                    <Button Grid.Row="0" Grid.Column="0" Style="{DynamicResource RotationButtonStyle}" >
+                        <StackPanel Orientation="Horizontal" >
+                            <TextBlock Text="Rx" FontStyle="Italic" FontSize="11"/>
+                            <TextBlock Text="-" FontSize="30" />
+                        </StackPanel>
+                    </Button>
+                    <Button Grid.Row="0" Grid.Column="2" Style="{DynamicResource RotationButtonStyle}" >
+                        <StackPanel Orientation="Horizontal" >
+                            <TextBlock Text="Rx" FontStyle="Italic" FontSize="11"/>
+                            <TextBlock Text="+" FontSize="30" />
+                        </StackPanel>
+                    </Button>
+                    <TextBox Grid.Row="0" Grid.Column="1" IsReadOnly="True"
+                             materialDesign:HintAssist.Hint="X-rotation"   TextAlignment="Center"
+                             Text="0°" Style="{DynamicResource InputMaterialDesignTextBox}" Height="70"></TextBox>
+                    <!-- Row 1: Rotation Y -->
+                    <Button  Grid.Row="1"  Grid.Column="0" Style="{DynamicResource RotationButtonStyle}" >
+                        <StackPanel Orientation="Horizontal" >
+                            <TextBlock Text="Ry" FontStyle="Italic" FontSize="11"/>
+                            <TextBlock Text="-" FontSize="30" />
+                        </StackPanel>
+                    </Button>
+                    <Button Grid.Row="1" Grid.Column="2" Style="{DynamicResource RotationButtonStyle}" >
+                        <StackPanel Orientation="Horizontal" >
+                            <TextBlock Text="Ry" FontStyle="Italic" FontSize="11"/>
+                            <TextBlock Text="+" FontSize="30" />
+                        </StackPanel>
+                    </Button>
+                    <TextBox  Grid.Row="1"   Grid.Column="1"     TextAlignment="Center"
+                              IsReadOnly="True" materialDesign:HintAssist.Hint="Y-rotation" 
+                              Text="0°" Style="{DynamicResource InputMaterialDesignTextBox}" Height="70"></TextBox>
+                    <!-- Row 2: Rotation Z -->
+                    <Button  Grid.Row="2"  Grid.Column="0" Style="{DynamicResource RotationButtonStyle}" >
+                        <StackPanel Orientation="Horizontal" >
+                            <TextBlock Text="Rz" FontStyle="Italic" FontSize="11"/>
+                            <TextBlock Text="-" FontSize="30" />
+                        </StackPanel>
+                    </Button>
+                    <Button Grid.Row="2" Grid.Column="2" Style="{DynamicResource RotationButtonStyle}" >
+                        <StackPanel Orientation="Horizontal" >
+                            <TextBlock Text="Rz" FontStyle="Italic" FontSize="11"/>
+                            <TextBlock Text="+" FontSize="30" />
+                        </StackPanel>
+                    </Button>
+                    <TextBox Grid.Row="2" Grid.Column="1"    TextAlignment="Center"
+                             IsReadOnly="True" materialDesign:HintAssist.Hint="Z-rotation"
+                             Text="0°" Style="{DynamicResource InputMaterialDesignTextBox}" Height="70"></TextBox>
+
                 </Grid>
             </Grid>
 

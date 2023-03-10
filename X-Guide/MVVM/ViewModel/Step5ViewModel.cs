@@ -82,7 +82,7 @@ namespace X_Guide.MVVM.ViewModel
 
         public override ViewModelBase GetNextViewModel()
         {
-            return null;
+            return new Step6ViewModel();
         }
     }
 }

@@ -616,7 +616,6 @@
     </Compile>
     <Compile Include="MVVM\Command\BrowseFileDialogCommand.cs" />
     <Compile Include="MVVM\Command\ConnectServerCommand.cs" />
-    <Compile Include="MVVM\Command\EditManipulatorNameCommand.cs" />
     <Compile Include="MVVM\Command\RelayCommand.cs" />
     <Compile Include="MVVM\Command\VideoCommand.cs" />
     <Compile Include="MVVM\Command\WizNextCommand.cs" />
@@ -629,16 +628,22 @@
     <Compile Include="EnumClass\PageName.cs" />
     <Compile Include="MVVM\Model\ModelBase.cs" />
     <Compile Include="MVVM\Model\VisionGuided.cs" />
+    <Compile Include="MVVM\ViewModel\CalibrationWizardStartViewModel.cs" />
     <Compile Include="MVVM\ViewModel\EngineeringViewModel.cs" />
     <Compile Include="MVVM\ViewModel\ErrorViewModel.cs" />
+    <Compile Include="MVVM\ViewModel\JogRobotViewModel.cs" />
     <Compile Include="MVVM\ViewModel\SecurityViewModel.cs" />
     <Compile Include="MVVM\ViewModel\Step1ViewModel.cs" />
     <Compile Include="MVVM\ViewModel\Step2ViewModel.cs" />
     <Compile Include="MVVM\ViewModel\Step3ViewModel.cs" />
     <Compile Include="MVVM\ViewModel\Step4ViewModel.cs" />
     <Compile Include="MVVM\ViewModel\Step5ViewModel.cs" />
+    <Compile Include="MVVM\ViewModel\Step6ViewModel.cs" />
     <Compile Include="MVVM\ViewModel\UndefinedViewModel.cs" />
     <Compile Include="MVVM\ViewModel\UserLoginViewModel.cs" />
+    <Compile Include="MVVM\View\CalibrationWizardSteps\CalibrationWizardStart.xaml.cs">
+      <DependentUpon>CalibrationWizardStart.xaml</DependentUpon>
+    </Compile>
     <Compile Include="MVVM\View\CalibrationWizardSteps\Step1.xaml.cs">
       <DependentUpon>Step1.xaml</DependentUpon>
     </Compile>
@@ -659,6 +664,9 @@
     </Compile>
     <Compile Include="MVVM\View\EngineeringView.xaml.cs">
       <DependentUpon>EngineeringView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="MVVM\View\JogRobotView.xaml.cs">
+      <DependentUpon>JogRobotView.xaml</DependentUpon>
     </Compile>
     <Compile Include="MVVM\View\SecurityView.xaml.cs">
       <DependentUpon>SecurityView.xaml</DependentUpon>
@@ -705,6 +713,10 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>XGuideModel.edmx</DependentUpon>
     </Compile>
+    <Page Include="MVVM\View\CalibrationWizardSteps\CalibrationWizardStart.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="MVVM\View\CalibrationWizardSteps\Step1.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -726,6 +738,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="MVVM\View\CalibrationWizardSteps\Step6.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="MVVM\View\JogRobotView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -765,15 +781,19 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Style\Button.xaml">
+    <Page Include="Style\BehaviorStyles.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Style\Color.xaml">
+    <Page Include="Style\Fonts.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Style\Text.xaml">
+    <Page Include="Style\Colors.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Style\Layouts.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -882,6 +902,8 @@
   <ItemGroup>
     <Resource Include="Style\ImageSource\hamster-cute.gif" />
     <Resource Include="Style\ImageSource\arrow.png" />
+    <Resource Include="Style\ImageSource\down.png" />
+    <Resource Include="Style\ImageSource\up.png" />
     <Content Include="XGuideDB.mdf">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>

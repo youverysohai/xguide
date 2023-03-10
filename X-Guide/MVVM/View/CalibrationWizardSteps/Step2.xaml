@@ -10,12 +10,31 @@
              xmlns:gif="https://github.com/XamlAnimatedGif/XamlAnimatedGif"
              xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes">
     <UserControl.Resources>
-        <Style x:Key="RadioButton" TargetType="RadioButton" BasedOn="{StaticResource MaterialDesignChoiceChipPrimaryOutlineRadioButton}">
+        <Style x:Key="RadioButtonStyle" TargetType="RadioButton" BasedOn="{StaticResource MaterialDesignChoiceChipPrimaryOutlineRadioButton}">
             <Setter Property="HorizontalAlignment" Value="Left"/>
             <Setter Property="FontSize" Value="16"/>
             <Setter Property="Margin" Value="10"/>
         </Style>
-
+        <Style x:Key="RadioButtonSCARA" TargetType="RadioButton" BasedOn="{StaticResource RadioButtonStyle}">
+            <Style.Triggers>
+                <DataTrigger Binding="{Binding IsLoggedIn}" Value="True" >
+                    <Setter Property="Visibility" Value="Visible"></Setter>
+                </DataTrigger>
+                <DataTrigger Binding="{Binding IsLoggedIn}" Value="False" >
+                    <Setter Property="Visibility" Value="Collapsed"></Setter>
+                </DataTrigger>
+            </Style.Triggers>
+        </Style>
+        <Style x:Key="RadioButtonSixAxis" TargetType="RadioButton" BasedOn="{StaticResource RadioButtonStyle}">
+            <Style.Triggers>
+                <DataTrigger Binding="{Binding IsTypeSixAxis}" Value="True" >
+                    <Setter Property="Visibility" Value="Visible"></Setter>
+                </DataTrigger>
+                <DataTrigger Binding="{Binding IsTypeSixAxis}" Value="False" >
+                    <Setter Property="Visibility" Value="Collapsed"></Setter>
+                </DataTrigger>
+            </Style.Triggers>
+        </Style>
     </UserControl.Resources>
     <Grid Margin="0 0 0 10">
         <materialDesign:Card UniformCornerRadius="20" Margin="0 10 15 0">
@@ -35,12 +54,13 @@
                         <ColumnDefinition Width="*"/>
                         <ColumnDefinition Width="*"/>
                     </Grid.ColumnDefinitions>
+                    
                     <StackPanel Orientation="Vertical" HorizontalAlignment="Right" >
-                        <RadioButton Style="{StaticResource RadioButton }" IsChecked="True">Look Downward</RadioButton>
-                        <RadioButton Style="{StaticResource RadioButton}">Look Upward</RadioButton>
-                        <RadioButton Style="{StaticResource  RadioButton }">Eye On Hand</RadioButton>
-                        <RadioButton Style="{StaticResource  RadioButton }">Mounted on Joint 2</RadioButton>
-                        <RadioButton Style="{StaticResource  RadioButton }">Mounted on Joint 5</RadioButton>
+                        <RadioButton Style="{StaticResource  RadioButtonStyle}">Look Upward</RadioButton>
+                        <RadioButton Style="{StaticResource  RadioButtonStyle }">Eye On Hand</RadioButton>
+                        <RadioButton Style="{StaticResource  RadioButtonStyle }" >Look Downward</RadioButton>
+                        <RadioButton Style="{StaticResource  RadioButtonSCARA }"  >Mounted on Joint 2</RadioButton>
+                        <RadioButton Style="{StaticResource  RadioButtonSixAxis }"  >Mounted on Joint 5</RadioButton>
                     
                     </StackPanel>
                     <Border Grid.Column="1"  >
