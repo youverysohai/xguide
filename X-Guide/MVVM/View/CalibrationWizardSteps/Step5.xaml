@@ -58,7 +58,7 @@
                               materialDesign:HintAssist.Hint="Select Video Source"
                   ItemsSource="{Binding VideoDevices}"
                   SelectedItem="{Binding CurrentDevice}" />
-                    
+
                     <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
                         <Button  
                             Style="{DynamicResource MaterialDesignOutlinedButton}"
@@ -72,44 +72,63 @@
                     </StackPanel>
 
                 </StackPanel>
+                <!-- JogButtons and Rotations-->
+                <TextBlock Grid.Row="1" Grid.Column="2" FontSize="18" > 
+                    <materialDesign:PackIcon Kind="CursorMove" Style="{DynamicResource IconStyle24}"/>
+                   Jog</TextBlock>
                 <Grid Grid.Row="1" Grid.Column="2">
                     <Grid.RowDefinitions >
-                        <RowDefinition Height="2*"/>
-                        <RowDefinition Height="5*"/>
                         <RowDefinition Height="*"/>
                         <RowDefinition Height="*"/>
                     </Grid.RowDefinitions>
                     <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width="*"/>
-                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="5*"/>
                         <ColumnDefinition Width="*"/>
                     </Grid.ColumnDefinitions>
                     <!--UP -->
-                    <Image  Grid.Column="0" Grid.Row="0" Stretch="Uniform" Source="pack://application:,,,/Style/ImageSource/up.png"/>
-                    <Ellipse Panel.ZIndex="1" Tag="Z+" Cursor="Hand" Fill="Transparent" Grid.Column="0" Grid.Row="0" Width="40" Height="75" VerticalAlignment="Center" />
-                    <TextBlock Text="Z+"  Grid.Column="0" Grid.Row="0" VerticalAlignment="Center" HorizontalAlignment="Center" Foreground="Black"/>
+                    <Button Grid.Column="2" Grid.Row="0" BorderThickness="0"  Style="{StaticResource TransparentStyle}">
+                        <Image  Stretch="Uniform" Source="pack://application:,,,/Style/ImageSource/up.png" ToolTip="Z+" ToolTipService.InitialShowDelay="100"/>
+                    </Button>
+
                     <!--Down -->
-                    <Image  Grid.Column="2" Grid.Row="0" Stretch="Uniform" Source="pack://application:,,,/Style/ImageSource/down.png"/>
-                    <Ellipse Panel.ZIndex="1" Tag="Z-" Cursor="Hand" Fill="Transparent" Grid.Column="2" Grid.Row="0" Width="40" Height="75" VerticalAlignment="Center" />
-                    <TextBlock Text="Z-"  Grid.Column="2" Grid.Row="0" VerticalAlignment="Center" HorizontalAlignment="Center" Foreground="Black"/>
+                    <Button Grid.Column="2" Grid.Row="1" BorderThickness="0"  Style="{StaticResource TransparentStyle}">
+                        <Image  Stretch="Uniform" Source="pack://application:,,,/Style/ImageSource/down.png" ToolTip="Z-" ToolTipService.InitialShowDelay="100"/>
+                    </Button>
                     <!-- Arrow Button-->
 
-                    <Canvas  Grid.Row="1" Grid.RowSpan="2" Grid.ColumnSpan="3"  HorizontalAlignment="Center" VerticalAlignment="Center" Width="250" Height="200" >
-                        <Image Width="240" Source="pack://application:,,,/Style/ImageSource/arrows.png"/>
+                    <Canvas  Grid.Row="0" Grid.RowSpan="2"  HorizontalAlignment="Left" VerticalAlignment="Top" Width="260" Height="280" >
+                        <Image Width="260" Canvas.Top="40" Source="pack://application:,,,/Style/ImageSource/arrows.png"/>
 
-                        <Ellipse Tag="X-" Cursor="Hand" Name="Left" Width="70" Height="50" Canvas.Left="20" Canvas.Top="50"      Fill="Transparent" Panel.ZIndex="1" />
-                        <Ellipse Tag="Y-" Cursor="Hand" Name="Down" Width="66" Height="80" Canvas.Left="100" Canvas.Top="108"    Fill="Transparent" Panel.ZIndex="1"/>
-                
-                        <Ellipse Tag="Y+" Cursor="Hand" Name="Up" Width="60" Height="50" Canvas.Left="102" Canvas.Top="5"        Fill="Transparent" Panel.ZIndex="1"   />
-                        <Ellipse  Tag="X+" Cursor="Hand" Name="Right" Width="70" Height="50" Canvas.Left="176" Canvas.Top="50"    Fill="Transparent" Panel.ZIndex="1"   />
-                        <TextBlock Canvas.Left="200" Canvas.Top="60">X+</TextBlock>
-                        <TextBlock Canvas.Left="40" Canvas.Top="60">X-</TextBlock>
-                        <TextBlock Canvas.Left="125" Canvas.Top="130">Y-</TextBlock>
-                        <TextBlock Canvas.Left="115" Canvas.Top="10">Y+</TextBlock>
+                        <Ellipse    Style="{DynamicResource UpArrow}"/>
+                        <Ellipse    Style="{DynamicResource DownArrow}"/>
+                        <Ellipse    Style="{DynamicResource LeftArrow}"/>
+                        <Ellipse    Style="{DynamicResource RightArrow}"/>
+
                     </Canvas>
 
                 </Grid>
+                <!-- Jog Distance -->
+                <TextBox Grid.Row="2" Grid.Column="2" Style="{DynamicResource MaterialDesignTextBox}"
+                             Height="40"
+                             materialDesign:TextFieldAssist.HasFilledTextField="False"
+                             materialDesign:TextFieldAssist.HasOutlinedTextField="False"
+                             materialDesign:TextFieldAssist.DecorationVisibility="Hidden"
+                             materialDesign:TextFieldAssist.UnderlineBrush="Transparent"
+                             materialDesign:TextFieldAssist.TextBoxViewMargin="10,3,0,0"
+                             materialDesign:TextFieldAssist.HasClearButton="True"
+                             materialDesign:HintAssist.Hint="Jog Distance (mm)"
+                             materialDesign:HintAssist.HelperTextFontSize="12"
+                             materialDesign:HintAssist.IsFloating="False"
+                             materialDesign:HintAssist.FloatingScale="0.4"
+                             >
+                    <TextBox.Resources>
+                        <Style TargetType="{x:Type materialDesign:SmartHint}">
+                            <Setter Property="HorizontalAlignment" Value="Center"/>
+                        </Style>
+                    </TextBox.Resources>
+                </TextBox>
                 <!-- Rotation RightBottom Grid -->
+                <!--
                 <Grid Grid.Row="2" Grid.Column="1">
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition Width="*"/>
@@ -121,7 +140,9 @@
                         <RowDefinition Height="*"/>
                         <RowDefinition Height="*"/>
                     </Grid.RowDefinitions>
-                    <!-- Row 1 : Rotation X -->
+                    -->
+                <!-- Row 1 : Rotation X -->
+                <!--
                     <Button Grid.Row="0" Grid.Column="0" Style="{DynamicResource RotationButtonStyle}" >
                         <StackPanel Orientation="Horizontal" >
                             <TextBlock Text="Rx" FontStyle="Italic" FontSize="11"/>
@@ -137,7 +158,9 @@
                     <TextBox Grid.Row="0" Grid.Column="1" IsReadOnly="True"
                              materialDesign:HintAssist.Hint="X-rotation"   TextAlignment="Center"
                              Text="0°" Style="{DynamicResource InputMaterialDesignTextBox}" Height="70"></TextBox>
-                    <!-- Row 2: Rotation Y -->
+                    -->
+                <!-- Row 2: Rotation Y -->
+                <!--
                     <Button  Grid.Row="1"  Grid.Column="0" Style="{DynamicResource RotationButtonStyle}" >
                         <StackPanel Orientation="Horizontal" >
                             <TextBlock Text="Ry" FontStyle="Italic" FontSize="11"/>
@@ -154,7 +177,7 @@
                               IsReadOnly="True" materialDesign:HintAssist.Hint="Y-rotation" 
                               Text="0°" Style="{DynamicResource InputMaterialDesignTextBox}" Height="70"></TextBox>
                     
-                </Grid>
+                </Grid>-->
             </Grid>
 
         </materialDesign:Card>

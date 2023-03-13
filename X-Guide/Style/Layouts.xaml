@@ -79,11 +79,66 @@
         <Setter Property="Foreground" Value="{DynamicResource PrimaryBlueColor }"/>
         <Setter Property="Margin" Value="10 0"/>
     </Style>
-    <!-- STEP 5 : Rotation Button -->
+    <!-- #region STEP 5 Styles -->
     <Style x:Key="RotationButtonStyle" TargetType="Button" BasedOn="{StaticResource  MaterialDesignIconButton }">
         
         
     </Style>
+    <!-- Transparent background Image button : Z+ Z- -->
+    <Style x:Key="TransparentStyle" TargetType="{x:Type Button}">
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="Button">
+                    <Border Background="Transparent" Cursor="Hand">
+                        <ContentPresenter/>
+                    </Border>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+
+    <!--ARROWS-->
+    <Style x:Key="ArrowButtonStyle" TargetType="Ellipse">
+        <Setter Property="Cursor" Value="Hand"/>
+        <Setter Property="Fill" Value="Transparent"/>
+        <Setter Property="ToolTipService.InitialShowDelay" Value="125"/>
+        <Setter Property="Panel.ZIndex" Value="1"/>
+    </Style>
+    <Style x:Key="UpArrow" TargetType="Ellipse" BasedOn="{StaticResource ArrowButtonStyle}">
+        <Setter Property="Tag" Value="Y+"/>
+        <Setter Property="ToolTip" Value="Y+"/>
+        <Setter Property="Width" Value="50"/>
+        <Setter Property="Height" Value="40"/>
+        <Setter Property="Canvas.Left" Value="105"/>
+        <Setter Property="Canvas.Top" Value="45"/>
+        
+    </Style>
+    <Style x:Key="DownArrow" TargetType="Ellipse" BasedOn="{StaticResource ArrowButtonStyle}">
+        <Setter Property="Tag" Value="Y-"/>
+        <Setter Property="ToolTip" Value="Y-"/>
+        <Setter Property="Width" Value="70"/>
+        <Setter Property="Height" Value="90"/>
+        <Setter Property="Canvas.Left" Value="95"/>
+        <Setter Property="Canvas.Bottom" Value="5"/>
+    </Style>
+    <Style x:Key="LeftArrow" TargetType="Ellipse" BasedOn="{StaticResource ArrowButtonStyle}">
+        <Setter Property="Tag" Value="X-"/>
+        <Setter Property="ToolTip" Value="X-"/>
+        <Setter Property="Width" Value="60"/>
+        <Setter Property="Height" Value="45"/>
+        <Setter Property="Canvas.Left" Value="10"/>
+        <Setter Property="Canvas.Top" Value="110"/>
+    </Style>
+    <Style x:Key="RightArrow" TargetType="Ellipse" BasedOn="{StaticResource ArrowButtonStyle}">
+        <Setter Property="Tag" Value="X+"/>
+        <Setter Property="ToolTip" Value="X+"/>
+        <Setter Property="Width" Value="60"/>
+        <Setter Property="Height" Value="45"/>
+        <Setter Property="Canvas.Right" Value="10"/>
+        <Setter Property="Canvas.Top" Value="110"/>
+    </Style>
+    <!--#endregion-->
     <!--#endregion-->
 
 </ResourceDictionary>

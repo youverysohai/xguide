@@ -915,6 +915,7 @@
     <Resource Include="Style\ImageSource\arrow.png" />
     <Resource Include="Style\ImageSource\down.png" />
     <Resource Include="Style\ImageSource\up.png" />
+    <Resource Include="Style\ImageSource\arrows.png" />
     <Content Include="XGuideDB.mdf">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
