@@ -98,7 +98,8 @@
                         <Image Width="240" Source="pack://application:,,,/Style/ImageSource/arrows.png"/>
 
                         <Ellipse Tag="X-" Cursor="Hand" Name="Left" Width="70" Height="50" Canvas.Left="20" Canvas.Top="50"      Fill="Transparent" Panel.ZIndex="1" />
-                        <Ellipse Tag="Y-" Cursor="Hand" Name="Down" Width="66" Height="80" Canvas.Left="100" Canvas.Top="108"    Fill="Transparent" Panel.ZIndex="1" />
+                        <Ellipse Tag="Y-" Cursor="Hand" Name="Down" Width="66" Height="80" Canvas.Left="100" Canvas.Top="108"    Fill="Transparent" Panel.ZIndex="1"/>
+                
                         <Ellipse Tag="Y+" Cursor="Hand" Name="Up" Width="60" Height="50" Canvas.Left="102" Canvas.Top="5"        Fill="Transparent" Panel.ZIndex="1"   />
                         <Ellipse  Tag="X+" Cursor="Hand" Name="Right" Width="70" Height="50" Canvas.Left="176" Canvas.Top="50"    Fill="Transparent" Panel.ZIndex="1"   />
                         <TextBlock Canvas.Left="200" Canvas.Top="60">X+</TextBlock>

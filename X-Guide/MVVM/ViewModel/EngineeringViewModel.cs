@@ -13,7 +13,8 @@ using System.Windows.Controls;
 using System.Windows.Input;
 using X_Guide.MVVM.Command;
 using X_Guide.MVVM.Store;
-using X_Guide.MVVM.View.CalibrationWizardSteps;
+
+using X_Guide.MVVM.ViewModel.CalibrationWizardSteps;
 using X_Guide.Service;
 using X_Guide.Service.DatabaseProvider;
 
@@ -22,7 +23,7 @@ namespace X_Guide.MVVM.ViewModel
     public class EngineeringViewModel : ViewModelBase
     {
 
-
+        public CalibrationViewModel Setting { get; set; } 
 
         public LinkedList<ViewModelBase> _navigationHistory = new LinkedList<ViewModelBase>();
         public LinkedList<ViewModelBase> NavigationHistory => _navigationHistory;
@@ -37,6 +38,7 @@ namespace X_Guide.MVVM.ViewModel
 
         private int _stepIndex;
 
+        private int _currentStep;
         public int StepIndex
         {
             get { return _stepIndex; }
@@ -47,7 +49,6 @@ namespace X_Guide.MVVM.ViewModel
             }
         }
 
-        private int _currentStep;
 
         public int CurrentStep
         {
@@ -58,8 +59,7 @@ namespace X_Guide.MVVM.ViewModel
                 StepIndex = _currentStep;
             }
         }
-
-
+        public LinkedListNode<ViewModelBase> CurrentNode { get; set; }
 
 
 
@@ -87,20 +87,26 @@ namespace X_Guide.MVVM.ViewModel
             }
         }
 
-        public LinkedListNode<ViewModelBase> CurrentNode { get; set; }
+
 
                                                             
 
-        public EngineeringViewModel(IMachineService machineService, IMapper mapper)
+        public EngineeringViewModel(IMachineService machineService, IMapper mapper, string name)
         {
 
 
             _navigationStore = new NavigationStore();
             _navigationStore.CurrentViewModelChanged += OnCurrentViewModelChanged;
+
             WizNextCommand = new WizNextCommand(this, _navigationStore);
             WizPrevCommand = new WizPrevCommand(this, _navigationStore);
 
-            _navigationStore.CurrentViewModel = new Step1ViewModel(machineService, mapper);
+            Setting = new CalibrationViewModel
+            {
+                Name = name
+            };
+
+            _navigationStore.CurrentViewModel = new Step1ViewModel(machineService, mapper, Setting);
             CurrentNode = _navigationHistory.AddLast(CurrentViewModel);
         }
 

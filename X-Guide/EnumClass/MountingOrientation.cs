@@ -6,11 +6,12 @@ using System.Threading.Tasks;
 
 namespace X_Guide
 {
-    public enum MountingOrientSCARA
+    public enum MountingOrientation
     {
         LookDownward,
         LookUpward,
         EyeOnHand,
-        MountedOnJoint2
+        MountedOnJoint2,
+        MountedOnJoint5,
     }
 }

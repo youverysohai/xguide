@@ -22,7 +22,7 @@
                     <RowDefinition Height="*"/>
                 </Grid.RowDefinitions>
                 <StackPanel Orientation="Vertical" Grid.ColumnSpan="2">
-                    <TextBlock  Text="Motion for Calibartion" HorizontalAlignment="Center" FontSize="35" Margin="0 120 0 25"/>
+                    <TextBlock  Text="Motion for Calibration" HorizontalAlignment="Center" FontSize="35" Margin="0 120 0 25"/>
                     <Grid HorizontalAlignment="Center">
                         <Grid.ColumnDefinitions>
                             <ColumnDefinition Width="5*"/>
@@ -38,7 +38,7 @@
                         <!-- Row 1: Speed-->
                         <StackPanel Orientation="Horizontal" Grid.Row="0" Grid.Column="0" >
                             <Label Content="1" Style="{DynamicResource MaterialDesignLabel}"/>
-                            <Slider  Value="{Binding Value}" Style="{StaticResource MaterialDesignSlider}"   Minimum="1" Maximum="100" Width="250"></Slider>
+                            <Slider  Value="{Binding Setting.Speed}" Style="{StaticResource MaterialDesignSlider}"  Minimum="1" Maximum="100" Width="250" ValueChanged="Slider_SpeedValueChanged"></Slider>
                             <Label Content="100" Style="{DynamicResource MaterialDesignLabel}"/>
                         </StackPanel>
                         <TextBox  Grid.Row="0" Grid.Column="1" Style="{StaticResource OutlineTextStyle}" Text="{Binding Value}" 
@@ -50,7 +50,7 @@
                         <!-- Row 2: Acceleration -->
                         <StackPanel Orientation="Horizontal" Grid.Row="1" Grid.Column="0" >
                             <Label Content="1" Style="{DynamicResource MaterialDesignLabel}"/>
-                            <Slider  Value="{Binding ValueAcceleration}" Style="{StaticResource MaterialDesignSlider}"   Minimum="1" Maximum="100" Width="250"></Slider>
+                            <Slider  Value="{Binding Setting.Acceleration}" Style="{StaticResource MaterialDesignSlider}"   Minimum="1" Maximum="100" Width="250" ValueChanged="Slider_AccelerationValueChanged"></Slider>
                             <Label Content="100" Style="{DynamicResource MaterialDesignLabel}"/>
                         </StackPanel>
                         <TextBox  Grid.Row="1" Grid.Column="1" Style="{StaticResource OutlineTextStyle}" Text="{Binding ValueAcceleration}" 
@@ -60,7 +60,7 @@
                         <!-- Row 3: Motion Delay-->
                         <StackPanel Orientation="Horizontal" Grid.Row="2" Grid.Column="0" >
                             <Label Content="0" Style="{DynamicResource MaterialDesignLabel}"/>
-                            <Slider   Style="{StaticResource MaterialDesignSlider}" Minimum="0" Maximum="2000" Width="250"></Slider>
+                            <Slider Value="{Binding Setting.MotionDelay}"  Style="{StaticResource MaterialDesignSlider}" Minimum="0" Maximum="2000" Width="250"></Slider>
                             <Label Content="2000" Style="{DynamicResource MaterialDesignLabel}"/>
                         </StackPanel>
                         <!--X Y offset-->
@@ -97,7 +97,7 @@
                         </Border.Effect>
                     </Border>
                     <TextBlock HorizontalAlignment="Center" VerticalAlignment="Bottom" Margin="50" FontSize="50"
-                           Foreground="#FF95D4FF" Text="{Binding Value}">
+                           Foreground="#FF95D4FF" x:Name="SpeedValue">
                         <TextBlock.Effect>
                             <DropShadowEffect BlurRadius="20" Color="#FF91DEFB" ShadowDepth="0"/>
                         </TextBlock.Effect>
@@ -110,7 +110,7 @@
                             <TransformGroup>
                                 <ScaleTransform/>
                                 <SkewTransform/>
-                                <RotateTransform Angle="{Binding Angle}"/>
+                                <RotateTransform x:Name="SpeedAngle" Angle="-85"/>
                                 <TranslateTransform/>
                             </TransformGroup>
                         </Border.RenderTransform>
@@ -129,7 +129,7 @@
                         </Border.Effect>
                     </Border>
                     <TextBlock HorizontalAlignment="Center" VerticalAlignment="Bottom" Margin="50" FontSize="50"
-                           Foreground="#FF95D4FF" Text="{Binding ValueAcceleration}">
+                           Foreground="#FF95D4FF" x:Name="AccelValue">
                         <TextBlock.Effect>
                             <DropShadowEffect BlurRadius="20" Color="#FF91DEFB" ShadowDepth="0"/>
                         </TextBlock.Effect>
@@ -142,7 +142,7 @@
                             <TransformGroup>
                                 <ScaleTransform/>
                                 <SkewTransform/>
-                                <RotateTransform Angle="{Binding AngleAcceleration}"/>
+                                <RotateTransform x:Name="AccelerationAngle" Angle="-85"/>
                                 <TranslateTransform/>
                             </TransformGroup>
                         </Border.RenderTransform>
