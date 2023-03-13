@@ -22,5 +22,6 @@ namespace X_Guide.Communication.Service
         bool getServerStatus();
         Task StartServer();
         void StopServer();
+        ConcurrentDictionary<int, TcpClientInfo> GetConnectedClient();
     }
 }

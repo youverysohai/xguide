@@ -18,7 +18,7 @@ namespace X_Guide.Communication.Service
 {
     public class ServerService : IServerService
     {
- 
+
         private int _port { get; }
         private IPAddress _ip { get; }
         private TcpListener _server;
@@ -217,10 +217,16 @@ namespace X_Guide.Communication.Service
         public TcpClientInfo GetConnectedClientInfo(TcpClient tcpClient)
         {
             TcpClientInfo tcpClientInfo;
+
+
             _connectedClient.TryGetValue(tcpClient.GetHashCode(), out tcpClientInfo);
+
+
             return tcpClientInfo;
 
         }
+
+
     }
 
 }

@@ -96,6 +96,10 @@
             </Setter.Value>
         </Setter>
     </Style>
+    <Style x:Key="ArrowUpButton" TargetType="Button" BasedOn="{StaticResource TransparentStyle}">
+        <Setter Property="Canvas.Left" Value="105"/>
+        <Setter Property="Canvas.Top" Value="45"/>
+    </Style>
 
 
     <!--ARROWS-->

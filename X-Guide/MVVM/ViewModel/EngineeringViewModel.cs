@@ -16,6 +16,7 @@ using X_Guide.MVVM.Store;
 
 using X_Guide.MVVM.ViewModel.CalibrationWizardSteps;
 using X_Guide.Service;
+using X_Guide.Service.Communation;
 using X_Guide.Service.DatabaseProvider;
 
 namespace X_Guide.MVVM.ViewModel
@@ -23,7 +24,12 @@ namespace X_Guide.MVVM.ViewModel
     public class EngineeringViewModel : ViewModelBase
     {
 
-        public CalibrationViewModel Setting { get; set; } 
+        public CalibrationViewModel Setting { get => setting; set
+            {
+                setting = value;
+                OnPropertyChanged();
+            }
+        }
 
         public LinkedList<ViewModelBase> _navigationHistory = new LinkedList<ViewModelBase>();
         public LinkedList<ViewModelBase> NavigationHistory => _navigationHistory;
@@ -32,13 +38,15 @@ namespace X_Guide.MVVM.ViewModel
         public NavigationStore _navigationStore;
         public ICommand WizNextCommand { get; set; }
         public ICommand WizPrevCommand { get; set; }
-    
+
         public ViewModelBase CurrentViewModel => _navigationStore.CurrentViewModel;
 
 
         private int _stepIndex;
 
         private int _currentStep;
+        private CalibrationViewModel setting;
+
         public int StepIndex
         {
             get { return _stepIndex; }
@@ -83,15 +91,15 @@ namespace X_Guide.MVVM.ViewModel
             {
                 StepIndex = CurrentStep;
                 MessageBox.Show("Page not found");
-                
+
             }
         }
 
 
 
-                                                            
 
-        public EngineeringViewModel(IMachineService machineService, IMapper mapper, string name)
+
+        public EngineeringViewModel(IMachineService machineService, IMapper mapper, string name, ServerCommand serverCommand)
         {
 
 
@@ -106,7 +114,7 @@ namespace X_Guide.MVVM.ViewModel
                 Name = name
             };
 
-            _navigationStore.CurrentViewModel = new Step1ViewModel(machineService, mapper, Setting);
+            _navigationStore.CurrentViewModel = new Step1ViewModel(machineService, mapper, Setting, serverCommand);
             CurrentNode = _navigationHistory.AddLast(CurrentViewModel);
         }
 

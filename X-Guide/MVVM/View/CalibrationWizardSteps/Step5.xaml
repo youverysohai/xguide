@@ -99,7 +99,9 @@
                     <Canvas  Grid.Row="0" Grid.RowSpan="2"  HorizontalAlignment="Left" VerticalAlignment="Top" Width="260" Height="280" >
                         <Image Width="260" Canvas.Top="40" Source="pack://application:,,,/Style/ImageSource/arrows.png"/>
 
-                        <Ellipse    Style="{DynamicResource UpArrow}"/>
+                        <Button Command="{Binding JogCommand}" CommandParameter="Y+" Style="{DynamicResource ArrowUpButton}">
+                            <Ellipse    Style="{DynamicResource UpArrow}"/>
+                        </Button>
                         <Ellipse    Style="{DynamicResource DownArrow}"/>
                         <Ellipse    Style="{DynamicResource LeftArrow}"/>
                         <Ellipse    Style="{DynamicResource RightArrow}"/>
@@ -110,6 +112,7 @@
                 <!-- Jog Distance -->
                 <TextBox Grid.Row="2" Grid.Column="2" Style="{DynamicResource MaterialDesignTextBox}"
                              Height="40"
+                         Text="{Binding JogDistance}"
                              materialDesign:TextFieldAssist.HasFilledTextField="False"
                              materialDesign:TextFieldAssist.HasOutlinedTextField="False"
                              materialDesign:TextFieldAssist.DecorationVisibility="Hidden"

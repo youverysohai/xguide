@@ -57,6 +57,7 @@
                      materialDesign:TextFieldAssist.HasTrailingIcon="True" 
                      materialDesign:TextFieldAssist.TrailingIcon="Edit"
                      Cursor="Hand"
+                     Text="{Binding Setting.Name}"
                      Grid.ColumnSpan="2" Width="300" Height="60" 
                      Style="{DynamicResource InputMaterialDesignTextBox}"
                      

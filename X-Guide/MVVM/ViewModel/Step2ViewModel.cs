@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using System.Windows;
 using X_Guide.MVVM.Model;
 using X_Guide.MVVM.ViewModel.CalibrationWizardSteps;
+using X_Guide.Service.Communation;
 
 namespace X_Guide.MVVM.ViewModel
 {
@@ -13,6 +14,7 @@ namespace X_Guide.MVVM.ViewModel
     {
     
         private CalibrationViewModel _setting;
+        private readonly ServerCommand _serverCommand;
 
         public CalibrationViewModel Setting
         {
@@ -25,9 +27,10 @@ namespace X_Guide.MVVM.ViewModel
         }
 
 
-        public Step2ViewModel(ref EventHandler OnSelectedItemChangedEvent, CalibrationViewModel setting)
+        public Step2ViewModel(ref EventHandler OnSelectedItemChangedEvent, CalibrationViewModel setting, ServerCommand serverCommand)
         {
             Setting = setting;
+            _serverCommand = serverCommand;
             OnSelectedItemChangedEvent += OnSelectedChangedEventHandler;
         }
 
@@ -40,7 +43,7 @@ namespace X_Guide.MVVM.ViewModel
 
         public override ViewModelBase GetNextViewModel()
         {
-            return new Step3ViewModel(_setting);
+            return new Step3ViewModel(_setting, _serverCommand);
         }
 
 

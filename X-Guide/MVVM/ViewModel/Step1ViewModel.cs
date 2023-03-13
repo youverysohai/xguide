@@ -10,6 +10,7 @@ using System.Threading.Tasks;
 using System.Windows.Input;
 using X_Guide.MVVM.Model;
 using X_Guide.MVVM.ViewModel.CalibrationWizardSteps;
+using X_Guide.Service.Communation;
 using X_Guide.Service.DatabaseProvider;
 
 namespace X_Guide.MVVM.ViewModel
@@ -64,10 +65,12 @@ namespace X_Guide.MVVM.ViewModel
         public ICommand ShoutCommand { get; set; }
         public IMachineService _machineService { get; }
         private IMapper _mapper { get; }
+        public ServerCommand _serverCommand { get; }
         #endregion
-        public Step1ViewModel(IMachineService machineService, IMapper mapper, CalibrationViewModel setting)
+        public Step1ViewModel(IMachineService machineService, IMapper mapper, CalibrationViewModel setting, ServerCommand serverCommand)
         {
             _setting = setting;
+            _serverCommand = serverCommand;
             _machineService = machineService;
             _mapper = mapper;
             MachineNames = new ObservableCollection<string>(_machineService.GetAllMachineName());
@@ -79,7 +82,7 @@ namespace X_Guide.MVVM.ViewModel
 
         public override ViewModelBase GetNextViewModel()
         {
-            return new Step2ViewModel(ref OnSelectedItemChangedEvent, _setting);
+            return new Step2ViewModel(ref OnSelectedItemChangedEvent, _setting, _serverCommand);
         }
     }
 }

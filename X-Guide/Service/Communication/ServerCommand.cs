@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
@@ -6,17 +7,17 @@ using System.Net.Sockets;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
+using System.Windows;
 using X_Guide.Communication.Service;
 using X_Guide.CustomEventArgs;
 using X_Guide.MVVM.ViewModel;
+using X_Guide.Service.Communication;
 
 namespace X_Guide.Service.Communation
 {
     public class ServerCommand
     {
-
-
-
+        public Queue<string> commandQeueue = new Queue<string>();
         public IServerService _serverService { get; }
         public ServerCommand(IServerService serverService)
         {
@@ -30,6 +31,18 @@ namespace X_Guide.Service.Communation
             _serverService.StartServer();
         }
 
+        public ConcurrentDictionary<int, TcpClientInfo> getConnectedClient()
+        {
+            try
+            {
+                return _serverService.GetConnectedClient();
+            }
+            catch
+            {
+                return null;
+            }
+        }
+
         public void ValidateSyntax(object sender, TcpClientEventArgs tcpClientEventArgs)
         {
             string message = tcpClientEventArgs.Message;
@@ -39,7 +52,7 @@ namespace X_Guide.Service.Communation
 
             switch (commands[0].Trim().ToLower())
             {
-                case "jog": JogManipulator(client); break;
+
                 case "jogdone": jogDone(client); break;
                 case "status": CheckStatus(client); break;
                 case "xguide": XGuideCommand(client, message); break;
@@ -55,6 +68,36 @@ namespace X_Guide.Service.Communation
 
         }
 
+
+
+
+
+
+
+        public async void StartJogCommand(CancellationToken cancellationToken, TcpClientInfo client)
+        {
+            await Task.Run(async () =>
+            {
+                while (!cancellationToken.IsCancellationRequested)
+                {
+                    await ServerJogCommand(client);
+                }
+            });
+           
+            MessageBox.Show("Jog session ended!");
+        }
+        public async Task ServerJogCommand(TcpClientInfo client)
+        {
+            NetworkStream stream = client.TcpClient.GetStream();
+            ManualResetEventSlim _jogDoneReplyRecieved = client.JogDoneReplyRecieved;
+            while (commandQeueue.Count > 0)
+            {
+                await Task.Run(() => _serverService.SendMessageAsync(commandQeueue.Dequeue(), stream));
+                _jogDoneReplyRecieved.Wait();
+                _jogDoneReplyRecieved.Reset();
+            }
+        }
+
         private void jogDone(TcpClient client)
         {
             ManualResetEventSlim _jogDoneReplyRecieved = _serverService.GetConnectedClientInfo(client).JogDoneReplyRecieved;
@@ -62,11 +105,8 @@ namespace X_Guide.Service.Communation
             _jogDoneReplyRecieved.Set();
         }
 
-        private void InProgressErrorMessage(TcpClient client)
-        {
-            _serverService.SendMessageAsync("Server is waiting for the appropriate response, your command is discarded.\n", client.GetStream());
-        }
-        private void JogManipulator(TcpClient client)
+
+        public void JogManipulator(TcpClient client)
         {
             var clientInfo = _serverService.GetConnectedClientInfo(client);
             ManualResetEventSlim _jogDoneReplyRecieved = clientInfo.JogDoneReplyRecieved;
