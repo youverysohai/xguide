@@ -51,7 +51,6 @@ namespace X_Guide.MVVM.ViewModel
         {
             _machineModel = _machineService.GetMachine(name);
             Machine = MachineViewModel.ToViewModel(_machineModel, _mapper);
-    
             OnSelectedItemChangedEvent?.Invoke(this, EventArgs.Empty);
         }
 
