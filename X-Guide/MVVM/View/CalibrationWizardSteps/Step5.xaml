@@ -72,10 +72,12 @@
                     </StackPanel>
 
                 </StackPanel>
+                <StackPanel Orientation="Horizontal" Grid.Row="0" Grid.Column="1">
+                    <Label VerticalAlignment="Bottom" Style="{DynamicResource MaterialDesignLabel}" Content="Jog Distance (mm) :"/>
+                    <TextBox VerticalAlignment="Bottom" Style="{DynamicResource MaterialDesignTextBox}" MinWidth="40" TextAlignment="Center">
+                        </TextBox>
+                </StackPanel>
                 <!-- JogButtons and Rotations-->
-                <TextBlock Grid.Row="1" Grid.Column="2" FontSize="18" > 
-                    <materialDesign:PackIcon Kind="CursorMove" Style="{DynamicResource IconStyle24}"/>
-                   Jog</TextBlock>
                 <Grid Grid.Row="1" Grid.Column="2">
                     <Grid.RowDefinitions >
                         <RowDefinition Height="*"/>
@@ -86,52 +88,50 @@
                         <ColumnDefinition Width="*"/>
                     </Grid.ColumnDefinitions>
                     <!--UP -->
-                    <Button Grid.Column="2" Grid.Row="0" BorderThickness="0"  Style="{StaticResource TransparentStyle}">
-                        <Image  Stretch="Uniform" Source="pack://application:,,,/Style/ImageSource/up.png" ToolTip="Z+" ToolTipService.InitialShowDelay="100"/>
+                    <Image VerticalAlignment="Top" Grid.Column="2" Grid.Row="0"  Stretch="Uniform" Source="pack://application:,,,/Style/ImageSource/up.png" ToolTip="Z+" ToolTipService.InitialShowDelay="100"/>
+
+                    <Button  VerticalAlignment="Top" Height="69"  Grid.Column="2" Grid.Row="0" BorderThickness="0"  Style="{StaticResource TransparentStyle}" ToolTip="Z+" ToolTipService.InitialShowDelay="100">
+                        <TextBlock Style="{DynamicResource ButtonInnerTextBlockCenter}">Z+</TextBlock>
                     </Button>
 
                     <!--Down -->
-                    <Button Grid.Column="2" Grid.Row="1" BorderThickness="0"  Style="{StaticResource TransparentStyle}">
-                        <Image  Stretch="Uniform" Source="pack://application:,,,/Style/ImageSource/down.png" ToolTip="Z-" ToolTipService.InitialShowDelay="100"/>
+
+                    <Image VerticalAlignment="Bottom" Cursor="Hand" Grid.Column="2" Grid.Row="1"  Stretch="Uniform" Source="pack://application:,,,/Style/ImageSource/down.png" ToolTip="Z-" ToolTipService.InitialShowDelay="100"/>
+
+                    <Button VerticalAlignment="Bottom" Height="69"  Grid.Column="2" Grid.Row="1" BorderThickness="0"  Style="{StaticResource TransparentStyle}" ToolTip="Z-" ToolTipService.InitialShowDelay="100">
+                        <TextBlock Style="{DynamicResource ButtonInnerTextBlockCenter}" >Z-</TextBlock>
                     </Button>
                     <!-- Arrow Button-->
 
                     <Canvas  Grid.Row="0" Grid.RowSpan="2"  HorizontalAlignment="Left" VerticalAlignment="Top" Width="260" Height="280" >
-                        <Image Width="260" Canvas.Top="40" Source="pack://application:,,,/Style/ImageSource/arrows.png"/>
-
-                        <Button Command="{Binding JogCommand}" CommandParameter="Y+" Style="{DynamicResource ArrowUpButton}">
-                            <Ellipse    Style="{DynamicResource UpArrow}"/>
+                        <Image Width="260" Canvas.Top="40" Source="pack://application:,,,/Style/ImageSource/arrows.png" />
+                        <Button Style="{DynamicResource UpArrowButton}" >
+                            <TextBlock Style="{DynamicResource ButtonInnerTextBlockCenter}">Y+</TextBlock>
                         </Button>
-                        <Ellipse    Style="{DynamicResource DownArrow}"/>
-                        <Ellipse    Style="{DynamicResource LeftArrow}"/>
-                        <Ellipse    Style="{DynamicResource RightArrow}"/>
+                        <Button Style="{DynamicResource DownArrowButton}">
+                            <TextBlock  Style="{DynamicResource ButtonInnerTextBlockCenter}">Y-</TextBlock>
+                        </Button>
+                        <Button Style="{DynamicResource LeftArrowButton}">
+                            <TextBlock  Style="{DynamicResource ButtonInnerTextBlockCenter}">X+</TextBlock>
 
+                        </Button>
+                        <Button Style="{DynamicResource RightArrowButton}">
+                            <TextBlock Style="{DynamicResource ButtonInnerTextBlockCenter}">X-</TextBlock>
+                        </Button>
+                        <!-- Z rotation-->
+                        <Button Style="{DynamicResource ClockwiseButton}">
+                            <TextBlock  Style="{DynamicResource ClockwiseTextBlock}">Rz+</TextBlock>
+
+                        </Button>
+                        <Button Style="{DynamicResource AntiClockwiseButton}">
+                            <TextBlock Style="{DynamicResource AntiClockwiseTextBlock}">Rz-</TextBlock>
+                        </Button>
                     </Canvas>
 
                 </Grid>
-                <!-- Jog Distance -->
-                <TextBox Grid.Row="2" Grid.Column="2" Style="{DynamicResource MaterialDesignTextBox}"
-                             Height="40"
-                         Text="{Binding JogDistance}"
-                             materialDesign:TextFieldAssist.HasFilledTextField="False"
-                             materialDesign:TextFieldAssist.HasOutlinedTextField="False"
-                             materialDesign:TextFieldAssist.DecorationVisibility="Hidden"
-                             materialDesign:TextFieldAssist.UnderlineBrush="Transparent"
-                             materialDesign:TextFieldAssist.TextBoxViewMargin="10,3,0,0"
-                             materialDesign:TextFieldAssist.HasClearButton="True"
-                             materialDesign:HintAssist.Hint="Jog Distance (mm)"
-                             materialDesign:HintAssist.HelperTextFontSize="12"
-                             materialDesign:HintAssist.IsFloating="False"
-                             materialDesign:HintAssist.FloatingScale="0.4"
-                             >
-                    <TextBox.Resources>
-                        <Style TargetType="{x:Type materialDesign:SmartHint}">
-                            <Setter Property="HorizontalAlignment" Value="Center"/>
-                        </Style>
-                    </TextBox.Resources>
-                </TextBox>
-                <!-- Rotation RightBottom Grid -->
-                <!--
+
+                 <!--Rotation RightBottom Grid--> 
+                
                 <Grid Grid.Row="2" Grid.Column="1">
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition Width="*"/>
@@ -143,44 +143,45 @@
                         <RowDefinition Height="*"/>
                         <RowDefinition Height="*"/>
                     </Grid.RowDefinitions>
-                    -->
-                <!-- Row 1 : Rotation X -->
-                <!--
-                    <Button Grid.Row="0" Grid.Column="0" Style="{DynamicResource RotationButtonStyle}" >
+                 <!-- Your Command -->
+                    <TextBlock Grid.Row="0" Grid.Column="1">▲ Press Any Button to Jog ▲</TextBlock>
+                    <!--Row 1 : Rotation X--> 
+                
+                    <Button Grid.Row="1" Grid.Column="0" Style="{DynamicResource RotationButtonStyle}" >
                         <StackPanel Orientation="Horizontal" >
                             <TextBlock Text="Rx" FontStyle="Italic" FontSize="11"/>
-                            <TextBlock Text="-" FontSize="30" />
-                        </StackPanel>
-                    </Button>
-                    <Button Grid.Row="0" Grid.Column="2" Style="{DynamicResource RotationButtonStyle}" >
-                        <StackPanel Orientation="Horizontal" >
-                            <TextBlock Text="Rx" FontStyle="Italic" FontSize="11"/>
-                            <TextBlock Text="+" FontSize="30" />
-                        </StackPanel>
-                    </Button>
-                    <TextBox Grid.Row="0" Grid.Column="1" IsReadOnly="True"
-                             materialDesign:HintAssist.Hint="X-rotation"   TextAlignment="Center"
-                             Text="0°" Style="{DynamicResource InputMaterialDesignTextBox}" Height="70"></TextBox>
-                    -->
-                <!-- Row 2: Rotation Y -->
-                <!--
-                    <Button  Grid.Row="1"  Grid.Column="0" Style="{DynamicResource RotationButtonStyle}" >
-                        <StackPanel Orientation="Horizontal" >
-                            <TextBlock Text="Ry" FontStyle="Italic" FontSize="11"/>
                             <TextBlock Text="-" FontSize="30" />
                         </StackPanel>
                     </Button>
                     <Button Grid.Row="1" Grid.Column="2" Style="{DynamicResource RotationButtonStyle}" >
                         <StackPanel Orientation="Horizontal" >
+                            <TextBlock Text="Rx" FontStyle="Italic" FontSize="11"/>
+                            <TextBlock Text="+" FontSize="30" />
+                        </StackPanel>
+                    </Button>
+                    <TextBox Grid.Row="1" Grid.Column="1" IsReadOnly="True"
+                             materialDesign:HintAssist.Hint="X-rotation"   TextAlignment="Center"
+                             Text="0°" Style="{DynamicResource InputMaterialDesignTextBox}" Height="70"></TextBox>
+                    
+                 <!--Row 2: Rotation Y--> 
+                
+                    <Button  Grid.Row="2"  Grid.Column="0" Style="{DynamicResource RotationButtonStyle}" >
+                        <StackPanel Orientation="Horizontal" >
+                            <TextBlock Text="Ry" FontStyle="Italic" FontSize="11"/>
+                            <TextBlock Text="-" FontSize="30" />
+                        </StackPanel>
+                    </Button>
+                    <Button Grid.Row="2" Grid.Column="2" Style="{DynamicResource RotationButtonStyle}" >
+                        <StackPanel Orientation="Horizontal" >
                             <TextBlock Text="Ry" FontStyle="Italic" FontSize="11"/>
                             <TextBlock Text="+" FontSize="30" />
                         </StackPanel>
                     </Button>
-                    <TextBox  Grid.Row="1"   Grid.Column="1"     TextAlignment="Center"
+                    <TextBox  Grid.Row="2"   Grid.Column="1"     TextAlignment="Center"
                               IsReadOnly="True" materialDesign:HintAssist.Hint="Y-rotation" 
                               Text="0°" Style="{DynamicResource InputMaterialDesignTextBox}" Height="70"></TextBox>
                     
-                </Grid>-->
+                </Grid>
             </Grid>
 
         </materialDesign:Card>
