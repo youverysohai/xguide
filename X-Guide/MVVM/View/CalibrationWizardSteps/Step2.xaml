@@ -20,9 +20,9 @@
                 <Label Content="Based on Step 1, you have selected..." HorizontalAlignment="Center" Style="{DynamicResource MaterialDesignLabel}"/>
                 <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" >
                     <Label Content="Name:" Style="{DynamicResource MaterialDesignLabel}"/> 
-                    <TextBlock Style="{StaticResource ReadOnlyTextBlock}" Text="Gantry 1"/>
+                    <TextBlock Style="{StaticResource ReadOnlyTextBlock}" Text="{Binding Machine.Name}"/>
                     <Label Content="Type:" Style="{DynamicResource MaterialDesignLabel}"/>
-                    <TextBlock Style="{StaticResource ReadOnlyTextBlock}" Text="Gantry System"/>
+                    <TextBlock Style="{StaticResource ReadOnlyTextBlock}" Text="{Binding Machine.Type}"/>
 
                 </StackPanel>
                 <TextBlock Text="Select Mounting &amp; Orientation" HorizontalAlignment="Center" FontSize="35" Margin="0 0 0 25"/>

@@ -1,4 +1,5 @@
-﻿using System;
+﻿using AutoMapper;
+using System;
 using System.Collections.Generic;
 using System.Configuration;
 using System.Data;
@@ -9,6 +10,7 @@ using System.Net;
 using System.Threading.Tasks;
 using System.Windows;
 using X_Guide.Communication.Service;
+using X_Guide.MappingConfiguration;
 using X_Guide.MVVM;
 using X_Guide.MVVM.DBContext;
 using X_Guide.MVVM.Model;
@@ -37,6 +39,7 @@ namespace X_Guide
         private ResourceDictionary _resourceDictionary;
         private IMachineService _machineDb;
         private ServerCommand _serverCommand;
+        private MapperConfiguration _mapperConfig;
 
 
         public App()
@@ -44,6 +47,11 @@ namespace X_Guide
 
 
 
+            _mapperConfig = new MapperConfiguration(c =>
+            {
+                c.AddProfile<MachineProfile>();
+            }
+                );
 
             _dbContextFactory = new DbContextFactory();
             _userProvider = new UserService(_dbContextFactory);
@@ -94,7 +102,7 @@ namespace X_Guide
             string settingPath = Path.Combine(appDataPath, "X-Guide", "Settings.xml");
             ConfigurationManager.AppSettings["SettingPath"] = settingPath;
         }
-          //        Startup Page
+        //        Startup Page
         protected override void OnStartup(StartupEventArgs e)
         {
             _navigationStore.CurrentViewModel = CreateEngineeringViewModel();
@@ -117,7 +125,7 @@ namespace X_Guide
         }
         private ViewModelBase CreateEngineeringViewModel()
         {
-            return new EngineeringViewModel(_machineDb);
+            return new EngineeringViewModel(_machineDb, _mapperConfig.CreateMapper());
         }
 
         private ViewModelBase CreateUndefinedViewModel()
@@ -144,7 +152,7 @@ namespace X_Guide
         }
         private ViewModelBase CreateCalibrationWizardStart()
         {
-            return new CalibrationWizardStartViewModel(_navigationStore, _machineDb);
+            return new CalibrationWizardStartViewModel(_navigationStore, _machineDb, _mapperConfig.CreateMapper());
         }
 
 
