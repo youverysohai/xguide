@@ -21,8 +21,8 @@ namespace X_Guide.MVVM.View
         {
                
             InitializeComponent();
-            VmSolution.Import(@"Cest.sol", "");
-            p = (VmProcedure)VmSolution.Instance["Flow1"];
+            //VmSolution.Import(@"Cest.sol", "");
+            //p = (VmProcedure)VmSolution.Instance["Flow1"];
 
 
         }
