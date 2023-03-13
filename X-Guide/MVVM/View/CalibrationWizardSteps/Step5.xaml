@@ -120,7 +120,7 @@
                         <RowDefinition Height="*"/>
                         <RowDefinition Height="*"/>
                     </Grid.RowDefinitions>
-                    <!-- Row 0 : Rotation X -->
+                    <!-- Row 1 : Rotation X -->
                     <Button Grid.Row="0" Grid.Column="0" Style="{DynamicResource RotationButtonStyle}" >
                         <StackPanel Orientation="Horizontal" >
                             <TextBlock Text="Rx" FontStyle="Italic" FontSize="11"/>
@@ -136,7 +136,7 @@
                     <TextBox Grid.Row="0" Grid.Column="1" IsReadOnly="True"
                              materialDesign:HintAssist.Hint="X-rotation"   TextAlignment="Center"
                              Text="0°" Style="{DynamicResource InputMaterialDesignTextBox}" Height="70"></TextBox>
-                    <!-- Row 1: Rotation Y -->
+                    <!-- Row 2: Rotation Y -->
                     <Button  Grid.Row="1"  Grid.Column="0" Style="{DynamicResource RotationButtonStyle}" >
                         <StackPanel Orientation="Horizontal" >
                             <TextBlock Text="Ry" FontStyle="Italic" FontSize="11"/>
@@ -152,23 +152,7 @@
                     <TextBox  Grid.Row="1"   Grid.Column="1"     TextAlignment="Center"
                               IsReadOnly="True" materialDesign:HintAssist.Hint="Y-rotation" 
                               Text="0°" Style="{DynamicResource InputMaterialDesignTextBox}" Height="70"></TextBox>
-                    <!-- Row 2: Rotation Z -->
-                    <Button  Grid.Row="2"  Grid.Column="0" Style="{DynamicResource RotationButtonStyle}" >
-                        <StackPanel Orientation="Horizontal" >
-                            <TextBlock Text="Rz" FontStyle="Italic" FontSize="11"/>
-                            <TextBlock Text="-" FontSize="30" />
-                        </StackPanel>
-                    </Button>
-                    <Button Grid.Row="2" Grid.Column="2" Style="{DynamicResource RotationButtonStyle}" >
-                        <StackPanel Orientation="Horizontal" >
-                            <TextBlock Text="Rz" FontStyle="Italic" FontSize="11"/>
-                            <TextBlock Text="+" FontSize="30" />
-                        </StackPanel>
-                    </Button>
-                    <TextBox Grid.Row="2" Grid.Column="1"    TextAlignment="Center"
-                             IsReadOnly="True" materialDesign:HintAssist.Hint="Z-rotation"
-                             Text="0°" Style="{DynamicResource InputMaterialDesignTextBox}" Height="70"></TextBox>
-
+                    
                 </Grid>
             </Grid>
 
