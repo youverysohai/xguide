@@ -74,7 +74,7 @@
                 </StackPanel>
                 <StackPanel Orientation="Horizontal" Grid.Row="0" Grid.Column="1">
                     <Label VerticalAlignment="Bottom" Style="{DynamicResource MaterialDesignLabel}" Content="Jog Distance (mm) :"/>
-                    <TextBox VerticalAlignment="Bottom" Style="{DynamicResource MaterialDesignTextBox}" MinWidth="40" TextAlignment="Center">
+                    <TextBox Text="{Binding JogDistance}" VerticalAlignment="Bottom" Style="{DynamicResource MaterialDesignTextBox}" MinWidth="40" TextAlignment="Center">
                         </TextBox>
                 </StackPanel>
                 <!-- JogButtons and Rotations-->
@@ -90,7 +90,7 @@
                     <!--UP -->
                     <Image VerticalAlignment="Top" Grid.Column="2" Grid.Row="0"  Stretch="Uniform" Source="pack://application:,,,/Style/ImageSource/up.png" ToolTip="Z+" ToolTipService.InitialShowDelay="100"/>
 
-                    <Button  VerticalAlignment="Top" Height="69"  Grid.Column="2" Grid.Row="0" BorderThickness="0"  Style="{StaticResource TransparentStyle}" ToolTip="Z+" ToolTipService.InitialShowDelay="100">
+                    <Button Command="{Binding JogCommand}" CommandParameter="Z+"  VerticalAlignment="Top" Height="69"  Grid.Column="2" Grid.Row="0" BorderThickness="0"  Style="{StaticResource TransparentStyle}" ToolTip="Z+" ToolTipService.InitialShowDelay="100">
                         <TextBlock Style="{DynamicResource ButtonInnerTextBlockCenter}">Z+</TextBlock>
                     </Button>
 
@@ -98,32 +98,32 @@
 
                     <Image VerticalAlignment="Bottom" Cursor="Hand" Grid.Column="2" Grid.Row="1"  Stretch="Uniform" Source="pack://application:,,,/Style/ImageSource/down.png" ToolTip="Z-" ToolTipService.InitialShowDelay="100"/>
 
-                    <Button VerticalAlignment="Bottom" Height="69"  Grid.Column="2" Grid.Row="1" BorderThickness="0"  Style="{StaticResource TransparentStyle}" ToolTip="Z-" ToolTipService.InitialShowDelay="100">
+                    <Button Command="{Binding JogCommand}" CommandParameter="Z-"  VerticalAlignment="Bottom" Height="69"  Grid.Column="2" Grid.Row="1" BorderThickness="0"  Style="{StaticResource TransparentStyle}" ToolTip="Z-" ToolTipService.InitialShowDelay="100">
                         <TextBlock Style="{DynamicResource ButtonInnerTextBlockCenter}" >Z-</TextBlock>
                     </Button>
                     <!-- Arrow Button-->
 
                     <Canvas  Grid.Row="0" Grid.RowSpan="2"  HorizontalAlignment="Left" VerticalAlignment="Top" Width="260" Height="280" >
                         <Image Width="260" Canvas.Top="40" Source="pack://application:,,,/Style/ImageSource/arrows.png" />
-                        <Button Style="{DynamicResource UpArrowButton}" >
+                        <Button Command="{Binding JogCommand}" CommandParameter="Y+" Style="{DynamicResource UpArrowButton}" >
                             <TextBlock Style="{DynamicResource ButtonInnerTextBlockCenter}">Y+</TextBlock>
                         </Button>
-                        <Button Style="{DynamicResource DownArrowButton}">
+                        <Button Command="{Binding JogCommand}" CommandParameter="Y-" Style="{DynamicResource DownArrowButton}">
                             <TextBlock  Style="{DynamicResource ButtonInnerTextBlockCenter}">Y-</TextBlock>
                         </Button>
-                        <Button Style="{DynamicResource LeftArrowButton}">
+                        <Button Command="{Binding JogCommand}" CommandParameter="X+"  Style="{DynamicResource LeftArrowButton}">
                             <TextBlock  Style="{DynamicResource ButtonInnerTextBlockCenter}">X+</TextBlock>
 
                         </Button>
-                        <Button Style="{DynamicResource RightArrowButton}">
+                        <Button Command="{Binding JogCommand}" CommandParameter="X-" Style="{DynamicResource RightArrowButton}">
                             <TextBlock Style="{DynamicResource ButtonInnerTextBlockCenter}">X-</TextBlock>
                         </Button>
                         <!-- Z rotation-->
-                        <Button Style="{DynamicResource ClockwiseButton}">
+                        <Button Command="{Binding JogCommand}" CommandParameter="RZ+" Style="{DynamicResource ClockwiseButton}">
                             <TextBlock  Style="{DynamicResource ClockwiseTextBlock}">Rz+</TextBlock>
 
                         </Button>
-                        <Button Style="{DynamicResource AntiClockwiseButton}">
+                        <Button Command="{Binding JogCommand}" CommandParameter="RZ-" Style="{DynamicResource AntiClockwiseButton}">
                             <TextBlock Style="{DynamicResource AntiClockwiseTextBlock}">Rz-</TextBlock>
                         </Button>
                     </Canvas>

@@ -31,7 +31,7 @@ namespace X_Guide.Service.Communation
             _serverService.StartServer();
         }
 
-        public ConcurrentDictionary<int, TcpClientInfo> getConnectedClient()
+        public ConcurrentDictionary<int, TcpClientInfo> GetConnectedClient()
         {
             try
             {
@@ -64,8 +64,6 @@ namespace X_Guide.Service.Communation
 
             }
 
-
-
         }
 
 
@@ -81,6 +79,7 @@ namespace X_Guide.Service.Communation
                 while (!cancellationToken.IsCancellationRequested)
                 {
                     await ServerJogCommand(client);
+  
                 }
             });
            
@@ -92,17 +91,29 @@ namespace X_Guide.Service.Communation
             ManualResetEventSlim _jogDoneReplyRecieved = client.JogDoneReplyRecieved;
             while (commandQeueue.Count > 0)
             {
+                client.Jogging = true;
                 await Task.Run(() => _serverService.SendMessageAsync(commandQeueue.Dequeue(), stream));
+                Debug.WriteLine("Sc = " + commandQeueue.Count);
                 _jogDoneReplyRecieved.Wait();
                 _jogDoneReplyRecieved.Reset();
             }
+            client.Jogging = false;
         }
 
         private void jogDone(TcpClient client)
         {
-            ManualResetEventSlim _jogDoneReplyRecieved = _serverService.GetConnectedClientInfo(client).JogDoneReplyRecieved;
-
-            _jogDoneReplyRecieved.Set();
+            TcpClientInfo clientInfo = _serverService.GetConnectedClientInfo(client);
+            ManualResetEventSlim _jogDoneReplyRecieved = clientInfo.JogDoneReplyRecieved;
+            Debug.WriteLine("status : " + _jogDoneReplyRecieved.IsSet);
+            if (clientInfo.Jogging)
+            {
+                _jogDoneReplyRecieved.Set();
+               
+            }
+            else
+            {
+                _serverService.SendMessageAsync("No new jog command available!", client.GetStream());
+            }
         }
 
 

@@ -2,6 +2,7 @@
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using System.Threading;
@@ -96,15 +97,16 @@ namespace X_Guide.MVVM.ViewModel
             }
             string command = String.Format("JOG,TOOL,{0},{1},{2},{3},{4},{5},{6},{7}\n", x, y, z, rx, ry, rz, _setting.Speed, _setting.Acceleration);
             _serverCommand.commandQeueue.Enqueue(command);
+            Debug.WriteLine(_serverCommand.commandQeueue.Count);
         }
 
         private void StartJogging()
         {
-            var i = _serverCommand.getConnectedClient().First();
-            if (i.Value == null) MessageBox.Show("No connected client found!");
+            var i = _serverCommand?.GetConnectedClient().First();
+            if (i == null) MessageBox.Show("No connected client found!");
             else
             {
-                _serverCommand.StartJogCommand(cancelJog, i.Value);
+                _serverCommand.StartJogCommand(cancelJog, i?.Value);
             }
         }
 
