@@ -9,13 +9,13 @@ namespace X_Guide
 {
     public enum Terminator
     {
-        [Description("NA")]
+        [Description("")]
         NA,
-        [Description("CR")]
+        [Description("\r")]
         CR,
-        [Description("LF")]
+        [Description("\n")]
         LF,
-        [Description("CRLF")]
+        [Description("\r\n")]
         CRLF,
    
     }

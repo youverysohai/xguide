@@ -42,6 +42,7 @@ namespace X_Guide.MVVM.ViewModel
             _navigationStore = navigationStore;
             _machineDB = machineService;
             _serverCommand = serverCommand;
+            _mapper = mapper;
         }
         private void start(object arg)
         {

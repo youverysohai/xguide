@@ -58,7 +58,9 @@ namespace X_Guide
             _machineDb = new MachineService(_dbContextFactory);
             //App specific settings
             InitializeAppConfiguration();
-            _serverService = new ServerService(IPAddress.Any, 8000);
+
+            
+            _serverService = new ServerService(IPAddress.Any, 8000, "\n");
             _serverCommand = new ServerCommand(_serverService);
             _serverCommand.StartServer();
 

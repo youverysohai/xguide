@@ -204,8 +204,8 @@
                         <!-- Input Port Number-->
                         <TextBox Width="70" Grid.Row="1" Grid.Column="1" Style="{DynamicResource InputMaterialDesignTextBox}" Text="{Binding RobotPort}"  PreviewTextInput="TxtPort_PreviewTextInput" 
                                         materialDesign:HintAssist.Hint="Port" HorizontalAlignment="Center"/>
-                        <ComboBox ItemsSource="{Binding TerminatorList}" DisplayMemberPath="Description"
-                            SelectedValuePath="Value" SelectedItem="{Binding ManipulatorTerminator}" SelectedValue="{Binding ManipulatorTerminator}"  Grid.Row="3" Grid.Column="0"  Margin="15"  Style="{DynamicResource MaterialDesignFloatingHintComboBox}"
+                        <ComboBox ItemsSource="{Binding TerminatorList}" DisplayMemberPath="Value"
+                            SelectedValuePath="Description" SelectedItem="{Binding ManipulatorTerminator}" SelectedValue="{Binding ManipulatorTerminator}"  Grid.Row="3" Grid.Column="0"  Margin="15"  Style="{DynamicResource MaterialDesignFloatingHintComboBox}"
                                           Padding="5"
                                           FontSize="15"
                                           HorizontalAlignment="Left"  
@@ -259,8 +259,8 @@
                         <!-- Input Vision Port Number-->
                         <TextBox Width="70"  Grid.Column="1" Grid.Row="6" Style="{DynamicResource InputMaterialDesignTextBox}"  Padding="2" Text="{Binding VisionPort}"  PreviewTextInput="TxtPort_PreviewTextInput"
                                         materialDesign:HintAssist.Hint="Port"  MaxWidth="100" HorizontalAlignment="Center"/>
-                        <ComboBox ItemsSource="{Binding TerminatorList}" DisplayMemberPath="Description"
-                            SelectedValuePath="Value" SelectedItem="{Binding VisionTerminator}" SelectedValue="{Binding VisionTerminator}"  Grid.Row="7" Grid.Column="0"  Margin="15"  Style="{DynamicResource MaterialDesignFloatingHintComboBox}"
+                        <ComboBox ItemsSource="{Binding TerminatorList}" DisplayMemberPath="Value"
+                            SelectedValuePath="Description" SelectedItem="{Binding VisionTerminator}" SelectedValue="{Binding VisionTerminator}"  Grid.Row="7" Grid.Column="0"  Margin="15"  Style="{DynamicResource MaterialDesignFloatingHintComboBox}"
                                           Padding="5"
                                           FontSize="15"
                                           HorizontalAlignment="Left"  

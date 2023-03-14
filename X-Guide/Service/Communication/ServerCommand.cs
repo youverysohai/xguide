@@ -21,7 +21,6 @@ namespace X_Guide.Service.Communation
         public IServerService _serverService { get; }
         public ServerCommand(IServerService serverService)
         {
-
             _serverService = serverService;
             _serverService.MessageEvent += ValidateSyntax;
         }
@@ -43,6 +42,11 @@ namespace X_Guide.Service.Communation
             }
         }
 
+
+        public void SetServerReadTerminator(string terminator)
+        {
+            _serverService.SetServerReadTerminator(terminator);
+        }
         public void ValidateSyntax(object sender, TcpClientEventArgs tcpClientEventArgs)
         {
             string message = tcpClientEventArgs.Message;
@@ -52,25 +56,14 @@ namespace X_Guide.Service.Communation
 
             switch (commands[0].Trim().ToLower())
             {
-
                 case "jogdone": jogDone(client); break;
                 case "status": CheckStatus(client); break;
                 case "xguide": XGuideCommand(client, message); break;
                 case "getpose": GetPoseCommand(client, message); break;
-
-
                 default: ReturnErrorMessage(client); break;
-
-
             }
-
         }
-
-
-
-
-
-
+        
 
         public async void StartJogCommand(CancellationToken cancellationToken, TcpClientInfo client)
         {
@@ -79,7 +72,6 @@ namespace X_Guide.Service.Communation
                 while (!cancellationToken.IsCancellationRequested)
                 {
                     await ServerJogCommand(client);
-  
                 }
             });
            
@@ -117,39 +109,7 @@ namespace X_Guide.Service.Communation
         }
 
 
-        public void JogManipulator(TcpClient client)
-        {
-            var clientInfo = _serverService.GetConnectedClientInfo(client);
-            ManualResetEventSlim _jogDoneReplyRecieved = clientInfo.JogDoneReplyRecieved;
-
-
-            NetworkStream stream = client.GetStream();
-            {
-                if (!clientInfo.Jogging)
-                {
-                    clientInfo.Jogging = true;
-
-                    List<string> jogCommand = new List<string>
-            {
-                "JOG,GLOBAL/TOOL,X,Y,Z,RX,RY,RZ,SPEED,ACCEL1\n",
-                "JOG,GLOBAL/TOOL,X,Y,Z,RX,RY,RZ,SPEED,ACCEL2\n",
-                "JOG,GLOBAL/TOOL,X,Y,Z,RX,RY,RZ,SPEED,ACCEL3\n",
-            };
-
-                    foreach (string command in jogCommand)
-                    {
-                        _serverService.SendMessageAsync(command, stream);
-                        _jogDoneReplyRecieved.Wait(); //note that literally every thread is sharing this thing
-                        _jogDoneReplyRecieved.Reset();
-                    }
-                    clientInfo.Jogging = false;
-                }
-                else
-                {
-                    _serverService.SendMessageAsync("Jog is in progress. Please refrain from initiating another jog command before completing the current cycle.\n", stream);
-                }
-            }
-        }
+  
 
         private void GetPoseCommand(TcpClient client, string message)
         {
@@ -169,7 +129,7 @@ namespace X_Guide.Service.Communation
 
         public void ReturnErrorMessage(TcpClient client)
         {
-            _serverService.SendMessageAsync("Unknown command :< \n", client.GetStream());
+            _serverService.SendMessageAsync("Unknown command.\n", client.GetStream());
         }
 
         public void CheckStatus(TcpClient client)

@@ -27,7 +27,7 @@ namespace X_Guide
     
         public virtual DbSet<Setting> Settings { get; set; }
         public virtual DbSet<User> Users { get; set; }
-        public virtual DbSet<Machine> Machines { get; set; }
         public virtual DbSet<Calibration> Calibrations { get; set; }
+        public virtual DbSet<Machine> Machines { get; set; }
     }
 }

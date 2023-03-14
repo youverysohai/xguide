@@ -158,7 +158,7 @@ namespace X_Guide
         {
             if(sender != null)
             {
-                ((dynamic)DataContext).SecurePassword = ((PasswordBox)sender).SecurePassword;
+                ((MainViewModel)DataContext).InputPassword = ((PasswordBox)sender).SecurePassword;
             }
         }
     }

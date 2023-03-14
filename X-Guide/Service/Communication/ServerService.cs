@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Microsoft.CodeAnalysis.CSharp;
+using System;
 using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.Diagnostics;
@@ -30,17 +31,18 @@ namespace X_Guide.Communication.Service
 
         public event EventHandler<TcpClientEventArgs> MessageEvent;
 
-        private List<string> pendingCommand = new List<string>();
-
         private readonly ConcurrentDictionary<int, TcpClientInfo> _connectedClient = new ConcurrentDictionary<int, TcpClientInfo>();
 
         CancellationTokenSource cts;
 
+        private string _terminator { get; set; }
 
-        public ServerService(IPAddress ip, int port)
+
+        public ServerService(IPAddress ip, int port, string delimiter)
         {
             _port = port;
             _ip = ip;
+            _terminator = delimiter;
         }
 
         public bool getServerStatus()
@@ -131,15 +133,10 @@ namespace X_Guide.Communication.Service
                     bool run = true;
                     while (run)
                     {
-                        run = await ReadAsync(commandList, ct, client, '\n');
+                        run = await ReadAsync(commandList, ct, client);
                         RunCommand(commandList);
 
                     }
-
-
-
-
-
 
                 }
                 /*   DisposeClient(client);*/
@@ -166,12 +163,13 @@ namespace X_Guide.Communication.Service
             }
         }
 
-        public async Task<bool> ReadAsync(Queue<TcpClientEventArgs> commandList, CancellationToken ct, TcpClient client, char delimiter)
+        public async Task<bool> ReadAsync(Queue<TcpClientEventArgs> commandList, CancellationToken ct, TcpClient client)
         {
             byte[] buffer = new byte[1024];
             string data = "";
             NetworkStream stream = client.GetStream();
-            while (!data.EndsWith(delimiter.ToString()))
+            Debug.WriteLine($"{SymbolDisplay.FormatLiteral(_terminator, false)}");
+            while (!data.EndsWith(_terminator))
             {
                 int bytesRead = await stream.ReadAsync(buffer, 0, buffer.Length);
                 data += Encoding.ASCII.GetString(buffer, 0, bytesRead);
@@ -183,7 +181,7 @@ namespace X_Guide.Communication.Service
 
             }
 
-            string[] messages = data.Split(new[] { delimiter.ToString() }, StringSplitOptions.RemoveEmptyEntries);
+            string[] messages = data.Split(new[] { _terminator.ToString() }, StringSplitOptions.RemoveEmptyEntries);
             foreach (string message in messages)
             {
                 Debug.WriteLine(message);
@@ -192,7 +190,6 @@ namespace X_Guide.Communication.Service
             }
             return true;
         }
-
 
 
         public void DisposeClient(TcpClient client)
@@ -217,16 +214,15 @@ namespace X_Guide.Communication.Service
         public TcpClientInfo GetConnectedClientInfo(TcpClient tcpClient)
         {
             TcpClientInfo tcpClientInfo;
-
-
             _connectedClient.TryGetValue(tcpClient.GetHashCode(), out tcpClientInfo);
-
-
             return tcpClientInfo;
 
         }
 
-
+        public void SetServerReadTerminator(string terminator)
+        {
+            _terminator = terminator;
+        }
     }
 
 }

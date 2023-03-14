@@ -34,8 +34,8 @@ namespace X_Guide.MVVM.Model
             ManipulatorPort = "8000";
             VisionIP = "127.0.0.1";
             VisionPort = "8000";
-            ManipulatorTerminator = "NA";
-            VisionTerminator = "NA";
+            ManipulatorTerminator = string.Empty;
+            VisionTerminator = string.Empty;
         }
 
         public MachineModel(int id, string name, int type, string description, string manipulatorIP, string manipulatorPort, string visionIP, string visionPort, string manipulatorTerminator, string visionTerminator)

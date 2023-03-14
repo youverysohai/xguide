@@ -104,6 +104,20 @@ namespace X_Guide.Service.DatabaseProvider
             return null;
         }
 
-       
+        public string GetMachineDelimiter(string name)
+        {
+            using (var context = _contextFactory.CreateDbContext())
+            {
+                var result = context.Machines.FirstOrDefault(x => x.Name == name);
+
+
+                if (result != null)
+                {
+
+                    return result.ManipulatorTerminator;
+                }
+                else return string.Empty;
+            }
+        }
     }
 }

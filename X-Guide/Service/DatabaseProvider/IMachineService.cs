@@ -14,8 +14,12 @@ namespace X_Guide.Service.DatabaseProvider
         void CreateMachine(MachineModel machine);
         IEnumerable<string> GetAllMachineName();
         IEnumerable<MachineModel> GetAllMachine();
+
+        string GetMachineDelimiter(string name);
         MachineModel GetMachine(string name);
         void SaveMachine(MachineModel machine);
+
+
         
     }
 }
