@@ -73,7 +73,7 @@
         </Style.Triggers>
     </Style>
     
-    <!-- BOTTOM -->
+    <!-- BOTTOM : incomplete not real connection binding !!!!!!!!!!!!!!!!!!!!!!!-->
     <!-- Icon Connection Status Change Color -->
     <Style x:Key="ConnectionStatusIconForeground" TargetType="materialDesign:PackIcon" BasedOn="{StaticResource IconStyle24}">
         <Style.Triggers>
@@ -142,7 +142,7 @@
     <!--#endregion-->
     
     <!--#region Wizard  -->
-    <!-- Stepbar Item created behavior -->
+    <!-- Stepbar Item created behavior :incomplete !!!!!!!!!!!!!!!!!!!!!!!-->
     <Style x:Key="StepBarCreatedBehavior" TargetType="hc:StepBarItem">
         <Style.Triggers>
             <DataTrigger Binding="{Binding PageCreated}" Value="True" >
