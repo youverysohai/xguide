@@ -44,17 +44,17 @@
 
                     <Image Width="180" Grid.Column="1"
                            Visibility="{Binding IsChecked, ElementName=rbLookUpward, Converter={StaticResource BooleanToVisibilityConverter}}"
-                               gif:AnimationBehavior.SourceUri="https://media.giphy.com/media/Oc8lIQHZsXqDu/giphy.gif"
-                               gif:AnimationBehavior.AnimateInDesignMode="True"></Image>
+                           gif:AnimationBehavior.SourceUri="pack://application:,,,/Style/ImageSource/hamster-cute.gif"    
+                           ></Image>
                     <Image Width="180" Grid.Column="1"
                             Visibility="{Binding IsChecked, ElementName=rbEyeOnHand, Converter={StaticResource BooleanToVisibilityConverter}}"
                             
-                               gif:AnimationBehavior.SourceUri="https://media.giphy.com/media/pm4VOSkAgkj3q/giphy.gif"
+                               gif:AnimationBehavior.SourceUri="pack://application:,,,/Style/ImageSource/eat-carrot.gif"
                                gif:AnimationBehavior.AnimateInDesignMode="True"></Image>
                     <Image Width="180" Grid.Column="1"
                             Visibility="{Binding IsChecked, ElementName=rbLookDownward, Converter={StaticResource BooleanToVisibilityConverter}}"
                            
-                               gif:AnimationBehavior.SourceUri="https://media.giphy.com/media/NLIPqilkyziF2/giphy-downsized-large.gif"
+                               gif:AnimationBehavior.SourceUri="pack://application:,,,/Style/ImageSource/cat.gif"
                                gif:AnimationBehavior.AnimateInDesignMode="True"></Image>
 
 

@@ -886,9 +886,6 @@
     <PackageReference Include="MaterialDesignThemes.Wpf">
       <Version>1.0.1</Version>
     </PackageReference>
-    <PackageReference Include="WpfAnimatedGif">
-      <Version>2.0.2</Version>
-    </PackageReference>
     <PackageReference Include="XamlAnimatedGif">
       <Version>2.1.1</Version>
     </PackageReference>
@@ -916,6 +913,8 @@
     <Resource Include="Style\ImageSource\down.png" />
     <Resource Include="Style\ImageSource\up.png" />
     <Resource Include="Style\ImageSource\arrows.png" />
+    <Resource Include="Style\ImageSource\cat.gif" />
+    <Resource Include="Style\ImageSource\eat-carrot.gif" />
     <Content Include="XGuideDB.mdf">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>

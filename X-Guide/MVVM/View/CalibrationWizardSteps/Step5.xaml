@@ -6,6 +6,9 @@
              xmlns:local="clr-namespace:X_Guide.MVVM.View.CalibrationWizardSteps"
              xmlns:dshow="clr-namespace:DirectShowLib;assembly=DirectShowLib"
              mc:Ignorable="d" 
+             xmlns:xctk="http://schemas.xceed.com/wpf/xaml/toolkit"
+
+
              FontSize="16"
              xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"   
                 
@@ -154,7 +157,7 @@
 
                     <StackPanel Orientation="Horizontal" Grid.Row="0" Grid.Column="1">
                         <Label VerticalAlignment="Bottom" Style="{DynamicResource MaterialDesignLabel}" Content="Jog Distance (mm) :"/>
-                        <TextBox VerticalAlignment="Bottom" Style="{DynamicResource MaterialDesignTextBox}" MinWidth="40" TextAlignment="Center">
+                        <TextBox VerticalAlignment="Bottom" Style="{DynamicResource MaterialDesignTextBox}" MinWidth="40" TextAlignment="Center" >
                         </TextBox>
                     </StackPanel>
                     <!--Row 1 : Rotation X--> 
