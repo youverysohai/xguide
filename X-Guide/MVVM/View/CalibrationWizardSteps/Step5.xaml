@@ -7,7 +7,8 @@
              xmlns:dshow="clr-namespace:DirectShowLib;assembly=DirectShowLib"
              mc:Ignorable="d" 
              FontSize="16"
-             xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"     
+             xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"   
+                
              d:DesignHeight="550" d:DesignWidth="1000">
     <UserControl.Resources>
 
@@ -87,6 +88,7 @@
                         <ColumnDefinition Width="5*"/>
                         <ColumnDefinition Width="*"/>
                     </Grid.ColumnDefinitions>
+                    
                     <!--UP -->
                     <Image VerticalAlignment="Top" Grid.Column="2" Grid.Row="0"  Stretch="Uniform" Source="pack://application:,,,/Style/ImageSource/up.png" ToolTip="Z+" ToolTipService.InitialShowDelay="100"/>
 
@@ -103,30 +105,31 @@
                     </Button>
                     <!-- Arrow Button-->
 
-                    <Canvas  Grid.Row="0" Grid.RowSpan="2"  HorizontalAlignment="Left" VerticalAlignment="Top" Width="260" Height="280" >
-                        <Image Width="260" Canvas.Top="40" Source="pack://application:,,,/Style/ImageSource/arrows.png" />
-                        <Button Style="{DynamicResource UpArrowButton}" >
-                            <TextBlock Style="{DynamicResource ButtonInnerTextBlockCenter}">Y+</TextBlock>
-                        </Button>
-                        <Button Style="{DynamicResource DownArrowButton}">
-                            <TextBlock  Style="{DynamicResource ButtonInnerTextBlockCenter}">Y-</TextBlock>
-                        </Button>
-                        <Button Style="{DynamicResource LeftArrowButton}">
-                            <TextBlock  Style="{DynamicResource ButtonInnerTextBlockCenter}">X+</TextBlock>
+                    <Viewbox Grid.Row="0" Grid.RowSpan="2" HorizontalAlignment="Left" VerticalAlignment="Top">
+                        <Canvas Width="260" Height="280">
+                            <Image Width="260" Canvas.Top="40" Source="pack://application:,,,/Style/ImageSource/arrows.png" />
+                            <Button Style="{DynamicResource UpArrowButton}">
+                                <TextBlock Style="{DynamicResource ButtonInnerTextBlockCenter}">Y+</TextBlock>
+                            </Button>
+                            <Button Style="{DynamicResource DownArrowButton}">
+                                <TextBlock Style="{DynamicResource ButtonInnerTextBlockCenter}">Y-</TextBlock>
+                            </Button>
+                            <Button Style="{DynamicResource LeftArrowButton}">
+                                <TextBlock Style="{DynamicResource ButtonInnerTextBlockCenter}">X+</TextBlock>
+                            </Button>
+                            <Button Style="{DynamicResource RightArrowButton}">
+                                <TextBlock Style="{DynamicResource ButtonInnerTextBlockCenter}">X-</TextBlock>
+                            </Button>
+                            <!-- Z rotation-->
+                            <Button Style="{DynamicResource ClockwiseButton}">
+                                <TextBlock Style="{DynamicResource ClockwiseTextBlock}">Rz+</TextBlock>
+                            </Button>
+                            <Button Style="{DynamicResource AntiClockwiseButton}">
+                                <TextBlock Style="{DynamicResource AntiClockwiseTextBlock}">Rz-</TextBlock>
+                            </Button>
+                        </Canvas>
+                    </Viewbox>
 
-                        </Button>
-                        <Button Style="{DynamicResource RightArrowButton}">
-                            <TextBlock Style="{DynamicResource ButtonInnerTextBlockCenter}">X-</TextBlock>
-                        </Button>
-                        <!-- Z rotation-->
-                        <Button Style="{DynamicResource ClockwiseButton}">
-                            <TextBlock  Style="{DynamicResource ClockwiseTextBlock}">Rz+</TextBlock>
-
-                        </Button>
-                        <Button Style="{DynamicResource AntiClockwiseButton}">
-                            <TextBlock Style="{DynamicResource AntiClockwiseTextBlock}">Rz-</TextBlock>
-                        </Button>
-                    </Canvas>
 
                 </Grid>
 
@@ -144,7 +147,8 @@
                         <RowDefinition Height="*"/>
                     </Grid.RowDefinitions>
                  <!-- Your Command -->
-                    <TextBlock Grid.Row="0" Grid.Column="1">▲ Press Any Button to Jog ▲</TextBlock>
+                    <TextBlock Grid.Row="0" Grid.ColumnSpan="2">▲ Press Any Button to Jog ▲</TextBlock>
+                   
                     <!--Row 1 : Rotation X--> 
                 
                     <Button Grid.Row="1" Grid.Column="0" Style="{DynamicResource RotationButtonStyle}" >
