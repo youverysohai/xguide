@@ -22,7 +22,7 @@
                     <RowDefinition Height="*"/>
                 </Grid.RowDefinitions>
                 <StackPanel Orientation="Vertical" Grid.ColumnSpan="2">
-                    <TextBlock  Text="Motion for Calibration" HorizontalAlignment="Center" FontSize="35" Margin="0 120 0 25"/>
+                    <TextBlock  Text="Motion for Calibartion" HorizontalAlignment="Center" FontSize="35" Margin="0 20 0 25"/>
                     <Grid HorizontalAlignment="Center">
                         <Grid.ColumnDefinitions>
                             <ColumnDefinition Width="5*"/>
@@ -68,7 +68,7 @@
                                    Padding="10 1"      MinWidth="100"  
                                   materialDesign:HintAssist.Hint="Motion Delay ms" materialDesign:HintAssist.FloatingScale=".55" 
                                     materialDesign:HintAssist.FloatingOffset="-15,-15"/>
-                        <StackPanel Orientation="Horizontal" Grid.ColumnSpan="2" Grid.Row="3" IsEnabled="False">
+                        <StackPanel Orientation="Horizontal" Grid.ColumnSpan="2" Grid.Row="3" Visibility="Collapsed">
                             <Label Style="{DynamicResource MaterialDesignLabel}"  Content="Value must be greater than zero"></Label>
                             <TextBox   Style="{StaticResource OutlineTextStyle}" 
                                    Padding="10 1"      MinWidth="100"  
