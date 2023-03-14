@@ -125,7 +125,7 @@ namespace X_Guide
         }
         private ViewModelBase CreateEngineeringViewModel()
         {
-            return new EngineeringViewModel(_machineDb, _mapperConfig.CreateMapper());
+            return new EngineeringViewModel(_machineDb, _mapperConfig.CreateMapper(), "My New Setting");
         }
 
         private ViewModelBase CreateUndefinedViewModel()

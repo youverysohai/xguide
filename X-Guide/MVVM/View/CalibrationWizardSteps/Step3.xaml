@@ -18,7 +18,7 @@
                 <StackPanel Orientation="Vertical" HorizontalAlignment="Center" >
                     <StackPanel Orientation="Horizontal">
                         <TextBlock Style="{DynamicResource ReadOnlyTextBlock}" Text="{Binding FilePath}"></TextBlock>
-                        <Button Style="{DynamicResource MaterialDesignOutlinedButton}" Command="{Binding OpenFileCommand}">Browse</Button>
+                        <Button Style="{DynamicResource MaterialDesignOutlinedButton}" Click="OpenFileButton_Click" >Browse</Button>
                     </StackPanel>
                     <ComboBox Style="{DynamicResource ComboBoxStyle}"
                               Width="200"
@@ -27,12 +27,13 @@
 
                     </ComboBox>
 
-                    <ComboBox Style="{DynamicResource ComboBoxStyle}"
+                    <ComboBox
+                        ItemsSource="{Binding VisionFlow}" 
+                        SelectedItem="{Binding SelectedItem}"
+                        Style="{DynamicResource ComboBoxStyle}"
                               Width="200"
                               materialDesign:HintAssist.Hint="Select Vision Flow">
-                        <ComboBoxItem>1</ComboBoxItem>
-                        <ComboBoxItem>2</ComboBoxItem>
-                        <ComboBoxItem>3</ComboBoxItem>
+             
                     </ComboBox>
                 </StackPanel>
 

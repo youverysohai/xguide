@@ -1,24 +1,13 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows;
-using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
+﻿using System.Windows;
+using System.Windows.Forms;
+using X_Guide.MVVM.ViewModel;
 
 namespace X_Guide.MVVM.View.CalibrationWizardSteps
 {
     /// <summary>
     /// Interaction logic for Step3.xaml
     /// </summary>
-    public partial class Step3 : UserControl
+    public partial class Step3 : System.Windows.Controls.UserControl
     {
         public Step3()
         {
@@ -28,6 +17,20 @@ namespace X_Guide.MVVM.View.CalibrationWizardSteps
         private void Button_Click(object sender, RoutedEventArgs e)
         {
 
+        }
+
+        private void OpenFileButton_Click(object sender, RoutedEventArgs e)
+        {
+            OpenFileDialog dialog = new OpenFileDialog();
+            dialog.Filter = "Vision solution files (*.sol)|*.sol|All files (*.*)|*.*";
+            dialog.InitialDirectory = "C:\\";
+            dialog.Title = "Select a solution file";
+
+
+            if (dialog.ShowDialog() == DialogResult.OK)
+            {
+                ((Step3ViewModel)DataContext).FilePath = dialog.FileName;
+            }
         }
     }
 }

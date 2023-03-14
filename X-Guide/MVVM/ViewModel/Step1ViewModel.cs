@@ -9,13 +9,15 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Input;
 using X_Guide.MVVM.Model;
+using X_Guide.MVVM.ViewModel.CalibrationWizardSteps;
 using X_Guide.Service.DatabaseProvider;
 
 namespace X_Guide.MVVM.ViewModel
 {
     internal class Step1ViewModel : ViewModelBase
     {
-
+        #region properties
+    
         public event EventHandler OnSelectedItemChangedEvent;
 
         private MachineModel _machineModel;
@@ -39,6 +41,10 @@ namespace X_Guide.MVVM.ViewModel
             }
         }
 
+        private CalibrationViewModel _setting;
+
+ 
+
         private ObservableCollection<string> _machineNames;
         public ObservableCollection<string> MachineNames
         {
@@ -51,28 +57,29 @@ namespace X_Guide.MVVM.ViewModel
         {
             _machineModel = _machineService.GetMachine(name);
             Machine = MachineViewModel.ToViewModel(_machineModel, _mapper);
-    
+            _setting.Machine = Machine;
             OnSelectedItemChangedEvent?.Invoke(this, EventArgs.Empty);
         }
 
         public ICommand ShoutCommand { get; set; }
         public IMachineService _machineService { get; }
         private IMapper _mapper { get; }
-
-        public Step1ViewModel(IMachineService machineService, IMapper mapper)
+        #endregion
+        public Step1ViewModel(IMachineService machineService, IMapper mapper, CalibrationViewModel setting)
         {
+            _setting = setting;
             _machineService = machineService;
             _mapper = mapper;
-            ShoutCommand = new RelayCommand(Test);
             MachineNames = new ObservableCollection<string>(_machineService.GetAllMachineName());
         }
         public void Test(object obj)
         {
             OnSelectedItemChangedEvent?.Invoke(this, EventArgs.Empty);
         }
+
         public override ViewModelBase GetNextViewModel()
         {
-            return new Step2ViewModel(Machine,  ref OnSelectedItemChangedEvent);
+            return new Step2ViewModel(ref OnSelectedItemChangedEvent, _setting);
         }
     }
 }

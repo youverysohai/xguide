@@ -15,6 +15,7 @@ namespace X_Guide.MVVM.ViewModel
     internal class CalibrationWizardStartViewModel :ViewModelBase
     {
         private IMapper _mapper;
+
         private string _name;
 
         public string Name
@@ -42,11 +43,8 @@ namespace X_Guide.MVVM.ViewModel
         private void start(object arg)
         {
             IsStarted = true;
-            _navigationStore.CurrentViewModel = new EngineeringViewModel(_machineDB, _mapper);
+            _navigationStore.CurrentViewModel = new EngineeringViewModel(_machineDB, _mapper, _name);
         }
-        //public override ViewModelBase GetNextViewModel()
-        //{
-        //    return new Step1ViewModel();
-        //}
+    
     }
 }

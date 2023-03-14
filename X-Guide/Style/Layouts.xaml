@@ -33,6 +33,12 @@
     <!--#endregion-->
 
     <!--#region Global Styles-->
+    <!-- Button inner Text Style : Step 5-->
+    <Style x:Key="ButtonInnerTextBlockCenter" TargetType="TextBlock">
+        <Setter Property="HorizontalAlignment" Value="Center"/>
+        <Setter Property="VerticalAlignment" Value="Center"/>
+        <Setter Property="TextAlignment" Value="Center"/>
+    </Style>
     <!--Radio Button Style: Step 2, -->
     <Style x:Key="RadioButtonStyle" TargetType="RadioButton" BasedOn="{StaticResource MaterialDesignChoiceChipPrimaryOutlineRadioButton}">
         <Setter Property="HorizontalAlignment" Value="Left"/>
@@ -95,26 +101,24 @@
                 </ControlTemplate>
             </Setter.Value>
         </Setter>
+        <Setter Property="ToolTipService.InitialShowDelay" Value="124"/>
+        <Setter Property="HorizontalAlignment" Value="Center"/>
     </Style>
-
-
-    <!--ARROWS-->
-    <Style x:Key="ArrowButtonStyle" TargetType="Ellipse">
-        <Setter Property="Cursor" Value="Hand"/>
-        <Setter Property="Fill" Value="Transparent"/>
-        <Setter Property="ToolTipService.InitialShowDelay" Value="125"/>
-        <Setter Property="Panel.ZIndex" Value="1"/>
-    </Style>
-    <Style x:Key="UpArrow" TargetType="Ellipse" BasedOn="{StaticResource ArrowButtonStyle}">
+    
+    <!-- Transparent background Button : Y+ Y- X+ X- -->
+    <Style x:Key="UpArrowButton" TargetType="{x:Type Button}" BasedOn="{StaticResource TransparentStyle}">
         <Setter Property="Tag" Value="Y+"/>
         <Setter Property="ToolTip" Value="Y+"/>
         <Setter Property="Width" Value="50"/>
         <Setter Property="Height" Value="40"/>
         <Setter Property="Canvas.Left" Value="105"/>
         <Setter Property="Canvas.Top" Value="45"/>
-        
+
     </Style>
-    <Style x:Key="DownArrow" TargetType="Ellipse" BasedOn="{StaticResource ArrowButtonStyle}">
+
+
+
+    <Style x:Key="DownArrowButton" TargetType="{x:Type Button}" BasedOn="{StaticResource TransparentStyle}">
         <Setter Property="Tag" Value="Y-"/>
         <Setter Property="ToolTip" Value="Y-"/>
         <Setter Property="Width" Value="70"/>
@@ -122,7 +126,7 @@
         <Setter Property="Canvas.Left" Value="95"/>
         <Setter Property="Canvas.Bottom" Value="5"/>
     </Style>
-    <Style x:Key="LeftArrow" TargetType="Ellipse" BasedOn="{StaticResource ArrowButtonStyle}">
+    <Style x:Key="LeftArrowButton" TargetType="{x:Type Button}" BasedOn="{StaticResource TransparentStyle}">
         <Setter Property="Tag" Value="X-"/>
         <Setter Property="ToolTip" Value="X-"/>
         <Setter Property="Width" Value="60"/>
@@ -130,13 +134,37 @@
         <Setter Property="Canvas.Left" Value="10"/>
         <Setter Property="Canvas.Top" Value="110"/>
     </Style>
-    <Style x:Key="RightArrow" TargetType="Ellipse" BasedOn="{StaticResource ArrowButtonStyle}">
+    <Style x:Key="RightArrowButton" TargetType="{x:Type Button}" BasedOn="{StaticResource TransparentStyle}">
         <Setter Property="Tag" Value="X+"/>
         <Setter Property="ToolTip" Value="X+"/>
         <Setter Property="Width" Value="60"/>
         <Setter Property="Height" Value="45"/>
         <Setter Property="Canvas.Right" Value="10"/>
         <Setter Property="Canvas.Top" Value="110"/>
+    </Style>
+
+    <!-- Transparent background Button : Rz+ Rz- -->
+    <Style x:Key="ClockwiseButton" TargetType="{x:Type Button}" BasedOn="{StaticResource TransparentStyle}">
+        <Setter Property="Tag" Value="Rz+"/>
+        <Setter Property="ToolTip" Value="Rz+"/>
+        <Setter Property="Width" Value="90"/>
+        <Setter Property="Height" Value="45"/>
+        <Setter Property="Canvas.Left" Value="85"/>
+        <Setter Property="Canvas.Top" Value="88"/>
+    </Style>
+    <Style x:Key="AntiClockwiseButton" TargetType="{x:Type Button}" BasedOn="{StaticResource TransparentStyle}">
+        <Setter Property="Tag" Value="Rz-"/>
+        <Setter Property="ToolTip" Value="Rz-"/>
+        <Setter Property="Width" Value="90"/>
+        <Setter Property="Height" Value="42"/>
+        <Setter Property="Canvas.Right" Value="85"/>
+        <Setter Property="Canvas.Bottom" Value="98"/>
+    </Style>
+    <Style x:Key="ClockwiseTextBlock" TargetType="TextBlock" BasedOn="{StaticResource ButtonInnerTextBlockCenter}">
+        <Setter Property="VerticalAlignment" Value="Top"/>
+    </Style>
+    <Style x:Key="AntiClockwiseTextBlock" TargetType="TextBlock" BasedOn="{StaticResource ButtonInnerTextBlockCenter}">
+        <Setter Property="VerticalAlignment" Value="Bottom"/>
     </Style>
     <!--#endregion-->
     <!--#endregion-->

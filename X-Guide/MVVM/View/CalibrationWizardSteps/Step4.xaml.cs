@@ -26,6 +26,21 @@ namespace X_Guide.MVVM.View.CalibrationWizardSteps
             InitializeComponent();
         }
 
-
+        private void Slider_SpeedValueChanged(object sender, RoutedPropertyChangedEventArgs<double> e)
+        {
+            if (SpeedAngle != null)
+            {
+                SpeedAngle.Angle = (int)(e.NewValue * 1.7 - 85);
+                SpeedValue.Text = ((int)e.NewValue).ToString();
+            }
+        }
+        private void Slider_AccelerationValueChanged(object sender, RoutedPropertyChangedEventArgs<double> e)
+        {
+            if (AccelerationAngle != null)
+            {
+                AccelerationAngle.Angle = (int)(e.NewValue * 1.7 - 85);
+                AccelValue.Text = ((int)e.NewValue).ToString();
+            }
+        }
     }
 }

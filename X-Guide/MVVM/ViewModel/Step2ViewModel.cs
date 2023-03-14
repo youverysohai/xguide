@@ -5,42 +5,44 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
 using X_Guide.MVVM.Model;
+using X_Guide.MVVM.ViewModel.CalibrationWizardSteps;
 
 namespace X_Guide.MVVM.ViewModel
 {
     internal class Step2ViewModel : ViewModelBase
     {
-        private MachineViewModel _machine;
+    
+        private CalibrationViewModel _setting;
 
-        public MachineViewModel Machine
+        public CalibrationViewModel Setting
         {
-            get { return _machine; }
-            set { _machine = value;
+            get { return _setting; }
+            set
+            {
+                _setting = value;
                 OnPropertyChanged();
             }
         }
-        public event EventHandler OnSelectedChangedEvent;
 
-        public Step2ViewModel(MachineViewModel machine, ref EventHandler OnSelectedItemChangedEvent)
+
+        public Step2ViewModel(ref EventHandler OnSelectedItemChangedEvent, CalibrationViewModel setting)
         {
-            Machine = machine;
-           OnSelectedItemChangedEvent += OnSelectedChangedEventHandler;
-
+            Setting = setting;
+            OnSelectedItemChangedEvent += OnSelectedChangedEventHandler;
         }
-        
+
         private void OnSelectedChangedEventHandler(object sender, EventArgs e)
         {
-            Machine = ((dynamic)sender).Machine;
-            
+            Setting.Machine = ((dynamic)sender).Machine;
         }
 
-        
+
 
         public override ViewModelBase GetNextViewModel()
         {
-            return new Step3ViewModel();
+            return new Step3ViewModel(_setting);
         }
-        
+
 
     }
 }

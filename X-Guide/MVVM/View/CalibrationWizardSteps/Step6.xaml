@@ -52,7 +52,7 @@
                         <StackPanel Grid.Row="1" Orientation="Horizontal" Margin="5" >
                             <Label Content="Camera Y Scalling:" Margin="5" Style="{DynamicResource OutputLabel}" />
                             <TextBlock Text="0" VerticalAlignment="Center" Style="{DynamicResource ReadOnlyTextBlock}"/>
-                            <TextBlock Text="px per mm" Style="{DynamicResource UnitTextBlock}"/>
+                            <TextBlock Text="mm per pixel" Style="{DynamicResource UnitTextBlock}"/>
                         </StackPanel>
                         <StackPanel Grid.Row="2" Orientation="Horizontal" Margin="5" >
                             <Label Content="X offset:" Margin="5" Style="{DynamicResource OutputLabel}" />
