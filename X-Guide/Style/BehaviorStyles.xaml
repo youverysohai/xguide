@@ -141,7 +141,17 @@
 
     <!--#endregion-->
     
-    <!--#region Wizard : Step 2-->
+    <!--#region Wizard  -->
+    <!-- Stepbar Item created behavior -->
+    <Style x:Key="StepBarCreatedBehavior" TargetType="hc:StepBarItem">
+        <Style.Triggers>
+            <DataTrigger Binding="{Binding PageCreated}" Value="True" >
+                <Setter Property="Foreground" Value="{DynamicResource SecondaryBlueColor}"></Setter>
+            </DataTrigger>
+            <DataTrigger Binding="{Binding PageCreated}" Value="False" >
+            </DataTrigger>
+        </Style.Triggers>
+    </Style>
     <!-- Set Radio Button Visibility Based on Machine Type-->
     <Style x:Key="RadioButtonSCARA" TargetType="RadioButton" BasedOn="{StaticResource RadioButtonStyle}">
         <Setter Property="Visibility" Value="Collapsed"/>
@@ -159,6 +169,7 @@
             </DataTrigger>
         </Style.Triggers>
     </Style>
+    <!--#endregion-->
     
     <!--Preview GIF Image Based on Selected Radio Button-->
     

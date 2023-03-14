@@ -29,8 +29,16 @@
                     <ColumnDefinition Width="2*"/>
                     <ColumnDefinition Width="*"/>
                 </Grid.ColumnDefinitions>
-                <TextBlock Grid.ColumnSpan="2" Grid.Row="0"  Text="Jog to Desired Calibration Point" HorizontalAlignment="Center" FontSize="35" />
-                <!--<Grid Grid.Row="1">
+                <TextBlock Grid.ColumnSpan="2" Grid.Row="0"  Text="Jog to Vision Center" HorizontalAlignment="Center" FontSize="35" />
+                <ScrollViewer Grid.Row="0" Grid.Column="1">
+                    <!-- Your Command -->
+                    <TextBlock  TextAlignment="Right" Margin="0 0 10 0">
+                        hi<LineBreak />hi<LineBreak />hi<LineBreak />hi<LineBreak />
+                        hi<LineBreak />hi<LineBreak />hi<LineBreak />hi<LineBreak />
+                    
+                    </TextBlock>
+                </ScrollViewer>
+                <Grid Grid.Row="1">
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition Width="*"/>
                         <ColumnDefinition Width="*"/>
@@ -41,17 +49,18 @@
                         <RowDefinition Height="*"/>
                         <RowDefinition Height="*"/>
                     </Grid.RowDefinitions>
-                    
-                    <Image Grid.ColumnSpan="3" Grid.RowSpan="3" x:Name="videoPlayer" Stretch="Uniform"/>
-                    <Border Grid.Row="1" Grid.Column="1" BorderThickness="2" BorderBrush="Yellow"></Border>
+                    <Viewbox Grid.ColumnSpan="3" Grid.RowSpan="3" >
+                        <Image x:Name="videoPlayer" Source="{Binding VideoSource}" Stretch="Uniform"/>
+                    </Viewbox>
+                    <Border Grid.Row="1" Grid.Column="1" BorderThickness="2.5" BorderBrush="{DynamicResource PrimaryBlueColor}"></Border>
 
-                </Grid>-->
-                <Grid Grid.Row="1">
+                </Grid>
+                <!--<Grid Grid.Row="1">
                     <Canvas>
                         <Image Width="630" Height="280" x:Name="videoPlayer" Source="{Binding VideoSource}"/>
                         <Border Canvas.Left="200" Canvas.Top="80" Width="250" Height="140" BorderThickness="3" BorderBrush="{DynamicResource PrimaryBlueColor}"></Border>
                     </Canvas>
-                </Grid>
+                </Grid>-->
                 <StackPanel Grid.Row="2">
                     <ComboBox x:Name="comboBox"
                           Style="{DynamicResource ComboBoxStyle}"
@@ -73,11 +82,7 @@
                     </StackPanel>
 
                 </StackPanel>
-                <StackPanel Orientation="Horizontal" Grid.Row="0" Grid.Column="1">
-                    <Label VerticalAlignment="Bottom" Style="{DynamicResource MaterialDesignLabel}" Content="Jog Distance (mm) :"/>
-                    <TextBox VerticalAlignment="Bottom" Style="{DynamicResource MaterialDesignTextBox}" MinWidth="40" TextAlignment="Center">
-                        </TextBox>
-                </StackPanel>
+
                 <!-- JogButtons and Rotations-->
                 <Grid Grid.Row="1" Grid.Column="2">
                     <Grid.RowDefinitions >
@@ -146,9 +151,12 @@
                         <RowDefinition Height="*"/>
                         <RowDefinition Height="*"/>
                     </Grid.RowDefinitions>
-                 <!-- Your Command -->
-                    <TextBlock Grid.Row="0" Grid.ColumnSpan="2">▲ Press Any Button to Jog ▲</TextBlock>
-                   
+
+                    <StackPanel Orientation="Horizontal" Grid.Row="0" Grid.Column="1">
+                        <Label VerticalAlignment="Bottom" Style="{DynamicResource MaterialDesignLabel}" Content="Jog Distance (mm) :"/>
+                        <TextBox VerticalAlignment="Bottom" Style="{DynamicResource MaterialDesignTextBox}" MinWidth="40" TextAlignment="Center">
+                        </TextBox>
+                    </StackPanel>
                     <!--Row 1 : Rotation X--> 
                 
                     <Button Grid.Row="1" Grid.Column="0" Style="{DynamicResource RotationButtonStyle}" >
