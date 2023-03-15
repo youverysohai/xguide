@@ -49,16 +49,13 @@ namespace X_Guide.MVVM.ViewModel
 
         public Step5ViewModel(CalibrationViewModel setting, ServerCommand serverCommand)
         {
-          
          
-            ReportCommand = new RelayCommand(Testing);
             ReconnectCommand = new RelayCommand(null);
             JogCommand = new RelayCommand(Jog, CanStartJog);
             _setting = setting;
             _serverCommand = serverCommand;
             searchClient = new BackgroundService(SearchForClient);
             searchClient.Start();
-    
         }
 
         private void SearchForClient()
@@ -66,8 +63,9 @@ namespace X_Guide.MVVM.ViewModel
             try
             {
                 _tcpClient = _serverCommand.GetConnectedClient().First().Value;
-                StartJog();
-                searchClient.Stop();            
+                Debug.WriteLine(_tcpClient.TcpClient.GetHashCode());
+                searchClient.Stop();
+             
             }
             catch
             {
@@ -75,8 +73,10 @@ namespace X_Guide.MVVM.ViewModel
             }
         }
 
+
         private void Jog(object parameter)
         {
+            if (JogDistance == 0) JogDistance = 10;
             int x = 0, y = 0, z = 0, rz = 0;
             switch (parameter)
             {
@@ -92,9 +92,11 @@ namespace X_Guide.MVVM.ViewModel
 
 
             }
-            string command = String.Format("JOG,{0},{1},{2},{3},{4},0,0,{5},{6}\r\n", JogMode, x, y, z, rz, _setting.Speed, _setting.Acceleration);
+            string terminator = "\r\n";
+            string command = String.Format("JOG,{0},{1},{2},{3},{4},0,0,{5},{6}{7}", JogMode, x, y, z, rz, _setting.Speed, _setting.Acceleration, terminator);
             _serverCommand.commandQeueue.Enqueue(command);
         }
+
         private bool CanStartJog(object parameter)
         {
             return _canJog;
@@ -116,14 +118,6 @@ namespace X_Guide.MVVM.ViewModel
             _canJog = canJog;
             (JogCommand as RelayCommand).RaiseCanExecuteChanged();
         }
-
- 
-
-        private void Testing(object obj)
-        {
-            MessageBox.Show(_setting.ToString());
-        }
-
    
 
 
