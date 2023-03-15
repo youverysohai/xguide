@@ -7,6 +7,7 @@ using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Threading;
 using VM.Core;
+using VMControls.WPF.Release;
 //using VM.Core;
 
 namespace X_Guide.MVVM.View
@@ -29,11 +30,13 @@ namespace X_Guide.MVVM.View
 
         private void p_box_Loaded(object sender, RoutedEventArgs e)
         {
-            VmSolution.Import(@"C:\Users\Xlent_XIR02\Desktop\test.sol", "");
+            VmSolution.Import(@"C:\Users\Xlent-Tung\Desktop\livecam.sol", "");
             p = (VmProcedure)VmSolution.Instance["Flow1"];
-
-            p_box.ModuleSource = p;
             p.Run();
+            p_box.LoadFrontendSource();
+            //p_box.BindSingleProcedure(p.ToString());
+            p_box.AutoChangeSize();
+            
         }
 
 

@@ -1,4 +1,4 @@
-﻿<UserControl x:Class="X_Guide.MVVM.View.CalibrationWizardSteps.Step5"
+﻿<UserControl xmlns:Release="clr-namespace:VMControls.WPF.Release;assembly=VMControls.WPF.Release"  x:Class="X_Guide.MVVM.View.CalibrationWizardSteps.Step5"
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
@@ -53,17 +53,13 @@
                         <RowDefinition Height="*"/>
                     </Grid.RowDefinitions>
                     <Viewbox Grid.ColumnSpan="3" Grid.RowSpan="3" >
-                        <Image x:Name="videoPlayer" Source="{Binding VideoSource}" Stretch="Uniform"/>
+                        <!--<Image x:Name="videoPlayer" Source="{Binding VideoSource}" Stretch="Uniform"/>-->
+                        <Release:VmFrontendControl Name="p_box" Loaded="p_box_Loaded"/>
                     </Viewbox>
                     <Border Grid.Row="1" Grid.Column="1" BorderThickness="2.5" BorderBrush="{DynamicResource PrimaryBlueColor}"></Border>
 
                 </Grid>
-                <!--<Grid Grid.Row="1">
-                    <Canvas>
-                        <Image Width="630" Height="280" x:Name="videoPlayer" Source="{Binding VideoSource}"/>
-                        <Border Canvas.Left="200" Canvas.Top="80" Width="250" Height="140" BorderThickness="3" BorderBrush="{DynamicResource PrimaryBlueColor}"></Border>
-                    </Canvas>
-                </Grid>-->
+
                 <StackPanel Grid.Row="2">
                     <ComboBox x:Name="comboBox"
                           Style="{DynamicResource ComboBoxStyle}"

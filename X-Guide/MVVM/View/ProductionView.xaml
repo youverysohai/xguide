@@ -1,4 +1,4 @@
-﻿<UserControl x:Class="X_Guide.MVVM.View.ProductionView"
+﻿<UserControl xmlns:Release="clr-namespace:VMControls.WPF.Release;assembly=VMControls.WPF.Release"  x:Class="X_Guide.MVVM.View.ProductionView"
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
@@ -29,9 +29,10 @@
                     <Button Grid.Column="1"   Margin="10" Content="Browse" Style="{DynamicResource MaterialDesignOutlinedButton}" Command="{Binding BrowseFileDialogCommand}"/>
               
                 <!--<Rectangle  Grid.Row="1" Grid.ColumnSpan="2" Fill="#212121" Margin="15"/>-->
-            <v:RenderControlBase Grid.Row="1" Grid.ColumnSpan="2" Name="p_box" Loaded="p_box_Loaded"/>
-
-
+            <!--<v:RenderControlBase Grid.Row="1" Grid.ColumnSpan="2" Name="p_box" Loaded="p_box_Loaded"/>--><!--<v:RenderControlBase Grid.Row="1" Grid.ColumnSpan="2" Name="p_box" Loaded="p_box_Loaded"/>-->
+                <!--<v:MainViewControl Grid.Row="1" Grid.ColumnSpan="2" Name="p_box" Loaded="p_box_Loaded"/>-->
+            <Release:VmFrontendControl Grid.Row="1" Grid.ColumnSpan="2"  Name="p_box" Loaded="p_box_Loaded" />
+            
 
             </Grid>
      </materialDesign:Card>
