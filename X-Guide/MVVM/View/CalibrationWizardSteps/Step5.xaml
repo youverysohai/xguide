@@ -35,10 +35,10 @@
                 <TextBlock Grid.ColumnSpan="2" Grid.Row="0"  Text="Jog to Vision Center" HorizontalAlignment="Center" FontSize="35" />
                 <ScrollViewer Grid.Row="0" Grid.Column="1">
                     <!-- Your Command -->
-                    <TextBlock  TextAlignment="Right" Margin="0 0 10 0">
+                    <TextBlock TextAlignment="Right" Margin="0 0 10 0">
                         hi<LineBreak />hi<LineBreak />hi<LineBreak />hi<LineBreak />
                         hi<LineBreak />hi<LineBreak />hi<LineBreak />hi<LineBreak />
-                    
+
                     </TextBlock>
                 </ScrollViewer>
                 <Grid Grid.Row="1">
@@ -73,6 +73,7 @@
                   SelectedItem="{Binding CurrentDevice}" />
 
                     <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
+                        <Button Content="Reconnect" Command="{Binding ReconnectCommand}"/>
                         <Button  
                             Style="{DynamicResource MaterialDesignOutlinedButton}"
                 Command="{Binding VideoCommand}" CommandParameter="Start"
@@ -85,11 +86,7 @@
                     </StackPanel>
 
                 </StackPanel>
-                <StackPanel Orientation="Horizontal" Grid.Row="0" Grid.Column="1">
-                    <Label VerticalAlignment="Bottom" Style="{DynamicResource MaterialDesignLabel}" Content="Jog Distance (mm) :"/>
-                    <TextBox Text="{Binding JogDistance}" VerticalAlignment="Bottom" Style="{DynamicResource MaterialDesignTextBox}" MinWidth="40" TextAlignment="Center">
-                        </TextBox>
-                </StackPanel>
+
                 <!-- JogButtons and Rotations-->
                 <Grid Grid.Row="1" Grid.Column="2">
                     <Grid.RowDefinitions >
@@ -100,7 +97,7 @@
                         <ColumnDefinition Width="5*"/>
                         <ColumnDefinition Width="*"/>
                     </Grid.ColumnDefinitions>
-                    
+
                     <!--UP -->
                     <Image VerticalAlignment="Top" Grid.Column="2" Grid.Row="0"  Stretch="Uniform" Source="pack://application:,,,/Style/ImageSource/up.png" ToolTip="Z+" ToolTipService.InitialShowDelay="100"/>
 
@@ -110,7 +107,7 @@
 
                     <!--Down -->
 
-                    <Image VerticalAlignment="Bottom" Cursor="Hand" Grid.Column="2" Grid.Row="1"  Stretch="Uniform" Source="pack://application:,,,/Style/ImageSource/down.png" ToolTip="Z-" ToolTipService.InitialShowDelay="100"/>
+                    <Image VerticalAlignment="Bottom"  Grid.Column="2" Grid.Row="1"  Stretch="Uniform" Source="pack://application:,,,/Style/ImageSource/down.png" ToolTip="Z-" ToolTipService.InitialShowDelay="100"/>
 
                     <Button Command="{Binding JogCommand}" CommandParameter="Z-"  VerticalAlignment="Bottom" Height="69"  Grid.Column="2" Grid.Row="1" BorderThickness="0"  Style="{StaticResource TransparentStyle}" ToolTip="Z-" ToolTipService.InitialShowDelay="100">
                         <TextBlock Style="{DynamicResource ButtonInnerTextBlockCenter}" >Z-</TextBlock>
@@ -124,24 +121,24 @@
 
                                 <TextBlock Style="{DynamicResource ButtonInnerTextBlockCenter}">Y+</TextBlock>
                             </Button>
-                        <Button Command="{Binding JogCommand}" CommandParameter="Y-" Style="{DynamicResource DownArrowButton}">
+                            <Button Command="{Binding JogCommand}" CommandParameter="Y-" Style="{DynamicResource DownArrowButton}">
 
                                 <TextBlock Style="{DynamicResource ButtonInnerTextBlockCenter}">Y-</TextBlock>
                             </Button>
-                        <Button Command="{Binding JogCommand}" CommandParameter="X+"  Style="{DynamicResource LeftArrowButton}">
+                            <Button Command="{Binding JogCommand}" CommandParameter="X+"  Style="{DynamicResource LeftArrowButton}">
 
                                 <TextBlock Style="{DynamicResource ButtonInnerTextBlockCenter}">X+</TextBlock>
                             </Button>
-                        <Button Command="{Binding JogCommand}" CommandParameter="X-" Style="{DynamicResource RightArrowButton}">
+                            <Button Command="{Binding JogCommand}" CommandParameter="X-" Style="{DynamicResource RightArrowButton}">
 
                                 <TextBlock Style="{DynamicResource ButtonInnerTextBlockCenter}">X-</TextBlock>
                             </Button>
                             <!-- Z rotation-->
-                        <Button Command="{Binding JogCommand}" CommandParameter="RZ+" Style="{DynamicResource ClockwiseButton}">
+                            <Button Command="{Binding JogCommand}" CommandParameter="RZ+" Style="{DynamicResource ClockwiseButton}">
 
                                 <TextBlock Style="{DynamicResource ClockwiseTextBlock}">Rz+</TextBlock>
                             </Button>
-                        <Button Command="{Binding JogCommand}" CommandParameter="RZ-" Style="{DynamicResource AntiClockwiseButton}">
+                            <Button Command="{Binding JogCommand}" CommandParameter="RZ-" Style="{DynamicResource AntiClockwiseButton}">
 
                                 <TextBlock Style="{DynamicResource AntiClockwiseTextBlock}">Rz-</TextBlock>
                             </Button>
@@ -151,8 +148,8 @@
 
                 </Grid>
 
-                 <!--Rotation RightBottom Grid--> 
-                
+                <!--Rotation RightBottom Grid-->
+
                 <Grid Grid.Row="2" Grid.Column="1">
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition Width="*"/>
@@ -167,11 +164,11 @@
 
                     <StackPanel Orientation="Horizontal" Grid.Row="0" Grid.Column="1">
                         <Label VerticalAlignment="Bottom" Style="{DynamicResource MaterialDesignLabel}" Content="Jog Distance (mm) :"/>
-                        <TextBox VerticalAlignment="Bottom" Style="{DynamicResource MaterialDesignTextBox}" MinWidth="40" TextAlignment="Center" >
+                        <TextBox VerticalAlignment="Bottom" Style="{DynamicResource MaterialDesignTextBox}" MinWidth="40" TextAlignment="Center"  Text="{Binding JogDistance}" >
                         </TextBox>
                     </StackPanel>
-                    <!--Row 1 : Rotation X--> 
-                
+                    <!--Row 1 : Rotation X-->
+
                     <Button Grid.Row="1" Grid.Column="0" Style="{DynamicResource RotationButtonStyle}" >
                         <StackPanel Orientation="Horizontal" >
                             <TextBlock Text="Rx" FontStyle="Italic" FontSize="11"/>
@@ -187,9 +184,9 @@
                     <TextBox Grid.Row="1" Grid.Column="1" IsReadOnly="True"
                              materialDesign:HintAssist.Hint="X-rotation"   TextAlignment="Center"
                              Text="0°" Style="{DynamicResource InputMaterialDesignTextBox}" Height="70"></TextBox>
-                    
-                 <!--Row 2: Rotation Y--> 
-                
+
+                    <!--Row 2: Rotation Y-->
+
                     <Button  Grid.Row="2"  Grid.Column="0" Style="{DynamicResource RotationButtonStyle}" >
                         <StackPanel Orientation="Horizontal" >
                             <TextBlock Text="Ry" FontStyle="Italic" FontSize="11"/>
@@ -205,7 +202,7 @@
                     <TextBox  Grid.Row="2"   Grid.Column="1"     TextAlignment="Center"
                               IsReadOnly="True" materialDesign:HintAssist.Hint="Y-rotation" 
                               Text="0°" Style="{DynamicResource InputMaterialDesignTextBox}" Height="70"></TextBox>
-                    
+
                 </Grid>
             </Grid>
 

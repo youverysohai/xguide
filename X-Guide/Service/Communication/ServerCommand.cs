@@ -126,7 +126,7 @@ namespace X_Guide.Service.Communation
             string X = commands[3];
             string Y = commands[4];
             string Rz = commands[5];
-            throw new NotImplementedException();
+       
         }
 
         public void ReturnErrorMessage(TcpClient client)

@@ -92,10 +92,11 @@
     </Style>
     <!-- Transparent background Image button : Z+ Z- -->
     <Style x:Key="TransparentStyle" TargetType="{x:Type Button}">
+        <Setter Property="Cursor" Value="Hand"></Setter>
         <Setter Property="Template">
             <Setter.Value>
                 <ControlTemplate TargetType="Button">
-                    <Border Background="Transparent" Cursor="Hand">
+                    <Border Background="Transparent">
                         <ContentPresenter/>
                     </Border>
                 </ControlTemplate>
@@ -113,6 +114,8 @@
         <Setter Property="Height" Value="40"/>
         <Setter Property="Canvas.Left" Value="105"/>
         <Setter Property="Canvas.Top" Value="45"/>
+        <Setter Property="Cursor" Value="Hand"></Setter>
+
 
     </Style>
 

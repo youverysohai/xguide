@@ -683,6 +683,7 @@
       <DependentUpon>UserLoginView.xaml</DependentUpon>
     </Compile>
     <Compile Include="Service\AuthenticationService.cs" />
+    <Compile Include="Service\BackgroundService.cs" />
     <Compile Include="Service\Communication\ClientService.cs" />
     <Compile Include="Service\Communication\IClientService.cs" />
     <Compile Include="Service\Communication\IServerService.cs" />
@@ -893,6 +894,9 @@
     </PackageReference>
     <PackageReference Include="Microsoft.CodeAnalysis.CSharp">
       <Version>4.5.0</Version>
+    </PackageReference>
+    <PackageReference Include="System.ServiceProcess.ServiceController">
+      <Version>7.0.0</Version>
     </PackageReference>
     <PackageReference Include="WpfAnimatedGif">
       <Version>2.0.2</Version>

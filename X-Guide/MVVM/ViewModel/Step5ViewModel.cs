@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Diagnostics;
 using System.Linq;
+using System.Net.Sockets;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
@@ -16,14 +17,28 @@ using X_Guide.MVVM.Command;
 using X_Guide.MVVM.ViewModel.CalibrationWizardSteps;
 using X_Guide.Service;
 using X_Guide.Service.Communation;
+using X_Guide.Service.Communication;
 
 namespace X_Guide.MVVM.ViewModel
 {
     internal class Step5ViewModel : ViewModelBase
     {
         private BitmapImage _videoSource;
-
         private int _jogDistance;
+        private CancellationToken cancelJog = new CancellationToken();
+        private readonly CalibrationViewModel _setting;
+        private readonly ServerCommand _serverCommand;
+        private BackgroundService searchClient;
+      
+        public string JogMode { get; set; } = "TOOL";
+
+        private bool _canJog = false;
+
+        private TcpClientInfo _tcpClient;
+        public ObservableCollection<FilterInfo> VideoDevices { get; set; }
+        public ICommand ReportCommand { get; }
+        public ICommand JogCommand { get; }
+        public ICommand ReconnectCommand { get; set; }
 
         public int JogDistance
         {
@@ -31,60 +46,41 @@ namespace X_Guide.MVVM.ViewModel
             set { _jogDistance = value; }
         }
 
-        public BitmapImage VideoSource
-        {
-            get { return _videoSource; }
-            set { _videoSource = value;
-                OnPropertyChanged();
-            }
-        }
-
-        public ObservableCollection<FilterInfo> VideoDevices { get; set; }
-        private CancellationToken cancelJog = new CancellationToken();
-
-
-        private FilterInfo _currentDevice;
-        public FilterInfo CurrentDevice
-        {
-            get { return _currentDevice; }
-            set
-            {
-                _currentDevice = value;
-                OnPropertyChanged();
-            }
-        }
-
-        private ImageService _imageService;
-
-        public ICommand ReportCommand { get; }
-        public ICommand JogCommand { get; }
-
-        private readonly CalibrationViewModel _setting;
-        private readonly ServerCommand _serverCommand;
-
-        public ICommand VideoCommand { get; set; }
-        public string JogMode { get; set; } = "TOOL";
 
         public Step5ViewModel(CalibrationViewModel setting, ServerCommand serverCommand)
         {
-            GetVideoDevices();
-            _imageService = new ImageService(CurrentDevice);
+          
+         
             ReportCommand = new RelayCommand(Testing);
- 
-            JogCommand = new RelayCommand(Jog);
-            _imageService.videoFrameChanged += OnVideoFrameChanged;
-            VideoCommand = new VideoCommand(_imageService);
+            ReconnectCommand = new RelayCommand(null);
+            JogCommand = new RelayCommand(Jog, CanStartJog);
             _setting = setting;
             _serverCommand = serverCommand;
-            StartJogging();
+            searchClient = new BackgroundService(SearchForClient);
+            searchClient.Start();
+    
         }
-  
+
+        private void SearchForClient()
+        {
+            try
+            {
+                _tcpClient = _serverCommand.GetConnectedClient().First().Value;
+                StartJog();
+                searchClient.Stop();            
+            }
+            catch
+            {
+                Debug.WriteLine("No client found!");
+            }
+        }
+
         private void Jog(object parameter)
         {
             int x = 0, y = 0, z = 0, rz = 0;
             switch (parameter)
             {
-                case "Y+": y = JogDistance;  break;
+                case "Y+": y = JogDistance; break;
                 case "Y-": y = -JogDistance; break;
                 case "X+": x = JogDistance; break;
                 case "X-": x = -JogDistance; break;
@@ -96,52 +92,39 @@ namespace X_Guide.MVVM.ViewModel
 
 
             }
-            string command = String.Format("JOG,{0},{1},{2},{3},{4},0,0,{5},{6}\r\n",JogMode, x, y, z, rz,_setting.Speed, _setting.Acceleration);
+            string command = String.Format("JOG,{0},{1},{2},{3},{4},0,0,{5},{6}\r\n", JogMode, x, y, z, rz, _setting.Speed, _setting.Acceleration);
             _serverCommand.commandQeueue.Enqueue(command);
-            Debug.WriteLine(_serverCommand.commandQeueue.Count);
+        }
+        private bool CanStartJog(object parameter)
+        {
+            return _canJog;
         }
 
-        private void StartJogging()
+        private void StartJog()
         {
-            try
+            if (_tcpClient != null)
             {
-                var connectedClient = _serverCommand.GetConnectedClient().First();
-                _serverCommand.StartJogCommand(cancelJog, connectedClient.Value);
+                _serverCommand.StartJogCommand(cancelJog, _tcpClient);
+                OnJogCanExecuteChanged(true);
+
             }
-            catch
-            {
-                MessageBox.Show("No connected client found!");
-            }
-     
-            
+
         }
+
+        private void OnJogCanExecuteChanged(bool canJog)
+        {
+            _canJog = canJog;
+            (JogCommand as RelayCommand).RaiseCanExecuteChanged();
+        }
+
+ 
 
         private void Testing(object obj)
         {
             MessageBox.Show(_setting.ToString());
         }
 
-        private void OnVideoFrameChanged(object sender, BitMapImageArgs e)
-        {
-            Application.Current.Dispatcher.BeginInvoke(new Action(() => VideoSource = e.BitmapImage));
-        }
-
-        private void GetVideoDevices()
-        {
-            VideoDevices = new ObservableCollection<FilterInfo>();
-            foreach (FilterInfo filterInfo in new FilterInfoCollection(FilterCategory.VideoInputDevice))
-            {
-                VideoDevices.Add(filterInfo);
-            }
-            if (VideoDevices.Any())
-            {
-                CurrentDevice = VideoDevices[0];
-            }
-            else
-            {
-                MessageBox.Show("No video sources found", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
-            }
-        }
+   
 
 
         public override ViewModelBase GetNextViewModel()
