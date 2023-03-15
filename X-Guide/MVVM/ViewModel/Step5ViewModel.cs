@@ -23,18 +23,34 @@ namespace X_Guide.MVVM.ViewModel
 {
     internal class Step5ViewModel : ViewModelBase
     {
-        private BitmapImage _videoSource;
+
         private int _jogDistance;
         private CancellationToken cancelJog = new CancellationToken();
         private readonly CalibrationViewModel _setting;
         private readonly ServerCommand _serverCommand;
         private BackgroundService searchClient;
-      
+
         public string JogMode { get; set; } = "TOOL";
 
         private bool _canJog = false;
 
+  
         private TcpClientInfo _tcpClient;
+
+        private TcpClientInfo TcpClient
+        {
+            get => _tcpClient; 
+        
+            set {
+              
+                _tcpClient = value;
+                if (value != null)
+                {
+                    StartJog();
+                }
+
+            }
+        }
         public ObservableCollection<FilterInfo> VideoDevices { get; set; }
         public ICommand ReportCommand { get; }
         public ICommand JogCommand { get; }
@@ -49,28 +65,37 @@ namespace X_Guide.MVVM.ViewModel
 
         public Step5ViewModel(CalibrationViewModel setting, ServerCommand serverCommand)
         {
-         
+
             ReconnectCommand = new RelayCommand(null);
             JogCommand = new RelayCommand(Jog, CanStartJog);
             _setting = setting;
             _serverCommand = serverCommand;
+            ReconnectCommand = new RelayCommand(testing);
             searchClient = new BackgroundService(SearchForClient);
             searchClient.Start();
+        }
+
+        private void testing(object obj)
+        {
+            StartJog();
         }
 
         private void SearchForClient()
         {
             try
             {
-                _tcpClient = _serverCommand.GetConnectedClient().First().Value;
-                Debug.WriteLine(_tcpClient.TcpClient.GetHashCode());
+                var tcpClient = _serverCommand.GetConnectedClient().First().Value;
+                Application.Current.Dispatcher.Invoke(() => TcpClient = tcpClient);
+                Debug.WriteLine(TcpClient.TcpClient.GetHashCode());
                 searchClient.Stop();
-             
+               
+
             }
             catch
             {
                 Debug.WriteLine("No client found!");
             }
+
         }
 
 
@@ -104,13 +129,12 @@ namespace X_Guide.MVVM.ViewModel
 
         private void StartJog()
         {
+            Debug.WriteLine("StartJog HashCode " + TcpClient.TcpClient.GetHashCode());
             if (_tcpClient != null)
             {
                 _serverCommand.StartJogCommand(cancelJog, _tcpClient);
                 OnJogCanExecuteChanged(true);
-
             }
-
         }
 
         private void OnJogCanExecuteChanged(bool canJog)
@@ -118,7 +142,7 @@ namespace X_Guide.MVVM.ViewModel
             _canJog = canJog;
             (JogCommand as RelayCommand).RaiseCanExecuteChanged();
         }
-   
+
 
 
         public override ViewModelBase GetNextViewModel()
