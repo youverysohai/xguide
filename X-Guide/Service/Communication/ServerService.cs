@@ -79,9 +79,6 @@ namespace X_Guide.Communication.Service
                     _server.Stop();
                 });
 
-
-
-
                 // Enter the listening loop.
                 while (!cts.IsCancellationRequested)
                 {
@@ -118,7 +115,6 @@ namespace X_Guide.Communication.Service
             // Get the stream for reading and writing data.
             NetworkStream stream = client.GetStream();
             _connectedClient.TryAdd(client.GetHashCode(), new TcpClientInfo(client));
-            SendMessageAsync("Connected to the server. Please enjoy your stay!\n", stream);
 
             ct.Register(() => stream.Close());
 
@@ -134,7 +130,10 @@ namespace X_Guide.Communication.Service
                     while (run)
                     {
                         run = await ReadAsync(commandList, ct, client);
+                        
                         RunCommand(commandList);
+                        if (!run) throw new Exception();
+                        
 
                     }
 
@@ -213,6 +212,7 @@ namespace X_Guide.Communication.Service
 
         public TcpClientInfo GetConnectedClientInfo(TcpClient tcpClient)
         {
+            if (tcpClient == null) return null;
             TcpClientInfo tcpClientInfo;
             _connectedClient.TryGetValue(tcpClient.GetHashCode(), out tcpClientInfo);
             return tcpClientInfo;

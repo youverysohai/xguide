@@ -63,6 +63,7 @@ namespace X_Guide.MVVM.ViewModel
         private readonly ServerCommand _serverCommand;
 
         public ICommand VideoCommand { get; set; }
+        public string JogMode { get; set; } = "TOOL";
 
         public Step5ViewModel(CalibrationViewModel setting, ServerCommand serverCommand)
         {
@@ -80,34 +81,39 @@ namespace X_Guide.MVVM.ViewModel
   
         private void Jog(object parameter)
         {
-            int x = 0, y = 0, z = 0, rx = 0, ry = 0, rz = 0;
+            int x = 0, y = 0, z = 0, rz = 0;
             switch (parameter)
             {
                 case "Y+": y = JogDistance;  break;
                 case "Y-": y = -JogDistance; break;
                 case "X+": x = JogDistance; break;
                 case "X-": x = -JogDistance; break;
-                case "Z+": x = JogDistance; break;
-                case "Z-": x = -JogDistance; break;
+                case "Z+": z = JogDistance; break;
+                case "Z-": z = -JogDistance; break;
                 case "RZ+": rz = JogDistance; break;
                 case "RZ-": rz = -JogDistance; break;
                 default: break;
 
 
             }
-            string command = String.Format("JOG,TOOL,{0},{1},{2},{3},{4},{5},{6},{7}\n", x, y, z, rx, ry, rz, _setting.Speed, _setting.Acceleration);
+            string command = String.Format("JOG,{0},{1},{2},{3},{4},0,0,{5},{6}\r\n",JogMode, x, y, z, rz,_setting.Speed, _setting.Acceleration);
             _serverCommand.commandQeueue.Enqueue(command);
             Debug.WriteLine(_serverCommand.commandQeueue.Count);
         }
 
         private void StartJogging()
         {
-            var i = _serverCommand?.GetConnectedClient().First();
-            if (i == null) MessageBox.Show("No connected client found!");
-            else
+            try
             {
-                _serverCommand.StartJogCommand(cancelJog, i?.Value);
+                var connectedClient = _serverCommand.GetConnectedClient().First();
+                _serverCommand.StartJogCommand(cancelJog, connectedClient.Value);
             }
+            catch
+            {
+                MessageBox.Show("No connected client found!");
+            }
+     
+            
         }
 
         private void Testing(object obj)

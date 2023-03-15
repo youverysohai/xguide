@@ -7,11 +7,13 @@ using System.Net.Sockets;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
+using System.Timers;
 using System.Windows;
 using X_Guide.Communication.Service;
 using X_Guide.CustomEventArgs;
 using X_Guide.MVVM.ViewModel;
 using X_Guide.Service.Communication;
+using Timer = System.Timers.Timer;
 
 namespace X_Guide.Service.Communation
 {
@@ -32,14 +34,8 @@ namespace X_Guide.Service.Communation
 
         public ConcurrentDictionary<int, TcpClientInfo> GetConnectedClient()
         {
-            try
-            {
-                return _serverService.GetConnectedClient();
-            }
-            catch
-            {
-                return null;
-            }
+            return _serverService.GetConnectedClient();
+
         }
 
 
@@ -56,17 +52,18 @@ namespace X_Guide.Service.Communation
 
             switch (commands[0].Trim().ToLower())
             {
-                case "jogdone": jogDone(client); break;
+                case "jogdone": JogDone(client); break;
                 case "status": CheckStatus(client); break;
                 case "xguide": XGuideCommand(client, message); break;
                 case "getpose": GetPoseCommand(client, message); break;
                 default: ReturnErrorMessage(client); break;
             }
         }
-        
+
 
         public async void StartJogCommand(CancellationToken cancellationToken, TcpClientInfo client)
         {
+            //need to handle when the client disconnected
             await Task.Run(async () =>
             {
                 while (!cancellationToken.IsCancellationRequested)
@@ -74,7 +71,7 @@ namespace X_Guide.Service.Communation
                     await ServerJogCommand(client);
                 }
             });
-           
+
             MessageBox.Show("Jog session ended!");
         }
         public async Task ServerJogCommand(TcpClientInfo client)
@@ -86,13 +83,18 @@ namespace X_Guide.Service.Communation
                 client.Jogging = true;
                 await Task.Run(() => _serverService.SendMessageAsync(commandQeueue.Dequeue(), stream));
                 Debug.WriteLine("Sc = " + commandQeueue.Count);
+                Timer timer = new Timer(5000);
+                timer.AutoReset = false;
+                timer.Elapsed += (sender, e) => { _jogDoneReplyRecieved.Set(); MessageBox.Show("Jog Command expired!"); ((Timer)sender).Dispose(); };
+                timer.Start();
                 _jogDoneReplyRecieved.Wait();
+                timer.Dispose();
                 _jogDoneReplyRecieved.Reset();
             }
             client.Jogging = false;
         }
 
-        private void jogDone(TcpClient client)
+        private void JogDone(TcpClient client)
         {
             TcpClientInfo clientInfo = _serverService.GetConnectedClientInfo(client);
             ManualResetEventSlim _jogDoneReplyRecieved = clientInfo.JogDoneReplyRecieved;
@@ -100,7 +102,7 @@ namespace X_Guide.Service.Communation
             if (clientInfo.Jogging)
             {
                 _jogDoneReplyRecieved.Set();
-               
+
             }
             else
             {
@@ -109,7 +111,7 @@ namespace X_Guide.Service.Communation
         }
 
 
-  
+
 
         private void GetPoseCommand(TcpClient client, string message)
         {
