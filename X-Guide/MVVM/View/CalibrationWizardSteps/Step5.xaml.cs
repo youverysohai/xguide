@@ -23,15 +23,19 @@ using System.Drawing;
 using System.Threading;
 using System.IO;
 using System.Drawing.Imaging;
+using VM.Core;
+using VM.PlatformSDKCS;
 
 namespace X_Guide.MVVM.View.CalibrationWizardSteps
 {
     /// <summary>
     /// Interaction logic for Step5.xaml
     /// </summary>
+    /// 
+
     public partial class Step5 : UserControl
     {
-
+        VmProcedure p;
 
 
 
@@ -42,7 +46,23 @@ namespace X_Guide.MVVM.View.CalibrationWizardSteps
 
 
         }
+        private void p_box_Loaded(object sender, RoutedEventArgs e)
+        {
+            try
+            {
+                VmSolution.Import(@"C:\Users\Xlent-Tung\Desktop\livecam.sol", "");
+                p = (VmProcedure)VmSolution.Instance["Flow1"];
+                p.Run();
+                p_box.LoadFrontendSource();
+                //p_box.BindSingleProcedure(p.ToString());
+                p_box.AutoChangeSize();
 
+            } catch(VmException ex)
+            {
+                throw ex;
+            }
+
+        }
 
 
     }

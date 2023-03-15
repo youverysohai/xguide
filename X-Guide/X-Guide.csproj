@@ -851,6 +851,7 @@
       <Generator>EntityModelCodeGenerator</Generator>
       <LastGenOutput>XGuideModel.Designer.cs</LastGenOutput>
     </EntityDeploy>
+    <None Include="Style\camFrontEnd.vmd" />
     <None Include="XGuideModel.edmx.diagram">
       <DependentUpon>XGuideModel.edmx</DependentUpon>
     </None>
