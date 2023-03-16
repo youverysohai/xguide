@@ -169,6 +169,16 @@
             </DataTrigger>
         </Style.Triggers>
     </Style>
+    <Style TargetType="Button" x:Key="ButtonBehavior">
+        <Style.Triggers>
+            <DataTrigger Binding="{Binding IsEnabled, RelativeSource={RelativeSource Self}}" Value="False">
+                <Setter Property="Cursor" Value="No" />
+            </DataTrigger>
+            <DataTrigger Binding="{Binding IsEnabled, RelativeSource={RelativeSource Self}}" Value="True">
+                <Setter Property="Cursor" Value="Hand" />
+            </DataTrigger>
+        </Style.Triggers>
+    </Style>
     <!--#endregion-->
     
     <!--Preview GIF Image Based on Selected Radio Button-->

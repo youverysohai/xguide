@@ -104,6 +104,14 @@
         </Setter>
         <Setter Property="ToolTipService.InitialShowDelay" Value="124"/>
         <Setter Property="HorizontalAlignment" Value="Center"/>
+        <Style.Triggers>
+            <DataTrigger Binding="{Binding IsEnabled, RelativeSource={RelativeSource Self}}" Value="False">
+                <Setter Property="Cursor" Value="No" />
+            </DataTrigger>
+            <DataTrigger Binding="{Binding IsEnabled, RelativeSource={RelativeSource Self}}" Value="True">
+                <Setter Property="Cursor" Value="Hand" />
+            </DataTrigger>
+        </Style.Triggers>
     </Style>
     
     <!-- Transparent background Button : Y+ Y- X+ X- -->

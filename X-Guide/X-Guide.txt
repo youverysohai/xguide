@@ -8,12 +8,28 @@
     <OutputType>WinExe</OutputType>
     <RootNamespace>X_Guide</RootNamespace>
     <AssemblyName>X-Guide</AssemblyName>
-    <TargetFrameworkVersion>v4.6.1</TargetFrameworkVersion>
+    <TargetFrameworkVersion>v4.7.1</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <ProjectTypeGuids>{60dc8134-eba5-43b8-bcc9-bb4bc16c2548};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
     <WarningLevel>4</WarningLevel>
     <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
     <Deterministic>true</Deterministic>
+    <TargetFrameworkProfile />
+    <IsWebBootstrapper>false</IsWebBootstrapper>
+    <PublishUrl>publish\</PublishUrl>
+    <Install>true</Install>
+    <InstallFrom>Disk</InstallFrom>
+    <UpdateEnabled>false</UpdateEnabled>
+    <UpdateMode>Foreground</UpdateMode>
+    <UpdateInterval>7</UpdateInterval>
+    <UpdateIntervalUnits>Days</UpdateIntervalUnits>
+    <UpdatePeriodically>false</UpdatePeriodically>
+    <UpdateRequired>false</UpdateRequired>
+    <MapFileExtensions>true</MapFileExtensions>
+    <ApplicationRevision>0</ApplicationRevision>
+    <ApplicationVersion>1.0.0.%2a</ApplicationVersion>
+    <UseApplicationTrust>false</UseApplicationTrust>
+    <BootstrapperEnabled>true</BootstrapperEnabled>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <PlatformTarget>AnyCPU</PlatformTarget>
@@ -34,8 +50,528 @@
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug|x64'">
+    <DebugSymbols>true</DebugSymbols>
+    <OutputPath>bin\x64\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <DebugType>full</DebugType>
+    <PlatformTarget>x64</PlatformTarget>
+    <LangVersion>7.3</LangVersion>
+    <ErrorReport>prompt</ErrorReport>
+    <Prefer32Bit>true</Prefer32Bit>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Release|x64'">
+    <OutputPath>bin\x64\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <Optimize>true</Optimize>
+    <DebugType>pdbonly</DebugType>
+    <PlatformTarget>x64</PlatformTarget>
+    <LangVersion>7.3</LangVersion>
+    <ErrorReport>prompt</ErrorReport>
+    <Prefer32Bit>true</Prefer32Bit>
+  </PropertyGroup>
   <ItemGroup>
-    <Reference Include="System" />
+    <Reference Include="IMVSBlobFindModuCs">
+      <HintPath>..\..\..\..\..\..\Program Files\VisionMaster4.1.0\Applications\Module(sp)\x64\Location\IMVSBlobFindModu\IMVSBlobFindModuCs.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="IMVSBlobFindLabelsModuCs">
+      <HintPath>..\..\..\..\..\..\Program Files\VisionMaster4.1.0\Applications\Module(sp)\x64\Location\IMVSBlobFindLabelsModu\IMVSBlobFindLabelsModuCs.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="IMVSNImageCalibModuCs">
+      <HintPath>..\..\..\..\..\..\Program Files\VisionMaster4.1.0\Applications\Module(sp)\x64\Calibration\IMVSNImageCalibModu\IMVSNImageCalibModuCs.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="IMVSNPointCalibModuCs">
+      <HintPath>..\..\..\..\..\..\Program Files\VisionMaster4.1.0\Applications\Module(sp)\x64\Calibration\IMVSNPointCalibModu\IMVSNPointCalibModuCs.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="IMVSMedianLineFindModuCs">
+      <HintPath>..\..\..\..\..\..\Program Files\VisionMaster4.1.0\Applications\Module(sp)\x64\Location\IMVSMedianLineFindModu\IMVSMedianLineFindModuCs.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="IMVS2dBcrModuCs">
+      <HintPath>..\..\..\..\..\..\Program Files\VisionMaster4.1.0\Applications\Module(sp)\x64\Recognition\IMVS2dBcrModu\IMVS2dBcrModuCs.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="IMVSIntensityMeasureModuCs">
+      <HintPath>..\..\..\..\..\..\Program Files\VisionMaster4.1.0\Applications\Module(sp)\x64\Measurement\IMVSIntensityMeasureModu\IMVSIntensityMeasureModuCs.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="IMVSAffineTransformModuCs">
+      <HintPath>..\..\..\..\..\..\Program Files\VisionMaster4.1.0\Applications\Module(sp)\x64\ImageProcessing\IMVSAffineTransformModu\IMVSAffineTransformModuCs.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="IMVSFixtureModuCs">
+      <HintPath>..\..\..\..\..\..\Program Files\VisionMaster4.1.0\Applications\Module(sp)\x64\Location\IMVSFixtureModu\IMVSFixtureModuCs.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="IMVSPixelCountModuCs">
+      <HintPath>..\..\..\..\..\..\Program Files\VisionMaster4.1.0\Applications\Module(sp)\x64\Measurement\IMVSPixelCountModu\IMVSPixelCountModuCs.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="LightModuleCs">
+      <HintPath>..\..\..\..\..\..\Program Files\VisionMaster4.1.0\Applications\Module(sp)\x64\Collection\LightModule\LightModuleCs.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="LightControlCs">
+      <HintPath>..\..\..\..\..\..\Program Files\VisionMaster4.1.0\Applications\Module(sp)\x64\Global\LightControl\LightControlCs.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="GlobalVariableModuleCs">
+      <HintPath>..\..\..\..\..\..\Program Files\VisionMaster4.1.0\Applications\Module(sp)\x64\Global\GlobalVariableModule\GlobalVariableModuleCs.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="GlobalCameraModuleCs">
+      <HintPath>..\..\..\..\..\..\Program Files\VisionMaster4.1.0\Applications\Module(sp)\x64\Global\GlobalCameraModule\GlobalCameraModuleCs.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="CommManagerModuleCs">
+      <HintPath>..\..\..\..\..\..\Program Files\VisionMaster4.1.0\Applications\Module(sp)\x64\Global\CommManagerModule\CommManagerModuleCs.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="GeometryCreateCs">
+      <HintPath>..\..\..\..\..\..\Program Files\VisionMaster4.1.0\Applications\Module(sp)\x64\ImageGeneration\GeometryCreate\GeometryCreateCs.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="IMVSGeometricTransformModuCs">
+      <HintPath>..\..\..\..\..\..\Program Files\VisionMaster4.1.0\Applications\Module(sp)\x64\ImageProcessing\IMVSGeometricTransformModu\IMVSGeometricTransformModuCs.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="BranchStringCpmLCs">
+      <HintPath>..\..\..\..\..\..\Program Files\VisionMaster4.1.0\Applications\Module(sp)\x64\Logic\BranchStringCpmL\BranchStringCpmLCs.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="BranchModule_STDCs">
+      <HintPath>..\..\..\..\..\..\Program Files\VisionMaster4.1.0\Applications\Module(sp)\x64\Logic\BranchModule_STD\BranchModule_STDCs.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="DataAssembleModuleCs">
+      <HintPath>..\..\..\..\..\..\Program Files\VisionMaster4.1.0\Applications\Module(sp)\x64\Communication\DataAssembleModule\DataAssembleModuleCs.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="DataAnalysisModuleCs">
+      <HintPath>..\..\..\..\..\..\Program Files\VisionMaster4.1.0\Applications\Module(sp)\x64\Communication\DataAnalysisModule\DataAnalysisModuleCs.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="IMVSScaleTransformModuCs">
+      <HintPath>..\..\..\..\..\..\Program Files\VisionMaster4.1.0\Applications\Module(sp)\x64\Calculation\IMVSScaleTransformModu\IMVSScaleTransformModuCs.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="IMVSSinglePointAlignModuCs">
+      <HintPath>..\..\..\..\..\..\Program Files\VisionMaster4.1.0\Applications\Module(sp)\x64\Calculation\IMVSSinglePointAlignModu\IMVSSinglePointAlignModuCs.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="IMVSCaliperModuCs">
+      <HintPath>..\..\..\..\..\..\Program Files\VisionMaster4.1.0\Applications\Module(sp)\x64\Location\IMVSCaliperModu\IMVSCaliperModuCs.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="SendDatasModuleCs">
+      <HintPath>..\..\..\..\..\..\Program Files\VisionMaster4.1.0\Applications\Module(sp)\x64\Communication\SendDatasModule\SendDatasModuleCs.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="CalculatorModuleCs">
+      <HintPath>..\..\..\..\..\..\Program Files\VisionMaster4.1.0\Applications\Module(sp)\x64\Calculation\CalculatorModule\CalculatorModuleCs.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="IMVSQuadrangleFindModuCs">
+      <HintPath>..\..\..\..\..\..\Program Files\VisionMaster4.1.0\Applications\Module(sp)\x64\Location\IMVSQuadrangleFindModu\IMVSQuadrangleFindModuCs.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="IMVSBinaryModuCs">
+      <HintPath>..\..\..\..\..\..\Program Files\VisionMaster4.1.0\Applications\Module(sp)\x64\ImageProcessing\IMVSBinaryModu\IMVSBinaryModuCs.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="IMVSImageFixtureModuCs">
+      <HintPath>..\..\..\..\..\..\Program Files\VisionMaster4.1.0\Applications\Module(sp)\x64\ImageProcessing\IMVSImageFixtureModu\IMVSImageFixtureModuCs.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="IMVSImageEnhanceModuCs">
+      <HintPath>..\..\..\..\..\..\Program Files\VisionMaster4.1.0\Applications\Module(sp)\x64\ImageProcessing\IMVSImageEnhanceModu\IMVSImageEnhanceModuCs.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="IMVSImageNormlizeModuCs">
+      <HintPath>..\..\..\..\..\..\Program Files\VisionMaster4.1.0\Applications\Module(sp)\x64\ImageProcessing\IMVSImageNormlizeModu\IMVSImageNormlizeModuCs.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="IMVSImgStitchCalibModuCs">
+      <HintPath>..\..\..\..\..\..\Program Files\VisionMaster4.1.0\Applications\Module(sp)\x64\ImageProcessing\IMVSImgStitchCalibModu\IMVSImgStitchCalibModuCs.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="ImageSourceModuleCs">
+      <HintPath>..\..\..\..\..\..\Program Files\VisionMaster4.1.0\Applications\Module(sp)\x64\Collection\ImageSourceModule\ImageSourceModuleCs.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="IMVSImageFilterModuCs">
+      <HintPath>..\..\..\..\..\..\Program Files\VisionMaster4.1.0\Applications\Module(sp)\x64\ImageProcessing\IMVSImageFilterModu\IMVSImageFilterModuCs.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="IMVSImageCorrectManualModuCs">
+      <HintPath>..\..\..\..\..\..\Program Files\VisionMaster4.1.0\Applications\Module(sp)\x64\ImageProcessing\IMVSImageCorrectManualModu\IMVSImageCorrectManualModuCs.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="IMVSImageCombineProcessModuCs">
+      <HintPath>..\..\..\..\..\..\Program Files\VisionMaster4.1.0\Applications\Module(sp)\x64\ImageProcessing\IMVSImageCombineProcessModu\IMVSImageCombineProcessModuCs.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="IMVSImageMathModuCs">
+      <HintPath>..\..\..\..\..\..\Program Files\VisionMaster4.1.0\Applications\Module(sp)\x64\ImageProcessing\IMVSImageMathModu\IMVSImageMathModuCs.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="IMVSMarkFindModuCs">
+      <HintPath>..\..\..\..\..\..\Program Files\VisionMaster4.1.0\Applications\Module(sp)\x64\Location\IMVSMarkFindModu\IMVSMarkFindModuCs.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="IMVSC2CMeasureModuCs">
+      <HintPath>..\..\..\..\..\..\Program Files\VisionMaster4.1.0\Applications\Module(sp)\x64\Measurement\IMVSC2CMeasureModu\IMVSC2CMeasureModuCs.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="IMVSCircleEdgePairInspModuCs">
+      <HintPath>..\..\..\..\..\..\Program Files\VisionMaster4.1.0\Applications\Module(sp)\x64\DefectDetection\IMVSCircleEdgePairInspModu\IMVSCircleEdgePairInspModuCs.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="IMVSCircleEdgeInspModuCs">
+      <HintPath>..\..\..\..\..\..\Program Files\VisionMaster4.1.0\Applications\Module(sp)\x64\DefectDetection\IMVSCircleEdgeInspModu\IMVSCircleEdgeInspModuCs.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="IMVSCircleFitModuCs">
+      <HintPath>..\..\..\..\..\..\Program Files\VisionMaster4.1.0\Applications\Module(sp)\x64\ImageGeneration\IMVSCircleFitModu\IMVSCircleFitModuCs.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="IMVSCircleFindModuCs">
+      <HintPath>..\..\..\..\..\..\Program Files\VisionMaster4.1.0\Applications\Module(sp)\x64\Location\IMVSCircleFindModu\IMVSCircleFindModuCs.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="IMVSPolarUnwarpModuCs">
+      <HintPath>..\..\..\..\..\..\Program Files\VisionMaster4.1.0\Applications\Module(sp)\x64\ImageProcessing\IMVSPolarUnwarpModu\IMVSPolarUnwarpModuCs.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="IMVSVerticalLineFindModuCs">
+      <HintPath>..\..\..\..\..\..\Program Files\VisionMaster4.1.0\Applications\Module(sp)\x64\Location\IMVSVerticalLineFindModu\IMVSVerticalLineFindModuCs.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="Apps.ColorFun">
+      <HintPath>..\..\..\..\..\..\Program Files\VisionMaster4.1.0\Applications\myLibs\Apps.ColorFun.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="System.Configuration" />
+    <Reference Include="System.Drawing" />
+    <Reference Include="System.Runtime.Serialization" />
+    <Reference Include="System.Security" />
+    <Reference Include="System.Web" />
+    <Reference Include="System.Windows.Forms" />
+    <Reference Include="VM.Core">
+      <HintPath>..\..\..\..\..\..\Program Files\VisionMaster4.1.0\Applications\myLibs\VM.Core.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="VM.PlatformSDKCS">
+      <HintPath>..\..\..\..\..\..\Program Files\VisionMaster4.1.0\Applications\myLibs\VM.PlatformSDKCS.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="VMControls.BaseInterface">
+      <HintPath>..\..\..\..\..\..\Program Files\VisionMaster4.1.0\Applications\myLibs\VMControls.BaseInterface.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="VMControls.WPF, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\..\..\..\..\Program Files\VisionMaster4.1.0\Development\V4.x\ComControls\bin\x86\VMControls.WPF.dll</HintPath>
+    </Reference>
+    <Reference Include="VMControls.WPF.Release">
+      <HintPath>..\..\..\..\..\..\Program Files\VisionMaster4.1.0\Applications\myLibs\VMControls.WPF.Release.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="VMControls.Interface">
+      <HintPath>..\..\..\..\..\..\Program Files\VisionMaster4.1.0\Applications\myLibs\VMControls.Interface.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="VMControls.RenderInterface">
+      <HintPath>..\..\..\..\..\..\Program Files\VisionMaster4.1.0\Applications\myLibs\VMControls.RenderInterface.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="VMControls.Winform.Release">
+      <HintPath>..\..\..\..\..\..\Program Files\VisionMaster4.1.0\Applications\myLibs\VMControls.Winform.Release.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="IMVSMultiImageFusionModuCs">
+      <HintPath>..\..\..\..\..\..\Program Files\VisionMaster4.1.0\Applications\Module(sp)\x64\ImageProcessing\IMVSMultiImageFusionModu\IMVSMultiImageFusionModuCs.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="ImageAcquisitionModuleCs">
+      <HintPath>..\..\..\..\..\..\Program Files\VisionMaster4.1.0\Applications\Module(sp)\x64\Collection\ImageAcquisitionModule\ImageAcquisitionModuleCs.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="IMVSMultiLineFindModuCs">
+      <HintPath>..\..\..\..\..\..\Program Files\VisionMaster4.1.0\Applications\Module(sp)\x64\Location\IMVSMultiLineFindModu\IMVSMultiLineFindModuCs.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="StringCompareModuleCs">
+      <HintPath>..\..\..\..\..\..\Program Files\VisionMaster4.1.0\Applications\Module(sp)\x64\Logic\StringCompareModule\StringCompareModuleCs.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="IMVSMarkInspModuCs">
+      <HintPath>..\..\..\..\..\..\Program Files\VisionMaster4.1.0\Applications\Module(sp)\x64\DefectDetection\IMVSMarkInspModu\IMVSMarkInspModuCs.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="IMVSMarkInspModuVACs">
+      <HintPath>..\..\..\..\..\..\Program Files\VisionMaster4.1.0\Applications\Module(sp)\x64\DefectDetection\IMVSMarkInspModuVA\IMVSMarkInspModuVACs.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="IMVSOcrModuCs">
+      <HintPath>..\..\..\..\..\..\Program Files\VisionMaster4.1.0\Applications\Module(sp)\x64\Recognition\IMVSOcrModu\IMVSOcrModuCs.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="IMVSFrameMeanModuCs">
+      <HintPath>..\..\..\..\..\..\Program Files\VisionMaster4.1.0\Applications\Module(sp)\x64\ImageProcessing\IMVSFrameMeanModu\IMVSFrameMeanModuCs.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="IMVSPairLineModuCs">
+      <HintPath>..\..\..\..\..\..\Program Files\VisionMaster4.1.0\Applications\Module(sp)\x64\Location\IMVSPairLineModu\IMVSPairLineModuCs.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="IMVSParallelCalculateModuCs">
+      <HintPath>..\..\..\..\..\..\Program Files\VisionMaster4.1.0\Applications\Module(sp)\x64\Location\IMVSParallelCalculateModu\IMVSParallelCalculateModuCs.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="IMVSImageMorphModuCs">
+      <HintPath>..\..\..\..\..\..\Program Files\VisionMaster4.1.0\Applications\Module(sp)\x64\ImageProcessing\IMVSImageMorphModu\IMVSImageMorphModuCs.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="IMVSFastFeatureMatchModuCs">
+      <HintPath>..\..\..\..\..\..\Program Files\VisionMaster4.1.0\Applications\Module(sp)\x64\Location\IMVSFastFeatureMatchModu\IMVSFastFeatureMatchModuCs.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="IMVSRegionCopyModuCs">
+      <HintPath>..\..\..\..\..\..\Program Files\VisionMaster4.1.0\Applications\Module(sp)\x64\ImageProcessing\IMVSRegionCopyModu\IMVSRegionCopyModuCs.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="ReadDatasModuleCs">
+      <HintPath>..\..\..\..\..\..\Program Files\VisionMaster4.1.0\Applications\Module(sp)\x64\Communication\ReadDatasModule\ReadDatasModuleCs.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="DataQueueModuleCs">
+      <HintPath>..\..\..\..\..\..\Program Files\VisionMaster4.1.0\Applications\Module(sp)\x64\Global\DataQueueModule\DataQueueModuleCs.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="DataSetModuleCs">
+      <HintPath>..\..\..\..\..\..\Program Files\VisionMaster4.1.0\Applications\Module(sp)\x64\Logic\DataSetModule\DataSetModuleCs.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="SaveTextModuleCs">
+      <HintPath>..\..\..\..\..\..\Program Files\VisionMaster4.1.0\Applications\Module(sp)\x64\Logic\SaveTextModule\SaveTextModuleCs.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="IMVSRotateCalculateModuCs">
+      <HintPath>..\..\..\..\..\..\Program Files\VisionMaster4.1.0\Applications\Module(sp)\x64\Calculation\IMVSRotateCalculateModu\IMVSRotateCalculateModuCs.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="IMVSMapCalibModuCs">
+      <HintPath>..\..\..\..\..\..\Program Files\VisionMaster4.1.0\Applications\Module(sp)\x64\Calibration\IMVSMapCalibModu\IMVSMapCalibModuCs.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="IfModuleCs">
+      <HintPath>..\..\..\..\..\..\Program Files\VisionMaster4.1.0\Applications\Module(sp)\x64\Logic\IfModule\IfModuleCs.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="IMVSBcrModuCs">
+      <HintPath>..\..\..\..\..\..\Program Files\VisionMaster4.1.0\Applications\Module(sp)\x64\Recognition\IMVSBcrModu\IMVSBcrModuCs.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="ReadCalibFileModuCs">
+      <HintPath>..\..\..\..\..\..\Program Files\VisionMaster4.1.0\Applications\Module(sp)\x64\Calibration\ReadCalibFileModu\ReadCalibFileModuCs.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="IMVSCalibBoardCalibModuCs">
+      <HintPath>..\..\..\..\..\..\Program Files\VisionMaster4.1.0\Applications\Module(sp)\x64\Calibration\IMVSCalibBoardCalibModu\IMVSCalibBoardCalibModuCs.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="IMVSCalibTransformModuCs">
+      <HintPath>..\..\..\..\..\..\Program Files\VisionMaster4.1.0\Applications\Module(sp)\x64\Calculation\IMVSCalibTransformModu\IMVSCalibTransformModuCs.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="FormatModuleCs">
+      <HintPath>..\..\..\..\..\..\Program Files\VisionMaster4.1.0\Applications\Module(sp)\x64\Logic\FormatModule\FormatModuleCs.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="IMVSImageSharpnessModuCs">
+      <HintPath>..\..\..\..\..\..\Program Files\VisionMaster4.1.0\Applications\Module(sp)\x64\ImageProcessing\IMVSImageSharpnessModu\IMVSImageSharpnessModuCs.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="IMVSGrayMatchModuCs">
+      <HintPath>..\..\..\..\..\..\Program Files\VisionMaster4.1.0\Applications\Module(sp)\x64\Location\IMVSGrayMatchModu\IMVSGrayMatchModuCs.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="IMVSP2CMeasureModuCs">
+      <HintPath>..\..\..\..\..\..\Program Files\VisionMaster4.1.0\Applications\Module(sp)\x64\Measurement\IMVSP2CMeasureModu\IMVSP2CMeasureModuCs.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="IMVSP2PMeasureModuCs">
+      <HintPath>..\..\..\..\..\..\Program Files\VisionMaster4.1.0\Applications\Module(sp)\x64\Measurement\IMVSP2PMeasureModu\IMVSP2PMeasureModuCs.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="IMVSP2LMeasureModuCs">
+      <HintPath>..\..\..\..\..\..\Program Files\VisionMaster4.1.0\Applications\Module(sp)\x64\Measurement\IMVSP2LMeasureModu\IMVSP2LMeasureModuCs.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="PointSetMODU_STDCs">
+      <HintPath>..\..\..\..\..\..\Program Files\VisionMaster4.1.0\Applications\Module(sp)\x64\Logic\PointSetMODU_STD\PointSetMODU_STDCs.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="IMVSMultiPointAlignModuCs">
+      <HintPath>..\..\..\..\..\..\Program Files\VisionMaster4.1.0\Applications\Module(sp)\x64\Calculation\IMVSMultiPointAlignModu\IMVSMultiPointAlignModuCs.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="IMVSImageCalibModuCs">
+      <HintPath>..\..\..\..\..\..\Program Files\VisionMaster4.1.0\Applications\Module(sp)\x64\Calibration\IMVSImageCalibModu\IMVSImageCalibModuCs.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="IMVSImageCorrectCalibModuCs">
+      <HintPath>..\..\..\..\..\..\Program Files\VisionMaster4.1.0\Applications\Module(sp)\x64\ImageProcessing\IMVSImageCorrectCalibModu\IMVSImageCorrectCalibModuCs.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="IMVSHistToolModuCs">
+      <HintPath>..\..\..\..\..\..\Program Files\VisionMaster4.1.0\Applications\Module(sp)\x64\Measurement\IMVSHistToolModu\IMVSHistToolModuCs.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="IMVSLineEdgePairInspModuCs">
+      <HintPath>..\..\..\..\..\..\Program Files\VisionMaster4.1.0\Applications\Module(sp)\x64\DefectDetection\IMVSLineEdgePairInspModu\IMVSLineEdgePairInspModuCs.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="IMVSLineFitModuCs">
+      <HintPath>..\..\..\..\..\..\Program Files\VisionMaster4.1.0\Applications\Module(sp)\x64\ImageGeneration\IMVSLineFitModu\IMVSLineFitModuCs.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="IMVSLineFindModuCs">
+      <HintPath>..\..\..\..\..\..\Program Files\VisionMaster4.1.0\Applications\Module(sp)\x64\Location\IMVSLineFindModu\IMVSLineFindModuCs.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="IMVSLineFindGroupModuCs">
+      <HintPath>..\..\..\..\..\..\Program Files\VisionMaster4.1.0\Applications\Module(sp)\x64\Location\IMVSLineFindGroupModu\IMVSLineFindGroupModuCs.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="IMVSLineEdgeInspModuCs">
+      <HintPath>..\..\..\..\..\..\Program Files\VisionMaster4.1.0\Applications\Module(sp)\x64\DefectDetection\IMVSLineEdgeInspModu\IMVSLineEdgeInspModuCs.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="CameraIOModuleCs">
+      <HintPath>..\..\..\..\..\..\Program Files\VisionMaster4.1.0\Applications\Module(sp)\x64\Communication\CameraIOModule\CameraIOModuleCs.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="IMVSCameraMapModuCs">
+      <HintPath>..\..\..\..\..\..\Program Files\VisionMaster4.1.0\Applications\Module(sp)\x64\Calibration\IMVSCameraMapModu\IMVSCameraMapModuCs.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="IMVSRectFindModuCs">
+      <HintPath>..\..\..\..\..\..\Program Files\VisionMaster4.1.0\Applications\Module(sp)\x64\Location\IMVSRectFindModu\IMVSRectFindModuCs.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="IMVSL2CMeasureModuCs">
+      <HintPath>..\..\..\..\..\..\Program Files\VisionMaster4.1.0\Applications\Module(sp)\x64\Measurement\IMVSL2CMeasureModu\IMVSL2CMeasureModuCs.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="IMVSLineAlignModuCs">
+      <HintPath>..\..\..\..\..\..\Program Files\VisionMaster4.1.0\Applications\Module(sp)\x64\Calculation\IMVSLineAlignModu\IMVSLineAlignModuCs.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="IMVSL2LMeasureModuCs">
+      <HintPath>..\..\..\..\..\..\Program Files\VisionMaster4.1.0\Applications\Module(sp)\x64\Measurement\IMVSL2LMeasureModu\IMVSL2LMeasureModuCs.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="IMVSGroupCs">
+      <HintPath>..\..\..\..\..\..\Program Files\VisionMaster4.1.0\Applications\Module(sp)\x64\Logic\IMVSGroup\IMVSGroupCs.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="ImageBufferModuleCs">
+      <HintPath>..\..\..\..\..\..\Program Files\VisionMaster4.1.0\Applications\Module(sp)\x64\Collection\ImageBufferModule\ImageBufferModuleCs.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="IMVSInspectModuCs">
+      <HintPath>..\..\..\..\..\..\Program Files\VisionMaster4.1.0\Applications\Module(sp)\x64\DefectDetection\IMVSInspectModu\IMVSInspectModuCs.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="TimeStatisticModuleCs">
+      <HintPath>..\..\..\..\..\..\Program Files\VisionMaster4.1.0\Applications\Module(sp)\x64\Logic\TimeStatisticModule\TimeStatisticModuleCs.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="ShellModuleCs">
+      <HintPath>..\..\..\..\..\..\Program Files\VisionMaster4.1.0\Applications\Module(sp)\x64\Logic\ShellModule\ShellModuleCs.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="IMVSAngleBisectorFindModuCs">
+      <HintPath>..\..\..\..\..\..\Program Files\VisionMaster4.1.0\Applications\Module(sp)\x64\Location\IMVSAngleBisectorFindModu\IMVSAngleBisectorFindModuCs.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="IMVSGluePathConductModuCs">
+      <HintPath>..\..\..\..\..\..\Program Files\VisionMaster4.1.0\Applications\Module(sp)\x64\Location\IMVSGluePathConductModu\IMVSGluePathConductModuCs.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="SaveImageCs">
+      <HintPath>..\..\..\..\..\..\Program Files\VisionMaster4.1.0\Applications\Module(sp)\x64\Collection\SaveImage\SaveImageCs.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="IMVSCaliperCornerModuCs">
+      <HintPath>..\..\..\..\..\..\Program Files\VisionMaster4.1.0\Applications\Module(sp)\x64\Location\IMVSCaliperCornerModu\IMVSCaliperCornerModuCs.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="IMVSEdgePairFlawInspModuCs">
+      <HintPath>..\..\..\..\..\..\Program Files\VisionMaster4.1.0\Applications\Module(sp)\x64\DefectDetection\IMVSEdgePairFlawInspModu\IMVSEdgePairFlawInspModuCs.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="IMVSEdgePairInspGroupModuCs">
+      <HintPath>..\..\..\..\..\..\Program Files\VisionMaster4.1.0\Applications\Module(sp)\x64\DefectDetection\IMVSEdgePairInspGroupModu\IMVSEdgePairInspGroupModuCs.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="IMVSCaliperEdgeModuCs">
+      <HintPath>..\..\..\..\..\..\Program Files\VisionMaster4.1.0\Applications\Module(sp)\x64\Location\IMVSCaliperEdgeModu\IMVSCaliperEdgeModuCs.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="IMVSEdgeFlawInspModuCs">
+      <HintPath>..\..\..\..\..\..\Program Files\VisionMaster4.1.0\Applications\Module(sp)\x64\DefectDetection\IMVSEdgeFlawInspModu\IMVSEdgeFlawInspModuCs.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="IMVSEdgeInspGroupModuCs">
+      <HintPath>..\..\..\..\..\..\Program Files\VisionMaster4.1.0\Applications\Module(sp)\x64\DefectDetection\IMVSEdgeInspGroupModu\IMVSEdgeInspGroupModuCs.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="AndModuleCs">
+      <HintPath>..\..\..\..\..\..\Program Files\VisionMaster4.1.0\Applications\Module(sp)\x64\Logic\AndModule\AndModuleCs.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="IMVSEdgeWidthFindModuCs">
+      <HintPath>..\..\..\..\..\..\Program Files\VisionMaster4.1.0\Applications\Module(sp)\x64\Measurement\IMVSEdgeWidthFindModu\IMVSEdgeWidthFindModuCs.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="IMVSShadeCorrectModuCs">
+      <HintPath>..\..\..\..\..\..\Program Files\VisionMaster4.1.0\Applications\Module(sp)\x64\ImageProcessing\IMVSShadeCorrectModu\IMVSShadeCorrectModuCs.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="IMVSPeakFindModuCs">
+      <HintPath>..\..\..\..\..\..\Program Files\VisionMaster4.1.0\Applications\Module(sp)\x64\Location\IMVSPeakFindModu\IMVSPeakFindModuCs.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="IMVSColorExtractModuCs">
+      <HintPath>..\..\..\..\..\..\Program Files\VisionMaster4.1.0\Applications\Module(sp)\x64\ColorProcessing\IMVSColorExtractModu\IMVSColorExtractModuCs.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="IMVSColorMeasureModuCs">
+      <HintPath>..\..\..\..\..\..\Program Files\VisionMaster4.1.0\Applications\Module(sp)\x64\ColorProcessing\IMVSColorMeasureModu\IMVSColorMeasureModuCs.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="IMVSColorRecognitionModuCs">
+      <HintPath>..\..\..\..\..\..\Program Files\VisionMaster4.1.0\Applications\Module(sp)\x64\ColorProcessing\IMVSColorRecognitionModu\IMVSColorRecognitionModuCs.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="IMVSColorTransformModuCs">
+      <HintPath>..\..\..\..\..\..\Program Files\VisionMaster4.1.0\Applications\Module(sp)\x64\ColorProcessing\IMVSColorTransformModu\IMVSColorTransformModuCs.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="IMVSHPFeatureMatchModuCs">
+      <HintPath>..\..\..\..\..\..\Program Files\VisionMaster4.1.0\Applications\Module(sp)\x64\Location\IMVSHPFeatureMatchModu\IMVSHPFeatureMatchModuCs.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="System">
+      <HintPath>..\..\..\..\..\..\Program Files (x86)\Reference Assemblies\Microsoft\Framework\.NETFramework\v4.7.1\System.dll</HintPath>
+    </Reference>
     <Reference Include="System.Data" />
     <Reference Include="System.Xml" />
     <Reference Include="Microsoft.CSharp" />
@@ -55,13 +591,170 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="Calibration.cs">
+      <DependentUpon>XGuideModel.tt</DependentUpon>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Compile>
+    <Compile Include="CustomEventArgs\BitMapImageArgs.cs" />
+    <Compile Include="CustomEventArgs\TcpClientEventArgs.cs" />
+    <Compile Include="CustomEventArgs\TcpListenerEventArgs.cs" />
+    <Compile Include="EnumClass\MountingOrientation.cs" />
+    <Compile Include="EnumClass\Terminator.cs" />
+    <Compile Include="EnumClass\EnumHelperClass.cs" />
+    <Compile Include="EnumClass\EnumToCollectionConverter.cs" />
+    <Compile Include="EnumClass\MachineType.cs" />
+    <Compile Include="EnumClass\UserRole.cs" />
+    <Compile Include="EnumClass\ValueDescription.cs" />
+    <Compile Include="Extension\TaskExtensions.cs" />
     <Compile Include="FileLogger.cs" />
     <Compile Include="FileLoggerExtensions.cs" />
     <Compile Include="FileLoggerProvider.cs" />
+    <Compile Include="HelperClass\BitMapHelper.cs" />
+    <Compile Include="HelperClass\ServerHelper.cs" />
+    <Compile Include="Machine.cs">
+      <DependentUpon>XGuideModel.tt</DependentUpon>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Compile>
+    <Compile Include="MappingConfiguration\MachineProfile.cs" />
+    <Compile Include="MVVM\Command\BrowseFileDialogCommand.cs" />
+    <Compile Include="MVVM\Command\ConnectServerCommand.cs" />
+    <Compile Include="MVVM\Command\RelayCommand.cs" />
+    <Compile Include="MVVM\Command\VideoCommand.cs" />
+    <Compile Include="MVVM\Command\WizNextCommand.cs" />
+    <Compile Include="MVVM\Command\WizPrevCommand.cs" />
+    <Compile Include="MVVM\DBContext\DbContextFactory.cs" />
+    <Compile Include="MVVM\DTO\UserDTO.cs" />
+    <Compile Include="MVVM\Model\MachineModel.cs" />
+    <Compile Include="MVVM\Model\Point.cs" />
+    <Compile Include="MVVM\Model\UserModel.cs" />
+    <Compile Include="EnumClass\PageName.cs" />
+    <Compile Include="MVVM\Model\ModelBase.cs" />
+    <Compile Include="MVVM\Model\VisionGuided.cs" />
+    <Compile Include="MVVM\ViewModel\CalibrationWizardStartViewModel.cs" />
+    <Compile Include="MVVM\ViewModel\EngineeringViewModel.cs" />
+    <Compile Include="MVVM\ViewModel\ErrorViewModel.cs" />
+    <Compile Include="MVVM\ViewModel\JogRobotViewModel.cs" />
+    <Compile Include="MVVM\ViewModel\MachineViewModel.cs" />
+    <Compile Include="MVVM\ViewModel\RenderControlViewModel.cs" />
+    <Compile Include="MVVM\ViewModel\SecurityViewModel.cs" />
+    <Compile Include="MVVM\ViewModel\Step1ViewModel.cs" />
+    <Compile Include="MVVM\ViewModel\Step2ViewModel.cs" />
+    <Compile Include="MVVM\ViewModel\Step3ViewModel.cs" />
+    <Compile Include="MVVM\ViewModel\Step4ViewModel.cs" />
+    <Compile Include="MVVM\ViewModel\Step5ViewModel.cs" />
+    <Compile Include="MVVM\ViewModel\Step6ViewModel.cs" />
+    <Compile Include="MVVM\ViewModel\UndefinedViewModel.cs" />
+    <Compile Include="MVVM\ViewModel\UserLoginViewModel.cs" />
+    <Compile Include="MVVM\ViewModel\CalibrationViewModel.cs" />
+    <Compile Include="MVVM\View\CalibrationWizardSteps\CalibrationWizardStart.xaml.cs">
+      <DependentUpon>CalibrationWizardStart.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="MVVM\View\CalibrationWizardSteps\Step1.xaml.cs">
+      <DependentUpon>Step1.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="MVVM\View\CalibrationWizardSteps\Step2.xaml.cs">
+      <DependentUpon>Step2.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="MVVM\View\CalibrationWizardSteps\Step3.xaml.cs">
+      <DependentUpon>Step3.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="MVVM\View\CalibrationWizardSteps\Step4.xaml.cs">
+      <DependentUpon>Step4.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="MVVM\View\CalibrationWizardSteps\Step5.xaml.cs">
+      <DependentUpon>Step5.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="MVVM\View\CalibrationWizardSteps\Step6.xaml.cs">
+      <DependentUpon>Step6.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="MVVM\View\EngineeringView.xaml.cs">
+      <DependentUpon>EngineeringView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="MVVM\View\JogRobotView.xaml.cs">
+      <DependentUpon>JogRobotView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="MVVM\View\SecurityView.xaml.cs">
+      <DependentUpon>SecurityView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="MVVM\View\UndefinedView.xaml.cs">
+      <DependentUpon>UndefinedView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="MVVM\View\UserLoginView.xaml.cs">
+      <DependentUpon>UserLoginView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Service\AuthenticationService.cs" />
+    <Compile Include="Service\BackgroundService.cs" />
+    <Compile Include="Service\Communication\ClientService.cs" />
+    <Compile Include="Service\Communication\IClientService.cs" />
+    <Compile Include="Service\Communication\IServerService.cs" />
+    <Compile Include="Service\Communication\TcpClientInfo.cs" />
+    <Compile Include="Service\DatabaseProvider\MachineService.cs" />
+    <Compile Include="Service\DatabaseProvider\IMachineService.cs" />
+    <Compile Include="Service\Communication\ServerCommand.cs" />
+    <Compile Include="Service\ImageService.cs" />
     <Compile Include="Service\NavigationService.cs" />
-    <Compile Include="System\Windows\Forms.cs" />
+    <Compile Include="Service\Communication\ServerService.cs" />
+    <Compile Include="Service\DatabaseProvider\UserService.cs" />
+    <Compile Include="Service\DatabaseProvider\IUserService.cs" />
+    <Compile Include="Setting.cs">
+      <DependentUpon>XGuideModel.tt</DependentUpon>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Compile>
+    <Compile Include="User.cs">
+      <DependentUpon>XGuideModel.tt</DependentUpon>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Compile>
     <Compile Include="Validation\IPValidation.cs" />
-    <Page Include="MainWindow.xaml">
+    <Compile Include="Utility\PasswordHashUtility.cs" />
+    <Compile Include="XGuideModel.Context.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>XGuideModel.Context.tt</DependentUpon>
+    </Compile>
+    <Compile Include="XGuideModel.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>XGuideModel.tt</DependentUpon>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Compile>
+    <Compile Include="XGuideModel.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>XGuideModel.edmx</DependentUpon>
+    </Compile>
+    <Page Include="MVVM\View\CalibrationWizardSteps\CalibrationWizardStart.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="MVVM\View\CalibrationWizardSteps\Step1.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="MVVM\View\CalibrationWizardSteps\Step2.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="MVVM\View\CalibrationWizardSteps\Step3.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="MVVM\View\CalibrationWizardSteps\Step4.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="MVVM\View\CalibrationWizardSteps\Step5.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="MVVM\View\CalibrationWizardSteps\Step6.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="MVVM\View\JogRobotView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="MVVM\View\MainWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
@@ -69,34 +762,66 @@
       <DependentUpon>App.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="MainWindow.xaml.cs">
+    <Compile Include="MVVM\View\MainWindow.xaml.cs">
       <DependentUpon>MainWindow.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
-    <Page Include="MVVM\View\SettingsView.xaml">
+    <Page Include="MVVM\View\EngineeringView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="MVVM\View\SecurityView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="MVVM\View\SettingView.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
-    <Page Include="MVVM\View\TestingView.xaml">
+    <Page Include="MVVM\View\ProductionView.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
+    </Page>
+    <Page Include="MVVM\View\UndefinedView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="MVVM\View\UserLoginView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Style\BehaviorStyles.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Style\Fonts.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Style\Colors.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Style\Layouts.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
     </Page>
   </ItemGroup>
   <ItemGroup>
     <Compile Include="MVVM\Command\CommandBase.cs" />
     <Compile Include="MVVM\Command\NavigateCommand.cs" />
     <Compile Include="MVVM\Command\SaveSettingCommand.cs" />
-    <Compile Include="MVVM\Model\Setting.cs" />
+    <Compile Include="MVVM\Model\SettingModel.cs" />
     <Compile Include="MVVM\Store\NavigationStore.cs" />
     <Compile Include="MVVM\ViewModel\MainViewModel.cs" />
     <Compile Include="MVVM\ViewModel\SettingViewModel.cs" />
-    <Compile Include="MVVM\ViewModel\TestingViewModel.cs" />
+    <Compile Include="MVVM\ViewModel\ProductionViewModel.cs" />
     <Compile Include="MVVM\ViewModel\ViewModelBase.cs" />
-    <Compile Include="MVVM\View\SettingsView.xaml.cs">
-      <DependentUpon>SettingsView.xaml</DependentUpon>
+    <Compile Include="MVVM\View\SettingView.xaml.cs">
+      <DependentUpon>SettingView.xaml</DependentUpon>
     </Compile>
-    <Compile Include="MVVM\View\TestingView.xaml.cs">
-      <DependentUpon>TestingView.xaml</DependentUpon>
+    <Compile Include="MVVM\View\ProductionView.xaml.cs">
+      <DependentUpon>ProductionView.xaml</DependentUpon>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs">
       <SubType>Code</SubType>
@@ -115,13 +840,116 @@
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
     </EmbeddedResource>
+    <None Include="..\.editorconfig">
+      <Link>.editorconfig</Link>
+    </None>
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>
     </None>
+    <EntityDeploy Include="XGuideModel.edmx">
+      <Generator>EntityModelCodeGenerator</Generator>
+      <LastGenOutput>XGuideModel.Designer.cs</LastGenOutput>
+    </EntityDeploy>
+    <None Include="Style\camFrontEnd.vmd" />
+    <None Include="XGuideModel.edmx.diagram">
+      <DependentUpon>XGuideModel.edmx</DependentUpon>
+    </None>
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <WCFMetadata Include="Connected Services\" />
+  </ItemGroup>
+  <ItemGroup>
+    <PackageReference Include="AForge.Controls">
+      <Version>2.2.5</Version>
+    </PackageReference>
+    <PackageReference Include="AForge.Video">
+      <Version>2.2.5</Version>
+    </PackageReference>
+    <PackageReference Include="AForge.Video.DirectShow">
+      <Version>2.2.5</Version>
+    </PackageReference>
+    <PackageReference Include="AutoMapper">
+      <Version>9.0.0</Version>
+    </PackageReference>
+    <PackageReference Include="AutoMapper.EF6">
+      <Version>2.1.1</Version>
+    </PackageReference>
+    <PackageReference Include="DirectShowLib">
+      <Version>1.0.0</Version>
+    </PackageReference>
+    <PackageReference Include="EntityFramework">
+      <Version>6.4.4</Version>
+    </PackageReference>
+    <PackageReference Include="HandyControls">
+      <Version>3.4.4</Version>
+    </PackageReference>
+    <PackageReference Include="MaterialDesignThemes">
+      <Version>4.7.1</Version>
+    </PackageReference>
+    <PackageReference Include="MaterialDesignThemes.Wpf">
+      <Version>1.0.1</Version>
+    </PackageReference>
+    <PackageReference Include="Microsoft.CodeAnalysis.CSharp">
+      <Version>4.5.0</Version>
+    </PackageReference>
+    <PackageReference Include="System.ServiceProcess.ServiceController">
+      <Version>7.0.0</Version>
+    </PackageReference>
+    <PackageReference Include="WpfAnimatedGif">
+      <Version>2.0.2</Version>
+    </PackageReference>
+    <PackageReference Include="XamlAnimatedGif">
+      <Version>2.1.1</Version>
+    </PackageReference>
+  </ItemGroup>
+  <ItemGroup>
+    <BootstrapperPackage Include=".NETFramework,Version=v4.7.1">
+      <Visible>False</Visible>
+      <ProductName>Microsoft .NET Framework 4.7.1 %28x86 and x64%29</ProductName>
+      <Install>true</Install>
+    </BootstrapperPackage>
+    <BootstrapperPackage Include="Microsoft.Net.Framework.3.5.SP1">
+      <Visible>False</Visible>
+      <ProductName>.NET Framework 3.5 SP1</ProductName>
+      <Install>false</Install>
+    </BootstrapperPackage>
+  </ItemGroup>
+  <ItemGroup>
+    <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Style\ImageSource\hamster-cute.gif">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Style\ImageSource\arrow.png" />
+    <Resource Include="Style\ImageSource\down.png" />
+    <Resource Include="Style\ImageSource\up.png" />
+    <Resource Include="Style\ImageSource\arrows.png" />
+    <Content Include="XGuideDB.mdf">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="XGuideDB_log.ldf">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      <DependentUpon>XGuideDB.mdf</DependentUpon>
+    </Content>
+    <Content Include="XGuideModel.Context.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <DependentUpon>XGuideModel.edmx</DependentUpon>
+      <LastGenOutput>XGuideModel.Context.cs</LastGenOutput>
+    </Content>
+    <Content Include="XGuideModel.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <DependentUpon>XGuideModel.edmx</DependentUpon>
+      <LastGenOutput>XGuideModel.cs</LastGenOutput>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="DP\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

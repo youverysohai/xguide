@@ -52,10 +52,10 @@
                         <RowDefinition Height="*"/>
                         <RowDefinition Height="*"/>
                     </Grid.RowDefinitions>
-                    <Viewbox Grid.ColumnSpan="3" Grid.RowSpan="3" >
+
                         <!--<Image x:Name="videoPlayer" Source="{Binding VideoSource}" Stretch="Uniform"/>-->
-                        <Release:VmFrontendControl Name="p_box" Loaded="p_box_Loaded"/>
-                    </Viewbox>
+                        <Release:VmFrontendControl Grid.ColumnSpan="3" Grid.RowSpan="3"  Name="p_box" Loaded="p_box_Loaded"/>
+
                     <Border Grid.Row="1" Grid.Column="1" BorderThickness="2.5" BorderBrush="{DynamicResource PrimaryBlueColor}"></Border>
 
                 </Grid>
