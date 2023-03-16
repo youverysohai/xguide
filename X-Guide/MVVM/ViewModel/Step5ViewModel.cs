@@ -12,6 +12,7 @@ using System.Windows;
 using System.Windows.Input;
 using System.Windows.Media.Imaging;
 using System.Windows.Threading;
+using VM.Core;
 using X_Guide.CustomEventArgs;
 using X_Guide.MVVM.Command;
 using X_Guide.MVVM.ViewModel.CalibrationWizardSteps;
@@ -29,6 +30,8 @@ namespace X_Guide.MVVM.ViewModel
         private readonly CalibrationViewModel _setting;
         private readonly ServerCommand _serverCommand;
         private BackgroundService searchClient;
+
+        VmProcedure p;
 
         public string JogMode { get; set; } = "TOOL";
 
@@ -62,7 +65,7 @@ namespace X_Guide.MVVM.ViewModel
             set { _jogDistance = value; }
         }
 
-
+      
         public Step5ViewModel(CalibrationViewModel setting, ServerCommand serverCommand)
         {
 
@@ -76,6 +79,8 @@ namespace X_Guide.MVVM.ViewModel
             searchClient.Start();
         }
 
+
+      
         private void HandleClientDisconnection(object sender, EventArgs e)
         {
             if (cancelJog != null)
