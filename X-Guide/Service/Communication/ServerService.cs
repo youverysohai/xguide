@@ -34,15 +34,17 @@ namespace X_Guide.Communication.Service
         private readonly ConcurrentDictionary<int, TcpClientInfo> _connectedClient = new ConcurrentDictionary<int, TcpClientInfo>();
 
         CancellationTokenSource cts;
+        
+        private string _terminator;
 
-        private string _terminator { get; set; }
+        private string Terminator { get => _terminator; set => _terminator = value ?? "\n"; }
 
 
-        public ServerService(IPAddress ip, int port, string delimiter)
+        public ServerService(IPAddress ip, int port, string terminator)
         {
             _port = port;
             _ip = ip;
-            _terminator = delimiter;
+            _terminator = terminator;
         }
 
         public bool getServerStatus()
@@ -88,7 +90,7 @@ namespace X_Guide.Communication.Service
                     Debug.WriteLine("Client connected.");
 
                     _connectedClient.TryAdd(client.GetHashCode(), new TcpClientInfo(client));
-                  
+
 
                     // Handle the client connection in a separate task.
 #pragma warning disable CS4014 // This warning has to be suppressed to disallow the await keyword from blocking the task
@@ -127,10 +129,10 @@ namespace X_Guide.Communication.Service
                     while (run)
                     {
                         run = await ReadAsync(commandList, ct, client);
-                        
+
                         RunCommand(commandList);
                         if (!run) throw new Exception();
-                        
+
 
                     }
 
@@ -198,7 +200,7 @@ namespace X_Guide.Communication.Service
 
         public async Task<bool> SendMessageAsync(string message, NetworkStream networkStream)
         {
-            
+
             var bytes = Encoding.ASCII.GetBytes(message);
             try
             {
@@ -209,7 +211,7 @@ namespace X_Guide.Communication.Service
             {
                 return false;
             }
-           
+
         }
 
         public ConcurrentDictionary<int, TcpClientInfo> GetConnectedClient()
@@ -228,7 +230,7 @@ namespace X_Guide.Communication.Service
 
         public void SetServerReadTerminator(string terminator)
         {
-            _terminator = terminator;
+            _terminator = terminator ?? "\n";
         }
     }
 

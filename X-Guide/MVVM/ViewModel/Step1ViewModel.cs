@@ -59,7 +59,7 @@ namespace X_Guide.MVVM.ViewModel
             _machineModel = _machineService.GetMachine(name);
             Machine = MachineViewModel.ToViewModel(_machineModel, _mapper);
             _setting.Machine = Machine;
-            _serverCommand.SetServerReadTerminator(_machineService.GetMachineDelimiter(name));
+            _serverCommand.SetServerTerminator(_machineService.GetMachineDelimiter(name));
             OnSelectedItemChangedEvent?.Invoke(this, EventArgs.Empty);
         }
 

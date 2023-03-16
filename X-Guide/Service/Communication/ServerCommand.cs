@@ -47,7 +47,7 @@ namespace X_Guide.Service.Communation
         }
 
 
-        public void SetServerReadTerminator(string terminator)
+        public void SetServerTerminator(string terminator)
         {
             _serverService.SetServerReadTerminator(terminator);
         }
@@ -140,8 +140,6 @@ namespace X_Guide.Service.Communation
                 _jogDoneReplyRecieved.Set();
             }
         }
-
-
 
 
         private void GetPoseCommand(TcpClient client, string message)

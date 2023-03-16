@@ -25,6 +25,7 @@ using System.IO;
 using System.Drawing.Imaging;
 using VM.Core;
 using VM.PlatformSDKCS;
+using System.Diagnostics;
 
 namespace X_Guide.MVVM.View.CalibrationWizardSteps
 {
@@ -38,8 +39,6 @@ namespace X_Guide.MVVM.View.CalibrationWizardSteps
         VmProcedure p;
 
 
-
-
         public Step5()
         {
             InitializeComponent();
@@ -48,12 +47,24 @@ namespace X_Guide.MVVM.View.CalibrationWizardSteps
         }
         private void p_box_Loaded(object sender, RoutedEventArgs e)
         {
-            VmSolution.Import(@"C:\Users\Xlent-Tung\Desktop\livecam.sol", "");
-            p = (VmProcedure)VmSolution.Instance["Flow1"];
-            p.Run();
-            p_box.LoadFrontendSource();
-            //p_box.BindSingleProcedure(p.ToString());
-            p_box.AutoChangeSize();
+            try
+            {
+                VmSolution.Import(@"C:\Users\Xlent-Tung\Desktop\livecam.sol", "");
+                p = (VmProcedure)VmSolution.Instance["Flow1"];
+                p.Run();
+                p_box.LoadFrontendSource();
+                //p_box.BindSingleProcedure(p.ToString());
+                p_box.AutoChangeSize();
+            }
+            catch
+            {
+                Debug.WriteLine("Everything is fine");
+            }
+            finally
+            {
+                Debug.WriteLine("Chun fault nia ma");
+            }
+
 
 
         }
