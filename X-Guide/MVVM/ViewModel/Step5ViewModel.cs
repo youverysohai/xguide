@@ -25,7 +25,7 @@ namespace X_Guide.MVVM.ViewModel
     {
 
         private int _jogDistance;
-        private CancellationToken cancelJog = new CancellationToken();
+        private CancellationTokenSource cancelJog;
         private readonly CalibrationViewModel _setting;
         private readonly ServerCommand _serverCommand;
         private BackgroundService searchClient;
@@ -47,8 +47,8 @@ namespace X_Guide.MVVM.ViewModel
                 if (value != null)
                 {
                     StartJog();
+                    OnJogCanExecuteChanged(true);
                 }
-
             }
         }
         public ObservableCollection<FilterInfo> VideoDevices { get; set; }
@@ -70,9 +70,20 @@ namespace X_Guide.MVVM.ViewModel
             JogCommand = new RelayCommand(Jog, CanStartJog);
             _setting = setting;
             _serverCommand = serverCommand;
+            _serverCommand.ClientDisconnectedEvent += HandleClientDisconnection;
             ReconnectCommand = new RelayCommand(testing);
             searchClient = new BackgroundService(SearchForClient);
             searchClient.Start();
+        }
+
+        private void HandleClientDisconnection(object sender, EventArgs e)
+        {
+            if (cancelJog != null)
+            {
+                cancelJog.Cancel();
+                Application.Current.Dispatcher.Invoke(() => OnJogCanExecuteChanged(false));
+                searchClient.Start();
+            }
         }
 
         private void testing(object obj)
@@ -85,10 +96,9 @@ namespace X_Guide.MVVM.ViewModel
             try
             {
                 var tcpClient = _serverCommand.GetConnectedClient().First().Value;
+      
                 Application.Current.Dispatcher.Invoke(() => TcpClient = tcpClient);
-                Debug.WriteLine(TcpClient.TcpClient.GetHashCode());
                 searchClient.Stop();
-               
 
             }
             catch
@@ -129,11 +139,11 @@ namespace X_Guide.MVVM.ViewModel
 
         private void StartJog()
         {
-            Debug.WriteLine("StartJog HashCode " + TcpClient.TcpClient.GetHashCode());
+ 
             if (_tcpClient != null)
             {
-                _serverCommand.StartJogCommand(cancelJog, _tcpClient);
-                OnJogCanExecuteChanged(true);
+                cancelJog = new CancellationTokenSource();
+                _serverCommand.StartJogCommand(_tcpClient, cancelJog.Token);
             }
         }
 

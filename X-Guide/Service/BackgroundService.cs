@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.ServiceProcess;
 using System.Text;
@@ -8,7 +9,7 @@ using System.Threading.Tasks;
 
 namespace X_Guide.Service
 {
-    public class BackgroundService 
+    public class BackgroundService
     {
         private Thread _workerThread;
         private bool _isRunning;
@@ -22,7 +23,7 @@ namespace X_Guide.Service
 
         public void Start()
         {
-            if(_workerThread == null)
+            if (_workerThread == null)
             {
                 _isRunning = true;
                 _workerThread = new Thread(DoWork);
@@ -33,19 +34,23 @@ namespace X_Guide.Service
         public void Stop()
         {
             _isRunning = false;
-            _workerThread?.Join();
+/*            _workerThread?.Join();*/
             _workerThread = null;
+   
+
         }
 
         private void DoWork()
         {
+
             while (_isRunning)
             {
                 _action();
                 Thread.Sleep(1000);
             }
+
         }
-        
-        
+
+
     }
 }

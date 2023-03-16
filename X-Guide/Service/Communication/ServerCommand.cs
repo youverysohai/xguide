@@ -21,10 +21,18 @@ namespace X_Guide.Service.Communation
     {
         public Queue<string> commandQeueue = new Queue<string>();
         public IServerService _serverService { get; }
+
+        public event EventHandler ClientDisconnectedEvent;
         public ServerCommand(IServerService serverService)
         {
             _serverService = serverService;
             _serverService.MessageEvent += ValidateSyntax;
+            _serverService.ClientEvent += OnClientDisconnectedEvent;
+        }
+
+        private void OnClientDisconnectedEvent(object sender, TcpClientEventArgs e)
+        {
+            ClientDisconnectedEvent?.Invoke(sender, e);
         }
 
         public void StartServer()
@@ -43,6 +51,8 @@ namespace X_Guide.Service.Communation
         {
             _serverService.SetServerReadTerminator(terminator);
         }
+
+        
         public void ValidateSyntax(object sender, TcpClientEventArgs tcpClientEventArgs)
         {
             string message = tcpClientEventArgs.Message;
@@ -61,52 +71,73 @@ namespace X_Guide.Service.Communation
         }
 
 
-        public async void StartJogCommand(CancellationToken cancellationToken, TcpClientInfo client)
+        public async void StartJogCommand(TcpClientInfo client, CancellationToken cancellationToken)
         {
             //need to handle when the client disconnected
-            await Task.Run(async () =>
-            {
-                while (!cancellationToken.IsCancellationRequested)
-                {
-                    await ServerJogCommand(client);
-                }
-            });
 
-            MessageBox.Show("Jog session ended!");
+            client.Jogging = true;
+            await Task.Run(() => ServerJogCommand(client, cancellationToken));
+            client.Jogging = false;
+            Debug.WriteLine("Jog session ended!");
         }
-        public async Task ServerJogCommand(TcpClientInfo client)
+
+        public async Task ServerJogCommand(TcpClientInfo client, CancellationToken cancellationToken)
         {
             NetworkStream stream = client.TcpClient.GetStream();
             ManualResetEventSlim _jogDoneReplyRecieved = client.JogDoneReplyRecieved;
-            while (commandQeueue.Count > 0)
+
+
+            while (!cancellationToken.IsCancellationRequested)
             {
-                client.Jogging = true;
-                await Task.Run(() => _serverService.SendMessageAsync(commandQeueue.Dequeue(), stream));
-                Debug.WriteLine("Sc = " + commandQeueue.Count);
-                Timer timer = new Timer(5000);
-                timer.AutoReset = false;
-                timer.Elapsed += (sender, e) => { _jogDoneReplyRecieved.Set(); MessageBox.Show("Jog Command expired!"); ((Timer)sender).Dispose(); };
-                timer.Start();
-                _jogDoneReplyRecieved.Wait();
-                timer.Dispose();
-                _jogDoneReplyRecieved.Reset();
+       
+                if (commandQeueue.Count <= 0)
+                {
+                    Thread.Sleep(1000);
+                    continue;
+                }
+
+                string jogCommand = commandQeueue.Dequeue();
+
+                //check if the message can be recieved by the client
+                bool IsMessageSent = await _serverService.SendMessageAsync(jogCommand, stream);
+
+                if (IsMessageSent)
+                {
+                    Timer timer = new Timer(5000);
+                    timer.AutoReset = false;
+                    timer.Elapsed += (sender, e) => JogCommandExpired(sender, _jogDoneReplyRecieved);
+                    timer.Start();
+                    _jogDoneReplyRecieved.Wait();
+                    timer.Dispose();
+                    _jogDoneReplyRecieved.Reset();
+                }
+                else
+                {
+                    HandleClientDisconnection();
+                    break;
+
+                }
             }
-            client.Jogging = false;
+        }
+
+        private void JogCommandExpired(object sender, ManualResetEventSlim _jogDoneReplyRecieved)
+        {
+            _jogDoneReplyRecieved.Set(); Debug.WriteLine("Jog command expired!"); ((Timer)sender).Dispose();
+        }
+
+        private void HandleClientDisconnection()
+        {
+            commandQeueue.Clear();
+            Debug.WriteLine("Client has disconnected!");
         }
 
         private void JogDone(TcpClient client)
         {
             TcpClientInfo clientInfo = _serverService.GetConnectedClientInfo(client);
             ManualResetEventSlim _jogDoneReplyRecieved = clientInfo.JogDoneReplyRecieved;
-            Debug.WriteLine("status : " + _jogDoneReplyRecieved.IsSet);
             if (clientInfo.Jogging)
             {
                 _jogDoneReplyRecieved.Set();
-
-            }
-            else
-            {
-                _serverService.SendMessageAsync("No new jog command available!", client.GetStream());
             }
         }
 
@@ -126,7 +157,7 @@ namespace X_Guide.Service.Communation
             string X = commands[3];
             string Y = commands[4];
             string Rz = commands[5];
-       
+
         }
 
         public void ReturnErrorMessage(TcpClient client)

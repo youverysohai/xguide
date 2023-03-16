@@ -88,7 +88,7 @@ namespace X_Guide.Communication.Service
                     Debug.WriteLine("Client connected.");
 
                     _connectedClient.TryAdd(client.GetHashCode(), new TcpClientInfo(client));
-                    ClientEvent?.Invoke(this, new TcpClientEventArgs(client));
+                  
 
                     // Handle the client connection in a separate task.
 #pragma warning disable CS4014 // This warning has to be suppressed to disallow the await keyword from blocking the task
@@ -110,12 +110,9 @@ namespace X_Guide.Communication.Service
         private async Task ReadClientCommand(TcpClient client, CancellationToken ct)
         {
 
-
-
             // Get the stream for reading and writing data.
             NetworkStream stream = client.GetStream();
             _connectedClient.TryAdd(client.GetHashCode(), new TcpClientInfo(client));
-
             ct.Register(() => stream.Close());
 
 
@@ -167,13 +164,13 @@ namespace X_Guide.Communication.Service
             byte[] buffer = new byte[1024];
             string data = "";
             NetworkStream stream = client.GetStream();
-            Debug.WriteLine($"{SymbolDisplay.FormatLiteral(_terminator, false)}");
             while (!data.EndsWith(_terminator))
             {
                 int bytesRead = await stream.ReadAsync(buffer, 0, buffer.Length);
                 data += Encoding.ASCII.GetString(buffer, 0, bytesRead);
                 if (bytesRead == 0)
                 {
+
                     Debug.WriteLine("Client disconnected.");
                     return false;
                 }
@@ -199,10 +196,20 @@ namespace X_Guide.Communication.Service
             client.Dispose();
         }
 
-        public async void SendMessageAsync(string message, NetworkStream networkStream)
+        public async Task<bool> SendMessageAsync(string message, NetworkStream networkStream)
         {
+            
             var bytes = Encoding.ASCII.GetBytes(message);
-            await networkStream.WriteAsync(bytes, 0, bytes.Length);
+            try
+            {
+                await networkStream.WriteAsync(bytes, 0, bytes.Length);
+                return true;
+            }
+            catch
+            {
+                return false;
+            }
+           
         }
 
         public ConcurrentDictionary<int, TcpClientInfo> GetConnectedClient()

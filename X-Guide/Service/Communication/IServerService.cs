@@ -18,7 +18,7 @@ namespace X_Guide.Communication.Service
         event EventHandler<TcpClientEventArgs> MessageEvent;
 
         TcpClientInfo GetConnectedClientInfo(TcpClient tcpClient);
-        void SendMessageAsync(string message, NetworkStream networkStream);
+        Task<bool> SendMessageAsync(string message, NetworkStream networkStream);
         bool getServerStatus();
         Task StartServer();
         void StopServer();
