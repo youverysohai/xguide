@@ -48,7 +48,13 @@ namespace X_Guide.MVVM.View.CalibrationWizardSteps
         }
         private void p_box_Loaded(object sender, RoutedEventArgs e)
         {
-            
+            VmSolution.Import(@"C:\Users\Xlent-Tung\Desktop\livecam.sol", "");
+            p = (VmProcedure)VmSolution.Instance["Flow1"];
+            p.Run();
+            p_box.LoadFrontendSource();
+            //p_box.BindSingleProcedure(p.ToString());
+            p_box.AutoChangeSize();
+
 
         }
 

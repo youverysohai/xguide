@@ -32,6 +32,7 @@
             <!--<v:RenderControlBase Grid.Row="1" Grid.ColumnSpan="2" Name="p_box" Loaded="p_box_Loaded"/>--><!--<v:RenderControlBase Grid.Row="1" Grid.ColumnSpan="2" Name="p_box" Loaded="p_box_Loaded"/>-->
                 <!--<v:MainViewControl Grid.Row="1" Grid.ColumnSpan="2" Name="p_box" Loaded="p_box_Loaded"/>-->
             <Release:VmFrontendControl Grid.Row="1" Grid.ColumnSpan="2"  Name="p_box" Loaded="p_box_Loaded" />
+                
             
 
             </Grid>
