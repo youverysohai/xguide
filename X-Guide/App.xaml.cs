@@ -19,7 +19,7 @@ using X_Guide.MVVM.ViewModel;
 using X_Guide.Service;
 using X_Guide.Service.Communation;
 using X_Guide.Service.DatabaseProvider;
-
+using Xlent_Vision_Guided;
 
 namespace X_Guide
 {
@@ -41,6 +41,7 @@ namespace X_Guide
         private ServerCommand _serverCommand;
         private MapperConfiguration _mapperConfig;
         private IClientService _clientService;
+        private VisionGuided _visAlgorithm;
 
 
         public App()
@@ -54,7 +55,7 @@ namespace X_Guide
             }
                 );
 
-
+            _visAlgorithm = new VisionGuided();
             _dbContextFactory = new DbContextFactory();
             _userProvider = new UserService(_dbContextFactory);
             _machineDb = new MachineService(_dbContextFactory);
@@ -113,7 +114,7 @@ namespace X_Guide
         //        Startup Page
         protected override void OnStartup(StartupEventArgs e)
         {
-            _navigationStore.CurrentViewModel = CreateEngineeringViewModel();
+            _navigationStore.CurrentViewModel = CreateCalibrationWizardStart();
             MainWindow = new MainWindow()
             {
                 DataContext = new MainViewModel(_navigationStore, _viewModels, _serverService, _userProvider)
@@ -160,7 +161,7 @@ namespace X_Guide
         }
         private ViewModelBase CreateCalibrationWizardStart()
         {
-            return new CalibrationWizardStartViewModel(_navigationStore, _machineDb, _mapperConfig.CreateMapper(), _serverCommand, _clientService);
+            return new CalibrationWizardStartViewModel(_navigationStore, _machineDb, _mapperConfig.CreateMapper(), _serverCommand, _clientService, _visAlgorithm);
         }
 
 

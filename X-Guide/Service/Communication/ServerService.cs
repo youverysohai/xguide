@@ -17,7 +17,7 @@ using X_Guide.Service.Communication;
 
 namespace X_Guide.Communication.Service
 {
-    public class ServerService : IServerService
+    public class ServerService : TCPBase, IServerService
     {
 
         private int _port { get; }
@@ -35,16 +35,14 @@ namespace X_Guide.Communication.Service
 
         CancellationTokenSource cts;
         
-        private string _terminator;
-
-        private string Terminator { get => _terminator; set => _terminator = value ?? "\n"; }
+  
 
 
         public ServerService(IPAddress ip, int port, string terminator)
         {
             _port = port;
             _ip = ip;
-            _terminator = terminator;
+            Terminator = terminator;
         }
 
         public bool getServerStatus()
@@ -166,7 +164,7 @@ namespace X_Guide.Communication.Service
             byte[] buffer = new byte[1024];
             string data = "";
             NetworkStream stream = client.GetStream();
-            while (!data.EndsWith(_terminator))
+            while (!data.EndsWith(Terminator))
             {
                 int bytesRead = await stream.ReadAsync(buffer, 0, buffer.Length);
                 data += Encoding.ASCII.GetString(buffer, 0, bytesRead);
@@ -179,7 +177,7 @@ namespace X_Guide.Communication.Service
 
             }
 
-            string[] messages = data.Split(new[] { _terminator.ToString() }, StringSplitOptions.RemoveEmptyEntries);
+            string[] messages = data.Split(new[] { Terminator.ToString() }, StringSplitOptions.RemoveEmptyEntries);
             foreach (string message in messages)
             {
                 Debug.WriteLine(message);
@@ -230,7 +228,7 @@ namespace X_Guide.Communication.Service
 
         public void SetServerReadTerminator(string terminator)
         {
-            _terminator = terminator ?? "\n";
+            Terminator = terminator ?? "\n";
         }
     }
 

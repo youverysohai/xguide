@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -42,12 +43,14 @@ namespace Xlent_Vision_Guided
             double MoveDist = 10;
             double RotateAngle = 3;
 
+    
+
             //calculate angle differences between vis and robot frame 
             double U_Vis2Robot = Math.Atan2(Vis_Center.Y - Vis_Positive.Y, Vis_Center.X - Vis_Positive.X);
 
             double mm_per_pixel = MoveDist / Vis_Center.CalculateDistance(Vis_Positive);
 
-            Console.WriteLine($"Rotation matrix = {U_Vis2Robot * 180 / Math.PI}");
+            Debug.WriteLine($"Rotation matrix = {U_Vis2Robot * 180 / Math.PI}");
 
             Point Vis_Rotate = new Point();
 

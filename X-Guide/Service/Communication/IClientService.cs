@@ -10,7 +10,7 @@ namespace X_Guide.Communication.Service
     public interface IClientService
     {
         Task ConnectServer();
-        Task WriteDataAsync(string stringData);
+        Task WriteDataAsync(string data);
         Task<Point> GetVisCenter();
     }
 }
