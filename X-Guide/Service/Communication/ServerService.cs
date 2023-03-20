@@ -11,7 +11,7 @@ using System.Threading;
 using System.Threading.Tasks;
 using System.Windows;
 using X_Guide.CustomEventArgs;
-using X_Guide.Service.Communation;
+using X_Guide.Service.Communication;
 using X_Guide.Service.Communication;
 
 
@@ -34,8 +34,8 @@ namespace X_Guide.Communication.Service
         private readonly ConcurrentDictionary<int, TcpClientInfo> _connectedClient = new ConcurrentDictionary<int, TcpClientInfo>();
 
         CancellationTokenSource cts;
-        
-  
+
+
 
 
         public ServerService(IPAddress ip, int port, string terminator)
@@ -59,12 +59,8 @@ namespace X_Guide.Communication.Service
         public async Task StartServer()
         {
             cts = new CancellationTokenSource();
-            // Specify the port number to listen on.
 
-            // Create a TcpListener object.
             _server = new TcpListener(_ip, _port);
-
-            // Start listening for incoming connections.
             try
             {
 
@@ -72,19 +68,14 @@ namespace X_Guide.Communication.Service
                 started = true;
                 ListenerEvent?.Invoke(this, new TcpListenerEventArgs(_server));
 
-                //sct = Server Cancellation Token
-                CancellationToken sct = cts.Token;
-                sct.Register(() =>
-                {
-                    _server.Stop();
-                });
 
-                // Enter the listening loop.
+                CancellationToken sct = cts.Token;
+
+
                 while (!cts.IsCancellationRequested)
                 {
+                    TcpClient client = await Task.Run(() => _server.AcceptTcpClientAsync(), cts.Token);
 
-                    // Wait for a client to connect, implemented 
-                    TcpClient client = await Task.Run(() => _server.AcceptTcpClientAsync(), sct);
                     Debug.WriteLine("Client connected.");
 
                     _connectedClient.TryAdd(client.GetHashCode(), new TcpClientInfo(client));
@@ -92,11 +83,10 @@ namespace X_Guide.Communication.Service
 
                     // Handle the client connection in a separate task.
 #pragma warning disable CS4014 // This warning has to be suppressed to disallow the await keyword from blocking the task
-                    Task.Run(() => ReadClientCommand(client, cts.Token));
+                    Task.Run(() => RecieveDataAsync(client.GetStream(), cts.Token));
 #pragma warning restore CS4014
                 }
             }
-            //throws socket error here
             catch
             {
                 Debug.WriteLine($"Server is closed.");
@@ -106,85 +96,49 @@ namespace X_Guide.Communication.Service
 
         }
 
-
-        private async Task ReadClientCommand(TcpClient client, CancellationToken ct)
+        public async Task StartJogCommand(TcpClientInfo client, Queue<string> commandQueue, CancellationToken cancellationToken)
         {
 
-            // Get the stream for reading and writing data.
-            NetworkStream stream = client.GetStream();
-            _connectedClient.TryAdd(client.GetHashCode(), new TcpClientInfo(client));
-            ct.Register(() => stream.Close());
 
-
-            Queue<TcpClientEventArgs> commandList = new Queue<TcpClientEventArgs>();
-
-            try
+            while (!cancellationToken.IsCancellationRequested)
             {
-                while (!cts.IsCancellationRequested)
+
+                if (commandQueue.Count <= 0)
                 {
-                    await Task.Delay(100, ct);
-                    bool run = true;
-                    while (run)
-                    {
-                        run = await ReadAsync(commandList, ct, client);
-
-                        RunCommand(commandList);
-                        if (!run) throw new Exception();
-
-
-                    }
-
+                    Thread.Sleep(1000);
+                    continue;
                 }
-                /*   DisposeClient(client);*/
+             
+                string jogCommand = commandQueue.Dequeue();
+
+                await ServerWriteDataAsync(jogCommand, client.TcpClient.GetStream());
+                while (await Task.Run(() => RegisterRequestEventHandler((e) => ServerJogCommand(e, client.TcpClient.GetStream())))) { };
+      
+
+                //check if the message can be recieved by the client
+                /* 
+
+                   client.Jogging = false;
+
+                   if (IsMessageSent)
+                   {
+                       Timer timer = new Timer(5000);
+                       timer.AutoReset = false;
+                       timer.Elapsed += (sender, e) => JogCommandExpired(sender, _jogDoneReplyRecieved);
+                       timer.Start();
+                       _jogDoneReplyRecieved.Wait();
+                       timer.Dispose();
+                       _jogDoneReplyRecieved.Reset();
+                   }
+                   else
+                   {
+                       HandleClientDisconnection();
+                       break;
+
+                   }*/
             }
 
-            //throws object dispose exception here
-            catch
-            {/*
-                var errorResponse = Encoding.ASCII.GetBytes("The server connection was forcefully closed!");
-                client.GetStream().Write(errorResponse, 0, errorResponse.Length);*/
-                Debug.WriteLine($"The connection was forcefully closed by the server.");
-                DisposeClient(client);
-            }
-
-
-
-        }
-
-        private async void RunCommand(Queue<TcpClientEventArgs> commandList)
-        {
-            while (commandList.Count > 0)
-            {
-                await Task.Run(() => MessageEvent?.Invoke(this, commandList.Dequeue()));
-            }
-        }
-
-        public async Task<bool> ReadAsync(Queue<TcpClientEventArgs> commandList, CancellationToken ct, TcpClient client)
-        {
-            byte[] buffer = new byte[1024];
-            string data = "";
-            NetworkStream stream = client.GetStream();
-            while (!data.EndsWith(Terminator))
-            {
-                int bytesRead = await stream.ReadAsync(buffer, 0, buffer.Length);
-                data += Encoding.ASCII.GetString(buffer, 0, bytesRead);
-                if (bytesRead == 0)
-                {
-
-                    Debug.WriteLine("Client disconnected.");
-                    return false;
-                }
-
-            }
-
-            string[] messages = data.Split(new[] { Terminator.ToString() }, StringSplitOptions.RemoveEmptyEntries);
-            foreach (string message in messages)
-            {
-                Debug.WriteLine(message);
-                commandList.Enqueue(new TcpClientEventArgs(client, message));
-
-            }
-            return true;
+            Debug.WriteLine("Jog session ended!");
         }
 
 
@@ -196,20 +150,10 @@ namespace X_Guide.Communication.Service
             client.Dispose();
         }
 
-        public async Task<bool> SendMessageAsync(string message, NetworkStream networkStream)
+        public bool ServerJogCommand(NetworkStreamEventArgs e, NetworkStream ce)
         {
-
-            var bytes = Encoding.ASCII.GetBytes(message);
-            try
-            {
-                await networkStream.WriteAsync(bytes, 0, bytes.Length);
-                return true;
-            }
-            catch
-            {
-                return false;
-            }
-
+            if (!e.Data[0].Trim().ToLower().Equals("jogdone") || !e.Equals(ce)) return false;
+            return true;
         }
 
         public ConcurrentDictionary<int, TcpClientInfo> GetConnectedClient()
@@ -228,8 +172,20 @@ namespace X_Guide.Communication.Service
 
         public void SetServerReadTerminator(string terminator)
         {
-            Terminator = terminator ?? "\n";
+            Terminator = terminator;
+        }
+
+        public async Task ServerWriteDataAsync(string data, NetworkStream stream)
+        {
+            await WriteDataAsync(data, stream);
         }
     }
-
 }
+
+
+
+
+
+
+
+

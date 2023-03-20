@@ -8,9 +8,10 @@ using System.Threading.Tasks;
 using System.Windows.Forms;
 using System.Windows.Input;
 using VM.Core;
+using X_Guide.Communication.Service;
 using X_Guide.MVVM.Command;
 using X_Guide.MVVM.ViewModel.CalibrationWizardSteps;
-using X_Guide.Service.Communation;
+using X_Guide.Service.Communication;
 
 namespace X_Guide.MVVM.ViewModel
 {
@@ -19,7 +20,7 @@ namespace X_Guide.MVVM.ViewModel
         public ICommand OpenFileCommand { get; }
 
         private CalibrationViewModel _setting;
-        private readonly ServerCommand _serverCommand;
+        private readonly IServerService _serverService;
         private ObservableCollection<string> _visionFlow;
 
         public ObservableCollection<string> VisionFlow
@@ -58,10 +59,10 @@ namespace X_Guide.MVVM.ViewModel
         }
 
 
-        public Step3ViewModel(CalibrationViewModel setting, ServerCommand serverCommand)
+        public Step3ViewModel(CalibrationViewModel setting, IServerService serverService)
         {
             _setting = setting;
-            _serverCommand = serverCommand;
+            _serverService = serverService;
         }
 
         private void OnItemChanged(string value)
@@ -85,7 +86,7 @@ namespace X_Guide.MVVM.ViewModel
 
         public override ViewModelBase GetNextViewModel()
         {
-            return new Step4ViewModel(_setting, _serverCommand);
+            return new Step4ViewModel(_setting, _serverService);
         }
     }
 }

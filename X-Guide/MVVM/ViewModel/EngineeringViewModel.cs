@@ -11,12 +11,13 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Controls;
 using System.Windows.Input;
+using X_Guide.Communication.Service;
 using X_Guide.MVVM.Command;
 using X_Guide.MVVM.Store;
 
 using X_Guide.MVVM.ViewModel.CalibrationWizardSteps;
 using X_Guide.Service;
-using X_Guide.Service.Communation;
+using X_Guide.Service.Communication;
 using X_Guide.Service.DatabaseProvider;
 
 namespace X_Guide.MVVM.ViewModel
@@ -99,7 +100,7 @@ namespace X_Guide.MVVM.ViewModel
 
 
 
-        public EngineeringViewModel(IMachineService machineService, IMapper mapper, string name, ServerCommand serverCommand)
+        public EngineeringViewModel(IMachineService machineService, IMapper mapper, string name, IServerService serverService)
         {
 
 
@@ -114,7 +115,7 @@ namespace X_Guide.MVVM.ViewModel
                 Name = name
             };
 
-            _navigationStore.CurrentViewModel = new Step1ViewModel(machineService, mapper, Setting, serverCommand);
+            _navigationStore.CurrentViewModel = new Step1ViewModel(machineService, mapper, Setting, serverService);
             CurrentNode = _navigationHistory.AddLast(CurrentViewModel);
         }
 

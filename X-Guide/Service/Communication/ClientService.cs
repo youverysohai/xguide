@@ -7,6 +7,7 @@ using System.Net.Sockets;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
+using X_Guide.CustomEventArgs;
 using X_Guide.Service;
 using X_Guide.Service.Communication;
 using Xlent_Vision_Guided;
@@ -30,6 +31,7 @@ namespace X_Guide.Communication.Service
 
         public async Task ConnectServer()
         {
+
             try
             {
                 _client = new TcpClient();
@@ -54,8 +56,10 @@ namespace X_Guide.Communication.Service
             
         }
 
-        private Point GetVisCenterEvent(string[] data)
+        private Point GetVisCenterEvent(NetworkStreamEventArgs e)
         {
+            string[] data = e.Data;
+
             if (data.Length == 2)
             {
                 Point point = new Point

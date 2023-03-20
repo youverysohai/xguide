@@ -9,7 +9,7 @@ using System.Windows.Navigation;
 using X_Guide.Communication.Service;
 using X_Guide.MVVM.Command;
 using X_Guide.MVVM.Store;
-using X_Guide.Service.Communation;
+using X_Guide.Service.Communication;
 using X_Guide.Service.DatabaseProvider;
 using Xlent_Vision_Guided;
 
@@ -28,7 +28,7 @@ namespace X_Guide.MVVM.ViewModel
             set { _name = value; }
         }
         private bool _isStarted;
-        private readonly ServerCommand _serverCommand;
+        private readonly IServerService _serverService;
 
         public bool IsStarted
         {
@@ -40,11 +40,11 @@ namespace X_Guide.MVVM.ViewModel
         public NavigationStore _navigationStore { get; }
         private  IMachineService _machineDB { get; }
 
-        public CalibrationWizardStartViewModel(NavigationStore navigationStore, IMachineService machineService, IMapper mapper, ServerCommand serverCommand, IClientService clientService, VisionGuided visAlgorithm) { 
+        public CalibrationWizardStartViewModel(NavigationStore navigationStore, IMachineService machineService, IMapper mapper, IServerService serverService, IClientService clientService, VisionGuided visAlgorithm) { 
             StartCommand = new RelayCommand(start);
             _navigationStore = navigationStore;
             _machineDB = machineService;
-            _serverCommand = serverCommand;
+            _serverService = serverService;
             _mapper = mapper;
             _clientService = clientService;
             _visAlgorithm = visAlgorithm;
@@ -52,10 +52,10 @@ namespace X_Guide.MVVM.ViewModel
         private async void start(object arg)
         {
             IsStarted = true;
-            /*          _navigationStore.CurrentViewModel = new EngineeringViewModel(_machineDB, _mapper, _name, _serverCommand);*/
-            Point Vis_Center = await _clientService.GetVisCenter();
+            _navigationStore.CurrentViewModel = new EngineeringViewModel(_machineDB, _mapper, _name, _serverService);
+/*            Point Vis_Center = await _clientService.GetVisCenter();
             Point Vis_Positive = new Point();
-            _visAlgorithm.FindEyeInHandXYMoves(Vis_Center, Vis_Positive);
+            _visAlgorithm.FindEyeInHandXYMoves(Vis_Center, Vis_Positive);*/
         }
     
     }

@@ -13,11 +13,12 @@ using System.Windows.Input;
 using System.Windows.Media.Imaging;
 using System.Windows.Threading;
 using VM.Core;
+using X_Guide.Communication.Service;
 using X_Guide.CustomEventArgs;
 using X_Guide.MVVM.Command;
 using X_Guide.MVVM.ViewModel.CalibrationWizardSteps;
 using X_Guide.Service;
-using X_Guide.Service.Communation;
+
 using X_Guide.Service.Communication;
 
 namespace X_Guide.MVVM.ViewModel
@@ -28,8 +29,9 @@ namespace X_Guide.MVVM.ViewModel
         private int _jogDistance;
         private CancellationTokenSource cancelJog;
         private readonly CalibrationViewModel _setting;
-        private readonly ServerCommand _serverCommand;
+        private readonly IServerService _serverService;
         private BackgroundService searchClient;
+        private Queue<string> commandQueue = new Queue<string>();
 
         VmProcedure p;
 
@@ -66,17 +68,19 @@ namespace X_Guide.MVVM.ViewModel
         }
 
       
-        public Step5ViewModel(CalibrationViewModel setting, ServerCommand serverCommand)
+        public Step5ViewModel(CalibrationViewModel setting, IServerService serverService)
         {
 
             ReconnectCommand = new RelayCommand(null);
             JogCommand = new RelayCommand(Jog, CanStartJog);
             _setting = setting;
-            _serverCommand = serverCommand;
-            _serverCommand.ClientDisconnectedEvent += HandleClientDisconnection;
+            _serverService = serverService;
+/*            _serverService.ClientDisconnectedEvent += HandleClientDisconnection;*/
             ReconnectCommand = new RelayCommand(testing);
+
             searchClient = new BackgroundService(SearchForClient);
             searchClient.Start();
+
         }
 
 
@@ -100,8 +104,8 @@ namespace X_Guide.MVVM.ViewModel
         {
             try
             {
-                var tcpClient = _serverCommand.GetConnectedClient().First().Value;
-      
+                var tcpClient = _serverService.GetConnectedClient().First().Value;
+
                 Application.Current.Dispatcher.Invoke(() => TcpClient = tcpClient);
                 searchClient.Stop();
 
@@ -134,7 +138,7 @@ namespace X_Guide.MVVM.ViewModel
             }
             string terminator = "\r\n";
             string command = String.Format("JOG,{0},{1},{2},{3},{4},0,0,{5},{6}{7}", JogMode, x, y, z, rz, _setting.Speed, _setting.Acceleration, terminator);
-            _serverCommand.commandQeueue.Enqueue(command);
+            commandQueue.Enqueue(command);
         }
 
         private bool CanStartJog(object parameter)
@@ -142,13 +146,13 @@ namespace X_Guide.MVVM.ViewModel
             return _canJog;
         }
 
-        private void StartJog()
+        private async void StartJog()
         {
  
             if (_tcpClient != null)
-            {
+            {   
                 cancelJog = new CancellationTokenSource();
-                _serverCommand.StartJogCommand(_tcpClient, cancelJog.Token);
+                await Task.Run(()=> _serverService.StartJogCommand(_tcpClient, commandQueue, cancelJog.Token));
             }
         }
 

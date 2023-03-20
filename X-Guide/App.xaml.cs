@@ -17,7 +17,7 @@ using X_Guide.MVVM.Model;
 using X_Guide.MVVM.Store;
 using X_Guide.MVVM.ViewModel;
 using X_Guide.Service;
-using X_Guide.Service.Communation;
+using X_Guide.Service.Communication;
 using X_Guide.Service.DatabaseProvider;
 using Xlent_Vision_Guided;
 
@@ -38,7 +38,6 @@ namespace X_Guide
         private IServerService _serverService;
         private ResourceDictionary _resourceDictionary;
         private IMachineService _machineDb;
-        private ServerCommand _serverCommand;
         private MapperConfiguration _mapperConfig;
         private IClientService _clientService;
         private VisionGuided _visAlgorithm;
@@ -64,8 +63,8 @@ namespace X_Guide
 
             
             _serverService = new ServerService(IPAddress.Parse("192.168.10.92"), 8000, "\n");
-            _serverCommand = new ServerCommand(_serverService);
-            _serverCommand.StartServer();
+            _serverService.StartServer();
+         
 
             _clientService = new ClientService(IPAddress.Parse("192.168.10.90"), 8000);
             _clientService.ConnectServer();
@@ -134,7 +133,7 @@ namespace X_Guide
         }
         private ViewModelBase CreateEngineeringViewModel()
         {
-            return new EngineeringViewModel(_machineDb, _mapperConfig.CreateMapper(), "My New Setting", _serverCommand);
+            return new EngineeringViewModel(_machineDb, _mapperConfig.CreateMapper(), "My New Setting", _serverService);
         }
 
         private ViewModelBase CreateUndefinedViewModel()
@@ -161,7 +160,7 @@ namespace X_Guide
         }
         private ViewModelBase CreateCalibrationWizardStart()
         {
-            return new CalibrationWizardStartViewModel(_navigationStore, _machineDb, _mapperConfig.CreateMapper(), _serverCommand, _clientService, _visAlgorithm);
+            return new CalibrationWizardStartViewModel(_navigationStore, _machineDb, _mapperConfig.CreateMapper(), _serverService, _clientService, _visAlgorithm);
         }
 
 

@@ -6,24 +6,25 @@ using System.Net.Sockets;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
+using X_Guide.CustomEventArgs;
 
 namespace X_Guide.Service.Communication
 {
     public class TCPBase 
     {
 
-        private event EventHandler<string[]> _dataReceived;
+        private event EventHandler<NetworkStreamEventArgs> _dataReceived;
 
         private string _terminator;
         protected string Terminator { get => _terminator; set => _terminator = value ?? "\n"; }
-        protected T RegisterRequestEventHandler<T>(Func<string[], T> action)
+        protected T RegisterRequestEventHandler<T>(Func<NetworkStreamEventArgs, T> action)
         {
 
             using (ManualResetEventSlim resetEvent = new ManualResetEventSlim())
             {
                 T data = default(T);
 
-                EventHandler<string[]> eventHandler = (s, e) =>
+                EventHandler<NetworkStreamEventArgs> eventHandler = (s, e) =>
                 {
                     data = action.Invoke(e);
                     if (data != null) resetEvent.Set();
@@ -50,7 +51,7 @@ namespace X_Guide.Service.Communication
                 string responseData = string.Empty;
                 int bytes = await stream.ReadAsync(data, 0, data.Length);
                 responseData += Encoding.ASCII.GetString(data, 0, bytes);
-                ProcessServerData(responseData, ',');
+                ProcessServerData(responseData, ',', stream);
                 await Task.Delay(1000);
             
             }
@@ -64,12 +65,12 @@ namespace X_Guide.Service.Communication
 
         }
 
-        private void ProcessServerData(string data, char seperator)
+        private void ProcessServerData(string data, char seperator, NetworkStream stream)
         {
             try
             {
                 string[] segment = data.Split(seperator);
-                OnDataRecieved(this, segment);
+                OnDataRecieved(this, new NetworkStreamEventArgs(stream, segment));
             }
 
             catch (Exception ex)
@@ -78,7 +79,7 @@ namespace X_Guide.Service.Communication
             }
         }
 
-        protected void OnDataRecieved(object s, string[] e)
+        protected void OnDataRecieved(object s, NetworkStreamEventArgs e)
         {
             _dataReceived?.Invoke(s, e);
         }

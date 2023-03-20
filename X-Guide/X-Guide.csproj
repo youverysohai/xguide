@@ -676,6 +676,7 @@
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Compile>
     <Compile Include="CustomEventArgs\BitMapImageArgs.cs" />
+    <Compile Include="CustomEventArgs\NetworkStreamEventArgs.cs" />
     <Compile Include="CustomEventArgs\TcpClientEventArgs.cs" />
     <Compile Include="CustomEventArgs\TcpListenerEventArgs.cs" />
     <Compile Include="EnumClass\MountingOrientation.cs" />
