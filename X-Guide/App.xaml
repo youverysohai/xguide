@@ -4,7 +4,7 @@
              xmlns:local="clr-namespace:X_Guide"
              xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
              xmlns:hc="https://handyorg.github.io/handycontrol"
-              
+             xmlns:ui="http://schemas.modernwpf.com/2019" 
        >
     <Application.Resources>
         <ResourceDictionary>
@@ -20,6 +20,8 @@
                 <!--<vm:ViewModelLocator x:Key="Locator" d:IsDataSource="True" xmlns:vm="clr-namespace:iAI.ViewModel" />-->
                 <hc:ThemeResources RequestedTheme="Dark" AccentColor="#80B9EE"/>
                 <hc:Theme/>
+                <ui:ThemeResources />
+                <ui:XamlControlsResources />
             </ResourceDictionary.MergedDictionaries>
         </ResourceDictionary>
     </Application.Resources>
