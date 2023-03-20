@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Xlent_Vision_Guided
 {
-    internal class Point
+    public class Point
     {
         public double X { get; set; }
         public double Y { get; set; }
@@ -20,6 +20,11 @@ namespace Xlent_Vision_Guided
         {
             X = x;
             Y = y;
+        }
+
+        public override string ToString()
+        {
+            return String.Format("X: {0}, Y: {1}", X, Y);
         }
 
         public double CalculateDistance(Point point)

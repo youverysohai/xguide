@@ -40,6 +40,7 @@ namespace X_Guide
         private IMachineService _machineDb;
         private ServerCommand _serverCommand;
         private MapperConfiguration _mapperConfig;
+        private IClientService _clientService;
 
 
         public App()
@@ -53,6 +54,7 @@ namespace X_Guide
             }
                 );
 
+
             _dbContextFactory = new DbContextFactory();
             _userProvider = new UserService(_dbContextFactory);
             _machineDb = new MachineService(_dbContextFactory);
@@ -63,6 +65,10 @@ namespace X_Guide
             _serverService = new ServerService(IPAddress.Parse("192.168.10.92"), 8000, "\n");
             _serverCommand = new ServerCommand(_serverService);
             _serverCommand.StartServer();
+
+            _clientService = new ClientService(IPAddress.Parse("192.168.10.90"), 8000);
+            _clientService.ConnectServer();
+            
 
             _navigationStore = new NavigationStore();
             _wizardNavigationStore = new NavigationStore();
@@ -154,7 +160,7 @@ namespace X_Guide
         }
         private ViewModelBase CreateCalibrationWizardStart()
         {
-            return new CalibrationWizardStartViewModel(_navigationStore, _machineDb, _mapperConfig.CreateMapper(), _serverCommand);
+            return new CalibrationWizardStartViewModel(_navigationStore, _machineDb, _mapperConfig.CreateMapper(), _serverCommand, _clientService);
         }
 
 

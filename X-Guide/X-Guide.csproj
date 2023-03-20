@@ -786,6 +786,7 @@
     </Compile>
     <Compile Include="Validation\IPValidation.cs" />
     <Compile Include="Utility\PasswordHashUtility.cs" />
+    <Compile Include="Vision\testing.cs" />
     <Compile Include="XGuideModel.Context.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -1033,7 +1034,3 @@
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
-
-
-
-

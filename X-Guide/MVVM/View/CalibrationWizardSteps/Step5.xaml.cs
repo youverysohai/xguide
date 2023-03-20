@@ -47,8 +47,33 @@ namespace X_Guide.MVVM.View.CalibrationWizardSteps
         }
         private void p_box_Loaded(object sender, RoutedEventArgs e)
         {
-           
 
+
+            try
+            {
+                
+                VmSolution.Import(@"C:\Users\Xlent_XIR02\Desktop\livecam.sol");
+
+                VmSolution.CreatSolInstance();
+                p = (VmProcedure)VmSolution.Instance["Flow1"];
+                
+                p.Run();
+
+                p_box.LoadFrontendSource();
+                
+                //p_box.BindSingleProcedure(p.ToString());
+                
+                p_box.AutoChangeSize();
+
+            }
+            catch
+            {
+                Debug.WriteLine("Everything is fine");
+            }
+            finally
+            {
+                Debug.WriteLine("Chun fault nia ma");
+            }
 
 
         }
