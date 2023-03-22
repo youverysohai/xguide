@@ -31,7 +31,8 @@ namespace X_Guide.MVVM.ViewModel
         private readonly CalibrationViewModel _setting;
         private readonly IServerService _serverService;
         private BackgroundService searchClient;
-        private Queue<string> commandQueue = new Queue<string>();
+
+        private Queue<JogCommand> commandQueue = new Queue<JogCommand>();
 
         VmProcedure p;
 
@@ -51,8 +52,8 @@ namespace X_Guide.MVVM.ViewModel
                 _tcpClient = value;
                 if (value != null)
                 {
-                    StartJog();
-                    OnJogCanExecuteChanged(true);
+                    InitiateJog();
+;                    OnJogCanExecuteChanged(true);
                 }
             }
         }
@@ -80,6 +81,7 @@ namespace X_Guide.MVVM.ViewModel
 
             searchClient = new BackgroundService(SearchForClient);
             searchClient.Start();
+           
 
         }
 
@@ -117,28 +119,32 @@ namespace X_Guide.MVVM.ViewModel
 
         }
 
-
+        private async void InitiateJog()
+        {
+            await Task.Run(()=> StartJog());
+        }
         private void Jog(object parameter)
         {
-            if (JogDistance == 0) JogDistance = 10;
-            int x = 0, y = 0, z = 0, rz = 0;
-            switch (parameter)
-            {
-                case "Y+": y = JogDistance; break;
-                case "Y-": y = -JogDistance; break;
-                case "X+": x = JogDistance; break;
-                case "X-": x = -JogDistance; break;
-                case "Z+": z = JogDistance; break;
-                case "Z-": z = -JogDistance; break;
-                case "RZ+": rz = JogDistance; break;
-                case "RZ-": rz = -JogDistance; break;
-                default: break;
+ 
+            
+                if (JogDistance == 0) JogDistance = 10;
+                int x = 0, y = 0, z = 0, rz = 0;
 
-
-            }
-            string terminator = "\r\n";
-            string command = String.Format("JOG,{0},{1},{2},{3},{4},0,0,{5},{6}{7}", JogMode, x, y, z, rz, _setting.Speed, _setting.Acceleration, terminator);
+                switch (parameter)
+                {
+                    case "Y+": y = JogDistance; break;
+                    case "Y-": y = -JogDistance; break;
+                    case "X+": x = JogDistance; break;
+                    case "X-": x = -JogDistance; break;
+                    case "Z+": z = JogDistance; break;
+                    case "Z-": z = -JogDistance; break;
+                    case "RZ+": rz = JogDistance; break;
+                    case "RZ-": rz = -JogDistance; break;
+                    default: break;
+                }
+            JogCommand command = new JogCommand().SetX(x).SetY(y).SetZ(z).SetRZ(rz).SetSpeed(_setting.Speed).SetAcceleration(_setting.Acceleration);
             commandQueue.Enqueue(command);
+            
         }
 
         private bool CanStartJog(object parameter)
@@ -148,11 +154,17 @@ namespace X_Guide.MVVM.ViewModel
 
         private async void StartJog()
         {
- 
-            if (_tcpClient != null)
-            {   
-                cancelJog = new CancellationTokenSource();
-                await Task.Run(()=> _serverService.StartJogCommand(_tcpClient, commandQueue, cancelJog.Token));
+            cancelJog = new CancellationTokenSource();
+            CancellationToken ct = cancelJog.Token;
+            while (!ct.IsCancellationRequested)
+            {
+                if (commandQueue.Count <= 0)
+                {
+                    Thread.Sleep(1000);
+                    continue;
+                }
+
+                await _serverService.SendJogCommand(_tcpClient, commandQueue.Dequeue());
             }
         }
 

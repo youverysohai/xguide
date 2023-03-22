@@ -10,7 +10,7 @@ using X_Guide.CustomEventArgs;
 
 namespace X_Guide.Service.Communication
 {
-    public class TCPBase 
+    public class TCPBase
     {
 
         private event EventHandler<NetworkStreamEventArgs> _dataReceived;
@@ -40,6 +40,11 @@ namespace X_Guide.Service.Communication
             }
         }
 
+        public TCPBase(string terminator)
+        {
+            Terminator = terminator;
+        }
+
         virtual protected async Task RecieveDataAsync(NetworkStream stream, CancellationToken ct)
         {
 
@@ -53,14 +58,14 @@ namespace X_Guide.Service.Communication
                 responseData += Encoding.ASCII.GetString(data, 0, bytes);
                 ProcessServerData(responseData, ',', stream);
                 await Task.Delay(1000);
-            
+
             }
             stream.Close();
         }
 
         protected async Task WriteDataAsync(string data, NetworkStream stream)
         {
-            byte[] bytes = Encoding.ASCII.GetBytes(data);
+            byte[] bytes = Encoding.ASCII.GetBytes(data + Terminator);
             await stream.WriteAsync(bytes, 0, bytes.Length);
 
         }

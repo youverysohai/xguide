@@ -19,7 +19,7 @@ namespace Xlent_Vision_Guided
         public Point(double x, double y)
         {
             X = x;
-            Y = y;
+            Y = -y;
         }
 
         public override string ToString()

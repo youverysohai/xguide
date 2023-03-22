@@ -62,7 +62,7 @@ namespace X_Guide
             InitializeAppConfiguration();
 
             
-            _serverService = new ServerService(IPAddress.Parse("192.168.10.92"), 8000, "\n");
+            _serverService = new ServerService(IPAddress.Parse("192.168.10.92"), 8000, "\r\n");
             _serverService.StartServer();
          
 

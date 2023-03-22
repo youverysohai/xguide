@@ -34,15 +34,13 @@ namespace X_Guide.Communication.Service
         private readonly ConcurrentDictionary<int, TcpClientInfo> _connectedClient = new ConcurrentDictionary<int, TcpClientInfo>();
 
         CancellationTokenSource cts;
+   
 
-
-
-
-        public ServerService(IPAddress ip, int port, string terminator)
+        public ServerService(IPAddress ip, int port, string terminator = null) : base(terminator)
         {
             _port = port;
             _ip = ip;
-            Terminator = terminator;
+        
         }
 
         public bool getServerStatus()
@@ -96,22 +94,13 @@ namespace X_Guide.Communication.Service
 
         }
 
-        public async Task StartJogCommand(TcpClientInfo client, Queue<string> commandQueue, CancellationToken cancellationToken)
+        public async Task SendJogCommand(TcpClientInfo client, JogCommand jogCommand)
         {
 
 
-            while (!cancellationToken.IsCancellationRequested)
-            {
+    
 
-                if (commandQueue.Count <= 0)
-                {
-                    Thread.Sleep(1000);
-                    continue;
-                }
-             
-                string jogCommand = commandQueue.Dequeue();
-
-                await ServerWriteDataAsync(jogCommand, client.TcpClient.GetStream());
+                await ServerWriteDataAsync(jogCommand.ToString(), client.TcpClient.GetStream());
                 while (await Task.Run(() => RegisterRequestEventHandler((e) => ServerJogCommand(e, client.TcpClient.GetStream())))) { };
       
 
@@ -136,9 +125,7 @@ namespace X_Guide.Communication.Service
                        break;
 
                    }*/
-            }
-
-            Debug.WriteLine("Jog session ended!");
+            
         }
 
 

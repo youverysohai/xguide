@@ -9,88 +9,110 @@ namespace Xlent_Vision_Guided
 {
     class VisionGuided
     {
-        // input variable declaration
-        private double[] Vision_X = new double[9];
-        private double[] Vision_Y = new double[9];
-        private double[] Robot_X = new double[9];
-        private double[] Robot_Y = new double[9];
-        // output variable declaration
-        private double[] Calib_Data = new double[3];
 
-
-        Point[] VisionCoords = new Point[9];
-        Point[] RobotCoords = new Point[9];
-
-
-        // scaling variable declaration
-        private double pixel_per_mm;
-        private double[] robot_distance = new double[12];
-        // calibration calculation variable declaration
-        private double[] x_offset = new double[8];
-        private double[] y_offset = new double[8];
-        private double[] theta_offset = new double[8];
-
-
-        //Operation Variable
-        private double[] Operate_Data = new double[3];
 
         //===========================================================================================================================================
         // 2D EYE IN HAND CONFIGURATION
         //===========================================================================================================================================
-        public void FindEyeInHandXYMoves(Point Vis_Center, Point Vis_Positive)
+        public double[] FindEyeInHandXYMoves(Point Vis_Center, Point Vis_Positive, Point Vis_Rotate, int jogDistance, int rotateAngle)
         {
-
-            double MoveDist = 10;
-            double RotateAngle = 3;
-
-    
 
             //calculate angle differences between vis and robot frame 
             double U_Vis2Robot = Math.Atan2(Vis_Center.Y - Vis_Positive.Y, Vis_Center.X - Vis_Positive.X);
+            Debug.WriteLine($"Rotation Matrix : {RadToDeg(U_Vis2Robot)}");
+            double pixelDistance = Vis_Center.CalculateDistance(Vis_Positive);
+            Debug.WriteLine($"Pixel Distance : {pixelDistance}");
+            double mm_per_pixel = jogDistance / pixelDistance;
 
-            double mm_per_pixel = MoveDist / Vis_Center.CalculateDistance(Vis_Positive);
+            double rotationAngle = DegToRad(rotateAngle);
+            Debug.WriteLine($"Rotation Angle : {rotationAngle}");
 
-            Debug.WriteLine($"Rotation matrix = {U_Vis2Robot * 180 / Math.PI}");
+            Debug.WriteLine($"mm_per pixel = {mm_per_pixel}");
 
-            Point Vis_Rotate = new Point();
+
+
+
+
 
             double Vis_RotateDistance = Vis_Center.CalculateDistance(Vis_Rotate);
-            double End_To_Obj_Dist = Vis_RotateDistance * Math.Sin(RotateAngle / 2) / Math.Sin(RotateAngle);
+            Debug.WriteLine($"Rotate Distance = {Vis_RotateDistance}");
+            double End_To_Obj_Dist = Vis_RotateDistance / Math.Sin(rotationAngle) * Math.Sin(DegToRad(90) - rotationAngle / 2);
+
 
             //Rotation
-            double RotationAngleOffset = U_Vis2Robot - RotateAngle;
+            double RotationAngleOffset = U_Vis2Robot - rotationAngle;
+            Debug.WriteLine("Rotation offset = " + RotationAngleOffset);
             Point RotatedFrame_Point_Center = new Point
             {
-                X = Vis_Center.X * Math.Cos(RotationAngleOffset) + Vis_Center.X * Math.Sin(RotationAngleOffset),
+                X = Vis_Center.X * Math.Cos(RotationAngleOffset) + Vis_Center.Y * Math.Sin(RotationAngleOffset),
                 Y = -Vis_Center.X * Math.Sin(RotationAngleOffset) + Vis_Center.Y * Math.Cos(RotationAngleOffset),
             };
 
+            Debug.WriteLine($"For rotated center point= {RotatedFrame_Point_Center}");
+
             Point RotatedFrame_Point_Rotate = new Point
             {
-                X = Vis_Rotate.X * Math.Cos(RotationAngleOffset) + Vis_Rotate.X * Math.Sin(RotationAngleOffset),
+                X = Vis_Rotate.X * Math.Cos(RotationAngleOffset) + Vis_Rotate.Y * Math.Sin(RotationAngleOffset),
                 Y = -Vis_Rotate.X * Math.Sin(RotationAngleOffset) + Vis_Rotate.Y * Math.Cos(RotationAngleOffset),
             };
+            Debug.WriteLine($"For rotated rotation point= {RotatedFrame_Point_Rotate}");
 
             double XDif = RotatedFrame_Point_Rotate.X - RotatedFrame_Point_Center.X;
             double YDif = RotatedFrame_Point_Rotate.Y - RotatedFrame_Point_Center.Y;
+            Debug.WriteLine($"XDif: {XDif}, YDif : {YDif}");
 
-            double Seg_Offset = 0;
+            double End_To_Obj_Deg;
+            double atan2 = RadToDeg(Math.Atan2(Math.Abs(YDif), Math.Abs(XDif)));
 
-            if (YDif >= 0 && XDif >= 0) Seg_Offset = 90;
-            else if (YDif >= 0 && XDif < 0) Seg_Offset = 180;
-            else if (YDif < 0 && XDif < 0) Seg_Offset = 270;
 
-            Console.WriteLine($"Segment Offset = {Seg_Offset}");
+            if (YDif >= 0 && XDif >= 0)
+            {
+                End_To_Obj_Deg = 90 - RadToDeg(rotationAngle / 2) + atan2;
+            }
+            else if (YDif >= 0 && XDif < 0)
+            {
+                End_To_Obj_Deg = 270 - RadToDeg(rotationAngle / 2) - atan2;
+            }
+            else if (YDif < 0 && XDif < 0)
+            {
+                End_To_Obj_Deg = 270 - RadToDeg(rotationAngle / 2) + atan2;
 
-            double End_To_Obj_Angle = Seg_Offset - (RotateAngle / 2) + Math.Atan2(Math.Abs(YDif), Math.Abs(XDif));
+            }
+            else
+            {
+                End_To_Obj_Deg = 90 - RadToDeg(rotationAngle / 2) - atan2;
+            }
 
-            double X_Move = End_To_Obj_Dist * Math.Cos(End_To_Obj_Angle);
-            double Y_Move = End_To_Obj_Dist * Math.Sin(End_To_Obj_Angle);
-            Console.WriteLine($"X_Move = {X_Move}, Y_Move = {Y_Move}");
+            double End_To_Obj_Rad = DegToRad(End_To_Obj_Deg);
+            Debug.WriteLine($"End_To_Obj_Angle = {End_To_Obj_Deg}");
+            Debug.WriteLine($"End-To-Object Distance = {End_To_Obj_Dist * mm_per_pixel}");
+            double X_Move = End_To_Obj_Dist * Math.Cos(End_To_Obj_Rad) * mm_per_pixel;
+            double Y_Move = End_To_Obj_Dist * Math.Sin(End_To_Obj_Rad) * mm_per_pixel;
+            Point OriginalPoint = new Point()
+            {
+                X = 89.7725777133691,
+                Y = 16.5052745624083,
+            };
+
+            Debug.WriteLine($"\nOldX_Move = {OriginalPoint.X}, Old_Y_Move={OriginalPoint.Y}");
+            Debug.WriteLine($"NewX_Move = {X_Move}, NewY_Move = {Y_Move}\n\n\n");
+
+            return new double[] { X_Move, Y_Move };
+        }
+
+        double RadToDeg(double rad)
+        {
+            return rad * (180 / Math.PI);
+
 
         }
 
+        double DegToRad(double deg)
+        {
+            return deg * (Math.PI / 180);
+        }
 
+ 
 
 
 

@@ -23,7 +23,7 @@ namespace X_Guide.Communication.Service
         private IPAddress _ipAddress;
         private CancellationTokenSource cts;
 
-        public ClientService(IPAddress ipAddress, int port)
+        public ClientService(IPAddress ipAddress, int port, string terminator = null) : base(terminator)
         {
             _ipAddress = ipAddress;
             _port = port;
@@ -62,11 +62,9 @@ namespace X_Guide.Communication.Service
 
             if (data.Length == 2)
             {
-                Point point = new Point
-                {
-                    X = double.Parse(data[0]),
-                    Y = double.Parse(data[1]),
-                };
+           
+                Point point = new Point(double.Parse(data[0]), double.Parse(data[1]));
+               
                 return point;
 
             }
