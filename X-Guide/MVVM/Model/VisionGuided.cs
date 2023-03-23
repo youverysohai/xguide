@@ -7,14 +7,14 @@ using System.Threading.Tasks;
 
 namespace Xlent_Vision_Guided
 {
-    class VisionGuided
+    static class VisionGuided
     {
 
 
         //===========================================================================================================================================
         // 2D EYE IN HAND CONFIGURATION
         //===========================================================================================================================================
-        public double[] FindEyeInHandXYMoves(Point Vis_Center, Point Vis_Positive, Point Vis_Rotate, int jogDistance, int rotateAngle)
+        public static double[] FindEyeInHandXYMoves(Point Vis_Center, Point Vis_Positive, Point Vis_Rotate, int jogDistance, int rotateAngle)
         {
 
             //calculate angle differences between vis and robot frame 
@@ -100,14 +100,14 @@ namespace Xlent_Vision_Guided
             return new double[] { X_Move, Y_Move };
         }
 
-        double RadToDeg(double rad)
+        static double RadToDeg(double rad)
         {
             return rad * (180 / Math.PI);
 
 
         }
 
-        double DegToRad(double deg)
+        static double DegToRad(double deg)
         {
             return deg * (Math.PI / 180);
         }

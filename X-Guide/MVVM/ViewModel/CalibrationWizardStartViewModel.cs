@@ -1,4 +1,5 @@
-﻿using AutoMapper;
+﻿using Autofac;
+using AutoMapper;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
@@ -6,10 +7,10 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Input;
-using System.Windows.Navigation;
 using X_Guide.Communication.Service;
 using X_Guide.MVVM.Command;
 using X_Guide.MVVM.Store;
+using X_Guide.Service;
 using X_Guide.Service.Communication;
 using X_Guide.Service.DatabaseProvider;
 using Xlent_Vision_Guided;
@@ -20,7 +21,8 @@ namespace X_Guide.MVVM.ViewModel
     {
         private IMapper _mapper;
         private IClientService _clientService;
-        private VisionGuided _visAlgorithm;
+        private readonly INavigationService _navigationService;
+        private readonly IViewModelLocator _viewModelLocator;
         private string _name;
 
         public string Name
@@ -41,33 +43,29 @@ namespace X_Guide.MVVM.ViewModel
         public NavigationStore _navigationStore { get; }
         private IMachineService _machineDB { get; }
 
-        public CalibrationWizardStartViewModel(NavigationStore navigationStore, IMachineService machineService, IMapper mapper, IServerService serverService, IClientService clientService, VisionGuided visAlgorithm)
+        public CalibrationWizardStartViewModel(IServerService serverService, IClientService clientService, IViewModelLocator viewModelLocator, NavigationStore navigationStore)
         {
-            StartCommand = new RelayCommand(start);
-            _navigationStore = navigationStore;
-            _machineDB = machineService;
+            StartCommand = new RelayCommand(start);       
             _serverService = serverService;
-            _mapper = mapper;
             _clientService = clientService;
-            _visAlgorithm = visAlgorithm;
+            _navigationService = new NavigationService(navigationStore);
+            _viewModelLocator = viewModelLocator;
+
         }
         private void start(object arg)
         {
-            IsStarted = true;
-            _navigationStore.CurrentViewModel = new EngineeringViewModel(_machineDB, _mapper, _name, _serverService);
-            /*
-                        FindXMoveYMove(10, 3);*/
+            /*            IsStarted = true;
+                        _navigationStore.CurrentViewModel = new EngineeringViewModel(_machineDB, _mapper, _name, _serverService, _clientService);*/
+            /*         FindXMoveYMove(30, 15);*/
 
-
-
-
-
+            _navigationService.Navigate(_viewModelLocator.CreateCalibrationMainViewModel(Name));
         }
+
         private async void FindXMoveYMove(int jogDistance, int rotateAngle)
         {
-            
+
             Point Vis_Center = await _clientService.GetVisCenter();
-          
+
             TcpClientInfo tcpClientInfo = _serverService.GetConnectedClient().First().Value;
             await _serverService.SendJogCommand(tcpClientInfo, new JogCommand().SetX(jogDistance));
             await Task.Delay(2000);
@@ -79,11 +77,12 @@ namespace X_Guide.MVVM.ViewModel
             Point Vis_Rotate = await _clientService.GetVisCenter();
             await Task.Delay(1000);
             await _serverService.SendJogCommand(tcpClientInfo, new JogCommand().SetRZ(-rotateAngle));
-            double[] MoveOffset = _visAlgorithm.FindEyeInHandXYMoves(Vis_Center, Vis_Positive, Vis_Rotate, jogDistance, rotateAngle);
+            double[] MoveOffset = VisionGuided.FindEyeInHandXYMoves(Vis_Center, Vis_Positive, Vis_Rotate, jogDistance, rotateAngle);
             await Task.Delay(1000);
             await _serverService.SendJogCommand(tcpClientInfo, new JogCommand().SetX(MoveOffset[0]).SetY(MoveOffset[1]));
 
 
         }
+
     }
 }

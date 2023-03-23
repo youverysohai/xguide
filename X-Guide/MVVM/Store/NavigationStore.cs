@@ -11,7 +11,7 @@ namespace X_Guide.MVVM.Store
 
     public class NavigationStore
     {
-
+     
         public event Action CurrentViewModelChanged;
 
         private ViewModelBase _currentViewModel;
@@ -27,7 +27,7 @@ namespace X_Guide.MVVM.Store
             }
         }
 
-        private void OnCurrentViewModelChanged()
+        public void OnCurrentViewModelChanged()
         {
            
             CurrentViewModelChanged?.Invoke();

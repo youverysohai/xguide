@@ -30,6 +30,7 @@ namespace X_Guide.MVVM.ViewModel
         private CancellationTokenSource cancelJog;
         private readonly CalibrationViewModel _setting;
         private readonly IServerService _serverService;
+        private readonly IClientService _clientService;
         private BackgroundService searchClient;
 
         private Queue<JogCommand> commandQueue = new Queue<JogCommand>();
@@ -69,13 +70,14 @@ namespace X_Guide.MVVM.ViewModel
         }
 
       
-        public Step5ViewModel(CalibrationViewModel setting, IServerService serverService)
+        public Step5ViewModel(CalibrationViewModel setting, IServerService serverService, IClientService clientService)
         {
 
             ReconnectCommand = new RelayCommand(null);
             JogCommand = new RelayCommand(Jog, CanStartJog);
             _setting = setting;
             _serverService = serverService;
+            _clientService = clientService;
 /*            _serverService.ClientDisconnectedEvent += HandleClientDisconnection;*/
             ReconnectCommand = new RelayCommand(testing);
 
@@ -178,7 +180,7 @@ namespace X_Guide.MVVM.ViewModel
 
         public override ViewModelBase GetNextViewModel()
         {
-            return new Step6ViewModel();
+            return new Step6ViewModel(_setting, _clientService, _serverService);
         }
     }
 }

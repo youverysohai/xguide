@@ -18,6 +18,7 @@ namespace X_Guide.MVVM.ViewModel
 
         private CalibrationViewModel _setting;
         private readonly IServerService _serverService;
+        private readonly IClientService _clientService;
 
         public CalibrationViewModel Setting
         {
@@ -33,14 +34,15 @@ namespace X_Guide.MVVM.ViewModel
         public override ViewModelBase GetNextViewModel()
         {
             
-            return new Step5ViewModel(_setting, _serverService);
+            return new Step5ViewModel(_setting, _serverService, _clientService);
         }
         
     
-        public Step4ViewModel(CalibrationViewModel setting, IServerService serverService)
+        public Step4ViewModel(CalibrationViewModel setting, IServerService serverService, IClientService clientService)
         {
             _setting = setting;
             _serverService = serverService;
+            _clientService = clientService;
         }
 
 

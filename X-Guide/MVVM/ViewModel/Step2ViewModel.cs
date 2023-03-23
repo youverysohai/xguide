@@ -16,6 +16,7 @@ namespace X_Guide.MVVM.ViewModel
     
         private CalibrationViewModel _setting;
         private readonly IServerService _serverService;
+        private readonly IClientService _clientService;
 
         public CalibrationViewModel Setting
         {
@@ -28,11 +29,12 @@ namespace X_Guide.MVVM.ViewModel
         }
 
 
-        public Step2ViewModel(ref EventHandler OnSelectedItemChangedEvent, CalibrationViewModel setting, IServerService serverService)
+        public Step2ViewModel(/*ref EventHandler OnSelectedItemChangedEvent, */CalibrationViewModel setting, IServerService serverService, IClientService clientService)
         {
             Setting = setting;
             _serverService = serverService;
-            OnSelectedItemChangedEvent += OnSelectedChangedEventHandler;
+            _clientService = clientService;
+ /*           OnSelectedItemChangedEvent += OnSelectedChangedEventHandler;*/
         }
 
         private void OnSelectedChangedEventHandler(object sender, EventArgs e)
@@ -44,7 +46,7 @@ namespace X_Guide.MVVM.ViewModel
 
         public override ViewModelBase GetNextViewModel()
         {
-            return new Step3ViewModel(_setting, _serverService);
+            return new Step3ViewModel(_setting, _serverService, _clientService);
         }
 
 

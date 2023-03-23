@@ -21,6 +21,7 @@ namespace X_Guide.MVVM.ViewModel
 
         private CalibrationViewModel _setting;
         private readonly IServerService _serverService;
+        private readonly IClientService _clientService;
         private ObservableCollection<string> _visionFlow;
 
         public ObservableCollection<string> VisionFlow
@@ -59,10 +60,11 @@ namespace X_Guide.MVVM.ViewModel
         }
 
 
-        public Step3ViewModel(CalibrationViewModel setting, IServerService serverService)
+        public Step3ViewModel(CalibrationViewModel setting, IServerService serverService, IClientService clientService)
         {
             _setting = setting;
             _serverService = serverService;
+            _clientService = clientService;
         }
 
         private void OnItemChanged(string value)
@@ -86,7 +88,7 @@ namespace X_Guide.MVVM.ViewModel
 
         public override ViewModelBase GetNextViewModel()
         {
-            return new Step4ViewModel(_setting, _serverService);
+            return new Step4ViewModel(_setting, _serverService, _clientService);
         }
     }
 }

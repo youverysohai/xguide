@@ -24,7 +24,7 @@ namespace X_Guide.MVVM.Command
         {
             if (parameter is PageName pageTitle && _viewModels.TryGetValue(pageTitle, out var page))
             {
-                page.Navigate();
+      /*          page.Navigate();*/
             }
                 
         }

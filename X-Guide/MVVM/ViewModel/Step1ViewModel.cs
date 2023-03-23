@@ -19,8 +19,8 @@ namespace X_Guide.MVVM.ViewModel
     internal class Step1ViewModel : ViewModelBase
     {
         #region properties
-    
-        public event EventHandler OnSelectedItemChangedEvent;
+
+        public Action SelectedItemChangedEvent;
 
         private MachineModel _machineModel;
 
@@ -61,30 +61,26 @@ namespace X_Guide.MVVM.ViewModel
             Machine = MachineViewModel.ToViewModel(_machineModel, _mapper);
             _setting.Machine = Machine;
             _serverService.SetServerReadTerminator(_machineService.GetMachineDelimiter(name));
-            OnSelectedItemChangedEvent?.Invoke(this, EventArgs.Empty);
+            SelectedItemChangedEvent?.Invoke();
+             
         }
 
         public ICommand ShoutCommand { get; set; }
         public IMachineService _machineService { get; }
         private IMapper _mapper { get; }
         public IServerService _serverService { get; }
+
+        private readonly IClientService _clientService;
         #endregion
-        public Step1ViewModel(IMachineService machineService, IMapper mapper, CalibrationViewModel setting, IServerService serverService)
+        public Step1ViewModel(IMachineService machineService, IMapper mapper, CalibrationViewModel setting, IServerService serverService, IClientService clientService)
         {
             _setting = setting;
             _serverService = serverService;
+            _clientService = clientService;
             _machineService = machineService;
             _mapper = mapper;
             MachineNames = new ObservableCollection<string>(_machineService.GetAllMachineName());
         }
-        public void Test(object obj)
-        {
-            OnSelectedItemChangedEvent?.Invoke(this, EventArgs.Empty);
-        }
-
-        public override ViewModelBase GetNextViewModel()
-        {
-            return new Step2ViewModel(ref OnSelectedItemChangedEvent, _setting, _serverService);
-        }
+  
     }
 }

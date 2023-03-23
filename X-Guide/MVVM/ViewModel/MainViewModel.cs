@@ -1,4 +1,6 @@
-﻿using System;
+﻿using Autofac;
+using AutoMapper;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Diagnostics;
@@ -27,7 +29,7 @@ namespace X_Guide.MVVM.ViewModel
     public class MainViewModel : ViewModelBase
     {
         #region CLR properties
-  
+
 
 
 
@@ -72,28 +74,47 @@ namespace X_Guide.MVVM.ViewModel
 
         private readonly AuthenticationService _auth;
 
-        private readonly NavigationStore _navigationStore;
+        private readonly INavigationService _navigationService;
+        private NavigationStore _navigationStore;
+        private readonly IViewModelLocator _viewModelLocator;
 
         public ViewModelBase CurrentViewModel => _navigationStore.CurrentViewModel;
         public UserModel CurrentUser => _auth.CurrentUser;
         #endregion
 
-        public MainViewModel(NavigationStore navigationStore, Dictionary<PageName, NavigationService> viewModels, IServerService serverService, IUserService userService)
+        public MainViewModel(INavigationService navigationService, IServerService serverService, IUserService userService, IClientService clientService, NavigationStore navigationStore, IViewModelLocator viewModelLocator)
         {
 
             _auth = new AuthenticationService(userService);
             _auth.CurrentUserChanged += OnCurrentUserChanged;
             
+            _navigationService = navigationService;
             _navigationStore = navigationStore;
+            _viewModelLocator = viewModelLocator;
+
             _navigationStore.CurrentViewModelChanged += OnCurrentViewModelChanged;
 
-            serverService.ClientEvent += ClientEventHandler;
-            serverService.ListenerEvent += ServerEventHandler;
-            NavigateCommand = new NavigateCommand(viewModels);
+            serverService.StartServer();
+            clientService.ConnectServer();
+            _navigationService.Navigate(_viewModelLocator.CreateCalibrationWizardStart(_navigationStore));
+   
             LoginCommand = new RelayCommand(Login);
             RegisterCommand = new RelayCommand(Register);
+            NavigateCommand = new RelayCommand(Navigate);
 
-          }
+        }
+
+        private void Navigate(object obj)
+        {
+          /*  switch (obj)
+            {
+                case PageName.Security: _navigationService.Navigate<SecurityViewModel>(); break;
+                case PageName.Production: _navigationService.Navigate<ProductionViewModel>(); break;
+                case PageName.Engineering: _navigationService.Navigate<EngineeringViewModel>(); break;
+                case PageName.Login: _navigationService.Navigate<UserLoginViewModel>(); break;
+                default: break;
+            }*/
+        }
 
         private void CurrentUser_PropertyChanged(object sender, PropertyChangedEventArgs e)
         {
@@ -103,9 +124,10 @@ namespace X_Guide.MVVM.ViewModel
         private void OnCurrentUserChanged()
         {
             OnPropertyChanged(nameof(CurrentUser));
-            
-        }
-        
+
+        }       
+
+       
         private async void Register(object obj)
         {
             bool success = await _auth.Register(new UserModel
@@ -118,12 +140,12 @@ namespace X_Guide.MVVM.ViewModel
             if (success)
             {
                 MessageBox.Show("Added successfully");
-        
+
             }
             else MessageBox.Show("User is not added!");
         }
 
-     
+
 
         private async void Login(object obj)
         {
@@ -142,33 +164,13 @@ namespace X_Guide.MVVM.ViewModel
 
 
 
-        private void ServerEventHandler(object sender, TcpListenerEventArgs e)
-        {
 
-            Application.Current.Dispatcher.Invoke(() =>
-            {
-                if ((sender as ServerService).getServerStatus())
-                {
-                    //SConnectionColor = ((SolidColorBrush)_resourceDictionary["ConnectedColor"]).ToString();
-                }
-                else
-                {
-
-                    //SConnectionColor = ((SolidColorBrush)_resourceDictionary["DisconnectedColor"]).ToString();
-                }
-            });
-        }
-
-
-        private void ClientEventHandler(object sender, TcpClientEventArgs e)
-        {
-
-        }
-
-      
         private void OnCurrentViewModelChanged()
         {
+  
             OnPropertyChanged(nameof(CurrentViewModel));
+            Debug.WriteLine(CurrentViewModel);
+
         }
 
     }
