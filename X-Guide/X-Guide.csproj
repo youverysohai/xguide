@@ -72,571 +72,571 @@
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="IMVSBlobFindModuCs">
-      <HintPath>..\..\..\..\..\Program Files\VisionMaster4.1.0\Applications\Module(sp)\x64\Location\IMVSBlobFindModu\IMVSBlobFindModuCs.dll</HintPath>
+      <HintPath>.\bin\x64\Debug\Module(sp)\x64\Location\IMVSBlobFindModu\IMVSBlobFindModuCs.dll</HintPath>
       <Private>False</Private>
     </Reference>
     <Reference Include="IMVSBlobFindLabelsModuCs">
-      <HintPath>..\..\..\..\..\Program Files\VisionMaster4.1.0\Applications\Module(sp)\x64\Location\IMVSBlobFindLabelsModu\IMVSBlobFindLabelsModuCs.dll</HintPath>
+      <HintPath>.\bin\x64\Debug\Module(sp)\x64\Location\IMVSBlobFindLabelsModu\IMVSBlobFindLabelsModuCs.dll</HintPath>
       <Private>False</Private>
     </Reference>
     <Reference Include="IMVSCnnClassifyModuCCs">
-      <HintPath>..\..\..\..\..\Program Files\VisionMaster4.1.0\Applications\Module(sp)\x64\DeepLearning\IMVSCnnClassifyModuC\IMVSCnnClassifyModuCCs.dll</HintPath>
+      <HintPath>.\bin\x64\Debug\Module(sp)\x64\DeepLearning\IMVSCnnClassifyModuC\IMVSCnnClassifyModuCCs.dll</HintPath>
       <Private>False</Private>
     </Reference>
     <Reference Include="IMVSCnnClassifyModuCs">
-      <HintPath>..\..\..\..\..\Program Files\VisionMaster4.1.0\Applications\Module(sp)\x64\DeepLearning\IMVSCnnClassifyModu\IMVSCnnClassifyModuCs.dll</HintPath>
+      <HintPath>.\bin\x64\Debug\Module(sp)\x64\DeepLearning\IMVSCnnClassifyModu\IMVSCnnClassifyModuCs.dll</HintPath>
       <Private>False</Private>
     </Reference>
     <Reference Include="IMVSCnnSingleCharDetectModuCCs">
-      <HintPath>..\..\..\..\..\Program Files\VisionMaster4.1.0\Applications\Module(sp)\x64\Recognition\IMVSCnnSingleCharDetectModuC\IMVSCnnSingleCharDetectModuCCs.dll</HintPath>
+      <HintPath>.\bin\x64\Debug\Module(sp)\x64\Recognition\IMVSCnnSingleCharDetectModuC\IMVSCnnSingleCharDetectModuCCs.dll</HintPath>
       <Private>False</Private>
     </Reference>
     <Reference Include="IMVSCnnSingleCharDetectModuCs">
-      <HintPath>..\..\..\..\..\Program Files\VisionMaster4.1.0\Applications\Module(sp)\x64\Recognition\IMVSCnnSingleCharDetectModu\IMVSCnnSingleCharDetectModuCs.dll</HintPath>
+      <HintPath>.\bin\x64\Debug\Module(sp)\x64\Recognition\IMVSCnnSingleCharDetectModu\IMVSCnnSingleCharDetectModuCs.dll</HintPath>
       <Private>False</Private>
     </Reference>
     <Reference Include="IMVSCnnFlawModuCs">
-      <HintPath>..\..\..\..\..\Program Files\VisionMaster4.1.0\Applications\Module(sp)\x64\DeepLearning\IMVSCnnFlawModu\IMVSCnnFlawModuCs.dll</HintPath>
+      <HintPath>.\bin\x64\Debug\Module(sp)\x64\DeepLearning\IMVSCnnFlawModu\IMVSCnnFlawModuCs.dll</HintPath>
       <Private>False</Private>
     </Reference>
     <Reference Include="IMVSCnnFlawModuCCs">
-      <HintPath>..\..\..\..\..\Program Files\VisionMaster4.1.0\Applications\Module(sp)\x64\DeepLearning\IMVSCnnFlawModuC\IMVSCnnFlawModuCCs.dll</HintPath>
+      <HintPath>.\bin\x64\Debug\Module(sp)\x64\DeepLearning\IMVSCnnFlawModuC\IMVSCnnFlawModuCCs.dll</HintPath>
       <Private>False</Private>
     </Reference>
     <Reference Include="IMVSCnnRetrievalModuCCs">
-      <HintPath>..\..\..\..\..\Program Files\VisionMaster4.1.0\Applications\Module(sp)\x64\DeepLearning\IMVSCnnRetrievalModuC\IMVSCnnRetrievalModuCCs.dll</HintPath>
+      <HintPath>.\bin\x64\Debug\Module(sp)\x64\DeepLearning\IMVSCnnRetrievalModuC\IMVSCnnRetrievalModuCCs.dll</HintPath>
       <Private>False</Private>
     </Reference>
     <Reference Include="IMVSCnnRetrievalModuCs">
-      <HintPath>..\..\..\..\..\Program Files\VisionMaster4.1.0\Applications\Module(sp)\x64\DeepLearning\IMVSCnnRetrievalModu\IMVSCnnRetrievalModuCs.dll</HintPath>
+      <HintPath>.\bin\x64\Debug\Module(sp)\x64\DeepLearning\IMVSCnnRetrievalModu\IMVSCnnRetrievalModuCs.dll</HintPath>
       <Private>False</Private>
     </Reference>
     <Reference Include="IMVSCnnCharDetectModuCCs">
-      <HintPath>..\..\..\..\..\Program Files\VisionMaster4.1.0\Applications\Module(sp)\x64\Recognition\IMVSCnnCharDetectModuC\IMVSCnnCharDetectModuCCs.dll</HintPath>
+      <HintPath>.\bin\x64\Debug\Module(sp)\x64\Recognition\IMVSCnnCharDetectModuC\IMVSCnnCharDetectModuCCs.dll</HintPath>
       <Private>False</Private>
     </Reference>
     <Reference Include="IMVSCnnCharDetectModuCs">
-      <HintPath>..\..\..\..\..\Program Files\VisionMaster4.1.0\Applications\Module(sp)\x64\Recognition\IMVSCnnCharDetectModu\IMVSCnnCharDetectModuCs.dll</HintPath>
+      <HintPath>.\bin\x64\Debug\Module(sp)\x64\Recognition\IMVSCnnCharDetectModu\IMVSCnnCharDetectModuCs.dll</HintPath>
       <Private>False</Private>
     </Reference>
     <Reference Include="IMVSOcrDlModuCCs">
-      <HintPath>..\..\..\..\..\Program Files\VisionMaster4.1.0\Applications\Module(sp)\x64\Recognition\IMVSOcrDlModuC\IMVSOcrDlModuCCs.dll</HintPath>
+      <HintPath>.\bin\x64\Debug\Module(sp)\x64\Recognition\IMVSOcrDlModuC\IMVSOcrDlModuCCs.dll</HintPath>
       <Private>False</Private>
     </Reference>
     <Reference Include="IMVSOcrDlModuCs">
-      <HintPath>..\..\..\..\..\Program Files\VisionMaster4.1.0\Applications\Module(sp)\x64\Recognition\IMVSOcrDlModu\IMVSOcrDlModuCs.dll</HintPath>
+      <HintPath>.\bin\x64\Debug\Module(sp)\x64\Recognition\IMVSOcrDlModu\IMVSOcrDlModuCs.dll</HintPath>
       <Private>False</Private>
     </Reference>
     <Reference Include="IMVSCnnInstanceSegmentModuCCs">
-      <HintPath>..\..\..\..\..\Program Files\VisionMaster4.1.0\Applications\Module(sp)\x64\DeepLearning\IMVSCnnInstanceSegmentModuC\IMVSCnnInstanceSegmentModuCCs.dll</HintPath>
+      <HintPath>.\bin\x64\Debug\Module(sp)\x64\DeepLearning\IMVSCnnInstanceSegmentModuC\IMVSCnnInstanceSegmentModuCCs.dll</HintPath>
       <Private>False</Private>
     </Reference>
     <Reference Include="IMVSCnnInstanceSegmentModuCs">
-      <HintPath>..\..\..\..\..\Program Files\VisionMaster4.1.0\Applications\Module(sp)\x64\DeepLearning\IMVSCnnInstanceSegmentModu\IMVSCnnInstanceSegmentModuCs.dll</HintPath>
+      <HintPath>.\bin\x64\Debug\Module(sp)\x64\DeepLearning\IMVSCnnInstanceSegmentModu\IMVSCnnInstanceSegmentModuCs.dll</HintPath>
       <Private>False</Private>
     </Reference>
     <Reference Include="IMVSCnnInspectModuCCs">
-      <HintPath>..\..\..\..\..\Program Files\VisionMaster4.1.0\Applications\Module(sp)\x64\DeepLearning\IMVSCnnInspectModuC\IMVSCnnInspectModuCCs.dll</HintPath>
+      <HintPath>.\bin\x64\Debug\Module(sp)\x64\DeepLearning\IMVSCnnInspectModuC\IMVSCnnInspectModuCCs.dll</HintPath>
       <Private>False</Private>
     </Reference>
     <Reference Include="IMVSCnnInspectModuCs">
-      <HintPath>..\..\..\..\..\Program Files\VisionMaster4.1.0\Applications\Module(sp)\x64\DeepLearning\IMVSCnnInspectModu\IMVSCnnInspectModuCs.dll</HintPath>
+      <HintPath>.\bin\x64\Debug\Module(sp)\x64\DeepLearning\IMVSCnnInspectModu\IMVSCnnInspectModuCs.dll</HintPath>
       <Private>False</Private>
     </Reference>
     <Reference Include="IMVSCnnDetectModuCCs">
-      <HintPath>..\..\..\..\..\Program Files\VisionMaster4.1.0\Applications\Module(sp)\x64\DeepLearning\IMVSCnnDetectModuC\IMVSCnnDetectModuCCs.dll</HintPath>
+      <HintPath>.\bin\x64\Debug\Module(sp)\x64\DeepLearning\IMVSCnnDetectModuC\IMVSCnnDetectModuCCs.dll</HintPath>
       <Private>False</Private>
     </Reference>
     <Reference Include="IMVSCnnDetectModuCs">
-      <HintPath>..\..\..\..\..\Program Files\VisionMaster4.1.0\Applications\Module(sp)\x64\DeepLearning\IMVSCnnDetectModu\IMVSCnnDetectModuCs.dll</HintPath>
+      <HintPath>.\bin\x64\Debug\Module(sp)\x64\DeepLearning\IMVSCnnDetectModu\IMVSCnnDetectModuCs.dll</HintPath>
       <Private>False</Private>
     </Reference>
     <Reference Include="IMVSCnnCodeRecgModuCCs">
-      <HintPath>..\..\..\..\..\Program Files\VisionMaster4.1.0\Applications\Module(sp)\x64\Recognition\IMVSCnnCodeRecgModuC\IMVSCnnCodeRecgModuCCs.dll</HintPath>
+      <HintPath>.\bin\x64\Debug\Module(sp)\x64\Recognition\IMVSCnnCodeRecgModuC\IMVSCnnCodeRecgModuCCs.dll</HintPath>
       <Private>False</Private>
     </Reference>
     <Reference Include="IMVSCnnCodeRecgModuCs">
-      <HintPath>..\..\..\..\..\Program Files\VisionMaster4.1.0\Applications\Module(sp)\x64\Recognition\IMVSCnnCodeRecgModu\IMVSCnnCodeRecgModuCs.dll</HintPath>
+      <HintPath>.\bin\x64\Debug\Module(sp)\x64\Recognition\IMVSCnnCodeRecgModu\IMVSCnnCodeRecgModuCs.dll</HintPath>
       <Private>False</Private>
     </Reference>
     <Reference Include="IMVSNImageCalibModuCs">
-      <HintPath>..\..\..\..\..\Program Files\VisionMaster4.1.0\Applications\Module(sp)\x64\Calibration\IMVSNImageCalibModu\IMVSNImageCalibModuCs.dll</HintPath>
+      <HintPath>.\bin\x64\Debug\Module(sp)\x64\Calibration\IMVSNImageCalibModu\IMVSNImageCalibModuCs.dll</HintPath>
       <Private>False</Private>
     </Reference>
     <Reference Include="IMVSNPointCalibModuCs">
-      <HintPath>..\..\..\..\..\Program Files\VisionMaster4.1.0\Applications\Module(sp)\x64\Calibration\IMVSNPointCalibModu\IMVSNPointCalibModuCs.dll</HintPath>
+      <HintPath>.\bin\x64\Debug\Module(sp)\x64\Calibration\IMVSNPointCalibModu\IMVSNPointCalibModuCs.dll</HintPath>
       <Private>False</Private>
     </Reference>
     <Reference Include="IMVSMedianLineFindModuCs">
-      <HintPath>..\..\..\..\..\Program Files\VisionMaster4.1.0\Applications\Module(sp)\x64\Location\IMVSMedianLineFindModu\IMVSMedianLineFindModuCs.dll</HintPath>
+      <HintPath>.\bin\x64\Debug\Module(sp)\x64\Location\IMVSMedianLineFindModu\IMVSMedianLineFindModuCs.dll</HintPath>
       <Private>False</Private>
     </Reference>
     <Reference Include="IMVS2dBcrModuCs">
-      <HintPath>..\..\..\..\..\Program Files\VisionMaster4.1.0\Applications\Module(sp)\x64\Recognition\IMVS2dBcrModu\IMVS2dBcrModuCs.dll</HintPath>
+      <HintPath>.\bin\x64\Debug\Module(sp)\x64\Recognition\IMVS2dBcrModu\IMVS2dBcrModuCs.dll</HintPath>
       <Private>False</Private>
     </Reference>
     <Reference Include="IMVSIntensityMeasureModuCs">
-      <HintPath>..\..\..\..\..\Program Files\VisionMaster4.1.0\Applications\Module(sp)\x64\Measurement\IMVSIntensityMeasureModu\IMVSIntensityMeasureModuCs.dll</HintPath>
+      <HintPath>.\bin\x64\Debug\Module(sp)\x64\Measurement\IMVSIntensityMeasureModu\IMVSIntensityMeasureModuCs.dll</HintPath>
       <Private>False</Private>
     </Reference>
     <Reference Include="IMVSAffineTransformModuCs">
-      <HintPath>..\..\..\..\..\Program Files\VisionMaster4.1.0\Applications\Module(sp)\x64\ImageProcessing\IMVSAffineTransformModu\IMVSAffineTransformModuCs.dll</HintPath>
+      <HintPath>.\bin\x64\Debug\Module(sp)\x64\ImageProcessing\IMVSAffineTransformModu\IMVSAffineTransformModuCs.dll</HintPath>
       <Private>False</Private>
     </Reference>
     <Reference Include="IMVSFixtureModuCs">
-      <HintPath>..\..\..\..\..\Program Files\VisionMaster4.1.0\Applications\Module(sp)\x64\Location\IMVSFixtureModu\IMVSFixtureModuCs.dll</HintPath>
+      <HintPath>.\bin\x64\Debug\Module(sp)\x64\Location\IMVSFixtureModu\IMVSFixtureModuCs.dll</HintPath>
       <Private>False</Private>
     </Reference>
     <Reference Include="IMVSPixelCountModuCs">
-      <HintPath>..\..\..\..\..\Program Files\VisionMaster4.1.0\Applications\Module(sp)\x64\Measurement\IMVSPixelCountModu\IMVSPixelCountModuCs.dll</HintPath>
+      <HintPath>.\bin\x64\Debug\Module(sp)\x64\Measurement\IMVSPixelCountModu\IMVSPixelCountModuCs.dll</HintPath>
       <Private>False</Private>
     </Reference>
     <Reference Include="LightModuleCs">
-      <HintPath>..\..\..\..\..\Program Files\VisionMaster4.1.0\Applications\Module(sp)\x64\Collection\LightModule\LightModuleCs.dll</HintPath>
+      <HintPath>.\bin\x64\Debug\Module(sp)\x64\Collection\LightModule\LightModuleCs.dll</HintPath>
       <Private>False</Private>
     </Reference>
     <Reference Include="LightControlCs">
-      <HintPath>..\..\..\..\..\Program Files\VisionMaster4.1.0\Applications\Module(sp)\x64\Global\LightControl\LightControlCs.dll</HintPath>
+      <HintPath>.\bin\x64\Debug\Module(sp)\x64\Global\LightControl\LightControlCs.dll</HintPath>
       <Private>False</Private>
     </Reference>
     <Reference Include="GlobalVariableModuleCs">
-      <HintPath>..\..\..\..\..\Program Files\VisionMaster4.1.0\Applications\Module(sp)\x64\Global\GlobalVariableModule\GlobalVariableModuleCs.dll</HintPath>
+      <HintPath>.\bin\x64\Debug\Module(sp)\x64\Global\GlobalVariableModule\GlobalVariableModuleCs.dll</HintPath>
       <Private>False</Private>
     </Reference>
     <Reference Include="GlobalCameraModuleCs">
-      <HintPath>..\..\..\..\..\Program Files\VisionMaster4.1.0\Applications\Module(sp)\x64\Global\GlobalCameraModule\GlobalCameraModuleCs.dll</HintPath>
+      <HintPath>.\bin\x64\Debug\Module(sp)\x64\Global\GlobalCameraModule\GlobalCameraModuleCs.dll</HintPath>
       <Private>False</Private>
     </Reference>
     <Reference Include="CommManagerModuleCs">
-      <HintPath>..\..\..\..\..\Program Files\VisionMaster4.1.0\Applications\Module(sp)\x64\Global\CommManagerModule\CommManagerModuleCs.dll</HintPath>
+      <HintPath>.\bin\x64\Debug\Module(sp)\x64\Global\CommManagerModule\CommManagerModuleCs.dll</HintPath>
       <Private>False</Private>
     </Reference>
     <Reference Include="GeometryCreateCs">
-      <HintPath>..\..\..\..\..\Program Files\VisionMaster4.1.0\Applications\Module(sp)\x64\ImageGeneration\GeometryCreate\GeometryCreateCs.dll</HintPath>
+      <HintPath>.\bin\x64\Debug\Module(sp)\x64\ImageGeneration\GeometryCreate\GeometryCreateCs.dll</HintPath>
       <Private>False</Private>
     </Reference>
     <Reference Include="IMVSGeometricTransformModuCs">
-      <HintPath>..\..\..\..\..\Program Files\VisionMaster4.1.0\Applications\Module(sp)\x64\ImageProcessing\IMVSGeometricTransformModu\IMVSGeometricTransformModuCs.dll</HintPath>
+      <HintPath>.\bin\x64\Debug\Module(sp)\x64\ImageProcessing\IMVSGeometricTransformModu\IMVSGeometricTransformModuCs.dll</HintPath>
       <Private>False</Private>
     </Reference>
     <Reference Include="BranchStringCpmLCs">
-      <HintPath>..\..\..\..\..\Program Files\VisionMaster4.1.0\Applications\Module(sp)\x64\Logic\BranchStringCpmL\BranchStringCpmLCs.dll</HintPath>
+      <HintPath>.\bin\x64\Debug\Module(sp)\x64\Logic\BranchStringCpmL\BranchStringCpmLCs.dll</HintPath>
       <Private>False</Private>
     </Reference>
     <Reference Include="BranchModule_STDCs">
-      <HintPath>..\..\..\..\..\Program Files\VisionMaster4.1.0\Applications\Module(sp)\x64\Logic\BranchModule_STD\BranchModule_STDCs.dll</HintPath>
+      <HintPath>.\bin\x64\Debug\Module(sp)\x64\Logic\BranchModule_STD\BranchModule_STDCs.dll</HintPath>
       <Private>False</Private>
     </Reference>
     <Reference Include="DataAssembleModuleCs">
-      <HintPath>..\..\..\..\..\Program Files\VisionMaster4.1.0\Applications\Module(sp)\x64\Communication\DataAssembleModule\DataAssembleModuleCs.dll</HintPath>
+      <HintPath>.\bin\x64\Debug\Module(sp)\x64\Communication\DataAssembleModule\DataAssembleModuleCs.dll</HintPath>
       <Private>False</Private>
     </Reference>
     <Reference Include="DataAnalysisModuleCs">
-      <HintPath>..\..\..\..\..\Program Files\VisionMaster4.1.0\Applications\Module(sp)\x64\Communication\DataAnalysisModule\DataAnalysisModuleCs.dll</HintPath>
+      <HintPath>.\bin\x64\Debug\Module(sp)\x64\Communication\DataAnalysisModule\DataAnalysisModuleCs.dll</HintPath>
       <Private>False</Private>
     </Reference>
     <Reference Include="IMVSScaleTransformModuCs">
-      <HintPath>..\..\..\..\..\Program Files\VisionMaster4.1.0\Applications\Module(sp)\x64\Calculation\IMVSScaleTransformModu\IMVSScaleTransformModuCs.dll</HintPath>
+      <HintPath>.\bin\x64\Debug\Module(sp)\x64\Calculation\IMVSScaleTransformModu\IMVSScaleTransformModuCs.dll</HintPath>
       <Private>False</Private>
     </Reference>
     <Reference Include="IMVSSinglePointAlignModuCs">
-      <HintPath>..\..\..\..\..\Program Files\VisionMaster4.1.0\Applications\Module(sp)\x64\Calculation\IMVSSinglePointAlignModu\IMVSSinglePointAlignModuCs.dll</HintPath>
+      <HintPath>.\bin\x64\Debug\Module(sp)\x64\Calculation\IMVSSinglePointAlignModu\IMVSSinglePointAlignModuCs.dll</HintPath>
       <Private>False</Private>
     </Reference>
     <Reference Include="IMVSCaliperModuCs">
-      <HintPath>..\..\..\..\..\Program Files\VisionMaster4.1.0\Applications\Module(sp)\x64\Location\IMVSCaliperModu\IMVSCaliperModuCs.dll</HintPath>
+      <HintPath>.\bin\x64\Debug\Module(sp)\x64\Location\IMVSCaliperModu\IMVSCaliperModuCs.dll</HintPath>
       <Private>False</Private>
     </Reference>
     <Reference Include="SendDatasModuleCs">
-      <HintPath>..\..\..\..\..\Program Files\VisionMaster4.1.0\Applications\Module(sp)\x64\Communication\SendDatasModule\SendDatasModuleCs.dll</HintPath>
+      <HintPath>.\bin\x64\Debug\Module(sp)\x64\Communication\SendDatasModule\SendDatasModuleCs.dll</HintPath>
       <Private>False</Private>
     </Reference>
     <Reference Include="CalculatorModuleCs">
-      <HintPath>..\..\..\..\..\Program Files\VisionMaster4.1.0\Applications\Module(sp)\x64\Calculation\CalculatorModule\CalculatorModuleCs.dll</HintPath>
+      <HintPath>.\bin\x64\Debug\Module(sp)\x64\Calculation\CalculatorModule\CalculatorModuleCs.dll</HintPath>
       <Private>False</Private>
     </Reference>
     <Reference Include="IMVSQuadrangleFindModuCs">
-      <HintPath>..\..\..\..\..\Program Files\VisionMaster4.1.0\Applications\Module(sp)\x64\Location\IMVSQuadrangleFindModu\IMVSQuadrangleFindModuCs.dll</HintPath>
+      <HintPath>.\bin\x64\Debug\Module(sp)\x64\Location\IMVSQuadrangleFindModu\IMVSQuadrangleFindModuCs.dll</HintPath>
       <Private>False</Private>
     </Reference>
     <Reference Include="IMVSBinaryModuCs">
-      <HintPath>..\..\..\..\..\Program Files\VisionMaster4.1.0\Applications\Module(sp)\x64\ImageProcessing\IMVSBinaryModu\IMVSBinaryModuCs.dll</HintPath>
+      <HintPath>.\bin\x64\Debug\Module(sp)\x64\ImageProcessing\IMVSBinaryModu\IMVSBinaryModuCs.dll</HintPath>
       <Private>False</Private>
     </Reference>
     <Reference Include="IMVSImageFixtureModuCs">
-      <HintPath>..\..\..\..\..\Program Files\VisionMaster4.1.0\Applications\Module(sp)\x64\ImageProcessing\IMVSImageFixtureModu\IMVSImageFixtureModuCs.dll</HintPath>
+      <HintPath>.\bin\x64\Debug\Module(sp)\x64\ImageProcessing\IMVSImageFixtureModu\IMVSImageFixtureModuCs.dll</HintPath>
       <Private>False</Private>
     </Reference>
     <Reference Include="IMVSImageEnhanceModuCs">
-      <HintPath>..\..\..\..\..\Program Files\VisionMaster4.1.0\Applications\Module(sp)\x64\ImageProcessing\IMVSImageEnhanceModu\IMVSImageEnhanceModuCs.dll</HintPath>
+      <HintPath>.\bin\x64\Debug\Module(sp)\x64\ImageProcessing\IMVSImageEnhanceModu\IMVSImageEnhanceModuCs.dll</HintPath>
       <Private>False</Private>
     </Reference>
     <Reference Include="IMVSImageNormlizeModuCs">
-      <HintPath>..\..\..\..\..\Program Files\VisionMaster4.1.0\Applications\Module(sp)\x64\ImageProcessing\IMVSImageNormlizeModu\IMVSImageNormlizeModuCs.dll</HintPath>
+      <HintPath>.\bin\x64\Debug\Module(sp)\x64\ImageProcessing\IMVSImageNormlizeModu\IMVSImageNormlizeModuCs.dll</HintPath>
       <Private>False</Private>
     </Reference>
     <Reference Include="IMVSImgStitchCalibModuCs">
-      <HintPath>..\..\..\..\..\Program Files\VisionMaster4.1.0\Applications\Module(sp)\x64\ImageProcessing\IMVSImgStitchCalibModu\IMVSImgStitchCalibModuCs.dll</HintPath>
+      <HintPath>.\bin\x64\Debug\Module(sp)\x64\ImageProcessing\IMVSImgStitchCalibModu\IMVSImgStitchCalibModuCs.dll</HintPath>
       <Private>False</Private>
     </Reference>
     <Reference Include="ImageSourceModuleCs">
-      <HintPath>..\..\..\..\..\Program Files\VisionMaster4.1.0\Applications\Module(sp)\x64\Collection\ImageSourceModule\ImageSourceModuleCs.dll</HintPath>
+      <HintPath>.\bin\x64\Debug\Module(sp)\x64\Collection\ImageSourceModule\ImageSourceModuleCs.dll</HintPath>
       <Private>False</Private>
     </Reference>
     <Reference Include="IMVSImageFilterModuCs">
-      <HintPath>..\..\..\..\..\Program Files\VisionMaster4.1.0\Applications\Module(sp)\x64\ImageProcessing\IMVSImageFilterModu\IMVSImageFilterModuCs.dll</HintPath>
+      <HintPath>.\bin\x64\Debug\Module(sp)\x64\ImageProcessing\IMVSImageFilterModu\IMVSImageFilterModuCs.dll</HintPath>
       <Private>False</Private>
     </Reference>
     <Reference Include="IMVSImageCorrectManualModuCs">
-      <HintPath>..\..\..\..\..\Program Files\VisionMaster4.1.0\Applications\Module(sp)\x64\ImageProcessing\IMVSImageCorrectManualModu\IMVSImageCorrectManualModuCs.dll</HintPath>
+      <HintPath>.\bin\x64\Debug\Module(sp)\x64\ImageProcessing\IMVSImageCorrectManualModu\IMVSImageCorrectManualModuCs.dll</HintPath>
       <Private>False</Private>
     </Reference>
     <Reference Include="IMVSImageCombineProcessModuCs">
-      <HintPath>..\..\..\..\..\Program Files\VisionMaster4.1.0\Applications\Module(sp)\x64\ImageProcessing\IMVSImageCombineProcessModu\IMVSImageCombineProcessModuCs.dll</HintPath>
+      <HintPath>.\bin\x64\Debug\Module(sp)\x64\ImageProcessing\IMVSImageCombineProcessModu\IMVSImageCombineProcessModuCs.dll</HintPath>
       <Private>False</Private>
     </Reference>
     <Reference Include="IMVSImageMathModuCs">
-      <HintPath>..\..\..\..\..\Program Files\VisionMaster4.1.0\Applications\Module(sp)\x64\ImageProcessing\IMVSImageMathModu\IMVSImageMathModuCs.dll</HintPath>
+      <HintPath>.\bin\x64\Debug\Module(sp)\x64\ImageProcessing\IMVSImageMathModu\IMVSImageMathModuCs.dll</HintPath>
       <Private>False</Private>
     </Reference>
     <Reference Include="IMVSMarkFindModuCs">
-      <HintPath>..\..\..\..\..\Program Files\VisionMaster4.1.0\Applications\Module(sp)\x64\Location\IMVSMarkFindModu\IMVSMarkFindModuCs.dll</HintPath>
+      <HintPath>.\bin\x64\Debug\Module(sp)\x64\Location\IMVSMarkFindModu\IMVSMarkFindModuCs.dll</HintPath>
       <Private>False</Private>
     </Reference>
     <Reference Include="IMVSC2CMeasureModuCs">
-      <HintPath>..\..\..\..\..\Program Files\VisionMaster4.1.0\Applications\Module(sp)\x64\Measurement\IMVSC2CMeasureModu\IMVSC2CMeasureModuCs.dll</HintPath>
+      <HintPath>.\bin\x64\Debug\Module(sp)\x64\Measurement\IMVSC2CMeasureModu\IMVSC2CMeasureModuCs.dll</HintPath>
       <Private>False</Private>
     </Reference>
     <Reference Include="IMVSCircleEdgePairInspModuCs">
-      <HintPath>..\..\..\..\..\Program Files\VisionMaster4.1.0\Applications\Module(sp)\x64\DefectDetection\IMVSCircleEdgePairInspModu\IMVSCircleEdgePairInspModuCs.dll</HintPath>
+      <HintPath>.\bin\x64\Debug\Module(sp)\x64\DefectDetection\IMVSCircleEdgePairInspModu\IMVSCircleEdgePairInspModuCs.dll</HintPath>
       <Private>False</Private>
     </Reference>
     <Reference Include="IMVSCircleEdgeInspModuCs">
-      <HintPath>..\..\..\..\..\Program Files\VisionMaster4.1.0\Applications\Module(sp)\x64\DefectDetection\IMVSCircleEdgeInspModu\IMVSCircleEdgeInspModuCs.dll</HintPath>
+      <HintPath>.\bin\x64\Debug\Module(sp)\x64\DefectDetection\IMVSCircleEdgeInspModu\IMVSCircleEdgeInspModuCs.dll</HintPath>
       <Private>False</Private>
     </Reference>
     <Reference Include="IMVSCircleFitModuCs">
-      <HintPath>..\..\..\..\..\Program Files\VisionMaster4.1.0\Applications\Module(sp)\x64\ImageGeneration\IMVSCircleFitModu\IMVSCircleFitModuCs.dll</HintPath>
+      <HintPath>.\bin\x64\Debug\Module(sp)\x64\ImageGeneration\IMVSCircleFitModu\IMVSCircleFitModuCs.dll</HintPath>
       <Private>False</Private>
     </Reference>
     <Reference Include="IMVSCircleFindModuCs">
-      <HintPath>..\..\..\..\..\Program Files\VisionMaster4.1.0\Applications\Module(sp)\x64\Location\IMVSCircleFindModu\IMVSCircleFindModuCs.dll</HintPath>
+      <HintPath>.\bin\x64\Debug\Module(sp)\x64\Location\IMVSCircleFindModu\IMVSCircleFindModuCs.dll</HintPath>
       <Private>False</Private>
     </Reference>
     <Reference Include="IMVSPolarUnwarpModuCs">
-      <HintPath>..\..\..\..\..\Program Files\VisionMaster4.1.0\Applications\Module(sp)\x64\ImageProcessing\IMVSPolarUnwarpModu\IMVSPolarUnwarpModuCs.dll</HintPath>
+      <HintPath>.\bin\x64\Debug\Module(sp)\x64\ImageProcessing\IMVSPolarUnwarpModu\IMVSPolarUnwarpModuCs.dll</HintPath>
       <Private>False</Private>
     </Reference>
     <Reference Include="IMVSVerticalLineFindModuCs">
-      <HintPath>..\..\..\..\..\Program Files\VisionMaster4.1.0\Applications\Module(sp)\x64\Location\IMVSVerticalLineFindModu\IMVSVerticalLineFindModuCs.dll</HintPath>
+      <HintPath>.\bin\x64\Debug\Module(sp)\x64\Location\IMVSVerticalLineFindModu\IMVSVerticalLineFindModuCs.dll</HintPath>
       <Private>False</Private>
     </Reference>
     <Reference Include="Apps.ColorFun">
-      <HintPath>..\..\..\..\..\Program Files\VisionMaster4.1.0\Applications\myLibs\Apps.ColorFun.dll</HintPath>
+      <HintPath>.\bin\x64\Debug\myLibs\Apps.ColorFun.dll</HintPath>
       <Private>False</Private>
     </Reference>
     <Reference Include="VM.Core">
-      <HintPath>..\..\..\..\..\Program Files\VisionMaster4.1.0\Applications\myLibs\VM.Core.dll</HintPath>
+      <HintPath>.\bin\x64\Debug\myLibs\VM.Core.dll</HintPath>
       <Private>False</Private>
     </Reference>
     <Reference Include="VM.PlatformSDKCS">
-      <HintPath>..\..\..\..\..\Program Files\VisionMaster4.1.0\Applications\myLibs\VM.PlatformSDKCS.dll</HintPath>
+      <HintPath>.\bin\x64\Debug\myLibs\VM.PlatformSDKCS.dll</HintPath>
       <Private>False</Private>
     </Reference>
     <Reference Include="VMControls.BaseInterface">
-      <HintPath>..\..\..\..\..\Program Files\VisionMaster4.1.0\Applications\myLibs\VMControls.BaseInterface.dll</HintPath>
+      <HintPath>.\bin\x64\Debug\myLibs\VMControls.BaseInterface.dll</HintPath>
       <Private>False</Private>
     </Reference>
     <Reference Include="VMControls.WPF.Release">
-      <HintPath>..\..\..\..\..\Program Files\VisionMaster4.1.0\Applications\myLibs\VMControls.WPF.Release.dll</HintPath>
+      <HintPath>.\bin\x64\Debug\myLibs\VMControls.WPF.Release.dll</HintPath>
       <Private>False</Private>
     </Reference>
     <Reference Include="VMControls.Interface">
-      <HintPath>..\..\..\..\..\Program Files\VisionMaster4.1.0\Applications\myLibs\VMControls.Interface.dll</HintPath>
+      <HintPath>.\bin\x64\Debug\myLibs\VMControls.Interface.dll</HintPath>
       <Private>False</Private>
     </Reference>
     <Reference Include="VMControls.RenderInterface">
-      <HintPath>..\..\..\..\..\Program Files\VisionMaster4.1.0\Applications\myLibs\VMControls.RenderInterface.dll</HintPath>
+      <HintPath>.\bin\x64\Debug\myLibs\VMControls.RenderInterface.dll</HintPath>
       <Private>False</Private>
     </Reference>
     <Reference Include="VMControls.Winform.Release">
-      <HintPath>..\..\..\..\..\Program Files\VisionMaster4.1.0\Applications\myLibs\VMControls.Winform.Release.dll</HintPath>
+      <HintPath>.\bin\x64\Debug\myLibs\VMControls.Winform.Release.dll</HintPath>
       <Private>False</Private>
     </Reference>
     <Reference Include="IMVSMultiImageFusionModuCs">
-      <HintPath>..\..\..\..\..\Program Files\VisionMaster4.1.0\Applications\Module(sp)\x64\ImageProcessing\IMVSMultiImageFusionModu\IMVSMultiImageFusionModuCs.dll</HintPath>
+      <HintPath>.\bin\x64\Debug\Module(sp)\x64\ImageProcessing\IMVSMultiImageFusionModu\IMVSMultiImageFusionModuCs.dll</HintPath>
       <Private>False</Private>
     </Reference>
     <Reference Include="ImageAcquisitionModuleCs">
-      <HintPath>..\..\..\..\..\Program Files\VisionMaster4.1.0\Applications\Module(sp)\x64\Collection\ImageAcquisitionModule\ImageAcquisitionModuleCs.dll</HintPath>
+      <HintPath>.\bin\x64\Debug\Module(sp)\x64\Collection\ImageAcquisitionModule\ImageAcquisitionModuleCs.dll</HintPath>
       <Private>False</Private>
     </Reference>
     <Reference Include="IMVSMultiLineFindModuCs">
-      <HintPath>..\..\..\..\..\Program Files\VisionMaster4.1.0\Applications\Module(sp)\x64\Location\IMVSMultiLineFindModu\IMVSMultiLineFindModuCs.dll</HintPath>
+      <HintPath>.\bin\x64\Debug\Module(sp)\x64\Location\IMVSMultiLineFindModu\IMVSMultiLineFindModuCs.dll</HintPath>
       <Private>False</Private>
     </Reference>
     <Reference Include="StringCompareModuleCs">
-      <HintPath>..\..\..\..\..\Program Files\VisionMaster4.1.0\Applications\Module(sp)\x64\Logic\StringCompareModule\StringCompareModuleCs.dll</HintPath>
+      <HintPath>.\bin\x64\Debug\Module(sp)\x64\Logic\StringCompareModule\StringCompareModuleCs.dll</HintPath>
       <Private>False</Private>
     </Reference>
     <Reference Include="IMVSMarkInspModuCs">
-      <HintPath>..\..\..\..\..\Program Files\VisionMaster4.1.0\Applications\Module(sp)\x64\DefectDetection\IMVSMarkInspModu\IMVSMarkInspModuCs.dll</HintPath>
+      <HintPath>.\bin\x64\Debug\Module(sp)\x64\DefectDetection\IMVSMarkInspModu\IMVSMarkInspModuCs.dll</HintPath>
       <Private>False</Private>
     </Reference>
     <Reference Include="IMVSMarkInspModuVACs">
-      <HintPath>..\..\..\..\..\Program Files\VisionMaster4.1.0\Applications\Module(sp)\x64\DefectDetection\IMVSMarkInspModuVA\IMVSMarkInspModuVACs.dll</HintPath>
+      <HintPath>.\bin\x64\Debug\Module(sp)\x64\DefectDetection\IMVSMarkInspModuVA\IMVSMarkInspModuVACs.dll</HintPath>
       <Private>False</Private>
     </Reference>
     <Reference Include="IMVSOcrModuCs">
-      <HintPath>..\..\..\..\..\Program Files\VisionMaster4.1.0\Applications\Module(sp)\x64\Recognition\IMVSOcrModu\IMVSOcrModuCs.dll</HintPath>
+      <HintPath>.\bin\x64\Debug\Module(sp)\x64\Recognition\IMVSOcrModu\IMVSOcrModuCs.dll</HintPath>
       <Private>False</Private>
     </Reference>
     <Reference Include="IMVSFrameMeanModuCs">
-      <HintPath>..\..\..\..\..\Program Files\VisionMaster4.1.0\Applications\Module(sp)\x64\ImageProcessing\IMVSFrameMeanModu\IMVSFrameMeanModuCs.dll</HintPath>
+      <HintPath>.\bin\x64\Debug\Module(sp)\x64\ImageProcessing\IMVSFrameMeanModu\IMVSFrameMeanModuCs.dll</HintPath>
       <Private>False</Private>
     </Reference>
     <Reference Include="IMVSPairLineModuCs">
-      <HintPath>..\..\..\..\..\Program Files\VisionMaster4.1.0\Applications\Module(sp)\x64\Location\IMVSPairLineModu\IMVSPairLineModuCs.dll</HintPath>
+      <HintPath>.\bin\x64\Debug\Module(sp)\x64\Location\IMVSPairLineModu\IMVSPairLineModuCs.dll</HintPath>
       <Private>False</Private>
     </Reference>
     <Reference Include="IMVSParallelCalculateModuCs">
-      <HintPath>..\..\..\..\..\Program Files\VisionMaster4.1.0\Applications\Module(sp)\x64\Location\IMVSParallelCalculateModu\IMVSParallelCalculateModuCs.dll</HintPath>
+      <HintPath>.\bin\x64\Debug\Module(sp)\x64\Location\IMVSParallelCalculateModu\IMVSParallelCalculateModuCs.dll</HintPath>
       <Private>False</Private>
     </Reference>
     <Reference Include="IMVSImageMorphModuCs">
-      <HintPath>..\..\..\..\..\Program Files\VisionMaster4.1.0\Applications\Module(sp)\x64\ImageProcessing\IMVSImageMorphModu\IMVSImageMorphModuCs.dll</HintPath>
+      <HintPath>.\bin\x64\Debug\Module(sp)\x64\ImageProcessing\IMVSImageMorphModu\IMVSImageMorphModuCs.dll</HintPath>
       <Private>False</Private>
     </Reference>
     <Reference Include="IMVSFastFeatureMatchModuCs">
-      <HintPath>..\..\..\..\..\Program Files\VisionMaster4.1.0\Applications\Module(sp)\x64\Location\IMVSFastFeatureMatchModu\IMVSFastFeatureMatchModuCs.dll</HintPath>
+      <HintPath>.\bin\x64\Debug\Module(sp)\x64\Location\IMVSFastFeatureMatchModu\IMVSFastFeatureMatchModuCs.dll</HintPath>
       <Private>False</Private>
     </Reference>
     <Reference Include="IMVSRegionCopyModuCs">
-      <HintPath>..\..\..\..\..\Program Files\VisionMaster4.1.0\Applications\Module(sp)\x64\ImageProcessing\IMVSRegionCopyModu\IMVSRegionCopyModuCs.dll</HintPath>
+      <HintPath>.\bin\x64\Debug\Module(sp)\x64\ImageProcessing\IMVSRegionCopyModu\IMVSRegionCopyModuCs.dll</HintPath>
       <Private>False</Private>
     </Reference>
     <Reference Include="ReadDatasModuleCs">
-      <HintPath>..\..\..\..\..\Program Files\VisionMaster4.1.0\Applications\Module(sp)\x64\Communication\ReadDatasModule\ReadDatasModuleCs.dll</HintPath>
+      <HintPath>.\bin\x64\Debug\Module(sp)\x64\Communication\ReadDatasModule\ReadDatasModuleCs.dll</HintPath>
       <Private>False</Private>
     </Reference>
     <Reference Include="DataQueueModuleCs">
-      <HintPath>..\..\..\..\..\Program Files\VisionMaster4.1.0\Applications\Module(sp)\x64\Global\DataQueueModule\DataQueueModuleCs.dll</HintPath>
+      <HintPath>.\bin\x64\Debug\Module(sp)\x64\Global\DataQueueModule\DataQueueModuleCs.dll</HintPath>
       <Private>False</Private>
     </Reference>
     <Reference Include="DataSetModuleCs">
-      <HintPath>..\..\..\..\..\Program Files\VisionMaster4.1.0\Applications\Module(sp)\x64\Logic\DataSetModule\DataSetModuleCs.dll</HintPath>
+      <HintPath>.\bin\x64\Debug\Module(sp)\x64\Logic\DataSetModule\DataSetModuleCs.dll</HintPath>
       <Private>False</Private>
     </Reference>
     <Reference Include="SaveTextModuleCs">
-      <HintPath>..\..\..\..\..\Program Files\VisionMaster4.1.0\Applications\Module(sp)\x64\Logic\SaveTextModule\SaveTextModuleCs.dll</HintPath>
+      <HintPath>.\bin\x64\Debug\Module(sp)\x64\Logic\SaveTextModule\SaveTextModuleCs.dll</HintPath>
       <Private>False</Private>
     </Reference>
     <Reference Include="IMVSRotateCalculateModuCs">
-      <HintPath>..\..\..\..\..\Program Files\VisionMaster4.1.0\Applications\Module(sp)\x64\Calculation\IMVSRotateCalculateModu\IMVSRotateCalculateModuCs.dll</HintPath>
+      <HintPath>.\bin\x64\Debug\Module(sp)\x64\Calculation\IMVSRotateCalculateModu\IMVSRotateCalculateModuCs.dll</HintPath>
       <Private>False</Private>
     </Reference>
     <Reference Include="IMVSMapCalibModuCs">
-      <HintPath>..\..\..\..\..\Program Files\VisionMaster4.1.0\Applications\Module(sp)\x64\Calibration\IMVSMapCalibModu\IMVSMapCalibModuCs.dll</HintPath>
+      <HintPath>.\bin\x64\Debug\Module(sp)\x64\Calibration\IMVSMapCalibModu\IMVSMapCalibModuCs.dll</HintPath>
       <Private>False</Private>
     </Reference>
     <Reference Include="IfModuleCs">
-      <HintPath>..\..\..\..\..\Program Files\VisionMaster4.1.0\Applications\Module(sp)\x64\Logic\IfModule\IfModuleCs.dll</HintPath>
+      <HintPath>.\bin\x64\Debug\Module(sp)\x64\Logic\IfModule\IfModuleCs.dll</HintPath>
       <Private>False</Private>
     </Reference>
     <Reference Include="IMVSBcrModuCs">
-      <HintPath>..\..\..\..\..\Program Files\VisionMaster4.1.0\Applications\Module(sp)\x64\Recognition\IMVSBcrModu\IMVSBcrModuCs.dll</HintPath>
+      <HintPath>.\bin\x64\Debug\Module(sp)\x64\Recognition\IMVSBcrModu\IMVSBcrModuCs.dll</HintPath>
       <Private>False</Private>
     </Reference>
     <Reference Include="ReadCalibFileModuCs">
-      <HintPath>..\..\..\..\..\Program Files\VisionMaster4.1.0\Applications\Module(sp)\x64\Calibration\ReadCalibFileModu\ReadCalibFileModuCs.dll</HintPath>
+      <HintPath>.\bin\x64\Debug\Module(sp)\x64\Calibration\ReadCalibFileModu\ReadCalibFileModuCs.dll</HintPath>
       <Private>False</Private>
     </Reference>
     <Reference Include="IMVSCalibBoardCalibModuCs">
-      <HintPath>..\..\..\..\..\Program Files\VisionMaster4.1.0\Applications\Module(sp)\x64\Calibration\IMVSCalibBoardCalibModu\IMVSCalibBoardCalibModuCs.dll</HintPath>
+      <HintPath>.\bin\x64\Debug\Module(sp)\x64\Calibration\IMVSCalibBoardCalibModu\IMVSCalibBoardCalibModuCs.dll</HintPath>
       <Private>False</Private>
     </Reference>
     <Reference Include="IMVSCalibTransformModuCs">
-      <HintPath>..\..\..\..\..\Program Files\VisionMaster4.1.0\Applications\Module(sp)\x64\Calculation\IMVSCalibTransformModu\IMVSCalibTransformModuCs.dll</HintPath>
+      <HintPath>.\bin\x64\Debug\Module(sp)\x64\Calculation\IMVSCalibTransformModu\IMVSCalibTransformModuCs.dll</HintPath>
       <Private>False</Private>
     </Reference>
     <Reference Include="FormatModuleCs">
-      <HintPath>..\..\..\..\..\Program Files\VisionMaster4.1.0\Applications\Module(sp)\x64\Logic\FormatModule\FormatModuleCs.dll</HintPath>
+      <HintPath>.\bin\x64\Debug\Module(sp)\x64\Logic\FormatModule\FormatModuleCs.dll</HintPath>
       <Private>False</Private>
     </Reference>
     <Reference Include="IMVSImageSharpnessModuCs">
-      <HintPath>..\..\..\..\..\Program Files\VisionMaster4.1.0\Applications\Module(sp)\x64\ImageProcessing\IMVSImageSharpnessModu\IMVSImageSharpnessModuCs.dll</HintPath>
+      <HintPath>.\bin\x64\Debug\Module(sp)\x64\ImageProcessing\IMVSImageSharpnessModu\IMVSImageSharpnessModuCs.dll</HintPath>
       <Private>False</Private>
     </Reference>
     <Reference Include="IMVSGrayMatchModuCs">
-      <HintPath>..\..\..\..\..\Program Files\VisionMaster4.1.0\Applications\Module(sp)\x64\Location\IMVSGrayMatchModu\IMVSGrayMatchModuCs.dll</HintPath>
+      <HintPath>.\bin\x64\Debug\Module(sp)\x64\Location\IMVSGrayMatchModu\IMVSGrayMatchModuCs.dll</HintPath>
       <Private>False</Private>
     </Reference>
     <Reference Include="IMVSP2CMeasureModuCs">
-      <HintPath>..\..\..\..\..\Program Files\VisionMaster4.1.0\Applications\Module(sp)\x64\Measurement\IMVSP2CMeasureModu\IMVSP2CMeasureModuCs.dll</HintPath>
+      <HintPath>.\bin\x64\Debug\Module(sp)\x64\Measurement\IMVSP2CMeasureModu\IMVSP2CMeasureModuCs.dll</HintPath>
       <Private>False</Private>
     </Reference>
     <Reference Include="IMVSP2PMeasureModuCs">
-      <HintPath>..\..\..\..\..\Program Files\VisionMaster4.1.0\Applications\Module(sp)\x64\Measurement\IMVSP2PMeasureModu\IMVSP2PMeasureModuCs.dll</HintPath>
+      <HintPath>.\bin\x64\Debug\Module(sp)\x64\Measurement\IMVSP2PMeasureModu\IMVSP2PMeasureModuCs.dll</HintPath>
       <Private>False</Private>
     </Reference>
     <Reference Include="IMVSP2LMeasureModuCs">
-      <HintPath>..\..\..\..\..\Program Files\VisionMaster4.1.0\Applications\Module(sp)\x64\Measurement\IMVSP2LMeasureModu\IMVSP2LMeasureModuCs.dll</HintPath>
+      <HintPath>.\bin\x64\Debug\Module(sp)\x64\Measurement\IMVSP2LMeasureModu\IMVSP2LMeasureModuCs.dll</HintPath>
       <Private>False</Private>
     </Reference>
     <Reference Include="PointSetMODU_STDCs">
-      <HintPath>..\..\..\..\..\Program Files\VisionMaster4.1.0\Applications\Module(sp)\x64\Logic\PointSetMODU_STD\PointSetMODU_STDCs.dll</HintPath>
+      <HintPath>.\bin\x64\Debug\Module(sp)\x64\Logic\PointSetMODU_STD\PointSetMODU_STDCs.dll</HintPath>
       <Private>False</Private>
     </Reference>
     <Reference Include="IMVSMultiPointAlignModuCs">
-      <HintPath>..\..\..\..\..\Program Files\VisionMaster4.1.0\Applications\Module(sp)\x64\Calculation\IMVSMultiPointAlignModu\IMVSMultiPointAlignModuCs.dll</HintPath>
+      <HintPath>.\bin\x64\Debug\Module(sp)\x64\Calculation\IMVSMultiPointAlignModu\IMVSMultiPointAlignModuCs.dll</HintPath>
       <Private>False</Private>
     </Reference>
     <Reference Include="IMVSImageCalibModuCs">
-      <HintPath>..\..\..\..\..\Program Files\VisionMaster4.1.0\Applications\Module(sp)\x64\Calibration\IMVSImageCalibModu\IMVSImageCalibModuCs.dll</HintPath>
+      <HintPath>.\bin\x64\Debug\Module(sp)\x64\Calibration\IMVSImageCalibModu\IMVSImageCalibModuCs.dll</HintPath>
       <Private>False</Private>
     </Reference>
     <Reference Include="IMVSImageCorrectCalibModuCs">
-      <HintPath>..\..\..\..\..\Program Files\VisionMaster4.1.0\Applications\Module(sp)\x64\ImageProcessing\IMVSImageCorrectCalibModu\IMVSImageCorrectCalibModuCs.dll</HintPath>
+      <HintPath>.\bin\x64\Debug\Module(sp)\x64\ImageProcessing\IMVSImageCorrectCalibModu\IMVSImageCorrectCalibModuCs.dll</HintPath>
       <Private>False</Private>
     </Reference>
     <Reference Include="IMVSHistToolModuCs">
-      <HintPath>..\..\..\..\..\Program Files\VisionMaster4.1.0\Applications\Module(sp)\x64\Measurement\IMVSHistToolModu\IMVSHistToolModuCs.dll</HintPath>
+      <HintPath>.\bin\x64\Debug\Module(sp)\x64\Measurement\IMVSHistToolModu\IMVSHistToolModuCs.dll</HintPath>
       <Private>False</Private>
     </Reference>
     <Reference Include="IMVSLineEdgePairInspModuCs">
-      <HintPath>..\..\..\..\..\Program Files\VisionMaster4.1.0\Applications\Module(sp)\x64\DefectDetection\IMVSLineEdgePairInspModu\IMVSLineEdgePairInspModuCs.dll</HintPath>
+      <HintPath>.\bin\x64\Debug\Module(sp)\x64\DefectDetection\IMVSLineEdgePairInspModu\IMVSLineEdgePairInspModuCs.dll</HintPath>
       <Private>False</Private>
     </Reference>
     <Reference Include="IMVSLineFitModuCs">
-      <HintPath>..\..\..\..\..\Program Files\VisionMaster4.1.0\Applications\Module(sp)\x64\ImageGeneration\IMVSLineFitModu\IMVSLineFitModuCs.dll</HintPath>
+      <HintPath>.\bin\x64\Debug\Module(sp)\x64\ImageGeneration\IMVSLineFitModu\IMVSLineFitModuCs.dll</HintPath>
       <Private>False</Private>
     </Reference>
     <Reference Include="IMVSLineFindModuCs">
-      <HintPath>..\..\..\..\..\Program Files\VisionMaster4.1.0\Applications\Module(sp)\x64\Location\IMVSLineFindModu\IMVSLineFindModuCs.dll</HintPath>
+      <HintPath>.\bin\x64\Debug\Module(sp)\x64\Location\IMVSLineFindModu\IMVSLineFindModuCs.dll</HintPath>
       <Private>False</Private>
     </Reference>
     <Reference Include="IMVSLineFindGroupModuCs">
-      <HintPath>..\..\..\..\..\Program Files\VisionMaster4.1.0\Applications\Module(sp)\x64\Location\IMVSLineFindGroupModu\IMVSLineFindGroupModuCs.dll</HintPath>
+      <HintPath>.\bin\x64\Debug\Module(sp)\x64\Location\IMVSLineFindGroupModu\IMVSLineFindGroupModuCs.dll</HintPath>
       <Private>False</Private>
     </Reference>
     <Reference Include="IMVSLineEdgeInspModuCs">
-      <HintPath>..\..\..\..\..\Program Files\VisionMaster4.1.0\Applications\Module(sp)\x64\DefectDetection\IMVSLineEdgeInspModu\IMVSLineEdgeInspModuCs.dll</HintPath>
+      <HintPath>.\bin\x64\Debug\Module(sp)\x64\DefectDetection\IMVSLineEdgeInspModu\IMVSLineEdgeInspModuCs.dll</HintPath>
       <Private>False</Private>
     </Reference>
     <Reference Include="CameraIOModuleCs">
-      <HintPath>..\..\..\..\..\Program Files\VisionMaster4.1.0\Applications\Module(sp)\x64\Communication\CameraIOModule\CameraIOModuleCs.dll</HintPath>
+      <HintPath>.\bin\x64\Debug\Module(sp)\x64\Communication\CameraIOModule\CameraIOModuleCs.dll</HintPath>
       <Private>False</Private>
     </Reference>
     <Reference Include="IMVSCameraMapModuCs">
-      <HintPath>..\..\..\..\..\Program Files\VisionMaster4.1.0\Applications\Module(sp)\x64\Calibration\IMVSCameraMapModu\IMVSCameraMapModuCs.dll</HintPath>
+      <HintPath>.\bin\x64\Debug\Module(sp)\x64\Calibration\IMVSCameraMapModu\IMVSCameraMapModuCs.dll</HintPath>
       <Private>False</Private>
     </Reference>
     <Reference Include="IMVSRectFindModuCs">
-      <HintPath>..\..\..\..\..\Program Files\VisionMaster4.1.0\Applications\Module(sp)\x64\Location\IMVSRectFindModu\IMVSRectFindModuCs.dll</HintPath>
+      <HintPath>.\bin\x64\Debug\Module(sp)\x64\Location\IMVSRectFindModu\IMVSRectFindModuCs.dll</HintPath>
       <Private>False</Private>
     </Reference>
     <Reference Include="IMVSL2CMeasureModuCs">
-      <HintPath>..\..\..\..\..\Program Files\VisionMaster4.1.0\Applications\Module(sp)\x64\Measurement\IMVSL2CMeasureModu\IMVSL2CMeasureModuCs.dll</HintPath>
+      <HintPath>.\bin\x64\Debug\Module(sp)\x64\Measurement\IMVSL2CMeasureModu\IMVSL2CMeasureModuCs.dll</HintPath>
       <Private>False</Private>
     </Reference>
     <Reference Include="IMVSLineAlignModuCs">
-      <HintPath>..\..\..\..\..\Program Files\VisionMaster4.1.0\Applications\Module(sp)\x64\Calculation\IMVSLineAlignModu\IMVSLineAlignModuCs.dll</HintPath>
+      <HintPath>.\bin\x64\Debug\Module(sp)\x64\Calculation\IMVSLineAlignModu\IMVSLineAlignModuCs.dll</HintPath>
       <Private>False</Private>
     </Reference>
     <Reference Include="IMVSL2LMeasureModuCs">
-      <HintPath>..\..\..\..\..\Program Files\VisionMaster4.1.0\Applications\Module(sp)\x64\Measurement\IMVSL2LMeasureModu\IMVSL2LMeasureModuCs.dll</HintPath>
+      <HintPath>.\bin\x64\Debug\Module(sp)\x64\Measurement\IMVSL2LMeasureModu\IMVSL2LMeasureModuCs.dll</HintPath>
       <Private>False</Private>
     </Reference>
     <Reference Include="IMVSGroupCs">
-      <HintPath>..\..\..\..\..\Program Files\VisionMaster4.1.0\Applications\Module(sp)\x64\Logic\IMVSGroup\IMVSGroupCs.dll</HintPath>
+      <HintPath>.\bin\x64\Debug\Module(sp)\x64\Logic\IMVSGroup\IMVSGroupCs.dll</HintPath>
       <Private>False</Private>
     </Reference>
     <Reference Include="ImageBufferModuleCs">
-      <HintPath>..\..\..\..\..\Program Files\VisionMaster4.1.0\Applications\Module(sp)\x64\Collection\ImageBufferModule\ImageBufferModuleCs.dll</HintPath>
+      <HintPath>.\bin\x64\Debug\Module(sp)\x64\Collection\ImageBufferModule\ImageBufferModuleCs.dll</HintPath>
       <Private>False</Private>
     </Reference>
     <Reference Include="IMVSInspectModuCs">
-      <HintPath>..\..\..\..\..\Program Files\VisionMaster4.1.0\Applications\Module(sp)\x64\DefectDetection\IMVSInspectModu\IMVSInspectModuCs.dll</HintPath>
+      <HintPath>.\bin\x64\Debug\Module(sp)\x64\DefectDetection\IMVSInspectModu\IMVSInspectModuCs.dll</HintPath>
       <Private>False</Private>
     </Reference>
     <Reference Include="TimeStatisticModuleCs">
-      <HintPath>..\..\..\..\..\Program Files\VisionMaster4.1.0\Applications\Module(sp)\x64\Logic\TimeStatisticModule\TimeStatisticModuleCs.dll</HintPath>
+      <HintPath>.\bin\x64\Debug\Module(sp)\x64\Logic\TimeStatisticModule\TimeStatisticModuleCs.dll</HintPath>
       <Private>False</Private>
     </Reference>
     <Reference Include="ShellModuleCs">
-      <HintPath>..\..\..\..\..\Program Files\VisionMaster4.1.0\Applications\Module(sp)\x64\Logic\ShellModule\ShellModuleCs.dll</HintPath>
+      <HintPath>.\bin\x64\Debug\Module(sp)\x64\Logic\ShellModule\ShellModuleCs.dll</HintPath>
       <Private>False</Private>
     </Reference>
     <Reference Include="IMVSAngleBisectorFindModuCs">
-      <HintPath>..\..\..\..\..\Program Files\VisionMaster4.1.0\Applications\Module(sp)\x64\Location\IMVSAngleBisectorFindModu\IMVSAngleBisectorFindModuCs.dll</HintPath>
+      <HintPath>.\bin\x64\Debug\Module(sp)\x64\Location\IMVSAngleBisectorFindModu\IMVSAngleBisectorFindModuCs.dll</HintPath>
       <Private>False</Private>
     </Reference>
     <Reference Include="IMVSGluePathConductModuCs">
-      <HintPath>..\..\..\..\..\Program Files\VisionMaster4.1.0\Applications\Module(sp)\x64\Location\IMVSGluePathConductModu\IMVSGluePathConductModuCs.dll</HintPath>
+      <HintPath>.\bin\x64\Debug\Module(sp)\x64\Location\IMVSGluePathConductModu\IMVSGluePathConductModuCs.dll</HintPath>
       <Private>False</Private>
     </Reference>
     <Reference Include="SaveImageCs">
-      <HintPath>..\..\..\..\..\Program Files\VisionMaster4.1.0\Applications\Module(sp)\x64\Collection\SaveImage\SaveImageCs.dll</HintPath>
+      <HintPath>.\bin\x64\Debug\Module(sp)\x64\Collection\SaveImage\SaveImageCs.dll</HintPath>
       <Private>False</Private>
     </Reference>
     <Reference Include="IMVSCaliperCornerModuCs">
-      <HintPath>..\..\..\..\..\Program Files\VisionMaster4.1.0\Applications\Module(sp)\x64\Location\IMVSCaliperCornerModu\IMVSCaliperCornerModuCs.dll</HintPath>
+      <HintPath>.\bin\x64\Debug\Module(sp)\x64\Location\IMVSCaliperCornerModu\IMVSCaliperCornerModuCs.dll</HintPath>
       <Private>False</Private>
     </Reference>
     <Reference Include="IMVSEdgePairFlawInspModuCs">
-      <HintPath>..\..\..\..\..\Program Files\VisionMaster4.1.0\Applications\Module(sp)\x64\DefectDetection\IMVSEdgePairFlawInspModu\IMVSEdgePairFlawInspModuCs.dll</HintPath>
+      <HintPath>.\bin\x64\Debug\Module(sp)\x64\DefectDetection\IMVSEdgePairFlawInspModu\IMVSEdgePairFlawInspModuCs.dll</HintPath>
       <Private>False</Private>
     </Reference>
     <Reference Include="IMVSEdgePairInspGroupModuCs">
-      <HintPath>..\..\..\..\..\Program Files\VisionMaster4.1.0\Applications\Module(sp)\x64\DefectDetection\IMVSEdgePairInspGroupModu\IMVSEdgePairInspGroupModuCs.dll</HintPath>
+      <HintPath>.\bin\x64\Debug\Module(sp)\x64\DefectDetection\IMVSEdgePairInspGroupModu\IMVSEdgePairInspGroupModuCs.dll</HintPath>
       <Private>False</Private>
     </Reference>
     <Reference Include="IMVSCaliperEdgeModuCs">
-      <HintPath>..\..\..\..\..\Program Files\VisionMaster4.1.0\Applications\Module(sp)\x64\Location\IMVSCaliperEdgeModu\IMVSCaliperEdgeModuCs.dll</HintPath>
+      <HintPath>.\bin\x64\Debug\Module(sp)\x64\Location\IMVSCaliperEdgeModu\IMVSCaliperEdgeModuCs.dll</HintPath>
       <Private>False</Private>
     </Reference>
     <Reference Include="IMVSEdgeFlawInspModuCs">
-      <HintPath>..\..\..\..\..\Program Files\VisionMaster4.1.0\Applications\Module(sp)\x64\DefectDetection\IMVSEdgeFlawInspModu\IMVSEdgeFlawInspModuCs.dll</HintPath>
+      <HintPath>.\bin\x64\Debug\Module(sp)\x64\DefectDetection\IMVSEdgeFlawInspModu\IMVSEdgeFlawInspModuCs.dll</HintPath>
       <Private>False</Private>
     </Reference>
     <Reference Include="IMVSEdgeInspGroupModuCs">
-      <HintPath>..\..\..\..\..\Program Files\VisionMaster4.1.0\Applications\Module(sp)\x64\DefectDetection\IMVSEdgeInspGroupModu\IMVSEdgeInspGroupModuCs.dll</HintPath>
+      <HintPath>.\bin\x64\Debug\Module(sp)\x64\DefectDetection\IMVSEdgeInspGroupModu\IMVSEdgeInspGroupModuCs.dll</HintPath>
       <Private>False</Private>
     </Reference>
     <Reference Include="AndModuleCs">
-      <HintPath>..\..\..\..\..\Program Files\VisionMaster4.1.0\Applications\Module(sp)\x64\Logic\AndModule\AndModuleCs.dll</HintPath>
+      <HintPath>.\bin\x64\Debug\Module(sp)\x64\Logic\AndModule\AndModuleCs.dll</HintPath>
       <Private>False</Private>
     </Reference>
     <Reference Include="IMVSEdgeWidthFindModuCs">
-      <HintPath>..\..\..\..\..\Program Files\VisionMaster4.1.0\Applications\Module(sp)\x64\Measurement\IMVSEdgeWidthFindModu\IMVSEdgeWidthFindModuCs.dll</HintPath>
+      <HintPath>.\bin\x64\Debug\Module(sp)\x64\Measurement\IMVSEdgeWidthFindModu\IMVSEdgeWidthFindModuCs.dll</HintPath>
       <Private>False</Private>
     </Reference>
     <Reference Include="IMVSShadeCorrectModuCs">
-      <HintPath>..\..\..\..\..\Program Files\VisionMaster4.1.0\Applications\Module(sp)\x64\ImageProcessing\IMVSShadeCorrectModu\IMVSShadeCorrectModuCs.dll</HintPath>
+      <HintPath>.\bin\x64\Debug\Module(sp)\x64\ImageProcessing\IMVSShadeCorrectModu\IMVSShadeCorrectModuCs.dll</HintPath>
       <Private>False</Private>
     </Reference>
     <Reference Include="IMVSPeakFindModuCs">
-      <HintPath>..\..\..\..\..\Program Files\VisionMaster4.1.0\Applications\Module(sp)\x64\Location\IMVSPeakFindModu\IMVSPeakFindModuCs.dll</HintPath>
+      <HintPath>.\bin\x64\Debug\Module(sp)\x64\Location\IMVSPeakFindModu\IMVSPeakFindModuCs.dll</HintPath>
       <Private>False</Private>
     </Reference>
     <Reference Include="IMVSColorExtractModuCs">
-      <HintPath>..\..\..\..\..\Program Files\VisionMaster4.1.0\Applications\Module(sp)\x64\ColorProcessing\IMVSColorExtractModu\IMVSColorExtractModuCs.dll</HintPath>
+      <HintPath>.\bin\x64\Debug\Module(sp)\x64\ColorProcessing\IMVSColorExtractModu\IMVSColorExtractModuCs.dll</HintPath>
       <Private>False</Private>
     </Reference>
     <Reference Include="IMVSColorMeasureModuCs">
-      <HintPath>..\..\..\..\..\Program Files\VisionMaster4.1.0\Applications\Module(sp)\x64\ColorProcessing\IMVSColorMeasureModu\IMVSColorMeasureModuCs.dll</HintPath>
+      <HintPath>.\bin\x64\Debug\Module(sp)\x64\ColorProcessing\IMVSColorMeasureModu\IMVSColorMeasureModuCs.dll</HintPath>
       <Private>False</Private>
     </Reference>
     <Reference Include="IMVSColorRecognitionModuCs">
-      <HintPath>..\..\..\..\..\Program Files\VisionMaster4.1.0\Applications\Module(sp)\x64\ColorProcessing\IMVSColorRecognitionModu\IMVSColorRecognitionModuCs.dll</HintPath>
+      <HintPath>.\bin\x64\Debug\Module(sp)\x64\ColorProcessing\IMVSColorRecognitionModu\IMVSColorRecognitionModuCs.dll</HintPath>
       <Private>False</Private>
     </Reference>
     <Reference Include="IMVSColorTransformModuCs">
-      <HintPath>..\..\..\..\..\Program Files\VisionMaster4.1.0\Applications\Module(sp)\x64\ColorProcessing\IMVSColorTransformModu\IMVSColorTransformModuCs.dll</HintPath>
+      <HintPath>.\bin\x64\Debug\Module(sp)\x64\ColorProcessing\IMVSColorTransformModu\IMVSColorTransformModuCs.dll</HintPath>
       <Private>False</Private>
     </Reference>
     <Reference Include="IMVSHPFeatureMatchModuCs">
-      <HintPath>..\..\..\..\..\Program Files\VisionMaster4.1.0\Applications\Module(sp)\x64\Location\IMVSHPFeatureMatchModu\IMVSHPFeatureMatchModuCs.dll</HintPath>
+      <HintPath>.\bin\x64\Debug\Module(sp)\x64\Location\IMVSHPFeatureMatchModu\IMVSHPFeatureMatchModuCs.dll</HintPath>
       <Private>False</Private>
     </Reference>
     <Reference Include="System.Configuration" />
@@ -678,6 +678,8 @@
     <Compile Include="CustomEventArgs\BitMapImageArgs.cs" />
     <Compile Include="CustomEventArgs\TcpClientEventArgs.cs" />
     <Compile Include="CustomEventArgs\TcpListenerEventArgs.cs" />
+    <Compile Include="DP\CommandNavigationViewItem.cs" />
+    <Compile Include="DP\NavigationViewItemBehavior.cs" />
     <Compile Include="EnumClass\MountingOrientation.cs" />
     <Compile Include="EnumClass\Terminator.cs" />
     <Compile Include="EnumClass\EnumHelperClass.cs" />
@@ -874,6 +876,11 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="Style\DesignTimeResources.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    	<ContainsDesignTimeResources>True</ContainsDesignTimeResources>
+    </Page>
     <Page Include="Style\Fonts.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -1031,8 +1038,20 @@
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="DP\" />
-  </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
+
+
+
+
+
+
+
+
+
+
+
+
+
+

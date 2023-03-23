@@ -11,7 +11,6 @@
              FontSize="16">
 
     <Grid Margin="0 0 0 10">
-        <materialDesign:Card UniformCornerRadius="20" Margin="0 10 15 0">
 
             <StackPanel Orientation="Vertical" VerticalAlignment="Center" >
                 <TextBlock Text="Select Manipulator" HorizontalAlignment="Center" FontSize="35" Margin="0 0 0 25"/>
@@ -23,7 +22,7 @@
                 </ComboBox>
                 <StackPanel  Orientation="Horizontal" HorizontalAlignment="Center" Margin="0 0 0 40">
                     <TextBlock  VerticalAlignment="Center" Text="New Manipulator? "/>
-                    <Button  Style="{DynamicResource MaterialDesignFlatAccentButton}" Padding="5"  Margin="5" Command="{Binding ShoutCommand}">Create New</Button>
+                    <Button  Style="{DynamicResource MaterialDesignPaperButton}" Padding="5"  Margin="5" Command="{Binding ShoutCommand}">Create New</Button>
                 </StackPanel>
                 <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
                     <Label Content="Manipulator Type: " Style="{DynamicResource MaterialDesignLabel}"/>
@@ -32,6 +31,5 @@
                 </StackPanel>
 
             </StackPanel>
-        </materialDesign:Card>
     </Grid>
 </UserControl>

@@ -23,7 +23,6 @@ namespace X_Guide.MVVM.ViewModel
 {
     //displaying the current viewmodel of the application
 
-
     public class MainViewModel : ViewModelBase
     {
         #region CLR properties
