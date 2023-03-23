@@ -1,4 +1,5 @@
-﻿using AutoMapper;
+﻿using Autofac;
+using AutoMapper;
 using System;
 using System.Collections.Generic;
 using System.Configuration;
@@ -17,9 +18,9 @@ using X_Guide.MVVM.Model;
 using X_Guide.MVVM.Store;
 using X_Guide.MVVM.ViewModel;
 using X_Guide.Service;
-using X_Guide.Service.Communation;
+using X_Guide.Service.Communication;
 using X_Guide.Service.DatabaseProvider;
-
+using Xlent_Vision_Guided;
 
 namespace X_Guide
 {
@@ -32,14 +33,16 @@ namespace X_Guide
 
         private readonly NavigationStore _navigationStore;
         private readonly NavigationStore _wizardNavigationStore;
-        private Dictionary<PageName, NavigationService> _viewModels;
+        private Dictionary<PageName, Func<ViewModelBase>> _navDictionary;
         private DbContextFactory _dbContextFactory;
         private IUserService _userProvider;
         private IServerService _serverService;
         private ResourceDictionary _resourceDictionary;
         private IMachineService _machineDb;
-        private ServerCommand _serverCommand;
         private MapperConfiguration _mapperConfig;
+        private IClientService _clientService;
+        private IContainer _diContainer;
+
 
 
         public App()
@@ -51,53 +54,57 @@ namespace X_Guide
             {
                 c.AddProfile<MachineProfile>();
             }
-                );
+            );
 
-            _dbContextFactory = new DbContextFactory();
-            _userProvider = new UserService(_dbContextFactory);
-            _machineDb = new MachineService(_dbContextFactory);
+
+
             //App specific settings
             InitializeAppConfiguration();
 
-            
-            _serverService = new ServerService(IPAddress.Parse("192.168.10.92"), 8000, "\n");
-            _serverCommand = new ServerCommand(_serverService);
-            _serverCommand.StartServer();
-
             _navigationStore = new NavigationStore();
             _wizardNavigationStore = new NavigationStore();
-            _resourceDictionary = new ResourceDictionary
-            {
-                Source = new Uri("/Style/Colors.xaml", UriKind.RelativeOrAbsolute)
-            };
+
 
             //Navigation setting      
-            InitializeAppNavigation();
-
+            _diContainer = BuildDIContainer();
 
         }
 
-
-        private void InitializeAppNavigation()
+        IContainer BuildDIContainer()
         {
-            _viewModels = new Dictionary<PageName, NavigationService>
+            ContainerBuilder builder = new ContainerBuilder();
+
+          
+            builder.Register(c => new ViewModelLocator(_diContainer)).As<IViewModelLocator>().SingleInstance();
+            builder.RegisterType<NavigationService>().As<INavigationService>();
+
+            builder.Register(c => new MainWindow()
             {
-                {PageName.Setting, new NavigationService (_navigationStore, CreateSettingViewModel) },
-                {PageName.Production, new NavigationService (_navigationStore, CreateProductionViewModel) },
-                {PageName.Engineering, new NavigationService (_navigationStore, CreateEngineeringViewModel) },
-                {PageName.Security, new NavigationService (_navigationStore, CreateSecurityViewModel) },
-                {PageName.Undefined, new NavigationService(_navigationStore, CreateUndefinedViewModel) } ,
-                {PageName.JogRobot, new NavigationService(_navigationStore, CreateJogRobotViewModel) } ,
-                {PageName.Login, new NavigationService(_navigationStore, CreateUserLoginViewModel) },
-                {PageName.CalibrationWizardStart, new NavigationService(_navigationStore, CreateCalibrationWizardStart)} ,
+                DataContext = c.Resolve<MainViewModel>()
+            });
 
-            };
+            builder.RegisterType<NavigationStore>().SingleInstance();
+            builder.RegisterType<MainViewModel>();
+            builder.RegisterType<CalibrationWizardStartViewModel>();
+            builder.RegisterType<Step1ViewModel>();
+            builder.RegisterType<Step2ViewModel>();
+            builder.RegisterType<SettingViewModel>();
+/*
+            builder.RegisterType<NavigationService>().As<INavigationService>().WithParameter(new TypedParameter(typeof(IContainer), _diContainer));*/
+            builder.RegisterType<CalibrationMainViewModel>();
+  
+            builder.RegisterInstance(_mapperConfig.CreateMapper());
+      
+            builder.RegisterType<DbContextFactory>();
+            builder.RegisterType<MachineService>().As<IMachineService>();
+            builder.RegisterType<UserService>().As<IUserService>();
+           
+            builder.Register(c => new ServerService(IPAddress.Parse("192.168.10.92"), 8000, "\r\n")).As<IServerService>().SingleInstance();
+            builder.Register(c => new ClientService(IPAddress.Parse("192.168.10.90"), 8000)).As<IClientService>().SingleInstance();
 
-
-            /*
-                        _setting = SettingModel.ReadFromXML(ConfigurationManager.AppSettings["SettingPath"]);*/
+            return builder.Build();
         }
-
+      
         private void InitializeAppConfiguration()
         {
             string appDataPath = Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData);
@@ -105,57 +112,24 @@ namespace X_Guide
             ConfigurationManager.AppSettings["SettingPath"] = settingPath;
         }
         //        Startup Page
+
+
+
         protected override void OnStartup(StartupEventArgs e)
         {
-            _navigationStore.CurrentViewModel = CreateEngineeringViewModel();
-            MainWindow = new MainWindow()
-            {
-                DataContext = new MainViewModel(_navigationStore, _viewModels, _serverService, _userProvider)
-            };
 
 
 
+
+            _diContainer = BuildDIContainer();
+            MainWindow = _diContainer.Resolve<MainWindow>();
             MainWindow.Show();
 
             base.OnStartup(e);
         }
+     
 
-
-        private ViewModelBase CreateSecurityViewModel()
-        {
-            return new SecurityViewModel();
-        }
-        private ViewModelBase CreateEngineeringViewModel()
-        {
-            return new EngineeringViewModel(_machineDb, _mapperConfig.CreateMapper(), "My New Setting", _serverCommand);
-        }
-
-        private ViewModelBase CreateUndefinedViewModel()
-        {
-            return new UndefinedViewModel();
-        }
-
-        private ViewModelBase CreateSettingViewModel()
-        {
-            return new SettingViewModel(_machineDb, _serverService);
-        }
-
-        private ViewModelBase CreateProductionViewModel()
-        {
-            return new ProductionViewModel();
-        }
-        private ViewModelBase CreateUserLoginViewModel()
-        {
-            return new UserLoginViewModel();
-        }
-        private ViewModelBase CreateJogRobotViewModel()
-        {
-            return new JogRobotViewModel();
-        }
-        private ViewModelBase CreateCalibrationWizardStart()
-        {
-            return new CalibrationWizardStartViewModel(_navigationStore, _machineDb, _mapperConfig.CreateMapper(), _serverCommand);
-        }
+    
 
 
     }

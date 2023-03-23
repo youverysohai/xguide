@@ -30,7 +30,7 @@
                 </Grid.ColumnDefinitions>
                 <!--Live Processed Image-->
                 <Image Width="180" Grid.Row="1" Source="pack://application:,,,/Style/ImageSource/hamster-cute.gif" ></Image>
-                <Button Margin="130 0" Grid.Row="2" Style="{DynamicResource MaterialDesignOutlinedButton}">Start Calibration</Button>
+                <Button Margin="130 0" Grid.Row="2" Style="{DynamicResource MaterialDesignOutlinedButton}" Command="{Binding CalibrateCommand}">Start Calibration</Button>
                 <!--Right Side Calibration Output Data -->
                 <GroupBox Header="Calibration Output Data" Grid.RowSpan="3" Grid.Column="1" FontSize="22">
 

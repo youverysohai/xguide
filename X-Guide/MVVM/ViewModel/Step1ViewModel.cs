@@ -8,9 +8,10 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Input;
+using X_Guide.Communication.Service;
 using X_Guide.MVVM.Model;
 using X_Guide.MVVM.ViewModel.CalibrationWizardSteps;
-using X_Guide.Service.Communation;
+using X_Guide.Service.Communication;
 using X_Guide.Service.DatabaseProvider;
 
 namespace X_Guide.MVVM.ViewModel
@@ -18,8 +19,8 @@ namespace X_Guide.MVVM.ViewModel
     internal class Step1ViewModel : ViewModelBase
     {
         #region properties
-    
-        public event EventHandler OnSelectedItemChangedEvent;
+
+        public Action SelectedItemChangedEvent;
 
         private MachineModel _machineModel;
 
@@ -59,31 +60,27 @@ namespace X_Guide.MVVM.ViewModel
             _machineModel = _machineService.GetMachine(name);
             Machine = MachineViewModel.ToViewModel(_machineModel, _mapper);
             _setting.Machine = Machine;
-            _serverCommand.SetServerTerminator(_machineService.GetMachineDelimiter(name));
-            OnSelectedItemChangedEvent?.Invoke(this, EventArgs.Empty);
+            _serverService.SetServerReadTerminator(_machineService.GetMachineDelimiter(name));
+            SelectedItemChangedEvent?.Invoke();
+             
         }
 
         public ICommand ShoutCommand { get; set; }
         public IMachineService _machineService { get; }
         private IMapper _mapper { get; }
-        public ServerCommand _serverCommand { get; }
+        public IServerService _serverService { get; }
+
+        private readonly IClientService _clientService;
         #endregion
-        public Step1ViewModel(IMachineService machineService, IMapper mapper, CalibrationViewModel setting, ServerCommand serverCommand)
+        public Step1ViewModel(IMachineService machineService, IMapper mapper, CalibrationViewModel setting, IServerService serverService, IClientService clientService)
         {
             _setting = setting;
-            _serverCommand = serverCommand;
+            _serverService = serverService;
+            _clientService = clientService;
             _machineService = machineService;
             _mapper = mapper;
             MachineNames = new ObservableCollection<string>(_machineService.GetAllMachineName());
         }
-        public void Test(object obj)
-        {
-            OnSelectedItemChangedEvent?.Invoke(this, EventArgs.Empty);
-        }
-
-        public override ViewModelBase GetNextViewModel()
-        {
-            return new Step2ViewModel(ref OnSelectedItemChangedEvent, _setting, _serverCommand);
-        }
+  
     }
 }

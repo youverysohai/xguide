@@ -287,7 +287,7 @@ namespace X_Guide.MVVM.ViewModel
         }//SettingViewModel properties 
 
 
-        public SettingViewModel(IMachineService machineDB, IServerService serverService)
+        public SettingViewModel(IMachineService machineDB   )
         {
             PropertyChanged += OnManipulatorChangeEvent;
         

@@ -1,23 +1,29 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Net;
 using System.Net.Sockets;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
-using System.Windows;
+using X_Guide.CustomEventArgs;
+using X_Guide.Service;
+using X_Guide.Service.Communication;
+using Xlent_Vision_Guided;
 
 namespace X_Guide.Communication.Service
 {
-    public class ClientService : IClientService
+    public class ClientService : TCPBase, IClientService
     {
-   
+
         private readonly int _port;
         private TcpClient _client;
         private NetworkStream _stream;
         private IPAddress _ipAddress;
+        private CancellationTokenSource cts;
 
-        public ClientService(IPAddress ipAddress, int port)
+        public ClientService(IPAddress ipAddress, int port, string terminator = null) : base(terminator)
         {
             _ipAddress = ipAddress;
             _port = port;
@@ -25,44 +31,54 @@ namespace X_Guide.Communication.Service
 
         public async Task ConnectServer()
         {
+
             try
             {
                 _client = new TcpClient();
                 _client.Connect(_ipAddress, _port);
                 _stream = _client.GetStream();
-                string message = "Hello Server!";
-                byte[] data = Encoding.ASCII.GetBytes(message);
-                _stream.Write(data, 0, data.Length);
-                await RecieveDataAsync();
+                cts = new CancellationTokenSource();
+                await RecieveDataAsync(_stream, cts.Token);
             }
             catch (Exception ex)
             {
-                MessageBox.Show("An error occurred: " + ex.Message);
+                Debug.WriteLine("An error occurred: " + ex.Message);
             }
-
-
         }
 
-        private async Task RecieveDataAsync()
+        public async Task<Point> GetVisCenter()
         {
-            byte[] data = new byte[1024];
-            string responseData = string.Empty;
-            while (_client.Connected)
-            {
-                int bytes = await _stream.ReadAsync(data, 0, data.Length);
-                responseData += Encoding.ASCII.GetString(data, 0, bytes);
-
-                while (_stream.DataAvailable)
-                {
-                    responseData += Encoding.ASCII.GetString(data, 0, bytes);
-
-                }
-
-                MessageBox.Show(responseData);
-                responseData = string.Empty;
-            }
-            _stream.Close();
-            _client.Close();
+            string flowName = "FindVisCenter";
+            await WriteDataAsync($"XGUIDE,{flowName}", _stream);
+            Point point = await Task.Run(() => RegisterRequestEventHandler(GetVisCenterEvent));
+            Debug.WriteLine(point);
+            return point;
+            
         }
+
+        private Point GetVisCenterEvent(NetworkStreamEventArgs e)
+        {
+            string[] data = e.Data;
+
+            if (data.Length == 2)
+            {
+           
+                Point point = new Point(double.Parse(data[0]), double.Parse(data[1]));
+               
+                return point;
+
+            }
+            return null;
+        }
+
+
+        public async Task WriteDataAsync(string data)
+        {
+            await WriteDataAsync(data, _stream);
+        }
+
+    
+
+       
     }
 }
