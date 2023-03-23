@@ -161,7 +161,10 @@ namespace X_Guide.MVVM.ViewModel
             {
                 case 0: return _viewModelLocator.CreateStep1(setting);
                 case 1: return _viewModelLocator.CreateStep2(setting);
-                case 2: return _viewModelLocator.Create<Step3ViewModel>();
+                case 2: return _viewModelLocator.CreateStep3(setting);
+                case 3: return _viewModelLocator.CreateStep4(setting);
+                case 4: return _viewModelLocator.CreateStep5(setting);
+                case 5: return _viewModelLocator.CreateStep6(setting);
                 default: return null;
             }
 

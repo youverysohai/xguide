@@ -73,10 +73,8 @@ namespace X_Guide.MVVM.View.CalibrationWizardSteps
                 VmSolution.Import(@"C:\Users\Xlent_XIR02\Desktop\livecam.sol");
 
                 VmSolution.CreatSolInstance();
-                p = (VmProcedure)VmSolution.Instance["Flow1"];
-                
+                p = (VmProcedure)VmSolution.Instance["LiveCam"];
                 p.Run();
-
                 p_box.LoadFrontendSource();
                 
                 //p_box.BindSingleProcedure(p.ToString());

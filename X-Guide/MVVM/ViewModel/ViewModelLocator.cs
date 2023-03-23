@@ -38,16 +38,35 @@ namespace X_Guide.MVVM.ViewModel
             return _dependencyResolver?.Resolve<Step1ViewModel>(new TypedParameter(typeof(CalibrationViewModel), setting));
         }
 
+        public ViewModelBase CreateStep2(CalibrationViewModel setting)
+        {
+            return _dependencyResolver?.Resolve<Step2ViewModel>(new TypedParameter(typeof(CalibrationViewModel), setting));
+        }
+
+        public ViewModelBase CreateStep3(CalibrationViewModel setting)
+        {
+            return _dependencyResolver?.Resolve<Step3ViewModel>(new TypedParameter(typeof(CalibrationViewModel), setting));
+        }
+        public ViewModelBase CreateStep4(CalibrationViewModel setting)
+        {
+            return _dependencyResolver?.Resolve<Step4ViewModel>(new TypedParameter(typeof(CalibrationViewModel), setting));
+        }        
+        public ViewModelBase CreateStep5(CalibrationViewModel setting)
+        {
+            return _dependencyResolver?.Resolve<Step5ViewModel>(new TypedParameter(typeof(CalibrationViewModel), setting));
+        }
+        public ViewModelBase CreateStep6(CalibrationViewModel setting)
+        {
+            return _dependencyResolver?.Resolve<Step6ViewModel>(new TypedParameter(typeof(CalibrationViewModel), setting));
+        }
+
         public ViewModelBase CreateCalibrationMainViewModel(string name)
         {
             return _dependencyResolver?.Resolve<CalibrationMainViewModel>(new TypedParameter(typeof(string), name));
 
         }
 
-        public ViewModelBase CreateStep2(CalibrationViewModel setting)
-        {
-            return _dependencyResolver?.Resolve<Step2ViewModel>(new TypedParameter(typeof(CalibrationViewModel), setting));
-        }
+  
 
         public ViewModelBase CreateCalibrationWizardStart(NavigationStore navigationStore)
         {

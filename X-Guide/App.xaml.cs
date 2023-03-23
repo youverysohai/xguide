@@ -88,6 +88,10 @@ namespace X_Guide
             builder.RegisterType<CalibrationWizardStartViewModel>();
             builder.RegisterType<Step1ViewModel>();
             builder.RegisterType<Step2ViewModel>();
+            builder.RegisterType<Step3ViewModel>();
+            builder.RegisterType<Step4ViewModel>();
+            builder.RegisterType<Step5ViewModel>();
+            builder.RegisterType<Step6ViewModel>();
             builder.RegisterType<SettingViewModel>();
 /*
             builder.RegisterType<NavigationService>().As<INavigationService>().WithParameter(new TypedParameter(typeof(IContainer), _diContainer));*/

@@ -16,5 +16,9 @@ namespace X_Guide.MVVM.ViewModel
         ViewModelBase CreateCalibrationMainViewModel(string name);
         ViewModelBase CreateStep1(CalibrationViewModel setting);
         ViewModelBase CreateStep2(CalibrationViewModel setting);
+        ViewModelBase CreateStep3(CalibrationViewModel setting);
+        ViewModelBase CreateStep4(CalibrationViewModel setting);
+        ViewModelBase CreateStep5(CalibrationViewModel setting);
+        ViewModelBase CreateStep6(CalibrationViewModel setting);
     }
 }
