@@ -11,22 +11,20 @@
         xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
         mc:Ignorable="d"
         Title="X-Guide"         
-        Height="800" Width="1280"
-        WindowStartupLocation="CenterScreen"
-        ResizeMode="CanResizeWithGrip" 
-        WindowStyle="None"
-        AllowsTransparency="True"
-        WindowState="Normal"
-         
-        BorderBrush="{DynamicResource PrimaryBlackColor}"
-        BorderThickness="1"
-        Foreground="White">
+        Height="720" Width="1280"
+        WindowState="Maximized"
+       
+        xmlns:ui="http://schemas.modernwpf.com/2019"
+        ui:WindowHelper.UseModernWindowStyle="True">
 
-
+    <!--#region  OLD-->
     <!--Login Form Dialog-->
+    <!--
     <materialDesign:DialogHost CloseOnClickAway="True" Panel.ZIndex="1" 
                                BorderBrush="{DynamicResource MaterialDesignShadowBrush}" >
-        <!-- pop out login-->
+        -->
+    <!-- pop out login-->
+    <!--
         <materialDesign:DialogHost.DialogContent>
             <materialDesign:Card UniformCornerRadius="16" Background="{x:Null}" Height="700" Width="380" Margin="25">
                 <StackPanel Orientation="Vertical" HorizontalAlignment="Center" Margin="15" Background="{DynamicResource MaterialDesignPaper}" >
@@ -61,13 +59,17 @@
 
             <StackPanel Orientation="Horizontal" Grid.Row="0" Grid.Column="1"  Margin="0 0 0 0" Panel.ZIndex="1">
 
-                <!-- login logout user role -->
+                -->
+    <!-- login logout user role -->
+    <!--
                 <Button x:Name="LoginIcon" Style="{DynamicResource LoginLogoutButton}"
                           Command="{x:Static materialDesign:DialogHost.OpenDialogCommand}" 
                            ToolTipService.InitialShowDelay="90" >
                     
 
-                    <!--<materialDesign:PackIcon Kind="WorkerOutline" Width="24" Height="24" VerticalAlignment="Center"/>-->
+                    -->
+    <!--<materialDesign:PackIcon Kind="WorkerOutline" Width="24" Height="24" VerticalAlignment="Center"/>-->
+    <!--
                     <materialDesign:PackIcon  Kind="LogoutVariant"  Width="24" Height="24" VerticalAlignment="Center" ToolTip="Logout"/>
                 </Button>
                 <TextBlock x:Name="Username" Text="{Binding SplashText}"  VerticalAlignment="Center"  FontSize="14"  TextAlignment="Center" Background="#1c1c1c" Foreground="White" Margin="10 0 0 0"/>
@@ -78,7 +80,9 @@
 
             </StackPanel>
 
-            <!--Min Max Close-->
+            -->
+    <!--Min Max Close-->
+    <!--
             <DockPanel x:Name="TitleBar" Grid.ColumnSpan="3" Grid.Row="0" MouseLeftButtonDown="OnMouseLeftButtonDown">
                 <Button x:Name="CloseButton"
                     Click="CloseButton_Click"  Style="{DynamicResource MaterialDesignIconForegroundButton}" 
@@ -100,7 +104,9 @@
                 <TextBlock  Style="{DynamicResource MainTopTitleTextBlock}"/>
 
             </DockPanel>
-            <!-- sidemenu -->
+            -->
+    <!-- sidemenu -->
+    <!--
             <Grid Grid.Row="1" Grid.Column="0"  Margin="8 0 0 0">
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="auto"/>
@@ -119,11 +125,15 @@
                 <hc:SideMenu  Grid.Row="1" Grid.ColumnSpan="2" x:Name="SideMenu" AutoSelect="True" HorizontalAlignment="Left" MinHeight="400" Width="180">
 
                     <hc:Interaction.Triggers>
-                        <!--<hc:EventTrigger EventName="SelectionChanged">
+                        -->
+    <!--<hc:EventTrigger EventName="SelectionChanged">
                         <hc:EventToCommand Command="{Binding SwitchItemCmd}" PassEventArgsToCommand="False" />
                     </hc:EventTrigger>-->
+    <!--
                     </hc:Interaction.Triggers>
-                    <!--Production Section-->
+                    -->
+    <!--Production Section-->
+    <!--
                     <hc:SideMenuItem Header="Production" FontSize="16">
                         <hc:SideMenuItem.Icon>
                             <materialDesign:PackIcon Kind="SitemapOutline" Width="36" Height="36"/>
@@ -147,7 +157,9 @@
                             </hc:SideMenuItem.Icon>
                         </hc:SideMenuItem>
                     </hc:SideMenuItem>
-                    <!--Engineering Section-->
+                    -->
+    <!--Engineering Section-->
+    <!--
                     <hc:SideMenuItem Header="Engineering"  FontSize="16">
                         <hc:SideMenuItem.Icon>
                             <materialDesign:PackIcon Kind="CalculatorVariantOutline" Width="36" Height="36"/>
@@ -173,7 +185,9 @@
                         </hc:SideMenuItem>
 
                     </hc:SideMenuItem>
-                    <!--Security Section-->
+                    -->
+    <!--Security Section-->
+    <!--
                     <hc:SideMenuItem Header="Security"  FontSize="16">
                         <hc:SideMenuItem.Icon>
                             <materialDesign:PackIcon Kind="SecureOutline" Width="36" Height="36"/>
@@ -193,7 +207,9 @@
                         </hc:SideMenuItem>
 
                     </hc:SideMenuItem>
-                    <!-- Settings Section -->
+                    -->
+    <!-- Settings Section -->
+    <!--
                     <hc:SideMenuItem Header="Settings" FontSize="16">
                         <hc:SideMenuItem.Icon>
                             <materialDesign:PackIcon Kind="SettingsOutline" Width="36" Height="36"/>
@@ -229,7 +245,9 @@
 
 
 
-            <!-- content-->
+            -->
+    <!-- content-->
+    <!--
 
             <DockPanel x:Name="UserControlContent" Grid.Row="1" Grid.Column="2" >
                 <DockPanel.Resources>
@@ -266,7 +284,9 @@
 
             </DockPanel>
 
-            <!-- Bottom info bar-->
+            -->
+    <!-- Bottom info bar-->
+    <!--
             <StackPanel Grid.Row="2" Grid.ColumnSpan="3" Orientation="Horizontal" VerticalAlignment="Center" HorizontalAlignment="Right"  >
                 <materialDesign:PackIcon Style="{DynamicResource ConnectionStatusIcon}"/>
                 <TextBlock  Style="{DynamicResource ConnectionStatusTextBlock}">Connection Status :</TextBlock>
@@ -279,5 +299,122 @@
 
 
         </Grid>
-    </materialDesign:DialogHost>
+    </materialDesign:DialogHost>-->
+    <!--#endregion-->
+
+    <ui:NavigationView x:Name="SideMenuNavigation"
+                       IsBackButtonVisible="Collapsed"
+                        CompactModeThresholdWidth="1007" ExpandedModeThresholdWidth="1007"
+                       IsSettingsVisible="True" ItemInvoked="SideMenuNavigation_ItemInvoked" >
+        <!-- Header Side Menu -->
+        <ui:NavigationView.PaneHeader>
+            <TextBlock Style="{DynamicResource SubheaderTextBlockStyle}">X-Guide</TextBlock>
+        </ui:NavigationView.PaneHeader>
+        <ui:NavigationView.PaneCustomContent>
+            <ui:SimpleStackPanel></ui:SimpleStackPanel>
+        </ui:NavigationView.PaneCustomContent>
+
+        <ui:NavigationView.MenuItems>
+            <ui:NavigationViewItem Content="Production" Icon="Library" ToolTipService.ToolTip="Production">
+                <ui:NavigationViewItem.MenuItems>
+                    <ui:NavigationViewItem  Tag="ProductionView" Content="Browse" Icon="BrowsePhotos" ToolTipService.ToolTip="Notes"/>
+                </ui:NavigationViewItem.MenuItems>
+            </ui:NavigationViewItem>
+
+            <ui:NavigationViewItem Content="Engineering" Icon="GoToStart" ToolTipService.ToolTip="Engineering">
+                <ui:NavigationViewItem.MenuItems>
+                    <ui:NavigationViewItem Tag="CalibrationWizardStartView" Content="Calibration Wizard" Icon="Page" ToolTipService.ToolTip="Calibration Wizard"  />
+                    <ui:NavigationViewItem Tag="JogRobotView" Content="Jog" Icon="Page2" ToolTipService.ToolTip="Jog"/>
+                </ui:NavigationViewItem.MenuItems>
+            </ui:NavigationViewItem>
+
+            <ui:NavigationViewItem Content="Users" Icon="Contact" ToolTipService.ToolTip="Users">
+                <ui:NavigationViewItem.MenuItems>
+                    <ui:NavigationViewItem Content="User Management" Icon="Page2" ToolTipService.ToolTip="Notes"/>
+                    <ui:NavigationViewItem Content="Permision" Icon="Mail" ToolTipService.ToolTip="Mail"/>
+                    <ui:NavigationViewItem Content="Change Password" Icon="Mail" ToolTipService.ToolTip="Mail"/>
+                </ui:NavigationViewItem.MenuItems>
+            </ui:NavigationViewItem>
+
+        </ui:NavigationView.MenuItems>
+        
+        <ui:NavigationView.PaneFooter>
+            <ui:SimpleStackPanel Orientation="Vertical">
+                <ui:NavigationViewItemSeparator/>
+
+                <ui:ToggleSwitch  Toggled="ToggleAppThemeHandler">
+                    <ui:ToggleSwitch.Header>
+                        <ui:SimpleStackPanel Orientation="Horizontal">
+                            <materialDesign:PackIcon Kind="LightbulbOutline" HorizontalAlignment="Left" Margin="10 0 0 0" Style="{DynamicResource IconStyle24}"/>
+                            <TextBlock VerticalAlignment="Center" Margin="10 0"> Light Mode</TextBlock>
+                        </ui:SimpleStackPanel>
+                    </ui:ToggleSwitch.Header>
+                </ui:ToggleSwitch>
+                <ui:NavigationViewItemSeparator/>
+
+            </ui:SimpleStackPanel> 
+            
+
+            <!--<Button Content="Toggle Theme" HorizontalAlignment="Stretch" Click="ToggleAppThemeHandler" />-->
+
+        </ui:NavigationView.PaneFooter>
+  
+
+
+        <!-- CONTENT -->
+        <ui:NavigationView.Content>
+           
+            <!--<ui:Frame x:Name="contentFrame"/>-->
+            
+
+            <Grid x:Name="UserControlContent" >
+                <Grid.Resources>
+                    <DataTemplate DataType="{x:Type vms:SettingViewModel}">
+                        <views:SettingView/>
+                    </DataTemplate>
+                    <DataTemplate DataType="{x:Type vms:ProductionViewModel}">
+                        <views:ProductionView/>
+                    </DataTemplate>
+                    <DataTemplate DataType="{x:Type vms:SecurityViewModel}">
+                        <views:SecurityView/>
+                    </DataTemplate>
+                    <DataTemplate DataType="{x:Type vms:EngineeringViewModel}">
+                        <views:EngineeringView/>
+                    </DataTemplate>
+                    <DataTemplate DataType="{x:Type vms:CalibrationWizardStartViewModel}">
+                        <stepsViews:CalibrationWizardStart/>
+                    </DataTemplate>
+                    <DataTemplate DataType="{x:Type vms:UndefinedViewModel}">
+                        <views:UndefinedView/>
+                    </DataTemplate>
+                    <DataTemplate DataType="{x:Type vms:UserLoginViewModel}">
+                        <views:UserLoginView/>
+                    </DataTemplate>
+                    <DataTemplate DataType="{x:Type vms:JogRobotViewModel}">
+                        <views:JogRobotView/>
+                    </DataTemplate>
+                </Grid.Resources>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="*"/>
+                    <RowDefinition Height="auto"/>
+                </Grid.RowDefinitions>
+                <ContentControl Grid.Row="0" Content="{Binding CurrentViewModel}"/>
+                <hc:SimpleStackPanel Grid.Row="1" Orientation="Horizontal" VerticalAlignment="Center" HorizontalAlignment="Right" >
+                    
+                        <materialDesign:PackIcon Style="{DynamicResource ConnectionStatusIcon}"/>
+                        <TextBlock  Style="{DynamicResource ConnectionStatusTextBlock}">Connection Status :</TextBlock>
+                        <materialDesign:PackIcon  Kind="RobotIndustrialOutline" Style="{DynamicResource ConnectionStatusIconForeground}" />
+                        <TextBlock  Style="{DynamicResource ConnectionStatusTextBlockForeground}" >Manipulator</TextBlock>
+                        <materialDesign:PackIcon Style="{DynamicResource ConnectionStatusIconForeground}" Kind="MonitorEye" />
+                        <TextBlock  Style="{DynamicResource ConnectionStatusTextBlockForeground}">Vision</TextBlock>
+                       
+                    <TextBlock Text="12/3/2023" x:Name="DateTimeTextBlock"/>
+                </hc:SimpleStackPanel>
+            </Grid>
+
+            
+        </ui:NavigationView.Content>
+
+    </ui:NavigationView>
+
 </Window>

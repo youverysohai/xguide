@@ -1,5 +1,7 @@
 ﻿
 using MaterialDesignThemes.Wpf;
+using ModernWpf;
+using ModernWpf.Controls;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -15,7 +17,12 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 using System.Windows.Threading;
+using X_Guide.MVVM.View;
+using X_Guide.MVVM.View.CalibrationWizardSteps;
 using X_Guide.MVVM.ViewModel;
+using Microsoft.Xaml.Behaviors;
+using X_Guide.MVVM.ViewModel.CalibrationWizardSteps;
+using X_Guide.MVVM;
 
 namespace X_Guide
 {
@@ -31,136 +38,93 @@ namespace X_Guide
             {
                 this.DateTimeTextBlock.Text = DateTime.Now.ToString("dddd, MMM dd yyyy, hh:mm:ss");
             }, this.Dispatcher);
+           
         }
 
-
-        //Purpose: Double click Application for maximize window/Normal size 
-        private void OnMouseLeftButtonDown(object sender, MouseButtonEventArgs e)
+        private void ToggleAppThemeHandler(object sender, RoutedEventArgs e)
         {
-            if (e.ClickCount == 2)      //Double Click 
-                //Compare current window state, if maximize , then the window state is changed to normal or vice versa 
-                WindowState = (WindowState == WindowState.Maximized) ?
-                    WindowState.Normal : WindowState.Maximized;
-            else
-                DragMove(); //Drag the window 
-        }
+            ClearValue(ThemeManager.RequestedThemeProperty);
 
-        /// <summary>
-        /// CloseButton_Clicked
-        /// </summary>
-        private void CloseButton_Click(object sender, RoutedEventArgs e)
-        {
-            System.Diagnostics.Process.GetCurrentProcess().Kill();
-            Application.Current.Shutdown();
-        }
-
-        /// <summary>
-        /// MaximizedButton_Clicked
-        /// </summary>
-        private void MaximizeButton_Click(object sender, RoutedEventArgs e)
-        {
-            AdjustWindowSize();
-        }
-
-        /// <summary>
-        /// Minimized Button_Clicked
-        /// </summary>
-        private void MinimizeButton_Click(object sender, RoutedEventArgs e)
-        {
-            this.WindowState = WindowState.Minimized;
-        }
-
-        /// <summary>
-        /// Adjusts the WindowSize to correct parameters when Maximize button is clicked
-        /// </summary>
-        private void AdjustWindowSize()
-        {
-            if (this.WindowState == WindowState.Maximized)
+            Application.Current.Dispatcher.BeginInvoke(() =>
             {
-                this.WindowState = WindowState.Normal;
-                //MaxButton.Content = "1";
-            }
-            else
-            {
-                this.WindowState = WindowState.Maximized;
-                //MaxButton.Content = "2";
-            }
-
-        }
-        private void Expander_Expanded(object sender, RoutedEventArgs e)
-        {
-            Expander expander = (Expander)sender;
-
-            foreach (Expander otherExpander in FindVisualChildren<Expander>(this))
-            {
-                if (otherExpander != expander)
+                var tm = ThemeManager.Current;
+                var handyTM = HandyControl.Themes.ThemeManager.Current;
+                
+                if (tm.ActualApplicationTheme == ApplicationTheme.Dark)
                 {
-                    otherExpander.IsExpanded = false;
+                    tm.ApplicationTheme = ApplicationTheme.Light;
+                    handyTM.ApplicationTheme = HandyControl.Themes.ApplicationTheme.Light;
+                    // Set the Light theme ResourceDictionary
+              
+                    Application.Current.Resources.MergedDictionaries.Add(new ResourceDictionary
+                    {
+                        Source = new Uri("/MaterialDesignThemes.Wpf;component/Themes/MaterialDesignTheme.Light.xaml", UriKind.Relative)
+                    });
+                }
+                else
+                {
+                    tm.ApplicationTheme = ApplicationTheme.Dark;
+                    handyTM.ApplicationTheme = HandyControl.Themes.ApplicationTheme.Dark;
+                     
+                    Application.Current.Resources.MergedDictionaries.Add(new ResourceDictionary
+                    {
+                        Source = new Uri("/MaterialDesignThemes.Wpf;component/Themes/MaterialDesignTheme.Dark.xaml", UriKind.Relative)
+                    });
+                }
+            });
+        }
+
+        private void ToggleWindowThemeHandler(object sender, RoutedEventArgs e)
+        {
+            if (ThemeManager.GetActualTheme(this) == ElementTheme.Light)
+            {
+                ThemeManager.SetRequestedTheme(this, ElementTheme.Dark);
+            }
+            else
+            {
+                ThemeManager.SetRequestedTheme(this, ElementTheme.Light);
+            }
+        }
+
+        private void SideMenuNavigation_ItemInvoked(NavigationView sender, NavigationViewItemInvokedEventArgs args)
+        {
+            if (args.IsSettingsInvoked)
+            {
+                // Handle the settings item click event here
+                (DataContext as MainViewModel).NavigateCommand.Execute(PageName.Setting);
+            }
+
+            if (args.InvokedItemContainer.Tag != null)
+            {
+                string tag = args.InvokedItemContainer.Tag.ToString();
+
+                switch (tag)
+                {
+                    case "ProductionView":
+                        (DataContext as MainViewModel).NavigateCommand.Execute(PageName.Production);
+                        break;
+                    case "CalibrationWizardStartView":
+                        (DataContext as MainViewModel).NavigateCommand.Execute(PageName.CalibrationWizardStart);
+                        break;
+                    case "JogRobotView":
+                        (DataContext as MainViewModel).NavigateCommand.Execute(PageName.JogRobot);
+                        break;
                 }
             }
         }
 
-        public static IEnumerable<T> FindVisualChildren<T>(DependencyObject parent) where T : DependencyObject
-        {
-            if (parent != null)
-            {
-                for (int i = 0; i < VisualTreeHelper.GetChildrenCount(parent); i++)
-                {
-                    DependencyObject child = VisualTreeHelper.GetChild(parent, i);
-                    if (child != null && child is T)
-                    {
-                        yield return (T)child;
-                    }
-
-                    foreach (T childOfChild in FindVisualChildren<T>(child))
-                    {
-                        yield return childOfChild;
-                    }
-                }
-            }
-        }
-
-        private void HamburgerMenuButton_Click(object sender, RoutedEventArgs e)
-        {
-            // Get a reference to the application resources
-            ResourceDictionary resources = Application.Current.Resources;
-            Color foregroundColor = (Color)resources["PrimaryTextColor"]; //white
 
 
-            // Get the SolidColorBrush resource from the resource dictionary
-            SolidColorBrush foregroundBrush = (SolidColorBrush)resources["PrimaryBlueColor"];
-            SolidColorBrush foregroundWhiteBrush = new SolidColorBrush(foregroundColor);
-            if (SideMenu.Width > 50)
-            {
-                TextElement.SetForeground(HambergerMenuBtn, foregroundWhiteBrush);
-                SideMenu.Width = 50;
-                TextTitle.Visibility = Visibility.Collapsed;
-                Username.Visibility = Visibility.Collapsed;
-                TxtRoleIcon.Visibility = Visibility.Collapsed;
-                UserControlContent.SetValue(Grid.ColumnProperty, 2);
-                UserControlContent.SetValue(Grid.ColumnSpanProperty, 3);
 
-            }
-            else
-            {
-                TextElement.SetForeground(HambergerMenuBtn, foregroundBrush);
-                SideMenu.Width = 180;
-                TextTitle.Visibility = Visibility.Visible;
-                Username.Visibility = Visibility.Visible;
-                TxtRoleIcon.Visibility = Visibility.Visible;
-                UserControlContent.SetValue(Grid.ColumnProperty, 3);
-                UserControlContent.SetValue(Grid.ColumnSpanProperty, 1);
 
-            }
-        }
 
-        private void PasswordBox_PasswordChanged(object sender, RoutedEventArgs e)
-        {
-            if(sender != null)
-            {
-                ((MainViewModel)DataContext).InputPassword = ((PasswordBox)sender).SecurePassword;
-            }
-        }
+        //private void PasswordBox_PasswordChanged(object sender, RoutedEventArgs e)
+        //{
+        //    if(sender != null)
+        //    {
+        //        ((MainViewModel)DataContext).InputPassword = ((PasswordBox)sender).SecurePassword;
+        //    }
+        //}
     }
 
 }

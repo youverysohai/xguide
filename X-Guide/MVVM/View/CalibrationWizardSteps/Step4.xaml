@@ -6,154 +6,182 @@
              xmlns:local="clr-namespace:X_Guide.MVVM.View.CalibrationWizardSteps"
              mc:Ignorable="d" 
              d:DesignHeight="700" d:DesignWidth="800"
+             xmlns:ui="http://schemas.modernwpf.com/2019"
+             
              xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes">
 
 
     <Grid Margin="0 0 0 10">
-        <materialDesign:Card UniformCornerRadius="20" Margin="0 10 15 0">
 
-            <Grid>
-                <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="*"/>
-                    <ColumnDefinition Width="*"/>
-                </Grid.ColumnDefinitions>
-                <Grid.RowDefinitions>
-                    <RowDefinition Height="1.5*"/>
-                    <RowDefinition Height="*"/>
-                </Grid.RowDefinitions>
-                <StackPanel Orientation="Vertical" Grid.ColumnSpan="2">
-                    <TextBlock  Text="Motion for Calibartion" HorizontalAlignment="Center" FontSize="35" Margin="0 20 0 25"/>
-                    <Grid HorizontalAlignment="Center">
-                        <Grid.ColumnDefinitions>
-                            <ColumnDefinition Width="5*"/>
-                            <ColumnDefinition Width="*"/>
+        <Grid>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="*"/>
+            </Grid.ColumnDefinitions>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="1.5*"/>
+                <RowDefinition Height="*"/>
+            </Grid.RowDefinitions>
+            <StackPanel Orientation="Vertical" Grid.ColumnSpan="2">
+                <TextBlock  Text="Motion for Calibartion" HorizontalAlignment="Center" FontSize="35" Margin="0 20 0 25"/>
+                <Grid HorizontalAlignment="Center">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="5*"/>
+                        <ColumnDefinition Width="*"/>
 
-                        </Grid.ColumnDefinitions>
-                        <Grid.RowDefinitions>
-                            <RowDefinition Height="*"/>
-                            <RowDefinition Height="*"/>
-                            <RowDefinition Height="*"/>
-                            <RowDefinition Height="*"/>
-                        </Grid.RowDefinitions>
-                        <!-- Row 1: Speed-->
-                        <StackPanel Orientation="Horizontal" Grid.Row="0" Grid.Column="0" >
-                            <Label Content="1" Style="{DynamicResource MaterialDesignLabel}"/>
-                            <Slider  Value="{Binding Setting.Speed}" Style="{StaticResource MaterialDesignSlider}"  Minimum="1" Maximum="100" Width="250" ValueChanged="Slider_SpeedValueChanged"></Slider>
-                            <Label Content="100" Style="{DynamicResource MaterialDesignLabel}"/>
-                        </StackPanel>
-                        <TextBox  Grid.Row="0" Grid.Column="1" Style="{StaticResource OutlineTextStyle}" Text="{Binding Value}" 
+                    </Grid.ColumnDefinitions>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="*"/>
+                        <RowDefinition Height="*"/>
+                        <RowDefinition Height="*"/>
+                        <RowDefinition Height="*"/>
+                    </Grid.RowDefinitions>
+                    <!-- Row 1: Speed-->
+                    <StackPanel Orientation="Horizontal" Grid.Row="0" Grid.Column="0" VerticalAlignment="Bottom">
+                        <Label Content="1" Style="{DynamicResource MaterialDesignLabel}"/>
+                        <Slider  Value="{Binding Setting.Speed}" Minimum="1" Maximum="100" Width="250" ValueChanged="Slider_SpeedValueChanged"></Slider>
+                        <Label Content="100" Style="{DynamicResource MaterialDesignLabel}"/>
+                    </StackPanel>
+
+                    <ui:NumberBox 
+                        Header="Speed (%)"
+                          SmallChange="1"
+                                   LargeChange="10" 
+                                   
+                                   SpinButtonPlacementMode="Compact"
+                        Grid.Row="0" Grid.Column="1"  
+                       Value="{Binding Setting.Speed}"
                                    Padding="10 1"      MinWidth="100"  
                                   materialDesign:HintAssist.Hint="Speed %" materialDesign:HintAssist.FloatingScale=".76" 
                                     materialDesign:HintAssist.FloatingOffset="-15,-20">
 
-                        </TextBox>
-                        <!-- Row 2: Acceleration -->
-                        <StackPanel Orientation="Horizontal" Grid.Row="1" Grid.Column="0" >
-                            <Label Content="1" Style="{DynamicResource MaterialDesignLabel}"/>
-                            <Slider  Value="{Binding Setting.Acceleration}" Style="{StaticResource MaterialDesignSlider}"   Minimum="1" Maximum="100" Width="250" ValueChanged="Slider_AccelerationValueChanged"></Slider>
-                            <Label Content="100" Style="{DynamicResource MaterialDesignLabel}"/>
-                        </StackPanel>
-                        <TextBox  Grid.Row="1" Grid.Column="1" Style="{StaticResource OutlineTextStyle}" Text="{Binding ValueAcceleration}" 
+                    </ui:NumberBox>
+                    <!-- Row 2: Acceleration -->
+                    <StackPanel Orientation="Horizontal" Grid.Row="1" Grid.Column="0" VerticalAlignment="Bottom">
+                        <Label Content="1" Style="{DynamicResource MaterialDesignLabel}"/>
+                        <Slider  Value="{Binding Setting.Acceleration}" Minimum="1" Maximum="100" Width="250"  ValueChanged="Slider_AccelerationValueChanged"></Slider>
+                        <Label Content="100" Style="{DynamicResource MaterialDesignLabel}"/>
+                    </StackPanel>
+                    <ui:NumberBox  Grid.Row="1" Grid.Column="1"  Value="{Binding Setting.Acceleration}"
+                                   Header="Acceleration (%)"
+                                   SmallChange="1"
+                                   LargeChange="10" 
+                                   SpinButtonPlacementMode="Compact"
                                    Padding="10 1"      MinWidth="100"  
                                   materialDesign:HintAssist.Hint="Acceleration %" materialDesign:HintAssist.FloatingScale=".63" 
                                     materialDesign:HintAssist.FloatingOffset="-15,-17"/>
-                        <!-- Row 3: Motion Delay-->
-                        <StackPanel Orientation="Horizontal" Grid.Row="2" Grid.Column="0" >
-                            <Label Content="0" Style="{DynamicResource MaterialDesignLabel}"/>
-                            <Slider Value="{Binding Setting.MotionDelay}"  Style="{StaticResource MaterialDesignSlider}" Minimum="0" Maximum="2000" Width="250"></Slider>
-                            <Label Content="2000" Style="{DynamicResource MaterialDesignLabel}"/>
-                        </StackPanel>
-                        <!--X Y offset-->
-                        <TextBox  Grid.Row="2" Grid.Column="1" Style="{StaticResource OutlineTextStyle}" 
+                    <!-- Row 3: Motion Delay-->
+                    <StackPanel Orientation="Horizontal" Grid.Row="2" Grid.Column="0" VerticalAlignment="Bottom">
+                        <Label Content="0" Style="{DynamicResource MaterialDesignLabel}"/>
+                        <Slider Value="{Binding Setting.MotionDelay}" Minimum="0" Maximum="2000" Width="250"></Slider>
+                        <Label Content="2000" Style="{DynamicResource MaterialDesignLabel}"/>
+                    </StackPanel>
+                    <ui:NumberBox  Grid.Row="2" Grid.Column="1"  
+                                 
+                                   Value="{Binding Setting.MotionDelay}" 
+                                   SpinButtonPlacementMode="Compact"
                                    Padding="10 1"      MinWidth="100"  
-                                  materialDesign:HintAssist.Hint="Motion Delay ms" materialDesign:HintAssist.FloatingScale=".55" 
-                                    materialDesign:HintAssist.FloatingOffset="-15,-15"/>
-                        <StackPanel Orientation="Horizontal" Grid.ColumnSpan="2" Grid.Row="3" Visibility="Collapsed">
-                            <Label Style="{DynamicResource MaterialDesignLabel}"  Content="Value must be greater than zero"></Label>
-                            <TextBox   Style="{StaticResource OutlineTextStyle}" 
-                                   Padding="10 1"      MinWidth="100"  
-                                  materialDesign:HintAssist.Hint="X-offset" materialDesign:HintAssist.FloatingScale=".55" 
-                                    materialDesign:HintAssist.FloatingOffset="-15,-15"/>
-                            <TextBox   Style="{StaticResource OutlineTextStyle}" 
-                                   Padding="10 1"      MinWidth="100"  
-                                  materialDesign:HintAssist.Hint="Y-offset" materialDesign:HintAssist.FloatingScale=".55" 
-                                    materialDesign:HintAssist.FloatingOffset="-15,-15"/>
-
-                        </StackPanel>
-
-                    </Grid>
+                                   Header="Motion Delay (ms)"/>
+                    <!--X Y offset-->
 
 
+                    <StackPanel Orientation="Horizontal" Grid.ColumnSpan="2" Grid.Row="3" Visibility="Visible" Margin="0 5">
+                        <Label Style="{DynamicResource MaterialDesignLabel}"  Content="Value must be greater than zero"></Label>
+                        <ui:NumberBox 
+                             Value="0"
+                            Header="X-offset"
+                            SpinButtonPlacementMode="Compact"
+                            SmallChange="1"
+                            LargeChange="100" 
+                            Padding="10 1"     
+                            MinWidth="100"  
+                                   />
+                        <ui:NumberBox   
+                            Value="0"
+                            Header="Y-offset"
+                            SpinButtonPlacementMode="Compact"
+                            SmallChange="1"
+                            LargeChange="100"  
+                            Padding="10 1"      
+                            MinWidth="100"  
+                            materialDesign:HintAssist.Hint="Y-offset" materialDesign:HintAssist.FloatingScale=".55" 
+                            materialDesign:HintAssist.FloatingOffset="-15,-15"/>
+
+                    </StackPanel>
+
+                </Grid>
 
 
-                </StackPanel>
-                <Grid Grid.Row="1">
-                    <Border Background="#2d2d30" HorizontalAlignment="Center" VerticalAlignment="Bottom" Height="200" Width="400" BorderBrush="#FF2596BE"
+
+
+            </StackPanel>
+
+            <Grid Grid.Row="1">
+                <Border Background="#2d2d30" HorizontalAlignment="Center" VerticalAlignment="Bottom" Height="200" Width="400" BorderBrush="#FF2596BE"
                         BorderThickness="2 2 2 0" CornerRadius="300 300 0 0"/>
-                    <Border HorizontalAlignment="Center" VerticalAlignment="Bottom" Height="190" Width="380" BorderBrush="#FF2596BE"
+                <Border HorizontalAlignment="Center" VerticalAlignment="Bottom" Height="190" Width="380" BorderBrush="#FF2596BE"
                         BorderThickness="0 2 0 0" CornerRadius="300 300 0 0">
-                        <Border.Effect>
-                            <DropShadowEffect Color="#FF95D4FF" BlurRadius="10" ShadowDepth="3"/>
-                        </Border.Effect>
-                    </Border>
-                    <TextBlock HorizontalAlignment="Center" VerticalAlignment="Bottom" Margin="50" FontSize="50"
+                    <Border.Effect>
+                        <DropShadowEffect Color="#FF95D4FF" BlurRadius="10" ShadowDepth="3"/>
+                    </Border.Effect>
+                </Border>
+                <TextBlock HorizontalAlignment="Center" VerticalAlignment="Bottom" Margin="50" FontSize="50"
                            Foreground="#FF95D4FF" x:Name="SpeedValue">
-                        <TextBlock.Effect>
-                            <DropShadowEffect BlurRadius="20" Color="#FF91DEFB" ShadowDepth="0"/>
-                        </TextBlock.Effect>
-                    </TextBlock>
-                    <Border Width="5" Background="#2596BE"
+                    <TextBlock.Effect>
+                        <DropShadowEffect BlurRadius="20" Color="#FF91DEFB" ShadowDepth="0"/>
+                    </TextBlock.Effect>
+                </TextBlock>
+                <Border Width="5" Background="#2596BE"
                         CornerRadius="120 120 0 0"
                         RenderTransformOrigin="0.5 2" Height="90" Margin="0 0 0 90" 
                         VerticalAlignment="Bottom" HorizontalAlignment="Center">
-                        <Border.RenderTransform>
-                            <TransformGroup>
-                                <ScaleTransform/>
-                                <SkewTransform/>
-                                <RotateTransform x:Name="SpeedAngle" Angle="-85"/>
-                                <TranslateTransform/>
-                            </TransformGroup>
-                        </Border.RenderTransform>
-                        <Border.Effect>
-                            <DropShadowEffect BlurRadius="30" Color="#FFB9B9B9" ShadowDepth="0"/>
-                        </Border.Effect>
-                    </Border>
-                </Grid>
-                <Grid Grid.Row="1" Grid.Column="2">
-                    <Border Background="#2d2d30" HorizontalAlignment="Center" VerticalAlignment="Bottom" Height="200" Width="400" BorderBrush="#FF2596BE"
-                        BorderThickness="2 2 2 0" CornerRadius="300 300 0 0"/>
-                    <Border HorizontalAlignment="Center" VerticalAlignment="Bottom" Height="190" Width="380" BorderBrush="#FF2596BE"
-                        BorderThickness="0 2 0 0" CornerRadius="300 300 0 0">
-                        <Border.Effect>
-                            <DropShadowEffect Color="#FF95D4FF" BlurRadius="10" ShadowDepth="3"/>
-                        </Border.Effect>
-                    </Border>
-                    <TextBlock HorizontalAlignment="Center" VerticalAlignment="Bottom" Margin="50" FontSize="50"
-                           Foreground="#FF95D4FF" x:Name="AccelValue">
-                        <TextBlock.Effect>
-                            <DropShadowEffect BlurRadius="20" Color="#FF91DEFB" ShadowDepth="0"/>
-                        </TextBlock.Effect>
-                    </TextBlock>
-                    <Border Width="5" Background="#2596BE"
-                        CornerRadius="120 120 0 0"
-                        RenderTransformOrigin="0.5 2" Height="90" Margin="0 0 0 90" 
-                        VerticalAlignment="Bottom" HorizontalAlignment="Center">
-                        <Border.RenderTransform>
-                            <TransformGroup>
-                                <ScaleTransform/>
-                                <SkewTransform/>
-                                <RotateTransform x:Name="AccelerationAngle" Angle="-85"/>
-                                <TranslateTransform/>
-                            </TransformGroup>
-                        </Border.RenderTransform>
-                        <Border.Effect>
-                            <DropShadowEffect BlurRadius="30" Color="#FFB9B9B9" ShadowDepth="0"/>
-                        </Border.Effect>
-                    </Border>
-                </Grid>
-
-
+                    <Border.RenderTransform>
+                        <TransformGroup>
+                            <ScaleTransform/>
+                            <SkewTransform/>
+                            <RotateTransform x:Name="SpeedAngle" Angle="-85"/>
+                            <TranslateTransform/>
+                        </TransformGroup>
+                    </Border.RenderTransform>
+                    <Border.Effect>
+                        <DropShadowEffect BlurRadius="30" Color="#FFB9B9B9" ShadowDepth="0"/>
+                    </Border.Effect>
+                </Border>
             </Grid>
-        </materialDesign:Card>
+            <Grid Grid.Row="1" Grid.Column="2">
+                <Border Background="#2d2d30" HorizontalAlignment="Center" VerticalAlignment="Bottom" Height="200" Width="400" BorderBrush="#FF2596BE"
+                        BorderThickness="2 2 2 0" CornerRadius="300 300 0 0"/>
+                <Border HorizontalAlignment="Center" VerticalAlignment="Bottom" Height="190" Width="380" BorderBrush="#FF2596BE"
+                        BorderThickness="0 2 0 0" CornerRadius="300 300 0 0">
+                    <Border.Effect>
+                        <DropShadowEffect Color="#FF95D4FF" BlurRadius="10" ShadowDepth="3"/>
+                    </Border.Effect>
+                </Border>
+                <TextBlock HorizontalAlignment="Center" VerticalAlignment="Bottom" Margin="50" FontSize="50"
+                           Foreground="#FF95D4FF" x:Name="AccelValue">
+                    <TextBlock.Effect>
+                        <DropShadowEffect BlurRadius="20" Color="#FF91DEFB" ShadowDepth="0"/>
+                    </TextBlock.Effect>
+                </TextBlock>
+                <Border Width="5" Background="#2596BE"
+                        CornerRadius="120 120 0 0"
+                        RenderTransformOrigin="0.5 2" Height="90" Margin="0 0 0 90" 
+                        VerticalAlignment="Bottom" HorizontalAlignment="Center">
+                    <Border.RenderTransform>
+                        <TransformGroup>
+                            <ScaleTransform/>
+                            <SkewTransform/>
+                            <RotateTransform x:Name="AccelerationAngle" Angle="-85"/>
+                            <TranslateTransform/>
+                        </TransformGroup>
+                    </Border.RenderTransform>
+                    <Border.Effect>
+                        <DropShadowEffect BlurRadius="30" Color="#FFB9B9B9" ShadowDepth="0"/>
+                    </Border.Effect>
+                </Border>
+            </Grid>
+
+
+        </Grid>
     </Grid>
 </UserControl>

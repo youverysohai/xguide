@@ -6,8 +6,10 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:X_Guide.MVVM" 
              xmlns:valid="clr-namespace:X_Guide.Validation"
-             mc:Ignorable="d" 
-             Background="Transparent"
+             mc:Ignorable="d"
+             d:Width="900"
+             xmlns:ui="http://schemas.modernwpf.com/2019"
+             d:Foreground="White"
              >
 
     <UserControl.Resources>
@@ -36,283 +38,271 @@
     <ScrollViewer VerticalScrollBarVisibility="Hidden" >
 
         <materialDesign:Card Style="{DynamicResource CardLayout}">
-
-
-
-
-
-            <Grid Margin="15">
+            <Grid Margin="10">
                 <Grid.RowDefinitions>
-                    <RowDefinition Height="*"/>
-                    <RowDefinition Height="*"/>
-                    <RowDefinition Height="*"/>
+                    <RowDefinition Height="auto"/>
+                    <RowDefinition Height="auto"/>
+                    <RowDefinition Height="auto "/>
+
+                    <RowDefinition Height="auto"/>
+                    <RowDefinition Height="auto"/>
+                    <RowDefinition Height="auto"/>
+
+                    <RowDefinition Height="auto"/>
+                    <RowDefinition Height="auto"/>
+                    <RowDefinition Height="auto"/>
+                    <RowDefinition Height="auto"/>
+                    <RowDefinition Height="3*"/>
                 </Grid.RowDefinitions>
 
-                <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="*"/>
-                    <ColumnDefinition Width="*"/>
-                </Grid.ColumnDefinitions>
+
                 <!-- Machine Info -->
-                <GroupBox Grid.Column="0" Style="{DynamicResource HeaderGroupBox}">
-                    <GroupBox.Header>
-                        <StackPanel Orientation="Horizontal">
-                            <TextBlock><materialDesign:PackIcon Foreground="{DynamicResource PrimaryBlackColor}"  Kind="WrenchCogOutline" VerticalAlignment="Center" Width="30" Height="30" Margin="5"/></TextBlock>
-                            <TextBlock Foreground="{DynamicResource PrimaryBlackColor}" VerticalAlignment="Center" ><Run Text="Configure Manipulator"/></TextBlock>
-                        </StackPanel>
-                    </GroupBox.Header>
-
-                    <!--Input-->
-                    <StackPanel Orientation="Vertical">
-                        <!--Software Revision Input-->
-                        <Grid>
-                            <Grid.ColumnDefinitions>
-                                <ColumnDefinition Width="5*"/>
-                                <ColumnDefinition Width="*"/>
-                            </Grid.ColumnDefinitions>
-
-                            <ComboBox 
+                <ui:SimpleStackPanel Orientation="Horizontal" HorizontalAlignment="Left" VerticalAlignment="Top" Grid.Row="0" Margin="20 0">
+                    <materialDesign:PackIcon  Kind="RobotIndustrialOutline" Style="{DynamicResource IconStyle24}" Margin="0 0 5 0"/>
+                    <TextBlock FontSize="16" FontWeight="Light"  VerticalAlignment="Center">
+                        
+                          <Run Text="Manipulator" />
+                    </TextBlock>
+                    <ComboBox 
                             ItemsSource="{Binding MachineNameList}"
                             IsTextSearchEnabled="False"
-                            
+                            MinWidth="220"
                             Text="{Binding MachineName}"
                             SelectedItem="{Binding MachineName}"
                             SelectedValue="{Binding MachineName}"
                             IsEditable="{Binding CanEdit}"
-                            Style="{DynamicResource ComboBoxStyle}"  
+                            Style="{DynamicResource ComboBoxStyle}"
+                        Padding="5"
+                        VerticalAlignment="Top"
+                        FontWeight="DemiBold"
+                        
                                     materialDesign:HintAssist.Hint="Manipulator Name"  
-                                    >
-                            </ComboBox>
-                            <StackPanel Orientation="Horizontal" Grid.Column="1">
-                                <Button Command="{Binding EditManipulatorNameCommand}" Visibility="{Binding EditBtnVisibility}">
-                                    <materialDesign:PackIcon Kind="EditOutline"/>
-                                </Button>
-                                <Button Command="{Binding EditManipulatorNameCommand}" Visibility="{Binding SaveBtnVisibility}">
-                                    <materialDesign:PackIcon Kind="ContentSaveOutline"/>
-                                </Button>
-                                <Button Command="{Binding EditManipulatorNameCommand}" Visibility="{Binding CancelBtnVisibility}">
-                                    <materialDesign:PackIcon Kind="PencilOffOutline"/>
-                                </Button>
-                            </StackPanel>
+                                    />
+                    <StackPanel Orientation="Horizontal" Grid.Column="3" HorizontalAlignment="Right" VerticalAlignment="Center" Margin="0 10 100 0" Visibility="Visible">
+                        <Button Command="{Binding EditManipulatorNameCommand}" Visibility="{Binding EditBtnVisibility}">
+                            <materialDesign:PackIcon Kind="EditOutline"/>
+                        </Button>
+                        <Button Command="{Binding EditManipulatorNameCommand}" Visibility="{Binding SaveBtnVisibility}">
+                            <materialDesign:PackIcon Kind="ContentSaveOutline"/>
+                        </Button>
+                        <Button Command="{Binding EditManipulatorNameCommand}" Visibility="{Binding CancelBtnVisibility}">
+                            <materialDesign:PackIcon Kind="PencilOffOutline"/>
+                        </Button>
+                    </StackPanel>
+
+                </ui:SimpleStackPanel>
 
 
-                        </Grid>
-                        <!--Machine ID Input-->
-                        <ComboBox 
+
+                <!--Machine Type ComboBox-->
+                <ui:SimpleStackPanel Orientation="Horizontal"  Grid.Row="1">
+                    <ComboBox 
+                       
+                           HorizontalAlignment="Left"
                             ItemsSource="{Binding MachineTypeList}"
                             DisplayMemberPath="Description"
                             SelectedValuePath="Value"
                             SelectedItem="{Binding MachineType}"
                             SelectedValue="{Binding MachineType}"
                                     Style="{DynamicResource ComboBoxStyle}" 
-                                    
-                                    materialDesign:HintAssist.Hint="Manipulator Type"  
-                                   
+                                MinWidth="150"    
+                                    materialDesign:HintAssist.Hint="Type"  
+                        Padding="5"
+                        VerticalAlignment="Top"
                                     >
 
-                            <!--Text="{Binding MachineID,UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=False, NotifyOnValidationError=True}"-->
-                        </ComboBox>
-                        <!--Machine Description TextArea (scrollable)-->
-                        <TextBox
+                        <!--Text="{Binding MachineID,UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=False, NotifyOnValidationError=True}"-->
+                    </ComboBox>
+                    <!--Machine Description TextArea (scrollable)-->
+                    <TextBox
+                         
+                                     
                                     AcceptsReturn="True"
-                                    Style="{DynamicResource InputMaterialDesignTextBox}"  
-                                    materialDesign:HintAssist.Hint="Manipulator Description"  
-                                    FontSize="18"
-                                    Height="175"
-                                    MaxHeight="150"
-                                Margin="20"
-                                    VerticalScrollBarVisibility="Auto"
-                                    HorizontalScrollBarVisibility="Auto"
-                                    BorderBrush="{DynamicResource MaterialDesignDivider}"
-                                    BorderThickness="1"
+                                    Style="{DynamicResource MaterialDesignFloatingHintTextBox}"  
+                                    materialDesign:HintAssist.Hint="Manipulator Description"
+                                    VerticalAlignment="Top"
+                                    HorizontalAlignment="Left"
+                                    Padding="0 8 0 0"
+                                    MinHeight="60"
+                                    VerticalScrollBarVisibility="Visible"
+                                    HorizontalScrollBarVisibility="Visible"
+                                    Margin="30 0 0 0"
                                     TextWrapping="Wrap"
-                                    Text ="{Binding MachineDescription,UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=False, NotifyOnValidationError=True}" />
-                    </StackPanel>
+                                     FontSize="16"
+                                    Text ="{Binding MachineDescription,UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=False, NotifyOnValidationError=True}" Width="200">
+                    </TextBox>
 
-                </GroupBox>
+
+                </ui:SimpleStackPanel>
+                <Grid Grid.Row="2" Margin="0 10 0 0">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="auto"/>
+                        <ColumnDefinition Width="auto"/>
+                        <ColumnDefinition Width="auto"/>
+                    </Grid.ColumnDefinitions>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="*"/>
+                        <RowDefinition Height="*"/>
+                    </Grid.RowDefinitions>
+                    <Label Grid.Column="0"  FontSize="13"  FontWeight="Light" Margin="15 5 0 0" Content="IP Address"/>
+                    <Label Grid.Column="1"  FontSize="13"  FontWeight="Light" Margin="15 5 0 0" Content="Port"/>
+                    <Label Grid.Column="2"  FontSize="13"  FontWeight="Light" Margin="30 5 0 0" Content="Terminator"/>
+                    <ui:SimpleStackPanel Grid.Row="1" Orientation="Horizontal"  HorizontalAlignment="Stretch" Margin="10 0 15 0">
+                        <TextBox x:Name="txtRobotIP1" Style="{DynamicResource IPInputMaterialDesignTextBox}" HorizontalAlignment="Center"  GotFocus="txtIP_GotFocus" TextChanged="TxtIPLength_TextChanged" PreviewKeyDown="txtIP_PreviewKeyDown" PreviewTextInput="TxtIPAddress_PreviewTextInput">
+                            <Binding Path="RobotIPS1" UpdateSourceTrigger="PropertyChanged">
+                            </Binding>
+                        </TextBox>
+                        <materialDesign:PackIcon Style="{DynamicResource IconStyle16}"  VerticalAlignment="Bottom"  Kind="CircleSmall"/>
+                        <TextBox x:Name="txtRobotIP2" Style="{DynamicResource IPInputMaterialDesignTextBox}" HorizontalAlignment="Center" GotFocus="txtIP_GotFocus" TextChanged="TxtIPLength_TextChanged" PreviewTextInput="TxtIPAddress_PreviewTextInput" PreviewKeyDown="txtIP_PreviewKeyDown">
+                            <Binding Path="RobotIPS2" UpdateSourceTrigger="PropertyChanged">
+
+                            </Binding>
+                        </TextBox>
+                        <materialDesign:PackIcon Style="{DynamicResource IconStyle16}"  VerticalAlignment="Bottom"  Kind="CircleSmall"/>
+                        <TextBox x:Name="txtRobotIP3"  Style="{DynamicResource IPInputMaterialDesignTextBox}" HorizontalAlignment="Center" GotFocus="txtIP_GotFocus" TextChanged="TxtIPLength_TextChanged" PreviewTextInput="TxtIPAddress_PreviewTextInput" PreviewKeyDown="txtIP_PreviewKeyDown"   >
+                            <Binding Path="RobotIPS3" UpdateSourceTrigger="PropertyChanged">
+
+                            </Binding>
+                        </TextBox>
+                        <materialDesign:PackIcon Style="{DynamicResource IconStyle16}" VerticalAlignment="Bottom" Kind="CircleSmall"/>
+
+                        <TextBox x:Name="txtRobotIP4"  Style="{DynamicResource IPInputMaterialDesignTextBox}" HorizontalAlignment="Center" GotFocus="txtIP_GotFocus" TextChanged="TxtIPLength_TextChanged" PreviewTextInput="TxtIPAddress_PreviewTextInput" PreviewKeyDown="txtIP_PreviewKeyDown"    >
+                            <Binding Path="RobotIPS4" UpdateSourceTrigger="PropertyChanged">
+
+                            </Binding>
+                        </TextBox>
+                    </ui:SimpleStackPanel>
+                    <TextBox  Grid.Row="1" Grid.Column="1"
+                          Style="{DynamicResource InputMaterialDesignTextBox}"
+                          Text="{Binding RobotPort}"
+                          PreviewTextInput="TxtPort_PreviewTextInput"
+                          HorizontalAlignment="Left"
+                          
+                           
+                                       />
+                    <ComboBox  Grid.Row="1" Grid.Column="2"  ItemsSource="{Binding TerminatorList}" DisplayMemberPath="Value"
+                            SelectedValuePath="Description" SelectedItem="{Binding ManipulatorTerminator}" SelectedValue="{Binding ManipulatorTerminator}" 
+                                          Style="{DynamicResource MaterialDesignFloatingHintComboBox}"
+                                          Margin="30 0 0 0" 
+                                          FontSize="15"
+                                          HorizontalAlignment="Left"  
+                                          Width="160"
+                                          >
+                    </ComboBox>
+
+                </Grid>
+                <ui:NavigationViewItemSeparator Grid.Row="4"  VerticalAlignment="Top"></ui:NavigationViewItemSeparator>
+
+
+                <StackPanel Orientation="Horizontal" HorizontalAlignment="Left" Grid.Row="5" Grid.ColumnSpan="3">
+                    <materialDesign:PackIcon  Kind="CameraOutline" Style="{DynamicResource IconStyle24}"  Margin="20 0 5 0"/>
+                    <TextBlock FontSize="16" FontWeight="Light"  VerticalAlignment="Center" HorizontalAlignment="Right">
+                          <Run Text="Vision"/>
+                    </TextBlock>
+                    <ComboBox Style="{DynamicResource ComboBoxStyle}"   
+                              Padding="5"
+                            VerticalAlignment="Top"
+                             
+                                 IsTextSearchEnabled="False"
+                            MinWidth="220"
+                                  materialDesign:HintAssist.Hint="Vision Software"
+                              Margin="50 0 0 0"     
+                              >
+                        <ComboBoxItem IsSelected="True">Vision Master</ComboBoxItem>
+                    </ComboBox>
+
+                </StackPanel>
+                <StackPanel Orientation="Horizontal" Grid.Row="6">
+                    <TextBox x:Name="TxtVisionSoftware" Style="{DynamicResource InputMaterialDesignTextBox}" MinWidth="300" Text="{Binding LogFilePath}"
+                                    materialDesign:HintAssist.Hint="Vision Software Path (.sol)" />
+                    <Button x:Name="BrowseBtn" Margin="10" Content="Browse"  Click="BrowseBtn_Click"/>
+
+                </StackPanel>
+
+                <Grid Grid.Row="7" Margin="0 10 0 0">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="auto"/>
+                        <ColumnDefinition Width="auto"/>
+                        <ColumnDefinition Width="auto"/>
+                    </Grid.ColumnDefinitions>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="*"/>
+                        <RowDefinition Height="*"/>
+                    </Grid.RowDefinitions>
+                    <Label Grid.Column="0"  FontSize="13"  FontWeight="Light" Margin="15 5 0 0" Content="IP Address"/>
+                    <Label Grid.Column="1"  FontSize="13"  FontWeight="Light" Margin="15 5 0 0" Content="Port"/>
+                    <Label Grid.Column="2"  FontSize="13"  FontWeight="Light" Margin="30 5 0 0" Content="Terminator"/>
+                    <ui:SimpleStackPanel Grid.Row="1" Orientation="Horizontal"  HorizontalAlignment="Stretch" Margin="10 0 15 0">
+                        <TextBox x:Name="txtVisionIP1" Style="{DynamicResource IPInputMaterialDesignTextBox}" HorizontalAlignment="Center"  GotFocus="txtIP_GotFocus" TextChanged="TxtIPLength_TextChanged" PreviewKeyDown="txtIP_PreviewKeyDown" PreviewTextInput="TxtIPAddress_PreviewTextInput">
+                            <Binding Path="VisionIP[0]" UpdateSourceTrigger="PropertyChanged">
+
+                            </Binding>
+                        </TextBox>
+                        <materialDesign:PackIcon VerticalAlignment="Bottom" Width="20" Height="20" Kind="CircleSmall"/>
+                        <TextBox x:Name="txtVisionIP2" Style="{DynamicResource IPInputMaterialDesignTextBox}" HorizontalAlignment="Center" GotFocus="txtIP_GotFocus" TextChanged="TxtIPLength_TextChanged" PreviewTextInput="TxtIPAddress_PreviewTextInput" PreviewKeyDown="txtIP_PreviewKeyDown">
+                            <Binding Path="VisionIP[1]" UpdateSourceTrigger="PropertyChanged">
+
+                            </Binding>
+                        </TextBox>
+                        <materialDesign:PackIcon VerticalAlignment="Bottom" Width="20" Height="20" Kind="CircleSmall"/>
+
+                        <TextBox x:Name="txtVisionIP3"  Style="{DynamicResource IPInputMaterialDesignTextBox}" HorizontalAlignment="Center" GotFocus="txtIP_GotFocus" TextChanged="TxtIPLength_TextChanged" PreviewTextInput="TxtIPAddress_PreviewTextInput" PreviewKeyDown="txtIP_PreviewKeyDown"   >
+                            <Binding Path="VisionIP[2]" UpdateSourceTrigger="PropertyChanged">
+
+                            </Binding>
+                        </TextBox>
+                        <materialDesign:PackIcon VerticalAlignment="Bottom" Width="20" Height="20" Kind="CircleSmall"/>
+
+                        <TextBox x:Name="txtVisionIP4"  Style="{DynamicResource IPInputMaterialDesignTextBox}" HorizontalAlignment="Center" GotFocus="txtIP_GotFocus" TextChanged="TxtIPLength_TextChanged" PreviewTextInput="TxtIPAddress_PreviewTextInput" PreviewKeyDown="txtIP_PreviewKeyDown"    >
+                            <Binding Path="VisionIP[3]" UpdateSourceTrigger="PropertyChanged">
+
+                            </Binding>
+                        </TextBox>
+                    </ui:SimpleStackPanel>
+                    <TextBox  Grid.Row="1" Grid.Column="1"
+                          Style="{DynamicResource InputMaterialDesignTextBox}"
+                          Text="{Binding VisionPort}"
+                          PreviewTextInput="TxtPort_PreviewTextInput"
+                          HorizontalAlignment="Left"
+                          
+                           
+                                       />
+                    <ComboBox  Grid.Row="1" Grid.Column="2"  ItemsSource="{Binding TerminatorList}" DisplayMemberPath="Value"
+                            SelectedValuePath="Description" SelectedItem="{Binding VisionTerminator}" SelectedValue="{Binding VisionTerminator}" 
+                                          Style="{DynamicResource MaterialDesignFloatingHintComboBox}"
+                                          Margin="30 0 0 0" 
+                                          FontSize="15"
+                                          HorizontalAlignment="Left"  
+                                          Width="160"
+                                          >
+                    </ComboBox>
+
+                </Grid>
                 <!--Connection-->
 
 
-                <GroupBox Grid.Column="1" Style="{DynamicResource HeaderGroupBox}" Background="#424242" >
-                    <GroupBox.Header >
-                        <StackPanel Orientation="Horizontal" >
-                            <TextBlock>
-                               <materialDesign:PackIcon Foreground="{DynamicResource PrimaryBlackColor}" Kind="Lan"  Width="30" Height="30" Margin="5"/>
+                <Expander Grid.Row="8" FlowDirection="LeftToRight" Header="Advanced Settings" Margin="10" FontSize="17" >
 
-                            </TextBlock>
-                            <TextBlock  VerticalAlignment="Center" FontSize="20" Foreground="{DynamicResource PrimaryBlackColor}" Text="Connection"/>
-
-                        </StackPanel>
-
-                    </GroupBox.Header>
-
-                    <Grid>
-                        <Grid.ColumnDefinitions>
-                            <ColumnDefinition Width="7*"/>
-                            <ColumnDefinition Width="2*"/>
-
-
-                        </Grid.ColumnDefinitions>
-                        <Grid.RowDefinitions>
-                            <RowDefinition Height="*"/>
-                            <RowDefinition Height="*"/>
-                            <RowDefinition Height="*"/>
-                            <RowDefinition Height="*"/>
-                            <RowDefinition Height="*"/>
-                            <RowDefinition Height="*"/>
-                            <RowDefinition Height="*"/>
-                            <RowDefinition Height="5*"/>
-                        </Grid.RowDefinitions>
-                        <!--Manipulator/Robot TCP title icon-->
-                        <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" Grid.Row="0" Grid.ColumnSpan="4">
-                            <TextBlock  
-                                       
-                                       FontSize="16"
-                                       FontWeight="Light"
-                                       Style="{DynamicResource MaterialDesignTextBlock}"> 
-                                Manipulator TCP
-                            </TextBlock>
-                            <materialDesign:PackIcon  Margin="10 0 0 4"  Kind="RobotIndustrialOutline" Width="25" Height="25" VerticalAlignment="Bottom"/>
-                        </StackPanel>
-                        <!-- Label IP Address-->
-                        <TextBlock Grid.Row="1"  FontSize="13" Foreground="#C8C8C8" FontWeight="Light" Margin="10 5 0 0">IP Address</TextBlock>
-                        <!-- Input IP -->
-                        <StackPanel Grid.Row="1" Orientation="Horizontal" Margin="10 0 0 0">
-                            <TextBox x:Name="txtRobotIP1" Style="{DynamicResource IPInputMaterialDesignTextBox}" HorizontalAlignment="Center"  GotFocus="txtIP_GotFocus" TextChanged="TxtIPLength_TextChanged" PreviewKeyDown="txtIP_PreviewKeyDown" PreviewTextInput="TxtIPAddress_PreviewTextInput">
-                                <Binding Path="RobotIPS1" UpdateSourceTrigger="PropertyChanged">
-                                </Binding>
-                            </TextBox>
-                            <materialDesign:PackIcon VerticalAlignment="Bottom" Width="20" Height="20" Kind="CircleSmall"/>
-                            <TextBox x:Name="txtRobotIP2" Style="{DynamicResource IPInputMaterialDesignTextBox}" HorizontalAlignment="Center" GotFocus="txtIP_GotFocus" TextChanged="TxtIPLength_TextChanged" PreviewTextInput="TxtIPAddress_PreviewTextInput" PreviewKeyDown="txtIP_PreviewKeyDown">
-                                <Binding Path="RobotIPS2" UpdateSourceTrigger="PropertyChanged">
-
-                                </Binding>
-                            </TextBox>
-                            <materialDesign:PackIcon VerticalAlignment="Bottom" Width="20" Height="20" Kind="CircleSmall"/>
-                            <TextBox x:Name="txtRobotIP3"  Style="{DynamicResource IPInputMaterialDesignTextBox}" HorizontalAlignment="Center" GotFocus="txtIP_GotFocus" TextChanged="TxtIPLength_TextChanged" PreviewTextInput="TxtIPAddress_PreviewTextInput" PreviewKeyDown="txtIP_PreviewKeyDown"   >
-                                <Binding Path="RobotIPS3" UpdateSourceTrigger="PropertyChanged">
-
-                                </Binding>
-                            </TextBox>
-                            <materialDesign:PackIcon VerticalAlignment="Bottom" Width="20" Height="20" Kind="CircleSmall"/>
-
-                            <TextBox x:Name="txtRobotIP4"  Style="{DynamicResource IPInputMaterialDesignTextBox}" HorizontalAlignment="Center" GotFocus="txtIP_GotFocus" TextChanged="TxtIPLength_TextChanged" PreviewTextInput="TxtIPAddress_PreviewTextInput" PreviewKeyDown="txtIP_PreviewKeyDown"    >
-                                <Binding Path="RobotIPS4" UpdateSourceTrigger="PropertyChanged">
-
-                                </Binding>
-                            </TextBox>
-                        </StackPanel>
-                        <!-- Input Port Number-->
-                        <TextBox Width="70" Grid.Row="1" Grid.Column="1" Style="{DynamicResource InputMaterialDesignTextBox}" Text="{Binding RobotPort}"  PreviewTextInput="TxtPort_PreviewTextInput" 
-                                        materialDesign:HintAssist.Hint="Port" HorizontalAlignment="Center"/>
-                        <ComboBox ItemsSource="{Binding TerminatorList}" DisplayMemberPath="Value"
-                            SelectedValuePath="Description" SelectedItem="{Binding ManipulatorTerminator}" SelectedValue="{Binding ManipulatorTerminator}"  Grid.Row="3" Grid.Column="0"  Margin="15"  Style="{DynamicResource MaterialDesignFloatingHintComboBox}"
-                                          Padding="5"
-                                          FontSize="15"
-                                          HorizontalAlignment="Left"  
-                                          Width="160"
-                                          materialDesign:HintAssist.Hint="Terminator">
-
-                        </ComboBox>
-                        <Separator Grid.ColumnSpan="3" Grid.Row="4" Style="{DynamicResource MaterialDesignLightSeparator}"/>
-                        <!--Vision TCP title icon-->
-                        <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" Grid.Row="5" Grid.ColumnSpan="4">
-                            <TextBlock  
-                                       
-                                       FontSize="16"
-                                       FontWeight="Light"
-                                       Style="{DynamicResource MaterialDesignTextBlock}"> 
-                                Vision TCP
-                            </TextBlock>
-                            <materialDesign:PackIcon  Margin="10 0 0 4"  Kind="MonitorEye" Width="25" Height="25" VerticalAlignment="Bottom"/>
-                        </StackPanel>
-                        <!-- Label IP Address-->
-                        <TextBlock Grid.Row="6"  FontSize="13"  FontWeight="Light" Margin="10 5 0 0">IP Address</TextBlock>
-                        <!-- Input IP -->
-                        <StackPanel Grid.Row="6" Orientation="Horizontal" Margin="10 6 0 0">
-                            <TextBox x:Name="txtVisionIP1" Style="{DynamicResource IPInputMaterialDesignTextBox}" HorizontalAlignment="Center"  GotFocus="txtIP_GotFocus" TextChanged="TxtIPLength_TextChanged" PreviewKeyDown="txtIP_PreviewKeyDown" PreviewTextInput="TxtIPAddress_PreviewTextInput">
-                                <Binding Path="VisionIP[0]" UpdateSourceTrigger="PropertyChanged">
-
-                                </Binding>
-                            </TextBox>
-                            <materialDesign:PackIcon VerticalAlignment="Bottom" Width="20" Height="20" Kind="CircleSmall"/>
-                            <TextBox x:Name="txtVisionIP2" Style="{DynamicResource IPInputMaterialDesignTextBox}" HorizontalAlignment="Center" GotFocus="txtIP_GotFocus" TextChanged="TxtIPLength_TextChanged" PreviewTextInput="TxtIPAddress_PreviewTextInput" PreviewKeyDown="txtIP_PreviewKeyDown">
-                                <Binding Path="VisionIP[1]" UpdateSourceTrigger="PropertyChanged">
-
-                                </Binding>
-                            </TextBox>
-                            <materialDesign:PackIcon VerticalAlignment="Bottom" Width="20" Height="20" Kind="CircleSmall"/>
-
-                            <TextBox x:Name="txtVisionIP3"  Style="{DynamicResource IPInputMaterialDesignTextBox}" HorizontalAlignment="Center" GotFocus="txtIP_GotFocus" TextChanged="TxtIPLength_TextChanged" PreviewTextInput="TxtIPAddress_PreviewTextInput" PreviewKeyDown="txtIP_PreviewKeyDown"   >
-                                <Binding Path="VisionIP[2]" UpdateSourceTrigger="PropertyChanged">
-
-                                </Binding>
-                            </TextBox>
-                            <materialDesign:PackIcon VerticalAlignment="Bottom" Width="20" Height="20" Kind="CircleSmall"/>
-
-                            <TextBox x:Name="txtVisionIP4"  Style="{DynamicResource IPInputMaterialDesignTextBox}" HorizontalAlignment="Center" GotFocus="txtIP_GotFocus" TextChanged="TxtIPLength_TextChanged" PreviewTextInput="TxtIPAddress_PreviewTextInput" PreviewKeyDown="txtIP_PreviewKeyDown"    >
-                                <Binding Path="VisionIP[3]" UpdateSourceTrigger="PropertyChanged">
-
-                                </Binding>
-                            </TextBox>
-
-                        </StackPanel>
-                        <!-- Input Vision Port Number-->
-                        <TextBox Width="70"  Grid.Column="1" Grid.Row="6" Style="{DynamicResource InputMaterialDesignTextBox}"  Padding="2" Text="{Binding VisionPort}"  PreviewTextInput="TxtPort_PreviewTextInput"
-                                        materialDesign:HintAssist.Hint="Port"  MaxWidth="100" HorizontalAlignment="Center"/>
-                        <ComboBox ItemsSource="{Binding TerminatorList}" DisplayMemberPath="Value"
-                            SelectedValuePath="Description" SelectedItem="{Binding VisionTerminator}" SelectedValue="{Binding VisionTerminator}"  Grid.Row="7" Grid.Column="0"  Margin="15"  Style="{DynamicResource MaterialDesignFloatingHintComboBox}"
-                                          Padding="5"
-                                          FontSize="15"
-                                          HorizontalAlignment="Left"  
-                                          Width="160"
-                                          materialDesign:HintAssist.Hint="Terminator">
-
-                        </ComboBox>
-
-                    </Grid>
-
-
-                </GroupBox>
-
-
-
-                <Expander Grid.Row="1" Grid.ColumnSpan="2" Header="Additional Setup" Foreground="{DynamicResource PrimaryBlackColor}" 
-                                  materialDesign:ExpanderAssist.HeaderFontSize="20"
-                                  Style="{DynamicResource MaterialDesignExpander}"
-                                  BorderBrush="{DynamicResource PrimaryBlackColor}"
-                                  BorderThickness="1"
-                                  materialDesign:ExpanderAssist.HeaderBackground="{DynamicResource PrimaryBlueColor}" Margin="15">
-
-
-                    <StackPanel Orientation="Vertical" VerticalAlignment="Center">
-                        <!--Browse Open Vision-->
-                        <ComboBox Style="{DynamicResource ComboBoxStyle}"  Width="400" HorizontalAlignment="Left"
-                                  materialDesign:HintAssist.Hint="Vision Software"
-                                  Foreground="#C6C6C6">
-                            <ComboBoxItem>Vision Master</ComboBoxItem>
-                        </ComboBox>
-                        <StackPanel Orientation="Horizontal">
-                            <TextBox x:Name="TxtVisionSoftware" Style="{DynamicResource InputMaterialDesignTextBox}"   Width="500" Text="{Binding LogFilePath}"
-                                    materialDesign:HintAssist.Hint="Vision Software Path (.sol)" />
-                            <Button x:Name="BrowseBtn" Margin="10" Content="Browse" Style="{DynamicResource MaterialDesignOutlinedButton}" Click="BrowseBtn_Click"/>
-
-                        </StackPanel>
-                        <!--Log File Path-->
+                    <StackPanel Orientation="Vertical">
                         <StackPanel Orientation="Horizontal" >
                             <TextBox  x:Name="TxtLogFilePath" Style="{DynamicResource InputMaterialDesignTextBox}"   MinWidth="400" Text="{Binding LogFilePath}"
                                     materialDesign:HintAssist.Hint="Log File Path (User Log, Communication Log)" />
-                            <Button Margin="10" Content="Browse" Style="{DynamicResource MaterialDesignOutlinedButton}" Command="{Binding ConnectServerCommand}"/>
+                            <Button Margin="10" Content="Browse" Command="{Binding ConnectServerCommand}"/>
                         </StackPanel>
-                        <StackPanel Orientation="Horizontal">
-                            <ToggleButton Style="{DynamicResource MaterialDesignSwitchLightToggleButton}" Margin="12"  />
-                            <TextBlock FontSize="16" VerticalAlignment="Center" Foreground="White"><Run Text="Debug Log (Developer use)"/></TextBlock>
+                        <StackPanel Orientation="Horizontal" Grid.Row="9">
+                            <ui:ToggleSwitch Margin="12" Header="Debug Log (Developer use)" />
                         </StackPanel>
                         <Button Width="100" Margin="5 10" Command="{Binding NavigateCommand}" Content="Navigate" />
+
                     </StackPanel>
+
                 </Expander>
-                <StackPanel Orientation="Horizontal" Grid.Column="1" Grid.Row="2" HorizontalAlignment="Right">
-                    <Button  Style="{DynamicResource MaterialDesignOutlinedButton}" Width="100" Margin="10" IsEnabled="{Binding CanExecute}" Command="{Binding SaveCommand}" HorizontalAlignment="Right" Content="Save" />
-                    <Button  Style="{DynamicResource MaterialDesignOutlinedSecondaryDarkButton}"  Width="120" Margin="10" IsEnabled="{Binding CanExecute}" Command="{Binding }" Content="Create New" />
+
+
+                <StackPanel Orientation="Horizontal" Grid.ColumnSpan="1" Grid.Row="10" HorizontalAlignment="Center">
+
+                    <Button  Style="{DynamicResource MaterialDesignPaperButton}" Width="100" Margin="10" IsEnabled="{Binding CanExecute}" Command="{Binding SaveCommand}" HorizontalAlignment="Right" Content="Save All" />
+                    <Button  Style="{DynamicResource MaterialDesignPaperSecondaryButton}"  Width="120" Margin="10" IsEnabled="{Binding CanExecute}" Command="{Binding }" Content="Create New"  />
 
                 </StackPanel>
 

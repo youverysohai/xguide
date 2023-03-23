@@ -39,18 +39,18 @@
                 </DataTemplate>
             </Grid.Resources>
             <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="auto"/>
                 <ColumnDefinition Width="*"/>
-                <ColumnDefinition Width="6*"/>
             </Grid.ColumnDefinitions>
             <Grid.RowDefinitions>
-                <RowDefinition Height="1.5*"/>
+                <RowDefinition Height="auto"/>
 
                 <RowDefinition Height="16*"/>
 
 
-                <RowDefinition Height="2*"/>
+                <RowDefinition Height="auto"/>
             </Grid.RowDefinitions>
-            <Button  Grid.Column="1" HorizontalAlignment="Right" VerticalAlignment="Center" Style="{DynamicResource MaterialDesignIconForegroundButton}" >
+            <Button  Grid.Column="1" HorizontalAlignment="Right" VerticalAlignment="Center" Style="{DynamicResource MaterialDesignIconForegroundButton}" Click="Button_Click" >
                 <materialDesign:PackIcon Kind="WindowClose" Style="{DynamicResource IconStyle16}"></materialDesign:PackIcon>
             </Button>
             <TextBox materialDesign:TextFieldAssist.HasClearButton="True"
@@ -58,7 +58,7 @@
                      materialDesign:TextFieldAssist.TrailingIcon="Edit"
                      Cursor="Hand"
                      Text="{Binding Setting.Name}"
-                     Grid.ColumnSpan="2" Width="300" Height="60" 
+                     Grid.ColumnSpan="2" Width="300" 
                      Style="{DynamicResource InputMaterialDesignTextBox}"
                      
                      materialDesign:HintAssist.Hint="Calibration Name"></TextBox>
@@ -66,10 +66,6 @@
             <!--  Side Step bar  -->
             <Border Name="Stepbar" d:Visibility="Visible" Grid.Row="1" Grid.RowSpan="2" Grid.Column="0" CornerRadius="20 0 0 20">
 
-                <Border.Background>
-                    <SolidColorBrush Color="#2d2d30" />
-
-                </Border.Background>
                 <hc:StepBar Margin="10" Name="step" IsMouseSelectable="True" Dock="Left" StepChanged="step_StepChanged" StepIndex="{Binding StepIndex}">
                     <!--Step 1-->
                     <hc:StepBarItem>
@@ -154,13 +150,12 @@
             </ContentControl>
 
             <!-- Buttons Next and Prev-->
-            <materialDesign:Card Grid.Row="2" Grid.Column="1" UniformCornerRadius="16" Margin="0 0 15 10" Name="BottomNextPrev">
-                <StackPanel  Orientation="Horizontal" HorizontalAlignment="Center"  >
+                <StackPanel Grid.Row="2" Grid.Column="1" Orientation="Horizontal" HorizontalAlignment="Center"  >
 
                     <Button Style="{DynamicResource MaterialDesignOutlinedButton}" Margin="10" Command="{Binding WizPrevCommand}" CommandParameter="{x:Static local:PageName.StepOne}" Width="180" Content="Prev"/>
                     <Button Style="{DynamicResource MaterialDesignOutlinedButton}" Command="{Binding WizNextCommand}" CommandParameter="{x:Static local:PageName.StepTwo}" Width="180"  Content="Next"/>
                 </StackPanel>
-            </materialDesign:Card>
+         
 
         </Grid>
     </materialDesign:Card>

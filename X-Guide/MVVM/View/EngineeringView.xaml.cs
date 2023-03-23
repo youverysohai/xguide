@@ -52,6 +52,11 @@ namespace X_Guide.MVVM.View
             }
         }
 
+        private void Button_Click(object sender, RoutedEventArgs e)
+        {
+
+        }
+
         //private void BtnStart_Click(object sender, RoutedEventArgs e)
         //{
         //    ContentControl.Visibility = Visibility.Visible;

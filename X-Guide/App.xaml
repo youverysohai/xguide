@@ -4,22 +4,25 @@
              xmlns:local="clr-namespace:X_Guide"
              xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
              xmlns:hc="https://handyorg.github.io/handycontrol"
-              
+             xmlns:ui="http://schemas.modernwpf.com/2019" 
        >
     <Application.Resources>
         <ResourceDictionary>
             <ResourceDictionary.MergedDictionaries>
 
                 <!--<materialDesign:BundledTheme BaseTheme="Light" PrimaryColor="DeepPurple" SecondaryColor="Lime" />-->
-                <materialDesign:CustomColorTheme BaseTheme="Dark" PrimaryColor="#80B9EE" SecondaryColor="#FFFFFF" />
+                <materialDesign:CustomColorTheme BaseTheme="Dark" PrimaryColor="#769FCD" SecondaryColor="#FFFFFF" />
                 <ResourceDictionary Source="pack://application:,,,/MaterialDesignThemes.Wpf;component/Themes/MaterialDesignTheme.Defaults.xaml" />
                 <ResourceDictionary Source="Style/Colors.xaml"/>
                 <ResourceDictionary Source="Style/Fonts.xaml"/>
                 <ResourceDictionary Source="Style/Layouts.xaml"/>
                 <ResourceDictionary Source="Style/BehaviorStyles.xaml"/>
+                <ResourceDictionary Source="Style/DesignTimeResources.xaml"/>
                 <!--<vm:ViewModelLocator x:Key="Locator" d:IsDataSource="True" xmlns:vm="clr-namespace:iAI.ViewModel" />-->
-                <hc:ThemeResources RequestedTheme="Dark" AccentColor="#80B9EE"/>
+                <hc:ThemeResources RequestedTheme="Dark" AccentColor="#769FCD"/>
                 <hc:Theme/>
+                <ui:ThemeResources RequestedTheme="Dark" AccentColor="#769FCD"/>
+                <ui:XamlControlsResources/>
             </ResourceDictionary.MergedDictionaries>
         </ResourceDictionary>
     </Application.Resources>

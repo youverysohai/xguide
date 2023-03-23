@@ -7,6 +7,7 @@ using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Threading;
 using VM.Core;
+using VM.PlatformSDKCS;
 using VMControls.WPF.Release;
 //using VM.Core;
 
@@ -20,7 +21,7 @@ namespace X_Guide.MVVM.View
         VmProcedure p;
         public ProductionView()
         {
-               
+
             InitializeComponent();
             //VmSolution.Import(@"Cest.sol", "");
             //p = (VmProcedure)VmSolution.Instance["Flow1"];
@@ -30,13 +31,22 @@ namespace X_Guide.MVVM.View
 
         private void p_box_Loaded(object sender, RoutedEventArgs e)
         {
-            VmSolution.Import(@"C:\Users\Xlent-Tung\Desktop\livecam.sol", "");
-            p = (VmProcedure)VmSolution.Instance["Flow1"];
-            p.Run();
-            p_box.LoadFrontendSource();
-            //p_box.BindSingleProcedure(p.ToString());
-            p_box.AutoChangeSize();
-            
+            try
+            {
+                VmSolution.Import(@"C:\Users\Xlent-Tung\Desktop\livecam.sol", "");
+                p = (VmProcedure)VmSolution.Instance["Flow1"];
+                p.Run();
+                p_box.LoadFrontendSource();
+                //p_box.BindSingleProcedure(p.ToString());
+                p_box.AutoChangeSize();
+            }
+            catch (VmException ex)
+            {
+
+            }
+
+
+
         }
 
 
