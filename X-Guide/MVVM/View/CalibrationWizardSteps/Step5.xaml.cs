@@ -49,26 +49,6 @@ namespace X_Guide.MVVM.View.CalibrationWizardSteps
         {
             try
             {
-                //VmSolution.Import(@"C:\Users\Xlent-Tung\Desktop\FindCenterPoint.sol", "");
-                VmSolution.Import(@"C:\Users\Admin\Desktop\livecam.sol", "");
-
-                p = (VmProcedure)VmSolution.Instance["LiveCam"];
-                p.Run();
-                p_box.LoadFrontendSource();
-                //p_box.BindSingleProcedure(p.ToString());
-                p_box.AutoChangeSize();
-            }
-            catch
-            {
-                Debug.WriteLine("Everything is fine");
-            }
-            finally
-            {
-                Debug.WriteLine("Chun fault nia ma");
-            }
-
-            try
-            {
                 
                 VmSolution.Import(@"C:\Users\Xlent_XIR02\Desktop\livecam.sol");
 
