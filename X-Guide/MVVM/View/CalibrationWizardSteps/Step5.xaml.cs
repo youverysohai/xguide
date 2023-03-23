@@ -50,9 +50,9 @@ namespace X_Guide.MVVM.View.CalibrationWizardSteps
             try
             {
                 
-                VmSolution.Import(@"C:\Users\Xlent_XIR02\Desktop\livecam.sol");
+                VmSolution.Import(@"C:\Users\Admin\Desktop\livecam.sol");
 
-                VmSolution.CreatSolInstance();
+                //VmSolution.CreatSolInstance();
                 p = (VmProcedure)VmSolution.Instance["LiveCam"];
                 p.Run();
                 p_box.LoadFrontendSource();
