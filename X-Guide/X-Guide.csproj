@@ -678,8 +678,6 @@
     <Compile Include="CustomEventArgs\BitMapImageArgs.cs" />
     <Compile Include="CustomEventArgs\TcpClientEventArgs.cs" />
     <Compile Include="CustomEventArgs\TcpListenerEventArgs.cs" />
-    <Compile Include="DP\CommandNavigationViewItem.cs" />
-    <Compile Include="DP\NavigationViewItemBehavior.cs" />
     <Compile Include="EnumClass\MountingOrientation.cs" />
     <Compile Include="EnumClass\Terminator.cs" />
     <Compile Include="EnumClass\EnumHelperClass.cs" />
@@ -879,7 +877,7 @@
     <Page Include="Style\DesignTimeResources.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
-    	<ContainsDesignTimeResources>True</ContainsDesignTimeResources>
+      <ContainsDesignTimeResources>True</ContainsDesignTimeResources>
     </Page>
     <Page Include="Style\Fonts.xaml">
       <SubType>Designer</SubType>
@@ -1038,20 +1036,8 @@
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <Folder Include="DP\" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
