@@ -378,8 +378,8 @@
                     <DataTemplate DataType="{x:Type vms:SecurityViewModel}">
                         <views:SecurityView/>
                     </DataTemplate>
-                    <DataTemplate DataType="{x:Type vms:EngineeringViewModel}">
-                        <views:EngineeringView/>
+                    <DataTemplate DataType="{x:Type vms:CalibrationMainViewModel}">
+                        <views:CalibrationMainView/>
                     </DataTemplate>
                     <DataTemplate DataType="{x:Type vms:CalibrationWizardStartViewModel}">
                         <stepsViews:CalibrationWizardStart/>
