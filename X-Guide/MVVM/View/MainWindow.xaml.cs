@@ -59,7 +59,7 @@ namespace X_Guide
                     Application.Current.Resources.MergedDictionaries.Add(new ResourceDictionary
                     {
                         Source = new Uri("/MaterialDesignThemes.Wpf;component/Themes/MaterialDesignTheme.Light.xaml", UriKind.Relative)
-                    });
+                    });   
                 }
                 else
                 {

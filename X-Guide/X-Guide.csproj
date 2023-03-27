@@ -980,6 +980,9 @@
     <PackageReference Include="HandyControls">
       <Version>3.4.4</Version>
     </PackageReference>
+    <PackageReference Include="MahApps.Metro">
+      <Version>2.4.9</Version>
+    </PackageReference>
     <PackageReference Include="MaterialDesignThemes">
       <Version>4.7.1</Version>
     </PackageReference>

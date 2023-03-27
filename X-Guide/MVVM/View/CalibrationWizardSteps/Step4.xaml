@@ -11,7 +11,7 @@
              xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes">
 
 
-    <Grid Margin="0 0 0 10">
+    <ScrollViewer Margin="0 0 0 10" >
 
         <Grid>
             <Grid.ColumnDefinitions>
@@ -19,11 +19,11 @@
                 <ColumnDefinition Width="*"/>
             </Grid.ColumnDefinitions>
             <Grid.RowDefinitions>
-                <RowDefinition Height="1.5*"/>
+                <RowDefinition Height="2*"/>
                 <RowDefinition Height="*"/>
             </Grid.RowDefinitions>
             <StackPanel Orientation="Vertical" Grid.ColumnSpan="2">
-                <TextBlock  Text="Motion for Calibartion" HorizontalAlignment="Center" FontSize="35" Margin="0 20 0 25"/>
+                <TextBlock  Text="Motion for Calibration" HorizontalAlignment="Center" FontSize="35" Margin="0 20 0 25"/>
                 <Grid HorizontalAlignment="Center">
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition Width="5*"/>
@@ -42,7 +42,6 @@
                         <Slider  Value="{Binding Setting.Speed}" Minimum="1" Maximum="100" Width="250" ValueChanged="Slider_SpeedValueChanged"></Slider>
                         <Label Content="100" Style="{DynamicResource MaterialDesignLabel}"/>
                     </StackPanel>
-
                     <ui:NumberBox 
                         Header="Speed (%)"
                           SmallChange="1"
@@ -183,5 +182,5 @@
 
 
         </Grid>
-    </Grid>
+    </ScrollViewer>
 </UserControl>

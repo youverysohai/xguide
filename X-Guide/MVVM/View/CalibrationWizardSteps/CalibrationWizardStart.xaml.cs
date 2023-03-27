@@ -24,5 +24,10 @@ namespace X_Guide.MVVM.View.CalibrationWizardSteps
         {
             InitializeComponent();
         }
+
+        private void Button_Click(object sender, RoutedEventArgs e)
+        {
+         LoadingSymbol.IsRunning = (LoadingSymbol.IsRunning)? false:  true;
+        }
     }
 }

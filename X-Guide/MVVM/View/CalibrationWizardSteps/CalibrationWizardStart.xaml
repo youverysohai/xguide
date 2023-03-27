@@ -5,6 +5,7 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:X_Guide.MVVM.View.CalibrationWizardSteps"
              xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
+             xmlns:hc="https://handyorg.github.io/handycontrol"
              
              mc:Ignorable="d" 
              d:DesignHeight="450" d:DesignWidth="800">
@@ -18,8 +19,10 @@
                          materialDesign:HintAssist.Hint="Enter New Calibration Name" Text="{Binding Name}"/>
 
                 <TextBlock Margin="0 0 0 50" HorizontalAlignment="Center" VerticalAlignment="Bottom">Press Start to Begin <materialDesign:PackIcon Kind="ArrowDownBoldOutline"></materialDesign:PackIcon></TextBlock>
-                <Button Command="{Binding StartCommand}" Style="{DynamicResource MaterialDesignOutlinedButton}" Width="200">Start</Button>
-
+                <hc:LoadingCircle Margin="10" IsRunning="True" x:Name="LoadingSymbol"/>
+                <Button Command="{Binding StartCommand}"  Style="{DynamicResource MaterialDesignOutlinedButton}" Width="200">Start</Button>
+                <Button   Click="Button_Click" Style="{DynamicResource MaterialDesignOutlinedButton}" Width="200">loading</Button>
+               
             </StackPanel>
         </Grid>
     </materialDesign:Card>

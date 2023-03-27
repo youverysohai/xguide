@@ -26,6 +26,8 @@ using System.Drawing.Imaging;
 using VM.Core;
 using VM.PlatformSDKCS;
 using System.Diagnostics;
+using VMControls.Winform.Release;
+using IMVSCircleFindModuCs;
 
 namespace X_Guide.MVVM.View.CalibrationWizardSteps
 {
@@ -53,33 +55,41 @@ namespace X_Guide.MVVM.View.CalibrationWizardSteps
                 VmSolution.Import(@"C:\Users\Admin\Desktop\livecam.sol");
 
                 //VmSolution.CreatSolInstance();
-                p = (VmProcedure)VmSolution.Instance["LiveCam"];
+                p = (VmProcedure)VmSolution.Instance["CircleOut"];
                 p.Run();
-                p_box.LoadFrontendSource();
+                p_box.ModuleSource = p;
+                var circleFind = (IMVSCircleFindModuTool)VmSolution.Instance["CircleOut.Circle Search1"];
+                circleFind.Run();
+                p_box.ModuleSource = circleFind;
+                //p_box.LoadFrontendSource();
                 
-                //p_box.BindSingleProcedure(p.ToString());
+                ////p_box.BindSingleProcedure(p.ToString());
                 
-                p_box.AutoChangeSize();
+                //p_box.AutoChangeSize();
 
             }
             catch
             {
                 Debug.WriteLine("Everything is fine");
             }
-            finally
-            {
-                Debug.WriteLine("Chun fault nia ma");
-            }
-
 
         }
 
         private void p_box_SizeChanged(object sender, SizeChangedEventArgs e)
         {
-          
-            p_box.LoadFrontendSource();
-            //p_box.BindSingleProcedure(p.ToString());
-            p_box.AutoChangeSize();
+            try
+            {
+
+                //p_box.LoadFrontendSource();
+                ////p_box.BindSingleProcedure(p.ToString());
+                //p_box.AutoChangeSize();
+
+            }
+            catch
+            {
+                Debug.WriteLine("Everything is fine");
+            }
+
         }
     }
 
