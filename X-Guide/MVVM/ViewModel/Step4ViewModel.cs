@@ -15,6 +15,7 @@ namespace X_Guide.MVVM.ViewModel
 {
     internal class Step4ViewModel : ViewModelBase
     {
+        
 
         private CalibrationViewModel _setting;
         private readonly IServerService _serverService;
@@ -33,8 +34,7 @@ namespace X_Guide.MVVM.ViewModel
         
         public override ViewModelBase GetNextViewModel()
         {
-            
-            return new Step5ViewModel(_setting, _serverService, _clientService);
+            return null;
         }
         
     

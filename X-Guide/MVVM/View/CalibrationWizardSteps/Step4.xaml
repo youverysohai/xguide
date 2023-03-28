@@ -88,16 +88,17 @@
                     <StackPanel Orientation="Horizontal" Grid.ColumnSpan="2" Grid.Row="3" Visibility="Visible" Margin="0 5">
                         <Label Style="{DynamicResource MaterialDesignLabel}"  Content="Value must be greater than zero"></Label>
                         <ui:NumberBox 
-                             Value="0"
+                             Value="{Binding Setting.XOffset}"
                             Header="X-offset"
                             SpinButtonPlacementMode="Compact"
                             SmallChange="1"
                             LargeChange="100" 
                             Padding="10 1"     
                             MinWidth="100"  
+                            
                                    />
                         <ui:NumberBox   
-                            Value="0"
+                            Value="{Binding Setting.YOffset}"
                             Header="Y-offset"
                             SpinButtonPlacementMode="Compact"
                             SmallChange="1"

@@ -26,6 +26,9 @@ using System.Drawing.Imaging;
 using VM.Core;
 using VM.PlatformSDKCS;
 using System.Diagnostics;
+using X_Guide.MVVM.ViewModel;
+using System.Windows.Threading;
+using VMControls.WPF.Release;
 
 namespace X_Guide.MVVM.View.CalibrationWizardSteps
 {
@@ -36,50 +39,62 @@ namespace X_Guide.MVVM.View.CalibrationWizardSteps
 
     public partial class Step5 : UserControl
     {
-        VmProcedure p;
 
+        VmRenderControl vmControl;
+        Step5ViewModel dataContext;
 
         public Step5()
         {
             InitializeComponent();
-
-
+            Loaded += OnLoaded;
+            Mouse.OverrideCursor = Cursors.Wait;
         }
-        private void p_box_Loaded(object sender, RoutedEventArgs e)
+
+        private void OnLoaded(object sender, RoutedEventArgs e)
         {
-            try
+            /*           VmRenderControl vmControl = (DataContext as Step5ViewModel).VmRenderControl;*/
+            dataContext = (DataContext as Step5ViewModel);
+           /* vmControl = dataContext.VmRenderControl;
+            container.Children.Add(vmControl);
+            Grid.SetRowSpan(vmControl, 3);
+            Grid.SetColumnSpan(vmControl, 3);*/
+            /*            bool IsLoaded = VmSolution.Instance._importPath != null ? true : false;*/
+            bool IsLoaded = false;
+     
+            if (IsLoaded) /*LoadModuleSource()*/;
+            else
             {
-                
-                VmSolution.Import(@"C:\Users\Admin\Desktop\livecam.sol");
-
-                //VmSolution.CreatSolInstance();
-                p = (VmProcedure)VmSolution.Instance["LiveCam"];
-                p.Run();
-                p_box.LoadFrontendSource();
-                
-                //p_box.BindSingleProcedure(p.ToString());
-                
-                p_box.AutoChangeSize();
-
-            }
-            catch
-            {
-                Debug.WriteLine("Everything is fine");
-            }
-            finally
-            {
-                Debug.WriteLine("Chun fault nia ma");
+                (DataContext as Step5ViewModel).VmImportCompleted -= LoadModuleSource;
+                (DataContext as Step5ViewModel).VmImportCompleted += LoadModuleSource;
             }
 
 
         }
+
+       
+        private async void LoadModuleSource(object sender, VmProcedure p)
+        {
+            await Task.Run(() => Dispatcher.InvokeAsync(() => p_box.ModuleSource = p));
+            loadingCircle.Visibility = Visibility.Collapsed;
+            CenterBox.Visibility = Visibility.Visible;
+            Mouse.OverrideCursor = null;
+            var i = p_box.ImageSource;
+
+        }
+
+
 
         private void p_box_SizeChanged(object sender, SizeChangedEventArgs e)
         {
-          
-            p_box.LoadFrontendSource();
-            //p_box.BindSingleProcedure(p.ToString());
-            p_box.AutoChangeSize();
+            /*
+                  p_box.LoadFrontendSource();
+
+                  p_box.AutoChangeSize();*/
+        }
+
+        private void p_box_Loaded(object sender, RoutedEventArgs e)
+        {
+
         }
     }
 

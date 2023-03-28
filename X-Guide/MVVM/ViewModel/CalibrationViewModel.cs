@@ -13,9 +13,25 @@ namespace X_Guide.MVVM.ViewModel.CalibrationWizardSteps
         private MachineViewModel _machine;
         private MountingOrientation _orientation;
         private string _visionFlow;
-        private int _speed;
-        private int _acceleration;
-        private int _motionDelay;
+        private double _cXOffSet = 0;
+        private double _cYOffset = 0;
+        private double _cRZOffset = 0;
+        private int _speed = 1;
+        private int _acceleration = 1;
+        private int _motionDelay = 0;
+        private double _mm_per_pixel = 1;
+        public int XOffset { get; set; } = 0;
+        public int YOffset { get; set; } = 0;
+
+        public double Mm_per_pixel
+        {
+            get { return _mm_per_pixel; }
+            set
+            {
+                _mm_per_pixel = value;
+                OnPropertyChanged();
+            }
+        }
 
         public string Name
         {
@@ -25,6 +41,33 @@ namespace X_Guide.MVVM.ViewModel.CalibrationWizardSteps
                 OnPropertyChanged();
             }
 
+        }
+
+        public double CXOffSet
+        {
+            get { return _cXOffSet; }
+            set
+            {
+                _cXOffSet = value;
+                OnPropertyChanged();
+            }
+        }
+        public double CYOffset
+        {
+            get { return _cYOffset; }
+            set
+            {
+                _cYOffset = value;
+                OnPropertyChanged();
+            }
+        }
+
+        public double CRZOffset
+        {
+            get { return _cRZOffset; }
+            set { _cRZOffset = value;
+                OnPropertyChanged();
+            }
         }
         public MachineViewModel Machine
         {

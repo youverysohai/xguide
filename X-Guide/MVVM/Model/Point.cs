@@ -19,8 +19,10 @@ namespace Xlent_Vision_Guided
         public Point(double x, double y)
         {
             X = x;
-            Y = -y;
+            Y = y;
         }
+
+        
 
         public override string ToString()
         {
@@ -39,7 +41,7 @@ namespace Xlent_Vision_Guided
         public void PixelConversion(double pixel_per_mm)
         {
             X /= pixel_per_mm;
-            Y /= -pixel_per_mm;
+            Y /= pixel_per_mm;
         }
     }
 }

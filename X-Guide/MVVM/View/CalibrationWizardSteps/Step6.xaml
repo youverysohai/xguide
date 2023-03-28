@@ -44,28 +44,28 @@
                         </Grid.RowDefinitions>
                         
                         <StackPanel Grid.Row="0" Orientation="Horizontal" Margin="5" >
-                            <Label Content="Camera X Scalling:" Margin="5" Style="{DynamicResource OutputLabel}" />
-                            <TextBlock Text="0" VerticalAlignment="Center" Style="{DynamicResource ReadOnlyTextBlock}"/>
+                            <Label Content="Camera X Scaling:" Margin="5" Style="{DynamicResource OutputLabel}" />
+                            <TextBlock Text="{Binding Setting.Mm_per_pixel}" VerticalAlignment="Center" Style="{DynamicResource ReadOnlyTextBlock}"/>
                             <TextBlock Text="mm per pixel"  Style="{DynamicResource UnitTextBlock}"/>
                         </StackPanel>
                         <StackPanel Grid.Row="1" Orientation="Horizontal" Margin="5" >
-                            <Label Content="Camera Y Scalling:" Margin="5" Style="{DynamicResource OutputLabel}" />
-                            <TextBlock Text="0" VerticalAlignment="Center" Style="{DynamicResource ReadOnlyTextBlock}"/>
+                            <Label Content="Camera Y Scaling:" Margin="5" Style="{DynamicResource OutputLabel}" />
+                            <TextBlock Text="{Binding Setting.Mm_per_pixel}" VerticalAlignment="Center" Style="{DynamicResource ReadOnlyTextBlock}"/>
                             <TextBlock Text="mm per pixel" Style="{DynamicResource UnitTextBlock}"/>
                         </StackPanel>
                         <StackPanel Grid.Row="2" Orientation="Horizontal" Margin="5" >
                             <Label Content="X offset:" Margin="5" Style="{DynamicResource OutputLabel}" />
-                            <TextBlock Text="0" VerticalAlignment="Center" Style="{DynamicResource ReadOnlyTextBlock}"/>
+                        <TextBlock Text="{Binding Setting.CXOffSet}" VerticalAlignment="Center" Style="{DynamicResource ReadOnlyTextBlock}"/>
                             <TextBlock Text="mm" Style="{DynamicResource UnitTextBlock}"/>
                         </StackPanel> 
                         <StackPanel Grid.Row="3" Orientation="Horizontal" Margin="5" >
                             <Label Content="Y offset:" Margin="5" Style="{DynamicResource OutputLabel}" />
-                            <TextBlock Text="0" VerticalAlignment="Center" Style="{DynamicResource ReadOnlyTextBlock}"/>
+                            <TextBlock Text="{Binding Setting.CYOffset}" VerticalAlignment="Center" Style="{DynamicResource ReadOnlyTextBlock}"/>
                             <TextBlock Text="mm" Style="{DynamicResource UnitTextBlock}"/>
                         </StackPanel> 
                         <StackPanel Grid.Row="4" Orientation="Horizontal" Margin="5" >
                             <Label Content="RZ offset:" Margin="5" Style="{DynamicResource OutputLabel}" />
-                            <TextBlock Text="0" VerticalAlignment="Center" Style="{DynamicResource ReadOnlyTextBlock}"/>
+                            <TextBlock Text="{Binding Setting.CRZOffset}" VerticalAlignment="Center" Style="{DynamicResource ReadOnlyTextBlock}"/>
                             <TextBlock Text="°" Style="{DynamicResource UnitTextBlock}" VerticalAlignment="Top"/>
                         </StackPanel>
                     </Grid>

@@ -63,7 +63,7 @@ namespace X_Guide.Communication.Service
             if (data.Length == 2)
             {
            
-                Point point = new Point(double.Parse(data[0]), double.Parse(data[1]));
+                Point point = new Point(double.Parse(data[0]), -double.Parse(data[1]));
                
                 return point;
 

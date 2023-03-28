@@ -784,12 +784,15 @@
       <DependentUpon>XGuideModel.tt</DependentUpon>
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Compile>
+    <Compile Include="StopwatchHelper.cs" />
     <Compile Include="User.cs">
       <DependentUpon>XGuideModel.tt</DependentUpon>
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Compile>
     <Compile Include="Validation\IPValidation.cs" />
     <Compile Include="Utility\PasswordHashUtility.cs" />
+    <Compile Include="VisionMaster\IVisionService.cs" />
+    <Compile Include="VisionMaster\VisionService.cs" />
     <Compile Include="Vision\testing.cs" />
     <Compile Include="XGuideModel.Context.cs">
       <AutoGen>True</AutoGen>

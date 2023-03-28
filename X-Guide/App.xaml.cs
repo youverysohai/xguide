@@ -10,6 +10,7 @@ using System.Linq;
 using System.Net;
 using System.Threading.Tasks;
 using System.Windows;
+using VMControls.WPF.Release;
 using X_Guide.Communication.Service;
 using X_Guide.MappingConfiguration;
 using X_Guide.MVVM;
@@ -20,6 +21,7 @@ using X_Guide.MVVM.ViewModel;
 using X_Guide.Service;
 using X_Guide.Service.Communication;
 using X_Guide.Service.DatabaseProvider;
+using X_Guide.VisionMaster;
 using Xlent_Vision_Guided;
 
 namespace X_Guide
@@ -33,21 +35,14 @@ namespace X_Guide
 
         private readonly NavigationStore _navigationStore;
         private readonly NavigationStore _wizardNavigationStore;
-        private Dictionary<PageName, Func<ViewModelBase>> _navDictionary;
-        private DbContextFactory _dbContextFactory;
-        private IUserService _userProvider;
-        private IServerService _serverService;
-        private ResourceDictionary _resourceDictionary;
-        private IMachineService _machineDb;
         private MapperConfiguration _mapperConfig;
-        private IClientService _clientService;
         private IContainer _diContainer;
 
 
 
         public App()
         {
-
+            
 
 
             _mapperConfig = new MapperConfiguration(c =>
@@ -77,7 +72,6 @@ namespace X_Guide
           
             builder.Register(c => new ViewModelLocator(_diContainer)).As<IViewModelLocator>().SingleInstance();
             builder.RegisterType<NavigationService>().As<INavigationService>();
-
             builder.Register(c => new MainWindow()
             {
                 DataContext = c.Resolve<MainViewModel>()
@@ -93,15 +87,16 @@ namespace X_Guide
             builder.RegisterType<Step5ViewModel>();
             builder.RegisterType<Step6ViewModel>();
             builder.RegisterType<SettingViewModel>();
-/*
-            builder.RegisterType<NavigationService>().As<INavigationService>().WithParameter(new TypedParameter(typeof(IContainer), _diContainer));*/
             builder.RegisterType<CalibrationMainViewModel>();
   
             builder.RegisterInstance(_mapperConfig.CreateMapper());
-      
-            builder.RegisterType<DbContextFactory>();
+            builder.RegisterInstance(new VmRenderControl());
+            builder.RegisterInstance(new VmFrontendControl());
+            
+            builder.RegisterType<DbContextFactory>().SingleInstance();
             builder.RegisterType<MachineService>().As<IMachineService>();
             builder.RegisterType<UserService>().As<IUserService>();
+            builder.RegisterType<VisionService>().As<IVisionService>();
            
             builder.Register(c => new ServerService(IPAddress.Parse("192.168.10.92"), 8000, "\r\n")).As<IServerService>().SingleInstance();
             builder.Register(c => new ClientService(IPAddress.Parse("192.168.10.90"), 8000)).As<IClientService>().SingleInstance();
@@ -115,16 +110,13 @@ namespace X_Guide
             string settingPath = Path.Combine(appDataPath, "X-Guide", "Settings.xml");
             ConfigurationManager.AppSettings["SettingPath"] = settingPath;
         }
+
         //        Startup Page
 
 
 
         protected override void OnStartup(StartupEventArgs e)
         {
-
-
-
-
             _diContainer = BuildDIContainer();
             MainWindow = _diContainer.Resolve<MainWindow>();
             MainWindow.Show();
