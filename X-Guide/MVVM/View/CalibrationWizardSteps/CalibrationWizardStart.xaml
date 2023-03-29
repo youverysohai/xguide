@@ -5,22 +5,101 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:X_Guide.MVVM.View.CalibrationWizardSteps"
              xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
+             xmlns:hc="https://handyorg.github.io/handycontrol"
              
              mc:Ignorable="d" 
-             d:DesignHeight="450" d:DesignWidth="800">
-    <materialDesign:Card Style="{DynamicResource CardLayout}" >
+             d:DesignHeight="650" d:DesignWidth="1000">
+    <UserControl.Resources>
+        <local:LastCharacterConverter x:Key="LastCharacterConverter" />
+        <DataTemplate x:Key="ChipTemplate">
 
-        <Grid Margin="20" >
-            <!-- Start Page, Need enter calibration name first-->
-            <StackPanel Orientation="Vertical" VerticalAlignment="Center" Grid.ColumnSpan="2" x:Name="StartStepPage" >
-                <TextBlock HorizontalAlignment="Center" FontSize="35" >Calibration Wizard</TextBlock>
-                <TextBox Width="250" Margin="50"  FontSize="16"  Style="{DynamicResource MaterialDesignFloatingHintTextBox }"
+            <materialDesign:Chip 
+        Style="{DynamicResource MaterialDesignOutlineChip}"
+        Click="Chip_Click"
+            Content="{Binding}"
+            Icon="{Binding Converter={StaticResource LastCharacterConverter}}"
+                Command="{x:Static materialDesign:DrawerHost.CloseDrawerCommand}"
+            DeleteClick="Chip_DeleteClick"  
+            IsDeletable="True" Margin="10"/>
+
+        </DataTemplate>
+    </UserControl.Resources>
+
+    <materialDesign:Card Style="{DynamicResource CardLayout}" >
+        <materialDesign:DrawerHost OpenMode="Default">
+            <materialDesign:DrawerHost.LeftDrawerContent>
+                <StackPanel Margin="16">
+                    <TextBlock Margin="4"
+                       HorizontalAlignment="Center"
+                       Text="EDIT" />
+
+
+
+                    <hc:SimplePanel x:Name="ChipsContainer">
+                        <ItemsControl ItemTemplate="{StaticResource ChipTemplate}" >
+                            <ItemsControl.ItemsPanel>
+                                <ItemsPanelTemplate>
+                                    <StackPanel Orientation="Horizontal"/>
+                                </ItemsPanelTemplate>
+                            </ItemsControl.ItemsPanel>
+                        </ItemsControl>
+                    </hc:SimplePanel>
+                    <Button Margin="4"
+                    HorizontalAlignment="Center"
+                    Command="{x:Static materialDesign:DrawerHost.CloseDrawerCommand}"
+                    CommandParameter="{x:Static Dock.Left}"
+                    Content="CLOSE THIS"
+                    Style="{StaticResource MaterialDesignFlatButton}" />
+
+                    <Button Margin="4"
+                    HorizontalAlignment="Center"
+                    Command="{x:Static materialDesign:DrawerHost.CloseDrawerCommand}"
+                    Content="CLOSE ALL"
+                    Style="{StaticResource MaterialDesignFlatButton}" />
+                </StackPanel>
+            </materialDesign:DrawerHost.LeftDrawerContent>
+
+            <Grid Margin="20" >
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="auto"/>
+                    <RowDefinition Height="*" />
+                    <RowDefinition Height="auto"/>
+                </Grid.RowDefinitions>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="auto"/>
+                    <ColumnDefinition Width="*"/>
+                </Grid.ColumnDefinitions>
+                <Button Grid.Column="0" Grid.Row="0" Command="{x:Static materialDesign:DrawerHost.OpenDrawerCommand}" 
+                             CommandParameter="{x:Static Dock.Left}" 
+                             Style="{DynamicResource MaterialDesignIconForegroundButton}" 
+                             ToolTip="Edit"
+                             ToolTipService.InitialShowDelay="122"
+                             >
+                    <materialDesign:PackIcon Kind="PlaylistEdit" Style="{DynamicResource IconStyle24}"/></Button>
+
+                <!-- Start Page, Need enter calibration name first-->
+                <StackPanel Grid.Column="1"  Grid.Row="1" Orientation="Vertical" VerticalAlignment="Stretch"  HorizontalAlignment="Stretch" x:Name="StartStepPage" >
+                    <TextBlock HorizontalAlignment="Center" FontSize="35" >Calibration Wizard</TextBlock>
+                    <TextBox Width="250" Margin="50"  FontSize="16"  Style="{DynamicResource MaterialDesignFloatingHintTextBox }"
                          materialDesign:HintAssist.Hint="Enter New Calibration Name" Text="{Binding Name}"/>
 
-                <TextBlock Margin="0 0 0 50" HorizontalAlignment="Center" VerticalAlignment="Bottom">Press Start to Begin <materialDesign:PackIcon Kind="ArrowDownBoldOutline"></materialDesign:PackIcon></TextBlock>
-                <Button Command="{Binding StartCommand}" Style="{DynamicResource MaterialDesignOutlinedButton}" Width="200">Start</Button>
+                    <TextBlock Margin="0 0 0 50" HorizontalAlignment="Center" VerticalAlignment="Bottom">Press Start to Begin <materialDesign:PackIcon Kind="ArrowDownBoldOutline"></materialDesign:PackIcon></TextBlock>
 
-            </StackPanel>
-        </Grid>
+                    <Button Command="{Binding StartCommand}"  Style="{DynamicResource MaterialDesignPaperButton}" Width="200" Margin="0 0 0 20">Start</Button>
+                    
+
+
+
+
+                </StackPanel>
+
+                <!-- simplest form -->
+                <materialDesign:Snackbar
+                        x:Name="SnackbarMessage" Grid.Row="3"  Grid.Column="1"
+                            IsActive="False"   MessageQueue="{materialDesign:MessageQueue}" />
+            </Grid>
+        </materialDesign:DrawerHost>
     </materialDesign:Card>
+
+
 </UserControl>

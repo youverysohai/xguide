@@ -25,11 +25,7 @@ using System.Drawing.Imaging;
 using VM.Core;
 using VM.PlatformSDKCS;
 using System.Diagnostics;
-using X_Guide.MVVM.ViewModel;
-using System.Windows.Threading;
-using VMControls.WPF.Release;
-using System.Reflection;
-using IMVSCircleFindModuCs;
+
 
 namespace X_Guide.MVVM.View.CalibrationWizardSteps
 {
@@ -40,59 +36,24 @@ namespace X_Guide.MVVM.View.CalibrationWizardSteps
 
     public partial class Step5 : UserControl
     {
-        private VmProcedure _p;
         public Step5()
         {
             InitializeComponent();
-            Loaded += OnLoaded;
+        
 
         }
 
-        private void OnLoaded(object sender, RoutedEventArgs e)
-        {
-            _p = (DataContext as Step5ViewModel).p;
-            if (_p != null) LoadModuleSource(this, _p);
-            else
+     
+                //p_box.LoadFrontendSource();
+                ////p_box.BindSingleProcedure(p.ToString());
+                //p_box.AutoChangeSize();
+
+            }
+            catch
             {
-                (DataContext as Step5ViewModel).VmImportCompleted += LoadModuleSource;
+                Debug.WriteLine("Everything is fine");
             }
 
-
-        }
-
-        private async void LoadModuleSource(object sender, VmProcedure p)
-        {
-     /*       await Task.Run(() => Dispatcher.InvokeAsync(() => p_box.ModuleSource = p, DispatcherPriority.Background));
-            loadingCircle.Visibility = Visibility.Collapsed;
-            CenterBox.Visibility = Visibility.Visible;
-        }
-
-
-
-        private void p_box_SizeChanged(object sender, SizeChangedEventArgs e)
-        {
-
-        }
-
-        private void p_box_Loaded(object sender, RoutedEventArgs e)
-        {
-
-        }
-
-        private void Button_Click(object sender, RoutedEventArgs e)
-        {
-  
-       
-          /*  Type x = p_box.ModuleSource.Outputs[4].GetType();
-            PropertyInfo[] properties = x.GetProperties();
-            foreach(PropertyInfo property in properties)
-            {
-                Debug.WriteLine(property.Name + ":  " + property.GetType());
-            }*/
-
-           
-
- 
         }
     }
 

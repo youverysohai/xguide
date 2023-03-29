@@ -21,8 +21,10 @@
                         <Button Style="{DynamicResource MaterialDesignPaperSecondaryButton}" Click="OpenFileButton_Click" Margin="10 0" >Browse</Button>
                     </StackPanel>
                     <ComboBox Style="{DynamicResource ComboBoxStyle}"
-                              Width="200"
-                              materialDesign:HintAssist.Hint="Vision Software">
+                              Width="300"
+                              materialDesign:HintAssist.Hint="Vision Software"
+                              HorizontalAlignment="Left"
+                              Margin="0">
                         <ComboBoxItem IsSelected="True">Vision Master</ComboBoxItem>
 
                     </ComboBox>
@@ -31,8 +33,10 @@
                         ItemsSource="{Binding VisionFlow}" 
                         SelectedItem="{Binding SelectedItem}"
                         Style="{DynamicResource ComboBoxStyle}"
-                              Width="200"
-                              materialDesign:HintAssist.Hint="Select Vision Flow">
+                              Width="300"
+                              materialDesign:HintAssist.Hint="Select Vision Flow"
+                                                      HorizontalAlignment="Left"
+                              Margin="0">
              
                     </ComboBox>
                 </StackPanel>
