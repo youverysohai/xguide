@@ -35,7 +35,9 @@ namespace X_Guide.MVVM.ViewModel
         public IVmModule VisProcedure
         {
             get { return _visProcedure; }
-            set { _visProcedure = value;
+            set
+            {
+                _visProcedure = value;
                 OnPropertyChanged();
             }
         }
@@ -53,29 +55,30 @@ namespace X_Guide.MVVM.ViewModel
             _serverService = serverService;
 
             try { clientService.ConnectServer(); }
-            catch(Exception ex)
+            catch (Exception ex)
             {
                 Debug.WriteLine(ex);
             }
 
             _tcpClientInfo = _serverService.GetConnectedClient().First().Value;
+            _serverService.ServerWriteDataAsync("RESET\r\n", _tcpClientInfo.TcpClient.GetStream());
             ((VmProcedure)VmSolution.Instance["Circle"]).ContinuousRunEnable = true;
             _circleFind = (IMVSCircleFindModuTool)VmSolution.Instance["Circle.Circle Search1"];
             VisProcedure = _circleFind;
-    /*        _circleFind.Run();*/
+            /*        _circleFind.Run();*/
             CalibrateCommand = new RelayCommand(Calibrate);
         }
-   /*     private async Task SaveRenderImage()
-        {
+        /*     private async Task SaveRenderImage()
+             {
 
-            _circleFind.Run();
-            await Task.Delay(1000);
-        }*/
+                 _circleFind.Run();
+                 await Task.Delay(1000);
+             }*/
 
         private async void Calibrate(object obj)
         {
-           
-           List<double> XMoveList = new List<double>();
+
+            List<double> XMoveList = new List<double>();
             List<double> YMoveList = new List<double>();
             Setting.XOffset = Setting.XOffset == 0 ? 10 : Setting.XOffset;
             Setting.YOffset = Setting.YOffset == 0 ? 10 : Setting.YOffset;
@@ -97,24 +100,22 @@ namespace X_Guide.MVVM.ViewModel
             //           YMoveList[2],
             //       }; 
 
-            double[] XYMove = await FindXMoveYMove(30,15);
+            double[] XYMove = await FindXMoveYMove(30, 15);
 
 
-
-
-            await _serverService.SendJogCommand(_tcpClientInfo, new JogCommand().SetX(XYMove[0]).SetY(XYMove[1]).SetZ(-180));
-            await Task.Delay(10000);
-            await _serverService.SendJogCommand(_tcpClientInfo, new JogCommand().SetX(-XYMove[0]).SetY(-XYMove[1]).SetZ(180));
+            /*            await _serverService.SendJogCommand(_tcpClientInfo, new JogCommand().SetX(XYMove[0]).SetY(XYMove[1]).SetZ(-180));
+                        await Task.Delay(10000);
+                        await _serverService.SendJogCommand(_tcpClientInfo, new JogCommand().SetX(-XYMove[0]).SetY(-XYMove[1]).SetZ(180));*/
 
             (Point[] VisionPoint, Point[] RobotPoint) = await Start9PointCalib();
             double[] calibData = VisionGuided.EyeInHandConfig2D_Calib(VisionPoint, RobotPoint, XYMove[0], XYMove[1], true);
-            
+
             Setting.CXOffSet = Math.Round(calibData[0], 2);
             Setting.CYOffset = Math.Round(calibData[1], 2);
             Setting.CRZOffset = Math.Round(calibData[2], 2);
             Setting.Mm_per_pixel = Math.Round(calibData[3], 2);
-            await _serverService.SendJogCommand(_tcpClientInfo, new JogCommand().SetX(calibData[0]).SetY(calibData[1]).SetRZ(calibData[2]));
-            await Task.Delay(2000);
+            /*        await _serverService.SendJogCommand(_tcpClientInfo, new JogCommand().SetX(calibData[0]).SetY(calibData[1]).SetRZ(calibData[2]));
+                    await Task.Delay(2000);*/
             await _clientService.GetVisCenter();
         }
 
@@ -128,35 +129,35 @@ namespace X_Guide.MVVM.ViewModel
 
             RobotPoints[4] = new Point(0, 0);
             VisionPoints[4] = await _clientService.GetVisCenter();
-          
+
 
             await _serverService.SendJogCommand(_tcpClientInfo, new JogCommand().SetY(-YOffset));
             await Task.Delay(1000);
 
             RobotPoints[1] = new Point(0, -YOffset);
             VisionPoints[1] = await _clientService.GetVisCenter();
-            await Task.Delay(3000);
+
 
             await _serverService.SendJogCommand(_tcpClientInfo, new JogCommand().SetX(XOffset));
             await Task.Delay(1000);
 
             RobotPoints[0] = new Point(XOffset, -YOffset);
             VisionPoints[0] = await _clientService.GetVisCenter();
-            await Task.Delay(3000);
+
 
             await _serverService.SendJogCommand(_tcpClientInfo, new JogCommand().SetY(YOffset));
             await Task.Delay(1000);
 
             RobotPoints[3] = new Point(XOffset, 0);
             VisionPoints[3] = await _clientService.GetVisCenter();
-            await Task.Delay(3000);
+
 
             await _serverService.SendJogCommand(_tcpClientInfo, new JogCommand().SetY(YOffset));
             await Task.Delay(1000);
 
             RobotPoints[6] = new Point(XOffset, YOffset);
             VisionPoints[6] = await _clientService.GetVisCenter();
-            await Task.Delay(3000);
+
 
             await _serverService.SendJogCommand(_tcpClientInfo, new JogCommand().SetX(-XOffset));
             await Task.Delay(1000);
@@ -170,21 +171,21 @@ namespace X_Guide.MVVM.ViewModel
 
             RobotPoints[8] = new Point(-XOffset, YOffset);
             VisionPoints[8] = await _clientService.GetVisCenter();
-            await Task.Delay(3000);
+
 
             await _serverService.SendJogCommand(_tcpClientInfo, new JogCommand().SetY(-YOffset));
             await Task.Delay(1000);
 
             RobotPoints[5] = new Point(-XOffset, 0);
             VisionPoints[5] = await _clientService.GetVisCenter();
-            await Task.Delay(3000);
+
 
             await _serverService.SendJogCommand(_tcpClientInfo, new JogCommand().SetY(-YOffset));
             await Task.Delay(1000);
 
             RobotPoints[2] = new Point(-XOffset, -YOffset);
             VisionPoints[2] = await _clientService.GetVisCenter();
-            await Task.Delay(3000);
+
 
             await _serverService.SendJogCommand(_tcpClientInfo, new JogCommand().SetY(YOffset).SetX(XOffset));
             return (VisionPoints, RobotPoints);

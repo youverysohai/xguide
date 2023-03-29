@@ -92,20 +92,7 @@ namespace X_Guide.MVVM.View.CalibrationWizardSteps
 
            
 
-    
-            string tempFilePath = Path.ChangeExtension(Path.GetTempFileName(), "jpeg");
-       /*     p_box.SaveRenderedImage(tempFilePath);*/
-            var converter = new ByteArrayToImageConverter();
-            var bArray = converter.ConvertBack(null, null, tempFilePath, null);
-            List<BitmapImage> bitmapImages = new List<BitmapImage>();
-
-            BitmapImage bitmap = new BitmapImage();
-            bitmap.BeginInit();
-            bitmap.UriSource = new Uri(tempFilePath);
-            bitmap.EndInit();
-            bitmapImages.Add(bitmap);
-
-            test.Source = bitmap;
+ 
         }
     }
 

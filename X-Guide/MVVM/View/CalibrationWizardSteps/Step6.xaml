@@ -11,7 +11,6 @@
              mc:Ignorable="d" 
              d:DesignHeight="450" d:DesignWidth="800">
     <UserControl.Resources>
-        <local:ByteArrayToImageConverter x:Key="ByteArrayToImageConverter"/>
         <Style TargetType="Label" x:Key="OutputLabel" BasedOn="{StaticResource MaterialDesignLabel}">
             <Setter Property="FontSize" Value="13"/>
         </Style>

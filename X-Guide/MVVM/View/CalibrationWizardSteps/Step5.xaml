@@ -18,7 +18,7 @@ xmlns:XCust="clr-namespace:X_Guide.CustomControls"             x:Class="X_Guide.
                 
              d:DesignHeight="550" d:DesignWidth="1000">
     <UserControl.Resources>
-        <local:ByteArrayToImageConverter x:Key="ByteArrayToImageConverter"/>
+      
         <Style TargetType="Button" BasedOn="{x:Null}"></Style>
         <Style TargetType="Label" BasedOn="{x:Null}"></Style>
         <Style TargetType="ComboBox" BasedOn="{x:Null}"></Style>
@@ -109,7 +109,7 @@ Canvas.Left="25" Canvas.Bottom="10" BorderThickness="0"  Style="{StaticResource 
             </Viewbox>
 
              <!--Arrow Button-->
-            <Image Grid.Row="0" Grid.RowSpan="2" x:Name="test" Source="{Binding BitMapImage1, Converter={StaticResource ByteArrayToImageConverter}}" />
+            <Image Grid.Row="0" Grid.RowSpan="2" x:Name="test"/>
             <Viewbox Grid.Row="0" Grid.RowSpan="2" HorizontalAlignment="Left" VerticalAlignment="Top">
                 <Canvas Width="260" Height="280"  x:Name="image" >
                     <Image Width="260" Canvas.Top="40" Source="pack://application:,,,/Style/ImageSource/arrows.png" />

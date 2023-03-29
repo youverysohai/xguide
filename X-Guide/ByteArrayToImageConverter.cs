@@ -10,7 +10,7 @@ using System.Windows.Media.Imaging;
 
 namespace X_Guide.MVVM.View.CalibrationWizardSteps
 {
-    public class ByteArrayToImageConverter : IValueConverter
+   /* public class ByteArrayToImageConverter : IValueConverter
     {
         public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
         {
@@ -35,6 +35,6 @@ namespace X_Guide.MVVM.View.CalibrationWizardSteps
 
             byte[] bytes = File.ReadAllBytes((string)parameter);
             return bytes;
-        }
-    }
+        }*/
+    
 }

@@ -83,6 +83,7 @@ namespace X_Guide.MVVM.ViewModel
            _serverService = serverService;
             _clientService = clientService;
             _setting = setting;
+            
         }
 
         private async void LoadMachineName()

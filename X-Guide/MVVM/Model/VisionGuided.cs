@@ -151,9 +151,9 @@ namespace Xlent_Vision_Guided
                 rotated_vision_y1 = -vision_p1.X * Math.Sin(gamma_rad) + vision_p1.Y * Math.Cos(gamma_rad);
 
                 // offset from robot frame to vision frame
-                x_offset = -robot_p1.X - x_move - rotated_vision_x1;
-                y_offset = -robot_p1.Y - y_move - rotated_vision_y1;
-                /* Debug.WriteLine($"X: {x_offset}, OY:{y_offset}");*/
+                x_offset = -robot_p1.X + x_move - rotated_vision_x1;
+                y_offset = -robot_p1.Y + y_move - rotated_vision_y1;
+                Debug.WriteLine($"X: {x_offset}, OY:{y_offset}");
 
                 theta_offset = -gamma_rad * 180.0 / Math.PI;
                 if (theta_offset <= -180.0)
