@@ -59,7 +59,7 @@ namespace X_Guide.MVVM.ViewModel
             {
                 Debug.WriteLine(ex);
             }
-
+            try {
             _tcpClientInfo = _serverService.GetConnectedClient().First().Value;
             _serverService.ServerWriteDataAsync("RESET\r\n", _tcpClientInfo.TcpClient.GetStream());
             ((VmProcedure)VmSolution.Instance["Circle"]).ContinuousRunEnable = true;
@@ -67,6 +67,7 @@ namespace X_Guide.MVVM.ViewModel
             VisProcedure = _circleFind;
             /*        _circleFind.Run();*/
             CalibrateCommand = new RelayCommand(Calibrate);
+            } catch (Exception ex) { Debug.WriteLine(ex);}
         }
         /*     private async Task SaveRenderImage()
              {

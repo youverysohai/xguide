@@ -114,7 +114,7 @@ namespace X_Guide.MVVM.ViewModel
             _clientService = clientService;
             _visionService = visionService;
             _setting = setting;
-            LoadProcedure();
+            //LoadProcedure();
            
 
             ReconnectCommand = new RelayCommand(null);
