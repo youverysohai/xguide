@@ -44,17 +44,8 @@ namespace X_Guide.MVVM.View.CalibrationWizardSteps
         }
 
      
-                //p_box.LoadFrontendSource();
-                ////p_box.BindSingleProcedure(p.ToString());
-                //p_box.AutoChangeSize();
+    
 
-            }
-            catch
-            {
-                Debug.WriteLine("Everything is fine");
-            }
-
-        }
     }
 
 

@@ -12,7 +12,7 @@ xmlns:XCust="clr-namespace:X_Guide.CustomControls"             x:Class="X_Guide.
              xmlns:xctk="http://schemas.xceed.com/wpf/xaml/toolkit"
 
              xmlns:ui="http://schemas.modernwpf.com/2019"
-        xmlns:hc="https://handyorg.github.io/handycontrol"
+     
 
              FontSize="16"
              xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"   
@@ -102,7 +102,7 @@ xmlns:XCust="clr-namespace:X_Guide.CustomControls"             x:Class="X_Guide.
                     </Viewbox>
 
              <!--Arrow Button-->
-            <Image Grid.Row="0" Grid.RowSpan="2" x:Name="test" Source="{Binding BitMapImage1, Converter={StaticResource ByteArrayToImageConverter}}" />
+            <Image Grid.Row="0" Grid.RowSpan="2"/>
             <Viewbox Grid.Row="0" Grid.RowSpan="2" HorizontalAlignment="Left" VerticalAlignment="Top">
                 <Canvas Width="260" Height="280"  x:Name="image" >
                     <Image Width="260" Canvas.Top="40" Source="pack://application:,,,/Style/ImageSource/arrows.png" />
