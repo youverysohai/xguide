@@ -25,12 +25,12 @@
     <ScrollViewer>
 
 
-        <hc:FlexPanel   FlexWrap="Wrap" JustifyContent="SpaceAround" AlignContent="Center" FlexDirection="Row">
+        <hc:FlexPanel Margin="0 20 0 0"  FlexWrap="Wrap" JustifyContent="SpaceAround" AlignContent="Center" FlexDirection="Row">
 
 
             <!--VM Camare-->
 
-            <Grid hc:FlexPanel.FlexBasis="720" Height="480">
+            <Grid hc:FlexPanel.FlexBasis="720" Height="480" >
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="*"/>
                     <ColumnDefinition Width="*"/>
@@ -49,17 +49,20 @@
                 <Border Grid.Row="1" Grid.Column="1" BorderThickness="2.5" BorderBrush="{DynamicResource PrimaryBlueColor}"></Border>
 
             </Grid>
-            <Grid hc:FlexPanel.FlexBasis="300">
+            <GroupBox hc:FlexPanel.FlexBasis="300" Style="{StaticResource GroupBoxTab}">
+                <GroupBox.Header>
+                    <TextBlock d:Foreground="Wheat" HorizontalAlignment="Center" Style="{DynamicResource TitleTextBlockStyle}" Text="Jog to Vision Center" />
+                </GroupBox.Header>
+                              <Grid >
                 <Grid.RowDefinitions>
-                    <RowDefinition Height="auto"/>
-                    <RowDefinition Height="4*"/>
-                    <RowDefinition Height="2*"/>
+                    
+                    <RowDefinition Height="*"/>
+                    <RowDefinition Height="*"/>
                 </Grid.RowDefinitions>
 
                 <!-- Title -->
-                <TextBlock d:Foreground="Wheat" HorizontalAlignment="Center" Style="{DynamicResource TitleTextBlockStyle}" Text="Jog to Vision Center" />
                 <!-- JogButtons and Rotations-->
-                <Grid Grid.Row="1" Grid.Column="2">
+                <Grid  Grid.Column="2">
                     <Grid.RowDefinitions >
                         <RowDefinition Height="*"/>
                         <RowDefinition Height="*"/>
@@ -167,6 +170,8 @@
                     </hc:TextBox>
                 </ui:SimpleStackPanel>
             </Grid>
+            </GroupBox>
+
 
         </hc:FlexPanel>
     </ScrollViewer>

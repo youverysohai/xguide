@@ -9,6 +9,7 @@ using System.Net;
 using System.Security;
 using System.Text;
 using System.Threading.Tasks;
+using System.Web.UI.WebControls;
 using System.Windows;
 using System.Windows.Input;
 using System.Windows.Media;
@@ -105,14 +106,15 @@ namespace X_Guide.MVVM.ViewModel
 
         private void Navigate(object obj)
         {
-          /*  switch (obj)
+            switch (obj)
             {
-                case PageName.Security: _navigationService.Navigate<SecurityViewModel>(); break;
-                case PageName.Production: _navigationService.Navigate<ProductionViewModel>(); break;
-                case PageName.Engineering: _navigationService.Navigate<EngineeringViewModel>(); break;
-                case PageName.Login: _navigationService.Navigate<UserLoginViewModel>(); break;
+                case PageName.Security: _navigationService.Navigate(_viewModelLocator.Create<SecurityViewModel>()); break;
+                case PageName.Production: _navigationService.Navigate(_viewModelLocator.Create<ProductionViewModel>()); break;
+                case PageName.Setting: _navigationService.Navigate(_viewModelLocator.Create<SettingViewModel>()); break;
+                case PageName.CalibrationWizardStart: _navigationService.Navigate(_viewModelLocator.Create<CalibrationWizardStartViewModel>()); break;
+                case PageName.Login: _navigationService.Navigate(_viewModelLocator.Create<UserLoginViewModel>()); break;
                 default: break;
-            }*/
+            }
         }
 
         private void CurrentUser_PropertyChanged(object sender, PropertyChangedEventArgs e)
