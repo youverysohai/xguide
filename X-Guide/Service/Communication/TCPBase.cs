@@ -72,6 +72,7 @@ namespace X_Guide.Service.Communication
 
         private void ProcessServerData(string data, char seperator, NetworkStream stream)
         {
+            Debug.WriteLine("Recieved data from server!", data);
             try
             {
                 string[] segment = data.Split(seperator);

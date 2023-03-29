@@ -31,12 +31,7 @@ namespace X_Guide.MVVM.ViewModel
 
       
 
-        
-        public override ViewModelBase GetNextViewModel()
-        {
-            return null;
-        }
-        
+   
     
         public Step4ViewModel(CalibrationViewModel setting, IServerService serverService, IClientService clientService)
         {

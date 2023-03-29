@@ -296,8 +296,8 @@ namespace X_Guide.MVVM.ViewModel
 
             _machineDB = machineDB;
 
-           
-            MachineNameList = new ObservableCollection<string>(_machineDB.GetAllMachineName());
+
+            LoadMachineName();
             MachineTypeList = EnumHelperClass.GetAllValuesAndDescriptions(typeof(MachineType));
             TerminatorList = EnumHelperClass.GetAllValuesAndDescriptions(typeof(Terminator));
 
@@ -312,6 +312,11 @@ namespace X_Guide.MVVM.ViewModel
 
             _errorViewModel.ErrorsChanged += OnErrorChanged;
             ConnectServerCommand = new ConnectServerCommand(this);
+        }
+
+        private async void LoadMachineName()
+        {
+            MachineNameList = new ObservableCollection<string>(await _machineDB.GetAllMachineName());
         }
 
         private void OnCommandEvent(object sender, TcpClientEventArgs e)

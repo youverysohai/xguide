@@ -12,6 +12,7 @@ namespace X_Guide.MVVM.Command
 
         private readonly Action<object> _execute;
         private readonly Func<object, bool> _canExecute;
+        
 
         public event EventHandler CanExecuteChanged;
 
@@ -21,6 +22,7 @@ namespace X_Guide.MVVM.Command
             _canExecute = canExecute;
         }
 
+    
 
         public bool CanExecute(object parameter)
         {

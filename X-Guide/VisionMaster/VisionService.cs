@@ -11,30 +11,32 @@ namespace X_Guide.VisionMaster
 {
     public class VisionService : IVisionService
     {
-        public async Task<bool> ImportSol(string filepath)
+        public List<string> GetAllProcedureName()
+        {
+             return  VmSolution.Instance.GetAllProcedureList().astProcessInfo.Where(x => x.strProcessName != null).ToList().Select(x=> x.strProcessName).ToList();  
+        }
+
+        public async Task<VmProcedure> ImportSol(string filepath)
         {
 
             //@"C:\Users\Xlent_XIR02\Desktop\livecam.sol"
             try
             {
 
-                await Task.Run(() => VmSolution.Import(filepath));
-                return true;
-        /*        VmProcedure p = (VmProcedure)VmSolution.Instance["LiveCam"];
-                p.Run();*/
-
-                //p_box.LoadFrontendSource();
-
-                //p_box.BindSingleProcedure(p.ToString());
-
-                //p_box.AutoChangeSize();
-
+                return await Task.Run(() => { VmSolution.Import(filepath); return VmSolution.Instance["Live"] as VmProcedure; });
             }
             catch (Exception ex)
             {
                 MessageBox.Show(ex.ToString());
-                return false;
+                return null;
             }
+        }
+
+    
+
+        public void RunOnceAndSaveImage()
+        {
+            throw new NotImplementedException();
         }
     }
 }

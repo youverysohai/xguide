@@ -94,7 +94,7 @@ namespace X_Guide.MVVM.ViewModel
             _navigationStore.CurrentViewModelChanged += OnCurrentViewModelChanged;
 
             serverService.StartServer();
-            clientService.ConnectServer();
+           
             _navigationService.Navigate(_viewModelLocator.CreateCalibrationWizardStart(_navigationStore));
    
             LoginCommand = new RelayCommand(Login);

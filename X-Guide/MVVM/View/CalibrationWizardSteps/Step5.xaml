@@ -1,4 +1,5 @@
-﻿<UserControl xmlns:Release="clr-namespace:VMControls.WPF.Release;assembly=VMControls.WPF.Release"  x:Class="X_Guide.MVVM.View.CalibrationWizardSteps.Step5"
+﻿<UserControl xmlns:Release="clr-namespace:VMControls.WPF.Release;assembly=VMControls.WPF.Release"  
+xmlns:XCust="clr-namespace:X_Guide.CustomControls"             x:Class="X_Guide.MVVM.View.CalibrationWizardSteps.Step5"
              xmlns:hc="https://handyorg.github.io/handycontrol"
              
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
@@ -17,7 +18,7 @@
                 
              d:DesignHeight="550" d:DesignWidth="1000">
     <UserControl.Resources>
-
+        <local:ByteArrayToImageConverter x:Key="ByteArrayToImageConverter"/>
         <Style TargetType="Button" BasedOn="{x:Null}"></Style>
         <Style TargetType="Label" BasedOn="{x:Null}"></Style>
         <Style TargetType="ComboBox" BasedOn="{x:Null}"></Style>
@@ -39,8 +40,7 @@
             <!-- Your Command -->
              
             <TextBlock TextAlignment="Right" Margin="0 0 10 0">
-                        hi<LineBreak />hi<LineBreak />hi<LineBreak />hi<LineBreak />
-                        hi<LineBreak />hi<LineBreak />hi<LineBreak />hi<LineBreak />
+  
 
             </TextBlock>
         </ScrollViewer>
@@ -55,8 +55,11 @@
                     <RowDefinition Height="*"/>
                     <RowDefinition Height="*"/>
                     <RowDefinition Height="*"/>
-                </Grid.RowDefinitions>  <Release:VmRenderControl Grid.ColumnSpan="3" Grid.RowSpan="3"  Name="p_box" SizeChanged="p_box_SizeChanged"/>
-            <hc:LoadingCircle x:Name="loadingCircle" Grid.Column="1" Grid.Row="1" Width="100" Height="100" DotDiameter="10" Panel.ZIndex="3"/>
+                </Grid.RowDefinitions>
+       
+            <XCust:CustomRenderControl Grid.ColumnSpan="3" Grid.RowSpan="3" Procedure="{Binding VisProcedure}"></XCust:CustomRenderControl>
+            
+       
 
 
 
@@ -96,7 +99,9 @@
                 <Canvas  Width="50" Height="50">
                     <Image Width="70" Height="70" Source="pack://application:,,,/Style/ImageSource/down.png" ToolTip="Z-" ToolTipService.InitialShowDelay="100"/>
 
-                    <Button Command="{Binding JogCommand}" CommandParameter="Z-"  Canvas.Left="25" Canvas.Bottom="10" BorderThickness="0"  Style="{StaticResource TransparentStyle}" ToolTip="Z-" ToolTipService.InitialShowDelay="100">
+                    <Button 
+                     CommandParameter="Z-"  
+Canvas.Left="25" Canvas.Bottom="10" BorderThickness="0"  Style="{StaticResource TransparentStyle}" ToolTip="Z-" ToolTipService.InitialShowDelay="100">
                         <TextBlock Style="{DynamicResource ButtonInnerTextBlockCenter}" >Z-</TextBlock>
                     </Button>
                 </Canvas>
@@ -104,7 +109,7 @@
             </Viewbox>
 
              <!--Arrow Button-->
-
+            <Image Grid.Row="0" Grid.RowSpan="2" x:Name="test" Source="{Binding BitMapImage1, Converter={StaticResource ByteArrayToImageConverter}}" />
             <Viewbox Grid.Row="0" Grid.RowSpan="2" HorizontalAlignment="Left" VerticalAlignment="Top">
                 <Canvas Width="260" Height="280"  x:Name="image" >
                     <Image Width="260" Canvas.Top="40" Source="pack://application:,,,/Style/ImageSource/arrows.png" />

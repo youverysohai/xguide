@@ -12,7 +12,7 @@ namespace X_Guide.Service.DatabaseProvider
 
         
         void CreateMachine(MachineModel machine);
-        IEnumerable<string> GetAllMachineName();
+        Task<IEnumerable<string>> GetAllMachineName();
         IEnumerable<MachineModel> GetAllMachine();
 
         string GetMachineDelimiter(string name);

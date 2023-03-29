@@ -13,7 +13,6 @@ using System.Windows.Media;
 using System.Windows.Media.Animation;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
-using System.Windows.Shapes;
 using AForge.Video;
 using AForge.Video.DirectShow;
 using AForge.Controls;
@@ -29,6 +28,8 @@ using System.Diagnostics;
 using X_Guide.MVVM.ViewModel;
 using System.Windows.Threading;
 using VMControls.WPF.Release;
+using System.Reflection;
+using IMVSCircleFindModuCs;
 
 namespace X_Guide.MVVM.View.CalibrationWizardSteps
 {
@@ -39,62 +40,72 @@ namespace X_Guide.MVVM.View.CalibrationWizardSteps
 
     public partial class Step5 : UserControl
     {
-
-        VmRenderControl vmControl;
-        Step5ViewModel dataContext;
-
+        private VmProcedure _p;
         public Step5()
         {
             InitializeComponent();
             Loaded += OnLoaded;
-            Mouse.OverrideCursor = Cursors.Wait;
+
         }
 
         private void OnLoaded(object sender, RoutedEventArgs e)
         {
-            /*           VmRenderControl vmControl = (DataContext as Step5ViewModel).VmRenderControl;*/
-            dataContext = (DataContext as Step5ViewModel);
-           /* vmControl = dataContext.VmRenderControl;
-            container.Children.Add(vmControl);
-            Grid.SetRowSpan(vmControl, 3);
-            Grid.SetColumnSpan(vmControl, 3);*/
-            /*            bool IsLoaded = VmSolution.Instance._importPath != null ? true : false;*/
-            bool IsLoaded = false;
-     
-            if (IsLoaded) /*LoadModuleSource()*/;
+            _p = (DataContext as Step5ViewModel).p;
+            if (_p != null) LoadModuleSource(this, _p);
             else
             {
-                (DataContext as Step5ViewModel).VmImportCompleted -= LoadModuleSource;
                 (DataContext as Step5ViewModel).VmImportCompleted += LoadModuleSource;
             }
 
 
         }
 
-       
         private async void LoadModuleSource(object sender, VmProcedure p)
         {
-            await Task.Run(() => Dispatcher.InvokeAsync(() => p_box.ModuleSource = p));
+     /*       await Task.Run(() => Dispatcher.InvokeAsync(() => p_box.ModuleSource = p, DispatcherPriority.Background));
             loadingCircle.Visibility = Visibility.Collapsed;
             CenterBox.Visibility = Visibility.Visible;
-            Mouse.OverrideCursor = null;
-            var i = p_box.ImageSource;
-
         }
 
 
 
         private void p_box_SizeChanged(object sender, SizeChangedEventArgs e)
         {
-            /*
-                  p_box.LoadFrontendSource();
 
-                  p_box.AutoChangeSize();*/
         }
 
         private void p_box_Loaded(object sender, RoutedEventArgs e)
         {
 
+        }
+
+        private void Button_Click(object sender, RoutedEventArgs e)
+        {
+  
+       
+          /*  Type x = p_box.ModuleSource.Outputs[4].GetType();
+            PropertyInfo[] properties = x.GetProperties();
+            foreach(PropertyInfo property in properties)
+            {
+                Debug.WriteLine(property.Name + ":  " + property.GetType());
+            }*/
+
+           
+
+    
+            string tempFilePath = Path.ChangeExtension(Path.GetTempFileName(), "jpeg");
+       /*     p_box.SaveRenderedImage(tempFilePath);*/
+            var converter = new ByteArrayToImageConverter();
+            var bArray = converter.ConvertBack(null, null, tempFilePath, null);
+            List<BitmapImage> bitmapImages = new List<BitmapImage>();
+
+            BitmapImage bitmap = new BitmapImage();
+            bitmap.BeginInit();
+            bitmap.UriSource = new Uri(tempFilePath);
+            bitmap.EndInit();
+            bitmapImages.Add(bitmap);
+
+            test.Source = bitmap;
         }
     }
 

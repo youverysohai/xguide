@@ -42,7 +42,9 @@ namespace X_Guide
 
         public App()
         {
-            
+            /*Uri resourceLocator = new Uri("/VMControls.WPF.Release;component/vmrendercontrol.xaml", UriKind.Relative);
+            LoadComponent(this, resourceLocator);*/
+            VmRenderControl vmRender = new VmRenderControl();
 
 
             _mapperConfig = new MapperConfiguration(c =>
@@ -90,8 +92,6 @@ namespace X_Guide
             builder.RegisterType<CalibrationMainViewModel>();
   
             builder.RegisterInstance(_mapperConfig.CreateMapper());
-            builder.RegisterInstance(new VmRenderControl());
-            builder.RegisterInstance(new VmFrontendControl());
             
             builder.RegisterType<DbContextFactory>().SingleInstance();
             builder.RegisterType<MachineService>().As<IMachineService>();
@@ -99,7 +99,7 @@ namespace X_Guide
             builder.RegisterType<VisionService>().As<IVisionService>();
            
             builder.Register(c => new ServerService(IPAddress.Parse("192.168.10.92"), 8000, "\r\n")).As<IServerService>().SingleInstance();
-            builder.Register(c => new ClientService(IPAddress.Parse("192.168.10.90"), 8000)).As<IClientService>().SingleInstance();
+            builder.Register(c => new ClientService(IPAddress.Parse("192.168.10.90"), 8000, "")).As<IClientService>().SingleInstance();
 
             return builder.Build();
         }

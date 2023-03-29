@@ -671,9 +671,13 @@
       <SubType>Designer</SubType>
     </ApplicationDefinition>
     <Compile Include="ADT\QueueProcessor.cs" />
+    <Compile Include="ByteArrayToImageConverter.cs" />
     <Compile Include="Calibration.cs">
       <DependentUpon>XGuideModel.tt</DependentUpon>
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Compile>
+    <Compile Include="CustomControls\CustomRenderControl.xaml.cs">
+      <DependentUpon>CustomRenderControl.xaml</DependentUpon>
     </Compile>
     <Compile Include="CustomEventArgs\BitMapImageArgs.cs" />
     <Compile Include="CustomEventArgs\NetworkStreamEventArgs.cs" />
@@ -810,6 +814,10 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>XGuideModel.edmx</DependentUpon>
     </Compile>
+    <Page Include="CustomControls\CustomRenderControl.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="MVVM\View\CalibrationWizardSteps\CalibrationWizardStart.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>

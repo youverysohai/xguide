@@ -12,6 +12,7 @@ using X_Guide.Communication.Service;
 using X_Guide.MVVM.Command;
 using X_Guide.MVVM.ViewModel.CalibrationWizardSteps;
 using X_Guide.Service.Communication;
+using X_Guide.VisionMaster;
 
 namespace X_Guide.MVVM.ViewModel
 {
@@ -22,6 +23,7 @@ namespace X_Guide.MVVM.ViewModel
         private CalibrationViewModel _setting;
         private readonly IServerService _serverService;
         private readonly IClientService _clientService;
+        private readonly IVisionService _visionService;
         private ObservableCollection<string> _visionFlow;
 
         public ObservableCollection<string> VisionFlow
@@ -60,25 +62,26 @@ namespace X_Guide.MVVM.ViewModel
         }
 
 
-        public Step3ViewModel(CalibrationViewModel setting, IServerService serverService, IClientService clientService)
+        public Step3ViewModel(CalibrationViewModel setting, IServerService serverService, IClientService clientService, IVisionService visionService)
         {
             _setting = setting;
             _serverService = serverService;
             _clientService = clientService;
+            _visionService = visionService;
         }
 
         private void OnItemChanged(string value)
         {
             _setting.VisionFlow = value;
         }
-        private void OpenFile()
+        private async void OpenFile()
         {
             try
             {
-                VmSolution.Import(FilePath, "happy");
-                ProcessInfoList i = VmSolution.Instance.GetAllProcedureList();
-                List<ProcessInfo> procedureList = i.astProcessInfo.Where(x => x.strProcessName != null).ToList();
-                VisionFlow = new ObservableCollection<string>(procedureList.Select(x => x.strProcessName));
+                await _visionService.ImportSol(FilePath);
+/*                ProcessInfoList i = VmSolution.Instance.GetAllProcedureList();
+                List<ProcessInfo> procedureList = i.astProcessInfo.Where(x => x.strProcessName != null).ToList();*/
+                VisionFlow = new ObservableCollection<string>(_visionService.GetAllProcedureName());
             }
             catch(Exception ex)
             {
@@ -86,9 +89,6 @@ namespace X_Guide.MVVM.ViewModel
             }
         }
 
-        public override ViewModelBase GetNextViewModel()
-        {
-            return new Step4ViewModel(_setting, _serverService, _clientService);
-        }
+   
     }
 }

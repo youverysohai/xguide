@@ -52,6 +52,7 @@ namespace X_Guide.MVVM.ViewModel
         {
             get { return _machineNames; }
             set { _machineNames = value;
+                OnPropertyChanged();
             }
         }
 
@@ -74,13 +75,22 @@ namespace X_Guide.MVVM.ViewModel
         #endregion
         public Step1ViewModel(IMachineService machineService, IMapper mapper, CalibrationViewModel setting, IServerService serverService, IClientService clientService)
         {
-            _setting = setting;
-            _serverService = serverService;
+            
+
+             _machineService = machineService;
+            LoadMachineName();
+            _mapper = mapper; 
+           _serverService = serverService;
             _clientService = clientService;
-            _machineService = machineService;
-            _mapper = mapper;
-            MachineNames = new ObservableCollection<string>(_machineService.GetAllMachineName());
+            _setting = setting;
         }
+
+        private async void LoadMachineName()
+        {
+
+            MachineNames = new ObservableCollection<string>(await _machineService.GetAllMachineName());
   
+        }
+
     }
 }

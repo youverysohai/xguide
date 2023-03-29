@@ -4,11 +4,14 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:X_Guide.MVVM.View.CalibrationWizardSteps"
+             xmlns:XCust="clr-namespace:X_Guide.CustomControls"
                xmlns:gif="https://github.com/XamlAnimatedGif/XamlAnimatedGif"
              xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes" 
+             xmlns:Release="clr-namespace:VMControls.WPF.Release;assembly=VMControls.WPF.Release" 
              mc:Ignorable="d" 
              d:DesignHeight="450" d:DesignWidth="800">
     <UserControl.Resources>
+        <local:ByteArrayToImageConverter x:Key="ByteArrayToImageConverter"/>
         <Style TargetType="Label" x:Key="OutputLabel" BasedOn="{StaticResource MaterialDesignLabel}">
             <Setter Property="FontSize" Value="13"/>
         </Style>
@@ -16,8 +19,9 @@
             <Setter Property="FontSize" Value="15"/>
             <Setter Property="VerticalAlignment" Value="Center"/>
         </Style>
+
     </UserControl.Resources>
-    <Grid Margin="0 0 0 10">
+    <Grid Margin="0 0 0 10" x:Name="container">
             <Grid Margin="20">
                 <Grid.RowDefinitions>
                     <RowDefinition Height="*"/>
@@ -29,8 +33,9 @@
                     <ColumnDefinition Width="*"/>
                 </Grid.ColumnDefinitions>
                 <!--Live Processed Image-->
-                <Image Width="180" Grid.Row="1" Source="pack://application:,,,/Style/ImageSource/hamster-cute.gif" ></Image>
-                <Button Margin="130 0" Grid.Row="2" Style="{DynamicResource MaterialDesignOutlinedButton}" Command="{Binding CalibrateCommand}">Start Calibration</Button>
+
+            <XCust:CustomRenderControl Grid.RowSpan="3" Procedure="{Binding VisProcedure}"></XCust:CustomRenderControl>
+            <Button Margin="130 0" Grid.Row="2" Style="{DynamicResource MaterialDesignOutlinedButton}" Command="{Binding CalibrateCommand}" >Start Calibration</Button>
                 <!--Right Side Calibration Output Data -->
                 <GroupBox Header="Calibration Output Data" Grid.RowSpan="3" Grid.Column="1" FontSize="22">
 

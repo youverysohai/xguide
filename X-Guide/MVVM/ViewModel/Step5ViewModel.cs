@@ -1,10 +1,12 @@
 ﻿
+using ImageSourceModuleCs;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Diagnostics;
 using System.Linq;
 using System.Net.Sockets;
+using System.Reflection;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
@@ -40,8 +42,17 @@ namespace X_Guide.MVVM.ViewModel
         private Queue<JogCommand> commandQueue = new Queue<JogCommand>();
         public event EventHandler<VmProcedure> VmImportCompleted;
 
-        public VmRenderControl VmRenderControl;
-        private VmProcedure p;
+        public VmProcedure p;
+        private VmProcedure _visProcedure;
+
+        public VmProcedure VisProcedure
+        {
+            get { return _visProcedure; }
+            set { _visProcedure = value;
+                OnPropertyChanged();
+            }
+        }
+
         public string JogMode { get; set; } = "TOOL";
 
         private bool _canJog = false;
@@ -54,6 +65,15 @@ namespace X_Guide.MVVM.ViewModel
             set
             {
                 _isLoading = value;
+                OnPropertyChanged();
+            }
+        }
+        private byte[] bitmapImage1;
+
+        public byte[] BitMapImage1
+        {
+            get { return bitmapImage1; }
+            set { bitmapImage1 = value;
                 OnPropertyChanged();
             }
         }
@@ -71,8 +91,8 @@ namespace X_Guide.MVVM.ViewModel
                 _tcpClient = value;
                 if (value != null)
                 {
-                    /*      InitiateJog();
-      ;                    OnJogCanExecuteChanged(true);*/
+                    InitiateJog();
+                    OnJogCanExecuteChanged(true);
                 }
             }
         }
@@ -94,14 +114,11 @@ namespace X_Guide.MVVM.ViewModel
             _clientService = clientService;
             _visionService = visionService;
             _setting = setting;
-
+            
             ImportSolutionFile();
 
             ReconnectCommand = new RelayCommand(null);
             JogCommand = new RelayCommand(Jog, CanStartJog);
-      
-
-
 
             searchClient = new BackgroundService(SearchForClient);
             searchClient.Start();
@@ -109,16 +126,15 @@ namespace X_Guide.MVVM.ViewModel
 
         }
 
+       
+
         private async void ImportSolutionFile()
         {
-            StopwatchHelper stopwatch = new StopwatchHelper();
-            stopwatch.Start();
-            await _visionService.ImportSol(@"C:\Users\Xlent_XIR02\Desktop\livecam.sol");
-    
-            p = await Task.Run(() => VmSolution.Instance["ChunOnlyFan2"] as VmProcedure);
+
+            p = await _visionService.ImportSol(@"C:\Users\Xlent_XIR02\Desktop\livecam.sol");
             p.ContinuousRunEnable = true;
-            VmImportCompleted?.Invoke(this, p);
-            stopwatch.Stop();
+            VisProcedure = p;
+            
         }
 
         private void HandleClientDisconnection(object sender, EventArgs e)
@@ -207,9 +223,6 @@ namespace X_Guide.MVVM.ViewModel
 
 
 
-        public override ViewModelBase GetNextViewModel()
-        {
-            return null;
-        }
+   
     }
 }

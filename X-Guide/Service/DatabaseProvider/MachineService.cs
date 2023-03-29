@@ -22,12 +22,15 @@ namespace X_Guide.Service.DatabaseProvider
             throw new NotImplementedException();
         }
 
-        public IEnumerable<string> GetAllMachineName()
+        public async Task<IEnumerable<string>> GetAllMachineName()
         {
-            using (var context = _contextFactory.CreateDbContext())
-            {
-                return context.Machines.Select(r => r.Name).ToList();
-            }
+            return await Task.Run(() => {
+                using (var context = _contextFactory.CreateDbContext())
+                {
+                   return context.Machines.Select(r => r.Name).ToList();
+                }
+            });
+            
         }
 
         public MachineModel GetMachine(string name)
