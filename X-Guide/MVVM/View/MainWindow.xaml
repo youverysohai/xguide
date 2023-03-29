@@ -13,10 +13,15 @@
         Title="X-Guide"         
         Height="720" Width="1280"
         WindowState="Maximized"
-       
+        ui:TitleBar.ExtendViewIntoTitleBar="True" 
+ 
         xmlns:ui="http://schemas.modernwpf.com/2019"
-        ui:WindowHelper.UseModernWindowStyle="True">
+        ui:WindowHelper.UseModernWindowStyle="True"
+        >
+    <Window.Resources>
 
+
+    </Window.Resources>
     <!--#region  OLD-->
     <!--Login Form Dialog-->
     <!--
@@ -303,16 +308,16 @@
     <!--#endregion-->
 
     <ui:NavigationView x:Name="SideMenuNavigation"
+                       IsTitleBarAutoPaddingEnabled="True" 
                        IsBackButtonVisible="Collapsed"
-                        CompactModeThresholdWidth="1007" ExpandedModeThresholdWidth="1007"
-                       IsSettingsVisible="True" ItemInvoked="SideMenuNavigation_ItemInvoked" >
+                       CompactModeThresholdWidth="0"
+                       
+                       IsSettingsVisible="True" ItemInvoked="SideMenuNavigation_ItemInvoked"  >
         <!-- Header Side Menu -->
         <ui:NavigationView.PaneHeader>
-            <TextBlock Style="{DynamicResource SubheaderTextBlockStyle}">X-Guide</TextBlock>
+            <TextBlock Style="{DynamicResource TitleTextBlockStyle}" Margin="10 0">X-Guide</TextBlock>
         </ui:NavigationView.PaneHeader>
-        <ui:NavigationView.PaneCustomContent>
-            <ui:SimpleStackPanel></ui:SimpleStackPanel>
-        </ui:NavigationView.PaneCustomContent>
+
 
         <ui:NavigationView.MenuItems>
             <ui:NavigationViewItem Content="Production" Icon="Library" ToolTipService.ToolTip="Production">
@@ -321,51 +326,113 @@
                 </ui:NavigationViewItem.MenuItems>
             </ui:NavigationViewItem>
 
-            <ui:NavigationViewItem Content="Engineering" Icon="GoToStart" ToolTipService.ToolTip="Engineering">
+            <ui:NavigationViewItem Content="Engineering" ToolTipService.ToolTip="Engineering">
+                <ui:NavigationViewItem.Icon>
+                    <ui:FontIcon   Glyph="&#xE9F5;"/>
+                </ui:NavigationViewItem.Icon>
                 <ui:NavigationViewItem.MenuItems>
-                    <ui:NavigationViewItem Tag="CalibrationWizardStartView" Content="Calibration Wizard" Icon="Page" ToolTipService.ToolTip="Calibration Wizard"  />
-                    <ui:NavigationViewItem Tag="JogRobotView" Content="Jog" Icon="Page2" ToolTipService.ToolTip="Jog"/>
+                    <ui:NavigationViewItem Tag="CalibrationWizardStartView" Content="Calibration Wizard"  ToolTipService.ToolTip="Calibration Wizard"  >
+                        <ui:NavigationViewItem.Icon>
+                            <ui:FontIcon   Glyph="&#xE707;"/>
+                        </ui:NavigationViewItem.Icon>
+
+                    </ui:NavigationViewItem>
+                    <ui:NavigationViewItem Tag="JogRobotView" Content="Jog" ToolTipService.ToolTip="Jog">
+                        <ui:NavigationViewItem.Icon>
+                            <ui:FontIcon   Glyph="&#xE759;"/>
+                        </ui:NavigationViewItem.Icon>
+                    </ui:NavigationViewItem>
                 </ui:NavigationViewItem.MenuItems>
             </ui:NavigationViewItem>
 
-            <ui:NavigationViewItem Content="Users" Icon="Contact" ToolTipService.ToolTip="Users">
+            <ui:NavigationViewItem Content="Account" Icon="Contact" ToolTipService.ToolTip="Account">
                 <ui:NavigationViewItem.MenuItems>
-                    <ui:NavigationViewItem Content="User Management" Icon="Page2" ToolTipService.ToolTip="Notes"/>
-                    <ui:NavigationViewItem Content="Permision" Icon="Mail" ToolTipService.ToolTip="Mail"/>
-                    <ui:NavigationViewItem Content="Change Password" Icon="Mail" ToolTipService.ToolTip="Mail"/>
+                    <ui:NavigationViewItem Content="Profile" ToolTipService.ToolTip="Notes">
+                          <ui:NavigationViewItem.Icon>
+                            <ui:FontIcon   Glyph="&#xE8D4;"/>
+                        </ui:NavigationViewItem.Icon>
+                    </ui:NavigationViewItem>
+                    <ui:NavigationViewItem Content="User Management"   ToolTipService.ToolTip="User Management">
+                         <ui:NavigationViewItem.Icon>
+                            <ui:FontIcon   Glyph="&#xE779;"/>
+                        </ui:NavigationViewItem.Icon> 
+                    </ui:NavigationViewItem>
+                    <ui:NavigationViewItem Content="Permission"  ToolTipService.ToolTip="Permission">
+                        <ui:NavigationViewItem.Icon>
+                            <ui:FontIcon   Glyph="&#xE8D7;"/>
+                        </ui:NavigationViewItem.Icon>  
+                    </ui:NavigationViewItem>
                 </ui:NavigationViewItem.MenuItems>
             </ui:NavigationViewItem>
 
         </ui:NavigationView.MenuItems>
-        
+
         <ui:NavigationView.PaneFooter>
             <ui:SimpleStackPanel Orientation="Vertical">
+                <Button Padding="0 5" Margin="0 5" Width="320" HorizontalContentAlignment="Left" Style="{DynamicResource DateTimePickerFlyoutButtonStyle}">
+                    <ui:SimpleStackPanel Orientation="Horizontal" Margin="0 0 0 0">
+
+
+                        <!--<hc:Gravatar Style="{StaticResource GravatarCircle}" Id="{Binding Text,ElementName=TextBoxUsername}" />-->
+
+                        <ui:SimpleStackPanel Orientation="Horizontal" VerticalAlignment="Center" Margin="5 0 0 0">
+                            <ui:PersonPicture Width="30" Height="30" DisplayName="User1"  >
+                            </ui:PersonPicture>
+
+                            <TextBlock x:Name="TextBoxUsername"  Text="User1" Margin="5 0 0 0" VerticalAlignment="Center"  FontSize="16"/>
+
+                        </ui:SimpleStackPanel>
+                    </ui:SimpleStackPanel>
+                    
+                </Button>
                 <ui:NavigationViewItemSeparator/>
 
-                <ui:ToggleSwitch  Toggled="ToggleAppThemeHandler">
+                <ui:ToggleSwitch Toggled="ToggleAppThemeHandler" OffContent="Dark" OnContent="Light" x:Name="toggleSwitch">
                     <ui:ToggleSwitch.Header>
                         <ui:SimpleStackPanel Orientation="Horizontal">
-                            <materialDesign:PackIcon Kind="LightbulbOutline" HorizontalAlignment="Left" Margin="10 0 0 0" Style="{DynamicResource IconStyle24}"/>
-                            <TextBlock VerticalAlignment="Center" Margin="10 0"> Light Mode</TextBlock>
+                            <ui:FontIcon FontFamily="Segoe MDL2 Assets"  Margin="10 0 0 0">
+                                <ui:FontIcon.Style>
+                                    <Style TargetType="ui:FontIcon">
+                                        <Style.Triggers>
+                                            <DataTrigger  Binding="{Binding ElementName=toggleSwitch, Path=IsOn}" Value="True">
+                                                <Setter Property="Glyph" Value="&#xE706;"/>
+                                                <Setter Property="ToolTip" Value="Bright"/>
+                                            </DataTrigger>
+                                            <DataTrigger  Binding="{Binding ElementName=toggleSwitch, Path=IsOn}" Value="False">
+                                                <Setter Property="Glyph" Value="&#xE708;" />
+                                                <Setter Property="ToolTip" Value="Dark"/>
+
+                                            </DataTrigger>
+                                        </Style.Triggers>
+                                    </Style>
+                                </ui:FontIcon.Style>
+                            </ui:FontIcon>
+                            <TextBlock VerticalAlignment="Center" Margin="10 0"> Theme</TextBlock>
                         </ui:SimpleStackPanel>
                     </ui:ToggleSwitch.Header>
                 </ui:ToggleSwitch>
-                <ui:NavigationViewItemSeparator/>
+         
 
-            </ui:SimpleStackPanel> 
-            
 
-            <!--<Button Content="Toggle Theme" HorizontalAlignment="Stretch" Click="ToggleAppThemeHandler" />-->
+
+
+
+
+
+            </ui:SimpleStackPanel>
+
+
+         
 
         </ui:NavigationView.PaneFooter>
-  
+
 
 
         <!-- CONTENT -->
         <ui:NavigationView.Content>
-           
+
             <!--<ui:Frame x:Name="contentFrame"/>-->
-            
+
 
             <Grid x:Name="UserControlContent" >
                 <Grid.Resources>
@@ -395,24 +462,24 @@
                     </DataTemplate>
                 </Grid.Resources>
                 <Grid.RowDefinitions>
-                    <RowDefinition Height="*"/>
+                    <RowDefinition Height="59*"/>
+                    <RowDefinition Height="9*"/>
                     <RowDefinition Height="auto"/>
                 </Grid.RowDefinitions>
-                <ContentControl Grid.Row="0" Content="{Binding CurrentViewModel}"/>
-                <hc:SimpleStackPanel Grid.Row="1" Orientation="Horizontal" VerticalAlignment="Center" HorizontalAlignment="Right" >
-                    
-                        <materialDesign:PackIcon Style="{DynamicResource ConnectionStatusIcon}"/>
-                        <TextBlock  Style="{DynamicResource ConnectionStatusTextBlock}">Connection Status :</TextBlock>
-                        <materialDesign:PackIcon  Kind="RobotIndustrialOutline" Style="{DynamicResource ConnectionStatusIconForeground}" />
-                        <TextBlock  Style="{DynamicResource ConnectionStatusTextBlockForeground}" >Manipulator</TextBlock>
-                        <materialDesign:PackIcon Style="{DynamicResource ConnectionStatusIconForeground}" Kind="MonitorEye" />
-                        <TextBlock  Style="{DynamicResource ConnectionStatusTextBlockForeground}">Vision</TextBlock>
-                       
+                <ContentControl Grid.Row="0" Content="{Binding CurrentViewModel}" Grid.RowSpan="2"/>
+                <hc:SimpleStackPanel Grid.Row="2" Orientation="Horizontal" VerticalAlignment="Center" HorizontalAlignment="Right">
+
+                    <materialDesign:PackIcon Style="{DynamicResource ConnectionStatusIcon}"/>
+                    <TextBlock  Style="{DynamicResource ConnectionStatusTextBlock}">Connection Status :</TextBlock>
+                    <materialDesign:PackIcon  Kind="RobotIndustrialOutline" Style="{DynamicResource ConnectionStatusIconForeground}" />
+                    <TextBlock  Style="{DynamicResource ConnectionStatusTextBlockForeground}" >Manipulator</TextBlock>
+                    <materialDesign:PackIcon Style="{DynamicResource ConnectionStatusIconForeground}" Kind="CameraOutline" />
+                    <TextBlock  Style="{DynamicResource ConnectionStatusTextBlockForeground}">Vision</TextBlock>
                     <TextBlock Text="12/3/2023" x:Name="DateTimeTextBlock"/>
                 </hc:SimpleStackPanel>
             </Grid>
 
-            
+
         </ui:NavigationView.Content>
 
     </ui:NavigationView>

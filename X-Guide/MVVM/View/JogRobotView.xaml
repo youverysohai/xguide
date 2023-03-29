@@ -105,7 +105,13 @@
                         <TextBlock Canvas.Left="125" Canvas.Top="130">Y-</TextBlock>
                         <TextBlock Canvas.Left="125" Canvas.Top="20">Y+</TextBlock>
                     </Canvas>
-
+                    <!--<DockPanel LastChildFill = "True" Grid.Column="2" Grid.Row="1">
+                        <Button Content = "Top" DockPanel.Dock = "Top" Click = "Click_Me" />
+                        <Button Content = "Bottom" DockPanel.Dock = "Bottom" Click = "Click_Me" />
+                        <Button Content = "Left" Click = "Click_Me" />
+                        <Button Content = "Right" DockPanel.Dock = "Right" Click = "Click_Me" />
+                        <Button Content = "Center" Click = "Click_Me" />
+                    </DockPanel>-->
                 </Grid>
                 <!-- Rotation RightBottom Grid -->
                 <Grid Grid.Row="2" Grid.Column="1">

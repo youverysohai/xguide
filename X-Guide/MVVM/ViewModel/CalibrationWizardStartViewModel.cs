@@ -83,6 +83,13 @@ namespace X_Guide.MVVM.ViewModel
 
 
         }
+        private List<string> _itemList;
+
+        public List<string> ItemList
+        {
+            get { return _itemList; }
+            set { _itemList = value; OnPropertyChanged(); }
+        }
 
     }
 }

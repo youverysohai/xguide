@@ -212,7 +212,7 @@
                     </ComboBox>
 
                 </StackPanel>
-                <StackPanel Orientation="Horizontal" Grid.Row="6">
+                <StackPanel Orientation="Horizontal" Grid.Row="6" Margin="0 5">
                     <TextBox x:Name="TxtVisionSoftware" Style="{DynamicResource InputMaterialDesignTextBox}" MinWidth="300" Text="{Binding LogFilePath}"
                                     materialDesign:HintAssist.Hint="Vision Software Path (.sol)" />
                     <Button x:Name="BrowseBtn" Margin="10" Content="Browse"  Click="BrowseBtn_Click"/>
@@ -281,7 +281,7 @@
                 <!--Connection-->
 
 
-                <Expander Grid.Row="8" FlowDirection="LeftToRight" Header="Advanced Settings" Margin="10" FontSize="17" >
+                <Expander Grid.Row="8" FlowDirection="LeftToRight" Header="Advanced Settings" Margin="10" FontSize="17" Style="{DynamicResource MaterialDesignExpander}" >
 
                     <StackPanel Orientation="Vertical">
                         <StackPanel Orientation="Horizontal" >

@@ -5,6 +5,8 @@
              xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
              xmlns:hc="https://handyorg.github.io/handycontrol"
              xmlns:ui="http://schemas.modernwpf.com/2019" 
+             xmlns:mah="http://metro.mahapps.com/winfx/xaml/controls"
+             
        >
     <Application.Resources>
         <ResourceDictionary>
@@ -23,6 +25,7 @@
                 <hc:Theme/>
                 <ui:ThemeResources RequestedTheme="Dark" AccentColor="#769FCD"/>
                 <ui:XamlControlsResources/>
+                
             </ResourceDictionary.MergedDictionaries>
         </ResourceDictionary>
     </Application.Resources>

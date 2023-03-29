@@ -27,11 +27,55 @@ namespace X_Guide.MVVM.View.CalibrationWizardSteps
     {
 
   
+        VmProcedure p;
+        public ObservableCollection<VmRenderControl> Items { get; } = new ObservableCollection<VmRenderControl>();
+
         public Step6()
         {
             InitializeComponent();
+           
+            Items.Add(new VmRenderControl());
+            Items.Add(new VmRenderControl());
+            Items.Add(new VmRenderControl());
+            Items.Add(new VmRenderControl());
+            Items.Add(new VmRenderControl());
+            flipView1.ItemsSource = Items;
 
-   
+        }
+        private void p_box_Loaded(object sender, RoutedEventArgs e)
+        {
+            try
+            {
+
+                VmSolution.Import(@"C:\Users\Admin\Desktop\livecam.sol");
+
+                //VmSolution.CreatSolInstance();
+                p = (VmProcedure)VmSolution.Instance["CircleOut"];
+                p.Run();
+                Items[0].ModuleSource = p;
+                Items[1].ModuleSource = p;
+                Items[2].ModuleSource = p;
+                Items[3].ModuleSource = p;
+                Items[4].ModuleSource = p;
+                var circleFind = (IMVSCircleFindModuTool)VmSolution.Instance["CircleOut.Circle Search1"];
+                circleFind.Run();
+                Items[0].ModuleSource = circleFind;
+                Items[1].ModuleSource = circleFind;
+                Items[2].ModuleSource = circleFind;
+                Items[3].ModuleSource = circleFind;
+                Items[4].ModuleSource = circleFind;
+                //p_box.LoadFrontendSource();
+
+                ////p_box.BindSingleProcedure(p.ToString());
+
+                //p_box.AutoChangeSize();
+
+            }
+            catch
+            {
+                Debug.WriteLine("Everything is fine");
+            }
+
         }
 
  

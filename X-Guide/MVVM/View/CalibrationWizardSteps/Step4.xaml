@@ -11,7 +11,7 @@
              xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes">
 
 
-    <Grid Margin="0 0 0 10">
+    <ScrollViewer Margin="0 0 0 10" >
 
         <Grid>
             <Grid.ColumnDefinitions>
@@ -19,11 +19,11 @@
                 <ColumnDefinition Width="*"/>
             </Grid.ColumnDefinitions>
             <Grid.RowDefinitions>
-                <RowDefinition Height="1.5*"/>
+                <RowDefinition Height="2*"/>
                 <RowDefinition Height="*"/>
             </Grid.RowDefinitions>
-            <StackPanel Orientation="Vertical" Grid.ColumnSpan="2">
-                <TextBlock  Text="Motion for Calibartion" HorizontalAlignment="Center" FontSize="35" Margin="0 20 0 25"/>
+            <StackPanel Orientation="Vertical" Grid.ColumnSpan="2" Width="700">
+                <TextBlock  Text="Motion for Calibration" HorizontalAlignment="Center" FontSize="35" Margin="0 20 0 25"/>
                 <Grid HorizontalAlignment="Center">
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition Width="5*"/>
@@ -42,7 +42,6 @@
                         <Slider  Value="{Binding Setting.Speed}" Minimum="1" Maximum="100" Width="250" ValueChanged="Slider_SpeedValueChanged"></Slider>
                         <Label Content="100" Style="{DynamicResource MaterialDesignLabel}"/>
                     </StackPanel>
-
                     <ui:NumberBox 
                         Header="Speed (%)"
                           SmallChange="1"
@@ -85,28 +84,49 @@
                     <!--X Y offset-->
 
 
-                    <StackPanel Orientation="Horizontal" Grid.ColumnSpan="2" Grid.Row="3" Visibility="Visible" Margin="0 5">
-                        <Label Style="{DynamicResource MaterialDesignLabel}"  Content="Value must be greater than zero"></Label>
+                    <StackPanel Orientation="Horizontal" Grid.ColumnSpan="2" Grid.Row="3" Visibility="Visible"  >
                         <ui:NumberBox 
-                             Value="{Binding Setting.XOffset}"
-                            Header="X-offset"
-                            SpinButtonPlacementMode="Compact"
+                              Value="{Binding Setting.XOffset}"
+                            Margin="10 5"
+                            SpinButtonPlacementMode="Inline"
                             SmallChange="1"
                             LargeChange="100" 
                             Padding="10 1"     
-                            MinWidth="100"  
-                            
-                                   />
+                            MinWidth="100" 
+
+                            >
+                            <ui:NumberBox.Header>
+                                <ui:SimpleStackPanel Orientation="Horizontal">
+                                    <TextBlock Text="X-Offset"/>
+
+                                    <ui:FontIcon FontFamily="Segoe MDL2 Assets" Glyph="&#xE946;" FontSize="20" Margin="10 0 0 0" 
+                                                 ToolTip="Value must be greater than zero"
+                                                ToolTipService.InitialShowDelay="130"/>
+                                </ui:SimpleStackPanel>
+
+                            </ui:NumberBox.Header>
+                        </ui:NumberBox>
                         <ui:NumberBox   
-                            Value="{Binding Setting.YOffset}"
-                            Header="Y-offset"
-                            SpinButtonPlacementMode="Compact"
+                           Value="{Binding Setting.YOffset}"
+                            Margin="20 5"
+            
+                            SpinButtonPlacementMode="Inline"
                             SmallChange="1"
                             LargeChange="100"  
                             Padding="10 1"      
                             MinWidth="100"  
-                            materialDesign:HintAssist.Hint="Y-offset" materialDesign:HintAssist.FloatingScale=".55" 
-                            materialDesign:HintAssist.FloatingOffset="-15,-15"/>
+>
+                            <ui:NumberBox.Header>
+                                <ui:SimpleStackPanel Orientation="Horizontal">
+                                    <TextBlock Text="Y-Offset"/>
+
+                                    <ui:FontIcon FontFamily="Segoe MDL2 Assets" Glyph="&#xE946;" FontSize="20" Margin="10 0 0 0" 
+                                                 ToolTip="Value must be greater than zero"
+                            ToolTipService.InitialShowDelay="130"/>
+                                </ui:SimpleStackPanel>
+
+                            </ui:NumberBox.Header>
+                        </ui:NumberBox>
 
                     </StackPanel>
 
@@ -184,5 +204,5 @@
 
 
         </Grid>
-    </Grid>
+    </ScrollViewer>
 </UserControl>
