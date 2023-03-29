@@ -6,6 +6,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
 using VM.Core;
+using VMControls.Interface;
 
 namespace X_Guide.VisionMaster
 {
@@ -14,6 +15,11 @@ namespace X_Guide.VisionMaster
         public List<string> GetAllProcedureName()
         {
              return  VmSolution.Instance.GetAllProcedureList().astProcessInfo.Where(x => x.strProcessName != null).ToList().Select(x=> x.strProcessName).ToList();  
+        }
+
+        public async Task<IVmModule> GetVmModule(string name)
+        {
+            return await Task.Run(() => VmSolution.Instance[$"{name}"] as IVmModule);
         }
 
         public async Task<VmProcedure> ImportSol(string filepath)

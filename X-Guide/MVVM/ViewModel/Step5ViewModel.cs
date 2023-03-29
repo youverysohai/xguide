@@ -15,6 +15,7 @@ using System.Windows.Input;
 using System.Windows.Media.Imaging;
 using System.Windows.Threading;
 using VM.Core;
+using VMControls.Interface;
 using VMControls.WPF.Release;
 /*using VM.Core;*/
 using X_Guide.Communication.Service;
@@ -42,10 +43,9 @@ namespace X_Guide.MVVM.ViewModel
         private Queue<JogCommand> commandQueue = new Queue<JogCommand>();
         public event EventHandler<VmProcedure> VmImportCompleted;
 
-        public VmProcedure p;
-        private VmProcedure _visProcedure;
+        private IVmModule _visProcedure;
 
-        public VmProcedure VisProcedure
+        public IVmModule VisProcedure
         {
             get { return _visProcedure; }
             set { _visProcedure = value;
@@ -114,8 +114,8 @@ namespace X_Guide.MVVM.ViewModel
             _clientService = clientService;
             _visionService = visionService;
             _setting = setting;
-            
-            ImportSolutionFile();
+            LoadProcedure();
+           
 
             ReconnectCommand = new RelayCommand(null);
             JogCommand = new RelayCommand(Jog, CanStartJog);
@@ -127,16 +127,13 @@ namespace X_Guide.MVVM.ViewModel
         }
 
        
-
-        private async void ImportSolutionFile()
+        private async void LoadProcedure()
         {
-
-            p = await _visionService.ImportSol(@"C:\Users\Xlent_XIR02\Desktop\livecam.sol");
-            //p = await _visionService.ImportSol(@"C:\Users\Admin\Desktop\livecam.sol");
-            p.ContinuousRunEnable = true;
-            VisProcedure = p;
-            
+            VmProcedure vmProcedure = (VmProcedure)await _visionService.GetVmModule("Live");
+            vmProcedure.ContinuousRunEnable = true;
+            VisProcedure = vmProcedure;
         }
+     
 
         private void HandleClientDisconnection(object sender, EventArgs e)
         {

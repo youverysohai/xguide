@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using VM.Core;
+using VMControls.Interface;
 
 namespace X_Guide.VisionMaster
 {
@@ -12,6 +13,7 @@ namespace X_Guide.VisionMaster
         Task<VmProcedure> ImportSol(string filepath);
 
         List<string> GetAllProcedureName();
+        Task<IVmModule> GetVmModule(string name); 
         void RunOnceAndSaveImage();
     }
 }

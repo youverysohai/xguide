@@ -48,18 +48,13 @@ namespace X_Guide.MVVM.View.CalibrationWizardSteps
             try
             {
 
-                VmSolution.Import(@"C:\Users\Admin\Desktop\livecam.sol");
 
                 //VmSolution.CreatSolInstance();
-                p = (VmProcedure)VmSolution.Instance["CircleOut"];
-                p.Run();
          /*       Items[0].ModuleSource = p;
                 Items[1].ModuleSource = p;
                 Items[2].ModuleSource = p;
                 Items[3].ModuleSource = p;
                 Items[4].ModuleSource = p;*/
-                var circleFind = (IMVSCircleFindModuTool)VmSolution.Instance["CircleOut.Circle Search1"];
-                circleFind.Run();
     /*            Items[0].ModuleSource = circleFind;
                 Items[1].ModuleSource = circleFind;
                 Items[2].ModuleSource = circleFind;
