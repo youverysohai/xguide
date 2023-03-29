@@ -48,14 +48,9 @@
                     HorizontalAlignment="Center"
                     Command="{x:Static materialDesign:DrawerHost.CloseDrawerCommand}"
                     CommandParameter="{x:Static Dock.Left}"
-                    Content="CLOSE THIS"
+                    Content="Close"
                     Style="{StaticResource MaterialDesignFlatButton}" />
-
-                    <Button Margin="4"
-                    HorizontalAlignment="Center"
-                    Command="{x:Static materialDesign:DrawerHost.CloseDrawerCommand}"
-                    Content="CLOSE ALL"
-                    Style="{StaticResource MaterialDesignFlatButton}" />
+ 
                 </StackPanel>
             </materialDesign:DrawerHost.LeftDrawerContent>
 

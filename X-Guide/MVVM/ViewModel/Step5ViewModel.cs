@@ -132,6 +132,7 @@ namespace X_Guide.MVVM.ViewModel
         {
 
             p = await _visionService.ImportSol(@"C:\Users\Xlent_XIR02\Desktop\livecam.sol");
+            //p = await _visionService.ImportSol(@"C:\Users\Admin\Desktop\livecam.sol");
             p.ContinuousRunEnable = true;
             VisProcedure = p;
             

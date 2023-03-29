@@ -10,6 +10,7 @@
              d:Width="900"
              xmlns:ui="http://schemas.modernwpf.com/2019"
              d:Foreground="White"
+             xmlns:hc="https://handyorg.github.io/handycontrol"
              >
 
     <UserControl.Resources>
@@ -63,6 +64,9 @@
                         
                           <Run Text="Manipulator" />
                     </TextBlock>
+                    <hc:TagContainer>
+                        <hc:Tag Header="H" hc:TitleElement.Background="{DynamicResource PrimaryBrush}" Margin="5" Selectable="True" Content="Text"/>
+                    </hc:TagContainer>
                     <ComboBox 
                             ItemsSource="{Binding MachineNameList}"
                             IsTextSearchEnabled="False"

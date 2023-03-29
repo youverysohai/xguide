@@ -25,7 +25,7 @@ using System.Drawing.Imaging;
 using VM.Core;
 using VM.PlatformSDKCS;
 using System.Diagnostics;
-
+using Windows.Globalization.NumberFormatting;
 
 namespace X_Guide.MVVM.View.CalibrationWizardSteps
 {
@@ -39,13 +39,17 @@ namespace X_Guide.MVVM.View.CalibrationWizardSteps
         public Step5()
         {
             InitializeComponent();
-        
 
+  
+                DecimalFormatter formatter = new DecimalFormatter();
+                formatter.IntegerDigits = 1;
+                formatter.FractionDigits = 2;
+                //FormattedNumberBox.NumberFormatter = (ModernWpf.)formatter;
+            
         }
 
      
-    
-
+ 
     }
 
 

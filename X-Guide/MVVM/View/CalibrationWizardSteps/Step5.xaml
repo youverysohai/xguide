@@ -12,7 +12,6 @@ xmlns:XCust="clr-namespace:X_Guide.CustomControls"             x:Class="X_Guide.
              xmlns:xctk="http://schemas.xceed.com/wpf/xaml/toolkit"
 
              xmlns:ui="http://schemas.modernwpf.com/2019"
-     
 
              FontSize="16"
              xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"   
@@ -147,6 +146,7 @@ xmlns:XCust="clr-namespace:X_Guide.CustomControls"             x:Class="X_Guide.
                               Header="Jog Distance (mm)" 
                               SpinButtonPlacementMode="Inline" 
                               Margin="5"
+                              x:Name="FormattedNumberBox"
                               MinWidth="140" Value="{Binding JogDistance}" >
                         </ui:NumberBox>
                         <ui:ToggleSwitch Header="Mode (Tool/Global)" OnContent="Global" OffContent="Tool"></ui:ToggleSwitch>
