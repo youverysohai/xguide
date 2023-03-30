@@ -44,13 +44,15 @@
 
 
 
-            <TabControl materialDesign:NavigationRailAssist.ShowSelectionBackground="True"
+            <TabControl  
                         SnapsToDevicePixels="True"
+                        materialDesign:ColorZoneAssist.Mode="Standard"
+                        materialDesign:ElevationAssist.Elevation="Dp8"
                         Style="{StaticResource MaterialDesignNavigationRailTabControl}"
-                        TabStripPlacement="Top" Margin="10">
+                        TabStripPlacement="Top" Margin="16" Background="Transparent">
 
                 <!-- Manipulator Tab-->
-                <TabItem>
+                <TabItem >
                     <TabItem.Header>
                         <StackPanel  Width="auto" Height="auto">
                             <materialDesign:PackIcon
@@ -65,9 +67,9 @@
                     <materialDesign:DrawerHost OpenMode="Standard" IsLeftDrawerOpen="True" >
 
                         <!-- Select in Left Drawer-->
-                        <materialDesign:DrawerHost.LeftDrawerContent>
+                        <materialDesign:DrawerHost.LeftDrawerContent >
                             <hc:ScrollViewer VerticalScrollBarVisibility="Visible">
-                                <hc:SimpleStackPanel Orientation="Horizontal" x:Name="ChipsContainer">
+                                <hc:SimpleStackPanel Orientation="Horizontal" x:Name="ChipsContainer" Background="{DynamicResource PersonPictureEllipseBadgeFillThemeBrush}">
                                        <ItemsControl ItemsSource="{Binding Manipulators}">
                                         <ItemsControl.ItemTemplate>
                                             <DataTemplate>
@@ -122,7 +124,8 @@
                                                 Padding="5"
                                                 VerticalAlignment="Top"
                                                 FontWeight="DemiBold"   
-                                                materialDesign:HintAssist.Hint="Manipulator Name"  
+                                                materialDesign:HintAssist.Hint="Manipulator Name" 
+                                                Style="{DynamicResource InputMaterialDesignTextBox}"
                                     />
 
 
@@ -165,12 +168,9 @@
                                     Margin="30 0 0 0"
                                     TextWrapping="Wrap"
                                      FontSize="16"
-                                    Text ="{Binding Manipulator.Description,UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=False, NotifyOnValidationError=True}" Width="200">
-                                </TextBox>
-                                    Text ="{Binding MachineDescription,UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=False, NotifyOnValidationError=True}" Width="200">
-                                </TextBox>
+                                    Text ="{Binding Manipulator.Description,UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=False, NotifyOnValidationError=True}" Width="200"/>
 
-
+                                
                             </ui:SimpleStackPanel>
                             <Grid Grid.Row="2" Margin="0 10 0 0">
                                 <Grid.ColumnDefinitions>
@@ -244,11 +244,11 @@
                             <TextBlock FontSize="12"  HorizontalAlignment="Center" Text="Vision" />
                         </StackPanel>
                     </TabItem.Header>
-                    <materialDesign:DrawerHost OpenMode="Standard" IsLeftDrawerOpen="True">
+                    <materialDesign:DrawerHost OpenMode="Standard" IsLeftDrawerOpen="True" >
                         <!-- Select in Left Drawer-->
                         <materialDesign:DrawerHost.LeftDrawerContent>
-                            <hc:ScrollViewer VerticalScrollBarVisibility="Visible">
-                                <hc:SimpleStackPanel Orientation="Horizontal">
+                            <hc:ScrollViewer VerticalScrollBarVisibility="Visible"  >
+                                <hc:SimpleStackPanel Orientation="Horizontal" Background="{DynamicResource PersonPictureEllipseBadgeFillThemeBrush}">
                                     <ItemsControl ItemsSource="{Binding MachineNameList}">
                                         <ItemsControl.ItemTemplate>
                                             <DataTemplate>
@@ -290,7 +290,7 @@
                                 <TextBlock  VerticalAlignment="Center" Margin="0,0,0,8" Style="{StaticResource MaterialDesignHeadline5TextBlock}" 
                                         Text="Visions"  />
                             </ui:SimpleStackPanel>
-                            <TextBox HorizontalAlignment="Left" Style="{DynamicResource InputMaterialDesignTextBox}" Width="200" materialDesign:HintAssist.Hint="Vision Name"/>
+                            <TextBox Margin="10" HorizontalAlignment="Left" Style="{DynamicResource InputMaterialDesignTextBox}" Width="200" materialDesign:HintAssist.Hint="Vision Name"/>
 
                             <StackPanel Orientation="Horizontal" > 
                                 <ComboBox Style="{DynamicResource ComboBoxStyle}"   VerticalAlignment="Top"  IsTextSearchEnabled="False" MinWidth="220" materialDesign:HintAssist.Hint="Vision Software"  >
