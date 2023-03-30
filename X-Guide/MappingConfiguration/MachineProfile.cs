@@ -12,8 +12,8 @@ namespace X_Guide.MappingConfiguration
     public class MachineProfile : Profile
     {
         public MachineProfile()
-        {
-            CreateMap<MachineModel, MachineViewModel>().ForMember(dest => dest.Type, opt => opt.MapFrom(src => EnumHelperClass.GetEnumDescription((MachineType)src.Type)));
+        {/*.ForMember(dest => dest.Type, opt => opt.MapFrom(src => EnumHelperClass.GetEnumDescription((MachineType)src.Type)))*/
+            CreateMap<MachineModel, MachineViewModel>();
             CreateMap<MachineViewModel, MachineModel>();
             CreateMap<Machine, MachineModel>();
             CreateMap<MachineModel, Machine>();

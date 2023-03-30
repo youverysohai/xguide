@@ -1,4 +1,5 @@
-﻿using System;
+﻿using AutoMapper;
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -33,6 +34,7 @@ namespace X_Guide.MVVM.ViewModel
         
         private readonly IMachineDbService _machineDb;
         private readonly IVisionDbService _visionDb;
+        private readonly IMapper _mapper;
         private readonly ErrorViewModel _errorViewModel;
 
         public event EventHandler<DataErrorsChangedEventArgs> ErrorsChanged;
@@ -52,9 +54,9 @@ namespace X_Guide.MVVM.ViewModel
         } 
         
 
-        private MachineModel _manipulator;
+        private MachineViewModel _manipulator;
 
-        public MachineModel Manipulator
+        public MachineViewModel Manipulator
         {
             get { return _manipulator; }
             set { _manipulator = value;
@@ -63,9 +65,9 @@ namespace X_Guide.MVVM.ViewModel
         }
 
         //SettingViewModel properties
-        private ObservableCollection<MachineModel> _manipulators;
+        private ObservableCollection<MachineViewModel> _manipulators;
 
-        public ObservableCollection<MachineModel> Manipulators
+        public ObservableCollection<MachineViewModel> Manipulators
         {
             get { return _manipulators; }
             set
@@ -111,11 +113,11 @@ namespace X_Guide.MVVM.ViewModel
             }
         }
 
-        public SettingViewModel(IMachineDbService machineDb, IVisionDbService visionDb)
+        public SettingViewModel(IMachineDbService machineDb, IVisionDbService visionDb, IMapper mapper)
         {
             _machineDb = machineDb;
             _visionDb = visionDb;
-
+            _mapper = mapper;
             GetAllMachine();
    
             MachineTypeList = EnumHelperClass.GetAllValuesAndDescriptions(typeof(MachineType));
@@ -127,7 +129,9 @@ namespace X_Guide.MVVM.ViewModel
 
         private async void GetAllMachine()
         {
-            Manipulators = new ObservableCollection<MachineModel>(await _machineDb.GetAllMachine());
+            IEnumerable<MachineModel> models = await _machineDb.GetAllMachine();
+            IEnumerable<MachineViewModel> viewModels = models.Select(x => _mapper.Map<MachineViewModel>(x));
+            Manipulators = new ObservableCollection<MachineViewModel>(viewModels);
         }
 
         private void SaveSetting(object obj)
@@ -147,7 +151,7 @@ namespace X_Guide.MVVM.ViewModel
 
         private void OnManipulatorChangeEvent(object obj)
         {
-            Manipulator = obj as MachineModel;
+            Manipulator = obj as MachineViewModel;
         }
 
 

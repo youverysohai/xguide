@@ -702,7 +702,6 @@
     </Compile>
     <Compile Include="MappingConfiguration\MachineProfile.cs" />
     <Compile Include="MVVM\Command\BrowseFileDialogCommand.cs" />
-    <Compile Include="MVVM\Command\ConnectServerCommand.cs" />
     <Compile Include="MVVM\Command\RelayCommand.cs" />
     <Compile Include="MVVM\Command\VideoCommand.cs" />
     <Compile Include="MVVM\DBContext\DbContextFactory.cs" />

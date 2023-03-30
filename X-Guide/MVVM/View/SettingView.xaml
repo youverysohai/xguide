@@ -138,8 +138,9 @@
                             ItemsSource="{Binding MachineTypeList}"
                             DisplayMemberPath="Description"
                             SelectedValuePath="Value"
-                            SelectedItem="{Binding MachineType}"
-                            SelectedValue="{Binding MachineType}"
+            
+                                    SelectedValue="{Binding Manipulator.Type}"
+          
                                     Style="{DynamicResource ComboBoxStyle}" 
                                 MinWidth="150"    
                                     materialDesign:HintAssist.Hint="Type"  

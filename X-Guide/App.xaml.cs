@@ -62,8 +62,6 @@ namespace X_Guide
             _navigationStore = new NavigationStore();
             _wizardNavigationStore = new NavigationStore();
 
-
-            //Navigation setting      
             _diContainer = BuildDIContainer();
 
         }
