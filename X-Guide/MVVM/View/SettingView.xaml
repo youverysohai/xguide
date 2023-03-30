@@ -81,7 +81,8 @@
                                             </DataTemplate>
                                         </ItemsControl.ItemTemplate>
                                     </ItemsControl>
-                                    <Button Margin="4"
+                                    <Button Margin="4 15 4 4 "
+                                            VerticalAlignment="Top"
                                                 HorizontalAlignment="Center"
                                                 Command="{x:Static materialDesign:DrawerHost.CloseDrawerCommand}"
                                                 CommandParameter="{x:Static Dock.Left}"
@@ -108,12 +109,20 @@
                              >
                                     <materialDesign:PackIcon Kind="PlaylistEdit" Style="{DynamicResource IconStyle24}"/>
                                 </Button>
+                                <Button  Style="{DynamicResource MaterialDesignFlatButton}" ToolTip="Create New Vision">
+                                    <ui:SimpleStackPanel Orientation="Horizontal">
+                                        
+                                    <materialDesign:PackIcon Kind="PlusBoxOutline" Style="{DynamicResource IconStyle24}"/>
+                                    <TextBlock Text="New" VerticalAlignment="Center" Margin="5 0 0 0" FontSize="15"/>
+                                    </ui:SimpleStackPanel>
 
-                                <TextBlock  VerticalAlignment="Center" Margin="0,0,0,8" Style="{StaticResource MaterialDesignHeadline5TextBlock}" Text="Manipulators" />
+                                </Button>
 
                             </ui:SimpleStackPanel>
+                            <TextBlock  VerticalAlignment="Center" Margin="0,0,0,8" Style="{StaticResource MaterialDesignHeadline5TextBlock}" Text="Manipulator" />
+
                             <!-- Machine Info -->
-                            <ui:SimpleStackPanel Orientation="Horizontal" HorizontalAlignment="Left" VerticalAlignment="Top" Grid.Row="0"  >
+                            <ui:SimpleStackPanel Orientation="Horizontal" HorizontalAlignment="Left" VerticalAlignment="Top"   >
 
                                 <TextBox 
                                             
@@ -154,7 +163,7 @@
                                 </ComboBox>
                                 <!--Machine Description TextArea (scrollable)-->
                                 <TextBox
-                         
+                                    MaxLines="4"
                                      
                                     AcceptsReturn="True"
                                     Style="{DynamicResource MaterialDesignFloatingHintTextBox}"  
@@ -265,10 +274,11 @@
                                                 HorizontalAlignment="Center"
                                                 Command="{x:Static materialDesign:DrawerHost.CloseDrawerCommand}"
                                                 CommandParameter="{x:Static Dock.Left}"
-                                                
+                                                VerticalAlignment="Top"
                                                 Style="{StaticResource MaterialDesignIconButton}" >
                                         <materialDesign:PackIcon Kind="MenuLeft" Style="{DynamicResource IconStyle24}" />
                                     </Button>
+                                    
                                 </hc:SimpleStackPanel>
 
 
@@ -286,11 +296,27 @@
                                          ToolTipService.InitialShowDelay="122">
                                     <materialDesign:PackIcon Kind="PlaylistEdit" Style="{DynamicResource IconStyle24}"/>
                                 </Button>
+                                <Button  Style="{DynamicResource MaterialDesignFlatButton}" ToolTip="Create New Manipulator">
+                                    <ui:SimpleStackPanel Orientation="Horizontal">
 
-                                <TextBlock  VerticalAlignment="Center" Margin="0,0,0,8" Style="{StaticResource MaterialDesignHeadline5TextBlock}" 
-                                        Text="Visions"  />
+                                        <materialDesign:PackIcon Kind="PlusBoxOutline" Style="{DynamicResource IconStyle24}"/>
+                                        <TextBlock Text="New" VerticalAlignment="Center" Margin="5 0 0 0" FontSize="15"/>
+                                    </ui:SimpleStackPanel>
+
+                                </Button>
+
                             </ui:SimpleStackPanel>
-                            <TextBox Margin="10" HorizontalAlignment="Left" Style="{DynamicResource InputMaterialDesignTextBox}" Width="200" materialDesign:HintAssist.Hint="Vision Name"/>
+                            <TextBlock  VerticalAlignment="Center" Margin="0,0,0,8" Style="{StaticResource MaterialDesignHeadline5TextBlock}" 
+                                        Text="Vision"  />
+                            <TextBox 
+                                
+                                               HorizontalAlignment="Left"                                 
+                                                Width="200" 
+                                                Padding="5"
+                                                VerticalAlignment="Top"
+                                                FontWeight="DemiBold"   
+                                                materialDesign:HintAssist.Hint="Vision Name" 
+                                                Style="{DynamicResource InputMaterialDesignTextBox}"/>
 
                             <StackPanel Orientation="Horizontal" > 
                                 <ComboBox Style="{DynamicResource ComboBoxStyle}"   VerticalAlignment="Top"  IsTextSearchEnabled="False" MinWidth="220" materialDesign:HintAssist.Hint="Vision Software"  >
@@ -447,6 +473,7 @@
                                           FontSize="15"
                                           HorizontalAlignment="Left"  
                                           Width="160"
+                                  
                                           >
                         </ComboBox>
 
