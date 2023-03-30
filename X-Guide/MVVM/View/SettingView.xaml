@@ -117,7 +117,14 @@
                                     </ui:SimpleStackPanel>
 
                                 </Button>
+                                <Button  Style="{DynamicResource MaterialDesignFlatSecondaryButton}"  ToolTip="Create New Vision">
+                                    <ui:SimpleStackPanel Orientation="Horizontal">
 
+                                        <materialDesign:PackIcon Kind="BinOutline" Style="{DynamicResource IconStyle24}"/>
+                                        <TextBlock Text="Remove" VerticalAlignment="Center" Margin="5 0 0 0" FontSize="15"/>
+                                    </ui:SimpleStackPanel>
+
+                                </Button>
                             </ui:SimpleStackPanel>
                             <TextBlock  VerticalAlignment="Center" Margin="0,0,0,8" Style="{StaticResource MaterialDesignHeadline5TextBlock}" Text="Manipulator" />
 
