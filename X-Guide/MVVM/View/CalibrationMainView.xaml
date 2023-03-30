@@ -76,11 +76,11 @@
                                 <TextBlock> 
 <materialDesign:PackIcon Width="30" Height="30" Kind="RobotIndustrialOutline"/>
                                 </TextBlock>
-                                <materialDesign:PackIcon Width="25" Height="25" Kind="EyeTickOutline"/>
+
 
 
                             </StackPanel>
-                            <TextBlock Text="Manipulator &amp; Vision" />
+                            <TextBlock Text="Manipulator" />
 
                         </StackPanel>
 
@@ -94,7 +94,7 @@
                                 <TextBlock> <materialDesign:PackIcon Width="30" Height="30" Kind="CompassOutline"></materialDesign:PackIcon></TextBlock>
 
                             </StackPanel>
-                            <TextBlock Text="Orientation" />
+                            <TextBlock Text="Orientation &amp; &#10;Mounting" />
 
                         </StackPanel>
                     </hc:StepBarItem>
@@ -103,7 +103,7 @@
                         <StackPanel Cursor="Hand">
                             <StackPanel Orientation="Horizontal" >
                                 <TextBlock Text="Step 3" VerticalAlignment="Center" FontSize="16" FontWeight="Bold" HorizontalAlignment="Left" Margin="0 0 5 0"/>
-                                <TextBlock> <materialDesign:PackIcon Width="30" Height="30" Kind="ViewListOutline"></materialDesign:PackIcon></TextBlock>
+                                <TextBlock> <materialDesign:PackIcon Width="30" Height="30" Kind="TableHeadersEye"></materialDesign:PackIcon></TextBlock>
 
                             </StackPanel>
                             <TextBlock Text="Vision Flow" />
@@ -151,7 +151,7 @@
             <!-- Content Steps-->
 
             <ContentControl Grid.Row="1" Grid.Column="1" Content="{Binding CurrentViewModel}"
-                         Name="ContentControl"  >
+                         Name="ContentControl">
             </ContentControl>
 
             <!-- Buttons Next and Prev-->

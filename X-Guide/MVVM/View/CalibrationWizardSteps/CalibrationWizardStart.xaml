@@ -30,29 +30,12 @@
             <materialDesign:DrawerHost.LeftDrawerContent>
                 <hc:ScrollViewer VerticalScrollBarVisibility="Visible">
                     <hc:SimpleStackPanel Orientation="Vertical">
-
                         <TextBlock Margin="4"
                        HorizontalAlignment="Center"
                        Text="Edit" />
-
-
-
-
-
                         <hc:SimplePanel x:Name="ChipsContainer">
-                        <ItemsControl ItemTemplate="{StaticResource ChipTemplate}" >
-                            <ItemsControl.ItemContainerStyle>
-                                <Style>
-                                    <Setter Property="Control.Template">
-                                        <Setter.Value>
-                                            <ControlTemplate>
-                                                <ScrollViewer/>
-                                            </ControlTemplate>
-                                        </Setter.Value>
-                                    </Setter>
-                                </Style>
-                            </ItemsControl.ItemContainerStyle>
-                        </ItemsControl>
+                            <ItemsControl ItemTemplate="{StaticResource ChipTemplate}" >
+                            </ItemsControl>
                     </hc:SimplePanel>
                    
                     <Button Margin="4"
