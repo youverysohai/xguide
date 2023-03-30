@@ -64,7 +64,7 @@
                                             Text="Manipulator" />
                         </StackPanel>
                     </TabItem.Header>
-                    <materialDesign:DrawerHost OpenMode="Standard" IsLeftDrawerOpen="True" >
+                    <materialDesign:DrawerHost OpenMode="Standard"   >
 
                         <!-- Select in Left Drawer-->
                         <materialDesign:DrawerHost.LeftDrawerContent >
@@ -253,7 +253,7 @@
                             <TextBlock FontSize="12"  HorizontalAlignment="Center" Text="Vision" />
                         </StackPanel>
                     </TabItem.Header>
-                    <materialDesign:DrawerHost OpenMode="Standard" IsLeftDrawerOpen="True" >
+                    <materialDesign:DrawerHost OpenMode="Standard"   >
                         <!-- Select in Left Drawer-->
                         <materialDesign:DrawerHost.LeftDrawerContent>
                             <hc:ScrollViewer VerticalScrollBarVisibility="Visible"  >
