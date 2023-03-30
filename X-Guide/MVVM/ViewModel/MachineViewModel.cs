@@ -1,6 +1,7 @@
 ﻿using AutoMapper;
 using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -8,8 +9,15 @@ using X_Guide.MVVM.Model;
 
 namespace X_Guide.MVVM.ViewModel
 {
-    public class MachineViewModel : ViewModelBase
+    public class MachineViewModel : ViewModelBase, ICloneable
     {
+        private int _id;
+
+        public int Id
+        {
+            get { return _id; }
+            set { _id = value; }
+        }
 
 
         private string _name;
@@ -36,9 +44,9 @@ namespace X_Guide.MVVM.ViewModel
             }
         }
 
-        private string _type;
+        private int _type;
 
-        public string Type
+        public int Type
         {
             get { return _type; }
             set
@@ -48,9 +56,52 @@ namespace X_Guide.MVVM.ViewModel
             }
         }
 
-        public static MachineViewModel ToViewModel(MachineModel machine, IMapper mapper)
+        private ObservableCollection<string> _ip;
+
+        public ObservableCollection<string> Ip
         {
-            return mapper.Map<MachineViewModel>(machine);
+            get { return _ip; }
+            set { _ip = value;
+                OnPropertyChanged();
+            }
+        }
+
+        private int _port;
+
+        public int Port
+        {
+            get { return _port; }
+            set { _port = value;
+                OnPropertyChanged();
+            }
+        }
+
+        private string _terminator;
+
+        public string Terminator
+        {
+            get { return _terminator; }
+            set { _terminator = value;
+                OnPropertyChanged();
+            }
+        }
+
+
+
+
+        public object Clone()
+        {
+            return new MachineViewModel
+            {
+                Id = Id,
+                Name = Name,
+                Description = Description,
+                Type = Type,
+                Port = Port,
+                Ip = new ObservableCollection<string>(Ip.ToList()),
+                Terminator = Terminator,
+            };
+            
         }
 
         public MachineViewModel()

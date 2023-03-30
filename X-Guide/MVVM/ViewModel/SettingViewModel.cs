@@ -4,6 +4,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
+using System.Configuration;
 using System.Diagnostics;
 using System.IO;
 using System.Linq;
@@ -25,13 +26,13 @@ using X_Guide.Validation;
 
 namespace X_Guide.MVVM.ViewModel
 {
-    internal class SettingViewModel : ViewModelBase, INotifyDataErrorInfo
+    public class SettingViewModel : ViewModelBase, INotifyDataErrorInfo
     {
 
         public RelayCommand SaveCommand { get; }
         public RelayCommand ManipulatorCommand { get; set; }
-      
-        
+
+
         private readonly IMachineDbService _machineDb;
         private readonly IVisionDbService _visionDb;
         private readonly IMapper _mapper;
@@ -51,15 +52,17 @@ namespace X_Guide.MVVM.ViewModel
                 _canEdit = value;
                 OnPropertyChanged();
             }
-        } 
-        
+        }
+        private MachineViewModel _cache;
 
         private MachineViewModel _manipulator;
 
         public MachineViewModel Manipulator
         {
             get { return _manipulator; }
-            set { _manipulator = value;
+            set
+            {
+                _manipulator = value;
                 OnPropertyChanged();
             }
         }
@@ -119,8 +122,8 @@ namespace X_Guide.MVVM.ViewModel
             _visionDb = visionDb;
             _mapper = mapper;
             GetAllMachine();
-   
-            MachineTypeList = EnumHelperClass.GetAllValuesAndDescriptions(typeof(MachineType));
+
+            MachineTypeList = EnumHelperClass.GetAllIntAndDescriptions(typeof(MachineType));
             TerminatorList = EnumHelperClass.GetAllValuesAndDescriptions(typeof(Terminator));
 
             ManipulatorCommand = new RelayCommand(OnManipulatorChangeEvent);
@@ -134,24 +137,29 @@ namespace X_Guide.MVVM.ViewModel
             Manipulators = new ObservableCollection<MachineViewModel>(viewModels);
         }
 
-        private void SaveSetting(object obj)
+        private async void SaveSetting(object obj)
         {
 
-        /*    string robotIP = $"{_settingViewModel.RobotIPS1}.{_settingViewModel.RobotIPS2}.{_settingViewModel.RobotIPS3}.{_settingViewModel.RobotIPS4}";
-            string visionIP = $"{_settingViewModel.VisionIP[0]}.{_settingViewModel.VisionIP[1]}.{_settingViewModel.VisionIP[2]}.{_settingViewModel.VisionIP[3]}";
 
-            var machine = new MachineModel(_settingViewModel.Machine.Id, _settingViewModel.MachineName, (int)Enum.Parse(typeof(MachineType), _settingViewModel.MachineType), _settingViewModel.MachineDescription, robotIP, _settingViewModel.RobotPort, visionIP, _settingViewModel.VisionPort, _settingViewModel.ManipulatorTerminator, _settingViewModel.VisionTerminator);
 
-            _machineDB.SaveMachine(machine);
-            _settingViewModel.UpdateManipulatorNameList(_settingViewModel.MachineName);
-            *//*setting.WriteToXML(ConfigurationManager.AppSettings["SettingPath"]);*//*
+            bool saveStatus = await _machineDb.SaveMachine(_mapper.Map<MachineModel>(Manipulator));
+            if (saveStatus)
+            {
+                MessageBox.Show(ConfigurationManager.AppSettings["SaveSettingCommand_SaveMessage"]);
+            }
+            else
+            {
+                MessageBox.Show("Failed to save setting!");
+            }
+            GetAllMachine();
 
-            MessageBox.Show(ConfigurationManager.AppSettings["SaveSettingCommand_SaveMessage"]);*/
         }
 
         private void OnManipulatorChangeEvent(object obj)
         {
-            Manipulator = obj as MachineViewModel;
+
+            Manipulator = ((MachineViewModel)obj).Clone() as MachineViewModel;
+   
         }
 
 

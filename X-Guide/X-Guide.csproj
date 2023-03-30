@@ -1043,11 +1043,8 @@
     <Resource Include="Style\ImageSource\down.png" />
     <Resource Include="Style\ImageSource\up.png" />
     <Resource Include="Style\ImageSource\arrows.png" />
-    <Content Include="XGuideDB.mdf">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
+    <Content Include="XGuideDB.mdf" />
     <Content Include="XGuideDB_log.ldf">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
       <DependentUpon>XGuideDB.mdf</DependentUpon>
     </Content>
     <Content Include="XGuideModel.Context.tt">
