@@ -251,7 +251,7 @@
                 <!-- Vision Tab-->
                 <TabItem>
                     <TabItem.Header>
-                        <StackPanel  Width="auto" Height="auto" ui:ThemeManager.RequestedTheme="Dark">
+                        <StackPanel  Width="auto" Height="auto">
                             <materialDesign:PackIcon
                                 Width="24" Height="24"
                                 HorizontalAlignment="Center"
