@@ -47,7 +47,7 @@ namespace X_Guide.MVVM.ViewModel
 
         public event EventHandler<DataErrorsChangedEventArgs> ErrorsChanged;
 
-        public bool HasErrors => _errorViewModel.HasErrors;
+        public bool HasErrors => false;
 
         private bool _canEdit;
 

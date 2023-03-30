@@ -56,9 +56,9 @@ namespace X_Guide.MVVM.ViewModel
             }
         }
 
-        private void OnSelectedItemChanged(string name)
+        private async void OnSelectedItemChanged(string name)
         {
-            _machineModel = _machineService.GetMachine(name);
+            _machineModel = await _machineService.GetMachine(name);
             Machine = MachineViewModel.ToViewModel(_machineModel, _mapper);
             _setting.Machine = Machine;
             _serverService.SetServerReadTerminator(_machineService.GetMachineDelimiter(name));

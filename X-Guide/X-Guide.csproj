@@ -804,7 +804,6 @@
     </Compile>
     <Compile Include="VisionMaster\IVisionService.cs" />
     <Compile Include="VisionMaster\VisionService.cs" />
-    <Compile Include="Vision\testing.cs" />
     <Compile Include="XGuideModel.Context.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -1066,6 +1065,7 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="DP\" />
+    <Folder Include="Vision\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

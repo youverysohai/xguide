@@ -1,4 +1,5 @@
 ﻿using Autofac;
+using HandyControl.Controls;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -27,8 +28,9 @@ namespace X_Guide.MVVM.ViewModel
             {
                 return _dependencyResolver?.Resolve<T>();
             }
-            catch
+            catch (Exception ex) 
             {
+                MessageBox.Show(ex.ToString());
                 return null;
             }
         }

@@ -96,7 +96,7 @@ namespace X_Guide.MVVM.ViewModel
 
             serverService.StartServer();
            
-            _navigationService.Navigate(_viewModelLocator.CreateCalibrationWizardStart(_navigationStore));
+            _navigationService.Navigate(_viewModelLocator.Create<SettingViewModel>());
    
             LoginCommand = new RelayCommand(Login);
             RegisterCommand = new RelayCommand(Register);
@@ -111,7 +111,7 @@ namespace X_Guide.MVVM.ViewModel
                 case PageName.Security: _navigationService.Navigate(_viewModelLocator.Create<SecurityViewModel>()); break;
                 case PageName.Production: _navigationService.Navigate(_viewModelLocator.Create<ProductionViewModel>()); break;
                 case PageName.Setting: _navigationService.Navigate(_viewModelLocator.Create<SettingViewModel>()); break;
-                case PageName.CalibrationWizardStart: _navigationService.Navigate(_viewModelLocator.Create<CalibrationWizardStartViewModel>()); break;
+                case PageName.CalibrationWizardStart: _navigationService.Navigate(_viewModelLocator.CreateCalibrationWizardStart(_navigationStore)); break;
                 case PageName.Login: _navigationService.Navigate(_viewModelLocator.Create<UserLoginViewModel>()); break;
                 default: break;
             }

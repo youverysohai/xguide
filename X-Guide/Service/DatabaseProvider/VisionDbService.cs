@@ -12,7 +12,7 @@ namespace X_Guide.Service.DatabaseProvider
     {
         private readonly IMapper _mapper;
 
-        public VisionDbService(Mapper mapper, DbContextFactory contextFactory) : base(contextFactory)
+        public VisionDbService(IMapper mapper, DbContextFactory contextFactory) : base(contextFactory)
         {
             _mapper = mapper;
         }

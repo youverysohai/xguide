@@ -53,7 +53,7 @@ namespace X_Guide
                
             }
             );
-
+                                      
 
 
             //App specific settings
@@ -91,13 +91,15 @@ namespace X_Guide
             builder.RegisterType<Step6ViewModel>();
             builder.RegisterType<SettingViewModel>();
             builder.RegisterType<CalibrationMainViewModel>();
-  
-            builder.RegisterInstance(_mapperConfig.CreateMapper());
+
+            builder.RegisterInstance(_mapperConfig.CreateMapper()).As<IMapper>();
             
             builder.RegisterType<DbContextFactory>().SingleInstance();
             builder.RegisterType<MachineDbService>().As<IMachineDbService>();
             builder.RegisterType<UserDbService>().As<IUserDbService>();
             builder.RegisterType<VisionService>().As<IVisionService>();
+            builder.RegisterType<VisionDbService>().As<IVisionDbService>();
+          
            
             builder.Register(c => new ServerService(IPAddress.Parse("192.168.10.92"), 8000, "\r\n")).As<IServerService>().SingleInstance();
             builder.Register(c => new ClientService(IPAddress.Parse("192.168.10.90"), 8000, "")).As<IClientService>().SingleInstance();
