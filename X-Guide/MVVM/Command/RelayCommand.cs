@@ -34,7 +34,7 @@ namespace X_Guide.MVVM.Command
             _execute(parameter);
         }
 
-        public void RaiseCanExecuteChanged()
+        public void OnCanExecuteChanged()
         {
             CanExecuteChanged?.Invoke(this, EventArgs.Empty);
         }

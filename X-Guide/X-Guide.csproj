@@ -711,7 +711,6 @@
     <Compile Include="MVVM\Model\Point.cs" />
     <Compile Include="MVVM\Model\UserModel.cs" />
     <Compile Include="EnumClass\PageName.cs" />
-    <Compile Include="MVVM\Model\ModelBase.cs" />
     <Compile Include="MVVM\Model\VisionGuided.cs" />
     <Compile Include="MVVM\ViewModel\CalibrationWizardStartViewModel.cs" />
     <Compile Include="MVVM\ViewModel\CalibrationMainViewModel.cs" />
@@ -719,6 +718,7 @@
     <Compile Include="MVVM\ViewModel\IViewModelLocator.cs" />
     <Compile Include="MVVM\ViewModel\JogRobotViewModel.cs" />
     <Compile Include="MVVM\ViewModel\MachineViewModel.cs" />
+    <Compile Include="MVVM\ViewModel\ManipulatorViewModel.cs" />
     <Compile Include="MVVM\ViewModel\RenderControlViewModel.cs" />
     <Compile Include="MVVM\ViewModel\SecurityViewModel.cs" />
     <Compile Include="MVVM\ViewModel\Step1ViewModel.cs" />
@@ -731,6 +731,7 @@
     <Compile Include="MVVM\ViewModel\UserLoginViewModel.cs" />
     <Compile Include="MVVM\ViewModel\CalibrationViewModel.cs" />
     <Compile Include="MVVM\ViewModel\ViewModelLocator.cs" />
+    <Compile Include="MVVM\ViewModel\VisionViewModel.cs" />
     <Compile Include="MVVM\View\CalibrationWizardSteps\CalibrationWizardStart.xaml.cs">
       <DependentUpon>CalibrationWizardStart.xaml</DependentUpon>
     </Compile>
@@ -775,15 +776,18 @@
     <Compile Include="Service\Communication\JogCommand.cs" />
     <Compile Include="Service\Communication\TCPBase.cs" />
     <Compile Include="Service\Communication\TcpClientInfo.cs" />
-    <Compile Include="Service\DatabaseProvider\MachineService.cs" />
-    <Compile Include="Service\DatabaseProvider\IMachineService.cs" />
+    <Compile Include="Service\DatabaseProvider\DbServiceBase.cs" />
+    <Compile Include="Service\DatabaseProvider\IVisionDbService.cs" />
+    <Compile Include="Service\DatabaseProvider\MachineDbService.cs" />
+    <Compile Include="Service\DatabaseProvider\IMachineDbService.cs" />
     <Compile Include="Service\Communication\ServerCommand.cs" />
+    <Compile Include="Service\DatabaseProvider\VisionDbService.cs" />
     <Compile Include="Service\ImageService.cs" />
     <Compile Include="Service\INavigationService.cs" />
     <Compile Include="Service\NavigationService.cs" />
     <Compile Include="Service\Communication\ServerService.cs" />
-    <Compile Include="Service\DatabaseProvider\UserService.cs" />
-    <Compile Include="Service\DatabaseProvider\IUserService.cs" />
+    <Compile Include="Service\DatabaseProvider\UserDbService.cs" />
+    <Compile Include="Service\DatabaseProvider\IUserDbService.cs" />
     <Compile Include="Setting.cs">
       <DependentUpon>XGuideModel.tt</DependentUpon>
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
@@ -795,6 +799,9 @@
     </Compile>
     <Compile Include="Validation\IPValidation.cs" />
     <Compile Include="Utility\PasswordHashUtility.cs" />
+    <Compile Include="Vision.cs">
+      <DependentUpon>XGuideModel.tt</DependentUpon>
+    </Compile>
     <Compile Include="VisionMaster\IVisionService.cs" />
     <Compile Include="VisionMaster\VisionService.cs" />
     <Compile Include="Vision\testing.cs" />
@@ -911,7 +918,6 @@
   <ItemGroup>
     <Compile Include="MVVM\Command\CommandBase.cs" />
     <Compile Include="MVVM\Command\NavigateCommand.cs" />
-    <Compile Include="MVVM\Command\SaveSettingCommand.cs" />
     <Compile Include="MVVM\Model\SettingModel.cs" />
     <Compile Include="MVVM\Store\NavigationStore.cs" />
     <Compile Include="MVVM\ViewModel\MainViewModel.cs" />

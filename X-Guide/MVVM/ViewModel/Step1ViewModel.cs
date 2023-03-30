@@ -67,13 +67,13 @@ namespace X_Guide.MVVM.ViewModel
         }
 
         public ICommand ShoutCommand { get; set; }
-        public IMachineService _machineService { get; }
+        public IMachineDbService _machineService { get; }
         private IMapper _mapper { get; }
         public IServerService _serverService { get; }
 
         private readonly IClientService _clientService;
         #endregion
-        public Step1ViewModel(IMachineService machineService, IMapper mapper, CalibrationViewModel setting, IServerService serverService, IClientService clientService)
+        public Step1ViewModel(IMachineDbService machineService, IMapper mapper, CalibrationViewModel setting, IServerService serverService, IClientService clientService)
         {
             
 

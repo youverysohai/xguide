@@ -41,7 +41,7 @@ namespace X_Guide.MVVM.ViewModel
 
         public ICommand StartCommand { get; set; }
         public NavigationStore _navigationStore { get; }
-        private IMachineService _machineDB { get; }
+        private IMachineDbService _machineDB { get; }
 
         public CalibrationWizardStartViewModel(IServerService serverService, IClientService clientService, IViewModelLocator viewModelLocator, NavigationStore navigationStore)
         {

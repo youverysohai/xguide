@@ -27,7 +27,7 @@ namespace X_Guide.MVVM.Command
         public override void Execute(object parameter)
         {
             MessageBox.Show("Start connecting...");
-            _clientService = new ClientService(IPAddress.Parse(_settingViewModel.Machine.ManipulatorIP), int.Parse(_settingViewModel.Machine.ManipulatorPort));
+            _clientService = new ClientService(IPAddress.Parse(_settingViewModel.Machine.Ip), int.Parse(_settingViewModel.Machine.Port));
             _clientService.ConnectServer();
             
         }

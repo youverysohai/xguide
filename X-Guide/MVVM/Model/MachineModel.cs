@@ -15,13 +15,9 @@ namespace X_Guide.MVVM.Model
         public string Name { get; set; }
         public int Type { get; set; }
         public string Description { get; set; }
-        public string ManipulatorIP { get; set; }
-        public string ManipulatorPort { get; set; }
-        public string VisionIP { get; set; }
-        public string VisionPort { get; set; }
-        public string ManipulatorTerminator { get; set; }
-
-        public string VisionTerminator { get; set; }
+        public string Ip { get; set; }
+        public string Port { get; set; }
+        public string Terminator { get; set; }
 
         
         public MachineModel()
@@ -30,26 +26,20 @@ namespace X_Guide.MVVM.Model
             Name = "Default";
             Type = 1;
             Description = "Default";
-            ManipulatorIP = "127.0.0.1";
-            ManipulatorPort = "8000";
-            VisionIP = "127.0.0.1";
-            VisionPort = "8000";
-            ManipulatorTerminator = string.Empty;
-            VisionTerminator = string.Empty;
+            Ip = "127.0.0.1";
+            Port = "8000";
+            Terminator = string.Empty;
         }
 
-        public MachineModel(int id, string name, int type, string description, string manipulatorIP, string manipulatorPort, string visionIP, string visionPort, string manipulatorTerminator, string visionTerminator)
+        public MachineModel(int id, string name, int type, string description, string manipulatorIP, string manipulatorPort, string manipulatorTerminator)
         {
             Id = id;
             Name = name;
             Type = type;
             Description = description;
-            ManipulatorIP = manipulatorIP;
-            ManipulatorPort = manipulatorPort;
-            VisionIP = visionIP;
-            VisionPort = visionPort;
-            ManipulatorTerminator = manipulatorTerminator;
-            VisionTerminator = visionTerminator;
+            Ip = manipulatorIP;
+            Port = manipulatorPort;
+            Terminator = manipulatorTerminator;
         }
     }
 }

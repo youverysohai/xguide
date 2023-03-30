@@ -31,12 +31,9 @@
           <Property Name="Type" Type="int" Nullable="false" />
           <Property Name="Name" Type="varchar" MaxLength="30" Nullable="false" />
           <Property Name="Description" Type="varchar" MaxLength="100" />
-          <Property Name="ManipulatorIP" Type="varchar" MaxLength="50" />
-          <Property Name="ManipulatorPort" Type="varchar" MaxLength="30" />
-          <Property Name="VisionIP" Type="varchar" MaxLength="30" />
-          <Property Name="VisionPort" Type="varchar" MaxLength="30" />
-          <Property Name="ManipulatorTerminator" Type="varchar" MaxLength="10" />
-          <Property Name="VisionTerminator" Type="varchar" MaxLength="10" />
+          <Property Name="Ip" Type="varchar" MaxLength="50" />
+          <Property Name="Port" Type="varchar" MaxLength="30" />
+          <Property Name="Terminator" Type="varchar" MaxLength="10" />
         </EntityType>
         <EntityType Name="Setting">
           <Key>
@@ -62,6 +59,15 @@
           <Property Name="UpdatedAt" Type="datetime" Nullable="false" />
           <Property Name="Role" Type="int" />
         </EntityType>
+        <EntityType Name="Vision">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Ip" Type="varchar" MaxLength="50" />
+          <Property Name="Port" Type="int" />
+          <Property Name="Terminator" Type="varchar" MaxLength="10" />
+        </EntityType>
         <Association Name="FK_Calibration_To_Machine">
           <End Role="Machine" Type="Self.Machine" Multiplicity="1" />
           <End Role="Calibration" Type="Self.Calibration" Multiplicity="*" />
@@ -79,6 +85,7 @@
           <EntitySet Name="Machine" EntityType="Self.Machine" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Setting" EntityType="Self.Setting" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="User" EntityType="Self.User" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Vision" EntityType="Self.Vision" Schema="dbo" store:Type="Tables" />
           <AssociationSet Name="FK_Calibration_To_Machine" Association="Self.FK_Calibration_To_Machine">
             <End Role="Machine" EntitySet="Machine" />
             <End Role="Calibration" EntitySet="Calibration" />
@@ -89,39 +96,16 @@
     <edmx:ConceptualModels>
       <Schema Namespace="XGuideDBModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
         <EntityContainer Name="XGuideDBEntities" annotation:LazyLoadingEnabled="true">
-          <EntitySet Name="Settings" EntityType="XGuideDBModel.Setting" />
-          <EntitySet Name="Users" EntityType="XGuideDBModel.User" />
           <EntitySet Name="Calibrations" EntityType="XGuideDBModel.Calibration" />
           <EntitySet Name="Machines" EntityType="XGuideDBModel.Machine" />
+          <EntitySet Name="Settings" EntityType="XGuideDBModel.Setting" />
+          <EntitySet Name="Users" EntityType="XGuideDBModel.User" />
+          <EntitySet Name="Visions" EntityType="XGuideDBModel.Vision" />
           <AssociationSet Name="FK_Calibration_To_Machine" Association="XGuideDBModel.FK_Calibration_To_Machine">
             <End Role="Machine" EntitySet="Machines" />
             <End Role="Calibration" EntitySet="Calibrations" />
           </AssociationSet>
         </EntityContainer>
-        <EntityType Name="Setting">
-          <Key>
-            <PropertyRef Name="Id" />
-          </Key>
-          <Property Name="Id" Type="Int32" Nullable="false" />
-          <Property Name="RobotIP" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
-          <Property Name="RobotPort" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
-          <Property Name="VisionIP" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
-          <Property Name="VisionPort" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
-          <Property Name="LogfilePath" Type="String" MaxLength="40" FixedLength="false" Unicode="false" />
-        </EntityType>
-        <EntityType Name="User">
-          <Key>
-            <PropertyRef Name="Id" />
-          </Key>
-          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="Username" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
-          <Property Name="Email" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="false" />
-          <Property Name="PasswordHash" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="false" />
-          <Property Name="IsActive" Type="Boolean" Nullable="false" />
-          <Property Name="CreatedAt" Type="DateTime" Nullable="false" Precision="3" />
-          <Property Name="UpdatedAt" Type="DateTime" Nullable="false" Precision="3" />
-          <Property Name="Role" Type="Int32" />
-        </EntityType>
         <EntityType Name="Calibration">
           <Key>
             <PropertyRef Name="Id" />
@@ -149,13 +133,43 @@
           <Property Name="Type" Type="Int32" Nullable="false" />
           <Property Name="Name" Type="String" Nullable="false" MaxLength="30" FixedLength="false" Unicode="false" />
           <Property Name="Description" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
-          <Property Name="ManipulatorIP" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
-          <Property Name="ManipulatorPort" Type="String" MaxLength="30" FixedLength="false" Unicode="false" />
-          <Property Name="VisionIP" Type="String" MaxLength="30" FixedLength="false" Unicode="false" />
-          <Property Name="VisionPort" Type="String" MaxLength="30" FixedLength="false" Unicode="false" />
-          <Property Name="ManipulatorTerminator" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
-          <Property Name="VisionTerminator" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
+          <Property Name="Ip" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="Port" Type="String" MaxLength="30" FixedLength="false" Unicode="false" />
+          <Property Name="Terminator" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
           <NavigationProperty Name="Calibrations" Relationship="XGuideDBModel.FK_Calibration_To_Machine" FromRole="Machine" ToRole="Calibration" />
+        </EntityType>
+        <EntityType Name="Setting">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" />
+          <Property Name="RobotIP" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Name="RobotPort" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Name="VisionIP" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Name="VisionPort" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Name="LogfilePath" Type="String" MaxLength="40" FixedLength="false" Unicode="false" />
+        </EntityType>
+        <EntityType Name="User">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Username" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="Email" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="PasswordHash" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="IsActive" Type="Boolean" Nullable="false" />
+          <Property Name="CreatedAt" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="UpdatedAt" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="Role" Type="Int32" />
+        </EntityType>
+        <EntityType Name="Vision">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Ip" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="Port" Type="Int32" />
+          <Property Name="Terminator" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
         </EntityType>
         <Association Name="FK_Calibration_To_Machine">
           <End Type="XGuideDBModel.Machine" Role="Machine" Multiplicity="1" />
@@ -175,6 +189,38 @@
     <edmx:Mappings>
       <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
         <EntityContainerMapping StorageEntityContainer="XGuideDBModelStoreContainer" CdmEntityContainer="XGuideDBEntities">
+          <EntitySetMapping Name="Calibrations">
+            <EntityTypeMapping TypeName="XGuideDBModel.Calibration">
+              <MappingFragment StoreEntitySet="Calibration">
+                <ScalarProperty Name="RZOffset" ColumnName="RZOffset" />
+                <ScalarProperty Name="CameraYScalling" ColumnName="CameraYScalling" />
+                <ScalarProperty Name="CameraXScalling" ColumnName="CameraXScalling" />
+                <ScalarProperty Name="YOffset" ColumnName="YOffset" />
+                <ScalarProperty Name="XOffset" ColumnName="XOffset" />
+                <ScalarProperty Name="MotionDelay" ColumnName="MotionDelay" />
+                <ScalarProperty Name="RobotAccel" ColumnName="RobotAccel" />
+                <ScalarProperty Name="RobotSpeed" ColumnName="RobotSpeed" />
+                <ScalarProperty Name="VisionFilePath" ColumnName="VisionFilePath" />
+                <ScalarProperty Name="MountingOrientation" ColumnName="MountingOrientation" />
+                <ScalarProperty Name="MachineId" ColumnName="MachineId" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Machines">
+            <EntityTypeMapping TypeName="XGuideDBModel.Machine">
+              <MappingFragment StoreEntitySet="Machine">
+                <ScalarProperty Name="Terminator" ColumnName="Terminator" />
+                <ScalarProperty Name="Port" ColumnName="Port" />
+                <ScalarProperty Name="Ip" ColumnName="Ip" />
+                <ScalarProperty Name="Description" ColumnName="Description" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="Type" ColumnName="Type" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
           <EntitySetMapping Name="Settings">
             <EntityTypeMapping TypeName="XGuideDBModel.Setting">
               <MappingFragment StoreEntitySet="Setting">
@@ -201,37 +247,12 @@
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
-          <EntitySetMapping Name="Calibrations">
-            <EntityTypeMapping TypeName="XGuideDBModel.Calibration">
-              <MappingFragment StoreEntitySet="Calibration">
-                <ScalarProperty Name="RZOffset" ColumnName="RZOffset" />
-                <ScalarProperty Name="CameraYScalling" ColumnName="CameraYScalling" />
-                <ScalarProperty Name="CameraXScalling" ColumnName="CameraXScalling" />
-                <ScalarProperty Name="YOffset" ColumnName="YOffset" />
-                <ScalarProperty Name="XOffset" ColumnName="XOffset" />
-                <ScalarProperty Name="MotionDelay" ColumnName="MotionDelay" />
-                <ScalarProperty Name="RobotAccel" ColumnName="RobotAccel" />
-                <ScalarProperty Name="RobotSpeed" ColumnName="RobotSpeed" />
-                <ScalarProperty Name="VisionFilePath" ColumnName="VisionFilePath" />
-                <ScalarProperty Name="MountingOrientation" ColumnName="MountingOrientation" />
-                <ScalarProperty Name="MachineId" ColumnName="MachineId" />
-                <ScalarProperty Name="Name" ColumnName="Name" />
-                <ScalarProperty Name="Id" ColumnName="Id" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="Machines">
-            <EntityTypeMapping TypeName="XGuideDBModel.Machine">
-              <MappingFragment StoreEntitySet="Machine">
-                <ScalarProperty Name="VisionTerminator" ColumnName="VisionTerminator" />
-                <ScalarProperty Name="ManipulatorTerminator" ColumnName="ManipulatorTerminator" />
-                <ScalarProperty Name="VisionPort" ColumnName="VisionPort" />
-                <ScalarProperty Name="VisionIP" ColumnName="VisionIP" />
-                <ScalarProperty Name="ManipulatorPort" ColumnName="ManipulatorPort" />
-                <ScalarProperty Name="ManipulatorIP" ColumnName="ManipulatorIP" />
-                <ScalarProperty Name="Description" ColumnName="Description" />
-                <ScalarProperty Name="Name" ColumnName="Name" />
-                <ScalarProperty Name="Type" ColumnName="Type" />
+          <EntitySetMapping Name="Visions">
+            <EntityTypeMapping TypeName="XGuideDBModel.Vision">
+              <MappingFragment StoreEntitySet="Vision">
+                <ScalarProperty Name="Terminator" ColumnName="Terminator" />
+                <ScalarProperty Name="Port" ColumnName="Port" />
+                <ScalarProperty Name="Ip" ColumnName="Ip" />
                 <ScalarProperty Name="Id" ColumnName="Id" />
               </MappingFragment>
             </EntityTypeMapping>

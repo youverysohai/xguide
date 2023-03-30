@@ -50,6 +50,7 @@ namespace X_Guide
             _mapperConfig = new MapperConfiguration(c =>
             {
                 c.AddProfile<MachineProfile>();
+               
             }
             );
 
@@ -94,8 +95,8 @@ namespace X_Guide
             builder.RegisterInstance(_mapperConfig.CreateMapper());
             
             builder.RegisterType<DbContextFactory>().SingleInstance();
-            builder.RegisterType<MachineService>().As<IMachineService>();
-            builder.RegisterType<UserService>().As<IUserService>();
+            builder.RegisterType<MachineDbService>().As<IMachineDbService>();
+            builder.RegisterType<UserDbService>().As<IUserDbService>();
             builder.RegisterType<VisionService>().As<IVisionService>();
            
             builder.Register(c => new ServerService(IPAddress.Parse("192.168.10.92"), 8000, "\r\n")).As<IServerService>().SingleInstance();

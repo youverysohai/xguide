@@ -24,7 +24,9 @@ namespace X_Guide.MVVM.ViewModel
         private readonly IServerService _serverService;
         private readonly IClientService _clientService;
         private readonly IVisionService _visionService;
+        public event EventHandler<bool> CanExecuteChange;
         private ObservableCollection<string> _visionFlow;
+        
 
         public ObservableCollection<string> VisionFlow
         {
@@ -68,8 +70,12 @@ namespace X_Guide.MVVM.ViewModel
             _serverService = serverService;
             _clientService = clientService;
             _visionService = visionService;
+          
+            
         }
 
+ 
+        
         private void OnItemChanged(string value)
         {
             _setting.VisionFlow = value;
@@ -82,6 +88,7 @@ namespace X_Guide.MVVM.ViewModel
 /*                ProcessInfoList i = VmSolution.Instance.GetAllProcedureList();
                 List<ProcessInfo> procedureList = i.astProcessInfo.Where(x => x.strProcessName != null).ToList();*/
                 VisionFlow = new ObservableCollection<string>(_visionService.GetAllProcedureName());
+                CanExecuteChange?.Invoke(this, true);
             }
             catch(Exception ex)
             {

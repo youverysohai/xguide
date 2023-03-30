@@ -15,6 +15,8 @@ namespace X_Guide.MappingConfiguration
         {
             CreateMap<MachineModel, MachineViewModel>().ForMember(dest => dest.Type, opt => opt.MapFrom(src => EnumHelperClass.GetEnumDescription((MachineType)src.Type)));
             CreateMap<MachineViewModel, MachineModel>();
+            CreateMap<Machine, MachineModel>();
+            CreateMap<MachineModel, Machine>();
         }
       
     }

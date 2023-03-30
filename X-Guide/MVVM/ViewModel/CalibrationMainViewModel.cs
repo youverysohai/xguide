@@ -34,9 +34,35 @@ namespace X_Guide.MVVM.ViewModel
             }
         }
 
+        private bool _canExecuteNext = true;
+
+        public bool CanExecuteNext
+        {
+            get { return _canExecuteNext; }
+            set
+            {
+                _canExecuteNext = value;
+                WizNextCommand?.OnCanExecuteChanged();
+
+            }
+        }
+
+        private bool _canExecutePrev = true;
+
+        public bool CanExecutePrev
+        {
+            get { return _canExecutePrev = true; }
+            set
+            {
+                _canExecutePrev = value;
+                WizPrevCommand?.OnCanExecuteChanged();
+            }
+        }
 
 
         public LinkedList<ViewModelBase> _navigationHistory = new LinkedList<ViewModelBase>();
+
+
         public LinkedList<ViewModelBase> NavigationHistory => _navigationHistory;
 
         // Define the data list for the StepBar control
@@ -44,8 +70,8 @@ namespace X_Guide.MVVM.ViewModel
         private readonly NavigationService _navigationService;
         private readonly IViewModelLocator _viewModelLocator;
 
-        public ICommand WizNextCommand { get; set; }
-        public ICommand WizPrevCommand { get; set; }
+        public RelayCommand WizNextCommand { get; set; }
+        public RelayCommand WizPrevCommand { get; set; }
 
         public ViewModelBase CurrentViewModel => _navigationStore.CurrentViewModel;
 
@@ -90,8 +116,6 @@ namespace X_Guide.MVVM.ViewModel
 
             if (node != null)
             {
-                
-       
                 CurrentNode = node;
                 CurrentStep = e.Info;
                 _navigationService.Navigate(node.Value);
@@ -118,7 +142,7 @@ namespace X_Guide.MVVM.ViewModel
             }
             else
             {
-             
+
                 ViewModelBase viewModel = GetStepViewModel(CurrentStep + 1);
                 if (viewModel != null)
                 {
@@ -161,7 +185,7 @@ namespace X_Guide.MVVM.ViewModel
             {
                 case 0: return _viewModelLocator.CreateStep1(setting);
                 case 1: return _viewModelLocator.CreateStep2(setting);
-                case 2: return _viewModelLocator.CreateStep3(setting);
+                case 2: var i = _viewModelLocator.CreateStep3(setting) as Step3ViewModel; i.CanExecuteChange += OnCanExecuteChange; CanExecuteNext = false; return i;
                 case 3: return _viewModelLocator.CreateStep4(setting);
                 case 4: return _viewModelLocator.CreateStep5(setting);
                 case 5: return _viewModelLocator.CreateStep6(setting);
@@ -173,14 +197,15 @@ namespace X_Guide.MVVM.ViewModel
         public CalibrationMainViewModel(string name, IViewModelLocator viewModelLocator)
         {
 
-            
+
             _navigationStore = new NavigationStore();
             _navigationService = new NavigationService(_navigationStore);
+
             _navigationStore.CurrentViewModelChanged += OnCurrentViewModelChanged;
             _viewModelLocator = viewModelLocator;
-            WizNextCommand = new RelayCommand(WizNext);
-            WizPrevCommand = new RelayCommand(WizPrev);
-     
+            WizNextCommand = new RelayCommand(WizNext, (o) => CanExecuteNext);
+            WizPrevCommand = new RelayCommand(WizPrev, (o) => CanExecutePrev);
+
             Setting = new CalibrationViewModel
             {
                 Name = name,
@@ -190,6 +215,11 @@ namespace X_Guide.MVVM.ViewModel
             Step1.SelectedItemChangedEvent += OnSelectedItemChangedEvent;
             _navigationService.Navigate(Step1);
             CurrentNode = _navigationHistory.AddLast(CurrentViewModel);
+        }
+
+        private void OnCanExecuteChange(object sender, bool e)
+        {
+            CanExecuteNext = e;
         }
 
         private void OnSelectedItemChangedEvent()

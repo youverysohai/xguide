@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace X_Guide.MVVM.Model
 {
-    public class UserModel : ModelBase
+    public class UserModel
     {
         private string _Username;
 
@@ -16,7 +16,7 @@ namespace X_Guide.MVVM.Model
             set
             {
                 _Username = value;
-                OnPropertyChanged();
+          
             }
         }
 
@@ -28,7 +28,7 @@ namespace X_Guide.MVVM.Model
             set
             {
                 _email = value;
-                OnPropertyChanged();
+        
             }
         }
 
@@ -40,7 +40,7 @@ namespace X_Guide.MVVM.Model
             set
             {
                 _role = value;
-                OnPropertyChanged();
+
             }
         }
 
@@ -52,7 +52,7 @@ namespace X_Guide.MVVM.Model
             set
             {
                 _isActive = value;
-                OnPropertyChanged();
+         
             }
         }
 
@@ -64,7 +64,6 @@ namespace X_Guide.MVVM.Model
             set
             {
                 _createdAt = value;
-                OnPropertyChanged();
             }
         }
 
@@ -76,7 +75,6 @@ namespace X_Guide.MVVM.Model
             set
             {
                 _updatedAt = value;
-                OnPropertyChanged();
             }
         }
 

@@ -216,7 +216,7 @@ namespace X_Guide.MVVM.ViewModel
         private void OnJogCanExecuteChanged(bool canJog)
         {
             _canJog = canJog;
-            (JogCommand as RelayCommand).RaiseCanExecuteChanged();
+            (JogCommand as RelayCommand).OnCanExecuteChanged();
         }
 
 
