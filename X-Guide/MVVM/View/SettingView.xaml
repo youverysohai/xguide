@@ -95,8 +95,10 @@
                                                 HorizontalAlignment="Center"
                                                 Command="{x:Static materialDesign:DrawerHost.CloseDrawerCommand}"
                                                 CommandParameter="{x:Static Dock.Left}"
-                                                Content="<"
-                                                Style="{StaticResource MaterialDesignFlatButton}" />
+                                                
+                                                Style="{StaticResource MaterialDesignIconButton}" >
+                                        <materialDesign:PackIcon Kind="MenuLeft" Style="{DynamicResource IconStyle24}" />
+                                    </Button>
                                 </hc:SimpleStackPanel>
 
 
