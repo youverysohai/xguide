@@ -28,19 +28,9 @@ namespace X_Guide.MVVM.ViewModel
     {
 
         public RelayCommand SaveCommand { get; }
-        public ICommand EditManipulatorNameCommand { get; set; }
-
-        private string _name;
-            
-        public string Name
-        {
-            get { return _name; }
-            set { _name = value;
-                OnPropertyChanged();
-                OnManipulatorChangeEvent(this, null);
-            }
-        }
-
+        public RelayCommand ManipulatorCommand { get; set; }
+      
+        
         private readonly IMachineDbService _machineDb;
         private readonly IVisionDbService _visionDb;
         private readonly ErrorViewModel _errorViewModel;
@@ -59,22 +49,28 @@ namespace X_Guide.MVVM.ViewModel
                 _canEdit = value;
                 OnPropertyChanged();
             }
-        } //Setting View UI properties
+        } 
+        
 
+        private MachineModel _manipulator;
 
-        private MachineModel _machine;
-        public MachineModel Machine => _machine;
-
+        public MachineModel Manipulator
+        {
+            get { return _manipulator; }
+            set { _manipulator = value;
+                OnPropertyChanged();
+            }
+        }
 
         //SettingViewModel properties
-        private ObservableCollection<string> _machineNameList;
+        private ObservableCollection<MachineModel> _manipulators;
 
-        public ObservableCollection<string> MachineNameList
+        public ObservableCollection<MachineModel> Manipulators
         {
-            get { return _machineNameList; }
+            get { return _manipulators; }
             set
             {
-                _machineNameList = value;
+                _manipulators = value;
                 OnPropertyChanged();
             }
         }
@@ -120,12 +116,18 @@ namespace X_Guide.MVVM.ViewModel
             _machineDb = machineDb;
             _visionDb = visionDb;
 
-
-            LoadMachineName();
+            GetAllMachine();
+   
             MachineTypeList = EnumHelperClass.GetAllValuesAndDescriptions(typeof(MachineType));
             TerminatorList = EnumHelperClass.GetAllValuesAndDescriptions(typeof(Terminator));
 
+            ManipulatorCommand = new RelayCommand(OnManipulatorChangeEvent);
             SaveCommand = new RelayCommand(SaveSetting);
+        }
+
+        private async void GetAllMachine()
+        {
+            Manipulators = new ObservableCollection<MachineModel>(await _machineDb.GetAllMachine());
         }
 
         private void SaveSetting(object obj)
@@ -143,54 +145,16 @@ namespace X_Guide.MVVM.ViewModel
             MessageBox.Show(ConfigurationManager.AppSettings["SaveSettingCommand_SaveMessage"]);*/
         }
 
-        private async void LoadMachineName()
+        private void OnManipulatorChangeEvent(object obj)
         {
-            MachineNameList = new ObservableCollection<string>(await _machineDb.GetAllMachineName());
+            Manipulator = obj as MachineModel;
         }
 
-        private void OnCommandEvent(object sender, TcpClientEventArgs e)
-        {
-            MessageBox.Show($"{e.TcpClient.Client.AddressFamily} : Client triggered a command!");
-        }
-
-        private void OnManipulatorChangeEvent(object sender, PropertyChangedEventArgs e)
-        {
-                UpdateMachine();
-                UpdateMachineUI(_machine); 
-        }
-
-        public async void UpdateMachine()
-        {
-            
-        }
-      
 
         public IEnumerable GetErrors(string propertyName)
         {
             return _errorViewModel.GetErrors(propertyName);
         }
-
-        public void UpdateMachineUI(MachineModel machine)
-        {
-
-            /*MachineDescription = machine.Description;
-            MachineType = Enum.GetName(typeof(MachineType), machine.Type);
-            ManipulatorTerminator = machine.Terminator;
-            var manipulatorIP = machine.Ip.Split('.');
-            RobotIPS1 = manipulatorIP[0];
-            RobotIPS2 = manipulatorIP[1];
-            RobotIPS3 = manipulatorIP[2];
-            RobotIPS4 = manipulatorIP[3];
-            RobotPort = machine.Port;*/
-            
-        }
-
-        public void UpdateManipulatorNameList(string name)
-        {
-            MachineNameList[MachineNameList.IndexOf(_machine.Name)] = name;
-      /*      MachineName = name;*/
-        }
-
 
     }
 
