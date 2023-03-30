@@ -62,7 +62,7 @@
                      Style="{DynamicResource InputMaterialDesignTextBox}"
                      
                      materialDesign:HintAssist.Hint="Calibration Name"></TextBox>
-          
+
             <!--  Side Step bar  -->
             <Border Name="Stepbar" d:Visibility="Visible" Grid.Row="1" Grid.RowSpan="2" Grid.Column="0" CornerRadius="20 0 0 20">
 
@@ -73,7 +73,11 @@
                             <StackPanel Orientation="Horizontal" >
 
                                 <TextBlock Text="Step 1" VerticalAlignment="Center" FontSize="16" FontWeight="Bold" HorizontalAlignment="Left" Margin="0 0 5 0"/>
-                                <TextBlock> <materialDesign:PackIcon Width="30" Height="30" Kind="RobotIndustrialOutline"></materialDesign:PackIcon></TextBlock>
+                                <TextBlock> 
+<materialDesign:PackIcon Width="30" Height="30" Kind="RobotIndustrialOutline"/>
+                                </TextBlock>
+
+
 
                             </StackPanel>
                             <TextBlock Text="Manipulator" />
@@ -87,10 +91,10 @@
                             <StackPanel Orientation="Horizontal" >
 
                                 <TextBlock Text="Step 2" VerticalAlignment="Center" FontSize="16" FontWeight="Bold" HorizontalAlignment="Left" Margin="0 0 5 0"/>
-                                <TextBlock> <materialDesign:PackIcon Width="30" Height="30" Kind="CameraOutline"></materialDesign:PackIcon></TextBlock>
+                                <TextBlock> <materialDesign:PackIcon Width="30" Height="30" Kind="CompassOutline"></materialDesign:PackIcon></TextBlock>
 
                             </StackPanel>
-                            <TextBlock Text="Camera" />
+                            <TextBlock Text="Orientation &amp; &#10;Mounting" />
 
                         </StackPanel>
                     </hc:StepBarItem>
@@ -99,7 +103,7 @@
                         <StackPanel Cursor="Hand">
                             <StackPanel Orientation="Horizontal" >
                                 <TextBlock Text="Step 3" VerticalAlignment="Center" FontSize="16" FontWeight="Bold" HorizontalAlignment="Left" Margin="0 0 5 0"/>
-                                <TextBlock> <materialDesign:PackIcon Width="30" Height="30" Kind="ViewListOutline"></materialDesign:PackIcon></TextBlock>
+                                <TextBlock> <materialDesign:PackIcon Width="30" Height="30" Kind="TableHeadersEye"></materialDesign:PackIcon></TextBlock>
 
                             </StackPanel>
                             <TextBlock Text="Vision Flow" />
@@ -111,10 +115,10 @@
                         <StackPanel Cursor="Hand">
                             <StackPanel Orientation="Horizontal" >
                                 <TextBlock Text="Step 4" VerticalAlignment="Center" FontSize="16" FontWeight="Bold" HorizontalAlignment="Left" Margin="0 0 5 0"/>
-                                <TextBlock> <materialDesign:PackIcon Width="30" Height="30" Kind="MotionOutline"></materialDesign:PackIcon></TextBlock>
+                                <TextBlock> <materialDesign:PackIcon Width="30" Height="30" Kind="Gauge"></materialDesign:PackIcon></TextBlock>
 
                             </StackPanel>
-                            <TextBlock Text="Robot Motion" />
+                            <TextBlock Text="Motion" />
                         </StackPanel>
                     </hc:StepBarItem>
                     <!--Step 5-->
@@ -126,7 +130,7 @@
                                 <TextBlock> <materialDesign:PackIcon Width="30" Height="30" Kind="GamepadOutline"></materialDesign:PackIcon></TextBlock>
 
                             </StackPanel>
-                            <TextBlock Text="Jog Robot" />
+                            <TextBlock Text="Jog" />
                         </StackPanel>
                     </hc:StepBarItem>
                     <!--Step 6-->
@@ -135,28 +139,28 @@
                             <StackPanel Orientation="Horizontal" >
 
                                 <TextBlock Text="Step 6" VerticalAlignment="Center" FontSize="16" FontWeight="Bold" HorizontalAlignment="Left" Margin="0 0 5 0"/>
-                                <TextBlock> <materialDesign:PackIcon Width="30" Height="30" Kind="CheckOutline"></materialDesign:PackIcon></TextBlock>
+                                <TextBlock> <materialDesign:PackIcon Width="30" Height="30" Kind="MathCompass"></materialDesign:PackIcon></TextBlock>
 
                             </StackPanel>
-                            <TextBlock Text="Start Calibration" />
+                            <TextBlock Text="Calibration" />
                         </StackPanel>
                     </hc:StepBarItem>
                 </hc:StepBar>
 
             </Border>
             <!-- Content Steps-->
-            
+
             <ContentControl Grid.Row="1" Grid.Column="1" Content="{Binding CurrentViewModel}"
-                         Name="ContentControl"  >  
+                         Name="ContentControl">
             </ContentControl>
 
             <!-- Buttons Next and Prev-->
-                <StackPanel Grid.Row="2" Grid.Column="1" Orientation="Horizontal" HorizontalAlignment="Center"  >
+            <StackPanel Grid.Row="2" Grid.Column="1" Orientation="Horizontal" HorizontalAlignment="Center"  >
 
-                    <Button Style="{DynamicResource MaterialDesignOutlinedButton}" Margin="10" Command="{Binding WizPrevCommand}" CommandParameter="{x:Static local:PageName.StepOne}" Width="180" Content="Prev"/>
-                    <Button Style="{DynamicResource MaterialDesignOutlinedButton}" Command="{Binding WizNextCommand}" CommandParameter="{x:Static local:PageName.StepTwo}" Width="180"  Content="Next"/>
-                </StackPanel>
-         
+                <Button Style="{DynamicResource MaterialDesignOutlinedButton}" Margin="10" Command="{Binding WizPrevCommand}" CommandParameter="{x:Static local:PageName.StepOne}" Width="180" Content="Prev"/>
+                <Button Style="{DynamicResource MaterialDesignOutlinedButton}" Command="{Binding WizNextCommand}" CommandParameter="{x:Static local:PageName.StepTwo}" Width="180"  Content="Next"/>
+            </StackPanel>
+
 
         </Grid>
     </materialDesign:Card>

@@ -28,30 +28,25 @@
     <materialDesign:Card Style="{DynamicResource CardLayout}" >
         <materialDesign:DrawerHost OpenMode="Default">
             <materialDesign:DrawerHost.LeftDrawerContent>
-                <StackPanel Margin="16">
-                    <TextBlock Margin="4"
+                <hc:ScrollViewer VerticalScrollBarVisibility="Visible">
+                    <hc:SimpleStackPanel Orientation="Vertical">
+                        <TextBlock Margin="4"
                        HorizontalAlignment="Center"
-                       Text="EDIT" />
-
-
-
-                    <hc:SimplePanel x:Name="ChipsContainer">
-                        <ItemsControl ItemTemplate="{StaticResource ChipTemplate}" >
-                            <ItemsControl.ItemsPanel>
-                                <ItemsPanelTemplate>
-                                    <StackPanel Orientation="Horizontal"/>
-                                </ItemsPanelTemplate>
-                            </ItemsControl.ItemsPanel>
-                        </ItemsControl>
+                       Text="Edit" />
+                        <hc:SimplePanel x:Name="ChipsContainer">
+                            <ItemsControl ItemTemplate="{StaticResource ChipTemplate}" >
+                            </ItemsControl>
                     </hc:SimplePanel>
+                   
                     <Button Margin="4"
                     HorizontalAlignment="Center"
                     Command="{x:Static materialDesign:DrawerHost.CloseDrawerCommand}"
                     CommandParameter="{x:Static Dock.Left}"
                     Content="Close"
                     Style="{StaticResource MaterialDesignFlatButton}" />
- 
-                </StackPanel>
+
+                    </hc:SimpleStackPanel>
+                </hc:ScrollViewer>
             </materialDesign:DrawerHost.LeftDrawerContent>
 
             <Grid Margin="20" >
