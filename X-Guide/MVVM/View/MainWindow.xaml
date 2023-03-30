@@ -14,7 +14,7 @@
         Height="720" Width="1280"
         WindowState="Maximized"
         ui:TitleBar.ExtendViewIntoTitleBar="True" 
- 
+       x:Name="m_AppWindow" 
         xmlns:ui="http://schemas.modernwpf.com/2019"
         ui:WindowHelper.UseModernWindowStyle="True"
         >

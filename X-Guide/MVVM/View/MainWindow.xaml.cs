@@ -23,6 +23,7 @@ using X_Guide.MVVM.ViewModel;
 using Microsoft.Xaml.Behaviors;
 using X_Guide.MVVM.ViewModel.CalibrationWizardSteps;
 using X_Guide.MVVM;
+using Windows.UI.WindowManagement;
 
 namespace X_Guide
 {
@@ -38,7 +39,7 @@ namespace X_Guide
             {
                 this.DateTimeTextBlock.Text = DateTime.Now.ToString("dddd, MMM dd yyyy, hh:mm:ss");
             }, this.Dispatcher);
-           
+
         }
 
         private void ToggleAppThemeHandler(object sender, RoutedEventArgs e)

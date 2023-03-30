@@ -25,7 +25,7 @@ namespace X_Guide.MVVM.View.CalibrationWizardSteps
     public partial class CalibrationWizardStart : UserControl
     {
         private SnackbarMessageQueue messageQueue = new SnackbarMessageQueue();
-        private List<string> chipsList = new List<string> { "Circle 1", "Chip 2", "Chip 3", "Chip 4", "Chip 5", };
+        private List<string> chipsList = new List<string> { "Circle 1", "Chip 2", "Chip 3", "Chip 4", "Chip 5", "Circle 1", "Chip 2", "Chip 3", "Chip 4", "Chip 5", "Circle 1", "Chip 2", "Chip 3", "Chip 4", "Chip 5", };
         private ItemsControl itemsControl = new ItemsControl();
 
 
