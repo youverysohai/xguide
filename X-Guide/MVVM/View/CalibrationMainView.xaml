@@ -157,8 +157,20 @@
             <!-- Buttons Next and Prev-->
             <StackPanel Grid.Row="2" Grid.Column="1" Orientation="Horizontal" HorizontalAlignment="Center"  >
 
-                <Button Style="{DynamicResource MaterialDesignOutlinedButton}" Margin="10" Command="{Binding WizPrevCommand}" CommandParameter="{x:Static local:PageName.StepOne}" Width="180" Content="Prev"/>
-                <Button Style="{DynamicResource MaterialDesignOutlinedButton}" Command="{Binding WizNextCommand}" CommandParameter="{x:Static local:PageName.StepTwo}" Width="180"  Content="Next"/>
+                <Button Style="{DynamicResource MaterialDesignPaperButton}" Margin="10" Command="{Binding WizPrevCommand}" CommandParameter="{x:Static local:PageName.StepOne}" Width="180">
+                    <Button.Content>
+                        <hc:SimpleStackPanel Orientation="Horizontal">
+                            <materialDesign:PackIcon Kind="ChevronLeft" Style="{DynamicResource IconStyle16}"/>
+                            <TextBlock Text="Prev"/>
+                        </hc:SimpleStackPanel>
+                    </Button.Content>
+                </Button>
+                <Button Style="{DynamicResource MaterialDesignPaperButton}" Command="{Binding WizNextCommand}" CommandParameter="{x:Static local:PageName.StepTwo}" Width="180" >
+                    <StackPanel Orientation="Horizontal">
+                        <TextBlock Text="Next"/>
+                            <materialDesign:PackIcon Kind="ChevronRight" Style="{DynamicResource IconStyle16}"/>
+                    </StackPanel>
+                </Button>
             </StackPanel>
 
 

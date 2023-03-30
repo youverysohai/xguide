@@ -12,7 +12,6 @@ using System.Threading.Tasks;
 using System.Windows;
 using X_Guide.CustomEventArgs;
 using X_Guide.Service.Communication;
-using X_Guide.Service.Communication;
 
 
 namespace X_Guide.Communication.Service

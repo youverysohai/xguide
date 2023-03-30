@@ -6,7 +6,7 @@
              xmlns:local="clr-namespace:X_Guide.MVVM.View.CalibrationWizardSteps"
              mc:Ignorable="d" 
              d:DesignHeight="450" d:DesignWidth="800"
-             
+              xmlns:ui="http://schemas.modernwpf.com/2019"
              xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes">
 
     <Grid Margin="0 0 0 10">
@@ -16,8 +16,20 @@
                 
                 <TextBlock  Text="Vision Flow for Calibration" HorizontalAlignment="Center" FontSize="35" Margin="0 0 0 25"/>
                 <StackPanel Orientation="Vertical" HorizontalAlignment="Center" >
-                <TextBox MinWidth="300" Style="{DynamicResource MaterialDesignFloatingHintTextBox}" materialDesign:HintAssist.Hint="Vision Name"></TextBox>
+                <ComboBox 
+                        ItemsSource="{Binding VisionName}" 
+                        SelectedItem="{Binding SelectedItem}"
+                        Style="{DynamicResource MaterialDesignOutlinedComboBox}"
+                              Width="300"
+                              materialDesign:HintAssist.Hint="Select Vision Name"
+                                                      HorizontalAlignment="Left"
+                              Margin="0">
 
+                </ComboBox>
+                <StackPanel  Orientation="Horizontal" HorizontalAlignment="Center"  >
+                    <TextBlock  VerticalAlignment="Center" Text="New Vision? "/>
+                    <ui:HyperlinkButton  Padding="5"  Margin="5" Command="{Binding ShoutCommand}">Create New</ui:HyperlinkButton>
+                </StackPanel>
                 <StackPanel Orientation="Horizontal">
                         <TextBox MinWidth="300" Text="{Binding FilePath}" Style="{DynamicResource MaterialDesignFloatingHintTextBox}" materialDesign:HintAssist.Hint="Vision Solution File (.sol)"></TextBox>
                         <Button Style="{DynamicResource MaterialDesignPaperSecondaryButton}" Click="OpenFileButton_Click" Margin="10 0" >Browse</Button>
