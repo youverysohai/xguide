@@ -290,9 +290,9 @@
                                 </Button>
 
                                 <TextBlock  VerticalAlignment="Center" Margin="0,0,0,8" Style="{StaticResource MaterialDesignHeadline5TextBlock}" 
-                                        Text="Visions" />
+                                        Text="Visions"  />
                             </ui:SimpleStackPanel>
-                            <TextBox HorizontalAlignment="Left" Style="{DynamicResource InputMaterialDesignTextBox}" Width="200" Padding="5"  materialDesign:HintAssist.Hint="Vision Name"/>
+                            <TextBox HorizontalAlignment="Left" Style="{DynamicResource InputMaterialDesignTextBox}" Width="200" materialDesign:HintAssist.Hint="Vision Name"/>
 
                             <StackPanel Orientation="Horizontal" > 
                                 <ComboBox Style="{DynamicResource ComboBoxStyle}"   VerticalAlignment="Top"  IsTextSearchEnabled="False" MinWidth="220" materialDesign:HintAssist.Hint="Vision Software"  >
