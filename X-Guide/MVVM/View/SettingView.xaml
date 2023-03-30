@@ -117,12 +117,11 @@
                                     </ui:SimpleStackPanel>
 
                                 </Button>
-                                <Button  Style="{DynamicResource MaterialDesignFlatSecondaryButton}"  ToolTip="Create New Vision">
-                                    <ui:SimpleStackPanel Orientation="Horizontal">
+                                <Button  Style="{DynamicResource MaterialDesignIconButton}"  ToolTip="Remove Manipulator">
+                      
 
                                         <materialDesign:PackIcon Kind="BinOutline" Style="{DynamicResource IconStyle24}"/>
-                                        <TextBlock Text="Remove" VerticalAlignment="Center" Margin="5 0 0 0" FontSize="15"/>
-                                    </ui:SimpleStackPanel>
+                                    
 
                                 </Button>
                             </ui:SimpleStackPanel>
@@ -252,7 +251,7 @@
                 <!-- Vision Tab-->
                 <TabItem>
                     <TabItem.Header>
-                        <StackPanel  Width="auto" Height="auto">
+                        <StackPanel  Width="auto" Height="auto" ui:ThemeManager.RequestedTheme="Dark">
                             <materialDesign:PackIcon
                                 Width="24" Height="24"
                                 HorizontalAlignment="Center"
@@ -303,7 +302,7 @@
                                          ToolTipService.InitialShowDelay="122">
                                     <materialDesign:PackIcon Kind="PlaylistEdit" Style="{DynamicResource IconStyle24}"/>
                                 </Button>
-                                <Button  Style="{DynamicResource MaterialDesignFlatButton}" ToolTip="Create New Manipulator">
+                                <Button  Style="{DynamicResource MaterialDesignFlatButton}" ToolTip="Create New Vision">
                                     <ui:SimpleStackPanel Orientation="Horizontal">
 
                                         <materialDesign:PackIcon Kind="PlusBoxOutline" Style="{DynamicResource IconStyle24}"/>
@@ -311,7 +310,13 @@
                                     </ui:SimpleStackPanel>
 
                                 </Button>
+                                <Button  Style="{DynamicResource MaterialDesignIconButton}"  ToolTip="Remove Vision">
 
+
+                                    <materialDesign:PackIcon Kind="BinOutline" Style="{DynamicResource IconStyle24}"/>
+
+
+                                </Button>
                             </ui:SimpleStackPanel>
                             <TextBlock  VerticalAlignment="Center" Margin="0,0,0,8" Style="{StaticResource MaterialDesignHeadline5TextBlock}" 
                                         Text="Vision"  />
