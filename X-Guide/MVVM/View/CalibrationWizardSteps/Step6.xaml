@@ -11,7 +11,7 @@
             xmlns:hc="https://handyorg.github.io/handycontrol"
              xmlns:ui="http://schemas.modernwpf.com/2019"
               xmlns:Release="clr-namespace:VMControls.WPF.Release;assembly=VMControls.WPF.Release" 
-               d:DesignHeight="600" d:DesignWidth="1300" d:Foreground="Wheat">
+               d:DesignHeight="600" d:DesignWidth="1000" d:Foreground="Wheat">
     <UserControl.Resources>
         <Style TargetType="Label" x:Key="OutputLabel" BasedOn="{StaticResource MaterialDesignLabel}">
             <Setter Property="FontSize" Value="13"/>
@@ -67,9 +67,9 @@
                 </hc:Carousel>-->
 
                 <!--Right Side Calibration Output Data -->
-                <XCust:CustomRenderControl hc:FlexPanel.FlexBasis="720" Procedure="{Binding VisProcedure}"></XCust:CustomRenderControl>
+                <XCust:CustomRenderControl hc:FlexPanel.FlexBasis="640" Height="480" Procedure="{Binding VisProcedure}"></XCust:CustomRenderControl>
 
-                <GroupBox  hc:FlexPanel.FlexBasis="260" MinHeight="550"  Grid.RowSpan="3" Grid.Column="1" Style="{StaticResource GroupBoxTab}">
+                <GroupBox  hc:FlexPanel.FlexBasis="300" MinHeight="550"  Grid.RowSpan="3" Grid.Column="1" Style="{StaticResource GroupBoxTab}">
                     <GroupBox.Header>
                         <TextBlock FontSize="20" FontWeight="SemiBold" Margin="0 10">Calibration Output Data</TextBlock>
                     </GroupBox.Header>
