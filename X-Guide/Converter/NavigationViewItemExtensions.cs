@@ -42,7 +42,7 @@ namespace X_Guide.Converter
             var item = d as NavigationViewItem;
             if (item != null)
             {
-                item.MouseDown += (sender, args) =>
+                item.PreviewMouseDoubleClick += (sender, args) =>
                 {
                     var command = GetCommand(item);
                     var commandParameter = GetCommandParameter(item);

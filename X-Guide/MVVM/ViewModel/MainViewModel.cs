@@ -106,6 +106,7 @@ namespace X_Guide.MVVM.ViewModel
 
         private void Navigate(object obj)
         {
+            
             switch (obj)
             {
                 case PageName.Security: _navigationService.Navigate(_viewModelLocator.Create<SecurityViewModel>()); break;
