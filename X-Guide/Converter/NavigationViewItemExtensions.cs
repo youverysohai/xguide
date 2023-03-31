@@ -9,7 +9,7 @@ using System.Windows.Input;
 
 namespace X_Guide.Converter
 {
-    public static class NavigationViewItemExtensions
+    public static class NavigationViewItemExtensions 
     {
         public static readonly DependencyProperty CommandProperty =
             DependencyProperty.RegisterAttached("Command", typeof(ICommand), typeof(NavigationViewItemExtensions), new PropertyMetadata(null, OnCommandPropertyChanged));

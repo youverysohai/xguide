@@ -52,6 +52,11 @@ namespace X_Guide.MVVM.ViewModel
             _viewModelLocator = viewModelLocator;
 
         }
+
+        public CalibrationWizardStartViewModel()
+        {
+        }
+
         private void start(object arg)
         {
             /*            IsStarted = true;

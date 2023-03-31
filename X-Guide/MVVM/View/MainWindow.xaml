@@ -197,7 +197,7 @@
                 <ui:NavigationViewItem.MenuItems>
                     <ui:NavigationViewItem
                          c:NavigationViewItemExtensions.Command="{Binding NavigateCommand}"
-                             c:NavigationViewItemExtensions.CommandParameter="{Binding MyCommandParameter}" 
+                             c:NavigationViewItemExtensions.CommandParameter="{Binding x:Static local:PageName.CalibrationWizardStart}" 
                         Tag="CalibrationWizardStartView" Content="Calibration Wizard"  ToolTipService.ToolTip="Calibration Wizard"  >
                         <ui:NavigationViewItem.Icon>
                             <ui:FontIcon   Glyph="&#xE707;"/>
