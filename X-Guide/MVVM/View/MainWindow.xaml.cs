@@ -104,9 +104,9 @@ namespace X_Guide
                     case "ProductionView":
                         (DataContext as MainViewModel).NavigateCommand.Execute(PageName.Production);
                         break;
-                    case "CalibrationWizardStartView":
-                        (DataContext as MainViewModel).NavigateCommand.Execute(PageName.CalibrationWizardStart);
-                        break;
+                    //case "CalibrationWizardStartView":
+                    //    (DataContext as MainViewModel).NavigateCommand.Execute(PageName.CalibrationWizardStart);
+                    //    break;
                     case "JogRobotView":
                         (DataContext as MainViewModel).NavigateCommand.Execute(PageName.JogRobot);
                         break;
@@ -127,6 +127,7 @@ namespace X_Guide
         //    }
         //}
     }
+
 
 }
 
