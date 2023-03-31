@@ -7,7 +7,7 @@
              mc:Ignorable="d" 
              d:DesignHeight="700" d:DesignWidth="800"
              xmlns:ui="http://schemas.modernwpf.com/2019"
-             
+             xmlns:hc="https://handyorg.github.io/handycontrol"
              xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes">
 
 
@@ -39,7 +39,13 @@
                     <!-- Row 1: Speed-->
                     <StackPanel Orientation="Horizontal" Grid.Row="0" Grid.Column="0" VerticalAlignment="Bottom">
                         <Label Content="1" Style="{DynamicResource MaterialDesignLabel}"/>
-                        <Slider  Value="{Binding Setting.Speed}" Minimum="1" Maximum="100" Width="250" ValueChanged="Slider_SpeedValueChanged"></Slider>
+                        <hc:PreviewSlider Value="{Binding Setting.Speed}" Width="300"  Minimum="1" Maximum="100" ValueChanged="Slider_SpeedValueChanged">
+                            <hc:PreviewSlider.PreviewContent>
+                                <Label Style="{StaticResource LabelPrimary}" Content="{Binding Path=(hc:PreviewSlider.PreviewPosition),RelativeSource={RelativeSource Self}}" ContentStringFormat="#0"/>
+                            </hc:PreviewSlider.PreviewContent>
+                        </hc:PreviewSlider>
+
+                       
                         <Label Content="100" Style="{DynamicResource MaterialDesignLabel}"/>
                     </StackPanel>
                     <ui:NumberBox 
@@ -58,7 +64,11 @@
                     <!-- Row 2: Acceleration -->
                     <StackPanel Orientation="Horizontal" Grid.Row="1" Grid.Column="0" VerticalAlignment="Bottom">
                         <Label Content="1" Style="{DynamicResource MaterialDesignLabel}"/>
-                        <Slider  Value="{Binding Setting.Acceleration}" Minimum="1" Maximum="100" Width="250"  ValueChanged="Slider_AccelerationValueChanged"></Slider>
+                        <hc:PreviewSlider Value="{Binding Setting.Acceleration}" Width="300"  Minimum="1" Maximum="100" ValueChanged="Slider_AccelerationValueChanged">
+                            <hc:PreviewSlider.PreviewContent>
+                                <Label Style="{StaticResource LabelPrimary}" Content="{Binding Path=(hc:PreviewSlider.PreviewPosition),RelativeSource={RelativeSource Self}}" ContentStringFormat="#0"/>
+                            </hc:PreviewSlider.PreviewContent>
+                        </hc:PreviewSlider>
                         <Label Content="100" Style="{DynamicResource MaterialDesignLabel}"/>
                     </StackPanel>
                     <ui:NumberBox  Grid.Row="1" Grid.Column="1"  Value="{Binding Setting.Acceleration}"
@@ -72,7 +82,11 @@
                     <!-- Row 3: Motion Delay-->
                     <StackPanel Orientation="Horizontal" Grid.Row="2" Grid.Column="0" VerticalAlignment="Bottom">
                         <Label Content="0" Style="{DynamicResource MaterialDesignLabel}"/>
-                        <Slider Value="{Binding Setting.MotionDelay}" Minimum="0" Maximum="2000" Width="250"></Slider>
+                        <hc:PreviewSlider Value="{Binding Setting.MotionDelay}" Width="300"  Minimum="0" Maximum="2000" >
+                            <hc:PreviewSlider.PreviewContent>
+                                <Label Style="{StaticResource LabelPrimary}" Content="{Binding Path=(hc:PreviewSlider.PreviewPosition),RelativeSource={RelativeSource Self}}" ContentStringFormat="#0"/>
+                            </hc:PreviewSlider.PreviewContent>
+                        </hc:PreviewSlider>
                         <Label Content="2000" Style="{DynamicResource MaterialDesignLabel}"/>
                     </StackPanel>
                     <ui:NumberBox  Grid.Row="2" Grid.Column="1"  

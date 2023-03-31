@@ -31,6 +31,7 @@ namespace X_Guide.MVVM.ViewModel
 
         public RelayCommand SaveCommand { get; }
         public RelayCommand ManipulatorCommand { get; set; }
+        public RelayCommand VisionCommand { get; set; }
 
 
         private readonly IMachineDbService _machineDb;
@@ -42,18 +43,35 @@ namespace X_Guide.MVVM.ViewModel
 
         public bool HasErrors => false;
 
-        private bool _canEdit;
+        private GeneralSettingViewModel _server;
 
-        public bool CanEdit
+        public GeneralSettingViewModel Server
         {
-            get { return _canEdit; }
-            set
-            {
-                _canEdit = value;
+            get { return _server; }
+            set { _server = value; OnPropertyChanged(); }
+        }
+
+
+        private VisionViewModel _vision;
+
+        
+
+        public VisionViewModel Vision
+        {
+            get { return _vision; }
+            set { _vision = value; 
+                OnPropertyChanged(); }
+        }
+        private ObservableCollection<VisionViewModel> _visions;
+
+        public ObservableCollection<VisionViewModel> Visions
+        {
+            get { return _visions; }
+            set { _visions = value;
                 OnPropertyChanged();
             }
         }
-        private MachineViewModel _cache;
+
 
         private MachineViewModel _manipulator;
 
@@ -92,6 +110,8 @@ namespace X_Guide.MVVM.ViewModel
             }
         }
 
+ 
+
 
         private string _logFilePath;
         public string LogFilePath
@@ -122,10 +142,41 @@ namespace X_Guide.MVVM.ViewModel
             _visionDb = visionDb;
             _mapper = mapper;
             GetAllMachine();
+            Vision = new VisionViewModel
+            {
+                Name = "Chun",
+                Ip = new ObservableCollection<string>(new string[]{"192", "168","11","90"}),
+                Port=8000,
+                Terminator="NA"
+                
+            };
+            Visions = new ObservableCollection<VisionViewModel> { Vision , new VisionViewModel
+            {
+                Name = "Hik",
+                Ip = new ObservableCollection<string>(new string[]{"192", "163","11","33"}),
+                Port=8000,
+                Terminator="NA"
+
+            } , new VisionViewModel
+            {
+                Name = "Canon",
+                Ip = new ObservableCollection<string>(new string[]{"192", "128","21","90"}),
+                Port=8000,
+                Terminator="NA"
+
+            }  };
+            Server = new GeneralSettingViewModel
+            {
+                Ip = new ObservableCollection<string>(new string[] { "192", "168", "11", "90" }),
+                Port = 8000,
+                Terminator = "NA"
+
+            };
+
 
             MachineTypeList = EnumHelperClass.GetAllIntAndDescriptions(typeof(MachineType));
             TerminatorList = EnumHelperClass.GetAllValuesAndDescriptions(typeof(Terminator));
-
+            VisionCommand = new RelayCommand(OnVisionChangeEvent);
             ManipulatorCommand = new RelayCommand(OnManipulatorChangeEvent);
             SaveCommand = new RelayCommand(SaveSetting);
         }
@@ -160,6 +211,12 @@ namespace X_Guide.MVVM.ViewModel
 
             Manipulator = ((MachineViewModel)obj).Clone() as MachineViewModel;
    
+        }
+        private void OnVisionChangeEvent(object obj)
+        {
+
+            Vision = ((VisionViewModel)obj).Clone() as VisionViewModel;
+
         }
 
 

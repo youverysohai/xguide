@@ -23,20 +23,18 @@
 
     </UserControl.Resources>
     <Grid Margin="20">
-            <XCust:CustomRenderControl  Procedure="{Binding VisProcedure}"></XCust:CustomRenderControl>
-            <Button Margin="130 0"   Style="{DynamicResource MaterialDesignOutlinedButton}" Command="{Binding CalibrateCommand}" >Start Calibration</Button>
-        <!--Live Processed Image-->
+ <!--Live Processed Image-->
         <hc:ScrollViewer  Grid.RowSpan="3" Grid.ColumnSpan="2" >
 
              
             <hc:FlexPanel JustifyContent="SpaceAround" FlexWrap="Wrap">
-                <hc:Carousel  hc:FlexPanel.FlexBasis="840" MinHeight="550" x:Name="flipView1" AutoRun="False" IsCenter="True">
+                <!--<hc:Carousel  hc:FlexPanel.FlexBasis="840" MinHeight="550" x:Name="flipView1" AutoRun="False" IsCenter="True">
                     <hc:Carousel.ItemTemplate>
                         <DataTemplate>
                             <Release:VmRenderControl Loaded="p_box_Loaded" Width="840" />
                         </DataTemplate>
                     </hc:Carousel.ItemTemplate>
-                </hc:Carousel>
+                </hc:Carousel>-->
 
                 <!--<hc:Carousel hc:FlexPanel.FlexBasis="840" MinHeight="550" x:Name="flipView1"  AutoRun="False" IsCenter="True">
                     <hc:CarouselItem>
@@ -69,12 +67,15 @@
                 </hc:Carousel>-->
 
                 <!--Right Side Calibration Output Data -->
-                <GroupBox  hc:FlexPanel.FlexBasis="260"  Grid.RowSpan="3" Grid.Column="1" Style="{StaticResource GroupBoxTab}">
+                <XCust:CustomRenderControl hc:FlexPanel.FlexBasis="720" Procedure="{Binding VisProcedure}"></XCust:CustomRenderControl>
+
+                <GroupBox  hc:FlexPanel.FlexBasis="260" MinHeight="550"  Grid.RowSpan="3" Grid.Column="1" Style="{StaticResource GroupBoxTab}">
                     <GroupBox.Header>
                         <TextBlock FontSize="20" FontWeight="SemiBold" Margin="0 10">Calibration Output Data</TextBlock>
                     </GroupBox.Header>
                     <Grid>
                         <Grid.RowDefinitions>
+                            <RowDefinition Height="Auto" />
                             <RowDefinition Height="Auto" />
                             <RowDefinition Height="Auto" />
                             <RowDefinition Height="Auto" />
@@ -108,6 +109,7 @@
                         <TextBlock Text="{Binding Setting.CRZOffset}" Grid.Row="4" Grid.Column="1" Margin="5" Style="{DynamicResource ReadOnlyTextBlock}"/>
                         <Label Content="°" Grid.Row="4" Grid.Column="2" Margin="5" />
 
+                        <Button Grid.Row="5" Style="{DynamicResource MaterialDesignOutlinedButton}" Command="{Binding CalibrateCommand}" >Start Calibration</Button>
 
                     </Grid>
                 </GroupBox>
