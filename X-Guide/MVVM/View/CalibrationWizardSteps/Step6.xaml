@@ -11,7 +11,7 @@
             xmlns:hc="https://handyorg.github.io/handycontrol"
              xmlns:ui="http://schemas.modernwpf.com/2019"
               xmlns:Release="clr-namespace:VMControls.WPF.Release;assembly=VMControls.WPF.Release" 
-               d:DesignHeight="600" d:DesignWidth="1300" d:Foreground="Wheat">
+               d:DesignHeight="600" d:DesignWidth="1000" d:Foreground="Wheat">
     <UserControl.Resources>
         <Style TargetType="Label" x:Key="OutputLabel" BasedOn="{StaticResource MaterialDesignLabel}">
             <Setter Property="FontSize" Value="13"/>
@@ -23,15 +23,11 @@
 
     </UserControl.Resources>
     <Grid Margin="20">
-
-
-        <!--Live Processed Image-->
+ <!--Live Processed Image-->
         <hc:ScrollViewer  Grid.RowSpan="3" Grid.ColumnSpan="2" >
 
              
             <hc:FlexPanel JustifyContent="SpaceAround" FlexWrap="Wrap">
-                <XCust:CustomRenderControl Height="480" Width="720" Procedure="{Binding VisProcedure}"></XCust:CustomRenderControl>
-
                 <!--<hc:Carousel  hc:FlexPanel.FlexBasis="840" MinHeight="550" x:Name="flipView1" AutoRun="False" IsCenter="True">
                     <hc:Carousel.ItemTemplate>
                         <DataTemplate>
@@ -71,8 +67,9 @@
                 </hc:Carousel>-->
 
                 <!--Right Side Calibration Output Data -->
-                <GroupBox  hc:FlexPanel.FlexBasis="260"  Grid.RowSpan="3" Grid.Column="1" Style="{StaticResource GroupBoxTab}">
+                <XCust:CustomRenderControl hc:FlexPanel.FlexBasis="640" Height="480" Procedure="{Binding VisProcedure}"></XCust:CustomRenderControl>
 
+                <GroupBox  hc:FlexPanel.FlexBasis="300" MinHeight="550"  Grid.RowSpan="3" Grid.Column="1" Style="{StaticResource GroupBoxTab}">
                     <GroupBox.Header>
                         <TextBlock FontSize="20" FontWeight="SemiBold" Margin="0 10">Calibration Output Data</TextBlock>
                     </GroupBox.Header>
@@ -86,6 +83,8 @@
                             <RowDefinition Height="Auto" />
                             <RowDefinition Height="Auto" />
                             <RowDefinition Height="Auto" />
+                            <RowDefinition Height="Auto" />
+                            <RowDefinition Height="*" />
                         </Grid.RowDefinitions>
                         <Grid.ColumnDefinitions>
                             <ColumnDefinition Width="Auto" />
@@ -112,6 +111,8 @@
                         <Label Content="RZ offset:" Grid.Row="4" Grid.Column="0" Margin="5" />
                         <TextBlock Text="{Binding Setting.CRZOffset}" Grid.Row="4" Grid.Column="1" Margin="5" Style="{DynamicResource ReadOnlyTextBlock}"/>
                         <Label Content="°" Grid.Row="4" Grid.Column="2" Margin="5" />
+
+                        
                         <Button Grid.Row="5" Style="{DynamicResource MaterialDesignPaperButton}" Command="{Binding OperationCommand}" >Start Operation</Button>
                         <Button Grid.Row="6"  Style="{DynamicResource MaterialDesignOutlinedButton}" Command="{Binding CalibrateCommand}" >Start Calibration</Button>
                         <Button Grid.Row="7"  Style="{DynamicResource MaterialDesignOutlinedButton}" Command="{Binding SaveCommand}" >Save</Button>

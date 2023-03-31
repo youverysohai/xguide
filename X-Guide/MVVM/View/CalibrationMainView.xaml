@@ -74,7 +74,7 @@
 
                                 <TextBlock Text="Step 1" VerticalAlignment="Center" FontSize="16" FontWeight="Bold" HorizontalAlignment="Left" Margin="0 0 5 0"/>
                                 <TextBlock> 
-<materialDesign:PackIcon Width="30" Height="30" Kind="RobotIndustrialOutline"/>
+                                    <materialDesign:PackIcon Width="30" Height="30" Kind="RobotIndustrialOutline"/>
                                 </TextBlock>
 
 
@@ -168,7 +168,7 @@
                 <Button Style="{DynamicResource MaterialDesignPaperButton}" Command="{Binding WizNextCommand}" CommandParameter="{x:Static local:PageName.StepTwo}" Width="180" >
                     <StackPanel Orientation="Horizontal">
                         <TextBlock Text="Next"/>
-                            <materialDesign:PackIcon Kind="ChevronRight" Style="{DynamicResource IconStyle16}"/>
+                        <materialDesign:PackIcon Kind="ChevronRight" Style="{DynamicResource IconStyle16}"/>
                     </StackPanel>
                 </Button>
             </StackPanel>

@@ -716,6 +716,7 @@
     <Compile Include="MVVM\ViewModel\CalibrationWizardStartViewModel.cs" />
     <Compile Include="MVVM\ViewModel\CalibrationMainViewModel.cs" />
     <Compile Include="MVVM\ViewModel\ErrorViewModel.cs" />
+    <Compile Include="MVVM\ViewModel\GeneralSettingViewModel.cs" />
     <Compile Include="MVVM\ViewModel\IViewModelLocator.cs" />
     <Compile Include="MVVM\ViewModel\JogRobotViewModel.cs" />
     <Compile Include="MVVM\ViewModel\ManipulatorViewModel.cs" />

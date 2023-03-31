@@ -1,35 +1,32 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
+
 namespace X_Guide.MVVM.ViewModel
 {
-    public class VisionViewModel : ViewModelBase
+    public class VisionViewModel : ViewModelBase, ICloneable
     {
-
-        private string _name;
+        private string name;
 
         public string Name
         {
-            get { return _name; }
-            set { _name = value;
-                OnPropertyChanged();
-            }
+            get { return name; }
+            set { name = value; OnPropertyChanged(); }
         }
 
-        private string _ip;
-        public string Ip
+
+        private ObservableCollection<string> _ip;
+
+        public ObservableCollection<string> Ip
         {
-
             get { return _ip; }
-            set
-            {
-                _ip = value;
-                OnPropertyChanged();
-            }
+            set { _ip = value; OnPropertyChanged(); }
         }
+
 
         private int _port;
 
@@ -49,7 +46,20 @@ namespace X_Guide.MVVM.ViewModel
             set { _terminator = value;
                 OnPropertyChanged(); }
         }
+        public object Clone()
+        {
+            return new VisionViewModel
+            {
 
+                Name = Name,
+
+
+                Port = Port,
+                Ip = new ObservableCollection<string>(Ip.ToList()),
+                Terminator = Terminator,
+            };
+
+        }
 
 
 

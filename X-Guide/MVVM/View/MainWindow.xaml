@@ -13,15 +13,18 @@
         Title="X-Guide"         
         Height="720" Width="1280"
         WindowState="Maximized"
-        ui:TitleBar.ExtendViewIntoTitleBar="True" 
+        ui:TitleBar.ExtendViewIntoTitleBar="True"
        x:Name="m_AppWindow" 
+        
         xmlns:ui="http://schemas.modernwpf.com/2019"
         ui:WindowHelper.UseModernWindowStyle="True"
+        
         >
     <Window.Resources>
 
 
     </Window.Resources>
+ 
     <!--#region  OLD-->
     <!--Login Form Dialog-->
     <!--
@@ -165,7 +168,7 @@
         </Grid>
     </materialDesign:DialogHost>-->
     <!--#endregion-->
-    
+     
     <ui:NavigationView x:Name="SideMenuNavigation"
                        IsTitleBarAutoPaddingEnabled="True" 
                        IsBackButtonVisible="Collapsed"
@@ -173,6 +176,7 @@
                        
                        IsSettingsVisible="True" ItemInvoked="SideMenuNavigation_ItemInvoked"  >
         <!-- Header Side Menu -->
+
         <ui:NavigationView.PaneHeader>
             <TextBlock Style="{DynamicResource TitleTextBlockStyle}" Margin="10 0">X-Guide</TextBlock>
         </ui:NavigationView.PaneHeader>
