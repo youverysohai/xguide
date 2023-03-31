@@ -18,5 +18,6 @@ namespace X_Guide
         public string Ip { get; set; }
         public Nullable<int> Port { get; set; }
         public string Terminator { get; set; }
+        public string Name { get; set; }
     }
 }

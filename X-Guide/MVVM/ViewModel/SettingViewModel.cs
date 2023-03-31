@@ -33,8 +33,8 @@ namespace X_Guide.MVVM.ViewModel
         public RelayCommand ManipulatorCommand { get; set; }
 
 
-        private readonly IManipulatorDbService _manipulatorDb;
-        private readonly IVisionDbService _visionDb;
+        private readonly IManipulatorDb _manipulatorDb;
+        private readonly IVisionDb _visionDb;
         private readonly IMapper _mapper;
         private readonly ErrorViewModel _errorViewModel;
 
@@ -116,7 +116,7 @@ namespace X_Guide.MVVM.ViewModel
             }
         }
 
-        public SettingViewModel(IManipulatorDbService machineDb, IVisionDbService visionDb, IMapper mapper)
+        public SettingViewModel(IManipulatorDb machineDb, IVisionDb visionDb, IMapper mapper)
         {
             _manipulatorDb = machineDb;
             _visionDb = visionDb;

@@ -11,7 +11,7 @@ namespace X_Guide.Service
 {
     public class AuthenticationService
     {
-        private IUserDbService _userService;
+        private IUserDb _userService;
         public event Action CurrentUserChanged;
 
         private UserModel userModel;
@@ -30,7 +30,7 @@ namespace X_Guide.Service
         }
         public bool IsLoggedIn => CurrentUser != null;
 
-        public AuthenticationService(IUserDbService userService)
+        public AuthenticationService(IUserDb userService)
         {
             _userService = userService;
         }

@@ -17,17 +17,19 @@ namespace X_Guide
         public int Id { get; set; }
         public string Name { get; set; }
         public Nullable<int> ManipulatorId { get; set; }
-        public Nullable<int> MountingOrientation { get; set; }
+        public Nullable<int> Orientation { get; set; }
         public string VisionFilePath { get; set; }
-        public Nullable<double> RobotSpeed { get; set; }
-        public Nullable<double> RobotAccel { get; set; }
+        public Nullable<double> Speed { get; set; }
+        public Nullable<double> Acceleration { get; set; }
         public Nullable<double> MotionDelay { get; set; }
         public Nullable<double> XOffset { get; set; }
         public Nullable<double> YOffset { get; set; }
         public Nullable<double> CameraXScaling { get; set; }
         public Nullable<double> CameraYScaling { get; set; }
-        public Nullable<double> RZOffset { get; set; }
+        public Nullable<double> CRZOffset { get; set; }
         public string VisionFlow { get; set; }
+        public Nullable<double> CYOffset { get; set; }
+        public Nullable<double> CXOffset { get; set; }
     
         public virtual Manipulator Manipulator { get; set; }
     }

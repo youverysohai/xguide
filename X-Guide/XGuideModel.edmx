@@ -9,20 +9,22 @@
           <Key>
             <PropertyRef Name="Id" />
           </Key>
-          <Property Name="Id" Type="int" Nullable="false" />
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="Name" Type="varchar" MaxLength="50" />
           <Property Name="ManipulatorId" Type="int" />
-          <Property Name="MountingOrientation" Type="int" />
+          <Property Name="Orientation" Type="int" />
           <Property Name="VisionFilePath" Type="varchar" MaxLength="100" />
-          <Property Name="RobotSpeed" Type="float" />
-          <Property Name="RobotAccel" Type="float" />
+          <Property Name="Speed" Type="float" />
+          <Property Name="Acceleration" Type="float" />
           <Property Name="MotionDelay" Type="float" />
           <Property Name="XOffset" Type="float" />
           <Property Name="YOffset" Type="float" />
           <Property Name="CameraXScaling" Type="float" />
           <Property Name="CameraYScaling" Type="float" />
-          <Property Name="RZOffset" Type="float" />
+          <Property Name="CRZOffset" Type="float" />
           <Property Name="VisionFlow" Type="varchar" MaxLength="100" />
+          <Property Name="CYOffset" Type="float" />
+          <Property Name="CXOffset" Type="float" />
         </EntityType>
         <EntityType Name="Manipulator">
           <Key>
@@ -68,6 +70,7 @@
           <Property Name="Ip" Type="varchar" MaxLength="50" />
           <Property Name="Port" Type="int" />
           <Property Name="Terminator" Type="varchar" MaxLength="10" />
+          <Property Name="Name" Type="varchar" MaxLength="100" />
         </EntityType>
         <Association Name="FK_Calibration_To_Manipulator">
           <End Role="Manipulator" Type="Self.Manipulator" Multiplicity="0..1" />
@@ -97,36 +100,16 @@
     <edmx:ConceptualModels>
       <Schema Namespace="XGuideDBModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
         <EntityContainer Name="XGuideDBEntities" annotation:LazyLoadingEnabled="true">
-          <EntitySet Name="Calibrations" EntityType="XGuideDBModel.Calibration" />
           <EntitySet Name="Manipulators" EntityType="XGuideDBModel.Manipulator" />
           <EntitySet Name="Settings" EntityType="XGuideDBModel.Setting" />
           <EntitySet Name="Users" EntityType="XGuideDBModel.User" />
           <EntitySet Name="Visions" EntityType="XGuideDBModel.Vision" />
+          <EntitySet Name="Calibrations" EntityType="XGuideDBModel.Calibration" />
           <AssociationSet Name="FK_Calibration_To_Manipulator" Association="XGuideDBModel.FK_Calibration_To_Manipulator">
             <End Role="Manipulator" EntitySet="Manipulators" />
             <End Role="Calibration" EntitySet="Calibrations" />
           </AssociationSet>
         </EntityContainer>
-        <EntityType Name="Calibration">
-          <Key>
-            <PropertyRef Name="Id" />
-          </Key>
-          <Property Name="Id" Type="Int32" Nullable="false" />
-          <Property Name="Name" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
-          <Property Name="ManipulatorId" Type="Int32" />
-          <Property Name="MountingOrientation" Type="Int32" />
-          <Property Name="VisionFilePath" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
-          <Property Name="RobotSpeed" Type="Double" />
-          <Property Name="RobotAccel" Type="Double" />
-          <Property Name="MotionDelay" Type="Double" />
-          <Property Name="XOffset" Type="Double" />
-          <Property Name="YOffset" Type="Double" />
-          <Property Name="CameraXScaling" Type="Double" />
-          <Property Name="CameraYScaling" Type="Double" />
-          <Property Name="RZOffset" Type="Double" />
-          <Property Name="VisionFlow" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
-          <NavigationProperty Name="Manipulator" Relationship="XGuideDBModel.FK_Calibration_To_Manipulator" FromRole="Calibration" ToRole="Manipulator" />
-        </EntityType>
         <EntityType Name="Manipulator">
           <Key>
             <PropertyRef Name="Id" />
@@ -172,6 +155,29 @@
           <Property Name="Ip" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
           <Property Name="Port" Type="Int32" />
           <Property Name="Terminator" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
+          <Property Name="Name" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+        </EntityType>
+        <EntityType Name="Calibration">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Name" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="ManipulatorId" Type="Int32" />
+          <Property Name="Orientation" Type="Int32" />
+          <Property Name="VisionFilePath" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="Speed" Type="Double" />
+          <Property Name="Acceleration" Type="Double" />
+          <Property Name="MotionDelay" Type="Double" />
+          <Property Name="XOffset" Type="Double" />
+          <Property Name="YOffset" Type="Double" />
+          <Property Name="CameraXScaling" Type="Double" />
+          <Property Name="CameraYScaling" Type="Double" />
+          <Property Name="CRZOffset" Type="Double" />
+          <Property Name="VisionFlow" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="CYOffset" Type="Double" />
+          <Property Name="CXOffset" Type="Double" />
+          <NavigationProperty Name="Manipulator" Relationship="XGuideDBModel.FK_Calibration_To_Manipulator" FromRole="Calibration" ToRole="Manipulator" />
         </EntityType>
         <Association Name="FK_Calibration_To_Manipulator">
           <End Type="XGuideDBModel.Manipulator" Role="Manipulator" Multiplicity="0..1" />
@@ -191,26 +197,6 @@
     <edmx:Mappings>
       <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
         <EntityContainerMapping StorageEntityContainer="XGuideDBModelStoreContainer" CdmEntityContainer="XGuideDBEntities">
-          <EntitySetMapping Name="Calibrations">
-            <EntityTypeMapping TypeName="XGuideDBModel.Calibration">
-              <MappingFragment StoreEntitySet="Calibration">
-                <ScalarProperty Name="VisionFlow" ColumnName="VisionFlow" />
-                <ScalarProperty Name="RZOffset" ColumnName="RZOffset" />
-                <ScalarProperty Name="CameraYScaling" ColumnName="CameraYScaling" />
-                <ScalarProperty Name="CameraXScaling" ColumnName="CameraXScaling" />
-                <ScalarProperty Name="YOffset" ColumnName="YOffset" />
-                <ScalarProperty Name="XOffset" ColumnName="XOffset" />
-                <ScalarProperty Name="MotionDelay" ColumnName="MotionDelay" />
-                <ScalarProperty Name="RobotAccel" ColumnName="RobotAccel" />
-                <ScalarProperty Name="RobotSpeed" ColumnName="RobotSpeed" />
-                <ScalarProperty Name="VisionFilePath" ColumnName="VisionFilePath" />
-                <ScalarProperty Name="MountingOrientation" ColumnName="MountingOrientation" />
-                <ScalarProperty Name="ManipulatorId" ColumnName="ManipulatorId" />
-                <ScalarProperty Name="Name" ColumnName="Name" />
-                <ScalarProperty Name="Id" ColumnName="Id" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
           <EntitySetMapping Name="Manipulators">
             <EntityTypeMapping TypeName="XGuideDBModel.Manipulator">
               <MappingFragment StoreEntitySet="Manipulator">
@@ -253,9 +239,32 @@
           <EntitySetMapping Name="Visions">
             <EntityTypeMapping TypeName="XGuideDBModel.Vision">
               <MappingFragment StoreEntitySet="Vision">
+                <ScalarProperty Name="Name" ColumnName="Name" />
                 <ScalarProperty Name="Terminator" ColumnName="Terminator" />
                 <ScalarProperty Name="Port" ColumnName="Port" />
                 <ScalarProperty Name="Ip" ColumnName="Ip" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Calibrations">
+            <EntityTypeMapping TypeName="XGuideDBModel.Calibration">
+              <MappingFragment StoreEntitySet="Calibration">
+                <ScalarProperty Name="CXOffset" ColumnName="CXOffset" />
+                <ScalarProperty Name="CYOffset" ColumnName="CYOffset" />
+                <ScalarProperty Name="VisionFlow" ColumnName="VisionFlow" />
+                <ScalarProperty Name="CRZOffset" ColumnName="CRZOffset" />
+                <ScalarProperty Name="CameraYScaling" ColumnName="CameraYScaling" />
+                <ScalarProperty Name="CameraXScaling" ColumnName="CameraXScaling" />
+                <ScalarProperty Name="YOffset" ColumnName="YOffset" />
+                <ScalarProperty Name="XOffset" ColumnName="XOffset" />
+                <ScalarProperty Name="MotionDelay" ColumnName="MotionDelay" />
+                <ScalarProperty Name="Acceleration" ColumnName="Acceleration" />
+                <ScalarProperty Name="Speed" ColumnName="Speed" />
+                <ScalarProperty Name="VisionFilePath" ColumnName="VisionFilePath" />
+                <ScalarProperty Name="Orientation" ColumnName="Orientation" />
+                <ScalarProperty Name="ManipulatorId" ColumnName="ManipulatorId" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
                 <ScalarProperty Name="Id" ColumnName="Id" />
               </MappingFragment>
             </EntityTypeMapping>

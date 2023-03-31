@@ -29,22 +29,14 @@ namespace X_Guide.MVVM.ViewModel
         }
 
 
-        public Step2ViewModel(/*ref EventHandler OnSelectedItemChangedEvent, */CalibrationViewModel setting, IServerService serverService, IClientService clientService)
+        public Step2ViewModel(CalibrationViewModel setting, IServerService serverService, IClientService clientService)
         {
             Setting = setting;
             _serverService = serverService;
             _clientService = clientService;
- /*           OnSelectedItemChangedEvent += OnSelectedChangedEventHandler;*/
+            _setting.Orientation = 1; 
+
         }
-
-        private void OnSelectedChangedEventHandler(object sender, EventArgs e)
-        {
-            Setting.Manipulator = ((dynamic)sender).Machine;
-        }
-
-
-
-   
 
 
     }

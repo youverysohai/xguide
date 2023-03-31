@@ -11,17 +11,27 @@ namespace X_Guide.MVVM.ViewModel.CalibrationWizardSteps
     {
         private string _name;
         private ManipulatorViewModel _manipulator;
-        private MountingOrientation _orientation;
+        private int _orientation;
         private string _visionFlow;
         private double _cXOffSet = 0;
         private double _cYOffset = 0;
         private double _cRZOffset = 0;
-        private int _speed = 1;
-        private int _acceleration = 1;
-        private int _motionDelay = 0;
+        private double _speed = 1;
+        private double _acceleration = 1;
+        private double _motionDelay = 0;
         private double _mm_per_pixel = 1;
         public int XOffset { get; set; } = 0;
         public int YOffset { get; set; } = 0;
+
+        private string _visionFilePath;
+
+        public string VisionFilePath
+        {
+            get { return _visionFilePath; }
+            set { _visionFilePath = value;
+                OnPropertyChanged();
+            }
+        }
 
         public double Mm_per_pixel
         {
@@ -77,7 +87,7 @@ namespace X_Guide.MVVM.ViewModel.CalibrationWizardSteps
                 OnPropertyChanged();
             }
         }
-        public MountingOrientation Orientation
+        public int Orientation
         {
             get => _orientation; set
             {
@@ -94,7 +104,7 @@ namespace X_Guide.MVVM.ViewModel.CalibrationWizardSteps
             }
         }
 
-        public int Speed
+        public double Speed
         {
             get => _speed; set
             {
@@ -103,7 +113,7 @@ namespace X_Guide.MVVM.ViewModel.CalibrationWizardSteps
             }
         }
 
-        public int Acceleration
+        public double Acceleration
         {
             get => _acceleration; set
             {
@@ -112,7 +122,7 @@ namespace X_Guide.MVVM.ViewModel.CalibrationWizardSteps
             }
         }
 
-        public int MotionDelay
+        public double MotionDelay
         {
             get => _motionDelay; set
             {

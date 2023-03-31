@@ -61,7 +61,7 @@ namespace X_Guide.Service.Communication
 
         public override string ToString()
         {
-            return $"JOG,{Mode},{X},{Y},{Z},{RZ},{RX},{RY},{Speed},{Acceleration}\r\n";
+            return $"JOG,{Mode},{X},{Y},{Z},{RZ},{RX},{RY},{Speed},{Acceleration}";
         }
 
     }

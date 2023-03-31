@@ -39,7 +39,7 @@
                     <!-- Row 1: Speed-->
                     <StackPanel Orientation="Horizontal" Grid.Row="0" Grid.Column="0" VerticalAlignment="Bottom">
                         <Label Content="1" Style="{DynamicResource MaterialDesignLabel}"/>
-                        <Slider  Value="{Binding Setting.Speed}" Minimum="1" Maximum="100" Width="250" ValueChanged="Slider_SpeedValueChanged"></Slider>
+                        <Slider Value="{Binding Setting.Speed}" Minimum="1" Maximum="100" Width="250" ValueChanged="Slider_SpeedValueChanged" SmallChange="0" LargeChange="100"></Slider>
                         <Label Content="100" Style="{DynamicResource MaterialDesignLabel}"/>
                     </StackPanel>
                     <ui:NumberBox 

@@ -51,6 +51,7 @@ namespace X_Guide
             {
                 c.AddProfile<ManipulatorProfile>();
                 c.AddProfile<CalibrationProfile>();
+                c.AddProfile<VisionProfile>();
             }
             );
                                       
@@ -94,14 +95,14 @@ namespace X_Guide
             builder.RegisterInstance(_mapperConfig.CreateMapper()).As<IMapper>();
             
             builder.RegisterType<DbContextFactory>().SingleInstance();
-            builder.RegisterType<ManipulatorDbService>().As<IManipulatorDbService>();
-            builder.RegisterType<UserDbService>().As<IUserDbService>();
+            builder.RegisterType<ManipulatorDb>().As<IManipulatorDb>();
+            builder.RegisterType<UserDb>().As<IUserDb>();
             builder.RegisterType<VisionService>().As<IVisionService>();
-            builder.RegisterType<VisionDbService>().As<IVisionDbService>();
-            builder.RegisterType<CalibrationDbService>().As<ICalibrationService>();
+            builder.RegisterType<VisionDb>().As<IVisionDb>();
+            builder.RegisterType<CalibrationDb>().As<ICalibrationService>();
 
 
-            builder.RegisterType<ServerService>().As<IServerService>().WithParameter(new TypedParameter(typeof(IPAddress), IPAddress.Parse("192.168.10.92"))).WithParameter(new TypedParameter(typeof(int), 8000)).WithParameter(new TypedParameter(typeof(string), "")).SingleInstance();
+            builder.RegisterType<ServerService>().As<IServerService>().WithParameter(new TypedParameter(typeof(IPAddress), IPAddress.Parse("192.168.10.92"))).WithParameter(new TypedParameter(typeof(int), 8000)).WithParameter(new TypedParameter(typeof(string), "\r\n")).SingleInstance();
 
             builder.Register(c => new ClientService(IPAddress.Parse("192.168.10.90"), 8000, "")).As<IClientService>().SingleInstance();
 

@@ -8,6 +8,17 @@ namespace X_Guide.MVVM.ViewModel
 {
     public class VisionViewModel : ViewModelBase
     {
+
+        private string _name;
+
+        public string Name
+        {
+            get { return _name; }
+            set { _name = value;
+                OnPropertyChanged();
+            }
+        }
+
         private string _ip;
         public string Ip
         {

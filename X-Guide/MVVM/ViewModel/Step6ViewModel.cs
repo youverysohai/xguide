@@ -49,9 +49,11 @@ namespace X_Guide.MVVM.ViewModel
         private readonly ICalibrationService _calibDb;
         private readonly TcpClientInfo _tcpClientInfo;
         public RelayCommand SaveCommand { get; set; }
-        
 
         public RelayCommand CalibrateCommand { get; set; }
+
+        public RelayCommand OperationCommand { get; set; }
+
         public Step6ViewModel(CalibrationViewModel setting, IClientService clientService, IServerService serverService, ICalibrationService calibDb)
         {
             Setting = setting;
@@ -72,6 +74,7 @@ namespace X_Guide.MVVM.ViewModel
             /*        _circleFind.Run();*/
             CalibrateCommand = new RelayCommand(Calibrate);
             SaveCommand = new RelayCommand(Save);
+                OperationCommand = new RelayCommand(Operation);
             } catch (Exception ex) { Debug.WriteLine(ex);}
             
         }
@@ -113,14 +116,17 @@ namespace X_Guide.MVVM.ViewModel
             ((VmProcedure)VmSolution.Instance["Circle"]).ContinuousRunEnable = false;
             ((VmProcedure)VmSolution.Instance["Long"]).ContinuousRunEnable = true;
             (_clientService as ClientService).Flowname = "Long";
-
+            
 
             Point VisCenter = await _clientService.GetVisCenter();
             double[] OperationData = VisionGuided.EyeInHandConfig2D_Operate(VisCenter, calibData);
-            OperationData[2] -= 112.307;
+            OperationData[2] -= 112.307 - 9.43;
             if (OperationData[2] > 180) OperationData[2] -= 360;
             else if (OperationData[2] <= 180) OperationData[2] += 360;
             await _serverService.SendJogCommand(_tcpClientInfo, new JogCommand().SetX(OperationData[0]).SetY(OperationData[1]).SetRZ(OperationData[2]));
+            await _serverService.SendJogCommand(_tcpClientInfo, new JogCommand().SetZ(-178));
+            System.Windows.MessageBox.Show("Press OK to reset machine!");
+            await _serverService.ServerWriteDataAsync("RESET", _tcpClientInfo.TcpClient.GetStream());
         }
 
         private async Task<(Point[], Point[])> Start9PointCalib()
@@ -168,7 +174,7 @@ namespace X_Guide.MVVM.ViewModel
 
             RobotPoints[7] = new Point(0, YOffset);
             VisionPoints[7] = await _clientService.GetVisCenter();
-            await Task.Delay(3000);
+    
 
             await _serverService.SendJogCommand(_tcpClientInfo, new JogCommand().SetX(-XOffset));
             await Task.Delay(1000);

@@ -671,11 +671,12 @@
       <SubType>Designer</SubType>
     </ApplicationDefinition>
     <Compile Include="ADT\QueueProcessor.cs" />
-    <Compile Include="ByteArrayToImageConverter.cs" />
+    <Compile Include="Converter\ByteArrayToImageConverter.cs" />
     <Compile Include="Calibration.cs">
       <DependentUpon>XGuideModel.tt</DependentUpon>
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Compile>
+    <Compile Include="Converter\TypeToDescriptionConverter.cs" />
     <Compile Include="CustomControls\CustomRenderControl.xaml.cs">
       <DependentUpon>CustomRenderControl.xaml</DependentUpon>
     </Compile>
@@ -683,13 +684,13 @@
     <Compile Include="CustomEventArgs\NetworkStreamEventArgs.cs" />
     <Compile Include="CustomEventArgs\TcpClientEventArgs.cs" />
     <Compile Include="CustomEventArgs\TcpListenerEventArgs.cs" />
-    <Compile Include="EnumClass\MountingOrientation.cs" />
-    <Compile Include="EnumClass\Terminator.cs" />
-    <Compile Include="EnumClass\EnumHelperClass.cs" />
-    <Compile Include="EnumClass\EnumToCollectionConverter.cs" />
-    <Compile Include="EnumClass\MachineType.cs" />
-    <Compile Include="EnumClass\UserRole.cs" />
-    <Compile Include="EnumClass\ValueDescription.cs" />
+    <Compile Include="Enum\MountingOrientation.cs" />
+    <Compile Include="Enum\Terminator.cs" />
+    <Compile Include="Enum\EnumHelperClass.cs" />
+    <Compile Include="Converter\EnumToCollectionConverter.cs" />
+    <Compile Include="Enum\ManipulatorType.cs" />
+    <Compile Include="Enum\UserRole.cs" />
+    <Compile Include="Enum\ValueDescription.cs" />
     <Compile Include="Extension\TaskExtensions.cs" />
     <Compile Include="FileLogger.cs" />
     <Compile Include="FileLoggerExtensions.cs" />
@@ -700,16 +701,17 @@
       <DependentUpon>XGuideModel.tt</DependentUpon>
     </Compile>
     <Compile Include="MappingConfiguration\CalibrationProfile.cs" />
-    <Compile Include="MappingConfiguration\MachineProfile.cs" />
+    <Compile Include="MappingConfiguration\ManipulatorProfile.cs" />
+    <Compile Include="MappingConfiguration\VisionProfile.cs" />
     <Compile Include="MVVM\Command\BrowseFileDialogCommand.cs" />
     <Compile Include="MVVM\Command\RelayCommand.cs" />
     <Compile Include="MVVM\Command\VideoCommand.cs" />
     <Compile Include="MVVM\DBContext\DbContextFactory.cs" />
     <Compile Include="MVVM\DTO\UserDTO.cs" />
-    <Compile Include="MVVM\Model\MachineModel.cs" />
+    <Compile Include="MVVM\Model\ManipulatorModel.cs" />
     <Compile Include="MVVM\Model\Point.cs" />
     <Compile Include="MVVM\Model\UserModel.cs" />
-    <Compile Include="EnumClass\PageName.cs" />
+    <Compile Include="Enum\PageName.cs" />
     <Compile Include="MVVM\Model\VisionGuided.cs" />
     <Compile Include="MVVM\ViewModel\CalibrationWizardStartViewModel.cs" />
     <Compile Include="MVVM\ViewModel\CalibrationMainViewModel.cs" />
@@ -774,20 +776,20 @@
     <Compile Include="Service\Communication\JogCommand.cs" />
     <Compile Include="Service\Communication\TCPBase.cs" />
     <Compile Include="Service\Communication\TcpClientInfo.cs" />
-    <Compile Include="Service\DatabaseProvider\CalibrationDbService.cs" />
+    <Compile Include="Service\DatabaseProvider\CalibrationDb.cs" />
     <Compile Include="Service\DatabaseProvider\DbServiceBase.cs" />
     <Compile Include="Service\DatabaseProvider\ICalibrationService.cs" />
-    <Compile Include="Service\DatabaseProvider\IVisionDbService.cs" />
-    <Compile Include="Service\DatabaseProvider\ManipulatorDbService.cs" />
-    <Compile Include="Service\DatabaseProvider\IManipulatorDbService.cs" />
+    <Compile Include="Service\DatabaseProvider\IVisionDb.cs" />
+    <Compile Include="Service\DatabaseProvider\ManipulatorDb.cs" />
+    <Compile Include="Service\DatabaseProvider\IManipulatorDb.cs" />
     <Compile Include="Service\Communication\ServerCommand.cs" />
-    <Compile Include="Service\DatabaseProvider\VisionDbService.cs" />
+    <Compile Include="Service\DatabaseProvider\VisionDb.cs" />
     <Compile Include="Service\ImageService.cs" />
     <Compile Include="Service\INavigationService.cs" />
     <Compile Include="Service\NavigationService.cs" />
     <Compile Include="Service\Communication\ServerService.cs" />
-    <Compile Include="Service\DatabaseProvider\UserDbService.cs" />
-    <Compile Include="Service\DatabaseProvider\IUserDbService.cs" />
+    <Compile Include="Service\DatabaseProvider\UserDb.cs" />
+    <Compile Include="Service\DatabaseProvider\IUserDb.cs" />
     <Compile Include="Setting.cs">
       <DependentUpon>XGuideModel.tt</DependentUpon>
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
@@ -1045,11 +1047,11 @@
     <Resource Include="Style\ImageSource\up.png" />
     <Resource Include="Style\ImageSource\arrows.png" />
     <Content Include="XGuideDB.mdf">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
     <Content Include="XGuideDB_log.ldf">
       <DependentUpon>XGuideDB.mdf</DependentUpon>
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
     <Content Include="XGuideModel.Context.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
@@ -1064,7 +1066,6 @@
     </Content>
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="DP\" />
     <Folder Include="Vision\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

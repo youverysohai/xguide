@@ -82,7 +82,7 @@ namespace X_Guide.MVVM.ViewModel
         public UserModel CurrentUser => _auth.CurrentUser;
         #endregion
 
-        public MainViewModel(INavigationService navigationService, IServerService serverService, IUserDbService userService, IClientService clientService, NavigationStore navigationStore, IViewModelLocator viewModelLocator)
+        public MainViewModel(INavigationService navigationService, IServerService serverService, IUserDb userService, IClientService clientService, NavigationStore navigationStore, IViewModelLocator viewModelLocator)
         {
 
             _auth = new AuthenticationService(userService);

@@ -22,19 +22,9 @@ namespace X_Guide.MVVM.ViewModel
 
         public Action SelectedItemChangedEvent;
 
-        private ManipulatorModel _machineModel;
+        private ManipulatorViewModel _selectedItem;
 
-        private ManipulatorViewModel _machine;
-        public ManipulatorViewModel Machine
-        {
-            get { return _machine; }
-            set { _machine = value;
-                OnPropertyChanged();
-            }
-        }
-        private string _selectedItem;
-
-        public string SelectedItem
+        public ManipulatorViewModel SelectedItem
         {
             get { return _selectedItem; }
             set { _selectedItem = value;
@@ -47,37 +37,36 @@ namespace X_Guide.MVVM.ViewModel
 
  
 
-        private ObservableCollection<string> _machineNames;
-        public ObservableCollection<string> MachineNames
+        private ObservableCollection<ManipulatorViewModel> _manipulators;
+        public ObservableCollection<ManipulatorViewModel> Manipulators
         {
-            get { return _machineNames; }
-            set { _machineNames = value;
+            get { return _manipulators; }
+            set { _manipulators = value;
                 OnPropertyChanged();
             }
         }
 
-        private async void OnSelectedItemChanged(string name)
+        private void OnSelectedItemChanged(ManipulatorViewModel manipulator)
         {
-            _machineModel = await _manipulatorDbService.GetManipulator(name);
-            Machine = /*MachineViewModel.ToViewModel(_machineModel, _mapper);*/ null;
-            _setting.Manipulator = Machine;
-            _serverService.SetServerReadTerminator(_manipulatorDbService.GetManipulatorDelimiter(name));
+
+
+            _setting.Manipulator = manipulator;
             SelectedItemChangedEvent?.Invoke();
              
         }
 
         public ICommand ShoutCommand { get; set; }
-        public IManipulatorDbService _manipulatorDbService { get; }
+        public IManipulatorDb _manipulatorDb { get; }
         private IMapper _mapper { get; }
         public IServerService _serverService { get; }
 
         private readonly IClientService _clientService;
         #endregion
-        public Step1ViewModel(IManipulatorDbService manipulatorDbService, IMapper mapper, CalibrationViewModel setting, IServerService serverService, IClientService clientService)
+        public Step1ViewModel(IManipulatorDb manipulatorDb, IMapper mapper, CalibrationViewModel setting, IServerService serverService, IClientService clientService)
         {
             
 
-             _manipulatorDbService = manipulatorDbService;
+             _manipulatorDb = manipulatorDb;
             LoadMachineName();
             _mapper = mapper; 
            _serverService = serverService;
@@ -88,8 +77,9 @@ namespace X_Guide.MVVM.ViewModel
 
         private async void LoadMachineName()
         {
-
-            MachineNames = new ObservableCollection<string>(await _manipulatorDbService.GetAllManipulatorName());
+            var models = await _manipulatorDb.GetAllManipulator();
+            var viewModels = models.Select(x => _mapper.Map<ManipulatorViewModel>(x));
+            Manipulators = new ObservableCollection<ManipulatorViewModel>(viewModels);
   
         }
 
