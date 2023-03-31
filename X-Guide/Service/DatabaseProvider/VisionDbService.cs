@@ -10,11 +10,11 @@ namespace X_Guide.Service.DatabaseProvider
 {
     internal class VisionDbService : DbServiceBase, IVisionDbService
     {
-        private readonly IMapper _mapper;
 
-        public VisionDbService(IMapper mapper, DbContextFactory contextFactory) : base(contextFactory)
+
+        public VisionDbService(IMapper mapper, DbContextFactory contextFactory) : base(contextFactory, mapper)
         {
-            _mapper = mapper;
+
         }
 
         

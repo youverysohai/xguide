@@ -203,8 +203,46 @@ namespace Xlent_Vision_Guided
 
             return 1/pixel_per_mm;
         }
+
+
+        public static double[] EyeInHandConfig2D_Operate(Point VisCenter, double[] Calib_Data)
+        {
+            double transformed_vision_x, transformed_vision_y;
+            double calib_theta_rad;
+            double[] Operate_Data = new double[3];
+
+            // convert vision pixel to mm
+            VisCenter.X *= Calib_Data[3];
+            VisCenter.Y *= Calib_Data[3];
+
+            /* vision_capture_y = -vision_capture_y;*/
+
+            // invert angle sign
+           /* VisCenter.Angle = -VisCenter.Angle;*/
+            calib_theta_rad = Calib_Data[2] * Math.PI / 180.0;
+
+
+            //rotate vision frame first
+            transformed_vision_x = VisCenter.X * Math.Cos(-calib_theta_rad) + VisCenter.Y * Math.Sin(-calib_theta_rad);
+            transformed_vision_y = -VisCenter.X * Math.Sin(-calib_theta_rad) + VisCenter.Y * Math.Cos(-calib_theta_rad);
+            //translation transformation
+
+            Operate_Data[0] = Calib_Data[0] + transformed_vision_x;
+            Operate_Data[1] = Calib_Data[1] + transformed_vision_y;
+            Operate_Data[2] = Calib_Data[2] + VisCenter.Angle;
+
+            if (Operate_Data[2] <= -180.0)
+                Operate_Data[2] += 360;
+            else if (Operate_Data[2] > 180.0)
+                Operate_Data[2] -= 360;
+            Debug.WriteLine("X:{0}, Y;{1}, Theta:{2}",Operate_Data[0], Operate_Data[1], Operate_Data[2]);
+            return Operate_Data;
+            
+        }
+
+
         #region legacyCode for testing
-             public static double[] OldEyeInHandConfig2D_Calib(double[] vision_x_data, double[] vision_y_data, double[] robot_x_data, double[] robot_y_data, double x_move, double y_move, bool conversion)
+        public static double[] OldEyeInHandConfig2D_Calib(double[] vision_x_data, double[] vision_y_data, double[] robot_x_data, double[] robot_y_data, double x_move, double y_move, bool conversion)
         {
 
             // input variable declaration

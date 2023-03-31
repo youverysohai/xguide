@@ -11,8 +11,10 @@ using System.Threading;
 using System.Threading.Tasks;
 using System.Windows;
 using X_Guide.CustomEventArgs;
+using X_Guide.MVVM.ViewModel.CalibrationWizardSteps;
 using X_Guide.Service.Communication;
-
+using X_Guide.Service.DatabaseProvider;
+using Xlent_Vision_Guided;
 
 namespace X_Guide.Communication.Service
 {
@@ -21,8 +23,11 @@ namespace X_Guide.Communication.Service
 
         private int _port { get; }
         private IPAddress _ip { get; }
-        private TcpListener _server;
 
+        private readonly ICalibrationService _calibrationDb;
+        private readonly IClientService _clientService;
+        private TcpListener _server;
+        
         private bool started = false;
 
         public event EventHandler<TcpClientEventArgs> ClientEvent;
@@ -35,11 +40,13 @@ namespace X_Guide.Communication.Service
         CancellationTokenSource cts;
    
 
-        public ServerService(IPAddress ip, int port, string terminator = null) : base(terminator)
+        public ServerService(IPAddress ip, int port, string terminator, ICalibrationService calibrationDb, IClientService clientService) : base(terminator)
         {
             _port = port;
             _ip = ip;
-        
+            _calibrationDb = calibrationDb;
+            _clientService = clientService;
+                
         }
 
         public bool getServerStatus()
@@ -56,8 +63,9 @@ namespace X_Guide.Communication.Service
         public async Task StartServer()
         {
             cts = new CancellationTokenSource();
-
+            _dataReceived += ProcessCommand;
             _server = new TcpListener(_ip, _port);
+            
             try
             {
 
@@ -91,6 +99,26 @@ namespace X_Guide.Communication.Service
                 ListenerEvent?.Invoke(this, new TcpListenerEventArgs(_server));
             }
 
+        }
+
+        private void ProcessCommand(object sender, NetworkStreamEventArgs e)
+        {
+            var data = e.Data.Select(x=> x.Trim().ToLower()).ToList();
+            if (!data[0].Equals("xguide") || data.Count < 3) return;
+            CalibrateOperation(data[1], data[2]);
+            
+        }
+
+
+        private async void CalibrateOperation(string calibName, string flowName)
+        {
+            /*   CalibrationViewModel calibration = await _calibrationDb.GetCalibration(calibName);
+               if (calibration == null) return;
+                
+               Point Vis_Center = await _clientService.GetVisCenter();
+               VisionGuided.EyeInHandConfig2D_Operate(Vis_Center, 15, new double[] { calibration.CXOffSet, calibration.CYOffset, calibration.CRZOffset });*/
+            MessageBox.Show("Start operation!");
+            
         }
 
         public async Task SendJogCommand(TcpClientInfo client, JogCommand jogCommand)

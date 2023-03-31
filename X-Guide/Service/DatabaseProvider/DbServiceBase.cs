@@ -1,4 +1,5 @@
-﻿using System;
+﻿using AutoMapper;
+using System;
 using System.Collections.Generic;
 using System.Data.Entity;
 using System.Linq;
@@ -11,10 +12,12 @@ namespace X_Guide.Service.DatabaseProvider
     internal class DbServiceBase
     {
         private readonly DbContextFactory _dbContextFactory;
+        private readonly IMapper _mapper;
 
-        public DbServiceBase(DbContextFactory dbContextFactory)
+        public DbServiceBase(DbContextFactory dbContextFactory, IMapper mapper)
         {
             _dbContextFactory = dbContextFactory;
+            _mapper = mapper;
         }
         protected async Task<T> AsyncQuery<T>(Func<XGuideDBEntities, T> action)
         {
@@ -26,6 +29,14 @@ namespace X_Guide.Service.DatabaseProvider
                 }
             });
         }
+
+        protected T MapTo<T>(object destination)
+        {
+            return _mapper.Map<T>(destination);
+        }
+
+       
+
 
     }
 }

@@ -33,7 +33,7 @@ namespace X_Guide.MVVM.ViewModel
         public RelayCommand ManipulatorCommand { get; set; }
 
 
-        private readonly IMachineDbService _machineDb;
+        private readonly IManipulatorDbService _manipulatorDb;
         private readonly IVisionDbService _visionDb;
         private readonly IMapper _mapper;
         private readonly ErrorViewModel _errorViewModel;
@@ -53,11 +53,11 @@ namespace X_Guide.MVVM.ViewModel
                 OnPropertyChanged();
             }
         }
-        private MachineViewModel _cache;
+        private ManipulatorViewModel _cache;
 
-        private MachineViewModel _manipulator;
+        private ManipulatorViewModel _manipulator;
 
-        public MachineViewModel Manipulator
+        public ManipulatorViewModel Manipulator
         {
             get { return _manipulator; }
             set
@@ -68,9 +68,9 @@ namespace X_Guide.MVVM.ViewModel
         }
 
         //SettingViewModel properties
-        private ObservableCollection<MachineViewModel> _manipulators;
+        private ObservableCollection<ManipulatorViewModel> _manipulators;
 
-        public ObservableCollection<MachineViewModel> Manipulators
+        public ObservableCollection<ManipulatorViewModel> Manipulators
         {
             get { return _manipulators; }
             set
@@ -80,14 +80,14 @@ namespace X_Guide.MVVM.ViewModel
             }
         }
 
-        private IEnumerable<ValueDescription> _machineTypeList;
+        private IEnumerable<ValueDescription> _manipulatorTypeList;
 
-        public IEnumerable<ValueDescription> MachineTypeList
+        public IEnumerable<ValueDescription> ManipulatorTypeList
         {
-            get { return _machineTypeList; }
+            get { return _manipulatorTypeList; }
             set
             {
-                _machineTypeList = value;
+                _manipulatorTypeList = value;
                 OnPropertyChanged();
             }
         }
@@ -116,14 +116,14 @@ namespace X_Guide.MVVM.ViewModel
             }
         }
 
-        public SettingViewModel(IMachineDbService machineDb, IVisionDbService visionDb, IMapper mapper)
+        public SettingViewModel(IManipulatorDbService machineDb, IVisionDbService visionDb, IMapper mapper)
         {
-            _machineDb = machineDb;
+            _manipulatorDb = machineDb;
             _visionDb = visionDb;
             _mapper = mapper;
             GetAllMachine();
 
-            MachineTypeList = EnumHelperClass.GetAllIntAndDescriptions(typeof(MachineType));
+            ManipulatorTypeList = EnumHelperClass.GetAllIntAndDescriptions(typeof(ManipulatorType));
             TerminatorList = EnumHelperClass.GetAllValuesAndDescriptions(typeof(Terminator));
 
             ManipulatorCommand = new RelayCommand(OnManipulatorChangeEvent);
@@ -132,9 +132,9 @@ namespace X_Guide.MVVM.ViewModel
 
         private async void GetAllMachine()
         {
-            IEnumerable<MachineModel> models = await _machineDb.GetAllMachine();
-            IEnumerable<MachineViewModel> viewModels = models.Select(x => _mapper.Map<MachineViewModel>(x));
-            Manipulators = new ObservableCollection<MachineViewModel>(viewModels);
+            IEnumerable<ManipulatorModel> models = await _manipulatorDb.GetAllManipulator();
+            IEnumerable<ManipulatorViewModel> viewModels = models.Select(x => _mapper.Map<ManipulatorViewModel>(x));
+            Manipulators = new ObservableCollection<ManipulatorViewModel>(viewModels);
         }
 
         private async void SaveSetting(object obj)
@@ -142,7 +142,7 @@ namespace X_Guide.MVVM.ViewModel
 
 
 
-            bool saveStatus = await _machineDb.SaveMachine(_mapper.Map<MachineModel>(Manipulator));
+            bool saveStatus = await _manipulatorDb.SaveManipulator(_mapper.Map<ManipulatorModel>(Manipulator));
             if (saveStatus)
             {
                 MessageBox.Show(ConfigurationManager.AppSettings["SaveSettingCommand_SaveMessage"]);
@@ -158,7 +158,7 @@ namespace X_Guide.MVVM.ViewModel
         private void OnManipulatorChangeEvent(object obj)
         {
 
-            Manipulator = ((MachineViewModel)obj).Clone() as MachineViewModel;
+            Manipulator = ((ManipulatorViewModel)obj).Clone() as ManipulatorViewModel;
    
         }
 

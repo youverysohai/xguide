@@ -9,7 +9,7 @@ using VM.Core;
 
 namespace X_Guide.MVVM.Model
 {
-    public class MachineModel
+    public class ManipulatorModel
     {
         public int Id { get; set; }
         public string Name { get; set; }
@@ -20,7 +20,7 @@ namespace X_Guide.MVVM.Model
         public string Terminator { get; set; }
 
         
-        public MachineModel()
+        public ManipulatorModel()
         {
           
             Name = "Default";
@@ -31,7 +31,7 @@ namespace X_Guide.MVVM.Model
             Terminator = string.Empty;
         }
 
-        public MachineModel(int id, string name, int type, string description, string manipulatorIP, string manipulatorPort, string manipulatorTerminator)
+        public ManipulatorModel(int id, string name, int type, string description, string manipulatorIP, string manipulatorPort, string manipulatorTerminator)
         {
             Id = id;
             Name = name;

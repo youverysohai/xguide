@@ -13,7 +13,7 @@ namespace X_Guide.Service.Communication
     public class TCPBase
     {
 
-        private event EventHandler<NetworkStreamEventArgs> _dataReceived;
+        protected event EventHandler<NetworkStreamEventArgs> _dataReceived;
 
         private string _terminator;
         protected string Terminator { get => _terminator; set => _terminator = value ?? "\n"; }

@@ -156,7 +156,7 @@
     <Style x:Key="RadioButtonSCARA" TargetType="RadioButton" BasedOn="{StaticResource RadioButtonStyle}">
         <Setter Property="Visibility" Value="Collapsed"/>
         <Style.Triggers>
-            <DataTrigger Binding="{Binding Machine.Type}" Value="SCARA" >
+            <DataTrigger Binding="{Binding Manipulator.Type}" Value="SCARA" >
                 <Setter Property="Visibility" Value="Visible"></Setter>
             </DataTrigger>
         </Style.Triggers>
@@ -164,7 +164,7 @@
     <Style x:Key="RadioButtonSixAxis" TargetType="RadioButton" BasedOn="{StaticResource RadioButtonStyle}">
         <Setter Property="Visibility" Value="Collapsed"/>
         <Style.Triggers>
-            <DataTrigger Binding="{Binding Machine.Type}" Value="6-Axis" >
+            <DataTrigger Binding="{Binding Manipulator.Type}" Value="6-Axis" >
                 <Setter Property="Visibility" Value="Visible"></Setter>
             </DataTrigger>
         </Style.Triggers>

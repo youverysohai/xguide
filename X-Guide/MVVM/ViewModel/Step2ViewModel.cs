@@ -39,7 +39,7 @@ namespace X_Guide.MVVM.ViewModel
 
         private void OnSelectedChangedEventHandler(object sender, EventArgs e)
         {
-            Setting.Machine = ((dynamic)sender).Machine;
+            Setting.Manipulator = ((dynamic)sender).Machine;
         }
 
 

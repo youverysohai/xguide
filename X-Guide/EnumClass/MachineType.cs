@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace X_Guide
 {
-    public enum MachineType
+    public enum ManipulatorType
     {
         [Description("Gantry System")]
         GantrySystem = 1,

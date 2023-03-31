@@ -10,14 +10,14 @@ using X_Guide.MVVM.ViewModel;
 
 namespace X_Guide.MappingConfiguration
 {
-    public class MachineProfile : Profile
+    public class ManipulatorProfile : Profile
     {
-        public MachineProfile()
+        public ManipulatorProfile()
         {/*.ForMember(dest => dest.Type, opt => opt.MapFrom(src => EnumHelperClass.GetEnumDescription((MachineType)src.Type)))*/
-            CreateMap<MachineModel, MachineViewModel>().ForMember(dest => dest.Ip, opt => opt.MapFrom(src => new ObservableCollection<string>(src.Ip.Split('.'))));
-            CreateMap<MachineViewModel, MachineModel>().ForMember(dest => dest.Ip, opt => opt.MapFrom(src => string.Join(".", src.Ip)));
-            CreateMap<Machine, MachineModel>();
-            CreateMap<MachineModel, Machine>();
+            CreateMap<ManipulatorModel, ManipulatorViewModel>().ForMember(dest => dest.Ip, opt => opt.MapFrom(src => new ObservableCollection<string>(src.Ip.Split('.'))));
+            CreateMap<ManipulatorViewModel, ManipulatorModel>().ForMember(dest => dest.Ip, opt => opt.MapFrom(src => string.Join(".", src.Ip)));
+            CreateMap<Manipulator, ManipulatorModel>();
+            CreateMap<ManipulatorModel, Manipulator>();
         }
       
     }

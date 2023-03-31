@@ -13,6 +13,7 @@ using X_Guide.Communication.Service;
 using X_Guide.MVVM.Command;
 using X_Guide.MVVM.ViewModel.CalibrationWizardSteps;
 using X_Guide.Service.Communication;
+using X_Guide.Service.DatabaseProvider;
 using Xlent_Vision_Guided;
 
 namespace X_Guide.MVVM.ViewModel
@@ -21,6 +22,7 @@ namespace X_Guide.MVVM.ViewModel
     {
         private CalibrationViewModel _setting;
         private IMVSCircleFindModuTool _circleFind;
+        private double[] calibData;
         public CalibrationViewModel Setting
         {
             get { return _setting; }
@@ -44,16 +46,18 @@ namespace X_Guide.MVVM.ViewModel
 
         private IClientService _clientService;
         private IServerService _serverService;
+        private readonly ICalibrationService _calibDb;
         private readonly TcpClientInfo _tcpClientInfo;
-        public event EventHandler<IMVSCircleFindModuTool> BindProcedure;
+        public RelayCommand SaveCommand { get; set; }
+        
 
-        public ICommand CalibrateCommand { get; set; }
-        public Step6ViewModel(CalibrationViewModel setting, IClientService clientService, IServerService serverService)
+        public RelayCommand CalibrateCommand { get; set; }
+        public Step6ViewModel(CalibrationViewModel setting, IClientService clientService, IServerService serverService, ICalibrationService calibDb)
         {
             Setting = setting;
             _clientService = clientService;
             _serverService = serverService;
-
+            _calibDb = calibDb;
             try { clientService.ConnectServer(); }
             catch (Exception ex)
             {
@@ -67,57 +71,56 @@ namespace X_Guide.MVVM.ViewModel
             VisProcedure = _circleFind;
             /*        _circleFind.Run();*/
             CalibrateCommand = new RelayCommand(Calibrate);
+            SaveCommand = new RelayCommand(Save);
             } catch (Exception ex) { Debug.WriteLine(ex);}
+            
         }
-        /*     private async Task SaveRenderImage()
-             {
 
-                 _circleFind.Run();
-                 await Task.Delay(1000);
-             }*/
+        private async void Save(object obj)
+        {
+            await _calibDb.AddCalibration(Setting);
+            System.Windows.MessageBox.Show("Saved!");
+        }
 
         private async void Calibrate(object obj)
         {
 
-            List<double> XMoveList = new List<double>();
-            List<double> YMoveList = new List<double>();
+            (_clientService as ClientService).Flowname = "Circle";
             Setting.XOffset = Setting.XOffset == 0 ? 10 : Setting.XOffset;
             Setting.YOffset = Setting.YOffset == 0 ? 10 : Setting.YOffset;
 
-            //for (int i = 0; i < 5; i++)
-            //{
-            //    double[] xyMove = await FindXMoveYMove(20, 3);
-            //    XMoveList.Add(xyMove[0]);
-            //    YMoveList.Add(xyMove[1]);
-            //}
-            //XMoveList.Sort();
-            //YMoveList.Sort();
-            //XMoveList.ForEach(x => Debug.Write(x + ","));
-            //Debug.WriteLine("");
-            //YMoveList.ForEach(x => Debug.Write(x + ","));
-            //double[] XYMove =
-            //{
-            //           XMoveList[2],
-            //           YMoveList[2],
-            //       }; 
+       
 
             double[] XYMove = await FindXMoveYMove(30, 15);
 
 
-            /*            await _serverService.SendJogCommand(_tcpClientInfo, new JogCommand().SetX(XYMove[0]).SetY(XYMove[1]).SetZ(-180));
-                        await Task.Delay(10000);
-                        await _serverService.SendJogCommand(_tcpClientInfo, new JogCommand().SetX(-XYMove[0]).SetY(-XYMove[1]).SetZ(180));*/
+ 
 
             (Point[] VisionPoint, Point[] RobotPoint) = await Start9PointCalib();
-            double[] calibData = VisionGuided.EyeInHandConfig2D_Calib(VisionPoint, RobotPoint, XYMove[0], XYMove[1], true);
+            calibData = VisionGuided.EyeInHandConfig2D_Calib(VisionPoint, RobotPoint, XYMove[0], XYMove[1], true);
 
             Setting.CXOffSet = Math.Round(calibData[0], 2);
             Setting.CYOffset = Math.Round(calibData[1], 2);
             Setting.CRZOffset = Math.Round(calibData[2], 2);
             Setting.Mm_per_pixel = Math.Round(calibData[3], 2);
-            /*        await _serverService.SendJogCommand(_tcpClientInfo, new JogCommand().SetX(calibData[0]).SetY(calibData[1]).SetRZ(calibData[2]));
-                    await Task.Delay(2000);*/
-            await _clientService.GetVisCenter();
+      /*      await _serverService.SendJogCommand(_tcpClientInfo, new JogCommand().SetX(calibData[0]).SetY(calibData[1]).SetRZ(calibData[2]));*/
+           /* await Task.Delay(2000);
+            await _clientService.GetVisCenter();*/
+        }
+
+        private async void Operation(object parameter)
+        {
+            ((VmProcedure)VmSolution.Instance["Circle"]).ContinuousRunEnable = false;
+            ((VmProcedure)VmSolution.Instance["Long"]).ContinuousRunEnable = true;
+            (_clientService as ClientService).Flowname = "Long";
+
+
+            Point VisCenter = await _clientService.GetVisCenter();
+            double[] OperationData = VisionGuided.EyeInHandConfig2D_Operate(VisCenter, calibData);
+            OperationData[2] -= 112.307;
+            if (OperationData[2] > 180) OperationData[2] -= 360;
+            else if (OperationData[2] <= 180) OperationData[2] += 360;
+            await _serverService.SendJogCommand(_tcpClientInfo, new JogCommand().SetX(OperationData[0]).SetY(OperationData[1]).SetRZ(OperationData[2]));
         }
 
         private async Task<(Point[], Point[])> Start9PointCalib()

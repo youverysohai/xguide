@@ -22,6 +22,7 @@ namespace X_Guide.Communication.Service
         private NetworkStream _stream;
         private IPAddress _ipAddress;
         private CancellationTokenSource cts;
+        public string Flowname = "";
 
         public ClientService(IPAddress ipAddress, int port, string terminator = null) : base(terminator)
         {
@@ -48,8 +49,7 @@ namespace X_Guide.Communication.Service
 
         public async Task<Point> GetVisCenter()
         {
-            string flowName = "FindVisCenter";
-            await WriteDataAsync($"XGUIDE,{flowName}", _stream);
+            await WriteDataAsync($"XGUIDE,{Flowname}", _stream);
             Point point = await Task.Run(() => RegisterRequestEventHandler(GetVisCenterEvent));
             Debug.WriteLine(point);
             return point;
@@ -60,10 +60,10 @@ namespace X_Guide.Communication.Service
         {
             string[] data = e.Data;
 
-            if (data.Length == 2)
+            if (data.Length == 3)
             {
-           
-                Point point = new Point(double.Parse(data[0]), -double.Parse(data[1]));
+                
+                Point point = new Point(double.Parse(data[0]), -double.Parse(data[1]), double.Parse(data[2]));
                
                 return point;
 

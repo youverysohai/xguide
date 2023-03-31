@@ -16,18 +16,19 @@ namespace X_Guide
     {
         public int Id { get; set; }
         public string Name { get; set; }
-        public int MachineId { get; set; }
-        public string MountingOrientation { get; set; }
+        public Nullable<int> ManipulatorId { get; set; }
+        public Nullable<int> MountingOrientation { get; set; }
         public string VisionFilePath { get; set; }
-        public string RobotSpeed { get; set; }
-        public string RobotAccel { get; set; }
-        public string MotionDelay { get; set; }
-        public string XOffset { get; set; }
-        public string YOffset { get; set; }
-        public string CameraXScalling { get; set; }
-        public string CameraYScalling { get; set; }
-        public string RZOffset { get; set; }
+        public Nullable<double> RobotSpeed { get; set; }
+        public Nullable<double> RobotAccel { get; set; }
+        public Nullable<double> MotionDelay { get; set; }
+        public Nullable<double> XOffset { get; set; }
+        public Nullable<double> YOffset { get; set; }
+        public Nullable<double> CameraXScaling { get; set; }
+        public Nullable<double> CameraYScaling { get; set; }
+        public Nullable<double> RZOffset { get; set; }
+        public string VisionFlow { get; set; }
     
-        public virtual Machine Machine { get; set; }
+        public virtual Manipulator Manipulator { get; set; }
     }
 }

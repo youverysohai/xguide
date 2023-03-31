@@ -22,10 +22,10 @@ namespace X_Guide.MVVM.ViewModel
 
         public Action SelectedItemChangedEvent;
 
-        private MachineModel _machineModel;
+        private ManipulatorModel _machineModel;
 
-        private MachineViewModel _machine;
-        public MachineViewModel Machine
+        private ManipulatorViewModel _machine;
+        public ManipulatorViewModel Machine
         {
             get { return _machine; }
             set { _machine = value;
@@ -58,26 +58,26 @@ namespace X_Guide.MVVM.ViewModel
 
         private async void OnSelectedItemChanged(string name)
         {
-            _machineModel = await _machineService.GetMachine(name);
+            _machineModel = await _manipulatorDbService.GetManipulator(name);
             Machine = /*MachineViewModel.ToViewModel(_machineModel, _mapper);*/ null;
-            _setting.Machine = Machine;
-            _serverService.SetServerReadTerminator(_machineService.GetMachineDelimiter(name));
+            _setting.Manipulator = Machine;
+            _serverService.SetServerReadTerminator(_manipulatorDbService.GetManipulatorDelimiter(name));
             SelectedItemChangedEvent?.Invoke();
              
         }
 
         public ICommand ShoutCommand { get; set; }
-        public IMachineDbService _machineService { get; }
+        public IManipulatorDbService _manipulatorDbService { get; }
         private IMapper _mapper { get; }
         public IServerService _serverService { get; }
 
         private readonly IClientService _clientService;
         #endregion
-        public Step1ViewModel(IMachineDbService machineService, IMapper mapper, CalibrationViewModel setting, IServerService serverService, IClientService clientService)
+        public Step1ViewModel(IManipulatorDbService manipulatorDbService, IMapper mapper, CalibrationViewModel setting, IServerService serverService, IClientService clientService)
         {
             
 
-             _machineService = machineService;
+             _manipulatorDbService = manipulatorDbService;
             LoadMachineName();
             _mapper = mapper; 
            _serverService = serverService;
@@ -89,7 +89,7 @@ namespace X_Guide.MVVM.ViewModel
         private async void LoadMachineName()
         {
 
-            MachineNames = new ObservableCollection<string>(await _machineService.GetAllMachineName());
+            MachineNames = new ObservableCollection<string>(await _manipulatorDbService.GetAllManipulatorName());
   
         }
 

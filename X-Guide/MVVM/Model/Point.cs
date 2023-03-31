@@ -10,23 +10,27 @@ namespace Xlent_Vision_Guided
     {
         public double X { get; set; }
         public double Y { get; set; }
+        public double Angle { get; set; }
 
         public Point()
         {
             X = 0;
             Y = 0;
+            Angle = 0;
         }
-        public Point(double x, double y)
+        public Point(double x, double y, double angle = 0)
         {
             X = x;
             Y = y;
+            Angle = angle;
+
         }
 
         
 
         public override string ToString()
         {
-            return String.Format("X: {0}, Y: {1}", X, Y);
+            return String.Format("X: {0}, Y: {1}, θ: {2}", X, Y, Angle);
         }
 
         public double CalculateDistance(Point point)
