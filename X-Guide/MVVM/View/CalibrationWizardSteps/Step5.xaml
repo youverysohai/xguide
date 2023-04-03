@@ -18,7 +18,7 @@ xmlns:XCust="clr-namespace:X_Guide.CustomControls"             x:Class="X_Guide.
                 
              d:DesignHeight="600" d:DesignWidth="1300">
     <UserControl.Resources>
-      
+
         <Style TargetType="Button" BasedOn="{x:Null}"></Style>
         <Style TargetType="Label" BasedOn="{x:Null}"></Style>
         <Style TargetType="ComboBox" BasedOn="{x:Null}"></Style>
@@ -32,7 +32,7 @@ xmlns:XCust="clr-namespace:X_Guide.CustomControls"             x:Class="X_Guide.
 
             <!--VM Camare-->
 
-            <Grid hc:FlexPanel.FlexBasis="720" Height="480" >
+            <Grid hc:FlexPanel.FlexBasis="720" Height="550" >
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="*"/>
                     <ColumnDefinition Width="*"/>
@@ -43,138 +43,138 @@ xmlns:XCust="clr-namespace:X_Guide.CustomControls"             x:Class="X_Guide.
                     <RowDefinition Height="*"/>
                     <RowDefinition Height="*"/>
                 </Grid.RowDefinitions>
-       
-            <XCust:CustomRenderControl Grid.ColumnSpan="3" Grid.RowSpan="3" Procedure="{Binding VisProcedure}"></XCust:CustomRenderControl>
-            
-       
+
+                <XCust:CustomRenderControl Grid.ColumnSpan="3" Grid.RowSpan="3" Procedure="{Binding VisProcedure}"></XCust:CustomRenderControl>
 
 
 
-            <Border Grid.Row="1" Grid.Column="1" BorderThickness="2.5" BorderBrush="{DynamicResource PrimaryBlueColor}" x:Name="CenterBox" Visibility="Collapsed"></Border>
+
+
+                <Border Grid.Row="1" Grid.Column="1" BorderThickness="2.5" BorderBrush="{DynamicResource PrimaryBlueColor}" x:Name="CenterBox" Visibility="Collapsed"></Border>
 
             </Grid>
             <GroupBox hc:FlexPanel.FlexBasis="300" Style="{StaticResource GroupBoxTab}">
                 <GroupBox.Header>
                     <TextBlock d:Foreground="Wheat" HorizontalAlignment="Center" Style="{DynamicResource TitleTextBlockStyle}" Text="Jog to Vision Center" />
                 </GroupBox.Header>
-                              <Grid >
-                <Grid.RowDefinitions>
-                    
-                    <RowDefinition Height="*"/>
-                    <RowDefinition Height="*"/>
-                </Grid.RowDefinitions>
+                <Grid >
+                    <Grid.RowDefinitions>
 
-                <!-- Title -->
-                <!-- JogButtons and Rotations-->
-                <Grid  Grid.Column="2">
-                    <Grid.RowDefinitions >
                         <RowDefinition Height="*"/>
                         <RowDefinition Height="*"/>
                     </Grid.RowDefinitions>
-                    <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width="5*"/>
-                        <ColumnDefinition Width="1.2*"/>
-                    </Grid.ColumnDefinitions>
 
-                    <!--UP -->
-                    <Viewbox   Grid.Column="1" Grid.Row="0"  >
-                        <Canvas  Width="50" Height="90">
-                            <Image Width="50" Height="90" Source="pack://application:,,,/Style/ImageSource/up.png" ToolTip="Z+" ToolTipService.InitialShowDelay="100"/>
+                    <!-- Title -->
+                    <!-- JogButtons and Rotations-->
+                    <Grid  Grid.Column="2">
+                        <Grid.RowDefinitions >
+                            <RowDefinition Height="*"/>
+                            <RowDefinition Height="*"/>
+                        </Grid.RowDefinitions>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="5*"/>
+                            <ColumnDefinition Width="1.2*"/>
+                        </Grid.ColumnDefinitions>
 
-                            <Button Command="{Binding JogCommand}" CommandParameter="Z+"  Canvas.Left="15" Canvas.Top="22" Style="{StaticResource TransparentStyle}" ToolTip="Z+" ToolTipService.InitialShowDelay="100">
-                                <TextBlock Style="{DynamicResource ButtonInnerTextBlockCenter}"  >Z+</TextBlock>
-                            </Button>
-                        </Canvas>
+                        <!--UP -->
+                        <Viewbox   Grid.Column="1" Grid.Row="0"  >
+                            <Canvas  Width="50" Height="90">
+                                <Image Width="50" Height="90" Source="pack://application:,,,/Style/ImageSource/up.png" ToolTip="Z+" ToolTipService.InitialShowDelay="100"/>
 
-                    </Viewbox>
+                                <Button Command="{Binding JogCommand}" CommandParameter="Z+"  Canvas.Left="15" Canvas.Top="22" Style="{StaticResource TransparentStyle}" ToolTip="Z+" ToolTipService.InitialShowDelay="100">
+                                    <TextBlock Style="{DynamicResource ButtonInnerTextBlockCenter}"  >Z+</TextBlock>
+                                </Button>
+                            </Canvas>
 
-                    <!--Down -->
-                    <Viewbox  Grid.Column="2" Grid.Row="1"  >
-                        <Canvas  Width="50" Height="90" >
-                            <Image  Width="50" Height="90"  Source="pack://application:,,,/Style/ImageSource/down.png" ToolTip="Z-" ToolTipService.InitialShowDelay="100"/>
+                        </Viewbox>
 
-                            <Button Command="{Binding JogCommand}" CommandParameter="Z-"  Canvas.Left="15" Canvas.Bottom="25" BorderThickness="0"  Style="{StaticResource TransparentStyle}" ToolTip="Z-" ToolTipService.InitialShowDelay="100">
-                                <TextBlock Style="{DynamicResource ButtonInnerTextBlockCenter}" >Z-</TextBlock>
-                            </Button>
-                        </Canvas>
+                        <!--Down -->
+                        <Viewbox  Grid.Column="2" Grid.Row="1"  >
+                            <Canvas  Width="50" Height="90" >
+                                <Image  Width="50" Height="90"  Source="pack://application:,,,/Style/ImageSource/down.png" ToolTip="Z-" ToolTipService.InitialShowDelay="100"/>
 
-                    </Viewbox>
+                                <Button Command="{Binding JogCommand}" CommandParameter="Z-"  Canvas.Left="15" Canvas.Bottom="25" BorderThickness="0"  Style="{StaticResource TransparentStyle}" ToolTip="Z-" ToolTipService.InitialShowDelay="100">
+                                    <TextBlock Style="{DynamicResource ButtonInnerTextBlockCenter}" >Z-</TextBlock>
+                                </Button>
+                            </Canvas>
 
-             <!--Arrow Button-->
-            <Image Grid.Row="0" Grid.RowSpan="2"/>
-            <Viewbox Grid.Row="0" Grid.RowSpan="2" HorizontalAlignment="Left" VerticalAlignment="Top">
-                <Canvas Width="260" Height="280"  x:Name="image" >
-                    <Image Width="260" Canvas.Top="40" Source="pack://application:,,,/Style/ImageSource/arrows.png" />
-                    <Button Command="{Binding JogCommand}" CommandParameter="Y+" Style="{DynamicResource UpArrowButton}" >
+                        </Viewbox>
 
-                                <TextBlock Style="{DynamicResource ButtonInnerTextBlockCenter}">Y+</TextBlock>
-                            </Button>
-                            <Button Command="{Binding JogCommand}" CommandParameter="Y-" Style="{DynamicResource DownArrowButton}">
+                        <!--Arrow Button-->
+                        <Image Grid.Row="0" Grid.RowSpan="2"/>
+                        <Viewbox Grid.Row="0" Grid.RowSpan="2" HorizontalAlignment="Left" VerticalAlignment="Top">
+                            <Canvas Width="260" Height="280"  x:Name="image" >
+                                <Image Width="260" Canvas.Top="40" Source="pack://application:,,,/Style/ImageSource/arrows.png" />
+                                <Button Command="{Binding JogCommand}" CommandParameter="Y+" Style="{DynamicResource UpArrowButton}" >
 
-                                <TextBlock Style="{DynamicResource ButtonInnerTextBlockCenter}">Y-</TextBlock>
-                            </Button>
-                            <Button Command="{Binding JogCommand}" CommandParameter="X-"  Style="{DynamicResource LeftArrowButton}">
+                                    <TextBlock Style="{DynamicResource ButtonInnerTextBlockCenter}">Y+</TextBlock>
+                                </Button>
+                                <Button Command="{Binding JogCommand}" CommandParameter="Y-" Style="{DynamicResource DownArrowButton}">
 
-                                <TextBlock Style="{DynamicResource ButtonInnerTextBlockCenter}">X-</TextBlock>
-                            </Button>
-                            <Button Command="{Binding JogCommand}" CommandParameter="X+" Style="{DynamicResource RightArrowButton}">
+                                    <TextBlock Style="{DynamicResource ButtonInnerTextBlockCenter}">Y-</TextBlock>
+                                </Button>
+                                <Button Command="{Binding JogCommand}" CommandParameter="X-"  Style="{DynamicResource LeftArrowButton}">
 
-                                <TextBlock Style="{DynamicResource ButtonInnerTextBlockCenter}">X+</TextBlock>
-                            </Button>
-                            <!-- Z rotation-->
-                            <Button Command="{Binding JogCommand}" CommandParameter="RZ+" Style="{DynamicResource ClockwiseButton}">
+                                    <TextBlock Style="{DynamicResource ButtonInnerTextBlockCenter}">X-</TextBlock>
+                                </Button>
+                                <Button Command="{Binding JogCommand}" CommandParameter="X+" Style="{DynamicResource RightArrowButton}">
 
-                                <TextBlock Style="{DynamicResource ClockwiseTextBlock}">Rz+</TextBlock>
-                            </Button>
-                            <Button Command="{Binding JogCommand}" CommandParameter="RZ-" Style="{DynamicResource AntiClockwiseButton}">
+                                    <TextBlock Style="{DynamicResource ButtonInnerTextBlockCenter}">X+</TextBlock>
+                                </Button>
+                                <!-- Z rotation-->
+                                <Button Command="{Binding JogCommand}" CommandParameter="RZ+" Style="{DynamicResource ClockwiseButton}">
 
-                                <TextBlock Style="{DynamicResource AntiClockwiseTextBlock}">Rz-</TextBlock>
-                            </Button>
-                        </Canvas>
+                                    <TextBlock Style="{DynamicResource ClockwiseTextBlock}">Rz+</TextBlock>
+                                </Button>
+                                <Button Command="{Binding JogCommand}" CommandParameter="RZ-" Style="{DynamicResource AntiClockwiseButton}">
 
-                    </Viewbox>
+                                    <TextBlock Style="{DynamicResource AntiClockwiseTextBlock}">Rz-</TextBlock>
+                                </Button>
+                            </Canvas>
+
+                        </Viewbox>
 
 
-                </Grid>
+                    </Grid>
 
-                <!--Rotation RightBottom Grid-->
+                    <!--Rotation RightBottom Grid-->
 
-                <ui:SimpleStackPanel Grid.Row="2" Grid.Column="1" Grid.ColumnSpan="2" >
+                    <ui:SimpleStackPanel Grid.Row="2" Grid.Column="1" Grid.ColumnSpan="2" >
 
-                    <ui:SimpleStackPanel  Orientation="Horizontal">
-                        <ui:NumberBox Grid.Row="0" Grid.ColumnSpan="3"
+                        <ui:SimpleStackPanel  Orientation="Horizontal">
+                            <ui:NumberBox Grid.Row="0" Grid.ColumnSpan="3"
                               Header="Jog Distance (mm)" 
                               SpinButtonPlacementMode="Inline" 
                               Margin="5"
                               x:Name="FormattedNumberBox"
                               MinWidth="140" Value="{Binding JogDistance}" >
-                        </ui:NumberBox>
-                        <ui:ToggleSwitch Header="Mode (Tool/Global)" OnContent="Global" OffContent="Tool"></ui:ToggleSwitch>
-                    </ui:SimpleStackPanel>
+                            </ui:NumberBox>
+                            <ui:ToggleSwitch Header="Mode (Tool/Global)" OnContent="Global" OffContent="Tool"></ui:ToggleSwitch>
+                        </ui:SimpleStackPanel>
 
-                    <ui:SimpleStackPanel Orientation="Horizontal">
-                        <ui:NumberBox
+                        <ui:SimpleStackPanel Orientation="Horizontal">
+                            <ui:NumberBox
                        
                         Grid.Row="0" Grid.ColumnSpan="3"
                               Header="Rotation X (°)" 
                               SpinButtonPlacementMode="Compact" 
                               Margin="3"
                               MinWidth="140" Value="{Binding RotationX}" >
-                        </ui:NumberBox>
-                        <ui:NumberBox Grid.Row="0" Grid.ColumnSpan="3"
+                            </ui:NumberBox>
+                            <ui:NumberBox Grid.Row="0" Grid.ColumnSpan="3"
                               Header="Rotation Y (°)" 
                               SpinButtonPlacementMode="Compact" 
                               Margin="3"
                               MinWidth="140" Value="{Binding RotationY}" >
-                        </ui:NumberBox>
-                        
+                            </ui:NumberBox>
+
+                        </ui:SimpleStackPanel>
+                        <Label Margin="10 0 0 0" Content="Send/Received Command" Style="{DynamicResource DefaultLabelStyle}"/>
+                        <hc:TextBox Margin="5" TextWrapping="Wrap" AcceptsReturn="True" MaxLines="5" VerticalScrollBarVisibility="Auto">
+
+                        </hc:TextBox>
                     </ui:SimpleStackPanel>
-                    <Label Margin="10 0 0 0" Content="Send/Received Command" Style="{DynamicResource DefaultLabelStyle}"/>
-                    <hc:TextBox Margin="5" TextWrapping="Wrap" AcceptsReturn="True" MaxLines="5" VerticalScrollBarVisibility="Auto">
-                        
-                    </hc:TextBox>
-                </ui:SimpleStackPanel>
-            </Grid>
+                </Grid>
             </GroupBox>
 
 

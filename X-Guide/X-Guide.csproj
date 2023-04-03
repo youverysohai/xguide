@@ -676,6 +676,8 @@
       <DependentUpon>XGuideModel.tt</DependentUpon>
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Compile>
+    <Compile Include="Converter\LastCharacterConverter.cs" />
+    <Compile Include="Converter\NavigationViewExtensions.cs" />
     <Compile Include="Converter\NavigationViewItemExtensions.cs" />
     <Compile Include="Converter\TypeToDescriptionConverter.cs" />
     <Compile Include="CustomControls\CustomRenderControl.xaml.cs">
@@ -1049,11 +1051,11 @@
     <Resource Include="Style\ImageSource\up.png" />
     <Resource Include="Style\ImageSource\arrows.png" />
     <Content Include="XGuideDB.mdf">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <Content Include="XGuideDB_log.ldf">
       <DependentUpon>XGuideDB.mdf</DependentUpon>
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <Content Include="XGuideModel.Context.tt">
       <Generator>TextTemplatingFileGenerator</Generator>

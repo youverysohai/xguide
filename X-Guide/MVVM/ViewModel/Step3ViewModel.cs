@@ -12,6 +12,7 @@ using X_Guide.Communication.Service;
 using X_Guide.MVVM.Command;
 using X_Guide.MVVM.ViewModel.CalibrationWizardSteps;
 using X_Guide.Service.Communication;
+using X_Guide.Service.DatabaseProvider;
 using X_Guide.VisionMaster;
 
 namespace X_Guide.MVVM.ViewModel
@@ -20,14 +21,39 @@ namespace X_Guide.MVVM.ViewModel
     {
         public ICommand OpenFileCommand { get; }
 
+        public ICommand NavigateCommand { get; }
+
+
         private CalibrationViewModel _setting;
         private readonly IServerService _serverService;
         private readonly IClientService _clientService;
         private readonly IVisionService _visionService;
         public event EventHandler<bool> CanExecuteChange;
         private ObservableCollection<string> _visionFlow;
-        
 
+
+        private VisionViewModel _vision;
+
+        public VisionViewModel Vision
+        {
+            get { return _vision; }
+            set
+            {
+                _vision = value;
+                OnPropertyChanged();
+            }
+        }
+        private ObservableCollection<VisionViewModel> _visions;
+
+        public ObservableCollection<VisionViewModel> Visions
+        {
+            get { return _visions; }
+            set
+            {
+                _visions = value;
+                OnPropertyChanged();
+            }
+        }
         public ObservableCollection<string> VisionFlow
         {
             get { return _visionFlow; }
@@ -63,6 +89,7 @@ namespace X_Guide.MVVM.ViewModel
             }
         }
 
+        public MainViewModel DataContext { get; private set; }
 
         public Step3ViewModel(CalibrationViewModel setting, IServerService serverService, IClientService clientService, IVisionService visionService)
         {
@@ -70,12 +97,35 @@ namespace X_Guide.MVVM.ViewModel
             _serverService = serverService;
             _clientService = clientService;
             _visionService = visionService;
-          
-            
+   
+             
+            Visions = new ObservableCollection<VisionViewModel> { new VisionViewModel
+            {
+                Name = "Vision1",
+                Ip = new ObservableCollection<string>(new string[] { "192", "168", "11", "90" }),
+                Port = 8000,
+                Terminator = ""
+
+            } , new VisionViewModel
+            {
+                Name = "Hik",
+                Ip = new ObservableCollection<string>(new string[]{"192", "163","11","33"}),
+                Port=8000,
+                Terminator="\r"
+
+            } , new VisionViewModel
+            {
+                Name = "Vision2",
+                Ip = new ObservableCollection<string>(new string[]{"192", "128","21","90"}),
+                Port=8000,
+                Terminator="\r\n"
+
+            }  };
+            //NavigateCommand = new RelayCommand(Navigate);
         }
 
- 
-        
+  
+
         private void OnItemChanged(string value)
         {
             _setting.VisionFlow = value;

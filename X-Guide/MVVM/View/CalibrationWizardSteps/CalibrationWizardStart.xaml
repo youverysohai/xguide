@@ -6,17 +6,17 @@
              xmlns:local="clr-namespace:X_Guide.MVVM.View.CalibrationWizardSteps"
              xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
              xmlns:hc="https://handyorg.github.io/handycontrol"
-             
+             xmlns:c="clr-namespace:X_Guide.Converter" 
              mc:Ignorable="d" 
              d:DesignHeight="650" d:DesignWidth="1000">
     <UserControl.Resources>
-        <local:LastCharacterConverter x:Key="LastCharacterConverter" />
+        <c:LastCharacterConverter x:Key="LastCharacterConverter" />
         <DataTemplate x:Key="ChipTemplate">
 
             <materialDesign:Chip 
         Style="{DynamicResource MaterialDesignOutlineChip}"
         Click="Chip_Click"
-            Content="{Binding}"
+            Content="{Binding Name}"
             Icon="{Binding Converter={StaticResource LastCharacterConverter}}"
                 Command="{x:Static materialDesign:DrawerHost.CloseDrawerCommand}"
             DeleteClick="Chip_DeleteClick"  
@@ -34,7 +34,7 @@
                        HorizontalAlignment="Center"
                        Text="Edit" />
                         <hc:SimplePanel x:Name="ChipsContainer">
-                            <ItemsControl ItemTemplate="{StaticResource ChipTemplate}" >
+                            <ItemsControl ItemsSource="{Binding CalibrationList}" ItemTemplate="{StaticResource ChipTemplate}" >
                             </ItemsControl>
                     </hc:SimplePanel>
                    
@@ -71,7 +71,7 @@
                 <StackPanel Grid.Column="1"  Grid.Row="1" Orientation="Vertical" VerticalAlignment="Stretch"  HorizontalAlignment="Stretch" x:Name="StartStepPage" >
                     <TextBlock HorizontalAlignment="Center" FontSize="35" >Calibration Wizard</TextBlock>
                     <TextBox Width="250" Margin="50"  FontSize="16"  Style="{DynamicResource MaterialDesignFloatingHintTextBox }"
-                         materialDesign:HintAssist.Hint="Enter New Calibration Name" Text="{Binding Name}"/>
+                         materialDesign:HintAssist.Hint="Enter New Calibration Name" Text="{Binding Name}" x:Name="CalibName"/>
 
                     <TextBlock Margin="0 0 0 50" HorizontalAlignment="Center" VerticalAlignment="Bottom">Press Start to Begin <materialDesign:PackIcon Kind="ArrowDownBoldOutline"></materialDesign:PackIcon></TextBlock>
 

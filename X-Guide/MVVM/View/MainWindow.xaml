@@ -25,7 +25,7 @@
 
 
     </Window.Resources>
- 
+
     <!--#region  OLD-->
     <!--Login Form Dialog-->
     <!--
@@ -169,12 +169,11 @@
         </Grid>
     </materialDesign:DialogHost>-->
     <!--#endregion-->
-     
+
     <ui:NavigationView x:Name="SideMenuNavigation"
                        IsTitleBarAutoPaddingEnabled="True" 
                        IsBackButtonVisible="Collapsed"
                        CompactModeThresholdWidth="0"
-                       
                        IsSettingsVisible="True" ItemInvoked="SideMenuNavigation_ItemInvoked"  >
         <!-- Header Side Menu -->
 
@@ -186,7 +185,10 @@
         <ui:NavigationView.MenuItems>
             <ui:NavigationViewItem Content="Production" Icon="Library" ToolTipService.ToolTip="Production">
                 <ui:NavigationViewItem.MenuItems>
-                    <ui:NavigationViewItem  Tag="ProductionView" Content="Browse" Icon="BrowsePhotos" ToolTipService.ToolTip="Notes"/>
+                    <ui:NavigationViewItem 
+                        c:NavigationViewItemExtensions.Command="{Binding NavigateCommand}"
+                        c:NavigationViewItemExtensions.CommandParameter="{x:Static local:PageName.Production}" 
+                        Tag="ProductionView" Content="Browse" Icon="BrowsePhotos" ToolTipService.ToolTip="Notes"/>
                 </ui:NavigationViewItem.MenuItems>
             </ui:NavigationViewItem>
 
@@ -196,15 +198,17 @@
                 </ui:NavigationViewItem.Icon>
                 <ui:NavigationViewItem.MenuItems>
                     <ui:NavigationViewItem
-                         c:NavigationViewItemExtensions.Command="{Binding NavigateCommand}"
-                             c:NavigationViewItemExtensions.CommandParameter="{Binding x:Static views:PageName.CalibrationWizardStart}" 
+                         c:NavigationViewItemExtensions.Command="{Binding NavigateCommand}"           
+                         c:NavigationViewItemExtensions.CommandParameter="{x:Static local:PageName.CalibrationWizardStart}" 
                         Tag="CalibrationWizardStartView" Content="Calibration Wizard"  ToolTipService.ToolTip="Calibration Wizard"  >
                         <ui:NavigationViewItem.Icon>
                             <ui:FontIcon   Glyph="&#xE707;"/>
                         </ui:NavigationViewItem.Icon>
-
                     </ui:NavigationViewItem>
-                    <ui:NavigationViewItem Tag="JogRobotView" Content="Jog" ToolTipService.ToolTip="Jog">
+                    <ui:NavigationViewItem 
+                         c:NavigationViewItemExtensions.Command="{Binding NavigateCommand}"
+                         c:NavigationViewItemExtensions.CommandParameter="{x:Static local:PageName.JogRobot}" 
+                        Tag="JogRobotView" Content="Jog" ToolTipService.ToolTip="Jog">
                         <ui:NavigationViewItem.Icon>
                             <ui:FontIcon   Glyph="&#xE759;"/>
                         </ui:NavigationViewItem.Icon>
@@ -215,19 +219,19 @@
             <ui:NavigationViewItem Content="Account" Icon="Contact" ToolTipService.ToolTip="Account">
                 <ui:NavigationViewItem.MenuItems>
                     <ui:NavigationViewItem Content="Profile" ToolTipService.ToolTip="Notes">
-                          <ui:NavigationViewItem.Icon>
+                        <ui:NavigationViewItem.Icon>
                             <ui:FontIcon   Glyph="&#xE8D4;"/>
                         </ui:NavigationViewItem.Icon>
                     </ui:NavigationViewItem>
                     <ui:NavigationViewItem Content="User Management"   ToolTipService.ToolTip="User Management">
-                         <ui:NavigationViewItem.Icon>
+                        <ui:NavigationViewItem.Icon>
                             <ui:FontIcon   Glyph="&#xE779;"/>
-                        </ui:NavigationViewItem.Icon> 
+                        </ui:NavigationViewItem.Icon>
                     </ui:NavigationViewItem>
                     <ui:NavigationViewItem Content="Permission"  ToolTipService.ToolTip="Permission">
                         <ui:NavigationViewItem.Icon>
                             <ui:FontIcon   Glyph="&#xE8D7;"/>
-                        </ui:NavigationViewItem.Icon>  
+                        </ui:NavigationViewItem.Icon>
                     </ui:NavigationViewItem>
                 </ui:NavigationViewItem.MenuItems>
             </ui:NavigationViewItem>
@@ -250,7 +254,7 @@
 
                         </ui:SimpleStackPanel>
                     </ui:SimpleStackPanel>
-                    
+
                 </Button>
                 <ui:NavigationViewItemSeparator/>
 
@@ -278,7 +282,7 @@
                         </ui:SimpleStackPanel>
                     </ui:ToggleSwitch.Header>
                 </ui:ToggleSwitch>
-         
+
 
 
 
@@ -289,7 +293,7 @@
             </ui:SimpleStackPanel>
 
 
-         
+
 
         </ui:NavigationView.PaneFooter>
 

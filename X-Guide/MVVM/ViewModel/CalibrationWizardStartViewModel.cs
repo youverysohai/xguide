@@ -2,6 +2,7 @@
 using AutoMapper;
 using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Diagnostics;
 using System.Linq;
 using System.Text;
@@ -10,6 +11,7 @@ using System.Windows.Input;
 using X_Guide.Communication.Service;
 using X_Guide.MVVM.Command;
 using X_Guide.MVVM.Store;
+using X_Guide.MVVM.ViewModel.CalibrationWizardSteps;
 using X_Guide.Service;
 using X_Guide.Service.Communication;
 using X_Guide.Service.DatabaseProvider;
@@ -24,11 +26,19 @@ namespace X_Guide.MVVM.ViewModel
         private readonly INavigationService _navigationService;
         private readonly IViewModelLocator _viewModelLocator;
         private string _name;
+        private ObservableCollection<CalibrationViewModel> _calibrationList;
+
+        public ObservableCollection<CalibrationViewModel> CalibrationList
+        {
+            get { return _calibrationList; }
+            set { _calibrationList = value; OnPropertyChanged(); }
+        }
+
 
         public string Name
         {
             get { return _name; }
-            set { _name = value; }
+            set { _name = value; OnPropertyChanged(); }
         }
         private bool _isStarted;
         private readonly IServerService _serverService;
@@ -45,12 +55,18 @@ namespace X_Guide.MVVM.ViewModel
 
         public CalibrationWizardStartViewModel(IServerService serverService, IClientService clientService, IViewModelLocator viewModelLocator, NavigationStore navigationStore)
         {
-            StartCommand = new RelayCommand(start);       
+            StartCommand = new RelayCommand(start);
             _serverService = serverService;
             _clientService = clientService;
             _navigationService = new NavigationService(navigationStore);
             _viewModelLocator = viewModelLocator;
 
+            CalibrationList = new ObservableCollection<CalibrationViewModel>()
+        {
+            new CalibrationViewModel() { Name = "Calibration 1" },
+            new CalibrationViewModel() { Name = "Calibration 2", },
+            new CalibrationViewModel() { Name = "Calibration 3",}
+        };
         }
 
         public CalibrationWizardStartViewModel()
@@ -95,6 +111,9 @@ namespace X_Guide.MVVM.ViewModel
             get { return _itemList; }
             set { _itemList = value; OnPropertyChanged(); }
         }
-
+        public void DeleteCalibration(CalibrationViewModel calibration)
+        {
+            CalibrationList.Remove(calibration);
+        }
     }
 }

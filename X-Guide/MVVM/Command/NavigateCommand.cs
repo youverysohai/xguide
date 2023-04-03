@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -25,6 +26,8 @@ namespace X_Guide.MVVM.Command
             if (parameter is PageName pageTitle && _viewModels.TryGetValue(pageTitle, out var page))
             {
                 //page.Navigate();
+                Debug.Print("HIIIIIII");
+
             }
                 
         }

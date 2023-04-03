@@ -95,23 +95,23 @@ namespace X_Guide
                 (DataContext as MainViewModel).NavigateCommand.Execute(PageName.Setting);
             }
 
-            if (args.InvokedItemContainer.Tag != null)
-            {
-                string tag = args.InvokedItemContainer.Tag.ToString();
+            //if (args.InvokedItemContainer.Tag != null)
+            //{
+            //    string tag = args.InvokedItemContainer.Tag.ToString();
 
-                switch (tag)
-                {
-                    case "ProductionView":
-                        (DataContext as MainViewModel).NavigateCommand.Execute(PageName.Production);
-                        break;
-                    //case "CalibrationWizardStartView":
-                    //    (DataContext as MainViewModel).NavigateCommand.Execute(PageName.CalibrationWizardStart);
-                    //    break;
-                    case "JogRobotView":
-                        (DataContext as MainViewModel).NavigateCommand.Execute(PageName.JogRobot);
-                        break;
-                }
-            }
+            //    switch (tag)
+            //    {
+            //        case "ProductionView":
+            //            (DataContext as MainViewModel).NavigateCommand.Execute(PageName.Production);
+            //            break;
+            //        case "CalibrationWizardStartView":
+            //            (DataContext as MainViewModel).NavigateCommand.Execute(PageName.CalibrationWizardStart);
+            //            break;
+            //        case "JogRobotView":
+            //            (DataContext as MainViewModel).NavigateCommand.Execute(PageName.JogRobot);
+            //            break;
+            //    }
+            //}
         }
 
 

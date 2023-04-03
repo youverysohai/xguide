@@ -4,6 +4,8 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:X_Guide.MVVM.View.CalibrationWizardSteps"
+             xmlns:loc="clr-namespace:X_Guide.MVVM"
+             
              mc:Ignorable="d" 
              d:DesignHeight="450" d:DesignWidth="800"
               xmlns:ui="http://schemas.modernwpf.com/2019"
@@ -17,8 +19,8 @@
                 <TextBlock  Text="Vision Flow for Calibration" HorizontalAlignment="Center" FontSize="35" Margin="0 0 0 25"/>
                 <StackPanel Orientation="Vertical" HorizontalAlignment="Center" >
                 <ComboBox 
-                        ItemsSource="{Binding VisionName}" 
-                        SelectedItem="{Binding SelectedItem}"
+                        ItemsSource="{Binding Visions}"
+                        DisplayMemberPath="Name"
                         Style="{DynamicResource MaterialDesignOutlinedComboBox}"
                               Width="300"
                               materialDesign:HintAssist.Hint="Select Vision Name"
@@ -28,7 +30,7 @@
                 </ComboBox>
                 <StackPanel  Orientation="Horizontal" HorizontalAlignment="Center"  >
                     <TextBlock  VerticalAlignment="Center" Text="New Vision? "/>
-                    <ui:HyperlinkButton  Padding="5"  Margin="5" Command="{Binding ShoutCommand}">Create New</ui:HyperlinkButton>
+                    <ui:HyperlinkButton  Padding="5"  Margin="5" Command="{Binding NavigateCommand}" CommandParameter="{x:Static loc:PageName.Setting}">Create New</ui:HyperlinkButton>
                 </StackPanel>
                 <StackPanel Orientation="Horizontal">
                         <TextBox MinWidth="300" Text="{Binding FilePath}" Style="{DynamicResource MaterialDesignFloatingHintTextBox}" materialDesign:HintAssist.Hint="Vision Solution File (.sol)"></TextBox>
