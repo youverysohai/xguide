@@ -1,4 +1,5 @@
-﻿using System;
+﻿using AutoMapper;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -8,6 +9,7 @@ using X_Guide.Communication.Service;
 using X_Guide.MVVM.Model;
 using X_Guide.MVVM.ViewModel.CalibrationWizardSteps;
 using X_Guide.Service.Communication;
+using X_Guide.Service.DatabaseProvider;
 
 namespace X_Guide.MVVM.ViewModel
 {
@@ -15,8 +17,7 @@ namespace X_Guide.MVVM.ViewModel
     {
     
         private CalibrationViewModel _setting;
-        private readonly IServerService _serverService;
-        private readonly IClientService _clientService;
+
 
         public CalibrationViewModel Setting
         {
@@ -28,16 +29,33 @@ namespace X_Guide.MVVM.ViewModel
             }
         }
 
+        private ManipulatorViewModel _manipulator;
+        private readonly IManipulatorDb _manipulatorDb;
+        private readonly IMapper _mapper;
 
-        public Step2ViewModel(CalibrationViewModel setting, IServerService serverService, IClientService clientService)
+        public ManipulatorViewModel Manipulator
+        {
+            get { return _manipulator; }
+            set { _manipulator = value;
+                OnPropertyChanged();
+            }
+        }
+            
+
+        public Step2ViewModel(CalibrationViewModel setting, IManipulatorDb manipulatorDb, IMapper mapper)
         {
             Setting = setting;
-            _serverService = serverService;
-            _clientService = clientService;
-            _setting.Orientation = 1; 
-
+            _manipulatorDb = manipulatorDb;
+            _mapper = mapper;
+            LoadManipulator();
+        
         }
 
+        private async void LoadManipulator()
+        {
+            var i = await _manipulatorDb.GetManipulator(Setting.ManipulatorId);
+            Manipulator = _mapper.Map<ManipulatorViewModel>(i);
+        }
 
     }
 }

@@ -21,6 +21,7 @@ namespace X_Guide.Service.DatabaseProvider
         public void CreateManipulator(ManipulatorModel manipulator)
         {
             throw new NotImplementedException();
+  
         }
 
         public async Task<IEnumerable<string>> GetAllManipulatorName()
@@ -49,6 +50,7 @@ namespace X_Guide.Service.DatabaseProvider
         {
             return await AsyncQuery((context) =>
             {
+                
                 var result = context.Manipulators.Find(manipulator.Id);
        
                 if (result != null)
@@ -80,6 +82,13 @@ namespace X_Guide.Service.DatabaseProvider
             return "";
         }
 
-     
+        public async Task<ManipulatorModel> GetManipulator(int id)
+        {
+            return await AsyncQuery((context) =>
+            {
+                var i = context.Manipulators.Find(id);
+                return MapTo<ManipulatorModel>(i);
+            });
+        }
     }
 }

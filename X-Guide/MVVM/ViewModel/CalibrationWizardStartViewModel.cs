@@ -26,6 +26,7 @@ namespace X_Guide.MVVM.ViewModel
         private IVisionService _visionService;
         private readonly INavigationService _navigationService;
         private readonly IViewModelLocator _viewModelLocator;
+        private readonly ICalibrationDb _calibrationDb;
         private string _name;
         private ObservableCollection<CalibrationViewModel> _calibrationList;
 
@@ -54,24 +55,24 @@ namespace X_Guide.MVVM.ViewModel
         public NavigationStore _navigationStore { get; }
         private IManipulatorDb _manipulatorDB { get; }
 
-        public CalibrationWizardStartViewModel(IServerService serverService, IClientService clientService, IViewModelLocator viewModelLocator, NavigationStore navigationStore, IVisionService visionService)
+        public CalibrationWizardStartViewModel(IServerService serverService, IClientService clientService, IViewModelLocator viewModelLocator, NavigationStore navigationStore, IVisionService visionService, ICalibrationDb calibrationDb, IMapper mapper)
         {
             StartCommand = new RelayCommand(start);
             _serverService = serverService;
             _visionService = visionService;
             _navigationService = new NavigationService(navigationStore);
             _viewModelLocator = viewModelLocator;
-
-            CalibrationList = new ObservableCollection<CalibrationViewModel>()
-        {
-            new CalibrationViewModel() { Name = "Calibration 1" },
-            new CalibrationViewModel() { Name = "Calibration 2", },
-            new CalibrationViewModel() { Name = "Calibration 3",}
-        };
+            _calibrationDb = calibrationDb;
+            _mapper = mapper;
+            LoadAllCalibration();
+         
         }
 
-        public CalibrationWizardStartViewModel()
+        private async void LoadAllCalibration()
         {
+            var i = await _calibrationDb.GetAllCalibration();
+            CalibrationList = new ObservableCollection<CalibrationViewModel>(i.Select(x=> _mapper.Map<CalibrationViewModel>(x)));
+
         }
 
         private void start(object arg)

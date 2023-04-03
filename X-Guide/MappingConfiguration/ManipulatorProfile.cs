@@ -20,7 +20,7 @@ namespace X_Guide.MappingConfiguration
             CreateMap<ManipulatorViewModel, ManipulatorModel>()
                 .ForMember(dest => dest.Ip, opt => opt.MapFrom(src => string.Join(".", src.Ip)));
             CreateMap<Manipulator, ManipulatorModel>();
-            CreateMap<ManipulatorModel, Manipulator>();
+            CreateMap<ManipulatorModel, Manipulator>().IgnoreAllSourcePropertiesWithAnInaccessibleSetter();
         }
       
     }

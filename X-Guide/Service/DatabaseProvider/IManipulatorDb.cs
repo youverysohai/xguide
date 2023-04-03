@@ -17,6 +17,7 @@ namespace X_Guide.Service.DatabaseProvider
 
         string GetManipulatorDelimiter(string name);
         Task<ManipulatorModel> GetManipulator(string name);
+        Task<ManipulatorModel> GetManipulator(int id);
         Task<bool> SaveManipulator(ManipulatorModel manipulator);
 
 

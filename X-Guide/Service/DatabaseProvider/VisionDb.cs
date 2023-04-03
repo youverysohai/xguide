@@ -18,12 +18,49 @@ namespace X_Guide.Service.DatabaseProvider
 
         }
 
-        public async Task<VisionViewModel> GetVision(string name)
+        public async Task<bool> RemoveVision(string name)
         {
-            return await AsyncQuery((context) =>
+            return await AsyncQuery(c =>
             {
-                return MapTo<VisionViewModel>(context.Visions.FirstOrDefault(x => x.Name.Equals(name)));
+                if(c.Visions.Remove(c.Visions.FirstOrDefault(x => x.Name == name)) != null)
+                {
+                    return true;
+                }
+                else
+                {
+                    return false;
+                };
             });
         }
+
+        public async Task<bool> UpdateVision(VisionViewModel vision)
+        {
+            
+            return await AsyncQuery(c => {
+                var result = c.Visions.Where(x => x.Name.Equals(vision.Name));
+                if (result == null) return false;
+                c.Entry(result).CurrentValues.SetValues(MapTo<Vision>(vision));
+                c.SaveChanges();
+                return true;
+            });
+        }
+
+        public async Task<VisionViewModel> GetVision(string name)
+        {
+            return await AsyncQuery(c =>
+            {
+                return MapTo<VisionViewModel>(c.Visions.FirstOrDefault(x => x.Name.Equals(name)));
+            });
+        }
+
+
+        public async Task<IEnumerable<VisionViewModel>> GetAllVision()
+        {
+            return await AsyncQuery(c =>
+            {
+                return c.Visions.ToList().Select(x => MapTo<VisionViewModel>(x));
+            });
+        }
+
     }
 }

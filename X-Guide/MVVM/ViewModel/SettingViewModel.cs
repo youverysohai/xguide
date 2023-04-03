@@ -280,6 +280,7 @@ namespace X_Guide.MVVM.ViewModel
             {
                 System.Windows.MessageBox.Show("Failed to save setting!");
             }
+            
             GetAllMachine();
 
         }
