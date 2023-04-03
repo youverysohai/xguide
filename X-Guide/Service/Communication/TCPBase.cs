@@ -17,7 +17,7 @@ namespace X_Guide.Service.Communication
 
         private string _terminator;
         protected string Terminator { get => _terminator; set => _terminator = value ?? "\n"; }
-        protected T RegisterRequestEventHandler<T>(Func<NetworkStreamEventArgs, T> action)
+        public T RegisterRequestEventHandler<T>(Func<NetworkStreamEventArgs, T> action)
         {
 
             using (ManualResetEventSlim resetEvent = new ManualResetEventSlim())
@@ -26,8 +26,14 @@ namespace X_Guide.Service.Communication
 
                 EventHandler<NetworkStreamEventArgs> eventHandler = (s, e) =>
                 {
-                    data = action.Invoke(e);
-                    if (data != null) resetEvent.Set();
+                    try
+                    {
+                        data = action.Invoke(e);
+                        resetEvent.Set();
+                    }
+                    catch
+                    {
+                    }
                 };
 
                 _dataReceived += eventHandler;
@@ -55,6 +61,7 @@ namespace X_Guide.Service.Communication
             {
                 string responseData = string.Empty;
                 int bytes = await stream.ReadAsync(data, 0, data.Length);
+
                 responseData += Encoding.ASCII.GetString(data, 0, bytes);
                 ProcessServerData(responseData, ',', stream);
                 await Task.Delay(1000);
@@ -72,7 +79,7 @@ namespace X_Guide.Service.Communication
 
         private void ProcessServerData(string data, char seperator, NetworkStream stream)
         {
-            Debug.WriteLine("Recieved data from server!", data);
+           
             try
             {
                 string[] segment = data.Split(seperator);

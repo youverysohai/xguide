@@ -12,17 +12,21 @@ using System.Net;
 using System.Net.Sockets;
 using System.Text;
 using System.Threading.Tasks;
-using System.Windows;
 using System.Windows.Input;
 using System.Xml.Serialization;
+using VM.Core;
 using X_Guide.Communication.Service;
 using X_Guide.CustomEventArgs;
 using X_Guide.MVVM.Command;
 using X_Guide.MVVM.Model;
 using X_Guide.MVVM.Store;
+using X_Guide.MVVM.ViewModel.CalibrationWizardSteps;
 using X_Guide.Service;
+using X_Guide.Service.Communication;
 using X_Guide.Service.DatabaseProvider;
 using X_Guide.Validation;
+using X_Guide.VisionMaster;
+using Xlent_Vision_Guided;
 
 namespace X_Guide.MVVM.ViewModel
 {
@@ -36,9 +40,13 @@ namespace X_Guide.MVVM.ViewModel
 
         private readonly IManipulatorDb _manipulatorDb;
         private readonly IVisionDb _visionDb;
+        private readonly ICalibrationDb _calibrationDb;
         private readonly IMapper _mapper;
+        private readonly IClientService _clientService;
+        private readonly IServerService _serverService;
+        private readonly IVisionService _visionService;
         private readonly ErrorViewModel _errorViewModel;
-
+        
         public event EventHandler<DataErrorsChangedEventArgs> ErrorsChanged;
 
         public bool HasErrors => false;
@@ -54,7 +62,29 @@ namespace X_Guide.MVVM.ViewModel
 
         private VisionViewModel _vision;
 
-        
+        private ObservableCollection<Calibration> _calibSol;
+
+        public ObservableCollection<Calibration> CalibSol
+        {
+            get { return _calibSol; }
+            set { _calibSol = value;
+                OnPropertyChanged();
+            }
+        }
+
+        private Calibration _calib;
+
+        public Calibration Calib
+        {
+            get { return _calib; }
+            set { _calib = value;
+                OnPropertyChanged();
+ 
+            }
+        }
+        double[] calibData;
+
+        public RelayCommand OperationCommand { get; set; }
 
         public VisionViewModel Vision
         {
@@ -135,11 +165,16 @@ namespace X_Guide.MVVM.ViewModel
             }
         }
 
-        public SettingViewModel(IManipulatorDb machineDb, IVisionDb visionDb, IMapper mapper)
+        public SettingViewModel(IManipulatorDb machineDb, IVisionDb visionDb, IMapper mapper, ICalibrationDb calibrationDb, IClientService clientService, IServerService serverService, IVisionService visionService)
         {
             _manipulatorDb = machineDb;
             _visionDb = visionDb;
+            _calibrationDb = calibrationDb;
             _mapper = mapper;
+            _clientService = clientService;
+            _serverService = serverService;
+            _visionService = visionService;
+
             GetAllMachine();
             Vision = new VisionViewModel
             {
@@ -175,11 +210,55 @@ namespace X_Guide.MVVM.ViewModel
 
             ManipulatorTypeList = EnumHelperClass.GetAllIntAndDescriptions(typeof(ManipulatorType));
             TerminatorList = EnumHelperClass.GetAllValuesAndDescriptions(typeof(Terminator));
+
+            LoadAllCalibFile();
             VisionCommand = new RelayCommand(OnVisionChangeEvent);
             ManipulatorCommand = new RelayCommand(OnManipulatorChangeEvent);
             SaveCommand = new RelayCommand(SaveSetting);
+            OperationCommand = new RelayCommand(Operation);
+        
         }
 
+       
+        private async void LoadAllCalibFile()
+        {
+            var i = await _calibrationDb.GetAllCalibration();
+
+            CalibSol = new ObservableCollection<Calibration>(i);
+        }
+
+       
+        private async void Operation(object parameter)
+        {
+            var _tcpClientInfo = _serverService.GetConnectedClient().First().Value;
+            try
+            {
+                await _visionService.ImportSol($"{Calib.VisionFilePath}");
+                _visionService.RunProcedure("Long", true);
+                ConnectServer();
+       
+                Point VisCenter = await _visionService.GetVisCenter();
+                double[] OperationData = VisionGuided.EyeInHandConfig2D_Operate(VisCenter, new double[] { (double)Calib.CXOffset, (double)Calib.CYOffset, (double)Calib.CRZOffset, (double)Calib.CameraXScaling });
+                OperationData[2] -= 112.307 - 9.43;
+                if (OperationData[2] > 180) OperationData[2] -= 360;
+                else if (OperationData[2] <= 180) OperationData[2] += 360;
+                await _serverService.SendJogCommand(_tcpClientInfo, new JogCommand().SetX(OperationData[0]).SetY(OperationData[1]).SetRZ(OperationData[2]));
+                await _serverService.SendJogCommand(_tcpClientInfo, new JogCommand().SetZ(-178));
+                System.Windows.MessageBox.Show("Press OK to reset machine!");
+                await _serverService.ServerWriteDataAsync("RESET", _tcpClientInfo.TcpClient.GetStream());
+            }
+            catch (Exception ex)
+            {
+                System.Windows.MessageBox.Show($"Exception: {ex.Message} | Aborting the calibration process!");
+                await _serverService.ServerWriteDataAsync("RESET", _tcpClientInfo.TcpClient.GetStream());
+                return;
+            }
+        }
+
+        private async void ConnectServer()
+        {
+            await _clientService.ConnectServer();
+        }
         private async void GetAllMachine()
         {
             IEnumerable<ManipulatorModel> models = await _manipulatorDb.GetAllManipulator();
@@ -195,11 +274,11 @@ namespace X_Guide.MVVM.ViewModel
             bool saveStatus = await _manipulatorDb.SaveManipulator(_mapper.Map<ManipulatorModel>(Manipulator));
             if (saveStatus)
             {
-                MessageBox.Show(ConfigurationManager.AppSettings["SaveSettingCommand_SaveMessage"]);
+                System.Windows.MessageBox.Show(ConfigurationManager.AppSettings["SaveSettingCommand_SaveMessage"]);
             }
             else
             {
-                MessageBox.Show("Failed to save setting!");
+                System.Windows.MessageBox.Show("Failed to save setting!");
             }
             GetAllMachine();
 

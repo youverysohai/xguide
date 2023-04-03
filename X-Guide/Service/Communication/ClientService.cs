@@ -23,6 +23,7 @@ namespace X_Guide.Communication.Service
         private IPAddress _ipAddress;
         private CancellationTokenSource cts;
         public string Flowname = "";
+        private BackgroundService _connectServer;
 
         public ClientService(IPAddress ipAddress, int port, string terminator = null) : base(terminator)
         {
@@ -32,7 +33,7 @@ namespace X_Guide.Communication.Service
 
         public async Task ConnectServer()
         {
-
+            
             try
             {
                 _client = new TcpClient();
@@ -47,29 +48,7 @@ namespace X_Guide.Communication.Service
             }
         }
 
-        public async Task<Point> GetVisCenter()
-        {
-            await WriteDataAsync($"XGUIDE,{Flowname}", _stream);
-            Point point = await Task.Run(() => RegisterRequestEventHandler(GetVisCenterEvent));
-            Debug.WriteLine(point);
-            return point;
-            
-        }
-
-        private Point GetVisCenterEvent(NetworkStreamEventArgs e)
-        {
-            string[] data = e.Data;
-
-            if (data.Length == 3)
-            {
-                
-                Point point = new Point(double.Parse(data[0]), -double.Parse(data[1]), double.Parse(data[2]));
-               
-                return point;
-
-            }
-            return null;
-        }
+      
 
 
         public async Task WriteDataAsync(string data)

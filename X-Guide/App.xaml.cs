@@ -99,7 +99,7 @@ namespace X_Guide
             builder.RegisterType<UserDb>().As<IUserDb>();
             builder.RegisterType<VisionService>().As<IVisionService>();
             builder.RegisterType<VisionDb>().As<IVisionDb>();
-            builder.RegisterType<CalibrationDb>().As<ICalibrationService>();
+            builder.RegisterType<CalibrationDb>().As<ICalibrationDb>();
 
 
             builder.RegisterType<ServerService>().As<IServerService>().WithParameter(new TypedParameter(typeof(IPAddress), IPAddress.Parse("192.168.10.92"))).WithParameter(new TypedParameter(typeof(int), 8000)).WithParameter(new TypedParameter(typeof(string), "\r\n")).SingleInstance();

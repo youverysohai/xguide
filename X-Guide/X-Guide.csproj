@@ -779,7 +779,7 @@
     <Compile Include="Service\Communication\TcpClientInfo.cs" />
     <Compile Include="Service\DatabaseProvider\CalibrationDb.cs" />
     <Compile Include="Service\DatabaseProvider\DbServiceBase.cs" />
-    <Compile Include="Service\DatabaseProvider\ICalibrationService.cs" />
+    <Compile Include="Service\DatabaseProvider\ICalibrationDb.cs" />
     <Compile Include="Service\DatabaseProvider\IVisionDb.cs" />
     <Compile Include="Service\DatabaseProvider\ManipulatorDb.cs" />
     <Compile Include="Service\DatabaseProvider\IManipulatorDb.cs" />
@@ -1048,11 +1048,11 @@
     <Resource Include="Style\ImageSource\up.png" />
     <Resource Include="Style\ImageSource\arrows.png" />
     <Content Include="XGuideDB.mdf">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <Content Include="XGuideDB_log.ldf">
       <DependentUpon>XGuideDB.mdf</DependentUpon>
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <Content Include="XGuideModel.Context.tt">
       <Generator>TextTemplatingFileGenerator</Generator>

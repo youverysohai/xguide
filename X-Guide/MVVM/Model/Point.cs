@@ -12,6 +12,7 @@ namespace Xlent_Vision_Guided
         public double Y { get; set; }
         public double Angle { get; set; }
 
+        public bool IsFound { get; set; } = false;
         public Point()
         {
             X = 0;

@@ -88,6 +88,8 @@ namespace X_Guide.MVVM.ViewModel
 /*                ProcessInfoList i = VmSolution.Instance.GetAllProcedureList();
                 List<ProcessInfo> procedureList = i.astProcessInfo.Where(x => x.strProcessName != null).ToList();*/
                 VisionFlow = new ObservableCollection<string>(_visionService.GetAllProcedureName());
+                _setting.VisionFilePath = FilePath;
+                
                 CanExecuteChange?.Invoke(this, true);
             }
             catch(Exception ex)

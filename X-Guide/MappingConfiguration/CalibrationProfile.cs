@@ -15,14 +15,15 @@ namespace X_Guide.MappingConfiguration
 
         public CalibrationProfile()
         {
-            var mapper = new MapperConfiguration(cfg => cfg.AddProfile<ManipulatorProfile>()).CreateMapper();
+            
 
             CreateMap<Calibration, CalibrationViewModel>()
                 .ForMember(dest => dest.Mm_per_pixel, opt => opt.MapFrom(src => src.CameraXScaling));
+
+
             CreateMap<CalibrationViewModel, Calibration>()
                 .ForMember(dest => dest.CameraXScaling, opt => opt.MapFrom(src => src.Mm_per_pixel))
-                .ForMember(dest => dest.CameraYScaling, opt => opt.MapFrom(src => src.Mm_per_pixel))
-                .ForMember(dest => dest.Manipulator, opt => opt.MapFrom(src => mapper.Map<Manipulator>(mapper.Map<ManipulatorModel>(src.Manipulator))));
+                .ForMember(dest => dest.CameraYScaling, opt => opt.MapFrom(src => src.Mm_per_pixel));
         }
     }
 

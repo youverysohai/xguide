@@ -13,6 +13,7 @@ using X_Guide.MVVM.Store;
 using X_Guide.Service;
 using X_Guide.Service.Communication;
 using X_Guide.Service.DatabaseProvider;
+using X_Guide.VisionMaster;
 using Xlent_Vision_Guided;
 
 namespace X_Guide.MVVM.ViewModel
@@ -20,7 +21,7 @@ namespace X_Guide.MVVM.ViewModel
     internal class CalibrationWizardStartViewModel : ViewModelBase
     {
         private IMapper _mapper;
-        private IClientService _clientService;
+        private IVisionService _visionService;
         private readonly INavigationService _navigationService;
         private readonly IViewModelLocator _viewModelLocator;
         private string _name;
@@ -43,11 +44,11 @@ namespace X_Guide.MVVM.ViewModel
         public NavigationStore _navigationStore { get; }
         private IManipulatorDb _manipulatorDB { get; }
 
-        public CalibrationWizardStartViewModel(IServerService serverService, IClientService clientService, IViewModelLocator viewModelLocator, NavigationStore navigationStore)
+        public CalibrationWizardStartViewModel(IServerService serverService, IClientService clientService, IViewModelLocator viewModelLocator, NavigationStore navigationStore, IVisionService visionService)
         {
             StartCommand = new RelayCommand(start);       
             _serverService = serverService;
-            _clientService = clientService;
+            _visionService = visionService;
             _navigationService = new NavigationService(navigationStore);
             _viewModelLocator = viewModelLocator;
 
@@ -64,17 +65,17 @@ namespace X_Guide.MVVM.ViewModel
         private async void FindXMoveYMove(int jogDistance, int rotateAngle)
         {
 
-            Point Vis_Center = await _clientService.GetVisCenter();
+            Point Vis_Center = await _visionService.GetVisCenter();
 
             TcpClientInfo tcpClientInfo = _serverService.GetConnectedClient().First().Value;
             await _serverService.SendJogCommand(tcpClientInfo, new JogCommand().SetX(jogDistance));
             await Task.Delay(2000);
-            Point Vis_Positive = await _clientService.GetVisCenter();
+            Point Vis_Positive = await _visionService.GetVisCenter();
             await Task.Delay(1000);
             await _serverService.SendJogCommand(tcpClientInfo, new JogCommand().SetX(-jogDistance));
             await _serverService.SendJogCommand(tcpClientInfo, new JogCommand().SetRZ(rotateAngle));
             await Task.Delay(2000);
-            Point Vis_Rotate = await _clientService.GetVisCenter();
+            Point Vis_Rotate = await _visionService.GetVisCenter();
             await Task.Delay(1000);
             await _serverService.SendJogCommand(tcpClientInfo, new JogCommand().SetRZ(-rotateAngle));
             double[] MoveOffset = VisionGuided.FindEyeInHandXYMoves(Vis_Center, Vis_Positive, Vis_Rotate, jogDistance, rotateAngle);

@@ -24,7 +24,7 @@ namespace X_Guide.Communication.Service
         private int _port { get; }
         private IPAddress _ip { get; }
 
-        private readonly ICalibrationService _calibrationDb;
+        private readonly ICalibrationDb _calibrationDb;
         private readonly IClientService _clientService;
         private TcpListener _server;
         
@@ -40,7 +40,7 @@ namespace X_Guide.Communication.Service
         CancellationTokenSource cts;
    
 
-        public ServerService(IPAddress ip, int port, string terminator, ICalibrationService calibrationDb, IClientService clientService) : base(terminator)
+        public ServerService(IPAddress ip, int port, string terminator, ICalibrationDb calibrationDb, IClientService clientService) : base(terminator)
         {
             _port = port;
             _ip = ip;

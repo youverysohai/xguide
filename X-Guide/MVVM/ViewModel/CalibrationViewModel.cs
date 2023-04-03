@@ -10,7 +10,7 @@ namespace X_Guide.MVVM.ViewModel.CalibrationWizardSteps
     public class CalibrationViewModel : ViewModelBase
     {
         private string _name;
-        private ManipulatorViewModel _manipulator;
+        private int _manipulatorId;
         private int _orientation;
         private string _visionFlow;
         private double _cXOffSet = 0;
@@ -79,11 +79,11 @@ namespace X_Guide.MVVM.ViewModel.CalibrationWizardSteps
                 OnPropertyChanged();
             }
         }
-        public ManipulatorViewModel Manipulator
+        public int ManipulatorId
         {
-            get => _manipulator; set
+            get => _manipulatorId; set
             {
-                _manipulator = value;
+                _manipulatorId = value;
                 OnPropertyChanged();
             }
         }
@@ -133,8 +133,8 @@ namespace X_Guide.MVVM.ViewModel.CalibrationWizardSteps
 
         public override string ToString()
         {
-            return string.Format("Name: {0}\nManipulator: {1}\nOrientation: {2}\nVision Flow: {3}\nSpeed: {4}\nAcceleration: {5}\nMotion Delay: {6}",
-    _name, _manipulator, _orientation, _visionFlow, _speed, _acceleration, _motionDelay);
+            return string.Format("Name: {0}\nManipulatorId: {1}\nOrientation: {2}\nVision Flow: {3}\nSpeed: {4}\nAcceleration: {5}\nMotion Delay: {6}",
+    _name, _manipulatorId, _orientation, _visionFlow, _speed, _acceleration, _motionDelay);
 
 
         }

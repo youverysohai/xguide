@@ -468,9 +468,13 @@
 
                         </Grid>
                         <!--Connection-->
-                         
- 
+                                                                            <hc:ComboBox ItemsSource="{Binding CalibSol}" DisplayMemberPath="Name" SelectedItem="{Binding Calib}">
+                        
+                    </hc:ComboBox>
+                        <Button Content="Start Operation" Command="{Binding OperationCommand}"/>
+                        
                     </StackPanel>
+
                 </TabItem>
 
             </TabControl>

@@ -50,12 +50,11 @@ namespace X_Guide.MVVM.ViewModel
         {
 
 
-            _setting.Manipulator = manipulator;
+            _setting.ManipulatorId = manipulator.Id;
             SelectedItemChangedEvent?.Invoke();
              
         }
 
-        public ICommand ShoutCommand { get; set; }
         public IManipulatorDb _manipulatorDb { get; }
         private IMapper _mapper { get; }
         public IServerService _serverService { get; }

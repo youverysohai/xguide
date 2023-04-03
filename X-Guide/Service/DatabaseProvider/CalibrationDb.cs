@@ -9,7 +9,7 @@ using X_Guide.MVVM.ViewModel.CalibrationWizardSteps;
 
 namespace X_Guide.Service.DatabaseProvider
 {
-    internal class CalibrationDb : DbServiceBase, ICalibrationService
+    internal class CalibrationDb : DbServiceBase, ICalibrationDb
     {
 
         public CalibrationDb(DbContextFactory dbContextFactory, IMapper mapper) : base(dbContextFactory, mapper)
@@ -21,7 +21,16 @@ namespace X_Guide.Service.DatabaseProvider
         {
             return await AsyncQuery((context) =>
             {
-                return MapTo<CalibrationViewModel>(context.Calibrations.FirstOrDefault(x => x.Name == name));
+                return MapTo<CalibrationViewModel>(context.Calibrations.FirstOrDefault(x => x.Name == name)) ;
+            });
+        }
+
+        public async Task<IEnumerable<Calibration>> GetAllCalibration()
+        {
+            return await AsyncQuery((context) =>
+            {
+                return context.Calibrations.ToList();
+               
             });
         }
 
