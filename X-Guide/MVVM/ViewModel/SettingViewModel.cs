@@ -178,10 +178,10 @@ namespace X_Guide.MVVM.ViewModel
             GetAllMachine();
             Vision = new VisionViewModel
             {
-                Name = "Chun",
+                Name = "Vision1",
                 Ip = new ObservableCollection<string>(new string[]{"192", "168","11","90"}),
                 Port=8000,
-                Terminator="NA"
+                Terminator=""
                 
             };
             Visions = new ObservableCollection<VisionViewModel> { Vision , new VisionViewModel
@@ -189,21 +189,21 @@ namespace X_Guide.MVVM.ViewModel
                 Name = "Hik",
                 Ip = new ObservableCollection<string>(new string[]{"192", "163","11","33"}),
                 Port=8000,
-                Terminator="NA"
+                Terminator="\r"
 
             } , new VisionViewModel
             {
-                Name = "Canon",
+                Name = "Vision2",
                 Ip = new ObservableCollection<string>(new string[]{"192", "128","21","90"}),
                 Port=8000,
-                Terminator="NA"
+                Terminator="\r\n"
 
             }  };
             Server = new GeneralSettingViewModel
             {
                 Ip = new ObservableCollection<string>(new string[] { "192", "168", "11", "90" }),
                 Port = 8000,
-                Terminator = "NA"
+                Terminator = ""
 
             };
 

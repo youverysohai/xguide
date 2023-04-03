@@ -16,6 +16,8 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using X_Guide.MVVM.ViewModel.CalibrationWizardSteps;
+using X_Guide.MVVM.ViewModel;
 
 namespace X_Guide.MVVM.View.CalibrationWizardSteps
 {
@@ -25,19 +27,15 @@ namespace X_Guide.MVVM.View.CalibrationWizardSteps
     public partial class CalibrationWizardStart : UserControl
     {
         private SnackbarMessageQueue messageQueue = new SnackbarMessageQueue();
-        private List<string> chipsList = new List<string> { "Circle 1", "Chip 2", "Chip 3", "Chip 4", "Chip 5", "Circle 1", "Chip 2", "Chip 3", "Chip 4", "Chip 5", "Circle 1", "Chip 2", "Chip 3", "Chip 4", "Chip 5", };
-        private ItemsControl itemsControl = new ItemsControl();
+
 
 
         public CalibrationWizardStart()
         {
             InitializeComponent();
-             
-            itemsControl.ItemTemplate = (DataTemplate)this.Resources["ChipTemplate"];
-            
-            itemsControl.ItemsSource = chipsList;
 
-            ChipsContainer.Children.Add(itemsControl);
+
+
             SnackbarMessage.MessageQueue = messageQueue;
 
         }
@@ -53,7 +51,7 @@ namespace X_Guide.MVVM.View.CalibrationWizardSteps
                 false,
                 true,
                 TimeSpan.FromSeconds(1.55));
-
+            CalibName.Text = (string)chip.Content;
         }
 
         private void Chip_DeleteClick(object sender, RoutedEventArgs e)
@@ -65,25 +63,22 @@ namespace X_Guide.MVVM.View.CalibrationWizardSteps
                 false,
                 true,
                 TimeSpan.FromSeconds(1.55));
-        }
-    }
-    public class LastCharacterConverter : IValueConverter
-    {
-        public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
-        {
-            string strValue = value as string;
-            if (string.IsNullOrEmpty(strValue))
-            {
-                return string.Empty;
-            }
-            return strValue.Substring(strValue.Length - 1);
-        }
 
-        public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
-        {
-            throw new NotImplementedException();
+
+            if (chip != null && chip.DataContext is CalibrationViewModel calibration)
+            {
+                var viewModel = DataContext as CalibrationWizardStartViewModel;
+                if (viewModel != null)
+                {
+                    viewModel.DeleteCalibration(calibration);
+                }
+            }
+
+
+
         }
     }
+
 
 
 }

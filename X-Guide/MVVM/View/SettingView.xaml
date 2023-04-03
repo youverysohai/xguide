@@ -153,7 +153,7 @@
                                 <ComboBox 
                        
                            HorizontalAlignment="Left"
-                            ItemsSource="{Binding MachineTypeList}"
+                            ItemsSource="{Binding ManipulatorTypeList}"
                             DisplayMemberPath="Description"
                             SelectedValuePath="Value"
                             SelectedValue="{Binding Manipulator.Type}"
@@ -227,7 +227,7 @@
                            
                                        />
                                 <ComboBox Grid.Column="2"  ItemsSource="{Binding TerminatorList}" DisplayMemberPath="Value"
-                            SelectedValuePath="Description"  SelectedValue="{Binding Manipulator.Terminator}" 
+                            SelectedValuePath="Description"  SelectedValue="{Binding Manipulator.Terminator}"    SelectedItem="{Binding Manipulator.Terminator}"
                                           Style="{DynamicResource MaterialDesignFloatingHintComboBox}"
                                           Margin="30,22,0,0" 
                                           FontSize="15"
@@ -259,6 +259,7 @@
                             <hc:ScrollViewer VerticalScrollBarVisibility="Visible"  >
                                 <hc:SimpleStackPanel Orientation="Horizontal" Background="{DynamicResource PersonPictureEllipseBadgeFillThemeBrush}">
                                     <ItemsControl ItemsSource="{Binding Visions}">
+                       
                                         <ItemsControl.ItemTemplate>
                                             <DataTemplate>
                                                 <StackPanel>
@@ -362,7 +363,6 @@
                                     <materialDesign:PackIcon VerticalAlignment="Bottom" Width="20" Height="20" Kind="CircleSmall"/>
 
                                     <TextBox x:Name="txtVisionIP4" Text="{Binding Vision.Ip[3]}" Style="{DynamicResource IPInputMaterialDesignTextBox}" HorizontalAlignment="Center" GotFocus="txtIP_GotFocus" TextChanged="TxtIPLength_TextChanged" PreviewTextInput="TxtIPAddress_PreviewTextInput" PreviewKeyDown="txtIP_PreviewKeyDown"    >
-
                                     </TextBox>
                                 </ui:SimpleStackPanel>
                                 <TextBox  Grid.Row="1" Grid.Column="1"
@@ -456,7 +456,7 @@
                                           HorizontalAlignment="Left"
                                        />
                             <ComboBox  Grid.Row="1" Grid.Column="2"  ItemsSource="{Binding TerminatorList}" DisplayMemberPath="Value"
-                            SelectedValuePath="Description" SelectedItem="{Binding Server.Terminator}" SelectedValue="{Binding VisionTerminator}" 
+                            SelectedValuePath="Description" SelectedItem="{Binding Server.Terminator}" SelectedValue="{Binding Server.Terminator}" 
                                           Style="{DynamicResource MaterialDesignFloatingHintComboBox}"
                                           Margin="30 0 0 0" 
                                           FontSize="15"

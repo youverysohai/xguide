@@ -13,6 +13,7 @@ using System.Windows.Media.Animation;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using Windows.Globalization.NumberFormatting;
 
 namespace X_Guide.MVVM.View.CalibrationWizardSteps
 {
@@ -25,7 +26,10 @@ namespace X_Guide.MVVM.View.CalibrationWizardSteps
         {
             InitializeComponent();
         }
-
+        private void SetNumberBoxNumberFormatter()
+        {
+           
+        }
         private void Slider_SpeedValueChanged(object sender, RoutedPropertyChangedEventArgs<double> e)
         {
             if (SpeedAngle != null)

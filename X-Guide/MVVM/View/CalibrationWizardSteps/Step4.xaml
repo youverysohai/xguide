@@ -49,13 +49,14 @@
                         <Label Content="100" Style="{DynamicResource MaterialDesignLabel}"/>
                     </StackPanel>
                     <ui:NumberBox 
+                        x:Name="SpeedNumberBox"
                         Header="Speed (%)"
                           SmallChange="1"
                                    LargeChange="10" 
                                    
                                    SpinButtonPlacementMode="Compact"
                         Grid.Row="0" Grid.Column="1"  
-                       Value="{Binding Setting.Speed}"
+                       Value="{Binding Setting.Speed, StringFormat={}{0:F2}}"
                                    Padding="10 1"      MinWidth="100"  
                                   materialDesign:HintAssist.Hint="Speed %" materialDesign:HintAssist.FloatingScale=".76" 
                                     materialDesign:HintAssist.FloatingOffset="-15,-20">
@@ -71,7 +72,7 @@
                         </hc:PreviewSlider>
                         <Label Content="100" Style="{DynamicResource MaterialDesignLabel}"/>
                     </StackPanel>
-                    <ui:NumberBox  Grid.Row="1" Grid.Column="1"  Value="{Binding Setting.Acceleration}"
+                    <ui:NumberBox  Grid.Row="1" Grid.Column="1"  Value="{Binding Setting.Acceleration , StringFormat={}{0:F2}}"
                                    Header="Acceleration (%)"
                                    SmallChange="1"
                                    LargeChange="10" 
@@ -91,7 +92,7 @@
                     </StackPanel>
                     <ui:NumberBox  Grid.Row="2" Grid.Column="1"  
                                  
-                                   Value="{Binding Setting.MotionDelay}" 
+                                   Value="{Binding Setting.MotionDelay, StringFormat={}{0:F2}}" 
                                    SpinButtonPlacementMode="Compact"
                                    Padding="10 1"      MinWidth="100"  
                                    Header="Motion Delay (ms)"/>

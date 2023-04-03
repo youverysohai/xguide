@@ -2,6 +2,8 @@
                     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
                     xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
                     xmlns:hc="https://handyorg.github.io/handycontrol"
+                    xmlns:c="clr-namespace:X_Guide.Converter"
+                    
                     >
     <!-- #region MainWindow Styles-->
     <!-- TOP -->
@@ -156,7 +158,7 @@
     <Style x:Key="RadioButtonSCARA" TargetType="RadioButton" BasedOn="{StaticResource RadioButtonStyle}">
         <Setter Property="Visibility" Value="Collapsed"/>
         <Style.Triggers>
-            <DataTrigger Binding="{Binding Manipulator.Type}" Value="SCARA" >
+            <DataTrigger Binding="{Binding Setting.Manipulator.Type, Converter={c:TypeToDescriptionConverter}}" Value="SCARA" >
                 <Setter Property="Visibility" Value="Visible"></Setter>
             </DataTrigger>
         </Style.Triggers>
@@ -164,7 +166,7 @@
     <Style x:Key="RadioButtonSixAxis" TargetType="RadioButton" BasedOn="{StaticResource RadioButtonStyle}">
         <Setter Property="Visibility" Value="Collapsed"/>
         <Style.Triggers>
-            <DataTrigger Binding="{Binding Manipulator.Type}" Value="6-Axis" >
+            <DataTrigger Binding="{Binding Setting.Manipulator.Type, Converter={c:TypeToDescriptionConverter}}" Value="6-Axis" >
                 <Setter Property="Visibility" Value="Visible"></Setter>
             </DataTrigger>
         </Style.Triggers>

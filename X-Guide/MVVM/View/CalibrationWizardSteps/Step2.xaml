@@ -34,10 +34,10 @@
                     
                     <StackPanel Orientation="Vertical" HorizontalAlignment="Right" >
                         <RadioButton x:Name="rbLookUpward"  Style="{StaticResource  RadioButtonStyle}">Look Upward</RadioButton>
-                        <RadioButton x:Name="rbEyeOnHand" Style="{StaticResource  RadioButtonStyle }">Eye On Hand</RadioButton>
+                        <RadioButton x:Name="rbEyeOnHand" Style="{StaticResource  RadioButtonStyle}">Eye On Hand</RadioButton>
                         <RadioButton x:Name="rbLookDownward" Style="{StaticResource  RadioButtonStyle }" >Look Downward</RadioButton>
-                        <RadioButton Style="{StaticResource  RadioButtonSCARA }"  >Mounted on Joint 2</RadioButton>
-                        <RadioButton Style="{StaticResource  RadioButtonSixAxis }"  >Mounted on Joint 5</RadioButton>
+                        <RadioButton Style="{DynamicResource  RadioButtonSCARA}"  >Mounted on Joint 2</RadioButton>
+                    <RadioButton Style="{DynamicResource  RadioButtonSixAxis }"  >Mounted on Joint 5</RadioButton>
                     
                     </StackPanel>
 
