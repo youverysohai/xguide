@@ -1,4 +1,5 @@
 ﻿using Autofac;
+using Autofac.Core;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
@@ -14,16 +15,29 @@ namespace X_Guide.Service
     public class NavigationService : INavigationService
     {
         private NavigationStore _navigationStore;
-        
-        public NavigationService(NavigationStore navigationStore)
+        private readonly IViewModelLocator _viewModelLocator;
+
+        public NavigationService(NavigationStore navigationStore, IViewModelLocator viewModelLocator)
         {
             _navigationStore = navigationStore;
+            _viewModelLocator = viewModelLocator;
         }
        
-        public void Navigate(ViewModelBase viewModel)
+        public void Navigate(ViewModelBase viewModelBase)
         {
-            _navigationStore.CurrentViewModel = viewModel;
+            _navigationStore.CurrentViewModel = viewModelBase;
         }
-    
+        public ViewModelBase Navigate<T>(params Parameter[] parameters) where T : ViewModelBase
+        {
+            ViewModelBase viewModel = _viewModelLocator.Create<T>(parameters);
+            _navigationStore.CurrentViewModel = viewModel;
+            return viewModel;
+        }
+
+        public NavigationStore GetNavigationStore()
+        {
+            return _navigationStore;
+        }
+        
     }
 }

@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Autofac.Core;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -10,15 +11,7 @@ namespace X_Guide.MVVM.ViewModel
 {
     public interface IViewModelLocator
     {
-        ViewModelBase Create<T>() where T : ViewModelBase;
-
-        ViewModelBase CreateCalibrationWizardStart(NavigationStore navigationStore);
-        ViewModelBase CreateCalibrationMainViewModel(string name);
-        ViewModelBase CreateStep1(CalibrationViewModel setting);
-        ViewModelBase CreateStep2(CalibrationViewModel setting);
-        ViewModelBase CreateStep3(CalibrationViewModel setting);
-        ViewModelBase CreateStep4(CalibrationViewModel setting);
-        ViewModelBase CreateStep5(CalibrationViewModel setting);
-        ViewModelBase CreateStep6(CalibrationViewModel setting);
+        ViewModelBase Create<T>(params Parameter[] parameters) where T : ViewModelBase;
+  
     }
 }

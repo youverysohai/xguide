@@ -9,13 +9,17 @@ using System.Windows.Input;
 
 namespace X_Guide.Converter
 {
-    public static class NavigationViewItemExtensions 
+    public static class NavigationViewItemExtensions
     {
         public static readonly DependencyProperty CommandProperty =
             DependencyProperty.RegisterAttached("Command", typeof(ICommand), typeof(NavigationViewItemExtensions), new PropertyMetadata(null, OnCommandPropertyChanged));
 
         public static readonly DependencyProperty CommandParameterProperty =
             DependencyProperty.RegisterAttached("CommandParameter", typeof(object), typeof(NavigationViewItemExtensions), new PropertyMetadata(null));
+
+
+        public static readonly DependencyProperty BoolProperty =
+            DependencyProperty.RegisterAttached("Bool", typeof(bool), typeof(NavigationViewItemExtensions), new PropertyMetadata(false));
 
         public static ICommand GetCommand(NavigationViewItem item)
         {
@@ -32,6 +36,16 @@ namespace X_Guide.Converter
             return item.GetValue(CommandParameterProperty);
         }
 
+        public static bool GetBool(NavigationViewItem item)
+        {
+            return (bool)item.GetValue(BoolProperty);
+        }
+
+        public static void SetBool(NavigationViewItem item, bool value)
+        {
+            item.SetValue(BoolProperty,value);
+        }
+
         public static void SetCommandParameter(NavigationViewItem item, object value)
         {
             item.SetValue(CommandParameterProperty, value);
@@ -40,19 +54,30 @@ namespace X_Guide.Converter
         private static void OnCommandPropertyChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
         {
             var item = d as NavigationViewItem;
+            MouseButtonEventHandler previewMouseDownHandler = (s, args) => ExecuteCommand(item);
+
             if (item != null)
             {
-                item.PreviewMouseDown += (sender, args) =>
+                if (!GetBool(item))
                 {
-                    var command = GetCommand(item);
-                    var commandParameter = GetCommandParameter(item);
-                    if (command != null && command.CanExecute(commandParameter))
-                    {
-                        command.Execute(commandParameter);
-                    }
-                };
+                    item.PreviewMouseDown += previewMouseDownHandler;
+                    SetBool(item, true);
+                }
             }
         }
+
+        private static void ExecuteCommand(NavigationViewItem item)
+        {
+
+            var command = GetCommand(item);
+            var commandParameter = GetCommandParameter(item);
+            if (command != null && command.CanExecute(commandParameter))
+            {
+                command.Execute(commandParameter);
+            }
+        }
+
+
     }
 
 

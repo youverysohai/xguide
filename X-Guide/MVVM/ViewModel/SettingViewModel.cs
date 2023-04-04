@@ -239,7 +239,7 @@ namespace X_Guide.MVVM.ViewModel
        
                 Point VisCenter = await _visionService.GetVisCenter();
                 double[] OperationData = VisionGuided.EyeInHandConfig2D_Operate(VisCenter, new double[] { (double)Calib.CXOffset, (double)Calib.CYOffset, (double)Calib.CRZOffset, (double)Calib.CameraXScaling });
-                OperationData[2] -= 112.307 - 9.43;
+                OperationData[2] -= 30;
                 if (OperationData[2] > 180) OperationData[2] -= 360;
                 else if (OperationData[2] <= 180) OperationData[2] += 360;
                 await _serverService.SendJogCommand(_tcpClientInfo, new JogCommand().SetX(OperationData[0]).SetY(OperationData[1]).SetRZ(OperationData[2]));

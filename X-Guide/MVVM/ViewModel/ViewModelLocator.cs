@@ -1,4 +1,5 @@
 ﻿using Autofac;
+using Autofac.Core;
 using HandyControl.Controls;
 using System;
 using System.Collections.Generic;
@@ -29,6 +30,20 @@ namespace X_Guide.MVVM.ViewModel
                 return _dependencyResolver?.Resolve<T>();
             }
             catch (Exception ex) 
+            {
+                
+                MessageBox.Show(ex.ToString());
+                return null;
+            }
+        }
+
+        public ViewModelBase Create<T>(params Parameter[] parameters) where T : ViewModelBase
+        {
+            try
+            {
+                return _dependencyResolver?.Resolve<T>(parameters);
+            }
+            catch(Exception ex)
             {
                 MessageBox.Show(ex.ToString());
                 return null;
@@ -66,9 +81,9 @@ namespace X_Guide.MVVM.ViewModel
             return _dependencyResolver?.Resolve<Step6ViewModel>(new TypedParameter(typeof(CalibrationViewModel), setting));
         }
 
-        public ViewModelBase CreateCalibrationMainViewModel(string name)
+        public ViewModelBase CreateCalibrationMainViewModel(CalibrationViewModel setting)
         {
-            return _dependencyResolver?.Resolve<CalibrationMainViewModel>(new TypedParameter(typeof(string), name));
+            return _dependencyResolver?.Resolve<CalibrationMainViewModel>(new TypedParameter(typeof(CalibrationViewModel), setting));
 
         }
 

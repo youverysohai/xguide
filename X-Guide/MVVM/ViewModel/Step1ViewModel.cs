@@ -22,64 +22,48 @@ namespace X_Guide.MVVM.ViewModel
 
         public Action SelectedItemChangedEvent;
 
-        private ManipulatorViewModel _selectedItem;
+        private CalibrationViewModel _calib;
 
-        public ManipulatorViewModel SelectedItem
+        public CalibrationViewModel Calib
         {
-            get { return _selectedItem; }
-            set { _selectedItem = value;
+            get { return _calib; }
+            set { _calib = value;
                 OnPropertyChanged();
-                OnSelectedItemChanged(value);
             }
         }
 
-        private CalibrationViewModel _setting;
-
- 
 
         private ObservableCollection<ManipulatorViewModel> _manipulators;
         public ObservableCollection<ManipulatorViewModel> Manipulators
         {
             get { return _manipulators; }
-            set { _manipulators = value;
+            set
+            {
+                _manipulators = value;
                 OnPropertyChanged();
             }
         }
 
-        private void OnSelectedItemChanged(ManipulatorViewModel manipulator)
-        {
-
-
-            _setting.ManipulatorId = manipulator.Id;
-            SelectedItemChangedEvent?.Invoke();
-             
-        }
 
         public IManipulatorDb _manipulatorDb { get; }
         private IMapper _mapper { get; }
         public IServerService _serverService { get; }
 
-        private readonly IClientService _clientService;
         #endregion
-        public Step1ViewModel(IManipulatorDb manipulatorDb, IMapper mapper, CalibrationViewModel setting, IServerService serverService, IClientService clientService)
+        public Step1ViewModel(IManipulatorDb manipulatorDb, IMapper mapper, CalibrationViewModel calib)
         {
-            
-
-             _manipulatorDb = manipulatorDb;
-            LoadMachineName();
-            _mapper = mapper; 
-           _serverService = serverService;
-            _clientService = clientService;
-            _setting = setting;
-            
+            _manipulatorDb = manipulatorDb;
+            _mapper = mapper;
+            _calib = calib;
+            LoadManipulator();
         }
 
-        private async void LoadMachineName()
+        private async void LoadManipulator()
         {
             var models = await _manipulatorDb.GetAllManipulator();
             var viewModels = models.Select(x => _mapper.Map<ManipulatorViewModel>(x));
             Manipulators = new ObservableCollection<ManipulatorViewModel>(viewModels);
-  
+
         }
 
     }

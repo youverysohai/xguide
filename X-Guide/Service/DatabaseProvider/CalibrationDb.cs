@@ -29,7 +29,7 @@ namespace X_Guide.Service.DatabaseProvider
         {
             return await AsyncQuery((context) =>
             {
-                return context.Calibrations.ToList();
+                return context.Calibrations.Include("Manipulator").ToList();
                
             });
         }

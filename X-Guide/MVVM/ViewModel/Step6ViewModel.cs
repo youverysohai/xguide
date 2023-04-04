@@ -48,7 +48,7 @@ namespace X_Guide.MVVM.ViewModel
         private IVisionService _visionService;
         private IServerService _serverService;
         private readonly ICalibrationDb _calibDb;
-        private readonly TcpClientInfo _tcpClientInfo;
+        private TcpClientInfo _tcpClientInfo;
         public RelayCommand SaveCommand { get; set; }
 
         public RelayCommand CalibrateCommand { get; set; }
@@ -65,14 +65,9 @@ namespace X_Guide.MVVM.ViewModel
             SaveCommand = new RelayCommand(Save);
             OperationCommand = new RelayCommand(Operation);
 
-      /*      _visionService.ConnectServer();*/
-
-            _tcpClientInfo = _serverService.GetConnectedClient().First().Value;
-            _serverService.ServerWriteDataAsync("RESET\r\n", _tcpClientInfo.TcpClient.GetStream());
-            ConnectServer();
-            _visionService.RunProcedure("Circle", true);
-            _circleFind = (IMVSCircleFindModuTool)VmSolution.Instance["Circle.Circle Search1"];
-            VisProcedure = _circleFind;
+         
+         
+           
         }
 
         private async void ConnectServer()
@@ -84,7 +79,7 @@ namespace X_Guide.MVVM.ViewModel
 
 
 
-
+            _visionService.RunProcedure("Long", true);
             Point VisCenter = await _visionService.GetVisCenter();
             double[] OperationData = VisionGuided.EyeInHandConfig2D_Operate(VisCenter, calibData);
             OperationData[2] -= 112.307 - 9.43;
@@ -104,8 +99,12 @@ namespace X_Guide.MVVM.ViewModel
 
         private async void Calibrate(object obj)
         {
-
-
+            _tcpClientInfo = _serverService.GetConnectedClient().First().Value;
+            await _serverService.ServerWriteDataAsync("RESET\r\n", _tcpClientInfo.TcpClient.GetStream());
+            ConnectServer();
+            _visionService.RunProcedure("Circle", true);
+            _circleFind = (IMVSCircleFindModuTool)VmSolution.Instance["Circle.Circle Search1"];
+            VisProcedure = _circleFind;
             Setting.XOffset = Setting.XOffset == 0 ? 10 : Setting.XOffset;
             Setting.YOffset = Setting.YOffset == 0 ? 10 : Setting.YOffset;
 

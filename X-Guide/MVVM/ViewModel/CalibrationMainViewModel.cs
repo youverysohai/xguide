@@ -1,4 +1,5 @@
-﻿using AutoMapper;
+﻿using Autofac;
+using AutoMapper;
 using HandyControl.Controls;
 using HandyControl.Data;
 using System;
@@ -24,12 +25,13 @@ namespace X_Guide.MVVM.ViewModel
 {
     public class CalibrationMainViewModel : ViewModelBase
     {
-
-        public CalibrationViewModel Setting
+        private CalibrationViewModel _calib;
+        public CalibrationViewModel Calib
         {
-            get => setting; set
+            get => _calib; 
+            set
             {
-                setting = value;
+                _calib = value;
                 OnPropertyChanged();
             }
         }
@@ -67,11 +69,12 @@ namespace X_Guide.MVVM.ViewModel
 
         // Define the data list for the StepBar control
         public NavigationStore _navigationStore;
-        private readonly NavigationService _navigationService;
+        private readonly INavigationService _navigationService;
         private readonly IViewModelLocator _viewModelLocator;
 
         public RelayCommand WizNextCommand { get; set; }
         public RelayCommand WizPrevCommand { get; set; }
+        public RelayCommand CancelCommand { get; set; }
 
         public ViewModelBase CurrentViewModel => _navigationStore.CurrentViewModel;
 
@@ -79,7 +82,7 @@ namespace X_Guide.MVVM.ViewModel
         private int _stepIndex;
 
         private int _currentStep;
-        private CalibrationViewModel setting;
+   
 
         public int StepIndex
         {
@@ -103,7 +106,14 @@ namespace X_Guide.MVVM.ViewModel
         }
         public LinkedListNode<ViewModelBase> CurrentNode { get; set; }
 
-
+       public void LoadCalibSetting(TypedParameter calib)
+        {
+            _navigationHistory.AddLast(_viewModelLocator.Create<Step2ViewModel>(calib));
+            _navigationHistory.AddLast(_viewModelLocator.Create<Step3ViewModel>(calib));
+            _navigationHistory.AddLast(_viewModelLocator.Create<Step4ViewModel>(calib));
+            _navigationHistory.AddLast(_viewModelLocator.Create<Step5ViewModel>(calib));
+            _navigationHistory.AddLast(_viewModelLocator.Create<Step6ViewModel>(calib));
+        }
 
         public void OnIndexChanged(FunctionEventArgs<int> e)
         {
@@ -142,35 +152,31 @@ namespace X_Guide.MVVM.ViewModel
             }
             else
             {
-
-                ViewModelBase viewModel = GetStepViewModel(CurrentStep + 1);
-                if (viewModel != null)
+                try
                 {
-                    _navigationService.Navigate(viewModel);
-                    CurrentNode = NavigationHistory.AddLast(viewModel);
+                    NavigateToStep(CurrentStep + 1);
+                    CurrentNode = NavigationHistory.AddLast(_navigationStore.CurrentViewModel);
                     CurrentStep += 1;
-
                 }
-                else
+                catch (Exception ex)
                 {
-                    MessageBox.Show("This is the last page!");
-                }
+                    MessageBox.Show(ex.Message);
+                }  
             }
 
         }
-
+    
         public void WizPrev(object parameter)
         {
-
-
             LinkedListNode<ViewModelBase> prevNode = CurrentNode.Previous;
 
             if (prevNode != null)
             {
-                _navigationService.Navigate(prevNode.Value);
                 CurrentNode = prevNode;
                 CurrentStep -= 1;
+                _navigationService.Navigate(prevNode.Value); 
             }
+
             else
             {
                 MessageBox.Show("This is the first page!");
@@ -178,43 +184,46 @@ namespace X_Guide.MVVM.ViewModel
 
         }
 
-        private ViewModelBase GetStepViewModel(int currentStep)
+        private void NavigateToStep(int currentStep)
         {
-
+            var calibPara = new TypedParameter(typeof(CalibrationViewModel), _calib);
+            
             switch (currentStep)
             {
-                case 0: return _viewModelLocator.CreateStep1(setting);
-                case 1: return _viewModelLocator.CreateStep2(setting);
-                case 2: var i = _viewModelLocator.CreateStep3(setting) as Step3ViewModel; i.CanExecuteChange += OnCanExecuteChange; CanExecuteNext = false; return i;
-                case 3: return _viewModelLocator.CreateStep4(setting);
-                case 4: return _viewModelLocator.CreateStep5(setting);
-                case 5: return _viewModelLocator.CreateStep6(setting);
-                default: return null;
+                case 0: _navigationService.Navigate<Step1ViewModel>(calibPara); break;
+                case 1: _navigationService.Navigate<Step2ViewModel>(calibPara); break;
+                case 2: _navigationService.Navigate<Step3ViewModel>(calibPara); break;
+                case 3:  _navigationService.Navigate<Step4ViewModel>(calibPara); break;
+                case 4:  _navigationService.Navigate<Step5ViewModel>(calibPara); break;
+                case 5:  _navigationService.Navigate<Step6ViewModel>(calibPara); break;
+                default: throw new Exception("Page does not exist!");
             }
 
         }
 
-        public CalibrationMainViewModel(string name, IViewModelLocator viewModelLocator)
+        public CalibrationMainViewModel(CalibrationViewModel calib, INavigationService navigationService, IViewModelLocator viewModelLocator)
         {
 
 
-            _navigationStore = new NavigationStore();
-            _navigationService = new NavigationService(_navigationStore);
-
+            _navigationService = navigationService;
+            _navigationStore = _navigationService.GetNavigationStore();
             _navigationStore.CurrentViewModelChanged += OnCurrentViewModelChanged;
             _viewModelLocator = viewModelLocator;
             WizNextCommand = new RelayCommand(WizNext, (o) => CanExecuteNext);
             WizPrevCommand = new RelayCommand(WizPrev, (o) => CanExecutePrev);
+            CancelCommand = new RelayCommand(CancelCalib);
 
-            Setting = new CalibrationViewModel
-            {
-                Name = name,
-            };
-
-            Step1ViewModel Step1 = viewModelLocator.CreateStep1(Setting) as Step1ViewModel;
+            Calib = calib;
+            var calibPara = new TypedParameter(typeof(CalibrationViewModel), _calib);
+            Step1ViewModel Step1 = viewModelLocator.Create<Step1ViewModel>(calibPara) as Step1ViewModel;
             Step1.SelectedItemChangedEvent += OnSelectedItemChangedEvent;
             _navigationService.Navigate(Step1);
             CurrentNode = _navigationHistory.AddLast(CurrentViewModel);
+        }
+
+        private void CancelCalib(object obj)
+        {
+            _navigationService.Navigate<CalibrationWizardStartViewModel>();
         }
 
         private void OnCanExecuteChange(object sender, bool e)

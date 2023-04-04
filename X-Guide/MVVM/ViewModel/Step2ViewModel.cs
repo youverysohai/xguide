@@ -16,46 +16,28 @@ namespace X_Guide.MVVM.ViewModel
     internal class Step2ViewModel : ViewModelBase
     {
     
-        private CalibrationViewModel _setting;
+        private CalibrationViewModel _calib;
 
 
-        public CalibrationViewModel Setting
+        public CalibrationViewModel Calib
         {
-            get { return _setting; }
+            get { return _calib; }
             set
             {
-                _setting = value;
+                _calib = value;
                 OnPropertyChanged();
             }
-        }
+        }    
 
-        private ManipulatorViewModel _manipulator;
-        private readonly IManipulatorDb _manipulatorDb;
-        private readonly IMapper _mapper;
-
-        public ManipulatorViewModel Manipulator
+        public Step2ViewModel(CalibrationViewModel calib)
         {
-            get { return _manipulator; }
-            set { _manipulator = value;
-                OnPropertyChanged();
-            }
-        }
-            
-
-        public Step2ViewModel(CalibrationViewModel setting, IManipulatorDb manipulatorDb, IMapper mapper)
-        {
-            Setting = setting;
-            _manipulatorDb = manipulatorDb;
-            _mapper = mapper;
-            LoadManipulator();
+            Calib = calib;
+   
+         
         
         }
 
-        private async void LoadManipulator()
-        {
-            var i = await _manipulatorDb.GetManipulator(Setting.ManipulatorId);
-            Manipulator = _mapper.Map<ManipulatorViewModel>(i);
-        }
+    
 
     }
 }

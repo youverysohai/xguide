@@ -74,29 +74,28 @@ namespace X_Guide.MVVM.ViewModel
 
         private readonly AuthenticationService _auth;
 
-        private readonly INavigationService _navigationService;
+        private INavigationService _navigationService;
         private NavigationStore _navigationStore;
-        private readonly IViewModelLocator _viewModelLocator;
+
 
         public ViewModelBase CurrentViewModel => _navigationStore.CurrentViewModel;
         public UserModel CurrentUser => _auth.CurrentUser;
         #endregion
 
-        public MainViewModel(INavigationService navigationService, IServerService serverService, IUserDb userService, IClientService clientService, NavigationStore navigationStore, IViewModelLocator viewModelLocator)
+        public MainViewModel(INavigationService navigationService, IServerService serverService, IUserDb userService)
         {
 
             _auth = new AuthenticationService(userService);
             _auth.CurrentUserChanged += OnCurrentUserChanged;
             
             _navigationService = navigationService;
-            _navigationStore = navigationStore;
-            _viewModelLocator = viewModelLocator;
 
+            _navigationStore = navigationService.GetNavigationStore();
             _navigationStore.CurrentViewModelChanged += OnCurrentViewModelChanged;
 
             serverService.StartServer();
            
-            _navigationService.Navigate(_viewModelLocator.Create<SettingViewModel>());
+            _navigationService.Navigate<SettingViewModel>();
    
             LoginCommand = new RelayCommand(Login);
             RegisterCommand = new RelayCommand(Register);
@@ -106,14 +105,16 @@ namespace X_Guide.MVVM.ViewModel
 
         private void Navigate(object obj)
         {
-            
+            var nav = new TypedParameter(typeof(INavigationService), _navigationService);
+           
             switch (obj)
             {
-                case PageName.Security: _navigationService.Navigate(_viewModelLocator.Create<SecurityViewModel>()); break;
-                case PageName.Production: _navigationService.Navigate(_viewModelLocator.Create<ProductionViewModel>()); break;
-                case PageName.Setting: _navigationService.Navigate(_viewModelLocator.Create<SettingViewModel>()); break;
-                case PageName.CalibrationWizardStart: _navigationService.Navigate(_viewModelLocator.CreateCalibrationWizardStart(_navigationStore)); break;
-                case PageName.Login: _navigationService.Navigate(_viewModelLocator.Create<UserLoginViewModel>()); break;
+
+                case PageName.Security: _navigationService.Navigate<SecurityViewModel>(); break;
+                case PageName.Production: _navigationService.Navigate<ProductionViewModel>(); break;
+                case PageName.Setting: _navigationService.Navigate<SettingViewModel>(); break;
+                case PageName.CalibrationWizardStart: _navigationService.Navigate<CalibrationWizardStartViewModel>(nav); break;
+                case PageName.Login: _navigationService.Navigate<UserLoginViewModel>(); break;
                 default: break;
             }
         }
@@ -132,7 +133,8 @@ namespace X_Guide.MVVM.ViewModel
        
         private async void Register(object obj)
         {
-            bool success = await _auth.Register(new UserModel
+            MessageBox.Show("Halo chub");
+            /*bool success = await _auth.Register(new UserModel
             {
                 Username = "123",
                 Email = "Akimoputo.DotCom",
@@ -144,7 +146,7 @@ namespace X_Guide.MVVM.ViewModel
                 MessageBox.Show("Added successfully");
 
             }
-            else MessageBox.Show("User is not added!");
+            else MessageBox.Show("User is not added!");*/
         }
 
 

@@ -23,7 +23,6 @@ namespace X_Guide.MVVM.ViewModel
     internal class CalibrationWizardStartViewModel : ViewModelBase
     {
         private IMapper _mapper;
-        private IVisionService _visionService;
         private readonly INavigationService _navigationService;
         private readonly IViewModelLocator _viewModelLocator;
         private readonly ICalibrationDb _calibrationDb;
@@ -51,21 +50,27 @@ namespace X_Guide.MVVM.ViewModel
             set { _isStarted = value; OnPropertyChanged(); }
         }
 
-        public ICommand StartCommand { get; set; }
-        public NavigationStore _navigationStore { get; }
-        private IManipulatorDb _manipulatorDB { get; }
+        public ICommand StartCalibCommand { get; set; }
+        public RelayCommand LoadCalibCommand { get; private set; }
 
-        public CalibrationWizardStartViewModel(IServerService serverService, IClientService clientService, IViewModelLocator viewModelLocator, NavigationStore navigationStore, IVisionService visionService, ICalibrationDb calibrationDb, IMapper mapper)
+        public CalibrationWizardStartViewModel(INavigationService navigationService, ICalibrationDb calibrationDb, IMapper mapper)
         {
-            StartCommand = new RelayCommand(start);
-            _serverService = serverService;
-            _visionService = visionService;
-            _navigationService = new NavigationService(navigationStore);
-            _viewModelLocator = viewModelLocator;
+            StartCalibCommand = new RelayCommand(StartCalib);
+            LoadCalibCommand = new RelayCommand(LoadCalib);
+            _navigationService = navigationService;
             _calibrationDb = calibrationDb;
             _mapper = mapper;
             LoadAllCalibration();
          
+        }
+
+        private void LoadCalib(object obj)
+        {
+            var calib = new TypedParameter(typeof(CalibrationViewModel), obj);
+            var calibMain = _navigationService.Navigate<CalibrationMainViewModel>(calib);
+            (calibMain as CalibrationMainViewModel).LoadCalibSetting(calib);
+           
+
         }
 
         private async void LoadAllCalibration()
@@ -75,44 +80,17 @@ namespace X_Guide.MVVM.ViewModel
 
         }
 
-        private void start(object arg)
+        private void StartCalib(object arg)
         {
-            /*            IsStarted = true;
-                        _navigationStore.CurrentViewModel = new EngineeringViewModel(_machineDB, _mapper, _name, _serverService, _clientService);*/
-            /*         FindXMoveYMove(30, 15);*/
+            var calib = new TypedParameter(typeof(CalibrationViewModel), new CalibrationViewModel
+            {
+                Name = Name,
+            });
 
-            _navigationService.Navigate(_viewModelLocator.CreateCalibrationMainViewModel(Name));
+            _navigationService.Navigate<CalibrationMainViewModel>(calib);
         }
 
-        private async void FindXMoveYMove(int jogDistance, int rotateAngle)
-        {
-
-            Point Vis_Center = await _visionService.GetVisCenter();
-
-            TcpClientInfo tcpClientInfo = _serverService.GetConnectedClient().First().Value;
-            await _serverService.SendJogCommand(tcpClientInfo, new JogCommand().SetX(jogDistance));
-            await Task.Delay(2000);
-            Point Vis_Positive = await _visionService.GetVisCenter();
-            await Task.Delay(1000);
-            await _serverService.SendJogCommand(tcpClientInfo, new JogCommand().SetX(-jogDistance));
-            await _serverService.SendJogCommand(tcpClientInfo, new JogCommand().SetRZ(rotateAngle));
-            await Task.Delay(2000);
-            Point Vis_Rotate = await _visionService.GetVisCenter();
-            await Task.Delay(1000);
-            await _serverService.SendJogCommand(tcpClientInfo, new JogCommand().SetRZ(-rotateAngle));
-            double[] MoveOffset = VisionGuided.FindEyeInHandXYMoves(Vis_Center, Vis_Positive, Vis_Rotate, jogDistance, rotateAngle);
-            await Task.Delay(1000);
-            await _serverService.SendJogCommand(tcpClientInfo, new JogCommand().SetX(MoveOffset[0]).SetY(MoveOffset[1]));
-
-
-        }
-        private List<string> _itemList;
-
-        public List<string> ItemList
-        {
-            get { return _itemList; }
-            set { _itemList = value; OnPropertyChanged(); }
-        }
+      
         public void DeleteCalibration(CalibrationViewModel calibration)
         {
             CalibrationList.Remove(calibration);

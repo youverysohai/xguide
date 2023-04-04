@@ -185,7 +185,7 @@
         <ui:NavigationView.MenuItems>
             <ui:NavigationViewItem Content="Production" Icon="Library" ToolTipService.ToolTip="Production">
                 <ui:NavigationViewItem.MenuItems>
-                    <ui:NavigationViewItem 
+                    <ui:NavigationViewItem x:Name="Production"
                         c:NavigationViewItemExtensions.Command="{Binding NavigateCommand}"
                         c:NavigationViewItemExtensions.CommandParameter="{x:Static local:PageName.Production}" 
                         Tag="ProductionView" Content="Browse" Icon="BrowsePhotos" ToolTipService.ToolTip="Notes"/>
@@ -197,7 +197,8 @@
                     <ui:FontIcon   Glyph="&#xE9F5;"/>
                 </ui:NavigationViewItem.Icon>
                 <ui:NavigationViewItem.MenuItems>
-                    <ui:NavigationViewItem
+    
+                    <ui:NavigationViewItem x:Name="CalibrationWizard"
                          c:NavigationViewItemExtensions.Command="{Binding NavigateCommand}"           
                          c:NavigationViewItemExtensions.CommandParameter="{x:Static local:PageName.CalibrationWizardStart}" 
                         Tag="CalibrationWizardStartView" Content="Calibration Wizard"  ToolTipService.ToolTip="Calibration Wizard"  >
@@ -205,7 +206,7 @@
                             <ui:FontIcon   Glyph="&#xE707;"/>
                         </ui:NavigationViewItem.Icon>
                     </ui:NavigationViewItem>
-                    <ui:NavigationViewItem 
+                    <ui:NavigationViewItem x:Name="Jog"
                          c:NavigationViewItemExtensions.Command="{Binding NavigateCommand}"
                          c:NavigationViewItemExtensions.CommandParameter="{x:Static local:PageName.JogRobot}" 
                         Tag="JogRobotView" Content="Jog" ToolTipService.ToolTip="Jog">
@@ -218,17 +219,19 @@
 
             <ui:NavigationViewItem Content="Account" Icon="Contact" ToolTipService.ToolTip="Account">
                 <ui:NavigationViewItem.MenuItems>
-                    <ui:NavigationViewItem Content="Profile" ToolTipService.ToolTip="Notes">
+                    <ui:NavigationViewItem Content="Profile" ToolTipService.ToolTip="Notes"                           >
                         <ui:NavigationViewItem.Icon>
                             <ui:FontIcon   Glyph="&#xE8D4;"/>
                         </ui:NavigationViewItem.Icon>
                     </ui:NavigationViewItem>
-                    <ui:NavigationViewItem Content="User Management"   ToolTipService.ToolTip="User Management">
+                    <ui:NavigationViewItem Content="User Management"   ToolTipService.ToolTip="User Management" c:NavigationViewItemExtensions.Command="{Binding NavigateCommand}"           
+                         c:NavigationViewItemExtensions.CommandParameter="{x:Static local:PageName.Undefined}">
                         <ui:NavigationViewItem.Icon>
                             <ui:FontIcon   Glyph="&#xE779;"/>
                         </ui:NavigationViewItem.Icon>
                     </ui:NavigationViewItem>
-                    <ui:NavigationViewItem Content="Permission"  ToolTipService.ToolTip="Permission">
+                    <ui:NavigationViewItem Content="Permission"  ToolTipService.ToolTip="Permission" c:NavigationViewItemExtensions.Command="{Binding NavigateCommand}"           
+                         c:NavigationViewItemExtensions.CommandParameter="{x:Static local:PageName.Setting}">
                         <ui:NavigationViewItem.Icon>
                             <ui:FontIcon   Glyph="&#xE8D7;"/>
                         </ui:NavigationViewItem.Icon>
@@ -347,6 +350,7 @@
                     <materialDesign:PackIcon Style="{DynamicResource ConnectionStatusIconForeground}" Kind="EyeOutline" />
                     <TextBlock  Style="{DynamicResource ConnectionStatusTextBlockForeground}">Vision</TextBlock>
                     <TextBlock Text="12/3/2023" x:Name="DateTimeTextBlock"/>
+                    <Button Command="{Binding NavigateCommand}" CommandParameter="{x:Static local:PageName.CalibrationWizardStart}" Content="TEST"/> 
                 </hc:SimpleStackPanel>
             </Grid>
 

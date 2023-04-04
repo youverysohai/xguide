@@ -20,9 +20,9 @@
                 <Label Content="Based on Step 1, you have selected..." HorizontalAlignment="Center" Style="{DynamicResource MaterialDesignLabel}"/>
                 <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" >
                     <Label Content="Name:" Style="{DynamicResource MaterialDesignLabel}"/> 
-                    <TextBlock Style="{StaticResource ReadOnlyTextBlock}" Text="{Binding Manipulator.Name}"/>
+                    <TextBlock Style="{StaticResource ReadOnlyTextBlock}" Text="{Binding Calib.Manipulator.Name}"/>
                     <Label Content="Type:" Style="{DynamicResource MaterialDesignLabel}"/>
-                    <TextBlock Style="{StaticResource ReadOnlyTextBlock}" Text="{Binding Manipulator.Type, Converter={c:TypeToDescriptionConverter}}"/>
+                    <TextBlock Style="{StaticResource ReadOnlyTextBlock}" Text="{Binding Calib.Manipulator.Type, Converter={c:TypeToDescriptionConverter}}"/>
 
                 </StackPanel>
                 <TextBlock Text="Mounting &amp; Orientation" HorizontalAlignment="Center" FontSize="35" Margin="0 0 0 25"/>

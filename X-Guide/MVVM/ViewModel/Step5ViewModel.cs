@@ -114,9 +114,9 @@ namespace X_Guide.MVVM.ViewModel
             _clientService = clientService;
             _visionService = visionService;
             _setting = setting;
-            LoadProcedure();
+   /*         LoadProcedure();*/
 
-
+            
             ReconnectCommand = new RelayCommand(null);
             JogCommand = new RelayCommand(Jog, CanStartJog);
 
@@ -130,7 +130,14 @@ namespace X_Guide.MVVM.ViewModel
         private async void LoadProcedure()
         {
             VmProcedure vmProcedure = (VmProcedure)await _visionService.GetVmModule("Live");
-            vmProcedure.ContinuousRunEnable = true;
+            try
+            {
+                vmProcedure.ContinuousRunEnable = true;
+            }
+            catch(Exception ex)
+            {
+                MessageBox.Show(ex.ToString());
+            }
             VisProcedure = vmProcedure;
         }
      

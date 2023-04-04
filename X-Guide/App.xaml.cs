@@ -73,13 +73,12 @@ namespace X_Guide
 
           
             builder.Register(c => new ViewModelLocator(_diContainer)).As<IViewModelLocator>().SingleInstance();
-            builder.RegisterType<NavigationService>().As<INavigationService>();
             builder.Register(c => new MainWindow()
             {
                 DataContext = c.Resolve<MainViewModel>()
             });
 
-            builder.RegisterType<NavigationStore>().SingleInstance();
+            
             builder.RegisterType<MainViewModel>();
             builder.RegisterType<CalibrationWizardStartViewModel>();
             builder.RegisterType<Step1ViewModel>();
@@ -98,13 +97,14 @@ namespace X_Guide
             builder.RegisterType<ManipulatorDb>().As<IManipulatorDb>();
             builder.RegisterType<UserDb>().As<IUserDb>();
             builder.RegisterType<VisionService>().As<IVisionService>();
+            builder.RegisterType<NavigationStore>();
+            builder.RegisterType<NavigationService>().As<INavigationService>();
             builder.RegisterType<VisionDb>().As<IVisionDb>();
             builder.RegisterType<CalibrationDb>().As<ICalibrationDb>();
-
-
             builder.RegisterType<ServerService>().As<IServerService>().WithParameter(new TypedParameter(typeof(IPAddress), IPAddress.Parse("192.168.10.92"))).WithParameter(new TypedParameter(typeof(int), 8000)).WithParameter(new TypedParameter(typeof(string), "\r\n")).SingleInstance();
-
             builder.Register(c => new ClientService(IPAddress.Parse("192.168.10.90"), 8000, "")).As<IClientService>().SingleInstance();
+
+
 
             return builder.Build();
         }

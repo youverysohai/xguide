@@ -9,13 +9,15 @@ namespace X_Guide
 {
     public enum ManipulatorType
     {
-        [Description("Gantry System")]
-        GantrySystem = 1,
+        [Description("Gantry With Rotary Axis")]
+        GantrySystemR = 1,
+        [Description("Gantry Without Rotary Axis")]
+        GantrySystemWR = 2,
         [Description("SCARA")]
-        SCARA = 2,
+        SCARA = 3,
         [Description("6-Axis")]
-        SixAxis = 3,
-
+        SixAxis = 4,
+        
 
     }
 }

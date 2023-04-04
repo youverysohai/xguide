@@ -50,14 +50,14 @@
 
                 <RowDefinition Height="auto"/>
             </Grid.RowDefinitions>
-            <Button  Grid.Column="1" HorizontalAlignment="Right" VerticalAlignment="Center" Style="{DynamicResource MaterialDesignIconForegroundButton}" Click="Button_Click" >
+            <Button  Grid.Column="1" HorizontalAlignment="Right" VerticalAlignment="Center" Style="{DynamicResource MaterialDesignIconForegroundButton}" Command="{Binding CancelCommand}">
                 <materialDesign:PackIcon Kind="WindowClose" Style="{DynamicResource IconStyle16}"></materialDesign:PackIcon>
             </Button>
             <TextBox materialDesign:TextFieldAssist.HasClearButton="True"
                      materialDesign:TextFieldAssist.HasTrailingIcon="True" 
                      materialDesign:TextFieldAssist.TrailingIcon="Edit"
                      Cursor="Hand"
-                     Text="{Binding Setting.Name}"
+                     Text="{Binding Calib.Name}"
                      Grid.ColumnSpan="2" Width="300" 
                      Style="{DynamicResource InputMaterialDesignTextBox}"
                      
