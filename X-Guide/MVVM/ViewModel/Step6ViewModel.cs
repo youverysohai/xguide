@@ -1,4 +1,5 @@
-﻿using IMVSCircleFindModuCs;
+﻿using AutoMapper;
+using IMVSCircleFindModuCs;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
@@ -11,6 +12,7 @@ using VM.Core;
 using VMControls.Interface;
 using X_Guide.Communication.Service;
 using X_Guide.MVVM.Command;
+using X_Guide.MVVM.Model;
 using X_Guide.MVVM.ViewModel.CalibrationWizardSteps;
 using X_Guide.Service.Communication;
 using X_Guide.Service.DatabaseProvider;
@@ -24,7 +26,7 @@ namespace X_Guide.MVVM.ViewModel
         private CalibrationViewModel _setting;
         private IMVSCircleFindModuTool _circleFind;
         private double[] calibData;
-        public CalibrationViewModel Setting
+        public CalibrationViewModel Calib
         {
             get { return _setting; }
             set
@@ -48,6 +50,7 @@ namespace X_Guide.MVVM.ViewModel
         private IVisionService _visionService;
         private IServerService _serverService;
         private readonly ICalibrationDb _calibDb;
+        private readonly IMapper _mapper;
         private TcpClientInfo _tcpClientInfo;
         public RelayCommand SaveCommand { get; set; }
 
@@ -55,12 +58,13 @@ namespace X_Guide.MVVM.ViewModel
 
 
 
-        public Step6ViewModel(CalibrationViewModel setting, IClientService clientService, IServerService serverService, ICalibrationDb calibDb, IVisionService visionService)
+        public Step6ViewModel(CalibrationViewModel setting, IClientService clientService, IServerService serverService, ICalibrationDb calibDb, IVisionService visionService, IMapper mapper)
         {
-            Setting = setting;
+            Calib = setting;
             _visionService = visionService;
             _serverService = serverService;
             _calibDb = calibDb;
+            _mapper = mapper;
             CalibrateCommand = new RelayCommand(Calibrate);
             SaveCommand = new RelayCommand(Save);
             OperationCommand = new RelayCommand(Operation);
@@ -93,7 +97,7 @@ namespace X_Guide.MVVM.ViewModel
 
         private async void Save(object obj)
         {
-            await _calibDb.AddCalibration(Setting);
+            await _calibDb.AddCalibration(_mapper.Map<CalibrationModel>(Calib));
             System.Windows.MessageBox.Show("Saved!");
         }
 
@@ -105,8 +109,8 @@ namespace X_Guide.MVVM.ViewModel
             _visionService.RunProcedure("Circle", true);
             _circleFind = (IMVSCircleFindModuTool)VmSolution.Instance["Circle.Circle Search1"];
             VisProcedure = _circleFind;
-            Setting.XOffset = Setting.XOffset == 0 ? 10 : Setting.XOffset;
-            Setting.YOffset = Setting.YOffset == 0 ? 10 : Setting.YOffset;
+            Calib.XOffset = Calib.XOffset == 0 ? 10 : Calib.XOffset;
+            Calib.YOffset = Calib.YOffset == 0 ? 10 : Calib.YOffset;
 
 
             double[] XYMove;            
@@ -118,10 +122,10 @@ namespace X_Guide.MVVM.ViewModel
 
                 calibData = VisionGuided.EyeInHandConfig2D_Calib(VisionPoint, RobotPoint, XYMove[0], XYMove[1], true);
 
-                Setting.CXOffSet = calibData[0];
-                Setting.CYOffset = calibData[1];
-                Setting.CRZOffset = calibData[2];
-                Setting.Mm_per_pixel = calibData[3];
+                Calib.CXOffSet = calibData[0];
+                Calib.CYOffset = calibData[1];
+                Calib.CRZOffset = calibData[2];
+                Calib.Mm_per_pixel = calibData[3];
             }
             catch (Exception ex)
             {
@@ -139,8 +143,8 @@ namespace X_Guide.MVVM.ViewModel
 
         private async Task<(Point[], Point[])> Start9PointCalib()
         {
-            int XOffset = Setting.XOffset;
-            int YOffset = Setting.YOffset;
+            int XOffset = Calib.XOffset;
+            int YOffset = Calib.YOffset;
 
             Point[] VisionPoints = new Point[9];
             Point[] RobotPoints = new Point[9];

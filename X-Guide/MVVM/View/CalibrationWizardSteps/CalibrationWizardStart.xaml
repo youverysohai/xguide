@@ -8,27 +8,31 @@
              xmlns:hc="https://handyorg.github.io/handycontrol"
              xmlns:c="clr-namespace:X_Guide.Converter" 
              mc:Ignorable="d" 
-             d:DesignHeight="650" d:DesignWidth="1000">
+             d:DesignHeight="650" d:DesignWidth="1000"
+             x:Name="CalibWizStart">
     <UserControl.Resources>
         <c:LastCharacterConverter x:Key="LastCharacterConverter" />
         <DataTemplate x:Key="ChipTemplate">
 
             <materialDesign:Chip 
         Style="{DynamicResource MaterialDesignOutlineChip}"
-        Click="Chip_Click"
-            Content="{Binding Name}"
+         
+            
             Icon="{Binding Converter={StaticResource LastCharacterConverter}}"
-            Command="{Binding DataContext.LoadCalibCommand, RelativeSource={RelativeSource AncestorType={x:Type ItemsControl}}}" CommandParameter="{Binding}"  
+            Command="{Binding DataContext.LoadCalibCommand, ElementName=CalibWizStart}" CommandParameter="{Binding}"  
                
-            DeleteClick="Chip_DeleteClick"
-                         IsDeletable="True" Margin="10"/>
-
+              Margin="10">
+                <hc:SimpleStackPanel Orientation="Horizontal">
+                    <TextBlock Text="{Binding Name}"/>
+                    <Button Command="{Binding DataContext.DeleteCalibCommand, ElementName=CalibWizStart}" CommandParameter="{Binding}" Content="X" Style="{DynamicResource MaterialDesignIconForegroundButton}"/>
+                </hc:SimpleStackPanel>
+            </materialDesign:Chip>
         </DataTemplate>
         <!--x:Static materialDesign:DrawerHost.CloseDrawerCommand-->
     </UserControl.Resources>
 
     <materialDesign:Card Style="{DynamicResource CardLayout}" >
-        <materialDesign:DrawerHost OpenMode="Default">
+        <materialDesign:DrawerHost OpenMode="Default" >
             <materialDesign:DrawerHost.LeftDrawerContent>
                 <hc:ScrollViewer VerticalScrollBarVisibility="Visible">
                     <hc:SimpleStackPanel Orientation="Vertical">
@@ -36,7 +40,7 @@
                        HorizontalAlignment="Center"
                        Text="Edit" />
                         <hc:SimplePanel x:Name="ChipsContainer">
-                            <ItemsControl ItemsSource="{Binding CalibrationList}" ItemTemplate="{StaticResource ChipTemplate}" >
+                            <ItemsControl ItemsSource="{Binding Calibrations}" ItemTemplate="{StaticResource ChipTemplate}" >
                             </ItemsControl>
                     </hc:SimplePanel>
                    

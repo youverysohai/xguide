@@ -9,8 +9,12 @@ namespace X_Guide.MVVM.ViewModel.CalibrationWizardSteps
 {
     public class CalibrationViewModel : ViewModelBase
     {
+
+
+
+        private int _id;
         private string _name;
-        private Manipulator _manipulator;
+        private ManipulatorViewModel _manipulator;
         private int _orientation;
         private string _visionFlow;
         private double _cXOffSet = 0;
@@ -25,6 +29,11 @@ namespace X_Guide.MVVM.ViewModel.CalibrationWizardSteps
 
         private string _visionFilePath;
 
+        public int Id
+        {
+            get { return _id; }
+            set { _id = value; }
+        }
         public string VisionFilePath
         {
             get { return _visionFilePath; }
@@ -79,7 +88,7 @@ namespace X_Guide.MVVM.ViewModel.CalibrationWizardSteps
                 OnPropertyChanged();
             }
         }
-        public Manipulator Manipulator
+        public ManipulatorViewModel Manipulator
         {
             get => _manipulator; 
             set

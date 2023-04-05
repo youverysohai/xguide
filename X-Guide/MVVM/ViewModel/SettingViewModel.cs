@@ -62,9 +62,9 @@ namespace X_Guide.MVVM.ViewModel
 
         private VisionViewModel _vision;
 
-        private ObservableCollection<Calibration> _calibSol;
+        private ObservableCollection<CalibrationModel> _calibSol;
 
-        public ObservableCollection<Calibration> CalibSol
+        public ObservableCollection<CalibrationModel> CalibSol
         {
             get { return _calibSol; }
             set { _calibSol = value;
@@ -222,9 +222,9 @@ namespace X_Guide.MVVM.ViewModel
        
         private async void LoadAllCalibFile()
         {
-            var i = await _calibrationDb.GetAllCalibration();
+            var i = await _calibrationDb.GetCalibrations();
 
-            CalibSol = new ObservableCollection<Calibration>(i);
+            CalibSol = new ObservableCollection<CalibrationModel>(i);
         }
 
        

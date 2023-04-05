@@ -18,7 +18,7 @@
 
         <StackPanel Orientation="Vertical" VerticalAlignment="Center" >
             <TextBlock Text="Select Manipulator" HorizontalAlignment="Center" FontSize="35" Margin="0 0 0 25"/>
-            <ComboBox ItemsSource="{Binding Manipulators}"  Width="300" SelectedValue="{Binding Calib.ManipulatorId}"
+            <ComboBox ItemsSource="{Binding Manipulators}"  Width="300" SelectedValue="{Binding Calib.Manipulator.Id}"
                            DisplayMemberPath="Name"
                       SelectedValuePath="Id"
                            

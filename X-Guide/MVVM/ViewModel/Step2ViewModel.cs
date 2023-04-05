@@ -32,7 +32,7 @@ namespace X_Guide.MVVM.ViewModel
         public Step2ViewModel(CalibrationViewModel calib)
         {
             Calib = calib;
-   
+            
          
         
         }

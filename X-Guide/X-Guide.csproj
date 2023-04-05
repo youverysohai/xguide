@@ -711,6 +711,7 @@
     <Compile Include="MVVM\Command\VideoCommand.cs" />
     <Compile Include="MVVM\DBContext\DbContextFactory.cs" />
     <Compile Include="MVVM\DTO\UserDTO.cs" />
+    <Compile Include="MVVM\Model\CalibrationModel.cs" />
     <Compile Include="MVVM\Model\ManipulatorModel.cs" />
     <Compile Include="MVVM\Model\Point.cs" />
     <Compile Include="MVVM\Model\UserModel.cs" />

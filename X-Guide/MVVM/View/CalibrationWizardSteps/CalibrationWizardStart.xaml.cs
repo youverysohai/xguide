@@ -41,19 +41,6 @@ namespace X_Guide.MVVM.View.CalibrationWizardSteps
         }
 
 
-        private void Chip_Click(object sender, RoutedEventArgs e)
-        {
-
-            Chip chip = (Chip)sender;
-            messageQueue.Enqueue(chip.Content + " is Selected", null,
-                null,
-                null,
-                false,
-                true,
-                TimeSpan.FromSeconds(1.55));
-            CalibName.Text = (string)chip.Content;
-        }
-
         private void Chip_DeleteClick(object sender, RoutedEventArgs e)
         {
             Chip chip = (Chip)sender;
