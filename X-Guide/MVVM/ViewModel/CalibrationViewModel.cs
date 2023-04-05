@@ -15,8 +15,8 @@ namespace X_Guide.MVVM.ViewModel.CalibrationWizardSteps
         private int _id;
         private string _name;
         private ManipulatorViewModel _manipulator;
+        private VisionViewModel _vision;
         private int _orientation;
-        private string _visionFlow;
         private double _cXOffSet = 0;
         private double _cYOffset = 0;
         private double _cRZOffset = 0;
@@ -24,22 +24,30 @@ namespace X_Guide.MVVM.ViewModel.CalibrationWizardSteps
         private double _acceleration = 1;
         private double _motionDelay = 0;
         private double _mm_per_pixel = 1;
+        private string _filepath;
+        private string _procedure;
+
+        public string Procedure
+        {
+            get { return _procedure; }
+            set { _procedure = value; }
+        }
+
+
+        public string Filepath
+        {
+            get { return _filepath; }
+            set { _filepath = value; }
+        }
+
         public int XOffset { get; set; } = 0;
         public int YOffset { get; set; } = 0;
 
-        private string _visionFilePath;
 
         public int Id
         {
             get { return _id; }
             set { _id = value; }
-        }
-        public string VisionFilePath
-        {
-            get { return _visionFilePath; }
-            set { _visionFilePath = value;
-                OnPropertyChanged();
-            }
         }
 
         public double Mm_per_pixel
@@ -98,21 +106,14 @@ namespace X_Guide.MVVM.ViewModel.CalibrationWizardSteps
             }
         }
 
-        private Vision _vision;
+        
 
-        public Vision Vision
+        public VisionViewModel Vision
         {
             get { return _vision; }
             set { _vision = value; }
         }
 
-        private string _procedure;
-
-        public string Procedure
-        {
-            get { return _procedure; }
-            set { _procedure = value; }
-        }
 
         public int Orientation
         {
@@ -123,14 +124,7 @@ namespace X_Guide.MVVM.ViewModel.CalibrationWizardSteps
                 OnPropertyChanged();
             }
         }
-        public string VisionFlow
-        {
-            get => _visionFlow; set
-            {
-                _visionFlow = value;
-                OnPropertyChanged();
-            }
-        }
+
 
         public double Speed
         {
@@ -162,7 +156,7 @@ namespace X_Guide.MVVM.ViewModel.CalibrationWizardSteps
         public override string ToString()
         {
             return string.Format("Name: {0}\nManipulatorId: {1}\nOrientation: {2}\nVision Flow: {3}\nSpeed: {4}\nAcceleration: {5}\nMotion Delay: {6}",
-    _name, _manipulator, _orientation, _visionFlow, _speed, _acceleration, _motionDelay);
+    _name, _manipulator, _orientation, _procedure, _speed, _acceleration, _motionDelay);
 
 
         }

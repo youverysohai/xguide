@@ -60,7 +60,7 @@ namespace X_Guide.VisionMaster
             throw new Exception("Data not found!");
         }
 
-        public List<string> GetAllProcedureName()
+        public IEnumerable<string> GetProcedureNames()
         {
              return  VmSolution.Instance.GetAllProcedureList().astProcessInfo.Where(x => x.strProcessName != null).ToList().Select(x=> x.strProcessName).ToList();  
         }

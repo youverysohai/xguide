@@ -15,19 +15,21 @@ namespace X_Guide.MappingConfiguration
 
         public CalibrationProfile()
         {
-            var maniConfig = new MapperConfiguration(c => c.AddProfile<ManipulatorProfile>()).CreateMapper();
+            var mapper = new MapperConfiguration(c => { c.AddProfile<ManipulatorProfile>(); c.AddProfile<VisionProfile>(); }).CreateMapper();
 
             CreateMap<Calibration, CalibrationModel>();
             CreateMap<CalibrationModel, Calibration>();
 
             CreateMap<CalibrationModel, CalibrationViewModel>()
             .ForMember(dest => dest.Mm_per_pixel, opt => opt.MapFrom(src => src.CameraXScaling))
-            .ForMember(dest => dest.Manipulator, opt => opt.MapFrom(src => maniConfig.Map<ManipulatorViewModel>(maniConfig.Map<ManipulatorModel>(src.Manipulator))));
+            .ForMember(dest => dest.Manipulator, opt => opt.MapFrom(src => mapper.Map<ManipulatorViewModel>(src.Manipulator)))
+            .ForMember(dest => dest.Vision, opt => opt.MapFrom(src => mapper.Map<VisionViewModel>(src.Vision)));
+
 
             CreateMap<CalibrationViewModel, CalibrationModel>()
                 .ForMember(dest => dest.CameraXScaling, opt => opt.MapFrom(src => src.Mm_per_pixel))
-                .ForMember(dest => dest.CameraYScaling, opt => opt.MapFrom(src => src.Mm_per_pixel))
-                .ForMember(dest => dest.Manipulator, opt => opt.MapFrom(src => maniConfig.Map<ManipulatorModel>(maniConfig.Map<Manipulator>(src.Manipulator))));
+                    .ForMember(dest => dest.Manipulator, opt => opt.MapFrom(src => mapper.Map<ManipulatorModel>(src.Manipulator)))
+            .ForMember(dest => dest.Vision, opt => opt.MapFrom(src => mapper.Map<VisionModel>(src.Vision))); ;
         }
     }
 

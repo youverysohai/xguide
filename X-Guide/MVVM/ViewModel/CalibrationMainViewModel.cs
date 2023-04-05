@@ -231,9 +231,10 @@ namespace X_Guide.MVVM.ViewModel
 
                 },
                 Orientation = 2,
-                Vision = new Vision
+                Vision = new VisionViewModel
                 {
-                    Filepath = @"C:\Users\Xlent_XIR02"
+                    Id = 1,
+                    Filepath= @"C:\Users\Xlent_XIR02\Desktop\livecam.sol",
                 }
             }))));
         }

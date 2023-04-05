@@ -197,7 +197,7 @@ namespace X_Guide.MVVM.ViewModel
             _visionService = visionService;
 
             GetAllMachine();
-            GetAllVision();
+            GetVisions();
             //Visions = new ObservableCollection<VisionViewModel>
             //{
             //    new VisionViewModel
@@ -261,11 +261,11 @@ namespace X_Guide.MVVM.ViewModel
         {
         }
 
-        private async void GetAllVision()
+        private async void GetVisions()
         {
-            IEnumerable<VisionViewModel> visionViewModels = await _visionDb.GetAllVision();
+            IEnumerable<VisionModel> models = await _visionDb.GetVisions();
             
-            Visions = new ObservableCollection<VisionViewModel>(visionViewModels);
+            Visions = new ObservableCollection<VisionViewModel>(models.Select(x=> _mapper.Map<VisionViewModel>(x)));
         }
 
         private async void LoadAllCalibFile()
@@ -281,7 +281,7 @@ namespace X_Guide.MVVM.ViewModel
             var _tcpClientInfo = _serverService.GetConnectedClient().First().Value;
             try
             {
-                await _visionService.ImportSol($"{Calib.VisionFilePath}");
+                await _visionService.ImportSol($"{Calib.Vision.Filepath}");
                 _visionService.RunProcedure("Long", true);
                 ConnectServer();
 

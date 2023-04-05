@@ -727,6 +727,7 @@
     <Compile Include="MVVM\Model\UserModel.cs" />
     <Compile Include="Enum\PageName.cs" />
     <Compile Include="MVVM\Model\VisionGuided.cs" />
+    <Compile Include="MVVM\Model\VisionModel.cs" />
     <Compile Include="MVVM\ViewModel\CalibrationWizardStartViewModel.cs" />
     <Compile Include="MVVM\ViewModel\CalibrationMainViewModel.cs" />
     <Compile Include="MVVM\ViewModel\ErrorViewModel.cs" />

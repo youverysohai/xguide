@@ -20,7 +20,10 @@
                 <StackPanel Orientation="Vertical" HorizontalAlignment="Center" >
                 <ComboBox 
                         ItemsSource="{Binding Visions}"
-                        DisplayMemberPath="Name"
+                        SelectedItem="{Binding Vision}"   
+                   SelectedValue="{Binding Calibration.Vision.Id}"
+                    DisplayMemberPath="Name"
+                        SelectedValuePath="Id"
                         Style="{DynamicResource MaterialDesignOutlinedComboBox}"
                               Width="300"
                               materialDesign:HintAssist.Hint="Select Vision Name"
@@ -37,8 +40,8 @@
                  
 
                     <ComboBox
-                        ItemsSource="{Binding VisionFlow}" 
-                        SelectedItem="{Binding SelectedItem}"
+                        ItemsSource="{Binding Procedures}" 
+                        SelectedItem="{Binding Procedure}"
                         Style="{DynamicResource ComboBoxStyle}"
                               Width="300"
                               materialDesign:HintAssist.Hint="Select Vision Flow"

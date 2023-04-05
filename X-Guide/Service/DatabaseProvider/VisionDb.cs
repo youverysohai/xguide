@@ -5,6 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using X_Guide.MVVM.DBContext;
+using X_Guide.MVVM.Model;
 using X_Guide.MVVM.ViewModel;
 
 namespace X_Guide.Service.DatabaseProvider
@@ -41,7 +42,7 @@ namespace X_Guide.Service.DatabaseProvider
             });
         }
 
-        public async Task<bool> UpdateVision(VisionViewModel vision)
+        public async Task<bool> UpdateVision(VisionModel vision)
         {
             
             return await AsyncQuery(c => {
@@ -53,20 +54,20 @@ namespace X_Guide.Service.DatabaseProvider
             });
         }
 
-        public async Task<VisionViewModel> GetVision(string name)
+        public async Task<VisionModel> GetVision(string name)
         {
             return await AsyncQuery(c =>
             {
-                return MapTo<VisionViewModel>(c.Visions.FirstOrDefault(x => x.Name.Equals(name)));
+                return MapTo<VisionModel>(c.Visions.FirstOrDefault(x => x.Name.Equals(name)));
             });
         }
 
 
-        public async Task<IEnumerable<VisionViewModel>> GetAllVision()
+        public async Task<IEnumerable<VisionModel>> GetVisions()
         {
             return await AsyncQuery(c =>
             {
-                return c.Visions.ToList().Select(x => MapTo<VisionViewModel>(x));
+                return c.Visions.ToList().Select(x => MapTo<VisionModel>(x));
             });
         }
 

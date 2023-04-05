@@ -16,7 +16,7 @@ namespace X_Guide.VisionMaster
         Task<bool> ImportSol(string filepath);
 
         void RunProcedure(string name, bool continuous = false);
-        List<string> GetAllProcedureName();
+        IEnumerable<string> GetProcedureNames();
         Task<IVmModule> GetVmModule(string name); 
         void RunOnceAndSaveImage();
     }

@@ -12,7 +12,6 @@ namespace X_Guide.MVVM.Model
         public string Name { get; set; }
         public int ManipulatorId { get; set; }
         public int Orientation { get; set; }
-        public string VisionFilePath { get; set; }
         public double Speed { get; set; }
         public double Acceleration { get; set; }
         public double MotionDelay { get; set; }
@@ -21,9 +20,12 @@ namespace X_Guide.MVVM.Model
         public double CameraXScaling { get; set; }
         public double CameraYScaling { get; set; }
         public double CRZOffset { get; set; }
-        public string VisionFlow { get; set; }
         public double CYOffset { get; set; }
         public double CXOffset { get; set; }
-        public Manipulator Manipulator { get; set; }
+        public ManipulatorModel Manipulator { get; set; }
+        public VisionModel Vision { get; set; }
+
+        public string Procedure { get; set; }
+        public string Filepath { get; set; }
     }
 }

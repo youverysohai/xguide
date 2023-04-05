@@ -1,4 +1,5 @@
-﻿using System;
+﻿using AutoMapper;
+using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Diagnostics;
@@ -10,6 +11,7 @@ using System.Windows.Input;
 using VM.Core;
 using X_Guide.Communication.Service;
 using X_Guide.MVVM.Command;
+using X_Guide.MVVM.Model;
 using X_Guide.MVVM.ViewModel.CalibrationWizardSteps;
 using X_Guide.Service.Communication;
 using X_Guide.Service.DatabaseProvider;
@@ -25,26 +27,49 @@ namespace X_Guide.MVVM.ViewModel
 
 
         private CalibrationViewModel _calibration;
-        private readonly IServerService _serverService;
-        private readonly IClientService _clientService;
         private readonly IVisionService _visionService;
         private readonly IVisionDb _visionDb;
+        private readonly IMapper _mapper;
 
-        public event EventHandler<bool> CanExecuteChange;
-        private ObservableCollection<string> _visionFlow;
+        public CalibrationViewModel Calibration
+        {
+            get { return _calibration; }
+        }
 
+        private string _procedure => _calibration.Procedure;
 
-        private VisionViewModel _vision;
+        public string Procedure
+        {
+            get { return _procedure; }
+            set { _calibration.Procedure = value;
+                OnPropertyChanged();
+                OnProcedureChanged();
+            }
+        }
 
+        private VisionViewModel _vision => _calibration.Vision;
         public VisionViewModel Vision
         {
             get { return _vision; }
-            set
-            {
-                _vision = value;
+            set { _calibration.Vision = value;
                 OnPropertyChanged();
+                if(value != null)
+                {
+                    GetProcedures();
+                }
             }
         }
+
+        private void OnVisionChanged()
+        {
+            GetProcedures();
+        }
+
+        private void OnProcedureChanged()
+        {
+            MessageBox.Show(_calibration.Procedure);
+        }
+
         private ObservableCollection<VisionViewModel> _visions;
 
         public ObservableCollection<VisionViewModel> Visions
@@ -56,82 +81,45 @@ namespace X_Guide.MVVM.ViewModel
                 OnPropertyChanged();
             }
         }
-        public ObservableCollection<string> VisionFlow
+
+        private ObservableCollection<string> _procedures;
+
+        public ObservableCollection<string> Procedures
         {
-            get { return _visionFlow; }
-            set
-            {
-                _visionFlow = value;
+            get { return _procedures; }
+            set { _procedures = value;
                 OnPropertyChanged();
             }
         }
 
-     
 
-  
 
-        public MainViewModel DataContext { get; private set; }
-
-        public Step3ViewModel(CalibrationViewModel calibration, IServerService serverService, IClientService clientService, IVisionService visionService, IVisionDb visionDb)
+        public Step3ViewModel(CalibrationViewModel calibration, IVisionService visionService, IVisionDb visionDb, IMapper mapper)
         {
             _calibration = calibration;
-            _serverService = serverService;
-            _clientService = clientService;
             _visionService = visionService;
             _visionDb = visionDb;
-   
-             
-            Visions = new ObservableCollection<VisionViewModel> { new VisionViewModel
+            _mapper = mapper;
+            GetVisions();
+       /*     if (!(Vision is null))
             {
-                Name = "Vision1",
-                Ip = new ObservableCollection<string>(new string[] { "192", "168", "11", "90" }),
-                Port = 8000,
-                Terminator = ""
+                GetProcedures();
+            }*/
 
-            } , new VisionViewModel
-            {
-                Name = "Hik",
-                Ip = new ObservableCollection<string>(new string[]{"192", "163","11","33"}),
-                Port=8000,
-                Terminator="\r"
-
-            } , new VisionViewModel
-            {
-                Name = "Vision2",
-                Ip = new ObservableCollection<string>(new string[]{"192", "128","21","90"}),
-                Port=8000,
-                Terminator="\r\n"
-
-            }  };
-            //NavigateCommand = new RelayCommand(Navigate);
         }
 
-        private void GetVisions()
+        private async void GetVisions()
         {
-   
+            IEnumerable<VisionModel> models = await _visionDb.GetVisions();
+            Visions = new ObservableCollection<VisionViewModel>(models.Select(x=> _mapper.Map<VisionViewModel>(x)));
         }
 
-        private void OnItemChanged(string value)
+        private async void GetProcedures()
         {
-            _calibration.VisionFlow = value;
+            await _visionService.ImportSol(_calibration.Vision.Filepath);
+            Procedures = new ObservableCollection<string>(_visionService.GetProcedureNames());
         }
-        private async void OpenFile()
-        {
-            try
-            {
-                await _visionService.ImportSol("");
-/*                ProcessInfoList i = VmSolution.Instance.GetAllProcedureList();
-                List<ProcessInfo> procedureList = i.astProcessInfo.Where(x => x.strProcessName != null).ToList();*/
-                VisionFlow = new ObservableCollection<string>(_visionService.GetAllProcedureName());
-                _calibration.VisionFilePath = "";
-                
-                CanExecuteChange?.Invoke(this, true);
-            }
-            catch(Exception ex)
-            {
-                MessageBox.Show(ex.ToString());
-            }
-        }
+      
 
    
     }

@@ -10,6 +10,14 @@ namespace X_Guide.MVVM.ViewModel
 {
     public class VisionViewModel : ViewModelBase, ICloneable
     {
+        private int _id;
+
+        public int Id
+        {
+            get { return _id; }
+            set { _id = value; }
+        }
+
         private string name;
 
         public string Name
@@ -46,17 +54,25 @@ namespace X_Guide.MVVM.ViewModel
             set { _terminator = value;
                 OnPropertyChanged(); }
         }
+
+        private string _filepath;
+
+        public string Filepath
+        {
+            get { return _filepath; }
+            set { _filepath = value; }
+        }
+
         public object Clone()
         {
             return new VisionViewModel
             {
 
                 Name = Name,
-
-
                 Port = Port,
                 Ip = new ObservableCollection<string>(Ip.ToList()),
                 Terminator = Terminator,
+                Filepath = Filepath,
             };
 
         }
