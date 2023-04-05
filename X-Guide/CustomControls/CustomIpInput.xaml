@@ -1,0 +1,35 @@
+﻿<UserControl x:Class="X_Guide.CustomControls.CustomIpInput"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:X_Guide.CustomControls"
+             xmlns:ui="http://schemas.modernwpf.com/2019"
+             mc:Ignorable="d" 
+             d:DesignHeight="50" d:DesignWidth="800"
+              >
+    <!--   <UserControl.Resources>
+     <Style x:Key="dot" TargetType="ui:FontIcon">
+            <Setter Property="Margin" Value="4"/>
+            <Setter Property="FontFamily" Value="Segoe MDL2 Assets"></Setter>
+            <Setter Property="Glyph" Value="&#xE843;"></Setter>
+             To get Icon :  https://learn.microsoft.com/en-us/windows/apps/design/style/segoe-ui-symbol-font#pua-ea00-ec00  
+        </Style>
+        <Style TargetType="TextBox" x:Key="IpTextBoxStyle" BasedOn="{StaticResource DefaultTextBoxStyle}">
+            <Setter Property="HorizontalAlignment" Value="Center"/>
+            <EventSetter Event="GotFocus" Handler="txtIP_GotFocus"/>
+            <EventSetter Event="TextChanged" Handler="TxtIPLength_TextChanged"/>
+            <EventSetter Event="PreviewKeyDown" Handler="txtIP_PreviewKeyDown"/>
+            <EventSetter Event="PreviewTextInput" Handler="TxtIPAddress_PreviewTextInput"/>
+        </Style>
+    </UserControl.Resources>
+    <ui:SimpleStackPanel  Orientation="Horizontal"  HorizontalAlignment="Stretch" Margin="5">
+        <TextBox  x:Name="Ip0" Style="{DynamicResource IpTextBoxStyle}"/>
+        <ui:FontIcon  Style="{DynamicResource dot}" />
+        <TextBox x:Name="Ip1"  Style="{DynamicResource IpTextBoxStyle}"/>
+        <ui:FontIcon  Style="{DynamicResource dot}" />
+        <TextBox x:Name="Ip2"  Style="{DynamicResource IpTextBoxStyle}"/>
+        <ui:FontIcon  Style="{DynamicResource dot}" />
+        <TextBox x:Name="Ip3"  Style="{DynamicResource IpTextBoxStyle}"/>
+    </ui:SimpleStackPanel>-->
+</UserControl>

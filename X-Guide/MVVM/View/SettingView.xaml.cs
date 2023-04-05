@@ -1,5 +1,7 @@
 ﻿
+using MaterialDesignThemes.Wpf;
 using Microsoft.Win32;
+using ModernWpf.Controls;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -17,6 +19,7 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Xml.Serialization;
 using X_Guide.MVVM.Model;
+using X_Guide.MVVM.ViewModel;
 
 namespace X_Guide.MVVM.View
 {
@@ -125,5 +128,37 @@ namespace X_Guide.MVVM.View
             if (openFileDialog.ShowDialog() == true)
                 TxtLogFilePath.Text = File.ReadAllText(openFileDialog.FileName);
         }
+
+
+
+        private async void ShowManipulatorDialogButton_Click(object sender, RoutedEventArgs e)
+        {
+
+
+    
+            await ManipulatorDialog.ShowAsync();
+            var i = ManipulatorDialog;
+          
+        }
+
+        private void ManipulatorDialog_DataContextChanged(object sender, DependencyPropertyChangedEventArgs e)
+        {
+            MessageBox.Show(e.OldValue.ToString());
+        }
+
+        private async void ShowDialog2Button_Click(object sender, RoutedEventArgs e)
+        {
+            var dialog = NewVisionDialog;  
+           await dialog.ShowAsync();    
+        }
+
+        private void ManipulatorDialog_CloseButtonClick(ContentDialog sender, ContentDialogButtonClickEventArgs args)
+        {
+            var dialog = sender;
+            dialog.Hide();
+        }
+
     }
+ 
+
 }

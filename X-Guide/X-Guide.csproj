@@ -680,6 +680,12 @@
     <Compile Include="Converter\NavigationViewExtensions.cs" />
     <Compile Include="Converter\NavigationViewItemExtensions.cs" />
     <Compile Include="Converter\TypeToDescriptionConverter.cs" />
+    <Compile Include="CustomControls\CustomIpInput.xaml.cs">
+      <DependentUpon>CustomIpInput.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="CustomControls\CustomManipulatorForm.xaml.cs">
+      <DependentUpon>CustomManipulatorForm.xaml</DependentUpon>
+    </Compile>
     <Compile Include="CustomControls\CustomRenderControl.xaml.cs">
       <DependentUpon>CustomRenderControl.xaml</DependentUpon>
     </Compile>
@@ -826,6 +832,14 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>XGuideModel.edmx</DependentUpon>
     </Compile>
+    <Page Include="CustomControls\CustomIpInput.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="CustomControls\CustomManipulatorForm.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="CustomControls\CustomRenderControl.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>

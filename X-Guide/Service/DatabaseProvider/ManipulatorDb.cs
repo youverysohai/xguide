@@ -12,16 +12,21 @@ namespace X_Guide.Service.DatabaseProvider
 {
     internal class ManipulatorDb : DbServiceBase, IManipulatorDb
     {
-    
+
 
         public ManipulatorDb(IMapper mapper, DbContextFactory contextFactory) : base(contextFactory, mapper)
-        { 
+        {
         }
 
-        public void CreateManipulator(ManipulatorModel manipulator)
+        public async Task<bool> CreateManipulator(ManipulatorModel manipulator)
         {
-            throw new NotImplementedException();
-  
+
+            return await AsyncQuery((context) =>
+            {
+                context.Manipulators.Add(MapTo<Manipulator>(manipulator));
+                context.SaveChanges();
+                return true;
+            });
         }
 
         public async Task<IEnumerable<string>> GetAllManipulatorName()
@@ -33,7 +38,7 @@ namespace X_Guide.Service.DatabaseProvider
         public async Task<ManipulatorModel> GetManipulator(string name)
         {
             return await AsyncQuery((context) => MapTo<ManipulatorModel>(context.Manipulators.SingleOrDefault(r => r.Name == name)));
-           
+
         }
 
         public async Task<IEnumerable<ManipulatorModel>> GetAllManipulator()
@@ -50,9 +55,9 @@ namespace X_Guide.Service.DatabaseProvider
         {
             return await AsyncQuery((context) =>
             {
-                
+
                 var result = context.Manipulators.Find(manipulator.Id);
-       
+
                 if (result != null)
                 {
                     context.Entry(result).CurrentValues.SetValues(MapTo<Manipulator>(manipulator));
