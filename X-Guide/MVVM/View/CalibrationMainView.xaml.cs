@@ -30,9 +30,8 @@ namespace X_Guide.MVVM.View
         {
             InitializeComponent();
 
-
-
         }
+
         //private void Button_Prev(object sender, RoutedEventArgs e)
         //{
         //    step.Prev();

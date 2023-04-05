@@ -155,6 +155,7 @@
         </Style.Triggers>
     </Style>
     <!-- Set Radio Button Visibility Based on Machine Type-->
+
     <Style x:Key="RadioButtonSCARA" TargetType="RadioButton" BasedOn="{StaticResource RadioButtonStyle}">
         <Setter Property="Visibility" Value="Collapsed"/>
         <Style.Triggers>

@@ -5,7 +5,7 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:X_Guide.MVVM.View.CalibrationWizardSteps"
              xmlns:loc="clr-namespace:X_Guide.MVVM"
-             
+             d:Foreground="White"
              mc:Ignorable="d" 
              d:DesignHeight="450" d:DesignWidth="800"
               xmlns:ui="http://schemas.modernwpf.com/2019"
@@ -32,18 +32,9 @@
                     <TextBlock  VerticalAlignment="Center" Text="New Vision? "/>
                     <ui:HyperlinkButton  Padding="5"  Margin="5" Command="{Binding NavigateCommand}" CommandParameter="{x:Static loc:PageName.Setting}">Create New</ui:HyperlinkButton>
                 </StackPanel>
-                <StackPanel Orientation="Horizontal">
-                        <TextBox MinWidth="300" Text="{Binding FilePath}" Style="{DynamicResource MaterialDesignFloatingHintTextBox}" materialDesign:HintAssist.Hint="Vision Solution File (.sol)"></TextBox>
-                        <Button Style="{DynamicResource MaterialDesignPaperSecondaryButton}" Click="OpenFileButton_Click" Margin="10 0" >Browse</Button>
-                    </StackPanel>
-                    <ComboBox Style="{DynamicResource ComboBoxStyle}"
-                              Width="300"
-                              materialDesign:HintAssist.Hint="Vision Software"
-                              HorizontalAlignment="Left"
-                              Margin="0">
-                        <ComboBoxItem IsSelected="True">Vision Master</ComboBoxItem>
+              
 
-                    </ComboBox>
+                 
 
                     <ComboBox
                         ItemsSource="{Binding VisionFlow}" 

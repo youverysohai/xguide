@@ -8,6 +8,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Input;
+using System.Windows.Threading;
 using X_Guide.Communication.Service;
 using X_Guide.MVVM.Command;
 using X_Guide.MVVM.Model;
@@ -66,6 +67,11 @@ namespace X_Guide.MVVM.ViewModel
             _calibrationDb = calibrationDb;
             _mapper = mapper;
             GetCalibrations();
+            TypedParameter calib = new TypedParameter(typeof(CalibrationViewModel), new CalibrationViewModel
+            {
+                Name = Name,
+            });
+            Dispatcher.CurrentDispatcher.BeginInvoke(new Action(()=> _navigationService.Navigate<CalibrationMainViewModel>(calib)));
 
         }
 

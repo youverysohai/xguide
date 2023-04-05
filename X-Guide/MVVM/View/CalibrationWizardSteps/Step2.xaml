@@ -9,9 +9,10 @@
              FontSize="16"
              xmlns:gif="https://github.com/XamlAnimatedGif/XamlAnimatedGif"
              xmlns:c="clr-namespace:X_Guide.Converter"
+             xmlns:XCust="clr-namespace:X_Guide.CustomControls"
              xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes">
     <UserControl.Resources>
-
+        
 
     </UserControl.Resources>
     <Grid Margin="0 0 0 10">
@@ -20,9 +21,9 @@
                 <Label Content="Based on Step 1, you have selected..." HorizontalAlignment="Center" Style="{DynamicResource MaterialDesignLabel}"/>
                 <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" >
                     <Label Content="Name:" Style="{DynamicResource MaterialDesignLabel}"/> 
-                    <TextBlock Style="{StaticResource ReadOnlyTextBlock}" Text="{Binding Calib.Manipulator.Name}"/>
+                    <TextBlock Style="{StaticResource ReadOnlyTextBlock}" Text="{Binding Calibration.Manipulator.Name}"/>
                     <Label Content="Type:" Style="{DynamicResource MaterialDesignLabel}"/>
-                    <TextBlock Style="{StaticResource ReadOnlyTextBlock}" Text="{Binding Calib.Manipulator.Type, Converter={c:TypeToDescriptionConverter}}"/>
+                    <TextBlock Style="{StaticResource ReadOnlyTextBlock}" Text="{Binding Calibration.Manipulator.Type, Converter={c:TypeToDescriptionConverter}}"/>
 
                 </StackPanel>
                 <TextBlock Text="Mounting &amp; Orientation" HorizontalAlignment="Center" FontSize="35" Margin="0 0 0 25"/>
@@ -33,11 +34,9 @@
                     </Grid.ColumnDefinitions>
                     
                     <StackPanel Orientation="Vertical" HorizontalAlignment="Right" >
-                        <RadioButton x:Name="rbLookUpward"  Style="{StaticResource  RadioButtonStyle}">Look Upward</RadioButton>
-                        <RadioButton x:Name="rbEyeOnHand" Style="{StaticResource  RadioButtonStyle}">Eye On Hand</RadioButton>
-                        <RadioButton x:Name="rbLookDownward" Style="{StaticResource  RadioButtonStyle }" >Look Downward</RadioButton>
-                        <RadioButton Style="{DynamicResource  RadioButtonSCARA}"  >Mounted on Joint 2</RadioButton>
-                    <RadioButton Style="{DynamicResource  RadioButtonSixAxis }"  >Mounted on Joint 5</RadioButton>
+                    
+                        <XCust:CustomRadioControl ItemSource="{Binding OrientationType}" SelectedValue="{Binding Calibration.Orientation,Mode=TwoWay}"/>
+                
                     
                     </StackPanel>
 

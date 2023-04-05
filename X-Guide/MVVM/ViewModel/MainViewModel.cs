@@ -19,6 +19,7 @@ using X_Guide.CustomEventArgs;
 using X_Guide.MVVM.Command;
 using X_Guide.MVVM.Model;
 using X_Guide.MVVM.Store;
+using X_Guide.MVVM.ViewModel.CalibrationWizardSteps;
 using X_Guide.Service;
 using X_Guide.Service.DatabaseProvider;
 
@@ -94,8 +95,10 @@ namespace X_Guide.MVVM.ViewModel
             _navigationStore.CurrentViewModelChanged += OnCurrentViewModelChanged;
 
             serverService.StartServer();
-           
-            _navigationService.Navigate<SettingViewModel>();
+            var nav = new TypedParameter(typeof(INavigationService), _navigationService);
+
+         
+            _navigationService.Navigate<CalibrationWizardStartViewModel>(nav);
    
             LoginCommand = new RelayCommand(Login);
             RegisterCommand = new RelayCommand(Register);

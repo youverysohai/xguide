@@ -57,7 +57,7 @@
                      materialDesign:TextFieldAssist.HasTrailingIcon="True" 
                      materialDesign:TextFieldAssist.TrailingIcon="Edit"
                      Cursor="Hand"
-                     Text="{Binding Calib.Name}"
+                     Text="{Binding Calibration.Name}"
                      Grid.ColumnSpan="2" Width="300" 
                      Style="{DynamicResource InputMaterialDesignTextBox}"
                      

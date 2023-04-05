@@ -12,6 +12,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Controls;
 using System.Windows.Input;
+using System.Windows.Threading;
 using X_Guide.Communication.Service;
 using X_Guide.MVVM.Command;
 using X_Guide.MVVM.Store;
@@ -25,13 +26,13 @@ namespace X_Guide.MVVM.ViewModel
 {
     public class CalibrationMainViewModel : ViewModelBase
     {
-        private CalibrationViewModel _calib;
-        public CalibrationViewModel Calib
+        private CalibrationViewModel _calibration;
+        public CalibrationViewModel Calibration
         {
-            get => _calib; 
+            get => _calibration; 
             set
             {
-                _calib = value;
+                _calibration = value;
                 OnPropertyChanged();
             }
         }
@@ -186,7 +187,7 @@ namespace X_Guide.MVVM.ViewModel
 
         private void NavigateToStep(int currentStep)
         {
-            var calibPara = new TypedParameter(typeof(CalibrationViewModel), _calib);
+            var calibPara = new TypedParameter(typeof(CalibrationViewModel), _calibration);
             
             switch (currentStep)
             {
@@ -201,7 +202,7 @@ namespace X_Guide.MVVM.ViewModel
 
         }
 
-        public CalibrationMainViewModel(CalibrationViewModel calib, INavigationService navigationService, IViewModelLocator viewModelLocator)
+        public CalibrationMainViewModel(CalibrationViewModel calibration, INavigationService navigationService, IViewModelLocator viewModelLocator)
         {
 
 
@@ -213,12 +214,28 @@ namespace X_Guide.MVVM.ViewModel
             WizPrevCommand = new RelayCommand(WizPrev, (o) => CanExecutePrev);
             CancelCommand = new RelayCommand(CancelCalib);
 
-            Calib = calib;
-            var calibPara = new TypedParameter(typeof(CalibrationViewModel), _calib);
-            Step1ViewModel Step1 = viewModelLocator.Create<Step1ViewModel>(calibPara) as Step1ViewModel;
-            Step1.SelectedItemChangedEvent += OnSelectedItemChangedEvent;
-            _navigationService.Navigate(Step1);
-            CurrentNode = _navigationHistory.AddLast(CurrentViewModel);
+            Calibration = calibration;
+            
+            var calibPara = new TypedParameter(typeof(CalibrationViewModel), _calibration);
+            /*   Step1ViewModel Step1 = viewModelLocator.Create<Step1ViewModel>(calibPara) as Step1ViewModel;
+               Step1.SelectedItemChangedEvent += OnSelectedItemChangedEvent;
+               _navigationService.Navigate(Step1);
+               CurrentNode = _navigationHistory.AddLast(CurrentViewModel);*/
+            Dispatcher.CurrentDispatcher.BeginInvoke(new Action(() => _navigationService.Navigate<Step3ViewModel>(new TypedParameter(typeof(CalibrationViewModel), new CalibrationViewModel()
+            {
+                Name = "Testing",
+                Manipulator = new ManipulatorViewModel
+                {
+                    Id = 1,
+                    Type = 1,
+
+                },
+                Orientation = 2,
+                Vision = new Vision
+                {
+                    Filepath = @"C:\Users\Xlent_XIR02"
+                }
+            }))));
         }
 
         private void CancelCalib(object obj)

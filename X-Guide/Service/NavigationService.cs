@@ -6,6 +6,7 @@ using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows.Threading;
 using X_Guide.MVVM;
 using X_Guide.MVVM.Store;
 using X_Guide.MVVM.ViewModel;
@@ -22,10 +23,11 @@ namespace X_Guide.Service
             _navigationStore = navigationStore;
             _viewModelLocator = viewModelLocator;
         }
-       
-        public void Navigate(ViewModelBase viewModelBase)
+
+        public void Navigate(ViewModelBase viewModel)
         {
-            _navigationStore.CurrentViewModel = viewModelBase;
+            _navigationStore.CurrentViewModel = viewModel;
+
         }
         public ViewModelBase Navigate<T>(params Parameter[] parameters) where T : ViewModelBase
         {
@@ -38,6 +40,6 @@ namespace X_Guide.Service
         {
             return _navigationStore;
         }
-        
+
     }
 }

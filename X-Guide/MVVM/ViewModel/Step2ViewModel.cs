@@ -5,7 +5,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
+using System.Windows.Threading;
 using X_Guide.Communication.Service;
+using X_Guide.MVVM.Command;
 using X_Guide.MVVM.Model;
 using X_Guide.MVVM.ViewModel.CalibrationWizardSteps;
 using X_Guide.Service.Communication;
@@ -15,29 +17,25 @@ namespace X_Guide.MVVM.ViewModel
 {
     internal class Step2ViewModel : ViewModelBase
     {
-    
-        private CalibrationViewModel _calib;
 
-
-        public CalibrationViewModel Calib
+        private readonly CalibrationViewModel _calibration;
+        public CalibrationViewModel Calibration
         {
-            get { return _calib; }
-            set
-            {
-                _calib = value;
-                OnPropertyChanged();
-            }
-        }    
-
-        public Step2ViewModel(CalibrationViewModel calib)
-        {
-            Calib = calib;
-            
-         
-        
+            get { return _calibration; }
         }
 
-    
+        public readonly IEnumerable<ValueDescription> _orientationType = EnumHelperClass.GetAllIntAndDescriptions(typeof(Orientation));
+        public IEnumerable<ValueDescription> OrientationType
+        {
+            get { return _orientationType; }
+        }
+
+
+        public RelayCommand OrientationCommand { get; set; }
+        public Step2ViewModel(CalibrationViewModel calibration)
+        {
+            _calibration = calibration;
+        }
 
     }
 }

@@ -97,9 +97,27 @@ namespace X_Guide.MVVM.ViewModel.CalibrationWizardSteps
                 OnPropertyChanged();
             }
         }
+
+        private Vision _vision;
+
+        public Vision Vision
+        {
+            get { return _vision; }
+            set { _vision = value; }
+        }
+
+        private string _procedure;
+
+        public string Procedure
+        {
+            get { return _procedure; }
+            set { _procedure = value; }
+        }
+
         public int Orientation
         {
-            get => _orientation; set
+            get => _orientation; 
+            set
             {
                 _orientation = value;
                 OnPropertyChanged();

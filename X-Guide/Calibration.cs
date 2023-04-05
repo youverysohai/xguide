@@ -30,7 +30,10 @@ namespace X_Guide
         public string VisionFlow { get; set; }
         public Nullable<double> CYOffset { get; set; }
         public Nullable<double> CXOffset { get; set; }
+        public Nullable<int> VisionId { get; set; }
+        public string Procedure { get; set; }
     
         public virtual Manipulator Manipulator { get; set; }
+        public virtual Vision Vision { get; set; }
     }
 }

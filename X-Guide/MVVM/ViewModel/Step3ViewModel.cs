@@ -24,10 +24,12 @@ namespace X_Guide.MVVM.ViewModel
         public ICommand NavigateCommand { get; }
 
 
-        private CalibrationViewModel _setting;
+        private CalibrationViewModel _calibration;
         private readonly IServerService _serverService;
         private readonly IClientService _clientService;
         private readonly IVisionService _visionService;
+        private readonly IVisionDb _visionDb;
+
         public event EventHandler<bool> CanExecuteChange;
         private ObservableCollection<string> _visionFlow;
 
@@ -64,39 +66,19 @@ namespace X_Guide.MVVM.ViewModel
             }
         }
 
-        private string _selectedItem;
-
-        public string SelectedItem
-        {
-            get { return _selectedItem; }
-            set { _selectedItem = value;
-                OnPropertyChanged();
-                OnItemChanged(value);
-            }
-        }
+     
 
   
 
-        private string _filePath;
-        public string FilePath
-        {
-            get { return _filePath; }
-            set
-            {
-                _filePath = value;
-                OnPropertyChanged();
-                OpenFile();
-            }
-        }
-
         public MainViewModel DataContext { get; private set; }
 
-        public Step3ViewModel(CalibrationViewModel setting, IServerService serverService, IClientService clientService, IVisionService visionService)
+        public Step3ViewModel(CalibrationViewModel calibration, IServerService serverService, IClientService clientService, IVisionService visionService, IVisionDb visionDb)
         {
-            _setting = setting;
+            _calibration = calibration;
             _serverService = serverService;
             _clientService = clientService;
             _visionService = visionService;
+            _visionDb = visionDb;
    
              
             Visions = new ObservableCollection<VisionViewModel> { new VisionViewModel
@@ -124,11 +106,14 @@ namespace X_Guide.MVVM.ViewModel
             //NavigateCommand = new RelayCommand(Navigate);
         }
 
-  
+        private void GetVisions()
+        {
+   
+        }
 
         private void OnItemChanged(string value)
         {
-            _setting.VisionFlow = value;
+            _calibration.VisionFlow = value;
         }
         private async void OpenFile()
         {
@@ -138,7 +123,7 @@ namespace X_Guide.MVVM.ViewModel
 /*                ProcessInfoList i = VmSolution.Instance.GetAllProcedureList();
                 List<ProcessInfo> procedureList = i.astProcessInfo.Where(x => x.strProcessName != null).ToList();*/
                 VisionFlow = new ObservableCollection<string>(_visionService.GetAllProcedureName());
-                _setting.VisionFilePath = FilePath;
+                _calibration.VisionFilePath = FilePath;
                 
                 CanExecuteChange?.Invoke(this, true);
             }

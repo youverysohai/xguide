@@ -14,10 +14,20 @@ namespace X_Guide
     
     public partial class Vision
     {
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
+        public Vision()
+        {
+            this.Calibrations = new HashSet<Calibration>();
+        }
+    
         public int Id { get; set; }
         public string Ip { get; set; }
         public Nullable<int> Port { get; set; }
         public string Terminator { get; set; }
         public string Name { get; set; }
+        public string Filepath { get; set; }
+    
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<Calibration> Calibrations { get; set; }
     }
 }

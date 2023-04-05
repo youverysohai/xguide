@@ -45,7 +45,7 @@ xmlns:XCust="clr-namespace:X_Guide.CustomControls"             x:Class="X_Guide.
                 </Grid.RowDefinitions>
 
                 <XCust:CustomRenderControl Grid.ColumnSpan="3" Grid.RowSpan="3" Procedure="{Binding VisProcedure}"></XCust:CustomRenderControl>
-
+         
 
 
 

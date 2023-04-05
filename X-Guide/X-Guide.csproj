@@ -679,7 +679,11 @@
     <Compile Include="Converter\LastCharacterConverter.cs" />
     <Compile Include="Converter\NavigationViewExtensions.cs" />
     <Compile Include="Converter\NavigationViewItemExtensions.cs" />
+    <Compile Include="Converter\RadioButtonTagConverter.cs" />
     <Compile Include="Converter\TypeToDescriptionConverter.cs" />
+    <Compile Include="CustomControls\CustomRadioControl.xaml.cs">
+      <DependentUpon>CustomRadioControl.xaml</DependentUpon>
+    </Compile>
     <Compile Include="CustomControls\CustomRenderControl.xaml.cs">
       <DependentUpon>CustomRenderControl.xaml</DependentUpon>
     </Compile>
@@ -687,7 +691,7 @@
     <Compile Include="CustomEventArgs\NetworkStreamEventArgs.cs" />
     <Compile Include="CustomEventArgs\TcpClientEventArgs.cs" />
     <Compile Include="CustomEventArgs\TcpListenerEventArgs.cs" />
-    <Compile Include="Enum\MountingOrientation.cs" />
+    <Compile Include="Enum\Orientation.cs" />
     <Compile Include="Enum\Terminator.cs" />
     <Compile Include="Enum\EnumHelperClass.cs" />
     <Compile Include="Converter\EnumToCollectionConverter.cs" />
@@ -827,6 +831,10 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>XGuideModel.edmx</DependentUpon>
     </Compile>
+    <Page Include="CustomControls\CustomRadioControl.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="CustomControls\CustomRenderControl.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>

@@ -20,14 +20,16 @@ namespace X_Guide.MVVM.ViewModel
     {
         #region properties
 
-        public Action SelectedItemChangedEvent;
+        private readonly CalibrationViewModel _calibration;
 
-        private CalibrationViewModel _calib;
 
-        public CalibrationViewModel Calib
+
+        private ManipulatorViewModel _manipulator => _calibration.Manipulator;
+
+        public ManipulatorViewModel Manipulator
         {
-            get { return _calib; }
-            set { _calib = value;
+            get { return _manipulator; }
+            set { _calibration.Manipulator = value ;
                 OnPropertyChanged();
             }
         }
@@ -50,15 +52,15 @@ namespace X_Guide.MVVM.ViewModel
         public IServerService _serverService { get; }
 
         #endregion
-        public Step1ViewModel(IManipulatorDb manipulatorDb, IMapper mapper, CalibrationViewModel calib)
+        public Step1ViewModel(IManipulatorDb manipulatorDb, IMapper mapper, CalibrationViewModel calibration)
         {
             _manipulatorDb = manipulatorDb;
             _mapper = mapper;
-            _calib = calib;
-            LoadManipulator();
+            _calibration = calibration;
+            GetManipulators();
         }
 
-        private async void LoadManipulator()
+        private async void GetManipulators()
         {
             var models = await _manipulatorDb.GetAllManipulator();
             var viewModels = models.Select(x => _mapper.Map<ManipulatorViewModel>(x));
