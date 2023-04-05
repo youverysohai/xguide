@@ -35,7 +35,8 @@
             <!--VM Camare-->
        
 
-                <XCust:CustomRenderControl  hc:FlexPanel.FlexBasis="720" Height="550" Procedure="{Binding VisProcedure}" CenterBorder="Collapsed"></XCust:CustomRenderControl>
+                <XCust:CustomRenderControl Grid.ColumnSpan="3" Grid.RowSpan="3" Procedure="{Binding VisProcedure}"></XCust:CustomRenderControl>
+
 
               
             <GroupBox hc:FlexPanel.FlexBasis="300" Style="{StaticResource GroupBoxTab}">
