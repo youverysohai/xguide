@@ -1,13 +1,8 @@
-﻿
-using MaterialDesignThemes.Wpf;
-using Microsoft.Win32;
-using ModernWpf.Controls;
-using System;
+﻿using System;
 using System.Collections.Generic;
-using System.IO;
+using System.Collections.ObjectModel;
 using System.Linq;
 using System.Text;
-using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
@@ -17,27 +12,60 @@ using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
-using System.Xml.Serialization;
-using X_Guide.MVVM.Model;
-using X_Guide.MVVM.ViewModel;
+using System.Windows.Shapes;
 
-namespace X_Guide.MVVM.View
+namespace X_Guide.CustomControls
 {
     /// <summary>
-    /// Interaction logic for SettingView.xaml
+    /// Interaction logic for CustomManipulatorForm.xaml
     /// </summary>
-    public partial class SettingView : UserControl
+    public partial class CustomManipulatorForm : UserControl
     {
-
-        
-      
-        public SettingView()
+        public CustomManipulatorForm()
         {
             InitializeComponent();
         }
 
+        //public string InputIp
+        //{
+        //    get { return (string)GetValue(InputIpProperty); }
+        //    set { SetValue(InputIpProperty, value); }
+        //}
 
-        
+        //// Using a DependencyProperty as the backing store for InputIp.  This enables animation, styling, binding, etc...
+        //public static readonly DependencyProperty InputIpProperty =
+        //    DependencyProperty.Register("InputIp", typeof(string), typeof(CustomIpInput), new PropertyMetadata(0));
+
+        //private static void OnIpInputChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
+        //{
+        //    string inputIp = "";
+        //    ObservableCollection<string> stringCollection = e.NewValue as ObservableCollection<string>;
+        //    if (stringCollection != null)
+        //    {
+        //        inputIp = string.Join(" ", stringCollection);
+        //        // Use the concatenated string as needed
+        //    }
+        //    if (string.IsNullOrEmpty(inputIp))
+        //    {
+        //        // Clear the text of all four TextBoxes if the input IP is null or empty.
+        //        ((CustomIpInput)d).Ip0.Text = string.Empty;
+        //        ((CustomIpInput)d).Ip1.Text = string.Empty;
+        //        ((CustomIpInput)d).Ip2.Text = string.Empty;
+        //        ((CustomIpInput)d).Ip3.Text = string.Empty;
+        //    }
+        //    else
+        //    {
+        //        // Split the input IP string by '.' and set the text of each TextBox accordingly.
+        //        string[] ip = inputIp.Split('.');
+        //        ((CustomIpInput)d).Ip0.Text = ip.Length > 0 ? ip[0] : string.Empty;
+        //        ((CustomIpInput)d).Ip1.Text = ip.Length > 1 ? ip[1] : string.Empty;
+        //        ((CustomIpInput)d).Ip2.Text = ip.Length > 2 ? ip[2] : string.Empty;
+        //        ((CustomIpInput)d).Ip3.Text = ip.Length > 3 ? ip[3] : string.Empty;
+        //    }
+        //}
+
+
+
         //Purpose: limit the number of characters that can be entered 
         private void TxtIPAddress_PreviewTextInput(object sender, TextCompositionEventArgs e)
         {
@@ -48,12 +76,12 @@ namespace X_Guide.MVVM.View
                 if (textBox.SelectionLength == textBox.Text.Length)
                 {
                     e.Handled = false; // do not cancel the input event
-                }   
+                }
                 else
                 {
                     e.Handled = true; // cancel the input event
                 }
-                   
+
             }
         }
         private void TxtPort_PreviewTextInput(object sender, TextCompositionEventArgs e)
@@ -118,47 +146,5 @@ namespace X_Guide.MVVM.View
             TextBox textBox = (TextBox)sender;
             textBox.SelectAll();
         }
-
-        private void BrowseBtn_Click(object sender, RoutedEventArgs e)
-        {
-            OpenFileDialog openFileDialog = new OpenFileDialog
-            {
-                Filter = "xml files (*.xml)|*.xml|All files (*.*)|*.*"
-            };
-            if (openFileDialog.ShowDialog() == true)
-                TxtLogFilePath.Text = File.ReadAllText(openFileDialog.FileName);
-        }
-
-
-
-        private async void ShowManipulatorDialogButton_Click(object sender, RoutedEventArgs e)
-        {
-
-
-    
-            await ManipulatorDialog.ShowAsync();
-            var i = ManipulatorDialog;
-          
-        }
-
-        private void ManipulatorDialog_DataContextChanged(object sender, DependencyPropertyChangedEventArgs e)
-        {
-            MessageBox.Show(e.OldValue.ToString());
-        }
-
-        private async void ShowDialog2Button_Click(object sender, RoutedEventArgs e)
-        {
-            var dialog = NewVisionDialog;  
-           await dialog.ShowAsync();    
-        }
-
-        private void ManipulatorDialog_CloseButtonClick(ContentDialog sender, ContentDialogButtonClickEventArgs args)
-        {
-            var dialog = sender;
-            dialog.Hide();
-        }
-
     }
- 
-
 }

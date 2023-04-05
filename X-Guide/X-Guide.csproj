@@ -684,6 +684,12 @@
     <Compile Include="CustomControls\CustomRadioControl.xaml.cs">
       <DependentUpon>CustomRadioControl.xaml</DependentUpon>
     </Compile>
+    <Compile Include="CustomControls\CustomIpInput.xaml.cs">
+      <DependentUpon>CustomIpInput.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="CustomControls\CustomManipulatorForm.xaml.cs">
+      <DependentUpon>CustomManipulatorForm.xaml</DependentUpon>
+    </Compile>
     <Compile Include="CustomControls\CustomRenderControl.xaml.cs">
       <DependentUpon>CustomRenderControl.xaml</DependentUpon>
     </Compile>
@@ -831,6 +837,14 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>XGuideModel.edmx</DependentUpon>
     </Compile>
+    <Page Include="CustomControls\CustomIpInput.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="CustomControls\CustomManipulatorForm.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="CustomControls\CustomRadioControl.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>

@@ -1,5 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel;
+using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -24,6 +26,18 @@ namespace X_Guide.CustomControls
     public partial class CustomRenderControl : UserControl
     {
 
+        public Visibility CenterBorder
+        {
+            get { return (Visibility)GetValue(CenterBorderProperty); }
+            set { SetValue(CenterBorderProperty, value); }
+        }
+
+        // Using a DependencyProperty as the backing store for CenterBorder.  This enables animation, styling, binding, etc...
+        public static readonly DependencyProperty CenterBorderProperty =
+            DependencyProperty.Register("CenterBorder", typeof(Visibility), typeof(CustomRenderControl), new PropertyMetadata(Visibility.Collapsed));
+
+
+
         public IVmModule Procedure
         {
             get { return (IVmModule)GetValue(ProcedureProperty); }
@@ -38,6 +52,8 @@ namespace X_Guide.CustomControls
         // Using a DependencyProperty as the backing store for Procedure.  This enables animation, styling, binding, etc...
         public static readonly DependencyProperty ProcedureProperty =
             DependencyProperty.Register("Procedure", typeof(IVmModule), typeof(CustomRenderControl), new PropertyMetadata(null, OnProcedureChanged));
+
+ 
 
         private static void OnProcedureChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
         {

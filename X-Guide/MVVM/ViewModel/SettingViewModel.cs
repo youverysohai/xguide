@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using ModernWpf.Controls;
 using System;
 using System.Collections;
 using System.Collections.Generic;
@@ -36,6 +37,7 @@ namespace X_Guide.MVVM.ViewModel
         public RelayCommand SaveCommand { get; }
         public RelayCommand ManipulatorCommand { get; set; }
         public RelayCommand VisionCommand { get; set; }
+ 
 
 
         private readonly IManipulatorDb _manipulatorDb;
@@ -46,7 +48,7 @@ namespace X_Guide.MVVM.ViewModel
         private readonly IServerService _serverService;
         private readonly IVisionService _visionService;
         private readonly ErrorViewModel _errorViewModel;
-        
+
         public event EventHandler<DataErrorsChangedEventArgs> ErrorsChanged;
 
         public bool HasErrors => false;
@@ -67,7 +69,9 @@ namespace X_Guide.MVVM.ViewModel
         public ObservableCollection<CalibrationModel> CalibSol
         {
             get { return _calibSol; }
-            set { _calibSol = value;
+            set
+            {
+                _calibSol = value;
                 OnPropertyChanged();
             }
         }
@@ -77,9 +81,11 @@ namespace X_Guide.MVVM.ViewModel
         public Calibration Calib
         {
             get { return _calib; }
-            set { _calib = value;
+            set
+            {
+                _calib = value;
                 OnPropertyChanged();
- 
+
             }
         }
         double[] calibData;
@@ -89,18 +95,33 @@ namespace X_Guide.MVVM.ViewModel
         public VisionViewModel Vision
         {
             get { return _vision; }
-            set { _vision = value; 
-                OnPropertyChanged(); }
+            set
+            {
+                _vision = value;
+                OnPropertyChanged();
+            }
         }
         private ObservableCollection<VisionViewModel> _visions;
 
         public ObservableCollection<VisionViewModel> Visions
         {
             get { return _visions; }
-            set { _visions = value;
+            set
+            {
+                _visions = value;
                 OnPropertyChanged();
             }
         }
+        public RelayCommand NewManipulatorCommand { get; set; }
+
+        private ManipulatorViewModel _newManipulator = new ManipulatorViewModel();
+
+        public ManipulatorViewModel NewManipulator
+        {
+            get { return _newManipulator; }
+            set { _newManipulator = value; OnPropertyChanged(); }
+        }
+
 
         private ManipulatorViewModel _manipulator;
 
@@ -139,7 +160,7 @@ namespace X_Guide.MVVM.ViewModel
             }
         }
 
- 
+
 
 
         private string _logFilePath;
@@ -176,29 +197,29 @@ namespace X_Guide.MVVM.ViewModel
             _visionService = visionService;
 
             GetAllMachine();
-            Vision = new VisionViewModel
-            {
-                Name = "Vision1",
-                Ip = new ObservableCollection<string>(new string[]{"192", "168","11","90"}),
-                Port=8000,
-                Terminator=""
-                
-            };
-            Visions = new ObservableCollection<VisionViewModel> { Vision , new VisionViewModel
-            {
-                Name = "Hik",
-                Ip = new ObservableCollection<string>(new string[]{"192", "163","11","33"}),
-                Port=8000,
-                Terminator="\r"
+            GetAllVision();
+            //Visions = new ObservableCollection<VisionViewModel>
+            //{
+            //    new VisionViewModel
+            //    {
+            //        Name = "Vision1",
+            //        Ip = new ObservableCollection<string>(new string[] { "192", "168", "11", "90" }),
+            //        Port = 8000,
+            //        Terminator = ""
 
-            } , new VisionViewModel
-            {
-                Name = "Vision2",
-                Ip = new ObservableCollection<string>(new string[]{"192", "128","21","90"}),
-                Port=8000,
-                Terminator="\r\n"
-
-            }  };
+            //    } , 
+            //    new VisionViewModel
+            //    {
+            //    Name = "Hik",
+            //    Ip = new ObservableCollection<string>(new string[]{"192", "163","11","33"}),
+            //    Port=8000,
+            //    Terminator="\r"
+            //    } , new VisionViewModel
+            //    {
+            //    Name = "Vision2",
+            //    Ip = new ObservableCollection<string>(new string[]{"192", "128","21","90"}),
+            //    Port=8000,
+            //    Terminator="\r\n"}  };
             Server = new GeneralSettingViewModel
             {
                 Ip = new ObservableCollection<string>(new string[] { "192", "168", "11", "90" }),
@@ -216,10 +237,37 @@ namespace X_Guide.MVVM.ViewModel
             ManipulatorCommand = new RelayCommand(OnManipulatorChangeEvent);
             SaveCommand = new RelayCommand(SaveSetting);
             OperationCommand = new RelayCommand(Operation);
-        
+            NewManipulatorCommand = new RelayCommand(AddNewManipulator);
         }
 
-       
+        private async void AddNewManipulator(object obj)
+        {
+
+            bool saveStatus = await _manipulatorDb.CreateManipulator(_mapper.Map<ManipulatorModel>(NewManipulator));
+            if (saveStatus)
+            {
+                System.Windows.MessageBox.Show("Added New Manipulator");
+            }
+            else
+            {
+                System.Windows.MessageBox.Show("Failed to save setting!");
+            }
+
+            GetAllMachine();
+
+        }
+
+        public SettingViewModel()
+        {
+        }
+
+        private async void GetAllVision()
+        {
+            IEnumerable<VisionViewModel> visionViewModels = await _visionDb.GetAllVision();
+            
+            Visions = new ObservableCollection<VisionViewModel>(visionViewModels);
+        }
+
         private async void LoadAllCalibFile()
         {
             var i = await _calibrationDb.GetCalibrations();
@@ -227,7 +275,7 @@ namespace X_Guide.MVVM.ViewModel
             CalibSol = new ObservableCollection<CalibrationModel>(i);
         }
 
-       
+
         private async void Operation(object parameter)
         {
             var _tcpClientInfo = _serverService.GetConnectedClient().First().Value;
@@ -236,7 +284,7 @@ namespace X_Guide.MVVM.ViewModel
                 await _visionService.ImportSol($"{Calib.VisionFilePath}");
                 _visionService.RunProcedure("Long", true);
                 ConnectServer();
-       
+
                 Point VisCenter = await _visionService.GetVisCenter();
                 double[] OperationData = VisionGuided.EyeInHandConfig2D_Operate(VisCenter, new double[] { (double)Calib.CXOffset, (double)Calib.CYOffset, (double)Calib.CRZOffset, (double)Calib.CameraXScaling });
                 OperationData[2] -= 30;
@@ -280,7 +328,7 @@ namespace X_Guide.MVVM.ViewModel
             {
                 System.Windows.MessageBox.Show("Failed to save setting!");
             }
-            
+
             GetAllMachine();
 
         }
@@ -289,7 +337,7 @@ namespace X_Guide.MVVM.ViewModel
         {
 
             Manipulator = ((ManipulatorViewModel)obj).Clone() as ManipulatorViewModel;
-   
+
         }
         private void OnVisionChangeEvent(object obj)
         {

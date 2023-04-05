@@ -10,8 +10,8 @@ namespace X_Guide.Service.DatabaseProvider
     public interface IManipulatorDb
     {
 
-        
-        void CreateManipulator(ManipulatorModel manipulator);
+
+        Task<bool> CreateManipulator(ManipulatorModel manipulator);
         Task<IEnumerable<string>> GetAllManipulatorName();
         Task<IEnumerable<ManipulatorModel>> GetAllManipulator();
 

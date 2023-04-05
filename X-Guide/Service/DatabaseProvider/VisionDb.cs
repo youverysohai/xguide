@@ -17,6 +17,14 @@ namespace X_Guide.Service.DatabaseProvider
         {
 
         }
+        //public async Task<bool> AddVision(string name, Vision vision)
+        //{
+        //    //return await AsyncQuery(c =>
+        //    //{
+
+        //    //}
+        //    //);
+        //}
 
         public async Task<bool> RemoveVision(string name)
         {
