@@ -19,18 +19,6 @@ namespace X_Guide.MVVM.View.CalibrationWizardSteps
 
         }
 
-        private void OpenFileButton_Click(object sender, RoutedEventArgs e)
-        {
-            OpenFileDialog dialog = new OpenFileDialog();
-            dialog.Filter = "Vision solution files (*.sol)|*.sol|All files (*.*)|*.*";
-            dialog.InitialDirectory = "C:\\";
-            dialog.Title = "Select a solution file";
-
-
-            if (dialog.ShowDialog() == DialogResult.OK)
-            {
-                ((Step3ViewModel)DataContext).FilePath = dialog.FileName;
-            }
-        }
+        
     }
 }

@@ -119,11 +119,11 @@ namespace X_Guide.MVVM.ViewModel
         {
             try
             {
-                await _visionService.ImportSol(FilePath);
+                await _visionService.ImportSol("");
 /*                ProcessInfoList i = VmSolution.Instance.GetAllProcedureList();
                 List<ProcessInfo> procedureList = i.astProcessInfo.Where(x => x.strProcessName != null).ToList();*/
                 VisionFlow = new ObservableCollection<string>(_visionService.GetAllProcedureName());
-                _calibration.VisionFilePath = FilePath;
+                _calibration.VisionFilePath = "";
                 
                 CanExecuteChange?.Invoke(this, true);
             }
