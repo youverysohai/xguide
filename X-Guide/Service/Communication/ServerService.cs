@@ -9,6 +9,7 @@ using System.Net.Sockets;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
+using System.Timers;
 using System.Windows;
 using X_Guide.CustomEventArgs;
 using X_Guide.MVVM.ViewModel.CalibrationWizardSteps;
@@ -108,7 +109,8 @@ namespace X_Guide.Communication.Service
 
                     // Handle the client connection in a separate task.
 #pragma warning disable CS4014 // This warning has to be suppressed to disallow the await keyword from blocking the task
-                    Task.Run(async () => { 
+                    Task.Run(async () =>
+                    {
                         await RecieveDataAsync(client.GetStream(), cts.Token);
                         _connectedClient.TryRemove(client.GetHashCode(), out _);
                     });
@@ -144,42 +146,35 @@ namespace X_Guide.Communication.Service
 
         }
 
-        public async Task SendJogCommand(JogCommand jogCommand)
+        public async Task<bool> SendJogCommand(JogCommand jogCommand)
         {
             if (valid)
             {
+                CancellationTokenSource cts = new CancellationTokenSource();
                 await ServerWriteDataAsync(jogCommand.ToString());
-                while (await Task.Run(() => RegisterRequestEventHandler((e) => ServerJogCommand(e, client.TcpClient.GetStream())))) { };
+
+                var timer = new System.Timers.Timer(5000);
+                timer.AutoReset = false;
+                timer.Elapsed += (s, o) => { cts.Cancel(); MessageBox.Show("Client to suc"); };
+                timer.Start();
+                bool status = await Task.Run(() => RegisterRequestEventHandler((e) => ServerJogCommand(e, client.TcpClient.GetStream()), cts.Token));
+                timer.Dispose();
+                return status;
             }
             else
             {
                 MessageBox.Show("Requires client connections!");
+                return false;
             }
-
-            //check if the message can be recieved by the client
-            /* 
-
-               client.Jogging = false;
-
-               if (IsMessageSent)
-               {
-                   Timer timer = new Timer(5000);
-                   timer.AutoReset = false;
-                   timer.Elapsed += (sender, e) => JogCommandExpired(sender, _jogDoneReplyRecieved);
-                   timer.Start();
-                   _jogDoneReplyRecieved.Wait();
-                   timer.Dispose();
-                   _jogDoneReplyRecieved.Reset();
-               }
-               else
-               {
-                   HandleClientDisconnection();
-                   break;
-
-               }*/
-
         }
 
+      
+
+        public bool ServerJogCommand(NetworkStreamEventArgs e, NetworkStream ce)
+        {
+            if (!e.Data[0].Trim().ToLower().Equals("jogdone") || !ce.Equals(ce)) throw new Exception("Not the awaited data");
+            return true;
+        }
 
         public void DisposeClient(TcpClient client)
         {
@@ -189,11 +184,7 @@ namespace X_Guide.Communication.Service
             client.Dispose();
         }
 
-        public bool ServerJogCommand(NetworkStreamEventArgs e, NetworkStream ce)
-        {
-            if (!e.Data[0].Trim().ToLower().Equals("jogdone") || !e.Equals(ce)) return false;
-            return true;
-        }
+
 
         public ConcurrentDictionary<int, TcpClientInfo> GetConnectedClient()
         {

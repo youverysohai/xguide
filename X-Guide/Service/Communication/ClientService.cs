@@ -56,8 +56,6 @@ namespace X_Guide.Communication.Service
             await WriteDataAsync(data, _stream);
         }
 
-    
-
        
     }
 }

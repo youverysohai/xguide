@@ -23,7 +23,7 @@ namespace X_Guide.Communication.Service
         bool getServerStatus();
         Task StartServer();
         void StopServer();
-        Task SendJogCommand(JogCommand jogCommand);
+        Task<bool> SendJogCommand(JogCommand jogCommand);
         void SetServerReadTerminator(string terminator);
         ConcurrentDictionary<int, TcpClientInfo> GetConnectedClient();
     }

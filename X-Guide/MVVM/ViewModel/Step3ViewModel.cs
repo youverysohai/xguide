@@ -96,10 +96,6 @@ namespace X_Guide.MVVM.ViewModel
             _visionDb = visionDb;
             _mapper = mapper;
             GetVisions();
-       /*     if (!(Vision is null))
-            {
-                GetProcedures();
-            }*/
 
         }
 

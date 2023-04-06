@@ -68,6 +68,7 @@ namespace X_Guide.MVVM.ViewModel
 
         public ICommand ReportCommand { get; }
         public RelayCommand JogCommand { get; }
+
         public ICommand ReconnectCommand { get; set; }
 
         public int JogDistance
@@ -83,17 +84,18 @@ namespace X_Guide.MVVM.ViewModel
             _visionService = visionService;
             _calibration = calibration;
 
-            RunProcedure();
+            //RunProcedure();
             InitiateJog();
 
             ReconnectCommand = new RelayCommand(null);
             JogCommand = new RelayCommand(Jog, (o) => _canJog);
+            
 
 
 
         }
 
-       
+      
         private async void RunProcedure()
         {
             await _visionService.ImportSol(_calibration.Vision.Filepath);
@@ -144,7 +146,6 @@ namespace X_Guide.MVVM.ViewModel
             commandQueue.Enqueue(command);
 
         }
-
         private async Task StartJog()
         {
             cancelJog = new CancellationTokenSource();

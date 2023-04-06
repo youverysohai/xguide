@@ -30,14 +30,15 @@ namespace X_Guide.VisionMaster
 
         public async Task<Point> GetVisCenter()
         {
-            await _clientService.WriteDataAsync($"XGUIDE,{Procedure}");
-            Point point = await Task.Run(() => _clientService.RegisterRequestEventHandler(GetVisCenterEvent));
-            Debug.WriteLine(point);
-            if(point is null)
-            {
-                throw new Exception("Center point is null!");
-            }
-            return point;
+            /*        await _clientService.WriteDataAsync($"XGUIDE,{Procedure}");
+                    Point point = await Task.Run(() => _clientService.RegisterRequestEventHandler(GetVisCenterEvent), new System.Threading.CancellationToken());
+                    Debug.WriteLine(point);
+                    if(point is null)
+                    {
+                        throw new Exception("Center point is null!");
+                    }
+                    return point;*/
+            return null;    
 
         }
 
