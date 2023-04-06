@@ -71,14 +71,14 @@ namespace X_Guide.MVVM.ViewModel
             {
                 Name = Name,
             });
-            Dispatcher.CurrentDispatcher.BeginInvoke(new Action(()=> _navigationService.Navigate<CalibrationMainViewModel>(calib)));
+
 
         }
 
 
         private async void GetCalibrations()
         {
-            IEnumerable<CalibrationModel> calibModels = await _calibrationDb.GetCalibrations();
+            IEnumerable<CalibrationModel> calibModels = await _calibrationDb.GetAll();
             Calibrations = new ObservableCollection<CalibrationViewModel>(calibModels.Select(x => _mapper.Map<CalibrationViewModel>(x)));
 
         }
@@ -86,7 +86,7 @@ namespace X_Guide.MVVM.ViewModel
         {
             TypedParameter calib = new TypedParameter(typeof(CalibrationViewModel), obj);
             CalibrationMainViewModel calibMain = _navigationService.Navigate<CalibrationMainViewModel>(calib) as CalibrationMainViewModel;
-            calibMain.LoadCalibSetting(calib);
+/*            calibMain.LoadCalibSetting(calib);*/
         }
 
         private void StartCalibration(object obj)
@@ -102,7 +102,7 @@ namespace X_Guide.MVVM.ViewModel
         public async void DeleteCalibration(object obj)
         {
             CalibrationViewModel vmodel = obj as CalibrationViewModel;
-            if (await _calibrationDb.DeleteCalibration(vmodel.Id))
+            if (await _calibrationDb.Delete(vmodel.Id))
             {
                 Calibrations.Remove(vmodel);
             }

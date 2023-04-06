@@ -34,9 +34,6 @@
           <Property Name="Type" Type="int" Nullable="false" />
           <Property Name="Name" Type="varchar" MaxLength="30" Nullable="false" />
           <Property Name="Description" Type="varchar" MaxLength="100" />
-          <Property Name="Ip" Type="varchar" MaxLength="50" />
-          <Property Name="Port" Type="varchar" MaxLength="30" />
-          <Property Name="Terminator" Type="varchar" MaxLength="10" />
         </EntityType>
         <EntityType Name="Setting">
           <Key>
@@ -117,33 +114,20 @@
     <edmx:ConceptualModels>
       <Schema Namespace="XGuideDBModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
         <EntityContainer Name="XGuideDBEntities" annotation:LazyLoadingEnabled="true">
-          <EntitySet Name="Manipulators" EntityType="XGuideDBModel.Manipulator" />
           <EntitySet Name="Settings" EntityType="XGuideDBModel.Setting" />
           <EntitySet Name="Users" EntityType="XGuideDBModel.User" />
           <EntitySet Name="Visions" EntityType="XGuideDBModel.Vision" />
           <EntitySet Name="Calibrations" EntityType="XGuideDBModel.Calibration" />
-          <AssociationSet Name="FK_Calibration_To_Manipulator" Association="XGuideDBModel.FK_Calibration_To_Manipulator">
-            <End Role="Manipulator" EntitySet="Manipulators" />
-            <End Role="Calibration" EntitySet="Calibrations" />
-          </AssociationSet>
           <AssociationSet Name="FK_Calibration_To_Vision" Association="XGuideDBModel.FK_Calibration_To_Vision">
             <End Role="Vision" EntitySet="Visions" />
             <End Role="Calibration" EntitySet="Calibrations" />
           </AssociationSet>
+          <EntitySet Name="Manipulators" EntityType="XGuideDBModel.Manipulator" />
+          <AssociationSet Name="FK_Calibration_To_Manipulator" Association="XGuideDBModel.FK_Calibration_To_Manipulator">
+            <End Role="Manipulator" EntitySet="Manipulators" />
+            <End Role="Calibration" EntitySet="Calibrations" />
+          </AssociationSet>
           </EntityContainer>
-        <EntityType Name="Manipulator">
-          <Key>
-            <PropertyRef Name="Id" />
-          </Key>
-          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="Type" Type="Int32" Nullable="false" />
-          <Property Name="Name" Type="String" Nullable="false" MaxLength="30" FixedLength="false" Unicode="false" />
-          <Property Name="Description" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
-          <Property Name="Ip" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
-          <Property Name="Port" Type="String" MaxLength="30" FixedLength="false" Unicode="false" />
-          <Property Name="Terminator" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
-          <NavigationProperty Name="Calibrations" Relationship="XGuideDBModel.FK_Calibration_To_Manipulator" FromRole="Manipulator" ToRole="Calibration" />
-        </EntityType>
         <EntityType Name="Setting">
           <Key>
             <PropertyRef Name="Id" />
@@ -200,8 +184,30 @@
           <Property Name="CXOffset" Type="Double" />
           <Property Name="VisionId" Type="Int32" />
           <Property Name="Procedure" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
-          <NavigationProperty Name="Manipulator" Relationship="XGuideDBModel.FK_Calibration_To_Manipulator" FromRole="Calibration" ToRole="Manipulator" />
           <NavigationProperty Name="Vision" Relationship="XGuideDBModel.FK_Calibration_To_Vision" FromRole="Calibration" ToRole="Vision" />
+          <NavigationProperty Name="Manipulator" Relationship="XGuideDBModel.FK_Calibration_To_Manipulator" FromRole="Calibration" ToRole="Manipulator" />
+        </EntityType>
+        <Association Name="FK_Calibration_To_Vision">
+          <End Type="XGuideDBModel.Vision" Role="Vision" Multiplicity="0..1" />
+          <End Type="XGuideDBModel.Calibration" Role="Calibration" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Vision">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Calibration">
+              <PropertyRef Name="VisionId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityType Name="Manipulator">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Type" Type="Int32" Nullable="false" />
+          <Property Name="Name" Type="String" Nullable="false" MaxLength="30" FixedLength="false" Unicode="false" />
+          <Property Name="Description" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="Calibrations" Relationship="XGuideDBModel.FK_Calibration_To_Manipulator" FromRole="Manipulator" ToRole="Calibration" />
         </EntityType>
         <Association Name="FK_Calibration_To_Manipulator">
           <End Type="XGuideDBModel.Manipulator" Role="Manipulator" Multiplicity="0..1" />
@@ -215,37 +221,12 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK_Calibration_To_Vision">
-          <End Type="XGuideDBModel.Vision" Role="Vision" Multiplicity="0..1" />
-          <End Type="XGuideDBModel.Calibration" Role="Calibration" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Vision">
-              <PropertyRef Name="Id" />
-            </Principal>
-            <Dependent Role="Calibration">
-              <PropertyRef Name="VisionId" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
         </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
     <edmx:Mappings>
       <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
         <EntityContainerMapping StorageEntityContainer="XGuideDBModelStoreContainer" CdmEntityContainer="XGuideDBEntities">
-          <EntitySetMapping Name="Manipulators">
-            <EntityTypeMapping TypeName="XGuideDBModel.Manipulator">
-              <MappingFragment StoreEntitySet="Manipulator">
-                <ScalarProperty Name="Terminator" ColumnName="Terminator" />
-                <ScalarProperty Name="Port" ColumnName="Port" />
-                <ScalarProperty Name="Ip" ColumnName="Ip" />
-                <ScalarProperty Name="Description" ColumnName="Description" />
-                <ScalarProperty Name="Name" ColumnName="Name" />
-                <ScalarProperty Name="Type" ColumnName="Type" />
-                <ScalarProperty Name="Id" ColumnName="Id" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
           <EntitySetMapping Name="Settings">
             <EntityTypeMapping TypeName="XGuideDBModel.Setting">
               <MappingFragment StoreEntitySet="Setting">
@@ -302,6 +283,16 @@
                 <ScalarProperty Name="Orientation" ColumnName="Orientation" />
                 <ScalarProperty Name="ManipulatorId" ColumnName="ManipulatorId" />
                 <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Manipulators">
+            <EntityTypeMapping TypeName="XGuideDBModel.Manipulator">
+              <MappingFragment StoreEntitySet="Manipulator">
+                <ScalarProperty Name="Description" ColumnName="Description" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="Type" ColumnName="Type" />
                 <ScalarProperty Name="Id" ColumnName="Id" />
               </MappingFragment>
             </EntityTypeMapping>

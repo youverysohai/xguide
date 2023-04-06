@@ -217,33 +217,34 @@ namespace X_Guide.MVVM.ViewModel
             Calibration = calibration;
             
             var calibPara = new TypedParameter(typeof(CalibrationViewModel), _calibration);
-            /*   Step1ViewModel Step1 = viewModelLocator.Create<Step1ViewModel>(calibPara) as Step1ViewModel;
-               Step1.SelectedItemChangedEvent += OnSelectedItemChangedEvent;
-               _navigationService.Navigate(Step1);
-               CurrentNode = _navigationHistory.AddLast(CurrentViewModel);*/
-            Dispatcher.CurrentDispatcher.BeginInvoke(new Action(() => _navigationService.Navigate<Step5ViewModel>(new TypedParameter(typeof(CalibrationViewModel), new CalibrationViewModel()
-            {
-                Name = "Testing",
-                Manipulator = new ManipulatorViewModel
-                {
-                    Id = 1,
-                    Type = 1,
+            Step1ViewModel Step1 = viewModelLocator.Create<Step1ViewModel>(calibPara) as Step1ViewModel;
+/*            Step1.SelectedItemChangedEvent += OnSelectedItemChangedEvent;*/
+            _navigationService.Navigate(Step1);
+            CurrentNode = _navigationHistory.AddLast(CurrentViewModel);
 
-                },
-                Orientation = 2,
-                Vision = new VisionViewModel
-                {
-                    Id = 1,
+            /*  Dispatcher.CurrentDispatcher.BeginInvoke(new Action(() => _navigationService.Navigate<Step6ViewModel>(new TypedParameter(typeof(CalibrationViewModel), new CalibrationViewModel()
+              {
+                  Name = "Testing",
+                  Manipulator = new ManipulatorViewModel
+                  {
+                      Id = 1,
+                      Type = 1,
 
-                    Filepath = @"C:\Users\Xlent_XIR02\Desktop\livecam.sol",
-                },
-                Procedure = "Live",
-                YOffset = 10,
-                XOffset = 15,
-                Speed = 69,
-                Acceleration = 69,
-                MotionDelay = 2,
-            }))));
+                  },
+                  Orientation = 2,
+                  Vision = new VisionViewModel
+                  {
+                      Id = 1,
+
+                      Filepath = @"C:\Users\Xlent_XIR02\Desktop\livecam.sol",
+                  },
+                  Procedure = "Circle",
+                  YOffset = 10,
+                  XOffset = 15,
+                  Speed = 69,
+                  Acceleration = 69,
+                  MotionDelay = 2,
+              }))));*/
         }
 
         private void CancelCalib(object obj)

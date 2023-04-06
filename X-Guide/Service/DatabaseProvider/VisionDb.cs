@@ -27,7 +27,7 @@ namespace X_Guide.Service.DatabaseProvider
         //    //);
         //}
 
-        public async Task<bool> RemoveVision(string name)
+        public async Task<bool> Delete(string name)
         {
             return await AsyncQuery(c =>
             {
@@ -42,7 +42,7 @@ namespace X_Guide.Service.DatabaseProvider
             });
         }
 
-        public async Task<bool> UpdateVision(VisionModel vision)
+        public async Task<bool> Update(VisionModel vision)
         {
             
             return await AsyncQuery(c => {
@@ -54,7 +54,7 @@ namespace X_Guide.Service.DatabaseProvider
             });
         }
 
-        public async Task<VisionModel> GetVision(string name)
+        public async Task<VisionModel> Get(string name)
         {
             return await AsyncQuery(c =>
             {
@@ -63,7 +63,7 @@ namespace X_Guide.Service.DatabaseProvider
         }
 
 
-        public async Task<IEnumerable<VisionModel>> GetVisions()
+        public async Task<IEnumerable<VisionModel>> GetAll()
         {
             return await AsyncQuery(c =>
             {

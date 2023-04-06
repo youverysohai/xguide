@@ -36,10 +36,7 @@ namespace X_Guide.MVVM.ViewModel
         private CancellationTokenSource cancelJog;
         private readonly CalibrationViewModel _calibration;
         private readonly IServerService _serverService;
-        private readonly IClientService _clientService;
         private readonly IVisionService _visionService;
-        private BackgroundService searchClient;
-        private BackgroundService initiateJog;
 
         private Queue<JogCommand> commandQueue = new Queue<JogCommand>();
 
@@ -55,7 +52,7 @@ namespace X_Guide.MVVM.ViewModel
 
         public string JogMode { get; set; } = "TOOL";
 
-        private bool _canJog = false;
+        private bool _canJog = true;
 
         private bool _isLoading = true;
 
@@ -68,37 +65,9 @@ namespace X_Guide.MVVM.ViewModel
                 OnPropertyChanged();
             }
         }
-        private byte[] bitmapImage1;
-
-        public byte[] BitMapImage1
-        {
-            get { return bitmapImage1; }
-            set { bitmapImage1 = value;
-                OnPropertyChanged();
-            }
-        }
-
-
-        private TcpClientInfo _tcpClient;
-
-        private TcpClientInfo TcpClient
-        {
-            get => _tcpClient;
-
-            set
-            {
-
-                _tcpClient = value;
-                if (value != null)
-                {
-                    InitiateJog();
-                    OnJogCanExecuteChanged(true);
-                }
-            }
-        }
 
         public ICommand ReportCommand { get; }
-        public ICommand JogCommand { get; }
+        public RelayCommand JogCommand { get; }
         public ICommand ReconnectCommand { get; set; }
 
         public int JogDistance
@@ -108,21 +77,18 @@ namespace X_Guide.MVVM.ViewModel
         }
 
 
-        public Step5ViewModel(CalibrationViewModel calibration, IServerService serverService, IClientService clientService, IVisionService visionService)
+        public Step5ViewModel(CalibrationViewModel calibration, IServerService serverService, IVisionService visionService)
         {
             _serverService = serverService;
-            _clientService = clientService;
             _visionService = visionService;
             _calibration = calibration;
-            
-            RunProcedure();
 
+            RunProcedure();
+            InitiateJog();
 
             ReconnectCommand = new RelayCommand(null);
             JogCommand = new RelayCommand(Jog, (o) => _canJog);
 
-            searchClient = new BackgroundService(SearchForClient, true);
-            searchClient.Start();
 
 
         }
@@ -134,7 +100,7 @@ namespace X_Guide.MVVM.ViewModel
             IVmModule vmProcedure = null;
             try
             {
-                vmProcedure = await _visionService.RunProcedure("Live");
+                vmProcedure = await _visionService.RunProcedure("Live", true);
             }
             catch(Exception ex)
             {
@@ -150,29 +116,12 @@ namespace X_Guide.MVVM.ViewModel
             {
                 cancelJog.Cancel();
                 Application.Current.Dispatcher.Invoke(() => OnJogCanExecuteChanged(false));
-                searchClient.Start();
-            }
-        }
-
-
-
-        private void SearchForClient()
-        {
-            try
-            {
-                var tcpClient = _serverService.GetConnectedClient().First().Value;
-                Application.Current.Dispatcher.Invoke(() => TcpClient = tcpClient);
-                searchClient.Stop();
-
-            }
-            catch
-            {
             }
         }
 
         private async void InitiateJog()
         {
-            await Task.Run(() => StartJog());
+            await Task.Run(()=>StartJog());
         }
         private void Jog(object parameter)
         {
@@ -196,7 +145,7 @@ namespace X_Guide.MVVM.ViewModel
 
         }
 
-        private async void StartJog()
+        private async Task StartJog()
         {
             cancelJog = new CancellationTokenSource();
             CancellationToken ct = cancelJog.Token;
@@ -208,14 +157,14 @@ namespace X_Guide.MVVM.ViewModel
                     continue;
                 }
 
-                await _serverService.SendJogCommand(_tcpClient, commandQueue.Dequeue());
+                await _serverService.SendJogCommand(commandQueue.Dequeue());
             }
         }
 
         private void OnJogCanExecuteChanged(bool canJog)
         {
             _canJog = canJog;
-            (JogCommand as RelayCommand).OnCanExecuteChanged();
+            JogCommand.OnCanExecuteChanged();
         }
 
 

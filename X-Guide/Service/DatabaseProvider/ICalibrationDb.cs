@@ -10,10 +10,13 @@ namespace X_Guide.Service.DatabaseProvider
 {
     public interface ICalibrationDb
     {
-        Task<CalibrationModel> GetCalibration(string name);
-        Task<int> AddCalibration(CalibrationModel calibration);
-        Task<IEnumerable<CalibrationModel>> GetCalibrations();
+        Task<CalibrationModel> Get(string name);
+        Task<int> Add(CalibrationModel calibration);
+        Task<int> Update(CalibrationModel calibration);
 
-        Task<bool> DeleteCalibration(int id);
+        Task<bool> IsExist(int id);
+        Task<IEnumerable<CalibrationModel>> GetAll();
+
+        Task<bool> Delete(int id);
     }
 }

@@ -62,7 +62,7 @@ namespace X_Guide.MVVM.ViewModel
 
         private async void GetManipulators()
         {
-            var models = await _manipulatorDb.GetAllManipulator();
+            var models = await _manipulatorDb.GetAll();
             var viewModels = models.Select(x => _mapper.Map<ManipulatorViewModel>(x));
             Manipulators = new ObservableCollection<ManipulatorViewModel>(viewModels);
 

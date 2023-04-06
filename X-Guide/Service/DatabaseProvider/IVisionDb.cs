@@ -10,12 +10,12 @@ namespace X_Guide.Service.DatabaseProvider
 {
     public interface IVisionDb
     {
-        Task<VisionModel> GetVision(string name);
+        Task<VisionModel> Get(string name);
 
-        Task<bool> RemoveVision(string name);
-        Task<bool> UpdateVision(VisionModel vision);
+        Task<bool> Delete(string name);
+        Task<bool> Update(VisionModel vision);
 
-        Task<IEnumerable<VisionModel>> GetVisions();
+        Task<IEnumerable<VisionModel>> GetAll();
 
 
 

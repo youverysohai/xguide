@@ -24,7 +24,6 @@ namespace X_Guide.MVVM.ViewModel.CalibrationWizardSteps
         private double _acceleration = 1;
         private double _motionDelay = 0;
         private double _mm_per_pixel = 1;
-        private string _filepath;
         private string _procedure;
 
         public string Procedure
@@ -34,11 +33,6 @@ namespace X_Guide.MVVM.ViewModel.CalibrationWizardSteps
         }
 
 
-        public string Filepath
-        {
-            get { return _filepath; }
-            set { _filepath = value; }
-        }
 
         public int XOffset { get; set; } = 0;
         public int YOffset { get; set; } = 0;

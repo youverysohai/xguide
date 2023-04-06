@@ -37,7 +37,7 @@
 
                 <XCust:CustomRenderControl 
                     hc:FlexPanel.FlexBasis="720" Height="550"
-                    Procedure="{Binding VisProcedure}"></XCust:CustomRenderControl>
+                    Procedure="{Binding VisProcedure}" CenterBorder="Visible"></XCust:CustomRenderControl>
 
 
               

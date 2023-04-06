@@ -10,7 +10,8 @@ using X_Guide.CustomEventArgs;
 
 namespace X_Guide.Service.Communication
 {
-    public class TCPBase
+    public class TCPBase : Attribute
+
     {
 
         protected event EventHandler<NetworkStreamEventArgs> _dataReceived;
@@ -61,7 +62,7 @@ namespace X_Guide.Service.Communication
             {
                 string responseData = string.Empty;
                 int bytes = await stream.ReadAsync(data, 0, data.Length);
-
+                if (bytes == 0) break;
                 responseData += Encoding.ASCII.GetString(data, 0, bytes);
                 ProcessServerData(responseData, ',', stream);
                 await Task.Delay(1000);
@@ -79,7 +80,7 @@ namespace X_Guide.Service.Communication
 
         private void ProcessServerData(string data, char seperator, NetworkStream stream)
         {
-           
+
             try
             {
                 string[] segment = data.Split(seperator);

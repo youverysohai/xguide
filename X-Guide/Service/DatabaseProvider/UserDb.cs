@@ -24,7 +24,7 @@ namespace X_Guide.Service.DatabaseProvider
 
 
         /*   This method checks if the provided password matches the hashed password stored in the database for the specified user.*/
-        public async Task<UserModel> AuthenticateUser(string username, SecureString password)
+        public async Task<UserModel> Authenticate(string username, SecureString password)
         {
 
             return await Task.Run(() =>
@@ -49,7 +49,7 @@ namespace X_Guide.Service.DatabaseProvider
         }
 
 
-        public async Task<bool> CreateUser(UserModel userModel, SecureString password)
+        public async Task<bool> Add(UserModel userModel, SecureString password)
         {
             
             return await Task.Run(() =>
@@ -84,7 +84,7 @@ namespace X_Guide.Service.DatabaseProvider
 
         }
 
-        public async Task<IEnumerable<UserModel>> GetAllUsersAsync()
+        public async Task<IEnumerable<UserModel>> GetAll()
         {
             using (XGuideDBEntities context = _userDbContextFactory.CreateDbContext())
             {

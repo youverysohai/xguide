@@ -14,11 +14,11 @@ namespace X_Guide.MappingConfiguration
     {
         public ManipulatorProfile()
         {
-           
-            CreateMap<ManipulatorModel, ManipulatorViewModel>()
-                .ForMember(dest => dest.Ip, opt => opt.MapFrom(src => new ObservableCollection<string>(src.Ip.Split('.'))));
-            CreateMap<ManipulatorViewModel, ManipulatorModel>()
-                .ForMember(dest => dest.Ip, opt => opt.MapFrom(src => string.Join(".", src.Ip)));
+
+            CreateMap<ManipulatorModel, ManipulatorViewModel>();
+       
+            CreateMap<ManipulatorViewModel, ManipulatorModel>();
+
             CreateMap<Manipulator, ManipulatorModel>();
             CreateMap<ManipulatorModel, Manipulator>();
         }

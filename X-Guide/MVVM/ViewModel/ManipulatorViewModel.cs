@@ -57,42 +57,7 @@ namespace X_Guide.MVVM.ViewModel
             }
         }
 
-        private ObservableCollection<string> _ip;
-
-        public ObservableCollection<string> Ip
-        {
-            get { return _ip; }
-            set
-            {
-                _ip = value;
-                OnPropertyChanged();
-            }
-        }
-
-        private int _port;
-
-        public int Port
-        {
-            get { return _port; }
-            set
-            {
-                _port = value;
-                OnPropertyChanged();
-            }
-        }
-
-        private string _terminator;
-
-        public string Terminator
-        {
-            get { return _terminator; }
-            set
-            {
-                _terminator = value;
-                OnPropertyChanged();
-            }
-        }
-
+   
 
 
 
@@ -104,16 +69,13 @@ namespace X_Guide.MVVM.ViewModel
                 Name = Name,
                 Description = Description,
                 Type = Type,
-                Port = Port,
-                Ip = new ObservableCollection<string>(Ip.ToList()),
-                Terminator = Terminator,
             };
 
         }
 
         public ManipulatorViewModel()
         {
-
+            
         }
 
 

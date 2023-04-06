@@ -36,7 +36,7 @@ namespace X_Guide.Service
         }
         public async Task<bool> Login(string username, SecureString password)
         {
-            UserModel user = await _userService.AuthenticateUser(username, password);
+            UserModel user = await _userService.Authenticate(username, password);
             if (user != null)
             {
                 CurrentUser = user;
@@ -47,7 +47,7 @@ namespace X_Guide.Service
 
         public async Task<bool> Register(UserModel user, SecureString password)
         {
-            bool success = await _userService.CreateUser(user, password);
+            bool success = await _userService.Add(user, password);
             return success;
         }
     }

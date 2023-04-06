@@ -269,7 +269,7 @@ namespace X_Guide.MVVM.ViewModel
         private async void AddNewManipulator(object obj)
         {
 
-            bool saveStatus = await _manipulatorDb.CreateManipulator(_mapper.Map<ManipulatorModel>(NewManipulator));
+            bool saveStatus = await _manipulatorDb.Add(_mapper.Map<ManipulatorModel>(NewManipulator));
             if (saveStatus)
             {
                 System.Windows.MessageBox.Show("Added New Manipulator");
@@ -289,14 +289,14 @@ namespace X_Guide.MVVM.ViewModel
 
         private async void GetVisions()
         {
-            IEnumerable<VisionModel> models = await _visionDb.GetVisions();
+            IEnumerable<VisionModel> models = await _visionDb.GetAll();
             
             Visions = new ObservableCollection<VisionViewModel>(models.Select(x=> _mapper.Map<VisionViewModel>(x)));
         }
 
         private async void LoadAllCalibFile()
         {
-            var i = await _calibrationDb.GetCalibrations();
+            var i = await _calibrationDb.GetAll();
 
             CalibSol = new ObservableCollection<CalibrationModel>(i);
         }
@@ -316,15 +316,15 @@ namespace X_Guide.MVVM.ViewModel
                 OperationData[2] -= 30;
                 if (OperationData[2] > 180) OperationData[2] -= 360;
                 else if (OperationData[2] <= 180) OperationData[2] += 360;
-                await _serverService.SendJogCommand(_tcpClientInfo, new JogCommand().SetX(OperationData[0]).SetY(OperationData[1]).SetRZ(OperationData[2]));
-                await _serverService.SendJogCommand(_tcpClientInfo, new JogCommand().SetZ(-178));
+                await _serverService.SendJogCommand(new JogCommand().SetX(OperationData[0]).SetY(OperationData[1]).SetRZ(OperationData[2]));
+                await _serverService.SendJogCommand(new JogCommand().SetZ(-178));
                 System.Windows.MessageBox.Show("Press OK to reset machine!");
-                await _serverService.ServerWriteDataAsync("RESET", _tcpClientInfo.TcpClient.GetStream());
+                await _serverService.ServerWriteDataAsync("RESET");
             }
             catch (Exception ex)
             {
                 System.Windows.MessageBox.Show($"Exception: {ex.Message} | Aborting the calibration process!");
-                await _serverService.ServerWriteDataAsync("RESET", _tcpClientInfo.TcpClient.GetStream());
+                await _serverService.ServerWriteDataAsync("RESET");
                 return;
             }
         }
@@ -335,7 +335,7 @@ namespace X_Guide.MVVM.ViewModel
         }
         private async void GetAllMachine()
         {
-            IEnumerable<ManipulatorModel> models = await _manipulatorDb.GetAllManipulator();
+            IEnumerable<ManipulatorModel> models = await _manipulatorDb.GetAll();
             IEnumerable<ManipulatorViewModel> viewModels = models.Select(x => _mapper.Map<ManipulatorViewModel>(x));
             Manipulators = new ObservableCollection<ManipulatorViewModel>(viewModels);
         }
@@ -345,7 +345,7 @@ namespace X_Guide.MVVM.ViewModel
 
 
 
-            bool saveStatus = await _manipulatorDb.SaveManipulator(_mapper.Map<ManipulatorModel>(Manipulator));
+            bool saveStatus = await _manipulatorDb.Update(_mapper.Map<ManipulatorModel>(Manipulator));
             if (saveStatus)
             {
                 System.Windows.MessageBox.Show(ConfigurationManager.AppSettings["SaveSettingCommand_SaveMessage"]);

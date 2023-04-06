@@ -18,7 +18,7 @@ namespace X_Guide.Service.DatabaseProvider
         {
         }
 
-        public async Task<bool> CreateManipulator(ManipulatorModel manipulator)
+        public async Task<bool> Add(ManipulatorModel manipulator)
         {
 
             return await AsyncQuery((context) =>
@@ -29,19 +29,19 @@ namespace X_Guide.Service.DatabaseProvider
             });
         }
 
-        public async Task<IEnumerable<string>> GetAllManipulatorName()
+        public async Task<IEnumerable<string>> GetAllNames()
         {
             return await AsyncQuery((context) => context.Manipulators.Select(r => r.Name).ToList());
 
         }
 
-        public async Task<ManipulatorModel> GetManipulator(string name)
+        public async Task<ManipulatorModel> Get(string name)
         {
             return await AsyncQuery((context) => MapTo<ManipulatorModel>(context.Manipulators.SingleOrDefault(r => r.Name == name)));
 
         }
 
-        public async Task<IEnumerable<ManipulatorModel>> GetAllManipulator()
+        public async Task<IEnumerable<ManipulatorModel>> GetAll()
         {
             return await AsyncQuery((context) =>
             {
@@ -51,7 +51,7 @@ namespace X_Guide.Service.DatabaseProvider
         }
 
 
-        public async Task<bool> SaveManipulator(ManipulatorModel manipulator)
+        public async Task<bool> Update(ManipulatorModel manipulator)
         {
             return await AsyncQuery((context) =>
             {
@@ -70,7 +70,7 @@ namespace X_Guide.Service.DatabaseProvider
         }
 
 
-        public string GetManipulatorDelimiter(string name)
+        public string GetDelimiter(string name)
         {
             /*   using (var context = _contextFactory.CreateDbContext())
                {
@@ -87,7 +87,7 @@ namespace X_Guide.Service.DatabaseProvider
             return "";
         }
 
-        public async Task<ManipulatorModel> GetManipulator(int id)
+        public async Task<ManipulatorModel> Get(int id)
         {
             return await AsyncQuery((context) =>
             {

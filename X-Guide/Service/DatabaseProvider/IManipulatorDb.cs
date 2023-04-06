@@ -11,14 +11,14 @@ namespace X_Guide.Service.DatabaseProvider
     {
 
 
-        Task<bool> CreateManipulator(ManipulatorModel manipulator);
-        Task<IEnumerable<string>> GetAllManipulatorName();
-        Task<IEnumerable<ManipulatorModel>> GetAllManipulator();
+        Task<bool> Add(ManipulatorModel manipulator);
+        Task<IEnumerable<string>> GetAllNames();
+        Task<IEnumerable<ManipulatorModel>> GetAll();
 
-        string GetManipulatorDelimiter(string name);
-        Task<ManipulatorModel> GetManipulator(string name);
-        Task<ManipulatorModel> GetManipulator(int id);
-        Task<bool> SaveManipulator(ManipulatorModel manipulator);
+        string GetDelimiter(string name);
+        Task<ManipulatorModel> Get(string name);
+        Task<ManipulatorModel> Get(int id);
+        Task<bool> Update(ManipulatorModel manipulator);
 
 
         

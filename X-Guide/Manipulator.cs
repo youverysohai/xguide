@@ -24,9 +24,6 @@ namespace X_Guide
         public int Type { get; set; }
         public string Name { get; set; }
         public string Description { get; set; }
-        public string Ip { get; set; }
-        public string Port { get; set; }
-        public string Terminator { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Calibration> Calibrations { get; set; }

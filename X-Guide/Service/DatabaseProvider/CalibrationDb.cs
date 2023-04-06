@@ -19,7 +19,7 @@ namespace X_Guide.Service.DatabaseProvider
        
         }
 
-        public async Task<CalibrationModel> GetCalibration(string name)
+        public async Task<CalibrationModel> Get(string name)
         {
             return await AsyncQuery((context) =>
             {
@@ -27,27 +27,40 @@ namespace X_Guide.Service.DatabaseProvider
             });
         }
 
-        public async Task<IEnumerable<CalibrationModel>> GetCalibrations()
+        public async Task<IEnumerable<CalibrationModel>> GetAll()
         {
             return await AsyncQuery((context) =>
             {
-              return context.Calibrations.Include("Manipulator").ToList().Select(x=> MapTo<CalibrationModel>(x));
+              return context.Calibrations.Include("Manipulator").Include("Vision").ToList().Select(x=> MapTo<CalibrationModel>(x));
                
             });
         }
 
-        public async Task<int> AddCalibration(CalibrationModel calibration)
+        public async Task<int> Update(CalibrationModel calibration)
         {
             return await AsyncQuery((context) =>
             {
-                context.Calibrations.Add(MapTo<Calibration>(calibration));
+                Calibration calib = context.Calibrations.Find(calibration.Id);
+                context.Entry(calib).CurrentValues.SetValues(MapTo<Calibration>(calibration));
+                return context.SaveChanges();
+            });
+        }
+
+        public async Task<int> Add(CalibrationModel calibration)
+        {
+            return await AsyncQuery((context) =>
+            {
+                Calibration calib = MapTo<Calibration>(calibration);
+                calib.Manipulator = context.Manipulators.Find(calib.Manipulator.Id);
+                calib.Vision = context.Visions.Find(calib.Vision.Id);
+                context.Calibrations.Add(calib);
                 return context.SaveChanges();
 
              
             });
         }
 
-        public async Task<bool> DeleteCalibration(int id)
+        public async Task<bool> Delete(int id)
         {
             return await AsyncQuery((context) =>
             {
@@ -65,6 +78,14 @@ namespace X_Guide.Service.DatabaseProvider
                     MessageBox.Show(ex.ToString());
                     return false;
                 }
+            });
+        }
+
+        public async Task<bool> IsExist(int id)
+        {
+            return await AsyncQuery((context) =>
+            {
+                return context.Calibrations.Find(id) is null ? false : true;
             });
         }
     }

@@ -18,12 +18,12 @@ namespace X_Guide.Communication.Service
         event EventHandler<TcpClientEventArgs> MessageEvent;
 
         TcpClientInfo GetConnectedClientInfo(TcpClient tcpClient);
-        Task ServerWriteDataAsync(string data, NetworkStream stream);
+        Task ServerWriteDataAsync(string data);
 
         bool getServerStatus();
         Task StartServer();
         void StopServer();
-        Task SendJogCommand(TcpClientInfo client, JogCommand jogCommand);
+        Task SendJogCommand(JogCommand jogCommand);
         void SetServerReadTerminator(string terminator);
         ConcurrentDictionary<int, TcpClientInfo> GetConnectedClient();
     }

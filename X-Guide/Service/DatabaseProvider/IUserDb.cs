@@ -10,8 +10,8 @@ namespace X_Guide.Service.DatabaseProvider
 {
     public interface IUserDb
     {
-        Task<IEnumerable<UserModel>> GetAllUsersAsync();
-        Task<bool> CreateUser(UserModel user, SecureString password);
-        Task<UserModel>AuthenticateUser(string username, SecureString password);
+        Task<IEnumerable<UserModel>> GetAll();
+        Task<bool> Add(UserModel user, SecureString password);
+        Task<UserModel>Authenticate(string username, SecureString password);
     }
 }

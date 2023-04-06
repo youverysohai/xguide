@@ -60,8 +60,6 @@ namespace X_Guide.MVVM.ViewModel
             }
         }
 
-    
-
         private void OnProcedureChanged()
         {
             MessageBox.Show(_calibration.Procedure);
@@ -107,7 +105,7 @@ namespace X_Guide.MVVM.ViewModel
 
         private async void GetVisions()
         {
-            IEnumerable<VisionModel> models = await _visionDb.GetVisions();
+            IEnumerable<VisionModel> models = await _visionDb.GetAll();
             Visions = new ObservableCollection<VisionViewModel>(models.Select(x=> _mapper.Map<VisionViewModel>(x)));
         }
 
