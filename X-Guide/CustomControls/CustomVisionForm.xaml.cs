@@ -1,13 +1,9 @@
-﻿
-using MaterialDesignThemes.Wpf;
-using Microsoft.Win32;
-using ModernWpf.Controls;
+﻿using Microsoft.Win32;
 using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Text;
-using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
@@ -17,28 +13,20 @@ using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
-using System.Xml.Serialization;
-using X_Guide.MVVM.Model;
-using X_Guide.MVVM.ViewModel;
+using System.Windows.Shapes;
 
-namespace X_Guide.MVVM.View
+namespace X_Guide.CustomControls
 {
     /// <summary>
-    /// Interaction logic for SettingView.xaml
+    /// Interaction logic for CustomVisionForm.xaml
     /// </summary>
-    public partial class SettingView : UserControl
+    public partial class CustomVisionForm : UserControl
     {
-
-        
-      
-        public SettingView()
+        public CustomVisionForm()
         {
             InitializeComponent();
         }
 
-
-        
-        //Purpose: limit the number of characters that can be entered 
         private void TxtIPAddress_PreviewTextInput(object sender, TextCompositionEventArgs e)
         {
             TextBox textBox = (TextBox)sender;
@@ -48,12 +36,12 @@ namespace X_Guide.MVVM.View
                 if (textBox.SelectionLength == textBox.Text.Length)
                 {
                     e.Handled = false; // do not cancel the input event
-                }   
+                }
                 else
                 {
                     e.Handled = true; // cancel the input event
                 }
-                   
+
             }
         }
         private void TxtPort_PreviewTextInput(object sender, TextCompositionEventArgs e)
@@ -78,7 +66,15 @@ namespace X_Guide.MVVM.View
 
         }
 
-
+        private void BrowseBtn_Click(object sender, RoutedEventArgs e)
+        {
+            OpenFileDialog openFileDialog = new OpenFileDialog
+            {
+                Filter = "sol files (*.sol)|*.sol|All files (*.*)|*.*"
+            };
+            if (openFileDialog.ShowDialog() == true)
+                VisionPathTextBox.Text = File.ReadAllText(openFileDialog.FileName);
+        }
 
 
         private static bool RequestFocusChange(FocusNavigationDirection direction)
@@ -118,56 +114,5 @@ namespace X_Guide.MVVM.View
             TextBox textBox = (TextBox)sender;
             textBox.SelectAll();
         }
-
-        private void BrowseBtn_Click(object sender, RoutedEventArgs e)
-        {
-            OpenFileDialog openFileDialog = new OpenFileDialog
-            {
-                Filter = "xml files (*.xml)|*.xml|All files (*.*)|*.*"
-            };
-            if (openFileDialog.ShowDialog() == true)
-                TxtLogFilePath.Text = File.ReadAllText(openFileDialog.FileName);
-        }
-        private void BrowseSolutionBtn_Click(object sender, RoutedEventArgs e)
-        {
-            OpenFileDialog openFileDialog = new OpenFileDialog
-            {
-                Filter = "sol files (*.sol)|*.sol|All files (*.*)|*.*"
-            };
-            if (openFileDialog.ShowDialog() == true)
-                TxtLogFilePath.Text = File.ReadAllText(openFileDialog.FileName);
-        }
-
-
-
-        private async void ShowManipulatorDialogButton_Click(object sender, RoutedEventArgs e)
-        {
-
-
-    
-            await ManipulatorDialog.ShowAsync();
-            var i = ManipulatorDialog;
-          
-        }
-
-        private void ManipulatorDialog_DataContextChanged(object sender, DependencyPropertyChangedEventArgs e)
-        {
-            MessageBox.Show(e.OldValue.ToString());
-        }
-
-        private async void ShowDialog2Button_Click(object sender, RoutedEventArgs e)
-        {
-            var dialog = NewVisionDialog;  
-           await dialog.ShowAsync();    
-        }
-
-        private void ManipulatorDialog_CloseButtonClick(ContentDialog sender, ContentDialogButtonClickEventArgs args)
-        {
-            var dialog = sender;
-            dialog.Hide();
-        }
-
     }
- 
-
 }

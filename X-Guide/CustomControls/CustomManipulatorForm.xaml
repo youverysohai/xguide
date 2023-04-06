@@ -9,12 +9,7 @@
              d:DesignHeight="450" d:DesignWidth="400" d:Foreground="WhiteSmoke"
              Name="ManipulatorForm">
     <UserControl.Resources>
-        <Style x:Key="dot" TargetType="ui:FontIcon">
-            <Setter Property="Margin" Value="4"/>
-            <Setter Property="FontFamily" Value="Segoe MDL2 Assets"></Setter>
-            <Setter Property="Glyph" Value="&#xE843;"></Setter>
-            <!-- To get Icon :  https://learn.microsoft.com/en-us/windows/apps/design/style/segoe-ui-symbol-font#pua-ea00-ec00 -->
-        </Style>
+ 
         <Style TargetType="TextBox" x:Key="IpTextBoxStyle" BasedOn="{StaticResource DefaultTextBoxStyle}">
             <Setter Property="HorizontalAlignment" Value="Center"/>
             <EventSetter Event="GotFocus" Handler="txtIP_GotFocus"/>
@@ -26,67 +21,48 @@
             <Setter Property="Margin" Value="5 12 0 0"/>
         </Style>
     </UserControl.Resources>
-    <ui:SimpleStackPanel Orientation="Vertical">
- 
-        <!--Row 0-->
-        <TextBlock  Text="Name" Style="{DynamicResource LabelTextBlock}"  />
-        <TextBox Text="{Binding DataContext.NewManipulator.Name, RelativeSource={RelativeSource AncestorType={x:Type ui:ContentDialog}}}" x:Name="NameTextBox" Grid.Row="0" Grid.Column="1" VerticalAlignment="Center" Margin="5" />
-        <!--Row 1-->
-        <TextBlock Text="Type" Style="{DynamicResource LabelTextBlock}" />
-        <ComboBox    
+
+        <ui:SimpleStackPanel Orientation="Vertical">
+
+            <!--Row 0-->
+            <TextBlock  Text="Name" Style="{DynamicResource LabelTextBlock}"  />
+            <TextBox Width="150" HorizontalAlignment="Left" Text="{Binding DataContext.NewManipulator.Name, RelativeSource={RelativeSource AncestorType={x:Type ui:ContentDialog}}}" x:Name="NameTextBox" Grid.Row="0" Grid.Column="1" VerticalAlignment="Center" Margin="5" />
+            <!--Row 1-->
+            <TextBlock Text="Type" Style="{DynamicResource LabelTextBlock}" />
+            <ComboBox    
                                         Grid.Row="1" Grid.Column="1"  
                                         ItemsSource="{Binding DataContext.ManipulatorTypeList, RelativeSource={RelativeSource AncestorType={x:Type ui:ContentDialog}}}"
                                         DisplayMemberPath="Description"
                                         SelectedValuePath="Value"
                                         SelectedValue="{Binding DataContext.NewManipulator.Type, RelativeSource={RelativeSource AncestorType={x:Type ui:ContentDialog}}}" 
-                                        MinWidth="130"
+                                         Width="150" HorizontalAlignment="Left" 
                                         Margin="5" />
-        <!--Row 2-->
-        <TextBlock Text="Description"  Style="{DynamicResource LabelTextBlock}" />
-        <TextBox x:Name="CommentsTextBox" Grid.Row="2" Grid.Column="1" Margin="5"  VerticalAlignment="Center" MaxLines="4" AcceptsReturn="True"/>
-        <!--Row 3-->
-        <TextBlock Text="IP Address" Style="{DynamicResource LabelTextBlock}"/>
-        <!--<ui:SimpleStackPanel Grid.Row="3" Grid.Column="1"  Orientation="Horizontal"  HorizontalAlignment="Stretch" Margin="5">
-                                        <TextBox Text="{Binding DataContext.Manipulator.Ip[0], RelativeSource={RelativeSource AncestorType={x:Type ui:ContentDialog}}}"  
-                                                 HorizontalAlignment="Center"  GotFocus="txtIP_GotFocus" TextChanged="TxtIPLength_TextChanged" PreviewKeyDown="txtIP_PreviewKeyDown" PreviewTextInput="TxtIPAddress_PreviewTextInput">
-
-                                        </TextBox>
-                                        <materialDesign:PackIcon Style="{DynamicResource IconStyle16}"  VerticalAlignment="Bottom"  Kind="CircleSmall"/>
-                                        <TextBox Text="{Binding DataContext.Manipulator.Ip[1], RelativeSource={RelativeSource AncestorType={x:Type ui:ContentDialog}}}"  
-                                                 HorizontalAlignment="Center" GotFocus="txtIP_GotFocus" TextChanged="TxtIPLength_TextChanged" PreviewTextInput="TxtIPAddress_PreviewTextInput" PreviewKeyDown="txtIP_PreviewKeyDown">
-
-                                        </TextBox>
-                                        <materialDesign:PackIcon Style="{DynamicResource IconStyle16}"  VerticalAlignment="Bottom"  Kind="CircleSmall"/>
-                                        <TextBox Text="{Binding DataContext.Manipulator.Ip[2], RelativeSource={RelativeSource AncestorType={x:Type ui:ContentDialog}}}"    HorizontalAlignment="Center" GotFocus="txtIP_GotFocus" TextChanged="TxtIPLength_TextChanged" PreviewTextInput="TxtIPAddress_PreviewTextInput" PreviewKeyDown="txtIP_PreviewKeyDown"   >
-
-                                        </TextBox>
-                                        <materialDesign:PackIcon Style="{DynamicResource IconStyle16}" VerticalAlignment="Bottom" Kind="CircleSmall"/>
-
-                                        <TextBox Text="{Binding DataContext.Manipulator.Ip[3], RelativeSource={RelativeSource AncestorType={x:Type ui:ContentDialog}}}"    HorizontalAlignment="Center" GotFocus="txtIP_GotFocus" TextChanged="TxtIPLength_TextChanged" PreviewTextInput="TxtIPAddress_PreviewTextInput" PreviewKeyDown="txtIP_PreviewKeyDown"    >
-
-                                        </TextBox>
-                                    </ui:SimpleStackPanel>-->
-        <!--<local:CustomIpInput Grid.Row="3" Grid.Column="1" InputIp="{Binding DataContext.Manipulator.Ip, RelativeSource={RelativeSource AncestorType={x:Type ui:ContentDialog}}}"/>-->
-        <ui:SimpleStackPanel Grid.Row="3" Grid.Column="1" Orientation="Horizontal"  HorizontalAlignment="Stretch" Margin="5">
-            <TextBox Text="{Binding DataContext.NewManipulator.Ip[0], RelativeSource={RelativeSource AncestorType={x:Type ui:ContentDialog}}}" x:Name="Ip0"  Style="{DynamicResource IpTextBoxStyle}"/>
-            <ui:FontIcon  Style="{DynamicResource dot}" />
-            <TextBox Text="{Binding DataContext.NewManipulator.Ip[1], RelativeSource={RelativeSource AncestorType={x:Type ui:ContentDialog}}}" x:Name="Ip1"  Style="{DynamicResource IpTextBoxStyle}"/>
-            <ui:FontIcon  Style="{DynamicResource dot}" />
-            <TextBox Text="{Binding DataContext.NewManipulator.Ip[2], RelativeSource={RelativeSource AncestorType={x:Type ui:ContentDialog}}}" x:Name="Ip2"  Style="{DynamicResource IpTextBoxStyle}"/>
-            <ui:FontIcon  Style="{DynamicResource dot}" />
-            <TextBox Text="{Binding DataContext.NewManipulator.Ip[3], RelativeSource={RelativeSource AncestorType={x:Type ui:ContentDialog}}}" x:Name="Ip3"  Style="{DynamicResource IpTextBoxStyle}"/>
-        </ui:SimpleStackPanel>
-        <!-- Row 4 -->
-        <TextBlock  Text="Port:" Style="{DynamicResource LabelTextBlock}" />
-        <ui:NumberBox x:Name="PortTextBox" SpinButtonPlacementMode="Inline"  Value="{Binding DataContext.NewManipulator.Port, RelativeSource={RelativeSource AncestorType={x:Type ui:ContentDialog}}}" Grid.Row="4" Grid.Column="1" Margin="5"  VerticalAlignment="Center"/>
-        <TextBlock  Text="Terminator " Style="{DynamicResource LabelTextBlock}"/>
-        <ComboBox Grid.Row="5" Grid.Column="1" Margin="5"  
+            <!--Row 3-->
+            <TextBlock Text="IP Address" Style="{DynamicResource LabelTextBlock}"/>
+            <ui:SimpleStackPanel Grid.Row="3" Grid.Column="1" Orientation="Horizontal"  HorizontalAlignment="Stretch" Margin="5">
+                <TextBox Text="{Binding DataContext.NewManipulator.Ip[0], RelativeSource={RelativeSource AncestorType={x:Type ui:ContentDialog}}}" x:Name="Ip0"  Style="{DynamicResource IpTextBoxStyle}"/>
+                <ui:FontIcon  Style="{DynamicResource dot}" />
+                <TextBox Text="{Binding DataContext.NewManipulator.Ip[1], RelativeSource={RelativeSource AncestorType={x:Type ui:ContentDialog}}}" x:Name="Ip1"  Style="{DynamicResource IpTextBoxStyle}"/>
+                <ui:FontIcon  Style="{DynamicResource dot}" />
+                <TextBox Text="{Binding DataContext.NewManipulator.Ip[2], RelativeSource={RelativeSource AncestorType={x:Type ui:ContentDialog}}}" x:Name="Ip2"  Style="{DynamicResource IpTextBoxStyle}"/>
+                <ui:FontIcon  Style="{DynamicResource dot}" />
+                <TextBox Text="{Binding DataContext.NewManipulator.Ip[3], RelativeSource={RelativeSource AncestorType={x:Type ui:ContentDialog}}}" x:Name="Ip3"  Style="{DynamicResource IpTextBoxStyle}"/>
+            </ui:SimpleStackPanel>
+            <!-- Row 4 -->
+            <TextBlock  Text="Port" Style="{DynamicResource LabelTextBlock}" />
+        <ui:NumberBox  Width="150" HorizontalAlignment="Left" SpinButtonPlacementMode="Compact"  Value="{Binding DataContext.NewManipulator.Port, RelativeSource={RelativeSource AncestorType={x:Type ui:ContentDialog}}}" Grid.Row="4" Grid.Column="1" Margin="5"  VerticalAlignment="Center"/>
+            <TextBlock  Text="Terminator " Style="{DynamicResource LabelTextBlock}"/>
+            <ComboBox Grid.Row="5" Grid.Column="1" Margin="5"  
                                               ItemsSource="{Binding DataContext.TerminatorList, RelativeSource={RelativeSource AncestorType={x:Type ui:ContentDialog}}}" 
                                               DisplayMemberPath="Value"
                                               SelectedValuePath="Description" 
                                               SelectedValue="{Binding DataContext.NewManipulator.Terminator, RelativeSource={RelativeSource AncestorType={x:Type ui:ContentDialog}}}"   
-                                              MinWidth="70"
+                                               Width="150" HorizontalAlignment="Left" 
                                            ></ComboBox>
+            <!--Row 2-->
+            <TextBlock Text="Description"  Style="{DynamicResource LabelTextBlock}" />
+            <TextBox x:Name="CommentsTextBox" Grid.Row="2" Grid.Column="1" Margin="5"  VerticalAlignment="Center" MaxLines="4" AcceptsReturn="True"/>
 
-    </ui:SimpleStackPanel>
+        </ui:SimpleStackPanel>
+
 </UserControl>

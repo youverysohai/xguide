@@ -1,7 +1,7 @@
 ﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
                     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
                     xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
-                    >
+                    xmlns:ui="http://schemas.modernwpf.com/2019">
     <Style x:Key ="IconStyle24" TargetType="materialDesign:PackIcon">
         <Setter Property="Width" Value="24"/>
         <Setter Property="Height" Value="24"/>
@@ -22,5 +22,31 @@
         <Setter Property="Margin" Value="15 0 0 0"/>
         <Setter Property="ToolTipService.InitialShowDelay" Value="100"/>
     </Style>
+    <!-- CRUD ICONS -->   <!-- To get Icon :  https://learn.microsoft.com/en-us/windows/apps/design/style/segoe-ui-symbol-font#pua-ea00-ec00 -->
 
+    <Style x:Key="dot" TargetType="ui:FontIcon">
+ 
+        <Setter Property="FontFamily" Value="Segoe MDL2 Assets"></Setter>
+        <Setter Property="Glyph" Value="&#xE915;"></Setter>
+    </Style>
+    <Style x:Key="DeleteIcon" TargetType="ui:FontIcon">
+         
+        <Setter Property="FontFamily" Value="Segoe MDL2 Assets"></Setter>
+        <Setter Property="Glyph" Value="&#xE74D;"></Setter>
+    </Style>
+    <Style x:Key="SaveIcon" TargetType="ui:FontIcon">
+         
+        <Setter Property="FontFamily" Value="Segoe MDL2 Assets"></Setter>
+        <Setter Property="Glyph" Value="&#xE74E;"></Setter>
+    </Style>
+    <Style x:Key="AddIcon" TargetType="ui:FontIcon">
+         
+        <Setter Property="FontFamily" Value="Segoe MDL2 Assets"></Setter>
+        <Setter Property="Glyph" Value="&#xE710;"></Setter>
+    </Style> 
+    <Style x:Key="BrowseIcon" TargetType="ui:FontIcon">
+         
+        <Setter Property="FontFamily" Value="Segoe MDL2 Assets"></Setter>
+        <Setter Property="Glyph" Value="&#xED25;"></Setter>
+    </Style>
 </ResourceDictionary>
