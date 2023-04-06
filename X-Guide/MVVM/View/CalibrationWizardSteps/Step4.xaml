@@ -151,7 +151,7 @@
                 <Border HorizontalAlignment="Center" VerticalAlignment="Bottom" Height="190" Width="380" BorderBrush="#FF2596BE"
                         BorderThickness="0 2 0 0" CornerRadius="300 300 0 0">
                     <Border.Effect>
-                        <DropShadowEffect Color="{DynamicResource PrimaryBlueColor}" BlurRadius="10" ShadowDepth="3"/>
+                        <DropShadowEffect Color="#FF95D4FF" BlurRadius="10" ShadowDepth="3"/>
                     </Border.Effect>
                 </Border>
                 <TextBlock HorizontalAlignment="Center" VerticalAlignment="Bottom" Margin="50" FontSize="50"
@@ -187,7 +187,7 @@
                     </Border.Effect>
                 </Border>
                 <TextBlock HorizontalAlignment="Center" VerticalAlignment="Bottom" Margin="50" FontSize="50"
-                           Foreground="#FF95D4FF" x:Name="AccelValue">
+                           Foreground="{DynamicResource PrimaryBlueColor}" x:Name="AccelValue">
                     <TextBlock.Effect>
                         <DropShadowEffect BlurRadius="20" Color="#FF91DEFB" ShadowDepth="0"/>
                     </TextBlock.Effect>

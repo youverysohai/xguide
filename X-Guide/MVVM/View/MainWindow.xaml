@@ -255,9 +255,7 @@
             </ui:SimpleStackPanel>
         </ui:NavigationView.FooterMenuItems>
         <ui:NavigationView.PaneFooter>
-            <ui:SimpleStackPanel Orientation="Vertical">
-    
- 
+
                 <ui:ToggleSwitch Toggled="ToggleAppThemeHandler" OffContent="Dark" OnContent="Light" x:Name="toggleSwitch">
                     <ui:ToggleSwitch.Header>
                         <ui:SimpleStackPanel Orientation="Horizontal">
@@ -280,19 +278,7 @@
                             <TextBlock VerticalAlignment="Center" Margin="10 0"> Theme</TextBlock>
                         </ui:SimpleStackPanel>
                     </ui:ToggleSwitch.Header>
-                </ui:ToggleSwitch>
-
-
-
-
-
-
-
-
-            </ui:SimpleStackPanel>
-
-
-
+                </ui:ToggleSwitch>    
 
         </ui:NavigationView.PaneFooter>
   
