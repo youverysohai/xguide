@@ -93,23 +93,23 @@
                         </Grid.ColumnDefinitions>
 
                         <Label Content="Camera X Scaling:" Grid.Row="0" Grid.Column="0" Margin="5" />
-                        <TextBlock Text="{Binding Setting.Mm_per_pixel, StringFormat={}{0:F2}}" Grid.Row="0" Grid.Column="1" Margin="5" Style="{DynamicResource ReadOnlyTextBlock}" />
+                        <TextBlock Text="{Binding Calibration.Mm_per_pixel, StringFormat={}{0:F2}}" Grid.Row="0" Grid.Column="1" Margin="5" Style="{DynamicResource ReadOnlyTextBlock}" />
                         <Label Content="mm per pixel" Grid.Row="0" Grid.Column="2" Margin="5" />
 
                         <Label Content="Camera Y Scaling:" Grid.Row="1" Grid.Column="0" Margin="5" />
-                        <TextBlock Text="{Binding Setting.Mm_per_pixel, StringFormat={}{0:F2}}" Grid.Row="1" Grid.Column="1" Margin="5" Style="{DynamicResource ReadOnlyTextBlock}"/>
+                        <TextBlock Text="{Binding Calibration.Mm_per_pixel, StringFormat={}{0:F2}}" Grid.Row="1" Grid.Column="1" Margin="5" Style="{DynamicResource ReadOnlyTextBlock}"/>
                         <Label Content="mm per pixel" Grid.Row="1" Grid.Column="2" Margin="5" />
 
                         <Label Content="X offset:" Grid.Row="2" Grid.Column="0" Margin="5" />
-                        <TextBlock Text="{Binding Setting.CXOffSet, StringFormat={}{0:F2}}" Grid.Row="2" Grid.Column="1" Margin="5" Style="{DynamicResource ReadOnlyTextBlock}"/>
+                        <TextBlock Text="{Binding Calibration.CXOffSet, StringFormat={}{0:F2}}" Grid.Row="2" Grid.Column="1" Margin="5" Style="{DynamicResource ReadOnlyTextBlock}"/>
                         <Label Content="mm" Grid.Row="2" Grid.Column="2" Margin="5" />
 
                         <Label Content="Y offset:" Grid.Row="3" Grid.Column="0" Margin="5" />
-                        <TextBlock  Text="{Binding Setting.CYOffset, StringFormat={}{0:F2}}"  Grid.Row="3" Grid.Column="1" Margin="5" Style="{DynamicResource ReadOnlyTextBlock}"/>
+                        <TextBlock  Text="{Binding Calibration.CYOffset, StringFormat={}{0:F2}}"  Grid.Row="3" Grid.Column="1" Margin="5" Style="{DynamicResource ReadOnlyTextBlock}"/>
                         <Label Content="mm" Grid.Row="3" Grid.Column="2" Margin="5" />
 
                         <Label Content="RZ offset:" Grid.Row="4" Grid.Column="0" Margin="5" />
-                        <TextBlock Text="{Binding Setting.CRZOffset, StringFormat={}{0:F2}}" Grid.Row="4" Grid.Column="1" Margin="5" Style="{DynamicResource ReadOnlyTextBlock}"/>
+                        <TextBlock Text="{Binding Calibration.CRZOffset, StringFormat={}{0:F2}}" Grid.Row="4" Grid.Column="1" Margin="5" Style="{DynamicResource ReadOnlyTextBlock}"/>
                         <Label Content="°" Grid.Row="4" Grid.Column="2" Margin="5" />
 
                         

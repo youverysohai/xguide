@@ -221,7 +221,7 @@ namespace X_Guide.MVVM.ViewModel
                Step1.SelectedItemChangedEvent += OnSelectedItemChangedEvent;
                _navigationService.Navigate(Step1);
                CurrentNode = _navigationHistory.AddLast(CurrentViewModel);*/
-            Dispatcher.CurrentDispatcher.BeginInvoke(new Action(() => _navigationService.Navigate<Step5ViewModel>(new TypedParameter(typeof(CalibrationViewModel), new CalibrationViewModel()
+            Dispatcher.CurrentDispatcher.BeginInvoke(new Action(() => _navigationService.Navigate<Step4ViewModel>(new TypedParameter(typeof(CalibrationViewModel), new CalibrationViewModel()
             {
                 Name = "Testing",
                 Manipulator = new ManipulatorViewModel

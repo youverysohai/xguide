@@ -126,7 +126,7 @@ namespace X_Guide.MVVM.View
                 Filter = "xml files (*.xml)|*.xml|All files (*.*)|*.*"
             };
             if (openFileDialog.ShowDialog() == true)
-                TxtLogFilePath.Text = File.ReadAllText(openFileDialog.FileName);
+                TxtLogFilePath.Text = openFileDialog.FileName;
         }
         private void BrowseSolutionBtn_Click(object sender, RoutedEventArgs e)
         {
@@ -135,7 +135,7 @@ namespace X_Guide.MVVM.View
                 Filter = "sol files (*.sol)|*.sol|All files (*.*)|*.*"
             };
             if (openFileDialog.ShowDialog() == true)
-                TxtLogFilePath.Text = File.ReadAllText(openFileDialog.FileName);
+                VisionFilePathTextBox.Text = openFileDialog.FileName;
         }
 
 

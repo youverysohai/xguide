@@ -60,7 +60,7 @@ namespace X_Guide.MVVM.ViewModel
         public string Filepath
         {
             get { return _filepath; }
-            set { _filepath = value; }
+            set { _filepath = value; OnPropertyChanged(); }
         }
 
         public object Clone()

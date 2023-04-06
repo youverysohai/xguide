@@ -87,32 +87,7 @@ namespace X_Guide
             }
         }
 
-        private void SideMenuNavigation_ItemInvoked(NavigationView sender, NavigationViewItemInvokedEventArgs args)
-        {
-            if (args.IsSettingsInvoked)
-            {
-                // Handle the settings item click event here
-                (DataContext as MainViewModel).NavigateCommand.Execute(PageName.Setting);
-            }
 
-            //if (args.InvokedItemContainer.Tag != null)
-            //{
-            //    string tag = args.InvokedItemContainer.Tag.ToString();
-
-            //    switch (tag)
-            //    {
-            //        case "ProductionView":
-            //            (DataContext as MainViewModel).NavigateCommand.Execute(PageName.Production);
-            //            break;
-            //        case "CalibrationWizardStartView":
-            //            (DataContext as MainViewModel).NavigateCommand.Execute(PageName.CalibrationWizardStart);
-            //            break;
-            //        case "JogRobotView":
-            //            (DataContext as MainViewModel).NavigateCommand.Execute(PageName.JogRobot);
-            //            break;
-            //    }
-            //}
-        }
 
 
 

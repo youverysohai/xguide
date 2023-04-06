@@ -98,7 +98,7 @@ namespace X_Guide.MVVM.ViewModel
             var nav = new TypedParameter(typeof(INavigationService), _navigationService);
 
          
-            _navigationService.Navigate<CalibrationWizardStartViewModel>(nav);
+            _navigationService.Navigate<SettingViewModel>(nav);
    
             LoginCommand = new RelayCommand(Login);
             RegisterCommand = new RelayCommand(Register);

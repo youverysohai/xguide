@@ -159,8 +159,8 @@
                                         ItemsSource="{Binding  ManipulatorTypeList }"
                                         DisplayMemberPath="Description"
                                         SelectedValuePath="Value"
-                                        SelectedValue="{Binding  NewManipulator.Type }" 
-                                         Width="150" HorizontalAlignment="Left" 
+                                        SelectedValue="{Binding  Manipulator.Type }" 
+                                         Width="320" HorizontalAlignment="Left" 
                                         Margin="5" />
                                <!--Row 3-->
                                 <TextBlock Text="IP Address" Style="{DynamicResource LabelTextBlock}"/>
@@ -188,7 +188,7 @@
  
                                 <!-- Row 4 -->
                                 <TextBlock  Text="Port:" Style="{DynamicResource LabelTextBlock}" />
-                                <ui:NumberBox Width="150" HorizontalAlignment="Left"  SpinButtonPlacementMode="Compact"   Value="{Binding DataContext.NewManipulator.Port }" Grid.Row="4" Grid.Column="1" Margin="5"  VerticalAlignment="Center"/>
+                                <ui:NumberBox Width="150" HorizontalAlignment="Left"  SpinButtonPlacementMode="Compact"   Value="{Binding  Manipulator.Port }" Grid.Row="4" Grid.Column="1" Margin="5"  VerticalAlignment="Center"/>
                                
                                 <!-- Row 5 -->
                                 <TextBlock  Text="Terminator " Style="{DynamicResource LabelTextBlock}"/>
@@ -196,12 +196,12 @@
                                               ItemsSource="{Binding TerminatorList }" 
                                               DisplayMemberPath="Value"
                                               SelectedValuePath="Description" 
-                                              SelectedValue="{Binding NewManipulator.Terminator }"   
+                                              SelectedValue="{Binding Manipulator.Terminator}"   
                                               MinWidth="150"
                                            ></ComboBox>
                                    <!--Row 2-->
                                 <TextBlock Text="Description"  Style="{DynamicResource LabelTextBlock}" />
-                                <TextBox Margin="5"  VerticalAlignment="Center" MaxLines="4" AcceptsReturn="True"/>
+                                <TextBox Width="320" HorizontalAlignment="Left" Text="{Binding Manipulator.Description}" Margin="5"  VerticalAlignment="Center"  MaxLines="4" AcceptsReturn="True"/>
                                 
                             </ui:SimpleStackPanel>
                              
@@ -261,6 +261,7 @@
                                               PrimaryButtonText="Create" PrimaryButtonStyle="{DynamicResource DefaultButtonStyle}">
                                 <xCust:CustomVisionForm/>
                             </ui:ContentDialog>
+                        
                             <ui:SimpleStackPanel Orientation="Horizontal">
                                 <Button  Command="{x:Static materialDesign:DrawerHost.OpenDrawerCommand}" 
                                          CommandParameter="{x:Static Dock.Left}" 
@@ -284,7 +285,7 @@
                             <TextBlock  VerticalAlignment="Center" Style="{StaticResource SubheaderTextBlockStyle}" 
                                         Text="Vision"  />
                             <ui:SimpleStackPanel Orientation="Vertical">
-
+                                <!-- Vision Form -->
                                 <!--Row 0-->
                                 <TextBlock  Text="Name" Style="{DynamicResource LabelTextBlock}"  />
                                 <TextBox  Width="150" HorizontalAlignment="Left"  Text="{Binding Vision.Name }" VerticalAlignment="Center" Margin="5" />
@@ -292,7 +293,7 @@
                                 <!--Row 2-->
                                 <TextBlock Text="Vision Solution Path (.sol)"  Style="{DynamicResource LabelTextBlock}" />
                                 <ui:SimpleStackPanel Orientation="Horizontal">
-                                    <TextBox x:Name="CommentsTextBox"  Margin="5"  VerticalAlignment="Center" MinWidth="350" ToolTip="OpenFileDialog"  />
+                                    <TextBox x:Name="VisionFilePathTextBox" Text="{Binding Vision.Filepath}"   Margin="5"  VerticalAlignment="Center" MinWidth="320" ToolTip="OpenFileDialog"  />
                                     <Button Style="{DynamicResource MaterialDesignIconForegroundButton}" Click="BrowseSolutionBtn_Click">
                                         <ui:FontIcon Style="{DynamicResource BrowseIcon}"/>
                                     </Button>
@@ -325,7 +326,7 @@
                                 <ComboBox    
                                         MinWidth="150"
                                         Margin="5" >
-                                    <ComboBoxItem>Vision Master</ComboBoxItem>
+                                    <ComboBoxItem IsSelected="True">Vision Master</ComboBoxItem>
                                 </ComboBox>
                             </ui:SimpleStackPanel>
 
@@ -354,8 +355,8 @@
                         <TextBlock Style="{DynamicResource CaptionTextBlockStyle}" Margin="5 0 0 0" Text="Log File Path (User Log, Communication Log)"></TextBlock>
                         <ui:SimpleStackPanel Orientation="Horizontal" >
                            
-                            <TextBox  x:Name="TxtLogFilePath" Text="{Binding LogFilePath}" Width="150" Height="10" Margin="5 0 0 0"/>
-                            <Button  Style="{DynamicResource MaterialDesignIconForegroundButton}" >
+                            <TextBox  x:Name="TxtLogFilePath" Text="{Binding LogFilePath}" Width="320" Height="10" Margin="5 0 0 0" />
+                            <Button  Style="{DynamicResource MaterialDesignIconForegroundButton}" Click="BrowseBtn_Click" >
                                 <ui:FontIcon Style="{DynamicResource BrowseIcon}"/>
                             </Button>
                         </ui:SimpleStackPanel>
@@ -363,7 +364,7 @@
                             <ui:ToggleSwitch Margin="5 12 0 0" Header="Debug Log (Developer use)" FontSize="12"/>
                         </StackPanel>
                         <!--Row 3-->
-                        <TextBlock Margin="5 12 0 0" Text="IP Address" Style="{DynamicResource LabelTextBlock}"/>
+                        <TextBlock Margin="5 12 0 0" Text="Server IP Address" Style="{DynamicResource LabelTextBlock}"/>
                         <ui:SimpleStackPanel Orientation="Horizontal"  HorizontalAlignment="Stretch" Margin="5">
                             <TextBox Text="{Binding Server.Ip[0] }"    Style="{DynamicResource IpTextBoxStyle}"/>
                             <ui:FontIcon  Style="{DynamicResource dot}" />
@@ -373,9 +374,9 @@
                             <ui:FontIcon  Style="{DynamicResource dot}" />
                             <TextBox Text="{Binding Server.Ip[3] }"  Style="{DynamicResource IpTextBoxStyle}"/>
                         </ui:SimpleStackPanel>
-                        <TextBlock  Text="Port" Style="{DynamicResource LabelTextBlock}" />
+                        <TextBlock  Text="Server Port" Style="{DynamicResource LabelTextBlock}" />
                         <ui:NumberBox Width="150" HorizontalAlignment="Left"  SpinButtonPlacementMode="Compact"  Value="{Binding Server.Port }" Margin="5"  VerticalAlignment="Center"/>
-                        <TextBlock  Text="Terminator " Style="{DynamicResource LabelTextBlock}"/>
+                        <TextBlock  Text="Server Terminator " Style="{DynamicResource LabelTextBlock}"/>
                         <ComboBox Grid.Row="5" Grid.Column="1" Margin="5"  
                                               ItemsSource="{Binding TerminatorList }" 
                                               DisplayMemberPath="Value"
