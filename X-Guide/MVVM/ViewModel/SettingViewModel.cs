@@ -112,6 +112,18 @@ namespace X_Guide.MVVM.ViewModel
                 OnPropertyChanged();
             }
         }
+
+        public RelayCommand NewVisionCommand { get; set; }
+
+        private VisionViewModel _newVision;
+
+        public VisionViewModel NewVision
+        {
+            get { return _newVision; }
+            set { _newVision = value; OnPropertyChanged(); }
+        }
+
+
         public RelayCommand NewManipulatorCommand { get; set; }
 
         private ManipulatorViewModel _newManipulator = new ManipulatorViewModel();
@@ -238,6 +250,20 @@ namespace X_Guide.MVVM.ViewModel
             SaveCommand = new RelayCommand(SaveSetting);
             OperationCommand = new RelayCommand(Operation);
             NewManipulatorCommand = new RelayCommand(AddNewManipulator);
+            NewVisionCommand = new RelayCommand(AddNewVision);
+        }
+
+        private void AddNewVision(object obj)
+        {
+            //bool saveStatus = await _manipulatorDb.CreateVision(_mapper.Map<VisionModeld>(NewManipulator));
+            //if (saveStatus)
+            //{
+            //    System.Windows.MessageBox.Show("Added New Manipulator");
+            //}
+            //else
+            //{
+            //    System.Windows.MessageBox.Show("Failed to save setting!");
+            //}
         }
 
         private async void AddNewManipulator(object obj)

@@ -693,6 +693,9 @@
     <Compile Include="CustomControls\CustomRenderControl.xaml.cs">
       <DependentUpon>CustomRenderControl.xaml</DependentUpon>
     </Compile>
+    <Compile Include="CustomControls\CustomVisionForm.xaml.cs">
+      <DependentUpon>CustomVisionForm.xaml</DependentUpon>
+    </Compile>
     <Compile Include="CustomEventArgs\BitMapImageArgs.cs" />
     <Compile Include="CustomEventArgs\NetworkStreamEventArgs.cs" />
     <Compile Include="CustomEventArgs\TcpClientEventArgs.cs" />
@@ -850,6 +853,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="CustomControls\CustomRenderControl.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="CustomControls\CustomVisionForm.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

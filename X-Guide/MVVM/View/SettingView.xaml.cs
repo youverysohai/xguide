@@ -128,6 +128,15 @@ namespace X_Guide.MVVM.View
             if (openFileDialog.ShowDialog() == true)
                 TxtLogFilePath.Text = File.ReadAllText(openFileDialog.FileName);
         }
+        private void BrowseSolutionBtn_Click(object sender, RoutedEventArgs e)
+        {
+            OpenFileDialog openFileDialog = new OpenFileDialog
+            {
+                Filter = "sol files (*.sol)|*.sol|All files (*.*)|*.*"
+            };
+            if (openFileDialog.ShowDialog() == true)
+                TxtLogFilePath.Text = File.ReadAllText(openFileDialog.FileName);
+        }
 
 
 
