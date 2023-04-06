@@ -60,10 +60,7 @@ namespace X_Guide.MVVM.ViewModel
             }
         }
 
-        private void OnVisionChanged()
-        {
-            GetProcedures();
-        }
+    
 
         private void OnProcedureChanged()
         {

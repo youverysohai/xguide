@@ -12,13 +12,18 @@ namespace X_Guide.Service
     public class BackgroundService
     {
         private Thread _workerThread;
-        private bool _isRunning;
+        private volatile bool _isRunning;
         private readonly Action _action;
+        private bool _repeat;
 
 
-        public BackgroundService(Action action)
+    
+
+        public BackgroundService(Action action, bool repeat = false)
         {
             _action = action;
+            _repeat = repeat;
+          
         }
 
         public void Start()
@@ -42,11 +47,17 @@ namespace X_Guide.Service
 
         private void DoWork()
         {
-
-            while (_isRunning)
+            if (_repeat)
+            {
+                while (!_isRunning)
+                {
+                    _action();
+                    Thread.Sleep(1000);
+                }
+            }
+            else
             {
                 _action();
-                Thread.Sleep(1000);
             }
 
         }

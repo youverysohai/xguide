@@ -91,16 +91,22 @@ namespace X_Guide.VisionMaster
             throw new NotImplementedException();
         }
 
-        public void RunProcedure(string name, bool continuous = false)
+        public async Task<IVmModule> RunProcedure(string name, bool continuous = false)
         {
-        
-            VmProcedure procedure = VmSolution.Instance[$"{name}"] as VmProcedure;
-            if (continuous) procedure.ContinuousRunEnable = true;
-            else
+
+            return await Task.Run(() =>
             {
-                procedure.Run();
-            }
-            Procedure = name;   
+                VmProcedure procedure = VmSolution.Instance[$"{name}"] as VmProcedure;
+                if (continuous) procedure.ContinuousRunEnable = true;
+                else
+                {
+                    procedure.Run();
+                }
+
+                Procedure = name;
+                return procedure;
+            });
+
         }
 
     }

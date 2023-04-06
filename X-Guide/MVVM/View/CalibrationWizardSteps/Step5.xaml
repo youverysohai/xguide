@@ -32,10 +32,12 @@
         <hc:FlexPanel Margin="0 20 0 0"  FlexWrap="Wrap" JustifyContent="SpaceAround" AlignContent="Center" FlexDirection="Row">
 
 
-            <!--VM Camare-->
+            <!--VM Camara-->
        
 
-                <XCust:CustomRenderControl Grid.ColumnSpan="3" Grid.RowSpan="3" Procedure="{Binding VisProcedure}"></XCust:CustomRenderControl>
+                <XCust:CustomRenderControl 
+                    hc:FlexPanel.FlexBasis="720" Height="550"
+                    Procedure="{Binding VisProcedure}"></XCust:CustomRenderControl>
 
 
               

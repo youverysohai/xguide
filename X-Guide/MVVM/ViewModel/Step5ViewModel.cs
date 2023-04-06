@@ -34,14 +34,14 @@ namespace X_Guide.MVVM.ViewModel
 
         private int _jogDistance;
         private CancellationTokenSource cancelJog;
-        private readonly CalibrationViewModel _setting;
+        private readonly CalibrationViewModel _calibration;
         private readonly IServerService _serverService;
         private readonly IClientService _clientService;
         private readonly IVisionService _visionService;
         private BackgroundService searchClient;
+        private BackgroundService initiateJog;
 
         private Queue<JogCommand> commandQueue = new Queue<JogCommand>();
-        public event EventHandler<VmProcedure> VmImportCompleted;
 
         private IVmModule _visProcedure;
 
@@ -108,31 +108,33 @@ namespace X_Guide.MVVM.ViewModel
         }
 
 
-        public Step5ViewModel(CalibrationViewModel setting, IServerService serverService, IClientService clientService, IVisionService visionService)
+        public Step5ViewModel(CalibrationViewModel calibration, IServerService serverService, IClientService clientService, IVisionService visionService)
         {
             _serverService = serverService;
             _clientService = clientService;
             _visionService = visionService;
-            _setting = setting;
-   /*         LoadProcedure();*/
-
+            _calibration = calibration;
             
-            ReconnectCommand = new RelayCommand(null);
-            JogCommand = new RelayCommand(Jog, CanStartJog);
+            RunProcedure();
 
-            searchClient = new BackgroundService(SearchForClient);
+
+            ReconnectCommand = new RelayCommand(null);
+            JogCommand = new RelayCommand(Jog, (o) => _canJog);
+
+            searchClient = new BackgroundService(SearchForClient, true);
             searchClient.Start();
 
 
         }
 
        
-        private async void LoadProcedure()
+        private async void RunProcedure()
         {
-            VmProcedure vmProcedure = (VmProcedure)await _visionService.GetVmModule("Live");
+            await _visionService.ImportSol(_calibration.Vision.Filepath);
+            IVmModule vmProcedure = null;
             try
             {
-                vmProcedure.ContinuousRunEnable = true;
+                vmProcedure = await _visionService.RunProcedure("Live");
             }
             catch(Exception ex)
             {
@@ -159,16 +161,13 @@ namespace X_Guide.MVVM.ViewModel
             try
             {
                 var tcpClient = _serverService.GetConnectedClient().First().Value;
-
                 Application.Current.Dispatcher.Invoke(() => TcpClient = tcpClient);
                 searchClient.Stop();
 
             }
             catch
             {
-                Debug.WriteLine("No client found!");
             }
-
         }
 
         private async void InitiateJog()
@@ -177,8 +176,6 @@ namespace X_Guide.MVVM.ViewModel
         }
         private void Jog(object parameter)
         {
-
-
             if (JogDistance == 0) JogDistance = 10;
             int x = 0, y = 0, z = 0, rz = 0;
 
@@ -194,14 +191,9 @@ namespace X_Guide.MVVM.ViewModel
                 case "RZ-": rz = -JogDistance; break;
                 default: break;
             }
-            JogCommand command = new JogCommand().SetX(x).SetY(y).SetZ(z).SetRZ(rz).SetSpeed(_setting.Speed).SetAcceleration(_setting.Acceleration);
+            JogCommand command = new JogCommand().SetX(x).SetY(y).SetZ(z).SetRZ(rz).SetSpeed(_calibration.Speed).SetAcceleration(_calibration.Acceleration);
             commandQueue.Enqueue(command);
 
-        }
-
-        private bool CanStartJog(object parameter)
-        {
-            return _canJog;
         }
 
         private async void StartJog()

@@ -17,27 +17,21 @@ namespace X_Guide.MVVM.ViewModel
     {
         
 
-        private CalibrationViewModel _setting;
-        private readonly IServerService _serverService;
-        private readonly IClientService _clientService;
+        private readonly CalibrationViewModel _calibration;
 
-        public CalibrationViewModel Setting
+
+        public CalibrationViewModel Calibration
         {
-            get { return _setting; }
-            set { _setting = value;
-                OnPropertyChanged();
-            }
+            get { return _calibration; }
         }
 
       
 
    
     
-        public Step4ViewModel(CalibrationViewModel setting, IServerService serverService, IClientService clientService)
+        public Step4ViewModel(CalibrationViewModel calibration)
         {
-            _setting = setting;
-            _serverService = serverService;
-            _clientService = clientService;
+            _calibration = calibration;
         }
 
 

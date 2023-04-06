@@ -221,7 +221,7 @@ namespace X_Guide.MVVM.ViewModel
                Step1.SelectedItemChangedEvent += OnSelectedItemChangedEvent;
                _navigationService.Navigate(Step1);
                CurrentNode = _navigationHistory.AddLast(CurrentViewModel);*/
-            Dispatcher.CurrentDispatcher.BeginInvoke(new Action(() => _navigationService.Navigate<Step3ViewModel>(new TypedParameter(typeof(CalibrationViewModel), new CalibrationViewModel()
+            Dispatcher.CurrentDispatcher.BeginInvoke(new Action(() => _navigationService.Navigate<Step5ViewModel>(new TypedParameter(typeof(CalibrationViewModel), new CalibrationViewModel()
             {
                 Name = "Testing",
                 Manipulator = new ManipulatorViewModel
@@ -234,8 +234,15 @@ namespace X_Guide.MVVM.ViewModel
                 Vision = new VisionViewModel
                 {
                     Id = 1,
-                    Filepath= @"C:\Users\Xlent_XIR02\Desktop\livecam.sol",
-                }
+
+                    Filepath = @"C:\Users\Xlent_XIR02\Desktop\livecam.sol",
+                },
+                Procedure = "Live",
+                YOffset = 10,
+                XOffset = 15,
+                Speed = 69,
+                Acceleration = 69,
+                MotionDelay = 2,
             }))));
         }
 
