@@ -31,7 +31,7 @@
         <!--Row 2 Solution Path-->
         <TextBlock Text="Vision Solution Path (.sol)"  Style="{DynamicResource LabelTextBlock}" />
         <ui:SimpleStackPanel Orientation="Horizontal">
-            <TextBox x:Name="VisionPathTextBox" Grid.Row="2" Grid.Column="1" Margin="5"  VerticalAlignment="Center" MinWidth="350" ToolTip="OpenFileDialog"  />
+            <TextBox x:Name="NewVisionPathTextBox" Grid.Row="2" Grid.Column="1" Margin="5"  VerticalAlignment="Center" MinWidth="320" ToolTip="OpenFileDialog"  />
             <Button Style="{DynamicResource MaterialDesignIconForegroundButton}" Click="BrowseBtn_Click">
                 <ui:FontIcon Style="{DynamicResource BrowseIcon}"/>
             </Button>
@@ -50,7 +50,7 @@
         </ui:SimpleStackPanel>
         <!-- Row 4 Port -->
         <TextBlock  Text="Port" Style="{DynamicResource LabelTextBlock}" />
-        <ui:NumberBox Width="150" HorizontalAlignment="Left" x:Name="PortTextBox" SpinButtonPlacementMode="Compact" d:Value="8000"  Value="{Binding DataContext.NewVision.Port, RelativeSource={RelativeSource AncestorType={x:Type ui:ContentDialog}}}" Margin="5"  VerticalAlignment="Center"/>
+        <ui:NumberBox Width="150" HorizontalAlignment="Left" x:Name="PortTextBox" SpinButtonPlacementMode="Compact"  Value="{Binding DataContext.NewVision.Port, RelativeSource={RelativeSource AncestorType={x:Type ui:ContentDialog}}}" Margin="5"  VerticalAlignment="Center"/>
 
         <!-- Row 4 Terminator -->
         <TextBlock  Text="Terminator " Style="{DynamicResource LabelTextBlock}"/>

@@ -35,7 +35,7 @@
                                         DisplayMemberPath="Description"
                                         SelectedValuePath="Value"
                                         SelectedValue="{Binding DataContext.NewManipulator.Type, RelativeSource={RelativeSource AncestorType={x:Type ui:ContentDialog}}}" 
-                                         Width="150" HorizontalAlignment="Left" 
+                                         Width="320" HorizontalAlignment="Left" 
                                         Margin="5" />
             <!--Row 3-->
             <TextBlock Text="IP Address" Style="{DynamicResource LabelTextBlock}"/>
@@ -50,7 +50,7 @@
             </ui:SimpleStackPanel>
             <!-- Row 4 -->
             <TextBlock  Text="Port" Style="{DynamicResource LabelTextBlock}" />
-        <ui:NumberBox  Width="150" HorizontalAlignment="Left" SpinButtonPlacementMode="Compact"  Value="{Binding DataContext.NewManipulator.Port, RelativeSource={RelativeSource AncestorType={x:Type ui:ContentDialog}}}" Grid.Row="4" Grid.Column="1" Margin="5"  VerticalAlignment="Center"/>
+        <ui:NumberBox  Width="150" HorizontalAlignment="Left" SpinButtonPlacementMode="Compact"  Value="{Binding DataContext.NewManipulator.Port, RelativeSource={RelativeSource AncestorType={x:Type ui:ContentDialog}}}"   Margin="5"  VerticalAlignment="Center"/>
             <TextBlock  Text="Terminator " Style="{DynamicResource LabelTextBlock}"/>
             <ComboBox Grid.Row="5" Grid.Column="1" Margin="5"  
                                               ItemsSource="{Binding DataContext.TerminatorList, RelativeSource={RelativeSource AncestorType={x:Type ui:ContentDialog}}}" 

@@ -73,7 +73,7 @@ namespace X_Guide.CustomControls
                 Filter = "sol files (*.sol)|*.sol|All files (*.*)|*.*"
             };
             if (openFileDialog.ShowDialog() == true)
-                VisionPathTextBox.Text = File.ReadAllText(openFileDialog.FileName);
+                NewVisionPathTextBox.Text = openFileDialog.FileName;
         }
 
 

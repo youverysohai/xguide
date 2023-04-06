@@ -14,9 +14,8 @@
         Title="X-Guide"         
         Height="720" Width="1280"
         WindowState="Maximized"
-        ui:TitleBar.ExtendViewIntoTitleBar="True"
+        ui:TitleBar.Background="{ui:ThemeResource ResourceKey=ApplicationPageBackgroundThemeBrush}"
        x:Name="m_AppWindow" 
-        
         xmlns:ui="http://schemas.modernwpf.com/2019"
         ui:WindowHelper.UseModernWindowStyle="True"
         
@@ -173,12 +172,12 @@
     <ui:NavigationView x:Name="SideMenuNavigation"
                        IsTitleBarAutoPaddingEnabled="True" 
                        IsBackButtonVisible="Collapsed"
-                       CompactModeThresholdWidth="0"
-                       IsSettingsVisible="True" ItemInvoked="SideMenuNavigation_ItemInvoked"  >
+                       CompactModeThresholdWidth="720"
+                       IsSettingsVisible="False">
         <!-- Header Side Menu -->
 
         <ui:NavigationView.PaneHeader>
-            <TextBlock Style="{DynamicResource TitleTextBlockStyle}" Margin="10 0">X-Guide</TextBlock>
+            <TextBlock Style="{DynamicResource TitleTextBlockStyle}" Margin="15 8 0 0">X-Guide</TextBlock>
         </ui:NavigationView.PaneHeader>
 
 
@@ -240,26 +239,22 @@
             </ui:NavigationViewItem>
 
         </ui:NavigationView.MenuItems>
+        <ui:NavigationView.FooterMenuItems>
+            <ui:NavigationViewItem Content="Setting"  ToolTipService.ToolTip="Permission" c:NavigationViewItemExtensions.Command="{Binding NavigateCommand}"           
+                         c:NavigationViewItemExtensions.CommandParameter="{x:Static local:PageName.Setting}">
+                <ui:NavigationViewItem.Icon>
+                    <ui:FontIcon   Glyph="&#xE713;"/>
+                </ui:NavigationViewItem.Icon>
+            </ui:NavigationViewItem>
+            <ui:SimpleStackPanel Orientation="Horizontal" Margin="-14,0,0,0">
+                <ui:PersonPicture Width="36" HorizontalAlignment="Left" DisplayName="User1">
+                </ui:PersonPicture>
 
+                <TextBlock x:Name="TextBoxUsername"  Text="User1" Margin="5 0 0 0" VerticalAlignment="Center"  FontSize="16"/>
+
+            </ui:SimpleStackPanel>
+        </ui:NavigationView.FooterMenuItems>
         <ui:NavigationView.PaneFooter>
-            <ui:SimpleStackPanel Orientation="Vertical">
-                <Button Padding="0 5" Margin="0 5" Width="320" HorizontalContentAlignment="Left" Style="{DynamicResource DateTimePickerFlyoutButtonStyle}">
-                    <ui:SimpleStackPanel Orientation="Horizontal" Margin="0 0 0 0">
-
-
-                        <!--<hc:Gravatar Style="{StaticResource GravatarCircle}" Id="{Binding Text,ElementName=TextBoxUsername}" />-->
-
-                        <ui:SimpleStackPanel Orientation="Horizontal" VerticalAlignment="Center" Margin="5 0 0 0">
-                            <ui:PersonPicture Width="30" Height="30" DisplayName="User1"  >
-                            </ui:PersonPicture>
-
-                            <TextBlock x:Name="TextBoxUsername"  Text="User1" Margin="5 0 0 0" VerticalAlignment="Center"  FontSize="16"/>
-
-                        </ui:SimpleStackPanel>
-                    </ui:SimpleStackPanel>
-
-                </Button>
-                <ui:NavigationViewItemSeparator/>
 
                 <ui:ToggleSwitch Toggled="ToggleAppThemeHandler" OffContent="Dark" OnContent="Light" x:Name="toggleSwitch">
                     <ui:ToggleSwitch.Header>
@@ -275,7 +270,6 @@
                                             <DataTrigger  Binding="{Binding ElementName=toggleSwitch, Path=IsOn}" Value="False">
                                                 <Setter Property="Glyph" Value="&#xE708;" />
                                                 <Setter Property="ToolTip" Value="Dark"/>
-
                                             </DataTrigger>
                                         </Style.Triggers>
                                     </Style>
@@ -284,22 +278,10 @@
                             <TextBlock VerticalAlignment="Center" Margin="10 0"> Theme</TextBlock>
                         </ui:SimpleStackPanel>
                     </ui:ToggleSwitch.Header>
-                </ui:ToggleSwitch>
-
-
-
-
-
-
-
-
-            </ui:SimpleStackPanel>
-
-
-
+                </ui:ToggleSwitch>    
 
         </ui:NavigationView.PaneFooter>
-
+  
 
 
         <!-- CONTENT -->
@@ -344,19 +326,18 @@
                 <hc:SimpleStackPanel Grid.Row="2" Orientation="Horizontal" VerticalAlignment="Center" HorizontalAlignment="Right">
 
                     <materialDesign:PackIcon Style="{DynamicResource ConnectionStatusIcon}"/>
-                    <TextBlock  Style="{DynamicResource ConnectionStatusTextBlock}">Connection Status :</TextBlock>
+                    <TextBlock VerticalAlignment="Center"  Style="{DynamicResource ConnectionStatusTextBlock}">Connection Status :</TextBlock>
                     <materialDesign:PackIcon  Kind="RobotIndustrialOutline" Style="{DynamicResource ConnectionStatusIconForeground}" />
-                    <TextBlock  Style="{DynamicResource ConnectionStatusTextBlockForeground}" >Manipulator</TextBlock>
+                    <TextBlock VerticalAlignment="Center" Style="{DynamicResource ConnectionStatusTextBlockForeground}" >Manipulator</TextBlock>
                     <materialDesign:PackIcon Style="{DynamicResource ConnectionStatusIconForeground}" Kind="EyeOutline" />
-                    <TextBlock  Style="{DynamicResource ConnectionStatusTextBlockForeground}">Vision</TextBlock>
+                    <TextBlock  Style="{DynamicResource ConnectionStatusTextBlockForeground}" VerticalAlignment="Center">Vision</TextBlock>
                     <TextBlock Text="12/3/2023" x:Name="DateTimeTextBlock"/>
-                    <Button Command="{Binding NavigateCommand}" CommandParameter="{x:Static local:PageName.CalibrationWizardStart}" Content="TEST"/> 
+                  
                 </hc:SimpleStackPanel>
             </Grid>
 
 
         </ui:NavigationView.Content>
-
     </ui:NavigationView>
 
 </Window>

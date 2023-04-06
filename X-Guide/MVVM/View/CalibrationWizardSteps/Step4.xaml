@@ -41,33 +41,26 @@
                         <Label Content="1" Style="{DynamicResource MaterialDesignLabel}"/>
                         <hc:PreviewSlider Value="{Binding Calibration.Speed}" Width="300"  Minimum="1" Maximum="100" IsSnapToTickEnabled="True" TickFrequency="1" ValueChanged="Slider_SpeedValueChanged">
                             <hc:PreviewSlider.PreviewContent>
-                                <Label Style="{StaticResource LabelPrimary}" Content="{Binding Path=(hc:PreviewSlider.PreviewPosition),RelativeSource={RelativeSource Self}}"/>
+                                <Label Style="{StaticResource LabelPrimary}" Content="{Binding Path=(hc:PreviewSlider.PreviewPosition),RelativeSource={RelativeSource Self}}"  ContentStringFormat="F0"/>
                             </hc:PreviewSlider.PreviewContent>
                         </hc:PreviewSlider>
 
                        
                         <Label Content="100" Style="{DynamicResource MaterialDesignLabel}"/>
                     </StackPanel>
-                    <ui:NumberBox 
-                        
-                        Header="Speed (%)"
-                          SmallChange="1"
-                                   LargeChange="10" 
-                                   
-                                   SpinButtonPlacementMode="Compact"
-                        Grid.Row="0" Grid.Column="1"  
-                       Value="{Binding Calibration.Speed}"
+                    <ui:NumberBox  Header="Speed (%)"   SmallChange="1"
+                                   LargeChange="10"  SpinButtonPlacementMode="Compact"
+                                   Grid.Row="0" Grid.Column="1"  
+                                   Value="{Binding Calibration.Speed}"
                                    Padding="10 1"      MinWidth="100"  
-                                  materialDesign:HintAssist.Hint="Speed %" materialDesign:HintAssist.FloatingScale=".76" 
-                                    materialDesign:HintAssist.FloatingOffset="-15,-20">
+                                 />
 
-                    </ui:NumberBox>
                     <!-- Row 2: Acceleration -->
                     <StackPanel Orientation="Horizontal" Grid.Row="1" Grid.Column="0" VerticalAlignment="Bottom">
                         <Label Content="1" Style="{DynamicResource MaterialDesignLabel}"/>
-                        <hc:PreviewSlider Value="{Binding Calibration.Acceleration}" Width="300"  Minimum="1" Maximum="100" ValueChanged="Slider_AccelerationValueChanged">
+                        <hc:PreviewSlider Value="{Binding Calibration.Acceleration}" Width="300"  Minimum="1" Maximum="100" IsSnapToTickEnabled="True" TickFrequency="1"  ValueChanged="Slider_AccelerationValueChanged">
                             <hc:PreviewSlider.PreviewContent>
-                                <Label Style="{StaticResource LabelPrimary}" Content="{Binding Path=(hc:PreviewSlider.PreviewPosition),RelativeSource={RelativeSource Self}}"/>
+                                <Label Style="{StaticResource LabelPrimary}" Content="{Binding Path=(hc:PreviewSlider.PreviewPosition),RelativeSource={RelativeSource Self}}"   ContentStringFormat="F0"/>
                             </hc:PreviewSlider.PreviewContent>
                         </hc:PreviewSlider>
                         <Label Content="100" Style="{DynamicResource MaterialDesignLabel}"/>
@@ -83,9 +76,9 @@
                     <!-- Row 3: Motion Delay-->
                     <StackPanel Orientation="Horizontal" Grid.Row="2" Grid.Column="0" VerticalAlignment="Bottom">
                         <Label Content="0" Style="{DynamicResource MaterialDesignLabel}"/>
-                        <hc:PreviewSlider Value="{Binding Calibration.MotionDelay}" Width="300"  Minimum="0" Maximum="2000" >
+                        <hc:PreviewSlider Value="{Binding Calibration.MotionDelay}" IsSnapToTickEnabled="True" TickFrequency="1"  Width="300"  Minimum="0" Maximum="2000" >
                             <hc:PreviewSlider.PreviewContent>
-                                <Label Style="{StaticResource LabelPrimary}" Content="{Binding Path=(hc:PreviewSlider.PreviewPosition),RelativeSource={RelativeSource Self}}"/>
+                                <Label Style="{StaticResource LabelPrimary}" Content="{Binding Path=(hc:PreviewSlider.PreviewPosition),RelativeSource={RelativeSource Self}}"   ContentStringFormat="F0"/>
                             </hc:PreviewSlider.PreviewContent>
                         </hc:PreviewSlider>
                         <Label Content="2000" Style="{DynamicResource MaterialDesignLabel}"/>
@@ -153,7 +146,7 @@
             </StackPanel>
 
             <Grid Grid.Row="1">
-                <Border Background="#2d2d30" HorizontalAlignment="Center" VerticalAlignment="Bottom" Height="200" Width="400" BorderBrush="#FF2596BE"
+                <Border Background="{ui:ThemeResource ResourceKey=PersonPictureEllipseBadgeFillThemeBrush}" HorizontalAlignment="Center" VerticalAlignment="Bottom" Height="200" Width="400" BorderBrush="#FF2596BE"
                         BorderThickness="2 2 2 0" CornerRadius="300 300 0 0"/>
                 <Border HorizontalAlignment="Center" VerticalAlignment="Bottom" Height="190" Width="380" BorderBrush="#FF2596BE"
                         BorderThickness="0 2 0 0" CornerRadius="300 300 0 0">
@@ -162,7 +155,7 @@
                     </Border.Effect>
                 </Border>
                 <TextBlock HorizontalAlignment="Center" VerticalAlignment="Bottom" Margin="50" FontSize="50"
-                           Foreground="#FF95D4FF" x:Name="SpeedValue">
+                           Foreground="{DynamicResource PrimaryBlueColor}" x:Name="SpeedValue">
                     <TextBlock.Effect>
                         <DropShadowEffect BlurRadius="20" Color="#FF91DEFB" ShadowDepth="0"/>
                     </TextBlock.Effect>
@@ -185,7 +178,7 @@
                 </Border>
             </Grid>
             <Grid Grid.Row="1" Grid.Column="2">
-                <Border Background="#2d2d30" HorizontalAlignment="Center" VerticalAlignment="Bottom" Height="200" Width="400" BorderBrush="#FF2596BE"
+                <Border  Background="{ui:ThemeResource ResourceKey=PersonPictureEllipseBadgeFillThemeBrush}"  HorizontalAlignment="Center" VerticalAlignment="Bottom" Height="200" Width="400" BorderBrush="#FF2596BE"
                         BorderThickness="2 2 2 0" CornerRadius="300 300 0 0"/>
                 <Border HorizontalAlignment="Center" VerticalAlignment="Bottom" Height="190" Width="380" BorderBrush="#FF2596BE"
                         BorderThickness="0 2 0 0" CornerRadius="300 300 0 0">
@@ -194,7 +187,7 @@
                     </Border.Effect>
                 </Border>
                 <TextBlock HorizontalAlignment="Center" VerticalAlignment="Bottom" Margin="50" FontSize="50"
-                           Foreground="#FF95D4FF" x:Name="AccelValue">
+                           Foreground="{DynamicResource PrimaryBlueColor}" x:Name="AccelValue">
                     <TextBlock.Effect>
                         <DropShadowEffect BlurRadius="20" Color="#FF91DEFB" ShadowDepth="0"/>
                     </TextBlock.Effect>
