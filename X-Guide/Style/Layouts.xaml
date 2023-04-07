@@ -55,8 +55,8 @@
     <!-- Cards Layout: SettingView, Production View-->
     <Style x:Key="CardLayout" TargetType="materialDesign:Card">
         <Setter Property="Background" Value="{ui:ThemeResource PersonPictureEllipseBadgeFillThemeBrush}" />
-        <Setter Property="UniformCornerRadius" Value="20" />
-        <Setter Property="Margin" Value="10" />
+        <Setter Property="UniformCornerRadius" Value="12" />
+        <Setter Property="Margin" Value="10 0 0 0" />
     </Style>
     <Style x:Key="InputMaterialDesignTextBox" TargetType="{x:Type TextBox}" BasedOn="{StaticResource MaterialDesignFloatingHintTextBox }">
         <Setter Property="MinWidth" Value="60"/> 

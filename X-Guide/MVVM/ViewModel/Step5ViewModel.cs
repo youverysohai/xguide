@@ -49,6 +49,14 @@ namespace X_Guide.MVVM.ViewModel
                 OnPropertyChanged();
             }
         }
+        private bool _test = true;
+                                                                        
+        public bool Test
+        {
+            get { return _test; }
+            set { _test  = value; OnPropertyChanged(); }
+        }
+
 
         public string JogMode { get; set; } = "TOOL";
 

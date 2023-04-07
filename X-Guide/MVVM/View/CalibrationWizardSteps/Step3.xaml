@@ -7,6 +7,7 @@
              xmlns:loc="clr-namespace:X_Guide.MVVM"
              d:Foreground="White"
              mc:Ignorable="d" 
+             xmlns:hc="https://handyorg.github.io/handycontrol"
              d:DesignHeight="450" d:DesignWidth="800"
               xmlns:ui="http://schemas.modernwpf.com/2019"
              xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes">
@@ -36,19 +37,18 @@
                     <ui:HyperlinkButton  Padding="5"  Margin="5" Command="{Binding NavigateCommand}" CommandParameter="{x:Static loc:PageName.Setting}">Create New</ui:HyperlinkButton>
                 </StackPanel>
               
-
+                     
                  
 
                     <ComboBox
                         ItemsSource="{Binding Procedures}" 
-                        SelectedItem="{Binding Procedure}"
-                        Style="{DynamicResource ComboBoxStyle}"
+                        SelectedItem="{Binding Procedure}"   Style="{DynamicResource MaterialDesignOutlinedComboBox}"
                               Width="300"
                               materialDesign:HintAssist.Hint="Select Vision Flow"
                                                       HorizontalAlignment="Left"
                               Margin="0">
-             
                     </ComboBox>
+                    
                 </StackPanel>
 
 

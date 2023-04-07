@@ -6,7 +6,7 @@
              xmlns:local="clr-namespace:X_Guide.CustomControls"
              mc:Ignorable="d" 
                xmlns:ui="http://schemas.modernwpf.com/2019"
-             d:DesignHeight="450" d:DesignWidth="400" d:Foreground="WhiteSmoke"
+             d:DesignHeight="300" d:DesignWidth="400" d:Foreground="WhiteSmoke"
              Name="ManipulatorForm">
     <UserControl.Resources>
  
@@ -37,28 +37,7 @@
                                         SelectedValue="{Binding DataContext.NewManipulator.Type, RelativeSource={RelativeSource AncestorType={x:Type ui:ContentDialog}}}" 
                                          Width="320" HorizontalAlignment="Left" 
                                         Margin="5" />
-            <!--Row 3-->
-            <TextBlock Text="IP Address" Style="{DynamicResource LabelTextBlock}"/>
-            <ui:SimpleStackPanel Grid.Row="3" Grid.Column="1" Orientation="Horizontal"  HorizontalAlignment="Stretch" Margin="5">
-                <TextBox Text="{Binding DataContext.NewManipulator.Ip[0], RelativeSource={RelativeSource AncestorType={x:Type ui:ContentDialog}}}" x:Name="Ip0"  Style="{DynamicResource IpTextBoxStyle}"/>
-                <ui:FontIcon  Style="{DynamicResource dot}" />
-                <TextBox Text="{Binding DataContext.NewManipulator.Ip[1], RelativeSource={RelativeSource AncestorType={x:Type ui:ContentDialog}}}" x:Name="Ip1"  Style="{DynamicResource IpTextBoxStyle}"/>
-                <ui:FontIcon  Style="{DynamicResource dot}" />
-                <TextBox Text="{Binding DataContext.NewManipulator.Ip[2], RelativeSource={RelativeSource AncestorType={x:Type ui:ContentDialog}}}" x:Name="Ip2"  Style="{DynamicResource IpTextBoxStyle}"/>
-                <ui:FontIcon  Style="{DynamicResource dot}" />
-                <TextBox Text="{Binding DataContext.NewManipulator.Ip[3], RelativeSource={RelativeSource AncestorType={x:Type ui:ContentDialog}}}" x:Name="Ip3"  Style="{DynamicResource IpTextBoxStyle}"/>
-            </ui:SimpleStackPanel>
-            <!-- Row 4 -->
-            <TextBlock  Text="Port" Style="{DynamicResource LabelTextBlock}" />
-        <ui:NumberBox  Width="150" HorizontalAlignment="Left" SpinButtonPlacementMode="Compact"  Value="{Binding DataContext.NewManipulator.Port, RelativeSource={RelativeSource AncestorType={x:Type ui:ContentDialog}}}"   Margin="5"  VerticalAlignment="Center"/>
-            <TextBlock  Text="Terminator " Style="{DynamicResource LabelTextBlock}"/>
-            <ComboBox Grid.Row="5" Grid.Column="1" Margin="5"  
-                                              ItemsSource="{Binding DataContext.TerminatorList, RelativeSource={RelativeSource AncestorType={x:Type ui:ContentDialog}}}" 
-                                              DisplayMemberPath="Value"
-                                              SelectedValuePath="Description" 
-                                              SelectedValue="{Binding DataContext.NewManipulator.Terminator, RelativeSource={RelativeSource AncestorType={x:Type ui:ContentDialog}}}"   
-                                               Width="150" HorizontalAlignment="Left" 
-                                           ></ComboBox>
+           
             <!--Row 2-->
             <TextBlock Text="Description"  Style="{DynamicResource LabelTextBlock}" />
             <TextBox x:Name="CommentsTextBox" Grid.Row="2" Grid.Column="1" Margin="5"  VerticalAlignment="Center" MaxLines="4" AcceptsReturn="True"/>

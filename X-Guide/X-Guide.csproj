@@ -671,6 +671,7 @@
       <SubType>Designer</SubType>
     </ApplicationDefinition>
     <Compile Include="ADT\QueueProcessor.cs" />
+    <Compile Include="Converter\BooleanToVisibilityConverter.cs" />
     <Compile Include="Converter\ByteArrayToImageConverter.cs" />
     <Compile Include="Calibration.cs">
       <DependentUpon>XGuideModel.tt</DependentUpon>
@@ -1081,6 +1082,9 @@
     <Resource Include="Style\ImageSource\down.png" />
     <Resource Include="Style\ImageSource\up.png" />
     <Resource Include="Style\ImageSource\arrows.png" />
+    <Resource Include="Style\ImageSource\greyarrow.png" />
+    <Resource Include="Style\ImageSource\greyup.png" />
+    <Resource Include="Style\ImageSource\greydown.png" />
     <Content Include="XGuideDB.mdf">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
