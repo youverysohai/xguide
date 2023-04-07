@@ -12,19 +12,28 @@
              xmlns:dshow="clr-namespace:DirectShowLib;assembly=DirectShowLib"
              mc:Ignorable="d" 
              xmlns:xctk="http://schemas.xceed.com/wpf/xaml/toolkit"
-
+             xmlns:c="clr-namespace:X_Guide.Converter"
              xmlns:ui="http://schemas.modernwpf.com/2019"
-
              FontSize="16"
              xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"   
                 
              d:DesignHeight="600" d:DesignWidth="1300">
     <UserControl.Resources>
-
-        <Style TargetType="Button" BasedOn="{x:Null}"></Style>
+                                                              
         <Style TargetType="Label" BasedOn="{x:Null}"></Style>
         <Style TargetType="ComboBox" BasedOn="{x:Null}"></Style>
-
+        <Style TargetType="Image" x:Key="GreyDisabledImg">
+            <Setter Property="Source" Value="pack://application:,,,/Style/ImageSource/arrows.png"/>
+            <Style.Triggers>
+                <DataTrigger Binding="{Binding Test}" Value="false">
+                    <Setter Property="Source" Value="pack://application:,,,/Style/ImageSource/greyarrow.png"/>
+                </DataTrigger>
+                <DataTrigger Binding="{Binding Test}" Value="true">
+                    <Setter Property="Source" Value="pack://application:,,,/Style/ImageSource/arrows.png"/>
+                </DataTrigger>
+            </Style.Triggers>   
+        </Style>
+        <c:BooleanToVisibilityConverter x:Key="BooleanToVisibilityConverter"/>
     </UserControl.Resources>
     <ScrollViewer>
 
@@ -51,10 +60,63 @@
                         <RowDefinition Height="*"/>
                         <RowDefinition Height="*"/>
                     </Grid.RowDefinitions>
-
+                    <hc:RunningBlock Foreground="{DynamicResource ErrorColor}" FontWeight="Bold" Content="Manipulator is not Connected" 
+                                    Visibility="{Binding Test, Converter={StaticResource BooleanToVisibilityConverter}, ConverterParameter=Collapsed}"
+                                     IsRunning="{Binding IsMouseOver,RelativeSource={RelativeSource Self},Converter={StaticResource Boolean2BooleanReConverter}}"/>
                     <!-- Title -->
                     <!-- JogButtons and Rotations-->
-                    <Grid  Grid.Column="2">
+                    <Grid Visibility="Collapsed">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="*"/>
+                        </Grid.ColumnDefinitions>
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="*"/>
+                            <RowDefinition Height="*"/>
+                            <RowDefinition Height="*"/>
+                        </Grid.RowDefinitions>
+
+                        <Button  Height="auto"  Cursor="Hand"  Grid.Row="1" Grid.Column="0" hc:BorderElement.CornerRadius="15" Style="{StaticResource ButtonDefault}">
+                                <ui:SimpleStackPanel Orientation="Vertical">
+                                    <ui:FontIcon Margin="5" Style="{DynamicResource LeftIcon}"/>
+                                    <TextBlock HorizontalAlignment="Center" Margin="5" Text="X-"/>
+                                </ui:SimpleStackPanel>
+                        </Button>
+                        <Button  Height="auto"  Cursor="Hand"  Grid.Row="0" Grid.Column="1" hc:BorderElement.CornerRadius="15" Style="{StaticResource ButtonDefault}">
+                            <ui:SimpleStackPanel Orientation="Vertical">
+                                <ui:FontIcon Margin="5" Style="{DynamicResource UpIcon}"/>
+                                <TextBlock HorizontalAlignment="Center" Margin="5" Text="Y+"/>
+                            </ui:SimpleStackPanel>
+                        </Button>
+                        <Button  Height="auto"  Cursor="Hand"  Grid.Row="1" Grid.Column="2" hc:BorderElement.CornerRadius="15" Style="{StaticResource ButtonDefault}">
+                            <ui:SimpleStackPanel Orientation="Vertical">
+                                <ui:FontIcon Margin="5" Style="{DynamicResource RightIcon}"/>
+                                <TextBlock HorizontalAlignment="Center" Margin="5" Text="X+"/>
+                            </ui:SimpleStackPanel>
+                        </Button>
+                        <Button  Height="auto"  Cursor="Hand"  Grid.Row="2" Grid.Column="1" hc:BorderElement.CornerRadius="15" Style="{StaticResource ButtonDefault}">
+                            <ui:SimpleStackPanel Orientation="Vertical">
+                                <ui:FontIcon Margin="5" Style="{DynamicResource DownIcon}"/>
+                                <TextBlock HorizontalAlignment="Center" Margin="5" Text="Y-"/>
+                            </ui:SimpleStackPanel>
+                        </Button>
+                        <Button  Height="auto"  Cursor="Hand"  Grid.Row="2" Grid.Column="3" hc:BorderElement.CornerRadius="15" Style="{StaticResource ButtonDefault}">
+                            <ui:SimpleStackPanel Orientation="Vertical">
+                                <TextBlock HorizontalAlignment="Center" Margin="5" Text="Z-"/>
+                                <ui:FontIcon Margin="5" Style="{DynamicResource DownIcon}"/>
+                                
+                            </ui:SimpleStackPanel>
+                        </Button>
+                        <Button  Height="auto"  Cursor="Hand"  Grid.Row="0" Grid.Column="3" hc:BorderElement.CornerRadius="15" Style="{StaticResource ButtonDefault}">
+                            <ui:SimpleStackPanel Orientation="Vertical">
+                                <ui:FontIcon Margin="5" Style="{DynamicResource UpIcon}"/>
+                                <TextBlock HorizontalAlignment="Center" Margin="5" Text="Z+"/>
+                            </ui:SimpleStackPanel>
+                        </Button>
+                    </Grid>
+                    <Grid Grid.Column="2" Visibility="Visible" >
                         <Grid.RowDefinitions >
                             <RowDefinition Height="*"/>
                             <RowDefinition Height="*"/>
@@ -67,10 +129,24 @@
                         <!--UP -->
                         <Viewbox   Grid.Column="1" Grid.Row="0"  >
                             <Canvas  Width="50" Height="90">
-                                <Image Width="50" Height="90" Source="pack://application:,,,/Style/ImageSource/up.png" ToolTip="Z+" ToolTipService.InitialShowDelay="100"/>
+                                <Image Width="50" Height="90"   ToolTip="Z+" ToolTipService.InitialShowDelay="100">
+                                    <Image.Style>
+                                        <Style TargetType="Image">
+                                            <Setter Property="Source" Value="pack://application:,,,/Style/ImageSource/up.png"/>
+                                            <Style.Triggers>
+                                                <DataTrigger Binding="{Binding Test}" Value="false">
+                                                    <Setter Property="Source" Value="pack://application:,,,/Style/ImageSource/greyup.png"/>
+                                                </DataTrigger>
+                                                <DataTrigger Binding="{Binding Test}" Value="true">
+                                                    <Setter Property="Source" Value="pack://application:,,,/Style/ImageSource/up.png"/>
+                                                </DataTrigger>
+                                            </Style.Triggers>
+                                        </Style>
+                                    </Image.Style>
+                                </Image>
 
-                                <Button Command="{Binding JogCommand}" CommandParameter="Z+"  Canvas.Left="15" Canvas.Top="22" Style="{StaticResource TransparentStyle}" ToolTip="Z+" ToolTipService.InitialShowDelay="100">
-                                    <TextBlock Style="{DynamicResource ButtonInnerTextBlockCenter}"  >Z+</TextBlock>
+                                <Button Command="{Binding JogCommand}" CommandParameter="Z+"  Canvas.Left="18" Canvas.Top="40" Style="{StaticResource TransparentStyle}" ToolTip="Z+" ToolTipService.InitialShowDelay="100">
+                                    <TextBlock Style="{DynamicResource ButtonInnerTextBlockCenter}"  FontSize="12"  >Z+</TextBlock>
                                 </Button>
                             </Canvas>
 
@@ -79,10 +155,24 @@
                         <!--Down -->
                         <Viewbox  Grid.Column="2" Grid.Row="1"  >
                             <Canvas  Width="50" Height="90" >
-                                <Image  Width="50" Height="90"  Source="pack://application:,,,/Style/ImageSource/down.png" ToolTip="Z-" ToolTipService.InitialShowDelay="100"/>
+                                <Image  Width="50" Height="90"  ToolTip="Z-" ToolTipService.InitialShowDelay="100">
+                                    <Image.Style>
+                                        <Style TargetType="Image">
+                                            <Setter Property="Source" Value="pack://application:,,,/Style/ImageSource/down.png"/>
+                                            <Style.Triggers>
+                                                <DataTrigger Binding="{Binding Test}" Value="false">
+                                                    <Setter Property="Source" Value="pack://application:,,,/Style/ImageSource/greydown.png"/>
+                                                </DataTrigger>
+                                                <DataTrigger Binding="{Binding Test}" Value="true">
+                                                    <Setter Property="Source" Value="pack://application:,,,/Style/ImageSource/down.png"/>
+                                                </DataTrigger>
+                                            </Style.Triggers>
+                                        </Style>
+                                    </Image.Style>
+                                </Image>
 
-                                <Button Command="{Binding JogCommand}" CommandParameter="Z-"  Canvas.Left="15" Canvas.Bottom="25" BorderThickness="0"  Style="{StaticResource TransparentStyle}" ToolTip="Z-" ToolTipService.InitialShowDelay="100">
-                                    <TextBlock Style="{DynamicResource ButtonInnerTextBlockCenter}" >Z-</TextBlock>
+                                <Button Command="{Binding JogCommand}" CommandParameter="Z-"  Canvas.Left="19" Canvas.Bottom="40" BorderThickness="0"  Style="{StaticResource TransparentStyle}" ToolTip="Z-" ToolTipService.InitialShowDelay="100">
+                                    <TextBlock Style="{DynamicResource ButtonInnerTextBlockCenter}" FontSize="12" >Z-</TextBlock>
                                 </Button>
                             </Canvas>
 
@@ -92,7 +182,9 @@
                         <Image Grid.Row="0" Grid.RowSpan="2"/>
                         <Viewbox Grid.Row="0" Grid.RowSpan="2" HorizontalAlignment="Left" VerticalAlignment="Top">
                             <Canvas Width="260" Height="280"  x:Name="image" >
-                                <Image Width="260" Canvas.Top="40" Source="pack://application:,,,/Style/ImageSource/arrows.png" />
+                                <Image Width="260" Canvas.Top="40" Style="{DynamicResource GreyDisabledImg}" >
+                           
+                                </Image>
                                 <Button Command="{Binding JogCommand}" CommandParameter="Y+" Style="{DynamicResource UpArrowButton}" >
 
                                     <TextBlock Style="{DynamicResource ButtonInnerTextBlockCenter}">Y+</TextBlock>
@@ -137,7 +229,7 @@
                               x:Name="FormattedNumberBox"
                               MinWidth="140" Value="{Binding JogDistance}" >
                             </ui:NumberBox>
-                            <ui:ToggleSwitch Header="Mode (Tool/Global)" OnContent="Global" OffContent="Tool"></ui:ToggleSwitch>
+                            <ui:ToggleSwitch Header="Mode (Tool/Global)" OnContent="Global" OffContent="Tool" IsOn="{Binding Test}"></ui:ToggleSwitch>
                         </ui:SimpleStackPanel>
 
                         <ui:SimpleStackPanel Orientation="Horizontal">

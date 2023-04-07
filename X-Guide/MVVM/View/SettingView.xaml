@@ -52,13 +52,9 @@
     </UserControl.Resources>
     <ScrollViewer VerticalScrollBarVisibility="Hidden" >
 
-        <materialDesign:Card Style="{DynamicResource CardLayout}">
-
-
-
             <TabControl  
                         SnapsToDevicePixels="True"
-                        Background="{ui:ThemeResource PersonPictureEllipseBadgeFillThemeBrush}"
+                        Background="{ui:ThemeResource ResourceKey=PersonPictureEllipseBadgeFillThemeBrush}"
                         Style="{DynamicResource MaterialDesignNavigatilRailTabControl}"  
                         TabStripPlacement="Top" Margin="16" SelectedIndex="0">
                 <!-- Manipulator Tab-->
@@ -154,7 +150,7 @@
                                 <TextBox  Width="150" HorizontalAlignment="Left"  Text="{Binding  Manipulator.Name }" x:Name="NameTextBox" Grid.Row="0" Grid.Column="1" VerticalAlignment="Center" Margin="5" />
                                 <!--Row 1-->
                                 <TextBlock Text="Type" Style="{DynamicResource LabelTextBlock}" />
-                                <ComboBox    
+                            <ComboBox    
                                         Grid.Row="1" Grid.Column="1"  
                                         ItemsSource="{Binding  ManipulatorTypeList }"
                                         DisplayMemberPath="Description"
@@ -162,44 +158,7 @@
                                         SelectedValue="{Binding  Manipulator.Type }" 
                                          Width="320" HorizontalAlignment="Left" 
                                         Margin="5" />
-                               <!--Row 3-->
-                                <TextBlock Text="IP Address" Style="{DynamicResource LabelTextBlock}"/>
-                                <ui:SimpleStackPanel Grid.Row="3" Grid.Column="1"  Orientation="Horizontal"  HorizontalAlignment="Stretch" Margin="5">
-                                        <TextBox Text="{Binding Manipulator.Ip[0] }"  
-                                                 HorizontalAlignment="Center"  GotFocus="txtIP_GotFocus" TextChanged="TxtIPLength_TextChanged" PreviewKeyDown="txtIP_PreviewKeyDown" PreviewTextInput="TxtIPAddress_PreviewTextInput">
-
-                                        </TextBox>
-                                    <ui:FontIcon Style="{DynamicResource dot}"/>
-                                    <TextBox Text="{Binding Manipulator.Ip[1] }"  
-                                                 HorizontalAlignment="Center" GotFocus="txtIP_GotFocus" TextChanged="TxtIPLength_TextChanged" PreviewTextInput="TxtIPAddress_PreviewTextInput" PreviewKeyDown="txtIP_PreviewKeyDown">
-
-                                        </TextBox>
-                                    <ui:FontIcon Style="{DynamicResource dot}"/>
-                                    <TextBox Text="{Binding Manipulator.Ip[2] }"    HorizontalAlignment="Center" GotFocus="txtIP_GotFocus" TextChanged="TxtIPLength_TextChanged" PreviewTextInput="TxtIPAddress_PreviewTextInput" PreviewKeyDown="txtIP_PreviewKeyDown"   >
-
-                                        </TextBox>
-                                    <ui:FontIcon Style="{DynamicResource dot}"/>
-
-                                    <TextBox Text="{Binding Manipulator.Ip[3] }"    HorizontalAlignment="Center" GotFocus="txtIP_GotFocus" TextChanged="TxtIPLength_TextChanged" PreviewTextInput="TxtIPAddress_PreviewTextInput" PreviewKeyDown="txtIP_PreviewKeyDown"    >
-
-                                        </TextBox>
-                                    </ui:SimpleStackPanel>
-                                 
- 
-                                <!-- Row 4 -->
-                                <TextBlock  Text="Port:" Style="{DynamicResource LabelTextBlock}" />
-                                <ui:NumberBox Width="150" HorizontalAlignment="Left"  SpinButtonPlacementMode="Compact"   Value="{Binding  Manipulator.Port }" Grid.Row="4" Grid.Column="1" Margin="5"  VerticalAlignment="Center"/>
-                               
-                                <!-- Row 5 -->
-                                <TextBlock  Text="Terminator " Style="{DynamicResource LabelTextBlock}"/>
-                                <ComboBox Grid.Row="5" Grid.Column="1" Margin="5"  
-                                              ItemsSource="{Binding TerminatorList }" 
-                                              DisplayMemberPath="Value"
-                                              SelectedValuePath="Description" 
-                                              SelectedValue="{Binding Manipulator.Terminator}"   
-                                              MinWidth="150"
-                                           ></ComboBox>
-                                   <!--Row 2-->
+                            <!--Row 2-->
                                 <TextBlock Text="Description"  Style="{DynamicResource LabelTextBlock}" />
                                 <TextBox Width="320" HorizontalAlignment="Left" Text="{Binding Manipulator.Description}" Margin="5"  VerticalAlignment="Center"  MaxLines="4" AcceptsReturn="True"/>
                                 
@@ -289,7 +248,13 @@
                                 <!--Row 0-->
                                 <TextBlock  Text="Name" Style="{DynamicResource LabelTextBlock}"  />
                                 <TextBox  Width="150" HorizontalAlignment="Left"  Text="{Binding Vision.Name }" VerticalAlignment="Center" Margin="5" />
-
+                                                                <!--Row 1-->
+                                <TextBlock Text="Vision Software" Style="{DynamicResource LabelTextBlock}" />
+                                <ComboBox    
+                                        MinWidth="150"
+                                        Margin="5" >
+                                    <ComboBoxItem IsSelected="True">Vision Master</ComboBoxItem>
+                                </ComboBox>
                                 <!--Row 2-->
                                 <TextBlock Text="Vision Solution Path (.sol)"  Style="{DynamicResource LabelTextBlock}" />
                                 <ui:SimpleStackPanel Orientation="Horizontal">
@@ -298,8 +263,8 @@
                                         <ui:FontIcon Style="{DynamicResource BrowseIcon}"/>
                                     </Button>
                                 </ui:SimpleStackPanel>
-
-                                <!--Row 3-->
+                            <TextBlock Text="Connection" Style="{DynamicResource SubtitleTextBlockStyle}" Margin="5 12 0 0"/>
+                            <!--Row 3-->
                                 <TextBlock Text="IP Address" Style="{DynamicResource LabelTextBlock}"/>
                                 <ui:SimpleStackPanel Orientation="Horizontal"  HorizontalAlignment="Stretch" Margin="5">
                                     <TextBox Text="{Binding Vision.Ip[0] }" x:Name="Ip0"  Style="{DynamicResource IpTextBoxStyle}"/>
@@ -321,13 +286,7 @@
                                               SelectedValue="{Binding Vision.Terminator }"   
                                               MinWidth="150"
                                            ></ComboBox>
-                                <!--Row 1-->
-                                <TextBlock Text="Vision Software" Style="{DynamicResource LabelTextBlock}" />
-                                <ComboBox    
-                                        MinWidth="150"
-                                        Margin="5" >
-                                    <ComboBoxItem IsSelected="True">Vision Master</ComboBoxItem>
-                                </ComboBox>
+
                             </ui:SimpleStackPanel>
 
                         </ui:SimpleStackPanel>
@@ -363,8 +322,17 @@
                         <StackPanel Orientation="Horizontal" >
                             <ui:ToggleSwitch Margin="5 12 0 0" Header="Debug Log (Developer use)" FontSize="12"/>
                         </StackPanel>
-                        <!--Row 3-->
-                        <TextBlock Margin="5 12 0 0" Text="Server IP Address" Style="{DynamicResource LabelTextBlock}"/>
+                    <!--Connection-->
+                    <TextBlock Text="Test Operation" Style="{DynamicResource LabelTextBlock}"/>
+                    <ui:SimpleStackPanel Orientation="Horizontal">
+                        <hc:ComboBox Width="150" Margin="5" ItemsSource="{Binding CalibSol}" DisplayMemberPath="Name" SelectedItem="{Binding Calib}">
+
+                        </hc:ComboBox>
+                        <Button Content="Start Operation" Command="{Binding OperationCommand}"/>
+                    </ui:SimpleStackPanel>
+                    <!--Row 3-->
+                    <TextBlock Text="Connection" Style="{DynamicResource SubtitleTextBlockStyle}" Margin="5 12 0 0"/>
+                    <TextBlock Margin="5 12 0 0" Text="Server IP Address" Style="{DynamicResource LabelTextBlock}"/>
                         <ui:SimpleStackPanel Orientation="Horizontal"  HorizontalAlignment="Stretch" Margin="5">
                             <TextBox Text="{Binding Server.Ip[0] }"    Style="{DynamicResource IpTextBoxStyle}"/>
                             <ui:FontIcon  Style="{DynamicResource dot}" />
@@ -384,14 +352,7 @@
                                               SelectedValue="{Binding Server.Terminator }"   
                                               MinWidth="150"
                                            ></ComboBox>
-                        <!--Connection-->
-                        <TextBlock Text="Test Operation" Style="{DynamicResource LabelTextBlock}"/>
-                        <ui:SimpleStackPanel Orientation="Horizontal">
-                            <hc:ComboBox Width="150" Margin="5" ItemsSource="{Binding CalibSol}" DisplayMemberPath="Name" SelectedItem="{Binding Calib}">
 
-                            </hc:ComboBox>
-                        <Button Content="Start Operation" Command="{Binding OperationCommand}"/>
-                        </ui:SimpleStackPanel>
 
 
                     </ui:SimpleStackPanel>
@@ -401,14 +362,6 @@
             </TabControl>
 
 
-
-
-
-
-
-
-
-        </materialDesign:Card>
 
     </ScrollViewer>
 

@@ -86,7 +86,7 @@ namespace X_Guide
                 ThemeManager.SetRequestedTheme(this, ElementTheme.Light);
             }
         }
-
+ 
 
 
 

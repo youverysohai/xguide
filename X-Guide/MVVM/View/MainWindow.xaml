@@ -14,7 +14,8 @@
         Title="X-Guide"         
         Height="720" Width="1280"
         WindowState="Maximized"
-        ui:TitleBar.Background="{ui:ThemeResource ResourceKey=ApplicationPageBackgroundThemeBrush}"
+        Background="{ui:ThemeResource ResourceKey=NavigationViewExpandedPaneBackground}"
+        ui:TitleBar.Background="{ui:ThemeResource ResourceKey=NavigationViewExpandedPaneBackground}"
        x:Name="m_AppWindow" 
         xmlns:ui="http://schemas.modernwpf.com/2019"
         ui:WindowHelper.UseModernWindowStyle="True"
@@ -196,7 +197,7 @@
                     <ui:FontIcon   Glyph="&#xE9F5;"/>
                 </ui:NavigationViewItem.Icon>
                 <ui:NavigationViewItem.MenuItems>
-    
+
                     <ui:NavigationViewItem x:Name="CalibrationWizard"
                          c:NavigationViewItemExtensions.Command="{Binding NavigateCommand}"           
                          c:NavigationViewItemExtensions.CommandParameter="{x:Static local:PageName.CalibrationWizardStart}" 
@@ -246,16 +247,9 @@
                     <ui:FontIcon   Glyph="&#xE713;"/>
                 </ui:NavigationViewItem.Icon>
             </ui:NavigationViewItem>
-            <ui:SimpleStackPanel Orientation="Horizontal" Margin="-14,0,0,0">
-                <ui:PersonPicture Width="36" HorizontalAlignment="Left" DisplayName="User1">
-                </ui:PersonPicture>
-
-                <TextBlock x:Name="TextBoxUsername"  Text="User1" Margin="5 0 0 0" VerticalAlignment="Center"  FontSize="16"/>
-
-            </ui:SimpleStackPanel>
         </ui:NavigationView.FooterMenuItems>
         <ui:NavigationView.PaneFooter>
-
+            <ui:SimpleStackPanel Orientation="Vertical">
                 <ui:ToggleSwitch Toggled="ToggleAppThemeHandler" OffContent="Dark" OnContent="Light" x:Name="toggleSwitch">
                     <ui:ToggleSwitch.Header>
                         <ui:SimpleStackPanel Orientation="Horizontal">
@@ -278,64 +272,72 @@
                             <TextBlock VerticalAlignment="Center" Margin="10 0"> Theme</TextBlock>
                         </ui:SimpleStackPanel>
                     </ui:ToggleSwitch.Header>
-                </ui:ToggleSwitch>    
+                </ui:ToggleSwitch>
+                 <!-- Profile Picture and Username-->
+                <ui:SimpleStackPanel Orientation="Horizontal"  HorizontalAlignment="Left" Margin="4 10 0 10">
+                    <ui:PersonPicture Width="30" DisplayName="Xuser1">
+                    </ui:PersonPicture>
+                    <TextBlock x:Name="TextBoxUsername"  Text="User1" Margin="5 0 0 0" VerticalAlignment="Center"  FontSize="16"/>
 
+                </ui:SimpleStackPanel>
+
+            </ui:SimpleStackPanel>
         </ui:NavigationView.PaneFooter>
-  
+
 
 
         <!-- CONTENT -->
         <ui:NavigationView.Content>
+            <hc:Card Margin="0 8 0 0" hc:BorderElement.CornerRadius="8 0 0 0" Background="{ui:ThemeResource ResourceKey=PersonPictureEllipseBadgeFillThemeBrush}">
+                <!--<ui:Frame x:Name="contentFrame"/>-->
 
-            <!--<ui:Frame x:Name="contentFrame"/>-->
+                <Grid x:Name="UserControlContent" >
+                    <Grid.Resources>
+                        <DataTemplate DataType="{x:Type vms:SettingViewModel}">
+                            <views:SettingView/>
+                        </DataTemplate>
+                        <DataTemplate DataType="{x:Type vms:ProductionViewModel}">
+                            <views:ProductionView/>
+                        </DataTemplate>
+                        <DataTemplate DataType="{x:Type vms:SecurityViewModel}">
+                            <views:SecurityView/>
+                        </DataTemplate>
+                        <DataTemplate DataType="{x:Type vms:CalibrationMainViewModel}">
+                            <views:CalibrationMainView/>
+                        </DataTemplate>
+                        <DataTemplate DataType="{x:Type vms:CalibrationWizardStartViewModel}">
+                            <stepsViews:CalibrationWizardStart/>
+                        </DataTemplate>
+                        <DataTemplate DataType="{x:Type vms:UndefinedViewModel}">
+                            <views:UndefinedView/>
+                        </DataTemplate>
+                        <DataTemplate DataType="{x:Type vms:UserLoginViewModel}">
+                            <views:UserLoginView/>
+                        </DataTemplate>
+                        <DataTemplate DataType="{x:Type vms:JogRobotViewModel}">
+                            <views:JogRobotView/>
+                        </DataTemplate>
+                    </Grid.Resources>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="59*"/>
+                        <RowDefinition Height="9*"/>
+                        <RowDefinition Height="auto"/>
+                    </Grid.RowDefinitions>
+                    <ContentControl Grid.Row="0" Content="{Binding CurrentViewModel}" Grid.RowSpan="2"/>
+                    <hc:SimpleStackPanel Grid.Row="2" Orientation="Horizontal" VerticalAlignment="Center" HorizontalAlignment="Right">
 
+                        <materialDesign:PackIcon Style="{DynamicResource ConnectionStatusIcon}"/>
+                        <TextBlock VerticalAlignment="Center"  Style="{DynamicResource ConnectionStatusTextBlock}">Connection Status :</TextBlock>
+                        <materialDesign:PackIcon  Kind="RobotIndustrialOutline" Style="{DynamicResource ConnectionStatusIconForeground}" />
+                        <TextBlock VerticalAlignment="Center" Style="{DynamicResource ConnectionStatusTextBlockForeground}" >Manipulator</TextBlock>
+                        <materialDesign:PackIcon Style="{DynamicResource ConnectionStatusIconForeground}" Kind="EyeOutline" />
+                        <TextBlock  Style="{DynamicResource ConnectionStatusTextBlockForeground}" VerticalAlignment="Center">Vision</TextBlock>
+                        <TextBlock Text="12/3/2023" x:Name="DateTimeTextBlock"/>
 
-            <Grid x:Name="UserControlContent" >
-                <Grid.Resources>
-                    <DataTemplate DataType="{x:Type vms:SettingViewModel}">
-                        <views:SettingView/>
-                    </DataTemplate>
-                    <DataTemplate DataType="{x:Type vms:ProductionViewModel}">
-                        <views:ProductionView/>
-                    </DataTemplate>
-                    <DataTemplate DataType="{x:Type vms:SecurityViewModel}">
-                        <views:SecurityView/>
-                    </DataTemplate>
-                    <DataTemplate DataType="{x:Type vms:CalibrationMainViewModel}">
-                        <views:CalibrationMainView/>
-                    </DataTemplate>
-                    <DataTemplate DataType="{x:Type vms:CalibrationWizardStartViewModel}">
-                        <stepsViews:CalibrationWizardStart/>
-                    </DataTemplate>
-                    <DataTemplate DataType="{x:Type vms:UndefinedViewModel}">
-                        <views:UndefinedView/>
-                    </DataTemplate>
-                    <DataTemplate DataType="{x:Type vms:UserLoginViewModel}">
-                        <views:UserLoginView/>
-                    </DataTemplate>
-                    <DataTemplate DataType="{x:Type vms:JogRobotViewModel}">
-                        <views:JogRobotView/>
-                    </DataTemplate>
-                </Grid.Resources>
-                <Grid.RowDefinitions>
-                    <RowDefinition Height="59*"/>
-                    <RowDefinition Height="9*"/>
-                    <RowDefinition Height="auto"/>
-                </Grid.RowDefinitions>
-                <ContentControl Grid.Row="0" Content="{Binding CurrentViewModel}" Grid.RowSpan="2"/>
-                <hc:SimpleStackPanel Grid.Row="2" Orientation="Horizontal" VerticalAlignment="Center" HorizontalAlignment="Right">
+                    </hc:SimpleStackPanel>
+                </Grid>
 
-                    <materialDesign:PackIcon Style="{DynamicResource ConnectionStatusIcon}"/>
-                    <TextBlock VerticalAlignment="Center"  Style="{DynamicResource ConnectionStatusTextBlock}">Connection Status :</TextBlock>
-                    <materialDesign:PackIcon  Kind="RobotIndustrialOutline" Style="{DynamicResource ConnectionStatusIconForeground}" />
-                    <TextBlock VerticalAlignment="Center" Style="{DynamicResource ConnectionStatusTextBlockForeground}" >Manipulator</TextBlock>
-                    <materialDesign:PackIcon Style="{DynamicResource ConnectionStatusIconForeground}" Kind="EyeOutline" />
-                    <TextBlock  Style="{DynamicResource ConnectionStatusTextBlockForeground}" VerticalAlignment="Center">Vision</TextBlock>
-                    <TextBlock Text="12/3/2023" x:Name="DateTimeTextBlock"/>
-                  
-                </hc:SimpleStackPanel>
-            </Grid>
-
+            </hc:Card>
 
         </ui:NavigationView.Content>
     </ui:NavigationView>

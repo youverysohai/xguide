@@ -49,4 +49,24 @@
         <Setter Property="FontFamily" Value="Segoe MDL2 Assets"></Setter>
         <Setter Property="Glyph" Value="&#xED25;"></Setter>
     </Style>
+
+    <Style x:Key="UpIcon" TargetType="ui:FontIcon">
+        <Setter Property="FontFamily" Value="Segoe MDL2 Assets"></Setter>
+        <Setter Property="Glyph" Value="&#xE70E;"></Setter>
+    </Style>
+
+    <Style x:Key="DownIcon" TargetType="ui:FontIcon">
+        <Setter Property="FontFamily" Value="Segoe MDL2 Assets"></Setter>
+        <Setter Property="Glyph" Value="&#xE70D;"></Setter>
+    </Style>
+
+    <Style x:Key="LeftIcon" TargetType="ui:FontIcon">
+        <Setter Property="FontFamily" Value="Segoe MDL2 Assets"></Setter>
+        <Setter Property="Glyph" Value="&#xF743;"></Setter>
+    </Style>
+
+    <Style x:Key="RightIcon" TargetType="ui:FontIcon">
+        <Setter Property="FontFamily" Value="Segoe MDL2 Assets"></Setter>
+        <Setter Property="Glyph" Value="&#xF745;"></Setter>
+    </Style>
 </ResourceDictionary>

@@ -13,7 +13,7 @@
              xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
              d:DesignHeight="650" d:DesignWidth="1000">
 
-    <materialDesign:Card Style="{DynamicResource CardLayout}" >
+
 
         <Grid Margin="10" >
             <Grid.Resources>
@@ -55,7 +55,6 @@
             </Button>
             <TextBox materialDesign:TextFieldAssist.HasClearButton="True"
                      materialDesign:TextFieldAssist.HasTrailingIcon="True" 
-                     materialDesign:TextFieldAssist.TrailingIcon="Edit"
                      Cursor="Hand"
                      Text="{Binding Calibration.Name}"
                      Grid.ColumnSpan="2" Width="300" 
@@ -175,5 +174,4 @@
 
 
         </Grid>
-    </materialDesign:Card>
 </UserControl>
