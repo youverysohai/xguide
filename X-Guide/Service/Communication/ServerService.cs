@@ -31,13 +31,14 @@ namespace X_Guide.Communication.Service
         private readonly IClientService _clientService;
         private BackgroundService searchClient;
         private TcpListener _server;
-        private bool valid = false;
+        private bool _valid = false;
+        
         private bool started = false;
         private TcpClientInfo client;
         public event EventHandler<TcpClientEventArgs> ClientEvent;
         public event EventHandler<TcpListenerEventArgs> ListenerEvent;
-
-        public event EventHandler<TcpClientEventArgs> MessageEvent;
+        public event EventHandler<bool> ClientConnectionChange;
+       
 
         private readonly ConcurrentDictionary<int, TcpClientInfo> _connectedClient = new ConcurrentDictionary<int, TcpClientInfo>();
 
@@ -55,19 +56,26 @@ namespace X_Guide.Communication.Service
 
         }
 
+        private void SetValid(bool valid)
+        {
+            if (!_valid.Equals(valid))
+            {
+                _valid = valid;
+                ClientConnectionChange?.Invoke(this, _valid);
+            }
+        }
+
         private void SearchForClient()
         {
 
             if (_connectedClient.Count == 0)
             {
-                valid = false;
-                Debug.WriteLine(_connectedClient.Count());
+                SetValid(true);
             }
             else
             {
-                valid = true;
-                Debug.WriteLine("Connected");
-                client = _connectedClient.FirstOrDefault().Value;
+                SetValid(false);
+                
             }
         }
 
@@ -92,9 +100,7 @@ namespace X_Guide.Communication.Service
             {
                 _server.Start();
                 started = true;
-                ListenerEvent?.Invoke(this, new TcpListenerEventArgs(_server));
-
-
+          
                 CancellationToken sct = cts.Token;
 
 
@@ -148,14 +154,14 @@ namespace X_Guide.Communication.Service
 
         public async Task<bool> SendJogCommand(JogCommand jogCommand)
         {
-            if (valid)
+            if (_valid)
             {
                 CancellationTokenSource cts = new CancellationTokenSource();
                 await ServerWriteDataAsync(jogCommand.ToString());
-
+                
                 var timer = new System.Timers.Timer(5000);
                 timer.AutoReset = false;
-                timer.Elapsed += (s, o) => { cts.Cancel(); MessageBox.Show("Client to suc"); };
+                timer.Elapsed += (s, o) => cts.Cancel();
                 timer.Start();
                 bool status = await Task.Run(() => RegisterRequestEventHandler((e) => ServerJogCommand(e, client.TcpClient.GetStream()), cts.Token));
                 timer.Dispose();

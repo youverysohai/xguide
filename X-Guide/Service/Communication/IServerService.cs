@@ -13,10 +13,7 @@ namespace X_Guide.Communication.Service
 {
     public interface IServerService
     {
-        event EventHandler<TcpClientEventArgs> ClientEvent;
-        event EventHandler<TcpListenerEventArgs> ListenerEvent;
-        event EventHandler<TcpClientEventArgs> MessageEvent;
-
+        event EventHandler<bool> ClientConnectionChange;
         TcpClientInfo GetConnectedClientInfo(TcpClient tcpClient);
         Task ServerWriteDataAsync(string data);
 

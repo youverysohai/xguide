@@ -18,13 +18,13 @@ namespace X_Guide.Service.Communication
 
         private string _terminator;
         protected string Terminator { get => _terminator; set => _terminator = value ?? "\n"; }
-        public T RegisterRequestEventHandler<T>(Func<NetworkStreamEventArgs, T> action, CancellationToken ct)
+        public T RegisterRequestEventHandler<T>(Func<NetworkStreamEventArgs, T> action, CancellationToken ct = new CancellationToken())
         {
 
 
             using (ManualResetEventSlim resetEvent = new ManualResetEventSlim())
             {
-                ct.Register(() => { System.Windows.MessageBox.Show("I am canceled!"); resetEvent.Set();  });
+                ct.Register(() => { Debug.WriteLine("OperationCanceled"); resetEvent.Set();  });
                 T data = default(T);
 
                 EventHandler<NetworkStreamEventArgs> eventHandler = (s, e) =>
@@ -85,7 +85,6 @@ namespace X_Guide.Service.Communication
 
         private void ProcessServerData(string data, char seperator, NetworkStream stream)
         {
-
             try
             {
                 string[] segment = data.Split(seperator);

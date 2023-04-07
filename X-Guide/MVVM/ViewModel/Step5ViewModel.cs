@@ -29,7 +29,7 @@ using X_Guide.VisionMaster;
 
 namespace X_Guide.MVVM.ViewModel
 {
-    internal class Step5ViewModel : ViewModelBase
+    internal class Step5ViewModel : ViewModelBase, IDisposable
     {
 
         private int _jogDistance;
@@ -89,10 +89,15 @@ namespace X_Guide.MVVM.ViewModel
 
             ReconnectCommand = new RelayCommand(null);
             JogCommand = new RelayCommand(Jog, (o) => _canJog);
+            _serverService.ClientConnectionChange += OnConnectionChange;
+
+        }
+
+        private void OnConnectionChange(object sender, bool status)
+        {
+            _canJog = status;
+            JogCommand.OnCanExecuteChanged();
             
-
-
-
         }
 
       
@@ -119,7 +124,9 @@ namespace X_Guide.MVVM.ViewModel
                 cancelJog.Cancel();
                 Application.Current.Dispatcher.Invoke(() => OnJogCanExecuteChanged(false));
             }
+                
         }
+
 
         private async void InitiateJog()
         {
@@ -168,8 +175,9 @@ namespace X_Guide.MVVM.ViewModel
             JogCommand.OnCanExecuteChanged();
         }
 
-
-
-   
+        public void Dispose()
+        {
+            _serverService.ClientConnectionChange -= OnConnectionChange;
+        }
     }
 }
