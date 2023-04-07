@@ -12,7 +12,6 @@ namespace X_Guide.Service
     public class BackgroundService
     {
         private Thread _workerThread;
-        private volatile bool _isRunning;
         private CancellationTokenSource _cts;
         private readonly Action _action;
         private bool _repeat;
@@ -30,7 +29,6 @@ namespace X_Guide.Service
         {
             if (_workerThread == null)
             {
-                _isRunning = true;
                 _cts = new CancellationTokenSource();
                 _workerThread = new Thread(() => DoWork(_cts.Token));
                 _workerThread.Start();
@@ -46,19 +44,19 @@ namespace X_Guide.Service
 
         }
 
-        private void DoWork(CancellationToken ct)
-        {
+        private async void DoWork(CancellationToken ct)
+            {
             if (_repeat)
             {
                 while (!ct.IsCancellationRequested)
                 {
-                    _action();
+                    await Task.Run(() => _action());
                     Thread.Sleep(_delay);
                 }
             }
             else
             {
-                _action();
+                await Task.Run(() => _action());
             }
 
         }

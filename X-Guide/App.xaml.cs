@@ -97,11 +97,12 @@ namespace X_Guide
             builder.RegisterType<ManipulatorDb>().As<IManipulatorDb>();
             builder.RegisterType<UserDb>().As<IUserDb>();
             builder.RegisterType<VisionService>().As<IVisionService>();
+            builder.RegisterType<JogService>().As<IJogService>();
             builder.RegisterType<NavigationStore>();
             builder.RegisterType<NavigationService>().As<INavigationService>();
             builder.RegisterType<VisionDb>().As<IVisionDb>();
             builder.RegisterType<CalibrationDb>().As<ICalibrationDb>();
-            builder.RegisterType<ServerService>().As<IServerService>().WithParameter(new TypedParameter(typeof(IPAddress), IPAddress.Parse("192.168.10.92"))).WithParameter(new TypedParameter(typeof(int), 8000)).WithParameter(new TypedParameter(typeof(string), "\r\n")).SingleInstance();
+            builder.RegisterType<ServerService>().As<IServerService>().WithParameter(new TypedParameter(typeof(IPAddress), IPAddress.Parse("192.168.10.90"))).WithParameter(new TypedParameter(typeof(int), 8000)).WithParameter(new TypedParameter(typeof(string), "\r\n")).SingleInstance();
             builder.Register(c => new ClientService(IPAddress.Parse("192.168.10.90"), 8000, "")).As<IClientService>().SingleInstance();
 
 

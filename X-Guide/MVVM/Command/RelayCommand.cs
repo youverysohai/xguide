@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Input;
+using System.Windows.Threading;
 
 namespace X_Guide.MVVM.Command
 {
@@ -37,6 +38,9 @@ namespace X_Guide.MVVM.Command
         public void OnCanExecuteChanged()
         {
             CanExecuteChanged?.Invoke(this, EventArgs.Empty);
+
+
+           
         }
     }
 }

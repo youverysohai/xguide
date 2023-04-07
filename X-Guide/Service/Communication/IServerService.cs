@@ -16,7 +16,7 @@ namespace X_Guide.Communication.Service
         event EventHandler<bool> ClientConnectionChange;
         TcpClientInfo GetConnectedClientInfo(TcpClient tcpClient);
         Task ServerWriteDataAsync(string data);
-
+        T RegisterRequestEventHandler<T>(Func<NetworkStreamEventArgs, T> action, CancellationToken ct = new CancellationToken());
         bool getServerStatus();
         Task StartServer();
         void StopServer();

@@ -35,9 +35,9 @@ namespace X_Guide.MVVM.ViewModel
         private int _jogDistance;
         private CancellationTokenSource cancelJog;
         private readonly CalibrationViewModel _calibration;
+        private readonly IJogService _jogService;
         private readonly IServerService _serverService;
         private readonly IVisionService _visionService;
-
         private Queue<JogCommand> commandQueue = new Queue<JogCommand>();
 
         private IVmModule _visProcedure;
@@ -49,18 +49,22 @@ namespace X_Guide.MVVM.ViewModel
                 OnPropertyChanged();
             }
         }
-        private bool _test = true;
-                                                                        
-        public bool Test
-        {
-            get { return _test; }
-            set { _test  = value; OnPropertyChanged(); }
-        }
+     
 
 
         public string JogMode { get; set; } = "TOOL";
 
-        private bool _canJog = true;
+        private bool _canJog = false;
+        public bool CanJog
+        {
+            get => _canJog;
+            private set {
+                _canJog = value;
+                OnPropertyChanged();
+            }
+           
+
+        }
 
         private bool _isLoading = true;
 
@@ -86,14 +90,13 @@ namespace X_Guide.MVVM.ViewModel
         }
 
 
-        public Step5ViewModel(CalibrationViewModel calibration, IServerService serverService, IVisionService visionService)
+        public Step5ViewModel(CalibrationViewModel calibration, IServerService serverService, IVisionService visionService, IJogService jogService)
         {
             _serverService = serverService;
             _visionService = visionService;
             _calibration = calibration;
-
+            _jogService = jogService;
             //RunProcedure();
-            InitiateJog();
 
             ReconnectCommand = new RelayCommand(null);
             JogCommand = new RelayCommand(Jog, (o) => _canJog);
@@ -101,10 +104,13 @@ namespace X_Guide.MVVM.ViewModel
 
         }
 
-        private void OnConnectionChange(object sender, bool status)
+        private void OnConnectionChange(object sender, bool canJog)
         {
-            _canJog = status;
-            JogCommand.OnCanExecuteChanged();
+            CanJog = canJog;
+            Application.Current.Dispatcher.Invoke(() =>
+            {
+                JogCommand.OnCanExecuteChanged();
+            });
             
         }
 
@@ -123,23 +129,9 @@ namespace X_Guide.MVVM.ViewModel
             }
             VisProcedure = vmProcedure;
         }
+    
+
      
-
-        private void HandleClientDisconnection(object sender, EventArgs e)
-        {
-            if (cancelJog != null)
-            {
-                cancelJog.Cancel();
-                Application.Current.Dispatcher.Invoke(() => OnJogCanExecuteChanged(false));
-            }
-                
-        }
-
-
-        private async void InitiateJog()
-        {
-            await Task.Run(()=>StartJog());
-        }
         private void Jog(object parameter)
         {
             if (JogDistance == 0) JogDistance = 10;
@@ -158,30 +150,10 @@ namespace X_Guide.MVVM.ViewModel
                 default: break;
             }
             JogCommand command = new JogCommand().SetX(x).SetY(y).SetZ(z).SetRZ(rz).SetSpeed(_calibration.Speed).SetAcceleration(_calibration.Acceleration);
-            commandQueue.Enqueue(command);
+            _jogService.EnqueueJog(command);
 
         }
-        private async Task StartJog()
-        {
-            cancelJog = new CancellationTokenSource();
-            CancellationToken ct = cancelJog.Token;
-            while (!ct.IsCancellationRequested)
-            {
-                if (commandQueue.Count <= 0)
-                {
-                    Thread.Sleep(1000);
-                    continue;
-                }
-
-                await _serverService.SendJogCommand(commandQueue.Dequeue());
-            }
-        }
-
-        private void OnJogCanExecuteChanged(bool canJog)
-        {
-            _canJog = canJog;
-            JogCommand.OnCanExecuteChanged();
-        }
+   
 
         public void Dispose()
         {

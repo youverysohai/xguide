@@ -9,7 +9,6 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:X_Guide.MVVM.View.CalibrationWizardSteps"
-             xmlns:dshow="clr-namespace:DirectShowLib;assembly=DirectShowLib"
              mc:Ignorable="d" 
              xmlns:xctk="http://schemas.xceed.com/wpf/xaml/toolkit"
              xmlns:c="clr-namespace:X_Guide.Converter"
@@ -25,10 +24,10 @@
         <Style TargetType="Image" x:Key="GreyDisabledImg">
             <Setter Property="Source" Value="pack://application:,,,/Style/ImageSource/arrows.png"/>
             <Style.Triggers>
-                <DataTrigger Binding="{Binding Test}" Value="false">
+                <DataTrigger  Binding="{Binding CanJog}" Value="false">
                     <Setter Property="Source" Value="pack://application:,,,/Style/ImageSource/greyarrow.png"/>
                 </DataTrigger>
-                <DataTrigger Binding="{Binding Test}" Value="true">
+                <DataTrigger Binding="{Binding CanJog}" Value="true">
                     <Setter Property="Source" Value="pack://application:,,,/Style/ImageSource/arrows.png"/>
                 </DataTrigger>
             </Style.Triggers>   
@@ -61,7 +60,7 @@
                         <RowDefinition Height="*"/>
                     </Grid.RowDefinitions>
                     <hc:RunningBlock Foreground="{DynamicResource ErrorColor}" FontWeight="Bold" Content="Manipulator is not Connected" 
-                                    Visibility="{Binding Test, Converter={StaticResource BooleanToVisibilityConverter}, ConverterParameter=Collapsed}"
+                                    Visibility="{Binding CanJog, Converter={StaticResource BooleanToVisibilityConverter}, ConverterParameter=Collapsed}"
                                      IsRunning="{Binding IsMouseOver,RelativeSource={RelativeSource Self},Converter={StaticResource Boolean2BooleanReConverter}}"/>
                     <!-- Title -->
                     <!-- JogButtons and Rotations-->
@@ -134,10 +133,10 @@
                                         <Style TargetType="Image">
                                             <Setter Property="Source" Value="pack://application:,,,/Style/ImageSource/up.png"/>
                                             <Style.Triggers>
-                                                <DataTrigger Binding="{Binding Test}" Value="false">
+                                                <DataTrigger Binding="{Binding CanJog}" Value="false">
                                                     <Setter Property="Source" Value="pack://application:,,,/Style/ImageSource/greyup.png"/>
                                                 </DataTrigger>
-                                                <DataTrigger Binding="{Binding Test}" Value="true">
+                                                <DataTrigger Binding="{Binding CanJog}" Value="true">
                                                     <Setter Property="Source" Value="pack://application:,,,/Style/ImageSource/up.png"/>
                                                 </DataTrigger>
                                             </Style.Triggers>
@@ -160,10 +159,10 @@
                                         <Style TargetType="Image">
                                             <Setter Property="Source" Value="pack://application:,,,/Style/ImageSource/down.png"/>
                                             <Style.Triggers>
-                                                <DataTrigger Binding="{Binding Test}" Value="false">
+                                                <DataTrigger Binding="{Binding CanJog}" Value="false">
                                                     <Setter Property="Source" Value="pack://application:,,,/Style/ImageSource/greydown.png"/>
                                                 </DataTrigger>
-                                                <DataTrigger Binding="{Binding Test}" Value="true">
+                                                <DataTrigger Binding="{Binding CanJog}" Value="true">
                                                     <Setter Property="Source" Value="pack://application:,,,/Style/ImageSource/down.png"/>
                                                 </DataTrigger>
                                             </Style.Triggers>
@@ -185,7 +184,7 @@
                                 <Image Width="260" Canvas.Top="40" Style="{DynamicResource GreyDisabledImg}" >
                            
                                 </Image>
-                                <Button Command="{Binding JogCommand}" CommandParameter="Y+" Style="{DynamicResource UpArrowButton}" >
+                                <Button x:Name="JogButton" Command="{Binding JogCommand}" CommandParameter="Y+" Style="{DynamicResource UpArrowButton}" >
 
                                     <TextBlock Style="{DynamicResource ButtonInnerTextBlockCenter}">Y+</TextBlock>
                                 </Button>
@@ -229,7 +228,7 @@
                               x:Name="FormattedNumberBox"
                               MinWidth="140" Value="{Binding JogDistance}" >
                             </ui:NumberBox>
-                            <ui:ToggleSwitch Header="Mode (Tool/Global)" OnContent="Global" OffContent="Tool" IsOn="{Binding Test}"></ui:ToggleSwitch>
+                            <ui:ToggleSwitch Header="Mode (Tool/Global)" OnContent="Global" OffContent="Tool"></ui:ToggleSwitch>
                         </ui:SimpleStackPanel>
 
                         <ui:SimpleStackPanel Orientation="Horizontal">

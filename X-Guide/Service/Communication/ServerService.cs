@@ -11,6 +11,8 @@ using System.Threading;
 using System.Threading.Tasks;
 using System.Timers;
 using System.Windows;
+using System.Windows.Threading;
+using X_Guide.Aspect;
 using X_Guide.CustomEventArgs;
 using X_Guide.MVVM.ViewModel.CalibrationWizardSteps;
 using X_Guide.Service;
@@ -27,14 +29,10 @@ namespace X_Guide.Communication.Service
         private int _port { get; }
         private IPAddress _ip { get; }
 
-        private readonly ICalibrationDb _calibrationDb;
-        private readonly IClientService _clientService;
         private BackgroundService searchClient;
         private TcpListener _server;
-        private bool _valid = false;
-        
+        private bool _canExecute = false;
         private bool started = false;
-        private TcpClientInfo client;
         public event EventHandler<TcpClientEventArgs> ClientEvent;
         public event EventHandler<TcpListenerEventArgs> ListenerEvent;
         public event EventHandler<bool> ClientConnectionChange;
@@ -49,8 +47,6 @@ namespace X_Guide.Communication.Service
         {
             _port = port;
             _ip = ip;
-            _calibrationDb = calibrationDb;
-            _clientService = clientService;
             searchClient = new BackgroundService(SearchForClient, true);
             searchClient.Start();
 
@@ -58,10 +54,12 @@ namespace X_Guide.Communication.Service
 
         private void SetValid(bool valid)
         {
-            if (!_valid.Equals(valid))
+            if (!_canExecute.Equals(valid))
             {
-                _valid = valid;
-                ClientConnectionChange?.Invoke(this, _valid);
+                _canExecute = valid;
+                Dispatcher.CurrentDispatcher.Invoke(() => ClientConnectionChange?.Invoke(this, valid));
+              
+         
             }
         }
 
@@ -70,11 +68,11 @@ namespace X_Guide.Communication.Service
 
             if (_connectedClient.Count == 0)
             {
-                SetValid(true);
+                SetValid(false);
             }
             else
             {
-                SetValid(false);
+                SetValid(true);
                 
             }
         }
@@ -152,35 +150,6 @@ namespace X_Guide.Communication.Service
 
         }
 
-        public async Task<bool> SendJogCommand(JogCommand jogCommand)
-        {
-            if (_valid)
-            {
-                CancellationTokenSource cts = new CancellationTokenSource();
-                await ServerWriteDataAsync(jogCommand.ToString());
-                
-                var timer = new System.Timers.Timer(5000);
-                timer.AutoReset = false;
-                timer.Elapsed += (s, o) => cts.Cancel();
-                timer.Start();
-                bool status = await Task.Run(() => RegisterRequestEventHandler((e) => ServerJogCommand(e, client.TcpClient.GetStream()), cts.Token));
-                timer.Dispose();
-                return status;
-            }
-            else
-            {
-                MessageBox.Show("Requires client connections!");
-                return false;
-            }
-        }
-
-      
-
-        public bool ServerJogCommand(NetworkStreamEventArgs e, NetworkStream ce)
-        {
-            if (!e.Data[0].Trim().ToLower().Equals("jogdone") || !ce.Equals(ce)) throw new Exception("Not the awaited data");
-            return true;
-        }
 
         public void DisposeClient(TcpClient client)
         {
@@ -189,7 +158,6 @@ namespace X_Guide.Communication.Service
             ClientEvent?.Invoke(this, new TcpClientEventArgs(client));
             client.Dispose();
         }
-
 
 
         public ConcurrentDictionary<int, TcpClientInfo> GetConnectedClient()
@@ -211,9 +179,15 @@ namespace X_Guide.Communication.Service
             Terminator = terminator;
         }
 
+        [CheckServerCanExecute("_canExecute")]
         public async Task ServerWriteDataAsync(string data)
         {
             await WriteDataAsync(data, _connectedClient.FirstOrDefault().Value.TcpClient.GetStream());
+        }
+
+        public Task<bool> SendJogCommand(JogCommand jogCommand)
+        {
+            throw new NotImplementedException();
         }
     }
 }

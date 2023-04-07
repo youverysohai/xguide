@@ -1,4 +1,4 @@
-﻿using AForge.Video.DirectShow;
+﻿
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -28,19 +28,7 @@ namespace X_Guide.MVVM.ViewModel
             }
         }
 
-        public ObservableCollection<FilterInfo> VideoDevices { get; set; }
-
-
-        private FilterInfo _currentDevice;
-        public FilterInfo CurrentDevice
-        {
-            get { return _currentDevice; }
-            set
-            {
-                _currentDevice = value;
-                OnPropertyChanged();
-            }
-        }
+ 
 
         private ImageService _imageService;
 
@@ -51,9 +39,7 @@ namespace X_Guide.MVVM.ViewModel
         public JogRobotViewModel()
         {
             GetVideoDevices();
-            _imageService = new ImageService(CurrentDevice);
-            _imageService.videoFrameChanged += OnVideoFrameChanged;
-            VideoCommand = new VideoCommand(_imageService);
+       
 
         }
 
@@ -64,19 +50,7 @@ namespace X_Guide.MVVM.ViewModel
 
         private void GetVideoDevices()
         {
-            VideoDevices = new ObservableCollection<FilterInfo>();
-            foreach (FilterInfo filterInfo in new FilterInfoCollection(FilterCategory.VideoInputDevice))
-            {
-                VideoDevices.Add(filterInfo);
-            }
-            if (VideoDevices.Any())
-            {
-                CurrentDevice = VideoDevices[0];
-            }
-            else
-            {
-                MessageBox.Show("No video sources found", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
-            }
+     
         }
     }
 }
