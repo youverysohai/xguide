@@ -38,7 +38,6 @@ namespace X_Guide.MVVM.ViewModel
         private readonly IJogService _jogService;
         private readonly IServerService _serverService;
         private readonly IVisionService _visionService;
-        private Queue<JogCommand> commandQueue = new Queue<JogCommand>();
 
         private IVmModule _visProcedure;
 
@@ -96,17 +95,20 @@ namespace X_Guide.MVVM.ViewModel
             _visionService = visionService;
             _calibration = calibration;
             _jogService = jogService;
-            //RunProcedure();
+    
 
             ReconnectCommand = new RelayCommand(null);
             JogCommand = new RelayCommand(Jog, (o) => _canJog);
             _serverService.ClientConnectionChange += OnConnectionChange;
-
+           /* RunProcedure();*/
+            _jogService.Start();
         }
 
         private void OnConnectionChange(object sender, bool canJog)
         {
             CanJog = canJog;
+            if (canJog) _jogService.Start();
+            else _jogService.Stop();
             Application.Current.Dispatcher.Invoke(() =>
             {
                 JogCommand.OnCanExecuteChanged();
@@ -129,9 +131,7 @@ namespace X_Guide.MVVM.ViewModel
             }
             VisProcedure = vmProcedure;
         }
-    
 
-     
         private void Jog(object parameter)
         {
             if (JogDistance == 0) JogDistance = 10;
@@ -150,10 +150,9 @@ namespace X_Guide.MVVM.ViewModel
                 default: break;
             }
             JogCommand command = new JogCommand().SetX(x).SetY(y).SetZ(z).SetRZ(rz).SetSpeed(_calibration.Speed).SetAcceleration(_calibration.Acceleration);
-            _jogService.EnqueueJog(command);
+            _jogService.Enqueue(command);
 
         }
-   
 
         public void Dispose()
         {

@@ -9,6 +9,8 @@ namespace X_Guide.Service
 {
     public interface IJogService
     {
-        void EnqueueJog(JogCommand jogCommand);
+        void Enqueue(JogCommand jogCommand);
+        void Start();
+        void Stop();
     }
 }

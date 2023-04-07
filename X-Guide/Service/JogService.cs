@@ -16,7 +16,6 @@ namespace X_Guide.Service
     {
         private readonly IServerService _serverService;
         private Queue<JogCommand> _jogQueue = new Queue<JogCommand>();
-        private CancellationTokenSource cancelJog;
         private readonly BackgroundService _jogTask;
 
         public JogService(IServerService serverService)
@@ -26,7 +25,7 @@ namespace X_Guide.Service
             _jogTask.Start();
         }
 
-        public void EnqueueJog(JogCommand jogCommand)
+        public void Enqueue(JogCommand jogCommand)
         {
             _jogQueue.Enqueue(jogCommand);
         }
@@ -65,6 +64,16 @@ namespace X_Guide.Service
             return true;
         }
 
+        public void Start()
+        {
+            _jogTask.Start();
+        }
+
+        public void Stop()
+        {
+            _jogTask.Stop();
+            _jogQueue.Clear();
+        }
     }
 
 
