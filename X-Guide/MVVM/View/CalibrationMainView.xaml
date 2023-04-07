@@ -54,7 +54,6 @@
                 <materialDesign:PackIcon Kind="WindowClose" Style="{DynamicResource IconStyle16}"></materialDesign:PackIcon>
             </Button>
             <TextBox materialDesign:TextFieldAssist.HasClearButton="True"
-                     materialDesign:TextFieldAssist.HasTrailingIcon="True" 
                      Cursor="Hand"
                      Text="{Binding Calibration.Name}"
                      Grid.ColumnSpan="2" Width="300" 
