@@ -156,8 +156,8 @@ namespace X_Guide.MVVM.ViewModel
 
         private async Task<(Point[], Point[])> Start9PointCalib()
         {
-            int XOffset = _calibration.XOffset;
-            int YOffset = _calibration.YOffset;
+            int XOffset = (int)_calibration.XOffset;
+            int YOffset = (int)_calibration.YOffset;
 
             Point[] VisionPoints = new Point[9];
             Point[] RobotPoints = new Point[9];
