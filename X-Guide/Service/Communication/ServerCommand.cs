@@ -1,172 +1,84 @@
-﻿//using System;
-//using System.Collections.Concurrent;
-//using System.Collections.Generic;
-//using System.Diagnostics;
-//using System.Linq;
-//using System.Net.Sockets;
-//using System.Text;
-//using System.Threading;
-//using System.Threading.Tasks;
-//using System.Timers;
-//using System.Windows;
-//using X_Guide.Communication.Service;
-//using X_Guide.CustomEventArgs;
-//using X_Guide.MVVM.ViewModel;
-//using X_Guide.Service.Communication;
-//using Timer = System.Timers.Timer;
+﻿using System;
+using System.Collections.Concurrent;
+using System.Collections.Generic;
+using System.Diagnostics;
+using System.Linq;
+using System.Net.Sockets;
+using System.Text;
+using System.Threading;
+using System.Threading.Tasks;
+using System.Timers;
+using X_Guide.Communication.Service;
+using X_Guide.CustomEventArgs;
+using X_Guide.MVVM.Model;
+using X_Guide.MVVM.ViewModel;
+using X_Guide.Service.Communication;
+using X_Guide.Service.DatabaseProvider;
+using X_Guide.VisionMaster;
+using Xlent_Vision_Guided;
+using Timer = System.Timers.Timer;
 
-//namespace X_Guide.Service.Communation
-//{
-//    public class ServerCommand
-//    {
-//        public Queue<string> commandQeueue = new Queue<string>();
-//        public IServerService _serverService { get; }
+namespace X_Guide.Service.Communation
+{
+    public class ServerCommand : IDisposable
+    {
+        public Queue<string> commandQeueue = new Queue<string>();
+        private readonly IServerService _serverService;
+        private readonly IClientService _clientService;
+        private readonly IVisionService _visionService;
+        private readonly ICalibrationDb _calibDb;
 
-//        public event EventHandler ClientDisconnectedEvent;
-//        public ServerCommand(IServerService serverService)
-//        {
-//            _serverService = serverService;
-//            _serverService.MessageEvent += ValidateSyntax;
-//            _serverService.ClientEvent += OnClientDisconnectedEvent;
-//        }
+        public ServerCommand(IServerService serverService, IClientService clientService, IVisionService visionService, ICalibrationDb calibDb)
+        {
+            _serverService = serverService;
+            _clientService = clientService;
+            _visionService = visionService;
+            _calibDb = calibDb;
+            _serverService._dataReceived += ValidateSyntax;
+                
+        }
 
-//        private void OnClientDisconnectedEvent(object sender, TcpClientEventArgs e)
-//        {
-//            ClientDisconnectedEvent?.Invoke(sender, e);
-//        }
+        public void ValidateSyntax(object sender, NetworkStreamEventArgs network)
+        {
+            string[] data = network.Data;
 
-//        public void StartServer()
-//        {
-//            _serverService.StartServer();
-//        }
-
-//        public ConcurrentDictionary<int, TcpClientInfo> GetConnectedClient()
-//        {
-//            return _serverService.GetConnectedClient();
-
-//        }
-
-
-//        public void SetServerTerminator(string terminator)
-//        {
-//            _serverService.SetServerReadTerminator(terminator);
-//        }
-
+            switch (data[0].Trim().ToLower())
+            {
+                case "xguide": Operation(data); break;
+                default: break;
+            }
+        }
         
-//        public void ValidateSyntax(object sender, TcpClientEventArgs tcpClientEventArgs)
-//        {
-//            string message = tcpClientEventArgs.Message;
-//            TcpClient client = tcpClientEventArgs.TcpClient;
-//            var commands = message.Split(' ');
+
+        private async void Operation(string[] parameter)
+        {
+            var _tcpClientInfo = _serverService.GetConnectedClient().First().Value;
+            double[] OperationData = { 0, 0, 0 };
+            CalibrationModel calib = null;
+            Point VisCenter = null;
+            try
+            {
+                if (parameter.Length < 3) throw new Exception(StrRetriver.Get("OP000"));
+               calib = await _calibDb.Get(parameter[1]) ?? throw new Exception(StrRetriver.Get("OP001"));         
+                if(!await _visionService.ImportSol(String.Format(@"{0}", calib.Vision.Filepath))) throw new Exception(StrRetriver.Get("OP002"));
+                _ = await _visionService.RunProcedure($"{parameter[2]}", true) ?? throw new Exception(StrRetriver.Get("OP003"));
+                VisCenter = await _visionService.GetVisCenter();
+                OperationData = VisionGuided.EyeInHandConfig2D_Operate(VisCenter, new double[] { calib.CXOffset, calib.CYOffset, calib.CRZOffset, calib.CameraXScaling });
+
+                await _serverService.ServerWriteDataAsync($"XGUIDE,{calib.Mode},{OperationData[0]},{OperationData[1]},{OperationData[2]}");
+            }
+            catch (Exception ex)
+            {
+                await _serverService.ServerWriteDataAsync($"XGUIDE, {ex.Message}");
+                return;
+            }
+
+        }
 
 
-//            switch (commands[0].Trim().ToLower())
-//            {
-//                case "jogdone": JogDone(client); break;
-//                case "status": CheckStatus(client); break;
-//                case "xguide": XGuideCommand(client, message); break;
-//                case "getpose": GetPoseCommand(client, message); break;
-//                default: ReturnErrorMessage(client); break;
-//            }
-//        }
-
-
-//        public async void StartJogCommand(TcpClientInfo client, CancellationToken cancellationToken)
-//        {
-//            //need to handle when the client disconnected
-
-//            client.Jogging = true;
-//            await Task.Run(() => ServerJogCommand(client, cancellationToken));
-//            client.Jogging = false;
-//            Debug.WriteLine("Jog session ended!");
-//        }
-
-//        public async Task ServerJogCommand(TcpClientInfo client, CancellationToken cancellationToken)
-//        {
-//            NetworkStream stream = client.TcpClient.GetStream();
-//            ManualResetEventSlim _jogDoneReplyRecieved = client.JogDoneReplyRecieved;
-
-
-//            while (!cancellationToken.IsCancellationRequested)
-//            {
-       
-//                if (commandQeueue.Count <= 0)
-//                {
-//                    Thread.Sleep(1000);
-//                    continue;
-//                }
-
-//                string jogCommand = commandQeueue.Dequeue();
-
-//                //check if the message can be recieved by the client
-//                bool IsMessageSent = await _serverService.SendMessageAsync(jogCommand, stream);
-
-//                if (IsMessageSent)
-//                {
-//                    Timer timer = new Timer(5000);
-//                    timer.AutoReset = false;
-//                    timer.Elapsed += (sender, e) => JogCommandExpired(sender, _jogDoneReplyRecieved);
-//                    timer.Start();
-//                    _jogDoneReplyRecieved.Wait();
-//                    timer.Dispose();
-//                    _jogDoneReplyRecieved.Reset();
-//                }
-//                else
-//                {
-//                    HandleClientDisconnection();
-//                    break;
-
-//                }
-//            }
-//        }
-
-//        private void JogCommandExpired(object sender, ManualResetEventSlim _jogDoneReplyRecieved)
-//        {
-//            _jogDoneReplyRecieved.Set(); Debug.WriteLine("Jog command expired!"); ((Timer)sender).Dispose();
-//        }
-
-//        private void HandleClientDisconnection()
-//        {
-//            commandQeueue.Clear();
-//            Debug.WriteLine("Client has disconnected!");
-//        }
-
-//        private void JogDone(TcpClient client)
-//        {
-//            TcpClientInfo clientInfo = _serverService.GetConnectedClientInfo(client);
-//            ManualResetEventSlim _jogDoneReplyRecieved = clientInfo.JogDoneReplyRecieved;
-//            if (clientInfo.Jogging)
-//            {
-//                _jogDoneReplyRecieved.Set();
-//            }
-//        }
-
-
-//        private void GetPoseCommand(TcpClient client, string message)
-//        {
-//            var commands = message.Split(',');
-//        }
-
-//        private void XGuideCommand(TcpClient client, string message)
-//        {
-//            var commands = message.Split(',');
-//            string GlobalTool = commands[1];
-//            string FoundStatus = commands[2];
-//            string X = commands[3];
-//            string Y = commands[4];
-//            string Rz = commands[5];
-
-//        }
-
-//        public void ReturnErrorMessage(TcpClient client)
-//        {
-//            _serverService.SendMessageAsync("Unknown command.\n", client.GetStream());
-//        }
-
-//        public void CheckStatus(TcpClient client)
-//        {
-//            _serverService.SendMessageAsync("Received your message!\n", client.GetStream());
-
-//        }
-//    }
-//}
+        public void Dispose()
+        {
+            _serverService._dataReceived -= ValidateSyntax;
+        }
+    }
+}

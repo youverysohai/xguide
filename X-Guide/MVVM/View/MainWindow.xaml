@@ -10,6 +10,7 @@
         xmlns:vms="clr-namespace:X_Guide.MVVM.ViewModel"
         xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
         xmlns:c="clr-namespace:X_Guide.Converter"
+  
         mc:Ignorable="d"
         Title="X-Guide"         
         Height="720" Width="1280"
@@ -19,11 +20,10 @@
        x:Name="m_AppWindow" 
         xmlns:ui="http://schemas.modernwpf.com/2019"
         ui:WindowHelper.UseModernWindowStyle="True"
-        
+            
         >
     <Window.Resources>
-
-
+      
     </Window.Resources>
 
     <!--#region  OLD-->
@@ -179,8 +179,9 @@
 
         <ui:NavigationView.PaneHeader>
             <TextBlock Style="{DynamicResource TitleTextBlockStyle}" Margin="15 8 0 0">X-Guide</TextBlock>
+       
         </ui:NavigationView.PaneHeader>
-
+     
 
         <ui:NavigationView.MenuItems>
             <ui:NavigationViewItem Content="Production" Icon="Library" ToolTipService.ToolTip="Production">
@@ -241,7 +242,7 @@
 
         </ui:NavigationView.MenuItems>
         <ui:NavigationView.FooterMenuItems>
-            <ui:NavigationViewItem Content="Setting"  ToolTipService.ToolTip="Permission" c:NavigationViewItemExtensions.Command="{Binding NavigateCommand}"           
+            <ui:NavigationViewItem Content="Setting" ToolTipService.ToolTip="Permission" c:NavigationViewItemExtensions.Command="{Binding NavigateCommand}"           
                          c:NavigationViewItemExtensions.CommandParameter="{x:Static local:PageName.Setting}">
                 <ui:NavigationViewItem.Icon>
                     <ui:FontIcon   Glyph="&#xE713;"/>
@@ -288,10 +289,12 @@
 
         <!-- CONTENT -->
         <ui:NavigationView.Content>
+  
             <hc:Card Margin="0 8 0 0" hc:BorderElement.CornerRadius="8 0 0 0" Background="{ui:ThemeResource ResourceKey=PersonPictureEllipseBadgeFillThemeBrush}">
                 <!--<ui:Frame x:Name="contentFrame"/>-->
-
+          
                 <Grid x:Name="UserControlContent" >
+                  
                     <Grid.Resources>
                         <DataTemplate DataType="{x:Type vms:SettingViewModel}">
                             <views:SettingView/>

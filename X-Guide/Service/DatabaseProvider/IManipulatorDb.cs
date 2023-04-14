@@ -15,6 +15,7 @@ namespace X_Guide.Service.DatabaseProvider
         Task<IEnumerable<string>> GetAllNames();
         Task<IEnumerable<ManipulatorModel>> GetAll();
 
+        Task<bool> Delete(ManipulatorModel manipulator);
         string GetDelimiter(string name);
         Task<ManipulatorModel> Get(string name);
         Task<ManipulatorModel> Get(int id);

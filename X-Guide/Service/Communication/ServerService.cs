@@ -91,7 +91,6 @@ namespace X_Guide.Communication.Service
         public async Task StartServer()
         {
             cts = new CancellationTokenSource();
-            _dataReceived += ProcessCommand;
             _server = new TcpListener(_ip, _port);
 
             try
@@ -100,7 +99,6 @@ namespace X_Guide.Communication.Service
                 started = true;
           
                 CancellationToken sct = cts.Token;
-
 
                 while (!cts.IsCancellationRequested)
                 {
@@ -130,27 +128,7 @@ namespace X_Guide.Communication.Service
 
         }
 
-        private void ProcessCommand(object sender, NetworkStreamEventArgs e)
-        {
-            var data = e.Data.Select(x => x.Trim().ToLower()).ToList();
-            if (!data[0].Equals("xguide") || data.Count < 3) return;
-            CalibrateOperation(data[1], data[2]);
-
-        }
-
-
-        private async void CalibrateOperation(string calibName, string flowName)
-        {
-            /*   CalibrationViewModel calibration = await _calibrationDb.GetCalibration(calibName);
-               if (calibration == null) return;
-                
-               Point Vis_Center = await _clientService.GetVisCenter();
-               VisionGuided.EyeInHandConfig2D_Operate(Vis_Center, 15, new double[] { calibration.CXOffSet, calibration.CYOffset, calibration.CRZOffset });*/
-            MessageBox.Show("Start operation!");
-
-        }
-
-
+   
         public void DisposeClient(TcpClient client)
         {
             client.Close();

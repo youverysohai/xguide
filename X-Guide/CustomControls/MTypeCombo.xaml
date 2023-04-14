@@ -1,0 +1,21 @@
+﻿<UserControl x:Class="X_Guide.CustomControls.ManipulatorComboBox"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:X_Guide.CustomControls"
+             mc:Ignorable="d" 
+             d:DesignHeight="450" d:DesignWidth="800"
+             Name="MTCombo">
+    <Grid>
+        <ComboBox    x:Name="ComboBox"
+                                        Grid.Row="1" Grid.Column="1"  
+                                        ItemsSource="{Binding Source={StaticResource ManiType} }"
+                                        DisplayMemberPath="Description"
+                                        SelectedValuePath="Value"
+                                        SelectedValue="{Binding Type, ElementName=MTCombo}" 
+                                         Width="320" HorizontalAlignment="Left" 
+                                        Margin="5" />
+
+    </Grid>
+</UserControl>

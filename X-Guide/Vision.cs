@@ -26,6 +26,7 @@ namespace X_Guide
         public string Terminator { get; set; }
         public string Name { get; set; }
         public string Filepath { get; set; }
+        public Nullable<int> Software { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Calibration> Calibrations { get; set; }

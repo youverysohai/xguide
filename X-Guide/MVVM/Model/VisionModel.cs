@@ -14,5 +14,7 @@ namespace X_Guide.MVVM.Model
         public string Terminator { get; set; }
         public string Name { get; set; }
         public string Filepath { get; set; }
+
+        public int Software { get; set; }
     }
 }

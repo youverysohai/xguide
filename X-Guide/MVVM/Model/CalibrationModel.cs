@@ -26,5 +26,6 @@ namespace X_Guide.MVVM.Model
         public VisionModel Vision { get; set; }
 
         public string Procedure { get; set; }
+        public int Mode { get; set; }
     }
 }

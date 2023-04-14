@@ -7,13 +7,13 @@
              xmlns:ui="http://schemas.modernwpf.com/2019"
              mc:Ignorable="d" 
              d:DesignHeight="50" d:DesignWidth="800"
+             Name="CustIpInput"
               >
-    <!--   <UserControl.Resources>
+     <UserControl.Resources>
      <Style x:Key="dot" TargetType="ui:FontIcon">
             <Setter Property="Margin" Value="4"/>
             <Setter Property="FontFamily" Value="Segoe MDL2 Assets"></Setter>
             <Setter Property="Glyph" Value="&#xE843;"></Setter>
-             To get Icon :  https://learn.microsoft.com/en-us/windows/apps/design/style/segoe-ui-symbol-font#pua-ea00-ec00  
         </Style>
         <Style TargetType="TextBox" x:Key="IpTextBoxStyle" BasedOn="{StaticResource DefaultTextBoxStyle}">
             <Setter Property="HorizontalAlignment" Value="Center"/>
@@ -24,12 +24,12 @@
         </Style>
     </UserControl.Resources>
     <ui:SimpleStackPanel  Orientation="Horizontal"  HorizontalAlignment="Stretch" Margin="5">
-        <TextBox  x:Name="Ip0" Style="{DynamicResource IpTextBoxStyle}"/>
+        <TextBox  x:Name="I0" Style="{DynamicResource IpTextBoxStyle}" Text="{Binding T1, ElementName=CustIpInput, UpdateSourceTrigger=PropertyChanged}" TextWrapping="Wrap" />
         <ui:FontIcon  Style="{DynamicResource dot}" />
-        <TextBox x:Name="Ip1"  Style="{DynamicResource IpTextBoxStyle}"/>
+        <TextBox x:Name="I1"  Style="{DynamicResource IpTextBoxStyle}" Text="{Binding T2, ElementName=CustIpInput,UpdateSourceTrigger=PropertyChanged}"  TextWrapping="Wrap"  />
         <ui:FontIcon  Style="{DynamicResource dot}" />
-        <TextBox x:Name="Ip2"  Style="{DynamicResource IpTextBoxStyle}"/>
+        <TextBox x:Name="I2"  Style="{DynamicResource IpTextBoxStyle}" Text="{Binding T3, ElementName=CustIpInput, UpdateSourceTrigger=PropertyChanged}"  TextWrapping="Wrap" />
         <ui:FontIcon  Style="{DynamicResource dot}" />
-        <TextBox x:Name="Ip3"  Style="{DynamicResource IpTextBoxStyle}"/>
-    </ui:SimpleStackPanel>-->
+        <TextBox x:Name="_i3"  Style="{DynamicResource IpTextBoxStyle}" Text="{Binding T4, ElementName=CustIpInput, UpdateSourceTrigger=PropertyChanged}"  TextWrapping="Wrap" />
+    </ui:SimpleStackPanel>
 </UserControl>

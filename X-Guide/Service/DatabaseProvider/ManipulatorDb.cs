@@ -18,6 +18,18 @@ namespace X_Guide.Service.DatabaseProvider
         {
         }
 
+        public async Task<bool> Delete(ManipulatorModel manipulator)
+        {
+            return await AsyncQuery((context) => {
+                var result = context.Manipulators.Find(manipulator.Id);
+                if (result == null) return false;
+                List<Calibration> calibrations = context.Calibrations.Where(x => x.ManipulatorId == result.Id).ToList();
+                calibrations.ForEach(x => x.Manipulator = null);
+                context.Manipulators.Remove(result);
+                context.SaveChanges();
+                return true;
+            });
+        }
         public async Task<bool> Add(ManipulatorModel manipulator)
         {
 

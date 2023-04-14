@@ -7,66 +7,44 @@
              mc:Ignorable="d" 
              d:Foreground="White"
              d:DesignHeight="450" d:DesignWidth="500"
+             xmlns:xCust="clr-namespace:X_Guide.CustomControls"
+             Name="CustVisionForm"
+             
                xmlns:ui="http://schemas.modernwpf.com/2019">
-    <UserControl.Resources>
-
-        <Style TargetType="TextBox" x:Key="IpTextBoxStyle" BasedOn="{StaticResource DefaultTextBoxStyle}">
-            <Setter Property="HorizontalAlignment" Value="Center"/>
-            <EventSetter Event="GotFocus" Handler="txtIP_GotFocus"/>
-            <EventSetter Event="TextChanged" Handler="TxtIPLength_TextChanged"/>
-            <EventSetter Event="PreviewKeyDown" Handler="txtIP_PreviewKeyDown"/>
-            <EventSetter Event="PreviewTextInput" Handler="TxtIPAddress_PreviewTextInput"/>
-        </Style>
-        <Style TargetType="TextBlock" x:Key="LabelTextBlock"  BasedOn="{StaticResource CaptionTextBlockStyle}">
-            <Setter Property="Margin" Value="5 12 0 0"/>
-        </Style>
-    </UserControl.Resources>
+ 
     <ui:SimpleStackPanel Orientation="Vertical">
 
         <!--Row 0 Name-->
         <TextBlock  Text="Name" Style="{DynamicResource LabelTextBlock}"  />
-        <TextBox Text="{Binding DataContext.NewVision.Name, RelativeSource={RelativeSource AncestorType={x:Type ui:ContentDialog}}}" 
+        <TextBox Text="{Binding Vision.Name,ElementName=CustVisionForm}" 
                  x:Name="NameTextBox" Grid.Row="0" Grid.Column="1" VerticalAlignment="Center" Margin="5" Width="150" HorizontalAlignment="Left" />
 
         <!--Row 2 Solution Path-->
         <TextBlock Text="Vision Solution Path (.sol)"  Style="{DynamicResource LabelTextBlock}" />
         <ui:SimpleStackPanel Orientation="Horizontal">
-            <TextBox x:Name="NewVisionPathTextBox" Grid.Row="2" Grid.Column="1" Margin="5"  VerticalAlignment="Center" MinWidth="320" ToolTip="OpenFileDialog"  />
-            <Button Style="{DynamicResource MaterialDesignIconForegroundButton}" Click="BrowseBtn_Click">
-                <ui:FontIcon Style="{DynamicResource BrowseIcon}"/>
-            </Button>
+            <TextBox x:Name="NewVisionPathTextBox" Grid.Row="2" Grid.Column="1" Margin="5" Text="{Binding Vision.Filepath,ElementName=CustVisionForm}" VerticalAlignment="Center" MinWidth="320" ToolTip="OpenFileDialog"  />
+            <local:CustomBrowse Path="{Binding Vision.Filepath, ElementName=CustVisionForm, Mode=TwoWay}" Filter="sol files (*.sol)|*.sol|All files (*.*)|*.*"/>
         </ui:SimpleStackPanel>
 
         <!--Row 3 IP-->
         <TextBlock Text="IP Address" Style="{DynamicResource LabelTextBlock}"/>
-        <ui:SimpleStackPanel Grid.Row="3" Grid.Column="1" Orientation="Horizontal"  HorizontalAlignment="Stretch" Margin="5">
-            <TextBox Text="{Binding DataContext.NewVision.Ip[0], RelativeSource={RelativeSource AncestorType={x:Type ui:ContentDialog}}}" x:Name="Ip0"  Style="{DynamicResource IpTextBoxStyle}"/>
-            <ui:FontIcon  Style="{DynamicResource dot}" />
-            <TextBox Text="{Binding DataContext.NewVision.Ip[1], RelativeSource={RelativeSource AncestorType={x:Type ui:ContentDialog}}}" x:Name="Ip1"  Style="{DynamicResource IpTextBoxStyle}"/>
-            <ui:FontIcon  Style="{DynamicResource dot}" />
-            <TextBox Text="{Binding DataContext.NewVision.Ip[2], RelativeSource={RelativeSource AncestorType={x:Type ui:ContentDialog}}}" x:Name="Ip2"  Style="{DynamicResource IpTextBoxStyle}"/>
-            <ui:FontIcon  Style="{DynamicResource dot}" />
-            <TextBox Text="{Binding DataContext.NewVision.Ip[3], RelativeSource={RelativeSource AncestorType={x:Type ui:ContentDialog}}}" x:Name="Ip3"  Style="{DynamicResource IpTextBoxStyle}"/>
-        </ui:SimpleStackPanel>
+        <xCust:CustomIpInput Ip="{Binding Vision.Ip, ElementName=CustVisionForm}"/>
         <!-- Row 4 Port -->
         <TextBlock  Text="Port" Style="{DynamicResource LabelTextBlock}" />
-        <ui:NumberBox Width="150" HorizontalAlignment="Left" x:Name="PortTextBox" SpinButtonPlacementMode="Compact"  Value="{Binding DataContext.NewVision.Port, RelativeSource={RelativeSource AncestorType={x:Type ui:ContentDialog}}}" Margin="5"  VerticalAlignment="Center"/>
+        <ui:NumberBox Width="150" HorizontalAlignment="Left" x:Name="PortTextBox" SpinButtonPlacementMode="Compact"  Value="{Binding Vision.Port, ElementName=CustVisionForm}" Margin="5"  VerticalAlignment="Center" />
 
         <!-- Row 4 Terminator -->
         <TextBlock  Text="Terminator " Style="{DynamicResource LabelTextBlock}"/>
-        <ComboBox Grid.Row="5" Grid.Column="1" Margin="5"  
-                                              ItemsSource="{Binding DataContext.TerminatorList, RelativeSource={RelativeSource AncestorType={x:Type ui:ContentDialog}}}" 
-                                              DisplayMemberPath="Value"
-                                              SelectedValuePath="Description" 
-                                              SelectedValue="{Binding DataContext.NewVision.Terminator, RelativeSource={RelativeSource AncestorType={x:Type ui:ContentDialog}}}"   
-                                              MinWidth="150"
-                                           ></ComboBox>
+        <local:TTypeCombo Terminator="{Binding Vision.Terminator,ElementName=CustVisionForm}"/>
         <!--Row 1 Vision Software-->
         <TextBlock Text="Vision Software" Style="{DynamicResource LabelTextBlock}" />
-        <ComboBox    
+        <ComboBox 
                                         MinWidth="150"
-                                        Margin="5" >
-            <ComboBoxItem>VisionMaster</ComboBoxItem>
+                                        Margin="5"
+            ItemsSource="{Binding Source={StaticResource SoftwareType}}"
+            DisplayMemberPath="Description"
+            SelectedValue="{Binding Vision.Software, ElementName=CustVisionForm}"
+            SelectedValuePath="Value">
         </ComboBox>
     </ui:SimpleStackPanel>
 </UserControl>

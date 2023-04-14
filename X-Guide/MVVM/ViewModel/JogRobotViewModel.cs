@@ -16,41 +16,19 @@ namespace X_Guide.MVVM.ViewModel
 {
     internal class JogRobotViewModel:ViewModelBase
     {
-        private BitmapImage _videoSource;
-
-        public BitmapImage VideoSource
-        {
-            get { return _videoSource; }
-            set
-            {
-                _videoSource = value;
-                OnPropertyChanged();
-            }
-        }
-
- 
-
-        private ImageService _imageService;
-
-        public ICommand VideoCommand { get; set; }
+       
 
 
 
-        public JogRobotViewModel()
-        {
-            GetVideoDevices();
+
+
+        public JogRobotViewModel() { 
+
        
 
         }
 
-        private void OnVideoFrameChanged(object sender, BitMapImageArgs e)
-        {
-            Application.Current.Dispatcher.BeginInvoke(new Action(() => VideoSource = e.BitmapImage));
-        }
+    
 
-        private void GetVideoDevices()
-        {
-     
-        }
     }
 }

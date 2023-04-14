@@ -13,6 +13,6 @@ namespace X_Guide.Communication.Service
     {
         Task ConnectServer();
         Task WriteDataAsync(string data);
-        T RegisterRequestEventHandler<T>(Func<NetworkStreamEventArgs, T> action, CancellationToken ct = new CancellationToken());
+        Task<T> RegisterSingleRequestHandler<T>(Func<NetworkStreamEventArgs, T> action, CancellationToken ct = new CancellationToken());
     }
 }

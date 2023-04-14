@@ -20,7 +20,8 @@
                 <ResourceDictionary Source="Style/Layouts.xaml"/>
                 <ResourceDictionary Source="Style/BehaviorStyles.xaml"/>
                 <ResourceDictionary Source="Style/DesignTimeResources.xaml"/>
-                <!--<vm:ViewModelLocator x:Key="Locator" d:IsDataSource="True" xmlns:vm="clr-namespace:iAI.ViewModel" />-->
+                <ResourceDictionary Source="MVVM/View/SharedResources.xaml"/>
+                <ResourceDictionary Source="Strings.xaml"/>
                 <hc:ThemeResources RequestedTheme="Dark" AccentColor="#769FCD"/>
                 <hc:Theme/>
                 <ui:ThemeResources RequestedTheme="Dark" AccentColor="#769FCD"/>

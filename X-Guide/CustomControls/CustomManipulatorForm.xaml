@@ -4,44 +4,26 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:X_Guide.CustomControls"
+             xmlns:e="clr-namespace:X_Guide.Enums"
              mc:Ignorable="d" 
+      
                xmlns:ui="http://schemas.modernwpf.com/2019"
              d:DesignHeight="300" d:DesignWidth="400" d:Foreground="WhiteSmoke"
-             Name="ManipulatorForm">
-    <UserControl.Resources>
- 
-        <Style TargetType="TextBox" x:Key="IpTextBoxStyle" BasedOn="{StaticResource DefaultTextBoxStyle}">
-            <Setter Property="HorizontalAlignment" Value="Center"/>
-            <EventSetter Event="GotFocus" Handler="txtIP_GotFocus"/>
-            <EventSetter Event="TextChanged" Handler="TxtIPLength_TextChanged"/>
-            <EventSetter Event="PreviewKeyDown" Handler="txtIP_PreviewKeyDown"/>
-            <EventSetter Event="PreviewTextInput" Handler="TxtIPAddress_PreviewTextInput"/>
-        </Style>
-        <Style TargetType="TextBlock" x:Key="LabelTextBlock"  BasedOn="{StaticResource CaptionTextBlockStyle}">
-            <Setter Property="Margin" Value="5 12 0 0"/>
-        </Style>
-    </UserControl.Resources>
+             Name="ManipulatorForm"
+>
 
-        <ui:SimpleStackPanel Orientation="Vertical">
+    <ui:SimpleStackPanel Orientation="Vertical">
 
-            <!--Row 0-->
-            <TextBlock  Text="Name" Style="{DynamicResource LabelTextBlock}"  />
-            <TextBox Width="150" HorizontalAlignment="Left" Text="{Binding DataContext.NewManipulator.Name, RelativeSource={RelativeSource AncestorType={x:Type ui:ContentDialog}}}" x:Name="NameTextBox" Grid.Row="0" Grid.Column="1" VerticalAlignment="Center" Margin="5" />
-            <!--Row 1-->
-            <TextBlock Text="Type" Style="{DynamicResource LabelTextBlock}" />
-            <ComboBox    
-                                        Grid.Row="1" Grid.Column="1"  
-                                        ItemsSource="{Binding DataContext.ManipulatorTypeList, RelativeSource={RelativeSource AncestorType={x:Type ui:ContentDialog}}}"
-                                        DisplayMemberPath="Description"
-                                        SelectedValuePath="Value"
-                                        SelectedValue="{Binding DataContext.NewManipulator.Type, RelativeSource={RelativeSource AncestorType={x:Type ui:ContentDialog}}}" 
-                                         Width="320" HorizontalAlignment="Left" 
-                                        Margin="5" />
-           
-            <!--Row 2-->
-            <TextBlock Text="Description"  Style="{DynamicResource LabelTextBlock}" />
-            <TextBox x:Name="CommentsTextBox" Grid.Row="2" Grid.Column="1" Margin="5"  VerticalAlignment="Center" MaxLines="4" AcceptsReturn="True"/>
 
-        </ui:SimpleStackPanel>
+    <!--Row 0-->
+    <TextBlock  Text="Name" Style="{DynamicResource LabelTextBlock}"  />
+    <TextBox Width="150" HorizontalAlignment="Left" Text="{Binding Manipulator.Name, ElementName=ManipulatorForm}" x:Name="NameTextBox" Grid.Row="0" Grid.Column="1" VerticalAlignment="Center" Margin="5" />
+    <!--Row 1-->
+    <TextBlock Text="Type" Style="{DynamicResource LabelTextBlock}" />
+        <local:ManipulatorComboBox Type="{Binding Manipulator.Type, ElementName=ManipulatorForm}"/>
+        <!--Row 2-->
+    <TextBlock Text="Description"  Style="{DynamicResource LabelTextBlock}" />
+    <TextBox x:Name="CommentsTextBox" Grid.Row="2" Grid.Column="1" Margin="5"  VerticalAlignment="Center" MaxLines="4" AcceptsReturn="True" Text="{Binding Manipulator.Description, ElementName=ManipulatorForm}"/>
+</ui:SimpleStackPanel>
 
 </UserControl>

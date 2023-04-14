@@ -1,5 +1,6 @@
 ﻿using Autofac;
 using AutoMapper;
+using Microsoft.Extensions.Logging;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -58,7 +59,7 @@ namespace X_Guide.MVVM.ViewModel
             set
             {
                 _inputUsername = value;
-                OnPropertyChanged();
+           
             }
         }
 
@@ -69,7 +70,7 @@ namespace X_Guide.MVVM.ViewModel
             set
             {
                 _inputPassword = value;
-                OnPropertyChanged();
+        
             }
         }
 
@@ -83,11 +84,11 @@ namespace X_Guide.MVVM.ViewModel
         public UserModel CurrentUser => _auth.CurrentUser;
         #endregion
 
-        public MainViewModel(INavigationService navigationService, IServerService serverService, IUserDb userService)
+        public MainViewModel(INavigationService navigationService, IServerService serverService, IUserDb userService, ILogger logger)
         {
 
             _auth = new AuthenticationService(userService);
-            _auth.CurrentUserChanged += OnCurrentUserChanged;
+            //_auth.CurrentUserChanged += OnCurrentUserChanged;
             
             _navigationService = navigationService;
 
@@ -103,6 +104,7 @@ namespace X_Guide.MVVM.ViewModel
             LoginCommand = new RelayCommand(Login);
             RegisterCommand = new RelayCommand(Register);
             NavigateCommand = new RelayCommand(Navigate);
+            logger.LogInformation("Fak u!");
 
         }
 
@@ -122,16 +124,9 @@ namespace X_Guide.MVVM.ViewModel
             }
         }
 
-        private void CurrentUser_PropertyChanged(object sender, PropertyChangedEventArgs e)
-        {
-            OnPropertyChanged(e.PropertyName);
-        }
+    
 
-        private void OnCurrentUserChanged()
-        {
-            OnPropertyChanged(nameof(CurrentUser));
-
-        }       
+       
 
        
         private async void Register(object obj)

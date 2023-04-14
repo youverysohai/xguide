@@ -10,56 +10,17 @@ using X_Guide.MVVM.Model;
 
 namespace X_Guide.MVVM.ViewModel
 {
+    [Serializable]
     public class ManipulatorViewModel : ViewModelBase, ICloneable
     {
-        private int _id;
+        public int Id { get; set; }
 
-        public int Id
-        {
-            get { return _id; }
-            set { _id = value; }
-        }
+        public string Name { get; set; }
+
+        public string Description { get; set; }
 
 
-        private string _name;
-
-        public string Name
-        {
-            get { return _name; }
-            set
-            {
-                _name = value;
-                OnPropertyChanged();
-            }
-        }
-
-        private string _description;
-
-        public string Description
-        {
-            get { return _description; }
-            set
-            {
-                _description = value;
-                OnPropertyChanged();
-            }
-        }
-
-        private int _type;
-
-        public int Type
-        {
-            get { return _type; }
-            set
-            {
-                _type = value;
-                OnPropertyChanged();
-            }
-        }
-
-   
-
-
+        public int Type { get; set; }
 
         public object Clone()
         {

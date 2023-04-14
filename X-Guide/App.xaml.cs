@@ -1,5 +1,8 @@
 ﻿using Autofac;
 using AutoMapper;
+using Microsoft.Extensions.Logging;
+using Serilog;
+using Serilog.Sinks.SystemConsole;
 using System;
 using System.Collections.Generic;
 using System.Configuration;
@@ -19,10 +22,12 @@ using X_Guide.MVVM.Model;
 using X_Guide.MVVM.Store;
 using X_Guide.MVVM.ViewModel;
 using X_Guide.Service;
+using X_Guide.Service.Communation;
 using X_Guide.Service.Communication;
 using X_Guide.Service.DatabaseProvider;
 using X_Guide.VisionMaster;
 using Xlent_Vision_Guided;
+
 
 namespace X_Guide
 {
@@ -32,53 +37,36 @@ namespace X_Guide
     public partial class App : Application
     {
 
-
-        private readonly NavigationStore _navigationStore;
-        private readonly NavigationStore _wizardNavigationStore;
-        private MapperConfiguration _mapperConfig;
-        private IContainer _diContainer;
+        private static readonly IContainer _diContainer = BuildDIContainer();
 
 
-
-        public App()
-        {
-            /*Uri resourceLocator = new Uri("/VMControls.WPF.Release;component/vmrendercontrol.xaml", UriKind.Relative);
-            LoadComponent(this, resourceLocator);*/
-            VmRenderControl vmRender = new VmRenderControl();
-
-
-            _mapperConfig = new MapperConfiguration(c =>
-            {
-                c.AddProfile<ManipulatorProfile>();
-                c.AddProfile<CalibrationProfile>();
-                c.AddProfile<VisionProfile>();
-            }
-            );
-                                      
-
-
-            //App specific settings
-            InitializeAppConfiguration();
-
-            _navigationStore = new NavigationStore();
-            _wizardNavigationStore = new NavigationStore();
-
-            _diContainer = BuildDIContainer();
-
-        }
-
-        IContainer BuildDIContainer()
+        private static IContainer BuildDIContainer()
         {
             ContainerBuilder builder = new ContainerBuilder();
 
-          
+
             builder.Register(c => new ViewModelLocator(_diContainer)).As<IViewModelLocator>().SingleInstance();
             builder.Register(c => new MainWindow()
             {
                 DataContext = c.Resolve<MainViewModel>()
             });
 
-            
+            builder.Register(c => ConfigurationManager.OpenExeConfiguration(ConfigurationUserLevel.None)).As<Configuration>();
+            builder.Register(c => new MapperConfiguration(b =>
+            {
+                b.AddProfile<ManipulatorProfile>();
+                b.AddProfile<CalibrationProfile>();
+                b.AddProfile<VisionProfile>();
+                b.AddProfile<GeneralProfile>();
+            })).SingleInstance();
+            builder.Register(c => c.Resolve<MapperConfiguration>().CreateMapper()).SingleInstance();
+
+            builder.Register(c => LoggerFactory.Create(b =>
+            {
+                b.AddSerilog(new LoggerConfiguration().WriteTo.Console().CreateLogger());
+            })).As<ILoggerFactory>().SingleInstance();
+            builder.Register(c => c.Resolve<ILoggerFactory>().CreateLogger<App>()).As<Microsoft.Extensions.Logging.ILogger>().SingleInstance();
+
             builder.RegisterType<MainViewModel>();
             builder.RegisterType<CalibrationWizardStartViewModel>();
             builder.RegisterType<Step1ViewModel>();
@@ -89,32 +77,42 @@ namespace X_Guide
             builder.RegisterType<Step6ViewModel>();
             builder.RegisterType<SettingViewModel>();
             builder.RegisterType<CalibrationMainViewModel>();
-         
-
-            builder.RegisterInstance(_mapperConfig.CreateMapper()).As<IMapper>();
-            
+       
             builder.RegisterType<DbContextFactory>().SingleInstance();
             builder.RegisterType<ManipulatorDb>().As<IManipulatorDb>();
             builder.RegisterType<UserDb>().As<IUserDb>();
             builder.RegisterType<VisionService>().As<IVisionService>();
             builder.RegisterType<JogService>().As<IJogService>();
+            builder.RegisterType<ServerCommand>().SingleInstance();
             builder.RegisterType<NavigationStore>();
             builder.RegisterType<NavigationService>().As<INavigationService>();
             builder.RegisterType<VisionDb>().As<IVisionDb>();
             builder.RegisterType<CalibrationDb>().As<ICalibrationDb>();
+            builder.RegisterType<GeneralDb>().As<IGeneralDb>();
+      
+           
             builder.RegisterType<ServerService>().As<IServerService>().WithParameter(new TypedParameter(typeof(IPAddress), IPAddress.Parse("192.168.10.90"))).WithParameter(new TypedParameter(typeof(int), 8000)).WithParameter(new TypedParameter(typeof(string), "\r\n")).SingleInstance();
-            builder.Register(c => new ClientService(IPAddress.Parse("192.168.10.90"), 8000, "")).As<IClientService>().SingleInstance();
-
-
-
+            builder.Register(c => new ClientService(IPAddress.Parse("192.168.10.90"), 7900, "")).As<IClientService>().SingleInstance();
             return builder.Build();
         }
-      
+
+        public App()
+        {
+            /* VmRenderControl vmRender = new VmRenderControl();*/
+   
+
+            //App specific settings
+            InitializeAppConfiguration();
+
+
+        }
+
         private void InitializeAppConfiguration()
         {
             string appDataPath = Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData);
             string settingPath = Path.Combine(appDataPath, "X-Guide", "Settings.xml");
             ConfigurationManager.AppSettings["SettingPath"] = settingPath;
+
         }
 
         //        Startup Page
@@ -123,15 +121,15 @@ namespace X_Guide
 
         protected override void OnStartup(StartupEventArgs e)
         {
-            _diContainer = BuildDIContainer();
-            MainWindow = _diContainer.Resolve<MainWindow>();
-            MainWindow.Show();
 
+            MainWindow = _diContainer.Resolve<MainWindow>();
+            ServerCommand serverCommand = _diContainer.Resolve<ServerCommand>();
+            MainWindow.Show();
             base.OnStartup(e);
         }
-     
 
-    
+
+
 
 
     }

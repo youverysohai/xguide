@@ -75,7 +75,6 @@ namespace X_Guide.MVVM.ViewModel
         {
             await _visionService.ImportSol(_calibration.Vision.Filepath);
             System.Windows.MessageBox.Show("Imported done!");
-            await _visionService.ConnectServer();
           
         }
        

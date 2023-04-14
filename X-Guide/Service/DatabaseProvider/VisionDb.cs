@@ -18,27 +18,19 @@ namespace X_Guide.Service.DatabaseProvider
         {
 
         }
-        //public async Task<bool> AddVision(string name, Vision vision)
-        //{
-        //    //return await AsyncQuery(c =>
-        //    //{
+       
 
-        //    //}
-        //    //);
-        //}
-
-        public async Task<bool> Delete(string name)
+        public async Task<bool> Delete(VisionModel vision)
         {
             return await AsyncQuery(c =>
             {
-                if(c.Visions.Remove(c.Visions.FirstOrDefault(x => x.Name == name)) != null)
-                {
-                    return true;
-                }
-                else
-                {
-                    return false;
-                };
+                var result = c.Visions.Find(vision.Id);
+                if (result == null) return false;
+                List<Calibration> calibrations = c.Calibrations.Where(x => x.VisionId == result.Id).ToList();
+                calibrations.ForEach(x => x.Vision = null);
+                c.Visions.Remove(result);
+                c.SaveChanges();
+                return true;
             });
         }
 
@@ -46,7 +38,7 @@ namespace X_Guide.Service.DatabaseProvider
         {
             
             return await AsyncQuery(c => {
-                var result = c.Visions.Where(x => x.Name.Equals(vision.Name));
+                var result = c.Visions.Find(vision.Id);
                 if (result == null) return false;
                 c.Entry(result).CurrentValues.SetValues(MapTo<Vision>(vision));
                 c.SaveChanges();
@@ -71,5 +63,14 @@ namespace X_Guide.Service.DatabaseProvider
             });
         }
 
+        public async Task<bool> Add(VisionModel vision)
+        {
+            return await AsyncQuery(c =>
+            {
+                c.Visions.Add(MapTo<Vision>(vision));
+                c.SaveChanges();
+                return true;
+            });
+        }
     }
 }

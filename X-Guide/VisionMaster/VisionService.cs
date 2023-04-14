@@ -15,15 +15,14 @@ namespace X_Guide.VisionMaster
     public class VisionService : IVisionService
     {
         private readonly IClientService _clientService;
+       
         public string Procedure { get; set; }
         public VisionService(IClientService clientService)
         {
             _clientService = clientService;
-            
         }
 
-
-        public async Task ConnectServer()
+        public async void ConnectServer()
         {
             await _clientService.ConnectServer();
         }
@@ -31,15 +30,11 @@ namespace X_Guide.VisionMaster
         public async Task<Point> GetVisCenter()
         {
             await _clientService.WriteDataAsync($"XGUIDE,{Procedure}");
-            Point point = await Task.Run(() => _clientService.RegisterRequestEventHandler(GetVisCenterEvent), new System.Threading.CancellationToken());
-            Debug.WriteLine(point);
-            if (point is null)
-            {
-                throw new Exception("Center point is null!");
-            }
-            return point;
+      
+            /*Point point = await _clientService.RegisterSingleRequestHandler(GetVisCenterEvent) ??*/ throw new Exception(StrRetriver.Get("VI000"));
 
-
+         /*   Debug.WriteLine(point);
+            return point;*/
         }
 
         private Point GetVisCenterEvent(NetworkStreamEventArgs e)
@@ -63,7 +58,7 @@ namespace X_Guide.VisionMaster
 
         public IEnumerable<string> GetProcedureNames()
         {
-             return  VmSolution.Instance.GetAllProcedureList().astProcessInfo.Where(x => x.strProcessName != null).ToList().Select(x=> x.strProcessName).ToList();  
+            return VmSolution.Instance.GetAllProcedureList().astProcessInfo.Where(x => x.strProcessName != null).ToList().Select(x => x.strProcessName).ToList();
         }
 
         public async Task<IVmModule> GetVmModule(string name)
@@ -73,17 +68,10 @@ namespace X_Guide.VisionMaster
 
         public async Task<bool> ImportSol(string filepath)
         {
-            try
-            {
-
-                await Task.Run(() =>  VmSolution.Import(filepath));
-                return true;
-            }
-            catch (Exception ex)
-            {
-                System.Windows.MessageBox.Show(ex.ToString());
-                return false;
-            }
+            await Task.Run(() => VmSolution.Import(filepath));
+            if (VmSolution.Instance.Modules.Count == 0) return false;
+            ConnectServer();
+            return true;
         }
 
 
@@ -97,7 +85,10 @@ namespace X_Guide.VisionMaster
 
             return await Task.Run(() =>
             {
-                VmProcedure procedure = VmSolution.Instance[$"{name}"] as VmProcedure;
+                if (!(VmSolution.Instance[$"{name}"] is VmProcedure procedure))
+                {
+                    return null;
+                }
                 if (continuous) procedure.ContinuousRunEnable = true;
                 else
                 {

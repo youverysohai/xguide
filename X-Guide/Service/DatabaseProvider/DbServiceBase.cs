@@ -35,7 +35,10 @@ namespace X_Guide.Service.DatabaseProvider
             return _mapper.Map<T>(destination);
         }
 
-       
+       protected T Map<T>(object source, T destination)
+        {
+            return _mapper.Map(source, destination);
+        }
 
 
     }

@@ -12,10 +12,12 @@ namespace X_Guide.Service.DatabaseProvider
     {
         Task<VisionModel> Get(string name);
 
-        Task<bool> Delete(string name);
+        Task<bool> Delete(VisionModel vision);
         Task<bool> Update(VisionModel vision);
 
         Task<IEnumerable<VisionModel>> GetAll();
+
+        Task<bool> Add(VisionModel vision);
 
 
 

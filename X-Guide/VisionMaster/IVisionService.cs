@@ -11,7 +11,7 @@ namespace X_Guide.VisionMaster
 {
     public interface IVisionService
     {
-        Task ConnectServer();
+        void ConnectServer();
         Task<Point> GetVisCenter();
         Task<bool> ImportSol(string filepath);
 

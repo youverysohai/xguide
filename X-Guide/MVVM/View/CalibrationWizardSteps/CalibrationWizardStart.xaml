@@ -32,7 +32,7 @@
     </UserControl.Resources>
 
     <materialDesign:Card Style="{DynamicResource CardLayout}" >
-        <materialDesign:DrawerHost OpenMode="Default" >
+        <materialDesign:DrawerHost OpenMode="Standard" >
             <materialDesign:DrawerHost.LeftDrawerContent>
                 <hc:ScrollViewer VerticalScrollBarVisibility="Visible">
                     <hc:SimpleStackPanel Orientation="Vertical">

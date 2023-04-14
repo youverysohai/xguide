@@ -6,7 +6,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace X_Guide
+namespace X_Guide.Enums
 {
     public static class EnumHelperClass
     {
@@ -44,7 +44,6 @@ namespace X_Guide
 
 
         }
-
         public static IEnumerable<ValueDescription> GetAllIntAndDescriptions(Type t)
         {
             if (!t.IsEnum)

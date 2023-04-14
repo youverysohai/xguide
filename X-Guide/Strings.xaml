@@ -1,0 +1,10 @@
+﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:system="clr-namespace:System;assembly=netstandard">
+    <system:String x:Key="OP000">OP-000: Required parameter is missing or incomplete.</system:String>
+    <system:String x:Key="OP001">OP-001: Could not get calibration file.</system:String>
+    <system:String x:Key="OP002">OP-002: Failed to load vision solution.</system:String>
+    <system:String x:Key="OP003">OP-003: Failed to load vision flow.</system:String>
+    <system:String x:Key="VI000">VI-000: Failed to locate center point of the reference object.</system:String>
+    <system:String x:Key="COM000">COM-000: Communication error: Unable to send message to target stream.</system:String>
+    <system:String x:Key="CL000">CL-000: Communication error: Unable to connect to client.</system:String>
+</ResourceDictionary>

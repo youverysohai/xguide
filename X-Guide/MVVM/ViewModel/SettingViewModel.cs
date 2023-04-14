@@ -31,245 +31,135 @@ using Xlent_Vision_Guided;
 
 namespace X_Guide.MVVM.ViewModel
 {
-    public class SettingViewModel : ViewModelBase, INotifyDataErrorInfo
+    public class SettingViewModel : ViewModelBase
     {
+        public RelayCommand AddManipulatorCommand { get; set; }
 
-        public RelayCommand SaveCommand { get; }
+        public RelayCommand TestCommand { get; }
+        public RelayCommand SaveManipulatorCommand { get; }
+        public RelayCommand OpenFormCommand { get; }
+        public RelayCommand DeleteManipulatorCommand { get; }
         public RelayCommand ManipulatorCommand { get; set; }
+        public RelayCommand OpenVisionFormCommand { get; }
+        public RelayCommand OpenManiFormCommand { get; }
+
+        public RelayCommand AddVisionCommand { get; }
+        public RelayCommand SaveVisionCommand { get; }
+        public RelayCommand DeleteVisionCommand { get; }
         public RelayCommand VisionCommand { get; set; }
- 
-
-
-        private readonly IManipulatorDb _manipulatorDb;
-        private readonly IVisionDb _visionDb;
-        private readonly ICalibrationDb _calibrationDb;
-        private readonly IMapper _mapper;
-        private readonly IClientService _clientService;
-        private readonly IServerService _serverService;
-        private readonly IVisionService _visionService;
-        private readonly ErrorViewModel _errorViewModel;
-
-        public event EventHandler<DataErrorsChangedEventArgs> ErrorsChanged;
-
-        public bool HasErrors => false;
-
-        private GeneralSettingViewModel _server;
-
-        public GeneralSettingViewModel Server
-        {
-            get { return _server; }
-            set { _server = value; OnPropertyChanged(); }
-        }
-
-
-        private VisionViewModel _vision;
-
-        private ObservableCollection<CalibrationModel> _calibSol;
-
-        public ObservableCollection<CalibrationModel> CalibSol
-        {
-            get { return _calibSol; }
-            set
-            {
-                _calibSol = value;
-                OnPropertyChanged();
-            }
-        }
-
-        private Calibration _calib;
-
-        public Calibration Calib
-        {
-            get { return _calib; }
-            set
-            {
-                _calib = value;
-                OnPropertyChanged();
-
-            }
-        }
-        double[] calibData;
 
         public RelayCommand OperationCommand { get; set; }
 
-        public VisionViewModel Vision
-        {
-            get { return _vision; }
-            set
-            {
-                _vision = value;
-                OnPropertyChanged();
-            }
-        }
-        private ObservableCollection<VisionViewModel> _visions;
+        public RelayCommand SaveGeneralCommand { get; set; }
 
-        public ObservableCollection<VisionViewModel> Visions
-        {
-            get { return _visions; }
-            set
-            {
-                _visions = value;
-                OnPropertyChanged();
-            }
-        }
+        private readonly IManipulatorDb _manipulatorDb;
+        private readonly IVisionDb _visionDb;
+        private readonly IMapper _mapper;
+        private readonly IGeneralDb _generalDb;
+        public bool Test { get; set; }
+        public bool HasErrors => false;
 
-        public RelayCommand NewVisionCommand { get; set; }
+   
 
-        private VisionViewModel _newVision;
+        public GeneralViewModel General { get; set; }
+        public ManipulatorViewModel Manipulator { get; set; }
+        public VisionViewModel Vision { get; set; } 
+        public ObservableCollection<ManipulatorViewModel> Manipulators { get; } = new ObservableCollection<ManipulatorViewModel>();
 
-        public VisionViewModel NewVision
-        {
-            get { return _newVision; }
-            set { _newVision = value; OnPropertyChanged(); }
-        }
+        public ObservableCollection<VisionViewModel> Visions { get; } = new ObservableCollection<VisionViewModel>();
 
 
-        public RelayCommand NewManipulatorCommand { get; set; }
-
-        private ManipulatorViewModel _newManipulator = new ManipulatorViewModel();
-
-        public ManipulatorViewModel NewManipulator
-        {
-            get { return _newManipulator; }
-            set { _newManipulator = value; OnPropertyChanged(); }
-        }
+        public string LogFilePath { get; set; }
 
 
-        private ManipulatorViewModel _manipulator;
-
-        public ManipulatorViewModel Manipulator
-        {
-            get { return _manipulator; }
-            set
-            {
-                _manipulator = value;
-                OnPropertyChanged();
-            }
-        }
-
-        //SettingViewModel properties
-        private ObservableCollection<ManipulatorViewModel> _manipulators;
-
-        public ObservableCollection<ManipulatorViewModel> Manipulators
-        {
-            get { return _manipulators; }
-            set
-            {
-                _manipulators = value;
-                OnPropertyChanged();
-            }
-        }
-
-        private IEnumerable<ValueDescription> _manipulatorTypeList;
-
-        public IEnumerable<ValueDescription> ManipulatorTypeList
-        {
-            get { return _manipulatorTypeList; }
-            set
-            {
-                _manipulatorTypeList = value;
-                OnPropertyChanged();
-            }
-        }
-
-
-
-
-        private string _logFilePath;
-        public string LogFilePath
-        {
-            get { return _logFilePath; }
-            set
-            {
-                _logFilePath = value;
-                OnPropertyChanged(nameof(LogFilePath));
-            }
-        }
-
-        private IEnumerable<ValueDescription> _terminatorList;
-
-        public IEnumerable<ValueDescription> TerminatorList
-        {
-            get { return _terminatorList; }
-            set
-            {
-                _terminatorList = value;
-                OnPropertyChanged();
-            }
-        }
-
-        public SettingViewModel(IManipulatorDb machineDb, IVisionDb visionDb, IMapper mapper, ICalibrationDb calibrationDb, IClientService clientService, IServerService serverService, IVisionService visionService)
+        public SettingViewModel(IManipulatorDb machineDb, IVisionDb visionDb, IMapper mapper, ICalibrationDb calibrationDb, IClientService clientService, IServerService serverService, IVisionService visionService, IGeneralDb generalDb)
         {
             _manipulatorDb = machineDb;
             _visionDb = visionDb;
-            _calibrationDb = calibrationDb;
             _mapper = mapper;
-            _clientService = clientService;
-            _serverService = serverService;
-            _visionService = visionService;
-
-            GetAllMachine();
+            _generalDb = generalDb;
+            General = _generalDb.Get();
+            GetManipulators();
             GetVisions();
-            //Visions = new ObservableCollection<VisionViewModel>
-            //{
-            //    new VisionViewModel
-            //    {
-            //        Name = "Vision1",
-            //        Ip = new ObservableCollection<string>(new string[] { "192", "168", "11", "90" }),
-            //        Port = 8000,
-            //        Terminator = ""
-
-            //    } , 
-            //    new VisionViewModel
-            //    {
-            //    Name = "Hik",
-            //    Ip = new ObservableCollection<string>(new string[]{"192", "163","11","33"}),
-            //    Port=8000,
-            //    Terminator="\r"
-            //    } , new VisionViewModel
-            //    {
-            //    Name = "Vision2",
-            //    Ip = new ObservableCollection<string>(new string[]{"192", "128","21","90"}),
-            //    Port=8000,
-            //    Terminator="\r\n"}  };
-            Server = new GeneralSettingViewModel
-            {
-                Ip = new ObservableCollection<string>(new string[] { "192", "168", "11", "90" }),
-                Port = 8000,
-                Terminator = ""
-
-            };
-
-
-            ManipulatorTypeList = EnumHelperClass.GetAllIntAndDescriptions(typeof(ManipulatorType));
-            TerminatorList = EnumHelperClass.GetAllValuesAndDescriptions(typeof(Terminator));
-
-            LoadAllCalibFile();
+            OpenVisionFormCommand = new RelayCommand(OpenVisionForm);
+            OpenManiFormCommand = new RelayCommand(OpenManiForm);
+            AddVisionCommand = new RelayCommand(AddVision);
             VisionCommand = new RelayCommand(OnVisionChangeEvent);
             ManipulatorCommand = new RelayCommand(OnManipulatorChangeEvent);
-            SaveCommand = new RelayCommand(SaveSetting);
-            OperationCommand = new RelayCommand(Operation);
-            NewManipulatorCommand = new RelayCommand(AddNewManipulator);
-            NewVisionCommand = new RelayCommand(AddNewVision);
+            SaveManipulatorCommand = new RelayCommand(SaveManipulator);
+            OpenFormCommand = new RelayCommand(OpenVisionForm);
+            DeleteManipulatorCommand = new RelayCommand(DeleteManipulator);
+            DeleteVisionCommand = new RelayCommand(DeleteVision);
+            SaveVisionCommand = new RelayCommand(SaveVision);
+            SaveGeneralCommand = new RelayCommand(SaveGeneral);
+            AddManipulatorCommand = new RelayCommand(AddManipulator);
+            TestCommand = new RelayCommand(test);
         }
 
-        private void AddNewVision(object obj)
+        private async void OpenVisionForm(object obj)
         {
-            //bool saveStatus = await _manipulatorDb.CreateVision(_mapper.Map<VisionModeld>(NewManipulator));
-            //if (saveStatus)
-            //{
-            //    System.Windows.MessageBox.Show("Added New Manipulator");
-            //}
-            //else
-            //{
-            //    System.Windows.MessageBox.Show("Failed to save setting!");
-            //}
+            Vision = new VisionViewModel();
+            if (obj is ContentDialog dialog) await dialog.ShowAsync();
+        
         }
 
-        private async void AddNewManipulator(object obj)
+        private async void OpenManiForm(object obj)
+        {
+            Manipulator = new ManipulatorViewModel();
+            if (obj is ContentDialog dialog) await dialog.ShowAsync();
+       
+        }
+
+        private void test(object obj)
+        {
+            Test = true;
+        }
+
+        private void SaveGeneral(object obj)
+        {
+            _generalDb.Update(General);
+        }
+
+        private async void DeleteVision(object obj)
+        {
+            await _visionDb.Delete(_mapper.Map<VisionModel>(Vision));
+            GetVisions();
+        }
+
+        private async void DeleteManipulator(object obj)
+        {
+            await _manipulatorDb.Delete(_mapper.Map<ManipulatorModel>(Manipulator));
+            GetManipulators();
+        }
+
+        private async void SaveVision(object obj)
+        {
+            await _visionDb.Update(_mapper.Map<VisionModel>(Vision));
+            GetVisions();
+        }
+
+        private async void AddVision(object obj)
+        {
+            await _visionDb.Add(_mapper.Map<VisionModel>(Vision));
+            GetVisions();
+        }
+
+
+        public async void GetVisions()
+        {
+            IEnumerable<VisionModel> models = await _visionDb.GetAll();
+            Vision = null;
+            Visions.Clear();
+            foreach (var model in models)
+            {
+                Visions.Add(_mapper.Map<VisionViewModel>(model));
+            }
+        }
+
+        private async void AddManipulator(object obj)
         {
 
-            bool saveStatus = await _manipulatorDb.Add(_mapper.Map<ManipulatorModel>(NewManipulator));
+            bool saveStatus = await _manipulatorDb.Add(_mapper.Map<ManipulatorModel>(Manipulator));
             if (saveStatus)
             {
                 System.Windows.MessageBox.Show("Added New Manipulator");
@@ -279,72 +169,13 @@ namespace X_Guide.MVVM.ViewModel
                 System.Windows.MessageBox.Show("Failed to save setting!");
             }
 
-            GetAllMachine();
+            GetManipulators();
 
         }
 
-        public SettingViewModel()
+
+        private async void SaveManipulator(object obj)
         {
-        }
-
-        private async void GetVisions()
-        {
-            IEnumerable<VisionModel> models = await _visionDb.GetAll();
-            
-            Visions = new ObservableCollection<VisionViewModel>(models.Select(x=> _mapper.Map<VisionViewModel>(x)));
-        }
-
-        private async void LoadAllCalibFile()
-        {
-            var i = await _calibrationDb.GetAll();
-
-            CalibSol = new ObservableCollection<CalibrationModel>(i);
-        }
-
-
-        private async void Operation(object parameter)
-        {
-            var _tcpClientInfo = _serverService.GetConnectedClient().First().Value;
-            try
-            {
-                await _visionService.ImportSol($"{Calib.Vision.Filepath}");
-                _visionService.RunProcedure("Long", true);
-                ConnectServer();
-
-                Point VisCenter = await _visionService.GetVisCenter();
-                double[] OperationData = VisionGuided.EyeInHandConfig2D_Operate(VisCenter, new double[] { (double)Calib.CXOffset, (double)Calib.CYOffset, (double)Calib.CRZOffset, (double)Calib.CameraXScaling });
-                OperationData[2] -= 30;
-                if (OperationData[2] > 180) OperationData[2] -= 360;
-                else if (OperationData[2] <= 180) OperationData[2] += 360;
-                await _serverService.SendJogCommand(new JogCommand().SetX(OperationData[0]).SetY(OperationData[1]).SetRZ(OperationData[2]));
-                await _serverService.SendJogCommand(new JogCommand().SetZ(-178));
-                System.Windows.MessageBox.Show("Press OK to reset machine!");
-                await _serverService.ServerWriteDataAsync("RESET");
-            }
-            catch (Exception ex)
-            {
-                System.Windows.MessageBox.Show($"Exception: {ex.Message} | Aborting the calibration process!");
-                await _serverService.ServerWriteDataAsync("RESET");
-                return;
-            }
-        }
-
-        private async void ConnectServer()
-        {
-            await _clientService.ConnectServer();
-        }
-        private async void GetAllMachine()
-        {
-            IEnumerable<ManipulatorModel> models = await _manipulatorDb.GetAll();
-            IEnumerable<ManipulatorViewModel> viewModels = models.Select(x => _mapper.Map<ManipulatorViewModel>(x));
-            Manipulators = new ObservableCollection<ManipulatorViewModel>(viewModels);
-        }
-
-        private async void SaveSetting(object obj)
-        {
-
-
-
             bool saveStatus = await _manipulatorDb.Update(_mapper.Map<ManipulatorModel>(Manipulator));
             if (saveStatus)
             {
@@ -355,9 +186,26 @@ namespace X_Guide.MVVM.ViewModel
                 System.Windows.MessageBox.Show("Failed to save setting!");
             }
 
-            GetAllMachine();
-
+            GetManipulators();
         }
+
+
+
+
+        private async void GetManipulators()
+        {
+            IEnumerable<ManipulatorModel> models = await _manipulatorDb.GetAll();
+            Manipulator = null;
+            Manipulators.Clear();
+
+            foreach (var model in models)
+            {
+                Manipulators.Add(_mapper.Map<ManipulatorViewModel>(model));
+            }
+        }
+
+      
+
 
         private void OnManipulatorChangeEvent(object obj)
         {
@@ -367,16 +215,12 @@ namespace X_Guide.MVVM.ViewModel
         }
         private void OnVisionChangeEvent(object obj)
         {
-
+    
             Vision = ((VisionViewModel)obj).Clone() as VisionViewModel;
-
         }
 
 
-        public IEnumerable GetErrors(string propertyName)
-        {
-            return _errorViewModel.GetErrors(propertyName);
-        }
+
 
     }
 

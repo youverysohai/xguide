@@ -13,10 +13,13 @@ namespace X_Guide.Communication.Service
 {
     public interface IServerService
     {
+
+        event EventHandler<NetworkStreamEventArgs> _dataReceived;
+
         event EventHandler<bool> ClientConnectionChange;
         TcpClientInfo GetConnectedClientInfo(TcpClient tcpClient);
         Task ServerWriteDataAsync(string data);
-        T RegisterRequestEventHandler<T>(Func<NetworkStreamEventArgs, T> action, CancellationToken ct = new CancellationToken());
+        Task<T> RegisterSingleRequestHandler<T>(Func<NetworkStreamEventArgs, T> action, CancellationToken ct = new CancellationToken());
         bool getServerStatus();
         Task StartServer();
         void StopServer();

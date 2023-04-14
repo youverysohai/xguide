@@ -32,8 +32,6 @@ namespace X_Guide.MVVM.ViewModel
     internal class Step5ViewModel : ViewModelBase, IDisposable
     {
 
-        private int _jogDistance;
-        private CancellationTokenSource cancelJog;
         private readonly CalibrationViewModel _calibration;
         private readonly IJogService _jogService;
         private readonly IServerService _serverService;
@@ -48,7 +46,6 @@ namespace X_Guide.MVVM.ViewModel
                 OnPropertyChanged();
             }
         }
-     
 
 
         public string JogMode { get; set; } = "TOOL";
@@ -59,6 +56,8 @@ namespace X_Guide.MVVM.ViewModel
             get => _canJog;
             private set {
                 _canJog = value;
+                if (value) _jogService.Start();
+                else _jogService.Stop();
                 OnPropertyChanged();
             }
            
@@ -80,8 +79,7 @@ namespace X_Guide.MVVM.ViewModel
         public ICommand ReportCommand { get; }
         public RelayCommand JogCommand { get; }
 
-        public ICommand ReconnectCommand { get; set; }
-
+        private int _jogDistance;
         public int JogDistance
         {
             get { return _jogDistance; }
@@ -95,9 +93,7 @@ namespace X_Guide.MVVM.ViewModel
             _visionService = visionService;
             _calibration = calibration;
             _jogService = jogService;
-    
-
-            ReconnectCommand = new RelayCommand(null);
+   
             JogCommand = new RelayCommand(Jog, (o) => _canJog);
             _serverService.ClientConnectionChange += OnConnectionChange;
            /* RunProcedure();*/
@@ -107,16 +103,12 @@ namespace X_Guide.MVVM.ViewModel
         private void OnConnectionChange(object sender, bool canJog)
         {
             CanJog = canJog;
-            if (canJog) _jogService.Start();
-            else _jogService.Stop();
             Application.Current.Dispatcher.Invoke(() =>
             {
                 JogCommand.OnCanExecuteChanged();
-            });
-            
+            });  
         }
 
-      
         private async void RunProcedure()
         {
             await _visionService.ImportSol(_calibration.Vision.Filepath);

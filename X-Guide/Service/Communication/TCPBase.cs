@@ -14,44 +14,45 @@ namespace X_Guide.Service.Communication
 
     {
 
-        protected event EventHandler<NetworkStreamEventArgs> _dataReceived;
+        public event EventHandler<NetworkStreamEventArgs> _dataReceived;
 
         private string _terminator;
         protected string Terminator { get => _terminator; set => _terminator = value ?? "\n"; }
-        public T RegisterRequestEventHandler<T>(Func<NetworkStreamEventArgs, T> action, CancellationToken ct = new CancellationToken())
+        public async Task<T> RegisterSingleRequestHandler<T>(Func<NetworkStreamEventArgs, T> action, CancellationToken ct = new CancellationToken())
         {
-
-
-            using (ManualResetEventSlim resetEvent = new ManualResetEventSlim())
+            return await Task.Run(() =>
             {
-                ct.Register(() => { Debug.WriteLine("OperationCanceled"); resetEvent.Set();  });
-                T data = default(T);
-
-                EventHandler<NetworkStreamEventArgs> eventHandler = (s, e) =>
+                using (ManualResetEventSlim resetEvent = new ManualResetEventSlim())
                 {
-                    try
+                    ct.Register(() => { Debug.WriteLine("OperationCanceled"); resetEvent.Set(); });
+                    T data = default(T);
+
+                    EventHandler<NetworkStreamEventArgs> eventHandler = (s, e) =>
                     {
-                        data = action.Invoke(e);
-                        resetEvent.Set();
-                    }
-                    catch (Exception ex)
-                    {
-                        System.Windows.MessageBox.Show(ex.Message);
-                    }
-                };
+                        try
+                        {
+                            data = action.Invoke(e);
+                            resetEvent.Set();
+                        }
+                        catch (Exception ex)
+                        {
+                            System.Windows.MessageBox.Show(ex.Message);
+                        }
+                    };
 
-                _dataReceived += eventHandler;
-  
-
-                int index = WaitHandle.WaitAny(new WaitHandle[] { ct.WaitHandle, resetEvent.WaitHandle });
+                    _dataReceived += eventHandler;
 
 
-                _dataReceived -= eventHandler;
+                    int index = WaitHandle.WaitAny(new WaitHandle[] { ct.WaitHandle, resetEvent.WaitHandle });
+                    _dataReceived -= eventHandler;
 
-                return data;
-            }
+                    return data;
+                }
+            });
         }
 
+
+     
         public TCPBase(string terminator)
         {
             Terminator = terminator;
@@ -79,8 +80,10 @@ namespace X_Guide.Service.Communication
         protected async Task WriteDataAsync(string data, NetworkStream stream)
         {
             byte[] bytes = Encoding.ASCII.GetBytes(data + Terminator);
+             _ = stream ?? throw new Exception(StrRetriver.Get("CL000"));
             await stream.WriteAsync(bytes, 0, bytes.Length);
-
+           
+              
         }
 
         private void ProcessServerData(string data, char seperator, NetworkStream stream)

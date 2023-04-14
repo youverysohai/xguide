@@ -15,9 +15,9 @@ namespace X_Guide.MappingConfiguration
         public VisionProfile()
         {
             CreateMap<Vision, VisionModel>();
-            CreateMap<VisionModel, Vision>(); 
-            CreateMap<VisionModel, VisionViewModel>().ForMember(dest => dest.Ip, opt => opt.MapFrom(src => new ObservableCollection<string>(src.Ip.Split('.')))); ;
-            CreateMap<VisionViewModel, VisionModel>().ForMember(dest => dest.Ip, opt => opt.MapFrom(src => string.Join(".", src.Ip))); ;
+            CreateMap<VisionModel, Vision>();
+            CreateMap<VisionModel, VisionViewModel>();
+            CreateMap<VisionViewModel, VisionModel>();
         }
     }
 }

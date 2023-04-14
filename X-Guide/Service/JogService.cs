@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Net.Sockets;
-using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Windows;
@@ -22,7 +21,6 @@ namespace X_Guide.Service
         {
             _serverService = serverService;
             _jogTask = new BackgroundService(StartJog, true);
-            _jogTask.Start();
         }
 
         public void Enqueue(JogCommand jogCommand)
@@ -53,7 +51,7 @@ namespace X_Guide.Service
             timer.AutoReset = false;
             timer.Elapsed += (s, o) => cts.Cancel();
             timer.Start();
-            bool status = await Task.Run(() => _serverService.RegisterRequestEventHandler((e) => ServerJogCommand(e, _serverService.GetConnectedClient().FirstOrDefault().Value.TcpClient.GetStream()), cts.Token));
+            bool status = await _serverService.RegisterSingleRequestHandler((e) => ServerJogCommand(e, _serverService.GetConnectedClient().FirstOrDefault().Value.TcpClient.GetStream()), cts.Token);
             timer.Dispose();
             return status;
         }
