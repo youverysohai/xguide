@@ -52,10 +52,9 @@ namespace X_Guide.Service.Communation
 
         private async void Operation(string[] parameter)
         {
-            var _tcpClientInfo = _serverService.GetConnectedClient().First().Value;
-            double[] OperationData = { 0, 0, 0 };
-            CalibrationModel calib = null;
-            Point VisCenter = null;
+            double[] OperationData;
+            CalibrationModel calib;
+            Point VisCenter;
             try
             {
                 if (parameter.Length < 3) throw new Exception(StrRetriver.Get("OP000"));
@@ -64,7 +63,7 @@ namespace X_Guide.Service.Communation
                 _ = await _visionService.RunProcedure($"{parameter[2]}", true) ?? throw new Exception(StrRetriver.Get("OP003"));
                 VisCenter = await _visionService.GetVisCenter();
                 OperationData = VisionGuided.EyeInHandConfig2D_Operate(VisCenter, new double[] { calib.CXOffset, calib.CYOffset, calib.CRZOffset, calib.CameraXScaling });
-
+                string Mode = calib.Mode ? "GLOBAL" : "TOOL"; 
                 await _serverService.ServerWriteDataAsync($"XGUIDE,{calib.Mode},{OperationData[0]},{OperationData[1]},{OperationData[2]}");
             }
             catch (Exception ex)

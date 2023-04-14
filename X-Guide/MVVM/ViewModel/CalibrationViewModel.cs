@@ -16,7 +16,7 @@ namespace X_Guide.MVVM.ViewModel.CalibrationWizardSteps
         public string Name { get; set; }
         public ManipulatorViewModel Manipulator { get; set; }
         public VisionViewModel Vision { get; set; }
-        public int Mode { get; set; }
+        public bool Mode { get; set; }
         public int Orientation { get; set; }
         public double XOffset { get; set; }
         public double YOffset { get; set; }

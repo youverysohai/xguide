@@ -146,10 +146,6 @@ namespace X_Guide.MVVM.ViewModel
                 await _serverService.ServerWriteDataAsync("RESET");
                 return;
             }
-
-
-
-    
         }
 
 

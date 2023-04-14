@@ -23,7 +23,7 @@ namespace X_Guide.CustomControls
     /// </summary>
     /// 
     [AddINotifyPropertyChangedInterface]
-    public partial class CustomIpInput : UserControl
+    public partial class CustomIpInput : UserControl, INotifyPropertyChanged
     {
 
 
@@ -43,7 +43,7 @@ namespace X_Guide.CustomControls
         public static readonly DependencyProperty IpSegmentProperty =
             DependencyProperty.Register("Ip", typeof(string), typeof(CustomIpInput), new FrameworkPropertyMetadata(null, FrameworkPropertyMetadataOptions.BindsTwoWayByDefault, IpChanged));
 
-
+        public event PropertyChangedEventHandler PropertyChanged;
 
         private static void IpChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
         {

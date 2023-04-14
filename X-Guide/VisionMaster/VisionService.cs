@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 using VM.Core;
 using VMControls.Interface;
@@ -15,7 +16,8 @@ namespace X_Guide.VisionMaster
     public class VisionService : IVisionService
     {
         private readonly IClientService _clientService;
-       
+        private CancellationTokenSource _cts;
+
         public string Procedure { get; set; }
         public VisionService(IClientService clientService)
         {
@@ -30,11 +32,15 @@ namespace X_Guide.VisionMaster
         public async Task<Point> GetVisCenter()
         {
             await _clientService.WriteDataAsync($"XGUIDE,{Procedure}");
-      
-            /*Point point = await _clientService.RegisterSingleRequestHandler(GetVisCenterEvent) ??*/ throw new Exception(StrRetriver.Get("VI000"));
-
-         /*   Debug.WriteLine(point);
-            return point;*/
+            _cts = new CancellationTokenSource();
+            var timer = new System.Timers.Timer(5000);
+            timer.AutoReset = false;
+            timer.Elapsed += (s, o) => _cts.Cancel();
+            timer.Start();
+            Point point = await _clientService.RegisterSingleRequestHandler(GetVisCenterEvent, _cts.Token) ?? throw new Exception(StrRetriver.Get("VI000"));
+            timer.Dispose();
+            Debug.WriteLine(point);
+            return point;
         }
 
         private Point GetVisCenterEvent(NetworkStreamEventArgs e)

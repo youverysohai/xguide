@@ -228,7 +228,7 @@
                               x:Name="FormattedNumberBox"
                               MinWidth="140" Value="{Binding JogDistance}" >
                             </ui:NumberBox>
-                            <ui:ToggleSwitch Header="Mode (Tool/Global)" OnContent="Global" OffContent="Tool"></ui:ToggleSwitch>
+                            <ui:ToggleSwitch Header="Mode (Tool/Global)" OnContent="Global" IsOn="{Binding Calibration.Mode}" OffContent="Tool"></ui:ToggleSwitch>
                         </ui:SimpleStackPanel>
 
                         <ui:SimpleStackPanel Orientation="Horizontal">
