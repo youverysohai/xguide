@@ -18,6 +18,8 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Xml.Serialization;
+using Windows.UI.WindowManagement;
+using X_Guide.CustomControls;
 using X_Guide.MVVM.Model;
 using X_Guide.MVVM.ViewModel;
 
@@ -36,18 +38,13 @@ namespace X_Guide.MVVM.View
             InitializeComponent();
         }
 
-
-        
-     
         private async void ShowManipulatorDialogButton_Click(object sender, RoutedEventArgs e)
         {
             (DataContext as SettingViewModel).Manipulator = new ManipulatorViewModel();
             await ManipulatorDialog.ShowAsync();
 
         }
-
-
-     
+ 
 
         private void ManipulatorDialog_CloseButtonClick(ContentDialog sender, ContentDialogButtonClickEventArgs args)
         {

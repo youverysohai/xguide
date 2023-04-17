@@ -56,7 +56,7 @@ namespace X_Guide.MVVM.ViewModel
         private readonly IVisionDb _visionDb;
         private readonly IMapper _mapper;
         private readonly IGeneralDb _generalDb;
-        public bool Test { get; set; }
+        public bool Test { get; set; } = false;
         public bool HasErrors => false;
 
    
@@ -112,7 +112,7 @@ namespace X_Guide.MVVM.ViewModel
 
         private void test(object obj)
         {
-            Test = true;
+            Test = !Test;
         }
 
         private void SaveGeneral(object obj)
