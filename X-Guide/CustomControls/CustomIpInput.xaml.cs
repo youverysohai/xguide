@@ -22,11 +22,10 @@ namespace X_Guide.CustomControls
     /// Interaction logic for CustomIpInput.xaml
     /// </summary>
     /// 
-    [AddINotifyPropertyChangedInterface]
+
     public partial class CustomIpInput : UserControl, INotifyPropertyChanged
     {
-
-
+        public event PropertyChangedEventHandler PropertyChanged;
         private volatile bool _updating = false;
         public string Ip
         {
@@ -43,7 +42,7 @@ namespace X_Guide.CustomControls
         public static readonly DependencyProperty IpSegmentProperty =
             DependencyProperty.Register("Ip", typeof(string), typeof(CustomIpInput), new FrameworkPropertyMetadata(null, FrameworkPropertyMetadataOptions.BindsTwoWayByDefault, IpChanged));
 
-        public event PropertyChangedEventHandler PropertyChanged;
+ 
 
         private static void IpChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
         {
@@ -62,6 +61,7 @@ namespace X_Guide.CustomControls
             InitializeComponent();
         }
 
+        
 
         private void UpdateTextbox(List<string> segments)
         {
