@@ -99,7 +99,9 @@ namespace X_Guide
         public App()
         {
             /* VmRenderControl vmRender = new VmRenderControl();*/
-         
+            //Uri uri = new Uri("/YourProjectName;component/YourFolderName/YourXamlFileName.xaml", UriKind.Relative);
+            //Application.LoadComponent(uri);
+
             //App specific settings
             InitializeAppConfiguration();
 

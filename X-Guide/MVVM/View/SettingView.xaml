@@ -35,8 +35,20 @@
 
             </DockPanel>
         </ControlTemplate>
+        <ContentPresenter x:Key="template1">
+            <ContentPresenter.Content>
+            <StackPanel
+                                        Margin="16">
 
-
+                <ProgressBar
+                                          Margin="16"
+                                          HorizontalAlignment="Center"
+                                          IsIndeterminate="True"
+                                          Style="{StaticResource MaterialDesignCircularProgressBar}"
+                                          Value="0" />
+            </StackPanel>
+            </ContentPresenter.Content>
+        </ContentPresenter>
 
 
         <Style TargetType="TextBlock" x:Key="LabelTextBlock"  BasedOn="{StaticResource CaptionTextBlockStyle}">
@@ -65,14 +77,14 @@
         </DataTemplate>
     </UserControl.Resources>
     <ScrollViewer VerticalScrollBarVisibility="Hidden" >
-
-        <TabControl  
+        
+            <TabControl  
                         SnapsToDevicePixels="True"
                         Background="{ui:ThemeResource ResourceKey=PersonPictureEllipseBadgeFillThemeBrush}"
                         Style="{DynamicResource MaterialDesignNavigatilRailTabControl}"  
                         TabStripPlacement="Top" Margin="16" SelectedIndex="0">
             <!-- Manipulator Tab-->
-
+                          
             <TabItem >
 
                 <TabItem.Header>
@@ -122,46 +134,52 @@
                     </materialDesign:DrawerHost.LeftDrawerContent>
 
                     <!-- Manipulator Form-->
-                    <StackPanel   Orientation="Vertical">
-                        <!-- NEW MANIPULATOR -->
-                        <ui:ContentDialog x:Name="ManipulatorDialog" Title="New Manipulator" 
+        
+                        <StackPanel  x:Name="Stackpanel" >
+                            <!-- NEW MANIPULATOR -->
+                            
+                            <ui:ContentDialog x:Name="ManipulatorDialog" Title="New Manipulator" 
                                         
                                               CloseButtonText="Cancel" CloseButtonStyle="{DynamicResource DateTimePickerFlyoutButtonStyle}"  CloseButtonClick="ManipulatorDialog_CloseButtonClick"
                                               
                                               PrimaryButtonText="Create" PrimaryButtonStyle="{DynamicResource DefaultButtonStyle}" PrimaryButtonCommand="{Binding DataContext.AddManipulatorCommand,ElementName=SettingUserControl}">
-                            <xCust:CustomManipulatorForm Manipulator="{Binding DataContext.Manipulator, ElementName=SettingUserControl}"/>
-                        </ui:ContentDialog>
-                        <!--View Manipulator-->
-                        <ui:SimpleStackPanel Orientation="Horizontal">
-                            <Button  Command="{x:Static materialDesign:DrawerHost.OpenDrawerCommand}" 
+                                <xCust:CustomManipulatorForm Manipulator="{Binding DataContext.Manipulator, ElementName=SettingUserControl}"/>
+                            </ui:ContentDialog>
+                            <!--View Manipulator-->
+                            <ui:SimpleStackPanel Orientation="Horizontal">
+                       
+                                <Button  Command="{x:Static materialDesign:DrawerHost.OpenDrawerCommand}" 
                              CommandParameter="{x:Static Dock.Left}" 
                              Style="{DynamicResource MaterialDesignIconForegroundButton}" 
                              ToolTip="List of Manipulators"
                              ToolTipService.InitialShowDelay="122"
                              >
-                                <materialDesign:PackIcon Kind="PlaylistEdit" Style="{DynamicResource IconStyle24}"/>
-                            </Button>
-                            <TextBlock  VerticalAlignment="Center" Style="{StaticResource SubheaderTextBlockStyle}" 
+                                    <materialDesign:PackIcon Kind="PlaylistEdit" Style="{DynamicResource IconStyle24}"/>
+                                </Button>
+                                <TextBlock  VerticalAlignment="Center" Style="{StaticResource SubheaderTextBlockStyle}" 
                                         Text="Manipulator"  />
-                            
-   
+                            <Button Command="{Binding TestCommand}" Content="Clikc"/>
+                            <xCust:CustomLoadingControl testing="{Binding Test}" ParentControl="{Binding ElementName=m_AppWindow}" DialogContent="{Binding Path=Content, Source={StaticResource template1}}"/>
+               
+
+
                         </ui:SimpleStackPanel>
-                        <ContentControl x:Name="ManipulatorContent" Content="{Binding Manipulator}">
+                            <ContentControl x:Name="ManipulatorContent" Content="{Binding Manipulator}">
 
-                            <i:Interaction.Triggers>
-                                <i:DataTrigger Binding="{Binding Manipulator}" Value="{Binding Manipulator}">
-                                    <i:ChangePropertyAction PropertyName="ContentTemplate" Value="{StaticResource ManiForm}"/>
-                                </i:DataTrigger>
-                                <i:DataTrigger Binding="{Binding Vision}" Value="{x:Null}">
-                                    <i:ChangePropertyAction PropertyName="ContentTemplate" Value="{StaticResource ErrorPage}"/>
-                                </i:DataTrigger>
-                            </i:Interaction.Triggers>
+                                <i:Interaction.Triggers>
+                                    <i:DataTrigger Binding="{Binding Manipulator}" Value="{Binding Manipulator}">
+                                        <i:ChangePropertyAction PropertyName="ContentTemplate" Value="{StaticResource ManiForm}"/>
+                                    </i:DataTrigger>
+                                    <i:DataTrigger Binding="{Binding Vision}" Value="{x:Null}">
+                                        <i:ChangePropertyAction PropertyName="ContentTemplate" Value="{StaticResource ErrorPage}"/>
+                                    </i:DataTrigger>
+                                </i:Interaction.Triggers>
 
-                        </ContentControl>
+                            </ContentControl>
 
 
 
-                    </StackPanel>
+                        </StackPanel>
                 </materialDesign:DrawerHost>
             </TabItem>
 
@@ -220,12 +238,12 @@
 
                             <TextBlock  VerticalAlignment="Center" Style="{StaticResource SubheaderTextBlockStyle}" 
                                         Text="Vision"  />
-                  
+
                         </ui:SimpleStackPanel>
 
 
                         <ContentControl x:Name="VisionContent" Content="{Binding Vision}">
-                            
+
                             <i:Interaction.Triggers>
                                 <i:DataTrigger Binding="{Binding Vision}" Value="{Binding Vision}">
                                     <i:ChangePropertyAction PropertyName="ContentTemplate" Value="{StaticResource VisionForm}"/>
@@ -234,7 +252,7 @@
                                     <i:ChangePropertyAction PropertyName="ContentTemplate" Value="{StaticResource ErrorPage}"/>
                                 </i:DataTrigger>
                             </i:Interaction.Triggers>
-                            
+
                         </ContentControl>
                     </ui:SimpleStackPanel>
                 </materialDesign:DrawerHost>
@@ -290,7 +308,6 @@
             </TabItem>
 
         </TabControl>
-
 
 
     </ScrollViewer>

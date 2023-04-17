@@ -695,6 +695,9 @@
     <Compile Include="CustomControls\CustomBrowse.xaml.cs">
       <DependentUpon>CustomBrowse.xaml</DependentUpon>
     </Compile>
+    <Compile Include="CustomControls\CustomLoading.xaml.cs">
+      <DependentUpon>CustomLoading.xaml</DependentUpon>
+    </Compile>
     <Compile Include="CustomControls\CustomRadioControl.xaml.cs">
       <DependentUpon>CustomRadioControl.xaml</DependentUpon>
     </Compile>
@@ -711,6 +714,9 @@
       <DependentUpon>CustomVisionForm.xaml</DependentUpon>
     </Compile>
     <Compile Include="CustomControls\DialogBehavior.cs" />
+    <Compile Include="CustomControls\CustomLoadingControl.xaml.cs">
+      <DependentUpon>CustomLoadingControl.xaml</DependentUpon>
+    </Compile>
     <Compile Include="CustomControls\MTypeCombo.xaml.cs">
       <DependentUpon>MTypeCombo.xaml</DependentUpon>
     </Compile>
@@ -888,6 +894,10 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="CustomControls\CustomLoading.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="CustomControls\CustomManipulatorForm.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -901,6 +911,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="CustomControls\CustomVisionForm.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="CustomControls\CustomLoadingControl.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
