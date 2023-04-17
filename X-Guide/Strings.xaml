@@ -8,5 +8,5 @@
     <system:String x:Key="VI001">VI-001: Failed to receive a response from vision within the specified time frame</system:String>
     <system:String x:Key="COM000">COM-000: Communication error: Unable to send message to target stream.</system:String>
     <system:String x:Key="CL000">CL-000: Communication error: Unable to connect to client.</system:String>
-
+    
 </ResourceDictionary>

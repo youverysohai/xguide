@@ -16,7 +16,7 @@ namespace X_Guide.Converter
 
         public static readonly DependencyProperty SettingsCommandParameterProperty =
             DependencyProperty.RegisterAttached("SettingsCommandParameter", typeof(object), typeof(NavigationViewExtensions), new PropertyMetadata(null));
-
+        
         public static ICommand GetSettingsCommand(NavigationView navigationView)
         {
             return (ICommand)navigationView.GetValue(SettingsCommandProperty);

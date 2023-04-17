@@ -82,10 +82,10 @@ namespace X_Guide.MVVM.ViewModel
             Calibrations = new ObservableCollection<CalibrationViewModel>(calibModels.Select(x => _mapper.Map<CalibrationViewModel>(x)));
 
         }
-        private void LoadCalibration(object obj)
+        private async void LoadCalibration(object obj)
         {
             TypedParameter calib = new TypedParameter(typeof(CalibrationViewModel), obj);
-            CalibrationMainViewModel calibMain = _navigationService.Navigate<CalibrationMainViewModel>(calib) as CalibrationMainViewModel;
+            CalibrationMainViewModel calibMain = await _navigationService.Navigate<CalibrationMainViewModel>(calib) as CalibrationMainViewModel;
 /*            calibMain.LoadCalibSetting(calib);*/
         }
 

@@ -11,8 +11,8 @@ namespace X_Guide.Service
 {
     public interface INavigationService
     {
-        void Navigate(ViewModelBase viewModelBase);
-        ViewModelBase Navigate<T>(params Parameter[] parameters) where T : ViewModelBase;
+        Task Navigate(ViewModelBase viewModelBase);
+        Task<ViewModelBase> Navigate<T>(params Parameter[] parameters) where T : ViewModelBase;
         NavigationStore GetNavigationStore();
 
     }

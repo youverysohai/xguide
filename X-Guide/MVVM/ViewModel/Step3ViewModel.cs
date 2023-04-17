@@ -5,6 +5,7 @@ using System.Collections.ObjectModel;
 using System.Diagnostics;
 using System.Linq;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using System.Windows.Input;
@@ -25,7 +26,7 @@ namespace X_Guide.MVVM.ViewModel
 
         public ICommand NavigateCommand { get; }
 
-
+        private ManualResetEvent _manual;
         private CalibrationViewModel _calibration;
         private readonly IVisionService _visionService;
         private readonly IVisionDb _visionDb;
@@ -41,7 +42,9 @@ namespace X_Guide.MVVM.ViewModel
         public string Procedure
         {
             get { return _procedure; }
-            set { _calibration.Procedure = value;
+            set
+            {
+                _calibration.Procedure = value;
                 OnPropertyChanged();
                 OnProcedureChanged();
             }
@@ -51,11 +54,13 @@ namespace X_Guide.MVVM.ViewModel
         public VisionViewModel Vision
         {
             get { return _vision; }
-            set { _calibration.Vision = value;
+            set
+            {
+                _calibration.Vision = value;
                 OnPropertyChanged();
-                if(value != null)
+                if (value != null)
                 {
-                    GetProcedures();
+                    /*     GetProcedures();*/
                 }
             }
         }
@@ -65,29 +70,18 @@ namespace X_Guide.MVVM.ViewModel
             MessageBox.Show(_calibration.Procedure);
         }
 
-        private ObservableCollection<VisionViewModel> _visions;
+        public ObservableCollection<VisionViewModel> Visions { get; set; }
 
-        public ObservableCollection<VisionViewModel> Visions
+        public ObservableCollection<string> Procedures { get; set; }
+
+        public override void ReadyToDisplay()
         {
-            get { return _visions; }
-            set
+            using (_manual = new ManualResetEvent(false))
             {
-                _visions = value;
-                OnPropertyChanged();
+                _manual.WaitOne();
             }
+
         }
-
-        private ObservableCollection<string> _procedures;
-
-        public ObservableCollection<string> Procedures
-        {
-            get { return _procedures; }
-            set { _procedures = value;
-                OnPropertyChanged();
-            }
-        }
-
-
 
         public Step3ViewModel(CalibrationViewModel calibration, IVisionService visionService, IVisionDb visionDb, IMapper mapper)
         {
@@ -95,23 +89,33 @@ namespace X_Guide.MVVM.ViewModel
             _visionService = visionService;
             _visionDb = visionDb;
             _mapper = mapper;
-            GetVisions();
+            InitView();
 
         }
 
-        private async void GetVisions()
+
+        private async void InitView()
+        {
+            await GetVisions();
+            await GetProcedures();
+            _manual?.Set();
+
+        }
+        private async Task GetVisions()
         {
             IEnumerable<VisionModel> models = await _visionDb.GetAll();
-            Visions = new ObservableCollection<VisionViewModel>(models.Select(x=> _mapper.Map<VisionViewModel>(x)));
+            Visions = new ObservableCollection<VisionViewModel>(models.Select(x => _mapper.Map<VisionViewModel>(x)));
+
         }
 
-        private async void GetProcedures()
+        private async Task GetProcedures()
         {
+            if (_calibration.Vision?.Filepath is null) return;
             await _visionService.ImportSol(_calibration.Vision.Filepath);
             Procedures = new ObservableCollection<string>(_visionService.GetProcedureNames());
         }
-      
 
-   
+
+
     }
 }

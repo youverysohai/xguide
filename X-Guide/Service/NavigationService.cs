@@ -24,14 +24,17 @@ namespace X_Guide.Service
             _viewModelLocator = viewModelLocator;
         }
 
-        public void Navigate(ViewModelBase viewModel)
+        public async Task Navigate(ViewModelBase viewModel)
         {
+            await Task.Run(() => viewModel.ReadyToDisplay());
             _navigationStore.CurrentViewModel = viewModel;
 
         }
-        public ViewModelBase Navigate<T>(params Parameter[] parameters) where T : ViewModelBase
+        public async Task<ViewModelBase> Navigate<T>(params Parameter[] parameters) where T : ViewModelBase
         {
             ViewModelBase viewModel = _viewModelLocator.Create<T>(parameters);
+            
+            await Task.Run(()=> viewModel.ReadyToDisplay());
             _navigationStore.CurrentViewModel = viewModel;
             return viewModel;
         }

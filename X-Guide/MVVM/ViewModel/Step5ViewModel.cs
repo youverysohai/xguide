@@ -17,6 +17,7 @@ using System.Windows.Threading;
 using VM.Core;
 using VMControls.Interface;
 using VMControls.WPF.Release;
+using Windows.UI.Xaml.Controls.Primitives;
 /*using VM.Core;*/
 using X_Guide.Communication.Service;
 using X_Guide.CustomEventArgs;

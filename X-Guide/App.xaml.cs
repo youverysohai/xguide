@@ -99,8 +99,7 @@ namespace X_Guide
         public App()
         {
             /* VmRenderControl vmRender = new VmRenderControl();*/
-   
-
+         
             //App specific settings
             InitializeAppConfiguration();
 

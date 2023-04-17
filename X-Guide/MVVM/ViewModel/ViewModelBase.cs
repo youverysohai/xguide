@@ -9,9 +9,11 @@ using System.Threading.Tasks;
 
 namespace X_Guide.MVVM.ViewModel
 {
-    [AddINotifyPropertyChangedInterface]
     public class ViewModelBase : INotifyPropertyChanged
     {
+        public virtual void ReadyToDisplay() {
+        }
+
         public event PropertyChangedEventHandler PropertyChanged;
 
         protected void OnPropertyChanged([CallerMemberName] string propertyName = null)
