@@ -23,7 +23,7 @@
         <local:ManipulatorComboBox Type="{Binding Manipulator.Type, ElementName=ManipulatorForm}"/>
         <!--Row 2-->
     <TextBlock Text="Description"  Style="{DynamicResource LabelTextBlock}" />
-    <TextBox x:Name="CommentsTextBox" Grid.Row="2" Grid.Column="1" Margin="5"  VerticalAlignment="Center" MaxLines="4" AcceptsReturn="True" Text="{Binding Manipulator.Description, ElementName=ManipulatorForm}"/>
+    <TextBox x:Name="CommentsTextBox" HorizontalAlignment="Left" Grid.Row="2" Grid.Column="1" Margin="5" Width="320" VerticalAlignment="Center" MaxLines="4" AcceptsReturn="True" TextWrapping="Wrap" Text="{Binding Manipulator.Description, ElementName=ManipulatorForm}"/>
 </ui:SimpleStackPanel>
 
 </UserControl>

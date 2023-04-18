@@ -117,9 +117,9 @@ namespace X_Guide
         {
             /* VmRenderControl vmRender = new VmRenderControl();*/
             //Uri uri = new Uri("/VMControls.WPF;component/MVVM/View/MainWindow.xaml", UriKind.Relative);
-            Uri uri = new Uri("/X-Guide.VMControls.WPF;component/MVVM/View/MainWindow.xaml", UriKind.Relative);
+            //Uri uri = new Uri("/X-Guide.VMControls.WPF;component/MVVM/View/MainWindow.xaml", UriKind.Relative);
             //pack://application:,,,/MaterialDesignThemes.Wpf;component/Themes/MaterialDesignTheme.Defaults.xaml
-            LoadComponent(uri);
+            //LoadComponent(uri);
                                  
             //App specific settings
             InitializeAppConfiguration();

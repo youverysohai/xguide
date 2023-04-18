@@ -42,8 +42,10 @@
         </Style>
 
         <DataTemplate x:Key="ErrorPage">
-            <StackPanel>
-                <TextBlock Text="Empty!" /> 
+            <StackPanel Orientation="Vertical" HorizontalAlignment="Center">
+                <TextBlock Style="{DynamicResource SubheaderTextBlockStyle}" Text="Nothing is selected.&#x0a;" /> 
+          
+                <TextBlock Style="{DynamicResource SubtitleTextBlockStyle}" HorizontalAlignment="Center" Text="Please select from the list." /> 
             </StackPanel>
         </DataTemplate>
 
@@ -120,7 +122,7 @@
 
                     <!-- Manipulator Form-->
         
-                        <StackPanel  x:Name="Stackpanel" >
+                        <StackPanel >
                             <!-- NEW MANIPULATOR -->
                             
                             <ui:ContentDialog x:Name="ManipulatorDialog" Title="New Manipulator" 
@@ -182,25 +184,40 @@
 
                 <materialDesign:DrawerHost OpenMode="Standard">
                     <materialDesign:DrawerHost.LeftDrawerContent>
-                        <Grid>
-                            <ItemsControl ItemsSource="{Binding Visions}">
-                                <ItemsControl.ItemTemplate>
-                                    <DataTemplate>
-                                        <StackPanel>
-                                            <RadioButton Content="{Binding Name}" GroupName="visions"
-                          Command="{Binding DataContext.VisionCommand, ElementName=SettingUserControl}" CommandParameter="{Binding}"  
+                        <hc:ScrollViewer VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Auto">
+                            <hc:SimpleStackPanel Orientation="Horizontal" 
+               Background="{DynamicResource PersonPictureEllipseBadgeFillThemeBrush}">
+                                <ItemsControl ItemsSource="{Binding Visions}">
+                                    <ItemsControl.ItemTemplate>
+                                        <DataTemplate>
+                                            <StackPanel>
+                                                <RadioButton Content="{Binding Name}" GroupName="visions"
+                          Command="{Binding DataContext.VisionCommand, ElementName= SettingUserControl}" CommandParameter="{Binding}"  
                                                                         Style="{StaticResource MaterialDesignChoiceChipPrimaryOutlineRadioButton}" />
-                                        </StackPanel>
-                                    </DataTemplate>
-                                </ItemsControl.ItemTemplate>
-                            </ItemsControl>
-                            <Button Command="{x:Static materialDesign:DrawerHost.CloseDrawerCommand}" >
-                            </Button>
-                        </Grid>
+                                            </StackPanel>
+                                        </DataTemplate>
+                                    </ItemsControl.ItemTemplate>
+                                </ItemsControl>
+                                <Button Margin="4 15 4 4 "
+                                            VerticalAlignment="Top"
+                                                HorizontalAlignment="Center"
+                                                Command="{x:Static materialDesign:DrawerHost.CloseDrawerCommand}"
+                                                CommandParameter="{x:Static Dock.Left}"
+                                                
+                                                Style="{StaticResource MaterialDesignIconButton}" >
+                                    <materialDesign:PackIcon Kind="MenuLeft" Style="{DynamicResource IconStyle24}" />
+                                </Button>
+                            </hc:SimpleStackPanel>
+
+
+
+
+                        </hc:ScrollViewer>
+
                     </materialDesign:DrawerHost.LeftDrawerContent>
 
 
-                    <ui:SimpleStackPanel Orientation="Vertical" Width="500" HorizontalAlignment="Left">
+                    <ui:SimpleStackPanel Orientation="Vertical">
 
                         <!-- NEW VISION -->
                         <ui:ContentDialog x:Name="VisionDialog" Title="New Vision" CloseButtonStyle="{DynamicResource DateTimePickerFlyoutButtonStyle}" CloseButtonText="Cancel" 
