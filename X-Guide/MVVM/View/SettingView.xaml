@@ -57,8 +57,7 @@
 
         <DataTemplate x:Key="ErrorPage">
             <StackPanel>
-                <TextBlock Text="Empty!" />
-
+                <TextBlock Text="Empty!" /> 
             </StackPanel>
         </DataTemplate>
 

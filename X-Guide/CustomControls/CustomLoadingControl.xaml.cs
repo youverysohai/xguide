@@ -73,14 +73,14 @@ namespace X_Guide.CustomControls
             if (custControl.testing && !(custControl.dialogHost is null))
             {
                 Application.Current.Dispatcher.BeginInvoke(() => custControl.dialogHost.ShowDialog(custControl.DialogContent));
-                await Task.Delay(5000);
+
                 custControl.dialogHost.IsOpen = false;
             }
-         /*   else
+            else
             {
                 Application.Current.Dispatcher.BeginInvoke(() => custControl.dialogHost.IsOpen = false);
-            }*/
-        
+            }
+
         }
 
         private static void OnParentControlChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
