@@ -72,7 +72,7 @@ namespace X_Guide.MVVM.ViewModel
         public string LogFilePath { get; set; }
 
 
-        public SettingViewModel(IManipulatorDb machineDb, IVisionDb visionDb, IMapper mapper, ICalibrationDb calibrationDb, IClientService clientService, IServerService serverService, IVisionService visionService, IGeneralDb generalDb)
+        public SettingViewModel(IManipulatorDb machineDb, IVisionDb visionDb, IMapper mapper, ICalibrationDb calibrationDb, IGeneralDb generalDb)
         {
             _manipulatorDb = machineDb;
             _visionDb = visionDb;
@@ -94,6 +94,8 @@ namespace X_Guide.MVVM.ViewModel
             SaveGeneralCommand = new RelayCommand(SaveGeneral);
             AddManipulatorCommand = new RelayCommand(AddManipulator);
             TestCommand = new RelayCommand(test);
+   
+
         }
 
         private async void OpenVisionForm(object obj)
@@ -112,7 +114,15 @@ namespace X_Guide.MVVM.ViewModel
 
         private void test(object obj)
         {
-            Test = !Test;
+            try
+            {
+                VmSolution.Import(@"C:\Users\Xlent_XIR02\Desktop\livecam.sol");
+                var i = VmSolution.Instance["Live"];
+            }
+            catch (Exception ex)
+            {
+                System.Windows.MessageBox.Show(ex.Message.ToString());
+            }
         }
 
         private void SaveGeneral(object obj)

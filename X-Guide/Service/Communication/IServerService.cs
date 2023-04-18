@@ -20,10 +20,10 @@ namespace X_Guide.Communication.Service
         TcpClientInfo GetConnectedClientInfo(TcpClient tcpClient);
         Task ServerWriteDataAsync(string data);
         Task<T> RegisterSingleRequestHandler<T>(Func<NetworkStreamEventArgs, T> action, CancellationToken ct = new CancellationToken());
-        bool getServerStatus();
-        Task StartServer();
-        void StopServer();
-        Task<bool> SendJogCommand(JogCommand jogCommand);
+        bool Status();
+        Task Start();
+        void Stop();
+
         void SetServerReadTerminator(string terminator);
         ConcurrentDictionary<int, TcpClientInfo> GetConnectedClient();
     }

@@ -43,7 +43,7 @@
                     <ComboBox
                         ItemsSource="{Binding Procedures}" 
                         SelectedItem="{Binding Procedure}"   Style="{DynamicResource MaterialDesignOutlinedComboBox}"
-                              Width="300"
+                              Width="300" IsEnabled="{Binding IsProcedureEditable}"
                               materialDesign:HintAssist.Hint="Select Vision Flow"
                                                       HorizontalAlignment="Left"
                               Margin="0">

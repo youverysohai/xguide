@@ -83,8 +83,8 @@ namespace X_Guide.MVVM.ViewModel
         private int _stepIndex;
 
         private int _currentStep;
-   
 
+     
         public int StepIndex
         {
             get { return _stepIndex; }
@@ -141,13 +141,13 @@ namespace X_Guide.MVVM.ViewModel
 
 
 
-        public void WizNext(object parameter)
+        public async void WizNext(object parameter)
         {
             LinkedListNode<ViewModelBase> nextNode = CurrentNode.Next;
 
             if (nextNode != null)
             {
-                _navigationService.Navigate(nextNode.Value);
+                await _navigationService.NavigateAsync(nextNode.Value);
                 CurrentNode = nextNode;
                 CurrentStep += 1;
             }
@@ -155,7 +155,7 @@ namespace X_Guide.MVVM.ViewModel
             {
                 try
                 {
-                    NavigateToStep(CurrentStep + 1);
+                    await NavigateToStep(CurrentStep + 1);
                     CurrentNode = NavigationHistory.AddLast(_navigationStore.CurrentViewModel);
                     CurrentStep += 1;
                 }
@@ -185,7 +185,7 @@ namespace X_Guide.MVVM.ViewModel
 
         }
 
-        private void NavigateToStep(int currentStep)
+        private async Task NavigateToStep(int currentStep)
         {
             var calibPara = new TypedParameter(typeof(CalibrationViewModel), _calibration);
             
@@ -193,10 +193,10 @@ namespace X_Guide.MVVM.ViewModel
             {
                 case 0: _navigationService.Navigate<Step1ViewModel>(calibPara); break;
                 case 1: _navigationService.Navigate<Step2ViewModel>(calibPara); break;
-                case 2: _navigationService.Navigate<Step3ViewModel>(calibPara); break;
-                case 3:  _navigationService.Navigate<Step4ViewModel>(calibPara); break;
-                case 4:  _navigationService.Navigate<Step5ViewModel>(calibPara); break;
-                case 5:  _navigationService.Navigate<Step6ViewModel>(calibPara); break;
+                case 2: await _navigationService.NavigateAsync<Step3ViewModel>(calibPara); break;
+                case 3: _navigationService.Navigate<Step4ViewModel>(calibPara); break;
+                case 4: await _navigationService.NavigateAsync<Step5ViewModel>(calibPara); break;
+                case 5: _navigationService.Navigate<Step6ViewModel>(calibPara); break;
                 default: throw new Exception("Page does not exist!");
             }
 

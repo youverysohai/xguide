@@ -17,6 +17,7 @@ using System.Windows.Threading;
 using VM.Core;
 using VMControls.Interface;
 using VMControls.WPF.Release;
+using Windows.UI.Xaml.Controls.Primitives;
 /*using VM.Core;*/
 using X_Guide.Communication.Service;
 using X_Guide.CustomEventArgs;
@@ -29,13 +30,14 @@ using X_Guide.VisionMaster;
 
 namespace X_Guide.MVVM.ViewModel
 {
-    internal class Step5ViewModel : ViewModelBase, IDisposable
+    internal class Step5ViewModel : ViewModelBase
     {
 
         private readonly CalibrationViewModel _calibration;
         private readonly IJogService _jogService;
         private readonly IServerService _serverService;
         private readonly IVisionService _visionService;
+        private ManualResetEventSlim _manual;
 
         private IVmModule _visProcedure;
 
@@ -96,8 +98,34 @@ namespace X_Guide.MVVM.ViewModel
    
             JogCommand = new RelayCommand(Jog, (o) => _canJog);
             _serverService.ClientConnectionChange += OnConnectionChange;
-           /* RunProcedure();*/
-            _jogService.Start();
+            
+           InitView();
+            
+        }
+
+
+        public async void InitView()
+        {
+            try
+            {
+                await RunProcedure();
+                _jogService.Start();
+               
+            }
+            catch
+            {
+                _canDisplayViewModel = false;
+            }
+            _manual.Set();
+        }
+
+        public override bool ReadyToDisplay()
+        {
+            using(_manual = new ManualResetEventSlim(false))
+            {
+                _manual.Wait();
+                return _canDisplayViewModel;
+            }
         }
 
         private void OnConnectionChange(object sender, bool canJog)
@@ -109,13 +137,13 @@ namespace X_Guide.MVVM.ViewModel
             });  
         }
 
-        private async void RunProcedure()
+        private async Task RunProcedure()
         {
             await _visionService.ImportSol(_calibration.Vision.Filepath);
             IVmModule vmProcedure = null;
             try
             {
-                vmProcedure = await _visionService.RunProcedure("Live", true);
+                vmProcedure = await _visionService.RunProcedure($"{_calibration.Procedure}", true);
             }
             catch(Exception ex)
             {
@@ -145,10 +173,11 @@ namespace X_Guide.MVVM.ViewModel
             _jogService.Enqueue(command);
 
         }
-
-        public void Dispose()
+       
+        public new void Dispose()
         {
             _serverService.ClientConnectionChange -= OnConnectionChange;
+            base.Dispose();
         }
     }
 }

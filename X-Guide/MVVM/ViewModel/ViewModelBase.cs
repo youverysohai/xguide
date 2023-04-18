@@ -9,9 +9,14 @@ using System.Threading.Tasks;
 
 namespace X_Guide.MVVM.ViewModel
 {
-    [AddINotifyPropertyChangedInterface]
-    public class ViewModelBase : INotifyPropertyChanged
+    public class ViewModelBase : INotifyPropertyChanged, IDisposable
     {
+        protected volatile bool _canDisplayViewModel = true;
+        protected volatile bool _isLoaded = false;
+        public virtual bool ReadyToDisplay() {
+            return true;
+        }
+
         public event PropertyChangedEventHandler PropertyChanged;
 
         protected void OnPropertyChanged([CallerMemberName] string propertyName = null)
@@ -19,6 +24,8 @@ namespace X_Guide.MVVM.ViewModel
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
         }
 
-
+        public void Dispose()
+        {
+        }
     }
 }

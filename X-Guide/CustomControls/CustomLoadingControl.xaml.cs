@@ -31,15 +31,18 @@ namespace X_Guide.CustomControls
         public DialogHost dialogHost { get; set; }
 
 
-        public bool testing
+
+
+        public bool IsRunning
         {
-            get { return (bool)GetValue(testingProperty); }
-            set { SetValue(testingProperty, value); }
+            get { return (bool)GetValue(IsRunningProperty); }
+            set { SetValue(IsRunningProperty, value); }
         }
 
-        // Using a DependencyProperty as the backing store for testing.  This enables animation, styling, binding, etc...
-        public static readonly DependencyProperty testingProperty =
-            DependencyProperty.Register("testing", typeof(bool), typeof(CustomLoadingControl), new PropertyMetadata(false, OnLoadingChanged));
+        // Using a DependencyProperty as the backing store for IsRunning.  This enables animation, styling, binding, etc...
+        public static readonly DependencyProperty IsRunningProperty =
+            DependencyProperty.Register("IsRunning", typeof(bool), typeof(CustomLoadingControl), new PropertyMetadata(true, OnLoadingChanged));
+
 
 
 
@@ -70,16 +73,18 @@ namespace X_Guide.CustomControls
         private static async void OnLoadingChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
         {
             var custControl = (d as CustomLoadingControl);
-            if (custControl.testing && !(custControl.dialogHost is null))
+            
+            if (custControl.IsRunning && !(custControl.dialogHost is null))
             {
-                Application.Current.Dispatcher.BeginInvoke(() => custControl.dialogHost.ShowDialog(custControl.DialogContent));
-
-                custControl.dialogHost.IsOpen = false;
+                 await Application.Current.Dispatcher.BeginInvoke(() => custControl.dialogHost.ShowDialog(custControl.DialogContent));
+            
             }
             else
             {
-                Application.Current.Dispatcher.BeginInvoke(() => custControl.dialogHost.IsOpen = false);
+                await Task.Delay(100);
+                custControl.dialogHost.IsOpen = false;
             }
+     
 
         }
 
