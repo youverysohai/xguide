@@ -47,10 +47,12 @@ namespace X_Guide.Service
         {
             CancellationTokenSource cts = new CancellationTokenSource();
             await _serverService.ServerWriteDataAsync(jogCommand.ToString());
+
             var timer = new System.Timers.Timer(5000);
             timer.AutoReset = false;
             timer.Elapsed += (s, o) => cts.Cancel();
             timer.Start();
+
             bool status = await _serverService.RegisterSingleRequestHandler((e) => ServerJogCommand(e, _serverService.GetConnectedClient().FirstOrDefault().Value.TcpClient.GetStream()), cts.Token);
             timer.Dispose();
             return status;

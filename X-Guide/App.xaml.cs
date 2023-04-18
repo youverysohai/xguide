@@ -13,6 +13,9 @@ using System.Linq;
 using System.Net;
 using System.Threading.Tasks;
 using System.Windows;
+using ToastNotifications;
+using ToastNotifications.Lifetime;
+using ToastNotifications.Position;
 using VMControls.WPF.Release;
 using X_Guide.Communication.Service;
 using X_Guide.MappingConfiguration;
@@ -25,6 +28,7 @@ using X_Guide.Service;
 using X_Guide.Service.Communation;
 using X_Guide.Service.Communication;
 using X_Guide.Service.DatabaseProvider;
+using X_Guide.State;
 using X_Guide.VisionMaster;
 using Xlent_Vision_Guided;
 
@@ -52,12 +56,24 @@ namespace X_Guide
             });
 
             builder.Register(c => ConfigurationManager.OpenExeConfiguration(ConfigurationUserLevel.None)).As<Configuration>();
-            builder.Register(c => new MapperConfiguration(b =>
+            builder.Register(c => new MapperConfiguration(cfg =>
             {
-                b.AddProfile<ManipulatorProfile>();
-                b.AddProfile<CalibrationProfile>();
-                b.AddProfile<VisionProfile>();
-                b.AddProfile<GeneralProfile>();
+                cfg.AddProfile<ManipulatorProfile>();
+                cfg.AddProfile<CalibrationProfile>();
+                cfg.AddProfile<VisionProfile>();
+                cfg.AddProfile<GeneralProfile>();
+            })).SingleInstance();
+            builder.Register(c => new Notifier(cfg =>
+            {
+                cfg.PositionProvider = new WindowPositionProvider(
+                    parentWindow: Application.Current.MainWindow,
+                    corner: Corner.TopRight,
+                    offsetX: 10,
+                    offsetY: 10);
+                cfg.LifetimeSupervisor = new TimeAndCountBasedLifetimeSupervisor(
+                    notificationLifetime: TimeSpan.FromSeconds(3),
+                    maximumNotificationCount: MaximumNotificationCount.FromCount(5));
+                cfg.Dispatcher = Application.Current.Dispatcher;
             })).SingleInstance();
             builder.Register(c => c.Resolve<MapperConfiguration>().CreateMapper()).SingleInstance();
 
@@ -77,7 +93,7 @@ namespace X_Guide
             builder.RegisterType<Step6ViewModel>();
             builder.RegisterType<SettingViewModel>();
             builder.RegisterType<CalibrationMainViewModel>();
-       
+            builder.RegisterType<ViewModelState>().SingleInstance();
             builder.RegisterType<DbContextFactory>().SingleInstance();
             builder.RegisterType<ManipulatorDb>().As<IManipulatorDb>();
             builder.RegisterType<UserDb>().As<IUserDb>();
@@ -86,6 +102,7 @@ namespace X_Guide
             builder.RegisterType<ServerCommand>().SingleInstance();
             builder.RegisterType<NavigationStore>();
             builder.RegisterType<NavigationService>().As<INavigationService>();
+            builder.RegisterType<CalibrationService>().As<ICalibrationService>();
             builder.RegisterType<VisionDb>().As<IVisionDb>();
             builder.RegisterType<CalibrationDb>().As<ICalibrationDb>();
             builder.RegisterType<GeneralDb>().As<IGeneralDb>();

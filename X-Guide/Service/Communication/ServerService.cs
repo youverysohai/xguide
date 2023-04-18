@@ -77,18 +77,18 @@ namespace X_Guide.Communication.Service
             }
         }
 
-        public bool getServerStatus()
+        public bool Status()
         {
-            return started;
+            return _canExecute;
         }
 
-        public void StopServer()
+        public void Stop()
         {
             cts.Cancel();
         }
 
 
-        public async Task StartServer()
+        public async Task Start()
         {
             cts = new CancellationTokenSource();
             _server = new TcpListener(_ip, _port);
@@ -163,10 +163,7 @@ namespace X_Guide.Communication.Service
             await WriteDataAsync(data, _connectedClient.FirstOrDefault().Value.TcpClient.GetStream());
         }
 
-        public Task<bool> SendJogCommand(JogCommand jogCommand)
-        {
-            throw new NotImplementedException();
-        }
+    
     }
 }
 

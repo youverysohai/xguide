@@ -9,6 +9,9 @@ using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using System.Windows.Input;
+using System.Windows.Navigation;
+using ToastNotifications;
+using ToastNotifications.Core;
 using VM.Core;
 using X_Guide.Communication.Service;
 using X_Guide.MVVM.Command;
@@ -16,21 +19,22 @@ using X_Guide.MVVM.Model;
 using X_Guide.MVVM.ViewModel.CalibrationWizardSteps;
 using X_Guide.Service.Communication;
 using X_Guide.Service.DatabaseProvider;
+using X_Guide.State;
 using X_Guide.VisionMaster;
+using ToastNotifications.Messages;
 
 namespace X_Guide.MVVM.ViewModel
 {
     internal class Step3ViewModel : ViewModelBase
     {
-        public ICommand OpenFileCommand { get; }
 
-        public ICommand NavigateCommand { get; }
-
-        private ManualResetEvent _manual;
+        private ManualResetEventSlim _manual;
         private CalibrationViewModel _calibration;
         private readonly IVisionService _visionService;
         private readonly IVisionDb _visionDb;
         private readonly IMapper _mapper;
+        private readonly Notifier _notifier;
+        private readonly ViewModelState _viewModelState;
 
         public CalibrationViewModel Calibration
         {
@@ -46,10 +50,9 @@ namespace X_Guide.MVVM.ViewModel
             {
                 _calibration.Procedure = value;
                 OnPropertyChanged();
-                OnProcedureChanged();
             }
         }
-
+        public bool IsProcedureEditable { get; set; } = false;
         private VisionViewModel _vision => _calibration.Vision;
         public VisionViewModel Vision
         {
@@ -60,35 +63,46 @@ namespace X_Guide.MVVM.ViewModel
                 OnPropertyChanged();
                 if (value != null)
                 {
-                    /*     GetProcedures();*/
+                    UpdateProcedures();
                 }
             }
         }
 
-        private void OnProcedureChanged()
+        private async void UpdateProcedures()
         {
-            MessageBox.Show(_calibration.Procedure);
+  
+            _viewModelState.IsLoading = true;
+            await GetProcedures();
+            _viewModelState.IsLoading = false;
         }
+
 
         public ObservableCollection<VisionViewModel> Visions { get; set; }
 
         public ObservableCollection<string> Procedures { get; set; }
 
-        public override void ReadyToDisplay()
+        public override bool ReadyToDisplay()
         {
-            using (_manual = new ManualResetEvent(false))
+            if (!_isLoaded)
             {
-                _manual.WaitOne();
+                using (_manual = new ManualResetEventSlim(false))
+                {
+                    _manual.Wait();
+                    _isLoaded = true;
+                }
             }
+            return _isLoaded;
 
         }
 
-        public Step3ViewModel(CalibrationViewModel calibration, IVisionService visionService, IVisionDb visionDb, IMapper mapper)
+        public Step3ViewModel(CalibrationViewModel calibration, IVisionService visionService, IVisionDb visionDb, IMapper mapper, ViewModelState viewModelState, Notifier notifier)
         {
             _calibration = calibration;
             _visionService = visionService;
             _visionDb = visionDb;
             _mapper = mapper;
+            _notifier = notifier;
+            _viewModelState = viewModelState;
             InitView();
 
         }
@@ -110,9 +124,22 @@ namespace X_Guide.MVVM.ViewModel
 
         private async Task GetProcedures()
         {
-            if (_calibration.Vision?.Filepath is null) return;
-            await _visionService.ImportSol(_calibration.Vision.Filepath);
-            Procedures = new ObservableCollection<string>(_visionService.GetProcedureNames());
+            IsProcedureEditable = false;
+            if (Vision is null) return;
+            try
+            {
+                await _visionService.ImportSol(Vision.Filepath);
+
+                Procedures = new ObservableCollection<string>(_visionService.GetProcedureNames());
+                IsProcedureEditable = true;
+            }
+            catch(Exception ex)
+            {
+                Vision = null;
+                Procedure = null;
+                _notifier.ShowError(ex.Message);
+            }
+            
         }
 
 

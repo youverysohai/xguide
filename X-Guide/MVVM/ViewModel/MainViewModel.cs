@@ -10,6 +10,7 @@ using System.Net;
 using System.Security;
 using System.Text;
 using System.Threading.Tasks;
+using System.Timers;
 using System.Web.UI.WebControls;
 using System.Windows;
 using System.Windows.Input;
@@ -23,6 +24,7 @@ using X_Guide.MVVM.Store;
 using X_Guide.MVVM.ViewModel.CalibrationWizardSteps;
 using X_Guide.Service;
 using X_Guide.Service.DatabaseProvider;
+using X_Guide.State;
 
 namespace X_Guide.MVVM.ViewModel
 {
@@ -31,7 +33,12 @@ namespace X_Guide.MVVM.ViewModel
     public class MainViewModel : ViewModelBase
     {
         #region CLR properties
+        public bool Test { get; set; } = false;
+        public RelayCommand TestCommand { get; }
 
+
+
+        public bool IsRunning => _viewModelState.IsLoading;
 
 
 
@@ -59,7 +66,7 @@ namespace X_Guide.MVVM.ViewModel
             set
             {
                 _inputUsername = value;
-           
+
             }
         }
 
@@ -70,12 +77,12 @@ namespace X_Guide.MVVM.ViewModel
             set
             {
                 _inputPassword = value;
-        
+
             }
         }
 
         private readonly AuthenticationService _auth;
-
+        private readonly ViewModelState _viewModelState;
         private INavigationService _navigationService;
         private NavigationStore _navigationStore;
 
@@ -84,23 +91,24 @@ namespace X_Guide.MVVM.ViewModel
         public UserModel CurrentUser => _auth.CurrentUser;
         #endregion
 
-        public MainViewModel(INavigationService navigationService, IServerService serverService, IUserDb userService, ILogger logger)
+        public MainViewModel(INavigationService navigationService, IServerService serverService, IUserDb userService, ILogger logger, ViewModelState viewModelState)
         {
 
             _auth = new AuthenticationService(userService);
             //_auth.CurrentUserChanged += OnCurrentUserChanged;
-            
+            _viewModelState = viewModelState;
+            _viewModelState.OnStateChanged = OnLoadingStateChanged;
             _navigationService = navigationService;
-
             _navigationStore = navigationService.GetNavigationStore();
             _navigationStore.CurrentViewModelChanged += OnCurrentViewModelChanged;
 
-            serverService.StartServer();
-            var nav = new TypedParameter(typeof(INavigationService), _navigationService);
 
-         
+            serverService.Start();
+            var nav = new TypedParameter(typeof(INavigationService), _navigationService);
+            TestCommand = new RelayCommand(test);
+
             _navigationService.Navigate<SettingViewModel>();
-   
+
             LoginCommand = new RelayCommand(Login);
             RegisterCommand = new RelayCommand(Register);
             NavigateCommand = new RelayCommand(Navigate);
@@ -108,10 +116,21 @@ namespace X_Guide.MVVM.ViewModel
 
         }
 
+        private void OnLoadingStateChanged()
+        {
+            OnPropertyChanged(nameof(IsRunning));
+            
+        }
+
+        private void test(object obj)
+        {
+            Test = !Test;
+        }
+
         private void Navigate(object obj)
         {
             var nav = new TypedParameter(typeof(INavigationService), _navigationService);
-           
+
             switch (obj)
             {
 
@@ -124,11 +143,11 @@ namespace X_Guide.MVVM.ViewModel
             }
         }
 
-    
 
-       
 
-       
+
+
+
         private async void Register(object obj)
         {
             MessageBox.Show("Halo chub");
@@ -169,7 +188,7 @@ namespace X_Guide.MVVM.ViewModel
 
         private void OnCurrentViewModelChanged()
         {
-  
+
             OnPropertyChanged(nameof(CurrentViewModel));
             Debug.WriteLine(CurrentViewModel);
 

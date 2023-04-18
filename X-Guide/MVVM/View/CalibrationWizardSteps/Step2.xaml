@@ -41,8 +41,8 @@
                     </StackPanel>
 
 
-                    <Image Width="180" Grid.Column="1"
-                           Visibility="{Binding IsChecked, ElementName=rbLookUpward, Converter={StaticResource BooleanToVisibilityConverter}}"
+                    <!--<Image Width="180" Grid.Column="1"
+                           Visibility="Collapsed" , ElementName=rbLookUpward, Converter={StaticResource BooleanToVisibilityConverter}}"
                            gif:AnimationBehavior.SourceUri="pack://application:,,,/Style/ImageSource/hamster-cute.gif"    
                            ></Image>
                     <Image Width="180" Grid.Column="1"
@@ -54,7 +54,7 @@
                             Visibility="{Binding IsChecked, ElementName=rbLookDownward, Converter={StaticResource BooleanToVisibilityConverter}}"
                            
                                gif:AnimationBehavior.SourceUri="pack://application:,,,/Style/ImageSource/cat.gif"
-                               gif:AnimationBehavior.AnimateInDesignMode="True"></Image>
+                               gif:AnimationBehavior.AnimateInDesignMode="True"></Image>-->
 
 
 

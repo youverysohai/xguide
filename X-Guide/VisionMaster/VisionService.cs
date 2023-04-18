@@ -9,7 +9,9 @@ using VM.Core;
 using VMControls.Interface;
 using X_Guide.Communication.Service;
 using X_Guide.CustomEventArgs;
+using X_Guide.HelperClass;
 using Xlent_Vision_Guided;
+using Timer = X_Guide.HelperClass.Timer;
 
 namespace X_Guide.VisionMaster
 {
@@ -28,14 +30,13 @@ namespace X_Guide.VisionMaster
         {
             await _clientService.ConnectServer();
         }
+        /// <inheritdoc/>
 
         public async Task<Point> GetVisCenter()
         {
             await _clientService.WriteDataAsync($"XGUIDE,{Procedure}");
             _cts = new CancellationTokenSource();
-            var timer = new System.Timers.Timer(5000);
-            timer.AutoReset = false;
-            timer.Elapsed += (s, o) => _cts.Cancel();
+            var timer = new Timer(5000, (s, o) => _cts.Cancel());
             timer.Start();
             Point point = await _clientService.RegisterSingleRequestHandler(GetVisCenterEvent, _cts.Token) ?? throw new Exception(StrRetriver.Get("VI000"));
             timer.Dispose();
@@ -71,13 +72,23 @@ namespace X_Guide.VisionMaster
         {
             return await Task.Run(() => VmSolution.Instance[$"{name}"] as IVmModule);
         }
+        /// <inheritdoc/>
 
-        public async Task<bool> ImportSol(string filepath)
+        public async Task ImportSol(string filepath)
         {
-            await Task.Run(() => VmSolution.Import(filepath));
-            if (VmSolution.Instance.Modules.Count == 0) return false;
-            ConnectServer();
-            return true;
+            await Task.Run(() =>
+            {
+                try
+                {
+                    VmSolution.Import(filepath);
+                }
+                catch
+                {
+                    throw new Exception(StrRetriver.Get("VI002"));
+                }
+            });
+         
+
         }
 
 
@@ -85,6 +96,8 @@ namespace X_Guide.VisionMaster
         {
             throw new NotImplementedException();
         }
+        /// <inheritdoc/>
+
 
         public async Task<IVmModule> RunProcedure(string name, bool continuous = false)
         {
@@ -95,6 +108,7 @@ namespace X_Guide.VisionMaster
                 {
                     return null;
                 }
+
                 if (continuous) procedure.ContinuousRunEnable = true;
                 else
                 {

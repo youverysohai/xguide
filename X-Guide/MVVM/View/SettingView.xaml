@@ -35,21 +35,7 @@
 
             </DockPanel>
         </ControlTemplate>
-        <ContentPresenter x:Key="template1">
-            <ContentPresenter.Content>
-            <StackPanel
-                                        Margin="16">
-
-                <ProgressBar
-                                          Margin="16"
-                                          HorizontalAlignment="Center"
-                                          IsIndeterminate="True"
-                                          Style="{StaticResource MaterialDesignCircularProgressBar}"
-                                          Value="0" />
-            </StackPanel>
-            </ContentPresenter.Content>
-        </ContentPresenter>
-
+  
 
         <Style TargetType="TextBlock" x:Key="LabelTextBlock"  BasedOn="{StaticResource CaptionTextBlockStyle}">
             <Setter Property="Margin" Value="5 10 0 0"/>
@@ -158,8 +144,8 @@
                                 </Button>
                                 <TextBlock  VerticalAlignment="Center" Style="{StaticResource SubheaderTextBlockStyle}" 
                                         Text="Manipulator"  />
-                            <Button Command="{Binding TestCommand}" Content="Clikc"/>
-                            <xCust:CustomLoadingControl testing="{Binding Test}" ParentControl="{Binding ElementName=m_AppWindow}" DialogContent="{Binding Path=Content, Source={StaticResource template1}}"/>
+                     
+                            
                
 
 
@@ -290,7 +276,7 @@
                     <TextBlock Text="Test Operation" Style="{DynamicResource LabelTextBlock}"/>
                     <ui:SimpleStackPanel Orientation="Horizontal">
 
-                        <Button Content="Start Operation" Command="{Binding SaveGeneralCommand}"/>
+                        <Button Content="Start Operation" Command="{Binding TestCommand}"/>
                     </ui:SimpleStackPanel>
                     <!--Row 3-->
                     <TextBlock Text="Connection" Style="{DynamicResource SubtitleTextBlockStyle}" Margin="5 12 0 0"/>

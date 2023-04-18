@@ -10,7 +10,7 @@
         xmlns:vms="clr-namespace:X_Guide.MVVM.ViewModel"
         xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
         xmlns:c="clr-namespace:X_Guide.Converter"
-  
+    xmlns:xCust="clr-namespace:X_Guide.CustomControls"
         mc:Ignorable="d"
         Title="X-Guide"         
         Height="720" Width="1280"
@@ -22,10 +22,25 @@
         ui:WindowHelper.UseModernWindowStyle="True"
                    >
     <Window.Resources>
+        <ContentPresenter x:Key="template1">
+            <ContentPresenter.Content>
+                <StackPanel
+                                        Margin="16">
+
+                    <ProgressBar
+                                          Margin="16"
+                                          HorizontalAlignment="Center"
+                                          IsIndeterminate="True"
+                                          Style="{StaticResource MaterialDesignCircularProgressBar}"
+                                          Value="0" />
+                </StackPanel>
+            </ContentPresenter.Content>
+        </ContentPresenter>
 
     </Window.Resources>
 
-
+    <Grid>
+        <xCust:CustomLoadingControl IsRunning="{Binding IsRunning}" ParentControl="{Binding ElementName=m_AppWindow}" DialogContent="{Binding Path=Content, Source={StaticResource template1}}"/>
         <ui:NavigationView x:Name="SideMenuNavigation"
                        IsTitleBarAutoPaddingEnabled="True" 
                        IsBackButtonVisible="Collapsed"
@@ -204,4 +219,5 @@
 
         </ui:NavigationView>
 
+    </Grid>
 </Window>

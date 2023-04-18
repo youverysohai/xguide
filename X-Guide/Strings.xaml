@@ -6,7 +6,11 @@
     <system:String x:Key="OP003">OP-003: Failed to load vision flow.</system:String>
     <system:String x:Key="VI000">VI-000: Failed to locate center point of the reference object.</system:String>
     <system:String x:Key="VI001">VI-001: Failed to receive a response from vision within the specified time frame</system:String>
+    <system:String x:Key="VI002">VI-002: Encountered an error while attempting to load a vision assembly reference.</system:String>
     <system:String x:Key="COM000">COM-000: Communication error: Unable to send message to target stream.</system:String>
     <system:String x:Key="CL000">CL-000: Communication error: Unable to connect to client.</system:String>
-    
+    <system:String x:Key="SC000">The calibration output and settings have been added.</system:String>
+    <system:String x:Key="SC001">The calibration output and settings have been saved.</system:String>
+
+
 </ResourceDictionary>

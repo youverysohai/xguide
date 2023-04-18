@@ -35,7 +35,7 @@ namespace X_Guide.Service.Communation
             _visionService = visionService;
             _calibDb = calibDb;
             _serverService._dataReceived += ValidateSyntax;
-                
+
         }
 
         public void ValidateSyntax(object sender, NetworkStreamEventArgs network)
@@ -48,7 +48,7 @@ namespace X_Guide.Service.Communation
                 default: break;
             }
         }
-        
+
 
         private async void Operation(string[] parameter)
         {
@@ -58,12 +58,13 @@ namespace X_Guide.Service.Communation
             try
             {
                 if (parameter.Length < 3) throw new Exception(StrRetriver.Get("OP000"));
-               calib = await _calibDb.Get(parameter[1]) ?? throw new Exception(StrRetriver.Get("OP001"));         
-                if(!await _visionService.ImportSol(String.Format(@"{0}", calib.Vision.Filepath))) throw new Exception(StrRetriver.Get("OP002"));
+                calib = await _calibDb.Get(parameter[1]) ?? throw new Exception(StrRetriver.Get("OP001"));
+                try { await _visionService.ImportSol(String.Format(@"{0}", calib.Vision.Filepath)); }
+                catch { throw new Exception(StrRetriver.Get("OP002")); };
                 _ = await _visionService.RunProcedure($"{parameter[2]}", true) ?? throw new Exception(StrRetriver.Get("OP003"));
                 VisCenter = await _visionService.GetVisCenter();
                 OperationData = VisionGuided.EyeInHandConfig2D_Operate(VisCenter, new double[] { calib.CXOffset, calib.CYOffset, calib.CRZOffset, calib.CameraXScaling });
-                string Mode = calib.Mode ? "GLOBAL" : "TOOL"; 
+                string Mode = calib.Mode ? "GLOBAL" : "TOOL";
                 await _serverService.ServerWriteDataAsync($"XGUIDE,{calib.Mode},{OperationData[0]},{OperationData[1]},{OperationData[2]}");
             }
             catch (Exception ex)
