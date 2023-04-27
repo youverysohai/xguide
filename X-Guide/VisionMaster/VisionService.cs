@@ -43,14 +43,13 @@ namespace X_Guide.VisionMaster
             Debug.WriteLine(point);
             return point;
         }
-
+    
         private Point GetVisCenterEvent(NetworkStreamEventArgs e)
         {
             string[] data = e.Data;
 
             if (data.Length == 4)
             {
-
                 if (data[0] == "1")
                 {
                     return new Point(double.Parse(data[1]), -double.Parse(data[2]), double.Parse(data[3]));
@@ -66,6 +65,11 @@ namespace X_Guide.VisionMaster
         public IEnumerable<string> GetProcedureNames()
         {
             return VmSolution.Instance.GetAllProcedureList().astProcessInfo.Where(x => x.strProcessName != null).ToList().Select(x => x.strProcessName).ToList();
+        }
+
+        public void GetCameras()
+        {
+            var i = VmSolution.Instance["Live"];
         }
 
         public async Task<IVmModule> GetVmModule(string name)

@@ -48,8 +48,15 @@
                                                       HorizontalAlignment="Left"
                               Margin="0">
                     </ComboBox>
-                    
-                </StackPanel>
+                <ComboBox 
+                        ItemsSource="{Binding Cameras}"
+                        SelectedItem="{Binding Camera}"   Style="{DynamicResource MaterialDesignOutlinedComboBox}"
+                              Width="300"
+                              materialDesign:HintAssist.Hint="Select Calibration Type"
+                                                      HorizontalAlignment="Left"
+                              Margin="0"></ComboBox>
+
+            </StackPanel>
 
 
             </StackPanel>

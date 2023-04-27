@@ -41,5 +41,6 @@ namespace X_Guide.VisionMaster
         IEnumerable<string> GetProcedureNames();
         Task<IVmModule> GetVmModule(string name); 
         void RunOnceAndSaveImage();
+        void GetCameras();
     }
 }

@@ -129,7 +129,7 @@ namespace X_Guide.MVVM.ViewModel
             try
             {
                 await _visionService.ImportSol(Vision.Filepath);
-
+                GetCameras();
                 Procedures = new ObservableCollection<string>(_visionService.GetProcedureNames());
                 IsProcedureEditable = true;
             }
@@ -142,6 +142,10 @@ namespace X_Guide.MVVM.ViewModel
             
         }
 
+        private void GetCameras()
+        {
+            _visionService.GetCameras();
+        }
 
 
     }

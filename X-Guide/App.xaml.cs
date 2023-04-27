@@ -42,13 +42,11 @@ namespace X_Guide
     {
 
         private static readonly IContainer _diContainer = BuildDIContainer();
-
+        //TODO: Add logger
 
         private static IContainer BuildDIContainer()
         {
             ContainerBuilder builder = new ContainerBuilder();
-
-
             builder.Register(c => new ViewModelLocator(_diContainer)).As<IViewModelLocator>().SingleInstance();
             builder.Register(c => new MainWindow()
             {
@@ -141,7 +139,7 @@ namespace X_Guide
         {
 
             MainWindow = _diContainer.Resolve<MainWindow>();
-            ServerCommand serverCommand = _diContainer.Resolve<ServerCommand>();
+            _ = _diContainer.Resolve<ServerCommand>();
             MainWindow.Show();
             base.OnStartup(e);
         }
