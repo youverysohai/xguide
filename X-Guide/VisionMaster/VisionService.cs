@@ -2,14 +2,12 @@
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
-using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 using VM.Core;
 using VMControls.Interface;
 using X_Guide.Communication.Service;
 using X_Guide.CustomEventArgs;
-using X_Guide.HelperClass;
 using Xlent_Vision_Guided;
 using Timer = X_Guide.HelperClass.Timer;
 
@@ -21,6 +19,7 @@ namespace X_Guide.VisionMaster
         private CancellationTokenSource _cts;
 
         public string Procedure { get; set; }
+
         public VisionService(IClientService clientService)
         {
             _clientService = clientService;
@@ -30,6 +29,7 @@ namespace X_Guide.VisionMaster
         {
             await _clientService.ConnectServer();
         }
+
         /// <inheritdoc/>
 
         public async Task<Point> GetVisCenter()
@@ -43,7 +43,7 @@ namespace X_Guide.VisionMaster
             Debug.WriteLine(point);
             return point;
         }
-    
+
         private Point GetVisCenterEvent(NetworkStreamEventArgs e)
         {
             string[] data = e.Data;
@@ -76,6 +76,7 @@ namespace X_Guide.VisionMaster
         {
             return await Task.Run(() => VmSolution.Instance[$"{name}"] as IVmModule);
         }
+
         /// <inheritdoc/>
 
         public async Task ImportSol(string filepath)
@@ -91,21 +92,17 @@ namespace X_Guide.VisionMaster
                     throw new Exception(StrRetriver.Get("VI002"));
                 }
             });
-         
-
         }
-
 
         public void RunOnceAndSaveImage()
         {
             throw new NotImplementedException();
         }
-        /// <inheritdoc/>
 
+        /// <inheritdoc/>
 
         public async Task<IVmModule> RunProcedure(string name, bool continuous = false)
         {
-
             return await Task.Run(() =>
             {
                 if (!(VmSolution.Instance[$"{name}"] is VmProcedure procedure))
@@ -122,8 +119,6 @@ namespace X_Guide.VisionMaster
                 Procedure = name;
                 return procedure;
             });
-
         }
-
     }
 }

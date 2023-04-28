@@ -743,7 +743,6 @@
     <Compile Include="FileLoggerProvider.cs" />
     <Compile Include="General.cs" />
     <Compile Include="HelperClass\BitMapHelper.cs" />
-    <Compile Include="HelperClass\ServerHelper.cs" />
     <Compile Include="HelperClass\Timer.cs">
       <SubType>Component</SubType>
     </Compile>
