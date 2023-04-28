@@ -26,10 +26,13 @@ namespace X_Guide.Service
             _jogService = jogService;
         }
 
+        /// <inheritdoc/>
+
         public async void EyeInHand2DConfig_Calibrate(CalibrationViewModel calibration)
         {
             _calibration = calibration;
             _jogCommand = new JogCommand().SetManipulatorName(_calibration?.Manipulator.Name);
+
             await _visionService.RunProcedure($"{_calibration.Procedure}", true);
             _circleFind = (IMVSCircleFindModuTool)VmSolution.Instance["Circle.Circle Search1"];
             VisProcedure = _circleFind;
