@@ -95,7 +95,7 @@ namespace X_Guide.VisionMaster
                {
                    VmSolution.Load(filepath);
                }
-               catch (Exception ex)
+               catch
                {
                    throw new CriticalErrorException(StrRetriver.Get("C000"));
                }
