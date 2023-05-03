@@ -2,13 +2,14 @@
 <Project ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
   <PropertyGroup>
+    <NullableContextOptions>enable</NullableContextOptions>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
     <ProjectGuid>{78569E50-901C-44AC-8244-55E77301D8A4}</ProjectGuid>
     <OutputType>WinExe</OutputType>
     <RootNamespace>X_Guide</RootNamespace>
     <AssemblyName>X-Guide</AssemblyName>
-    <TargetFrameworkVersion>v4.7.1</TargetFrameworkVersion>
+    <TargetFrameworkVersion>v4.8</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <ProjectTypeGuids>{60dc8134-eba5-43b8-bcc9-bb4bc16c2548};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
     <WarningLevel>4</WarningLevel>
@@ -59,6 +60,7 @@
     <LangVersion>7.3</LangVersion>
     <ErrorReport>prompt</ErrorReport>
     <Prefer32Bit>true</Prefer32Bit>
+    <DocumentationFile>bin\x64\Debug\X-Guide.xml</DocumentationFile>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Release|x64'">
     <OutputPath>bin\x64\Release\</OutputPath>
@@ -335,6 +337,7 @@
       <HintPath>.\bin\x64\Debug\myLibs\Apps.ColorFun.dll</HintPath>
       <Private>False</Private>
     </Reference>
+    <Reference Include="System.Web.Extensions" />
     <Reference Include="VM.Core">
       <HintPath>.\bin\x64\Debug\myLibs\VM.Core.dll</HintPath>
       <Private>False</Private>
@@ -671,50 +674,106 @@
       <SubType>Designer</SubType>
     </ApplicationDefinition>
     <Compile Include="ADT\QueueProcessor.cs" />
+    <Compile Include="Aspect\CheckServerCanExecute.cs" />
+    <Compile Include="Aspect\GlobalAspects.cs" />
+    <Compile Include="Converter\BooleanToVisibilityConverter.cs" />
+    <Compile Include="Converter\ByteArrayToImageConverter.cs" />
     <Compile Include="Calibration.cs">
       <DependentUpon>XGuideModel.tt</DependentUpon>
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Compile>
+    <Compile Include="Converter\LastCharacterConverter.cs" />
+    <Compile Include="Converter\NavigationViewExtensions.cs" />
+    <Compile Include="Converter\NavigationViewItemExtensions.cs" />
+    <Compile Include="Converter\RadioButtonTagConverter.cs" />
+    <Compile Include="Converter\TypeToDescriptionConverter.cs" />
+    <Compile Include="CriticalErrorException.cs" />
+    <Compile Include="CustomControls\CustomFormButtons.xaml.cs">
+      <DependentUpon>CustomFormButtons.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="CustomControls\CustomLeftDrawer.xaml.cs">
+      <DependentUpon>CustomLeftDrawer.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="CustomControls\CustomBrowse.xaml.cs">
+      <DependentUpon>CustomBrowse.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="CustomControls\CustomLoading.xaml.cs">
+      <DependentUpon>CustomLoading.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="CustomControls\CustomRadioControl.xaml.cs">
+      <DependentUpon>CustomRadioControl.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="CustomControls\CustomIpInput.xaml.cs">
+      <DependentUpon>CustomIpInput.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="CustomControls\CustomManipulatorForm.xaml.cs">
+      <DependentUpon>CustomManipulatorForm.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="CustomControls\CustomRenderControl.xaml.cs">
+      <DependentUpon>CustomRenderControl.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="CustomControls\CustomVisionForm.xaml.cs">
+      <DependentUpon>CustomVisionForm.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="CustomControls\DialogBehavior.cs" />
+    <Compile Include="CustomControls\CustomLoadingControl.xaml.cs">
+      <DependentUpon>CustomLoadingControl.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="CustomControls\MTypeCombo.xaml.cs">
+      <DependentUpon>MTypeCombo.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="CustomControls\TTypeCombo.xaml.cs">
+      <DependentUpon>TTypeCombo.xaml</DependentUpon>
     </Compile>
     <Compile Include="CustomEventArgs\BitMapImageArgs.cs" />
     <Compile Include="CustomEventArgs\NetworkStreamEventArgs.cs" />
     <Compile Include="CustomEventArgs\TcpClientEventArgs.cs" />
     <Compile Include="CustomEventArgs\TcpListenerEventArgs.cs" />
-    <Compile Include="EnumClass\MountingOrientation.cs" />
-    <Compile Include="EnumClass\Terminator.cs" />
-    <Compile Include="EnumClass\EnumHelperClass.cs" />
-    <Compile Include="EnumClass\EnumToCollectionConverter.cs" />
-    <Compile Include="EnumClass\MachineType.cs" />
-    <Compile Include="EnumClass\UserRole.cs" />
-    <Compile Include="EnumClass\ValueDescription.cs" />
+    <Compile Include="Enums\Mode.cs" />
+    <Compile Include="Enums\Orientation.cs" />
+    <Compile Include="Enums\Terminator.cs" />
+    <Compile Include="Enums\EnumHelperClass.cs" />
+    <Compile Include="Converter\EnumToCollectionConverter.cs" />
+    <Compile Include="Enums\ManipulatorType.cs" />
+    <Compile Include="Enums\UserRole.cs" />
+    <Compile Include="Enums\ValueDescription.cs" />
+    <Compile Include="Enums\VisionSoftware.cs" />
     <Compile Include="Extension\TaskExtensions.cs" />
     <Compile Include="FileLogger.cs" />
     <Compile Include="FileLoggerExtensions.cs" />
     <Compile Include="FileLoggerProvider.cs" />
+    <Compile Include="General.cs" />
     <Compile Include="HelperClass\BitMapHelper.cs" />
-    <Compile Include="HelperClass\ServerHelper.cs" />
-    <Compile Include="Machine.cs">
-      <DependentUpon>XGuideModel.tt</DependentUpon>
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    <Compile Include="HelperClass\Timer.cs">
+      <SubType>Component</SubType>
     </Compile>
-    <Compile Include="MappingConfiguration\MachineProfile.cs" />
+    <Compile Include="Logging\ILoggable.cs" />
+    <Compile Include="Manipulator.cs">
+      <DependentUpon>XGuideModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="MappingConfiguration\CalibrationProfile.cs" />
+    <Compile Include="MappingConfiguration\GeneralProfile.cs" />
+    <Compile Include="MappingConfiguration\ManipulatorProfile.cs" />
+    <Compile Include="MappingConfiguration\VisionProfile.cs" />
     <Compile Include="MVVM\Command\BrowseFileDialogCommand.cs" />
-    <Compile Include="MVVM\Command\ConnectServerCommand.cs" />
     <Compile Include="MVVM\Command\RelayCommand.cs" />
     <Compile Include="MVVM\Command\VideoCommand.cs" />
     <Compile Include="MVVM\DBContext\DbContextFactory.cs" />
     <Compile Include="MVVM\DTO\UserDTO.cs" />
-    <Compile Include="MVVM\Model\MachineModel.cs" />
+    <Compile Include="MVVM\Model\CalibrationModel.cs" />
+    <Compile Include="MVVM\Model\ManipulatorModel.cs" />
     <Compile Include="MVVM\Model\Point.cs" />
     <Compile Include="MVVM\Model\UserModel.cs" />
-    <Compile Include="EnumClass\PageName.cs" />
-    <Compile Include="MVVM\Model\ModelBase.cs" />
+    <Compile Include="Enums\PageName.cs" />
     <Compile Include="MVVM\Model\VisionGuided.cs" />
+    <Compile Include="MVVM\Model\VisionModel.cs" />
     <Compile Include="MVVM\ViewModel\CalibrationWizardStartViewModel.cs" />
     <Compile Include="MVVM\ViewModel\CalibrationMainViewModel.cs" />
     <Compile Include="MVVM\ViewModel\ErrorViewModel.cs" />
+    <Compile Include="MVVM\ViewModel\GeneralViewModel.cs" />
     <Compile Include="MVVM\ViewModel\IViewModelLocator.cs" />
     <Compile Include="MVVM\ViewModel\JogRobotViewModel.cs" />
-    <Compile Include="MVVM\ViewModel\MachineViewModel.cs" />
+    <Compile Include="MVVM\ViewModel\ManipulatorViewModel.cs" />
     <Compile Include="MVVM\ViewModel\RenderControlViewModel.cs" />
     <Compile Include="MVVM\ViewModel\SecurityViewModel.cs" />
     <Compile Include="MVVM\ViewModel\Step1ViewModel.cs" />
@@ -727,6 +786,7 @@
     <Compile Include="MVVM\ViewModel\UserLoginViewModel.cs" />
     <Compile Include="MVVM\ViewModel\CalibrationViewModel.cs" />
     <Compile Include="MVVM\ViewModel\ViewModelLocator.cs" />
+    <Compile Include="MVVM\ViewModel\VisionViewModel.cs" />
     <Compile Include="MVVM\View\CalibrationWizardSteps\CalibrationWizardStart.xaml.cs">
       <DependentUpon>CalibrationWizardStart.xaml</DependentUpon>
     </Compile>
@@ -765,32 +825,50 @@
     </Compile>
     <Compile Include="Service\AuthenticationService.cs" />
     <Compile Include="Service\BackgroundService.cs" />
+    <Compile Include="Service\CalibrationService.cs" />
     <Compile Include="Service\Communication\ClientService.cs" />
     <Compile Include="Service\Communication\IClientService.cs" />
     <Compile Include="Service\Communication\IServerService.cs" />
     <Compile Include="Service\Communication\JogCommand.cs" />
     <Compile Include="Service\Communication\TCPBase.cs" />
     <Compile Include="Service\Communication\TcpClientInfo.cs" />
-    <Compile Include="Service\DatabaseProvider\MachineService.cs" />
-    <Compile Include="Service\DatabaseProvider\IMachineService.cs" />
+    <Compile Include="Service\DatabaseProvider\CalibrationDb.cs" />
+    <Compile Include="Service\DatabaseProvider\DbServiceBase.cs" />
+    <Compile Include="Service\DatabaseProvider\GeneralDb.cs" />
+    <Compile Include="Service\DatabaseProvider\ICalibrationDb.cs" />
+    <Compile Include="Service\DatabaseProvider\IGeneralDb.cs" />
+    <Compile Include="Service\DatabaseProvider\IVisionDb.cs" />
+    <Compile Include="Service\DatabaseProvider\ManipulatorDb.cs" />
+    <Compile Include="Service\DatabaseProvider\IManipulatorDb.cs" />
     <Compile Include="Service\Communication\ServerCommand.cs" />
+    <Compile Include="Service\DatabaseProvider\VisionDb.cs" />
+    <Compile Include="Service\ICalibrationService.cs" />
+    <Compile Include="Service\IJogService.cs" />
     <Compile Include="Service\ImageService.cs" />
     <Compile Include="Service\INavigationService.cs" />
+    <Compile Include="Service\JogService.cs" />
     <Compile Include="Service\NavigationService.cs" />
     <Compile Include="Service\Communication\ServerService.cs" />
-    <Compile Include="Service\DatabaseProvider\UserService.cs" />
-    <Compile Include="Service\DatabaseProvider\IUserService.cs" />
+    <Compile Include="Service\DatabaseProvider\UserDb.cs" />
+    <Compile Include="Service\DatabaseProvider\IUserDb.cs" />
     <Compile Include="Setting.cs">
       <DependentUpon>XGuideModel.tt</DependentUpon>
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Compile>
+    <Compile Include="State\ViewModelState.cs" />
+    <Compile Include="StopwatchHelper.cs" />
+    <Compile Include="StringRetriever.cs" />
     <Compile Include="User.cs">
       <DependentUpon>XGuideModel.tt</DependentUpon>
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Compile>
     <Compile Include="Validation\IPValidation.cs" />
     <Compile Include="Utility\PasswordHashUtility.cs" />
-    <Compile Include="Vision\testing.cs" />
+    <Compile Include="Vision.cs">
+      <DependentUpon>XGuideModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="VisionMaster\IVisionService.cs" />
+    <Compile Include="VisionMaster\VisionService.cs" />
     <Compile Include="XGuideModel.Context.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -807,6 +885,54 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>XGuideModel.edmx</DependentUpon>
     </Compile>
+    <Page Include="CustomControls\CustomFormButtons.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="CustomControls\CustomLeftDrawer.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="CustomControls\CustomBrowse.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="CustomControls\CustomIpInput.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="CustomControls\CustomLoading.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="CustomControls\CustomManipulatorForm.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="CustomControls\CustomRadioControl.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="CustomControls\CustomRenderControl.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="CustomControls\CustomVisionForm.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="CustomControls\CustomLoadingControl.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="CustomControls\MTypeCombo.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="CustomControls\TTypeCombo.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="MVVM\View\CalibrationWizardSteps\CalibrationWizardStart.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -867,11 +993,19 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
+    <Page Include="MVVM\View\SharedResources.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="MVVM\View\UndefinedView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="MVVM\View\UserLoginView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Strings.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -900,7 +1034,6 @@
   <ItemGroup>
     <Compile Include="MVVM\Command\CommandBase.cs" />
     <Compile Include="MVVM\Command\NavigateCommand.cs" />
-    <Compile Include="MVVM\Command\SaveSettingCommand.cs" />
     <Compile Include="MVVM\Model\SettingModel.cs" />
     <Compile Include="MVVM\Store\NavigationStore.cs" />
     <Compile Include="MVVM\ViewModel\MainViewModel.cs" />
@@ -947,21 +1080,14 @@
     </None>
   </ItemGroup>
   <ItemGroup>
-    <None Include="App.config" />
+    <Content Include="App.config">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
   </ItemGroup>
   <ItemGroup>
     <WCFMetadata Include="Connected Services\" />
   </ItemGroup>
   <ItemGroup>
-    <PackageReference Include="AForge.Controls">
-      <Version>2.2.5</Version>
-    </PackageReference>
-    <PackageReference Include="AForge.Video">
-      <Version>2.2.5</Version>
-    </PackageReference>
-    <PackageReference Include="AForge.Video.DirectShow">
-      <Version>2.2.5</Version>
-    </PackageReference>
     <PackageReference Include="Autofac">
       <Version>7.0.0</Version>
     </PackageReference>
@@ -971,14 +1097,19 @@
     <PackageReference Include="AutoMapper.EF6">
       <Version>2.1.1</Version>
     </PackageReference>
-    <PackageReference Include="DirectShowLib">
-      <Version>1.0.0</Version>
-    </PackageReference>
     <PackageReference Include="EntityFramework">
       <Version>6.4.4</Version>
     </PackageReference>
+    <PackageReference Include="Fody">
+      <Version>6.6.4</Version>
+      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+      <PrivateAssets>all</PrivateAssets>
+    </PackageReference>
     <PackageReference Include="HandyControls">
       <Version>3.4.4</Version>
+    </PackageReference>
+    <PackageReference Include="MahApps.Metro">
+      <Version>2.4.9</Version>
     </PackageReference>
     <PackageReference Include="MaterialDesignThemes">
       <Version>4.7.1</Version>
@@ -986,14 +1117,41 @@
     <PackageReference Include="MaterialDesignThemes.Wpf">
       <Version>1.0.1</Version>
     </PackageReference>
+    <PackageReference Include="MethodDecorator.Fody">
+      <Version>1.1.1</Version>
+    </PackageReference>
     <PackageReference Include="Microsoft.CodeAnalysis.CSharp">
       <Version>4.5.0</Version>
+    </PackageReference>
+    <PackageReference Include="Microsoft.Extensions.Logging.Console">
+      <Version>7.0.0</Version>
+    </PackageReference>
+    <PackageReference Include="Microsoft.Windows.SDK.Contracts">
+      <Version>10.0.22621.755</Version>
+    </PackageReference>
+    <PackageReference Include="Microsoft.Xaml.Behaviors.Wpf">
+      <Version>1.1.39</Version>
     </PackageReference>
     <PackageReference Include="ModernWpfUI">
       <Version>0.9.6</Version>
     </PackageReference>
+    <PackageReference Include="PropertyChanged.Fody">
+      <Version>4.1.0</Version>
+    </PackageReference>
+    <PackageReference Include="Serilog.Extensions.Logging">
+      <Version>3.1.0</Version>
+    </PackageReference>
+    <PackageReference Include="Serilog.Sinks.Console">
+      <Version>4.1.0</Version>
+    </PackageReference>
     <PackageReference Include="System.ServiceProcess.ServiceController">
       <Version>7.0.0</Version>
+    </PackageReference>
+    <PackageReference Include="ToastNotifications">
+      <Version>2.5.1</Version>
+    </PackageReference>
+    <PackageReference Include="ToastNotifications.Messages">
+      <Version>2.5.1</Version>
     </PackageReference>
     <PackageReference Include="WpfAnimatedGif">
       <Version>2.0.2</Version>
@@ -1025,12 +1183,16 @@
     <Resource Include="Style\ImageSource\down.png" />
     <Resource Include="Style\ImageSource\up.png" />
     <Resource Include="Style\ImageSource\arrows.png" />
+    <Resource Include="Style\ImageSource\greyarrow.png" />
+    <Resource Include="Style\ImageSource\greyup.png" />
+    <Resource Include="Style\ImageSource\greydown.png" />
+    <Resource Include="FodyWeavers.xml" />
     <Content Include="XGuideDB.mdf">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <Content Include="XGuideDB_log.ldf">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
       <DependentUpon>XGuideDB.mdf</DependentUpon>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <Content Include="XGuideModel.Context.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
@@ -1045,7 +1207,7 @@
     </Content>
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="DP\" />
+    <Folder Include="Vision\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

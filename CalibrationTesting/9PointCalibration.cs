@@ -1,8 +1,8 @@
 ﻿using System;
 using System.Threading.Tasks;
+using X_Guide;
 using X_Guide.MVVM.ViewModel.CalibrationWizardSteps;
 using X_Guide.Service.Communication;
-using Xlent_Vision_Guided;
 
 namespace CalibrationTest
 {
@@ -58,81 +58,6 @@ namespace CalibrationTest
         {
             int XOffset = (int)_calibration.XOffset;
             int YOffset = (int)_calibration.YOffset;
-
-            Point[] VisionPoints = new Point[9];
-            Point[] RobotPoints = new Point[9];
-
-            RobotPoints[4] = new Point(0, 0);
-            VisionPoints[4] = await _visionService.GetVisCenter();
-
-            await _jogService.SendJogCommand(_jogCommand.SetY(-YOffset));
-            await Task.Delay(1000);
-
-            RobotPoints[1] = new Point(0, -YOffset);
-            VisionPoints[1] = await _visionService.GetVisCenter();
-
-            await _jogService.SendJogCommand(_jogCommand.SetX(XOffset));
-            await Task.Delay(1000);
-
-            RobotPoints[0] = new Point(XOffset, -YOffset);
-            VisionPoints[0] = await _visionService.GetVisCenter();
-
-            await _jogService.SendJogCommand(_jogCommand.SetY(YOffset));
-            await Task.Delay(1000);
-
-            RobotPoints[3] = new Point(XOffset, 0);
-            VisionPoints[3] = await _visionService.GetVisCenter();
-
-            await _jogService.SendJogCommand(_jogCommand.SetY(YOffset));
-            await Task.Delay(1000);
-
-            RobotPoints[6] = new Point(XOffset, YOffset);
-            VisionPoints[6] = await _visionService.GetVisCenter();
-
-            await _jogService.SendJogCommand(_jogCommand.SetX(-XOffset));
-            await Task.Delay(1000);
-
-            RobotPoints[7] = new Point(0, YOffset);
-            VisionPoints[7] = await _visionService.GetVisCenter();
-
-            await _jogService.SendJogCommand(_jogCommand.SetX(-XOffset));
-            await Task.Delay(1000);
-
-            RobotPoints[8] = new Point(-XOffset, YOffset);
-            VisionPoints[8] = await _visionService.GetVisCenter();
-
-            await _jogService.SendJogCommand(_jogCommand.SetY(-YOffset));
-            await Task.Delay(1000);
-
-            RobotPoints[5] = new Point(-XOffset, 0);
-            VisionPoints[5] = await _visionService.GetVisCenter();
-
-            await _jogService.SendJogCommand(_jogCommand.SetY(-YOffset));
-            await Task.Delay(1000);
-
-            RobotPoints[2] = new Point(-XOffset, -YOffset);
-            VisionPoints[2] = await _visionService.GetVisCenter();
-
-            await _jogService.SendJogCommand(_jogCommand.SetY(YOffset).SetX(XOffset));
-            return (VisionPoints, RobotPoints);
-        }
-
-        public async Task<(Point[], Point[])> NewStart9PointCalib()
-        {
-            int XOffset = (int)_calibration.XOffset;
-            int YOffset = (int)_calibration.YOffset;
-
-            //int[,] offsets = new int[9, 3] {
-            //{0, 0, 4},
-            //{0, -YOffset, 1},
-            //{XOffset, -YOffset, 0},
-            //{XOffset, 0, 3},
-            //{XOffset, YOffset, 6},
-            //{0, YOffset, 7},
-            //{-XOffset, YOffset, 8},
-            //{-XOffset, 0, 5},
-            //{-XOffset, -YOffset, 2},
-            //};
 
             int[,] offsets = new int[9, 3] {
             {0, -YOffset,4},

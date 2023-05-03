@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Diagnostics;
+using System.IO;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
@@ -8,7 +9,6 @@ using VM.Core;
 using VMControls.Interface;
 using X_Guide.Communication.Service;
 using X_Guide.CustomEventArgs;
-using Xlent_Vision_Guided;
 using Timer = X_Guide.HelperClass.Timer;
 
 namespace X_Guide.VisionMaster
@@ -69,7 +69,7 @@ namespace X_Guide.VisionMaster
 
         public void GetCameras()
         {
-            var i = VmSolution.Instance["Live"];
+            var i = VmSolution.Instance;
         }
 
         public async Task<IVmModule> GetVmModule(string name)
@@ -81,17 +81,25 @@ namespace X_Guide.VisionMaster
 
         public async Task ImportSol(string filepath)
         {
-            await Task.Run(() =>
+            if (!File.Exists(filepath))
             {
-                try
-                {
-                    VmSolution.Import(filepath);
-                }
-                catch
-                {
-                    throw new Exception(StrRetriver.Get("VI002"));
-                }
-            });
+                throw new Exception(StrRetriver.Get("VI002"));
+            }
+            if (!Path.GetExtension(filepath).Equals(".sol", StringComparison.OrdinalIgnoreCase))
+            {
+                throw new Exception(StrRetriver.Get("VI003"));
+            }
+            await Task.Run(() =>
+           {
+               try
+               {
+                   VmSolution.Load(filepath);
+               }
+               catch (Exception ex)
+               {
+                   throw new CriticalErrorException(StrRetriver.Get("C000"));
+               }
+           });
         }
 
         public void RunOnceAndSaveImage()

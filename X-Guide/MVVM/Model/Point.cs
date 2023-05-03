@@ -1,10 +1,6 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
-namespace Xlent_Vision_Guided
+namespace X_Guide
 {
     public class Point
     {
@@ -13,21 +9,20 @@ namespace Xlent_Vision_Guided
         public double Angle { get; set; }
 
         public bool IsFound { get; set; } = false;
+
         public Point()
         {
             X = 0;
             Y = 0;
             Angle = 0;
         }
+
         public Point(double x, double y, double angle = 0)
         {
             X = x;
             Y = y;
             Angle = angle;
-
         }
-
-        
 
         public override string ToString()
         {
@@ -43,6 +38,7 @@ namespace Xlent_Vision_Guided
         {
             return Math.Atan2(Y - point.Y, X - point.X);
         }
+
         public void PixelConversion(double pixel_per_mm)
         {
             X /= pixel_per_mm;

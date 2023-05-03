@@ -1,11 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
-using VM.Core;
 using VMControls.Interface;
-using Xlent_Vision_Guided;
 
 namespace X_Guide.VisionMaster
 {
@@ -22,7 +18,6 @@ namespace X_Guide.VisionMaster
         /// <exception cref="Exception">Thrown when no response is received from the client service within 5 seconds.</exception>
         Task<Point> GetVisCenter();
 
-
         /// <summary>
         /// Imports a solution file from the specified file path.
         /// </summary>
@@ -38,9 +33,13 @@ namespace X_Guide.VisionMaster
         /// <returns>An instance of IVmModule representing the procedure that was run, or null if the procedure was not found.</returns>
         /// <exception cref="System.InvalidOperationException">Thrown if the specified procedure is not found.</exception>
         Task<IVmModule> RunProcedure(string name, bool continuous = false);
+
         IEnumerable<string> GetProcedureNames();
-        Task<IVmModule> GetVmModule(string name); 
+
+        Task<IVmModule> GetVmModule(string name);
+
         void RunOnceAndSaveImage();
+
         void GetCameras();
     }
 }

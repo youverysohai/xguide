@@ -2,36 +2,24 @@
 using AutoMapper;
 using Microsoft.Extensions.Logging;
 using Serilog;
-using Serilog.Sinks.SystemConsole;
 using System;
-using System.Collections.Generic;
 using System.Configuration;
-using System.Data;
-using System.Diagnostics;
 using System.IO;
-using System.Linq;
 using System.Net;
-using System.Threading.Tasks;
 using System.Windows;
 using ToastNotifications;
 using ToastNotifications.Lifetime;
 using ToastNotifications.Position;
-using VMControls.WPF.Release;
 using X_Guide.Communication.Service;
 using X_Guide.MappingConfiguration;
-using X_Guide.MVVM;
 using X_Guide.MVVM.DBContext;
-using X_Guide.MVVM.Model;
 using X_Guide.MVVM.Store;
 using X_Guide.MVVM.ViewModel;
 using X_Guide.Service;
 using X_Guide.Service.Communation;
-using X_Guide.Service.Communication;
 using X_Guide.Service.DatabaseProvider;
 using X_Guide.State;
 using X_Guide.VisionMaster;
-using Xlent_Vision_Guided;
-
 
 namespace X_Guide
 {
@@ -40,7 +28,6 @@ namespace X_Guide
     /// </summary>
     public partial class App : Application
     {
-
         private static readonly IContainer _diContainer = BuildDIContainer();
         //TODO: Add logger
 
@@ -104,8 +91,7 @@ namespace X_Guide
             builder.RegisterType<VisionDb>().As<IVisionDb>();
             builder.RegisterType<CalibrationDb>().As<ICalibrationDb>();
             builder.RegisterType<GeneralDb>().As<IGeneralDb>();
-      
-           
+
             builder.RegisterType<ServerService>().As<IServerService>().WithParameter(new TypedParameter(typeof(IPAddress), IPAddress.Parse("192.168.10.90"))).WithParameter(new TypedParameter(typeof(int), 8000)).WithParameter(new TypedParameter(typeof(string), "\r\n")).SingleInstance();
             builder.Register(c => new ClientService(IPAddress.Parse("192.168.10.90"), 7900, "")).As<IClientService>().SingleInstance();
             return builder.Build();
@@ -113,14 +99,19 @@ namespace X_Guide
 
         public App()
         {
-            /* VmRenderControl vmRender = new VmRenderControl();*/
-            //Uri uri = new Uri("/YourProjectName;component/YourFolderName/YourXamlFileName.xaml", UriKind.Relative);
-            //Application.LoadComponent(uri);
+            AppDomain.CurrentDomain.UnhandledException += CurrentDomain_UnhandledException;
 
             //App specific settings
             InitializeAppConfiguration();
+        }
 
-
+        private void CurrentDomain_UnhandledException(object sender, UnhandledExceptionEventArgs e)
+        {
+            if (e.ExceptionObject is CriticalErrorException ex)
+            {
+                HandyControl.Controls.MessageBox.Show(ex.Message, "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+                Current.Shutdown();
+            }
         }
 
         private void InitializeAppConfiguration()
@@ -128,26 +119,17 @@ namespace X_Guide
             string appDataPath = Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData);
             string settingPath = Path.Combine(appDataPath, "X-Guide", "Settings.xml");
             ConfigurationManager.AppSettings["SettingPath"] = settingPath;
-
         }
 
         //        Startup Page
 
-
-
         protected override void OnStartup(StartupEventArgs e)
         {
-
+            var visionService = _diContainer.Resolve<IVisionService>();
             MainWindow = _diContainer.Resolve<MainWindow>();
             _ = _diContainer.Resolve<ServerCommand>();
             MainWindow.Show();
             base.OnStartup(e);
         }
-
-
-
-
-
     }
-
 }

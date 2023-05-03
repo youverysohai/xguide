@@ -1,23 +1,17 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Diagnostics;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using X_Guide;
 
 namespace Xlent_Vision_Guided
 {
-    static class VisionGuided
+    internal static class VisionGuided
     {
-
-
         //===========================================================================================================================================
         // 2D EYE IN HAND CONFIGURATION
         //===========================================================================================================================================
         public static double[] FindEyeInHandXYMoves(Point Vis_Center, Point Vis_Positive, Point Vis_Rotate, int jogDistance, int rotateAngle)
         {
-
-            //calculate angle differences between vis and robot frame 
+            //calculate angle differences between vis and robot frame
             double U_Vis2Robot = Math.Atan2(Vis_Center.Y - Vis_Positive.Y, Vis_Center.X - Vis_Positive.X);
             Debug.WriteLine($"Rotation Matrix : {RadToDeg(U_Vis2Robot)}");
             double pixelDistance = Vis_Center.CalculateDistance(Vis_Positive);
@@ -29,15 +23,9 @@ namespace Xlent_Vision_Guided
 
             Debug.WriteLine($"mm_per pixel = {mm_per_pixel}");
 
-
-
-
-
-
             double Vis_RotateDistance = Vis_Center.CalculateDistance(Vis_Rotate);
             Debug.WriteLine($"Rotate Distance = {Vis_RotateDistance}");
             double End_To_Obj_Dist = Vis_RotateDistance / Math.Sin(rotationAngle) * Math.Sin(DegToRad(90) - rotationAngle / 2);
-
 
             //Rotation
             double RotationAngleOffset = U_Vis2Robot - rotationAngle;
@@ -64,7 +52,6 @@ namespace Xlent_Vision_Guided
             double End_To_Obj_Deg;
             double atan2 = RadToDeg(Math.Atan2(Math.Abs(YDif), Math.Abs(XDif)));
 
-
             if (YDif >= 0 && XDif >= 0)
             {
                 End_To_Obj_Deg = 90 - RadToDeg(rotationAngle / 2) + atan2;
@@ -87,7 +74,7 @@ namespace Xlent_Vision_Guided
             Debug.WriteLine($"End-To-Object Distance = {End_To_Obj_Dist * mm_per_pixel}");
             double X_Move = End_To_Obj_Dist * Math.Cos(End_To_Obj_Rad) * mm_per_pixel;
             double Y_Move = End_To_Obj_Dist * Math.Sin(End_To_Obj_Rad) * mm_per_pixel;
-       
+
             Debug.WriteLine($"NewX_Move = {X_Move}, NewY_Move = {Y_Move}\n\n\n");
 
             return new double[] { X_Move, Y_Move };
@@ -95,7 +82,6 @@ namespace Xlent_Vision_Guided
 
         public static double[] EyeInHandConfig2D_Calib(Point[] VisionCoords, Point[] RobotCoords, double x_move, double y_move, bool conversion)
         {
-
             double[] x_offset = new double[8];
             double[] y_offset = new double[8];
             double[] theta_offset = new double[8];
@@ -106,18 +92,15 @@ namespace Xlent_Vision_Guided
             {
                 mm_per_pixel = PixelToMMConversion(VisionCoords, RobotCoords);
             }
-           
+
             int c = 0;
             for (int i = 0; i < 8; i++)
             {
-            
                 if (i == 4) c++;
-            
+
                 EyeInHandConfig2D_get_XYU_Offset(VisionCoords[c], RobotCoords[c], VisionCoords[4], RobotCoords[4], x_move, y_move, ref x_offset[i], ref y_offset[i], ref theta_offset[i]);
-                c++; 
-
+                c++;
             }
-
 
             // Median method
             Array.Sort(x_offset);
@@ -130,6 +113,7 @@ namespace Xlent_Vision_Guided
 
             return Calib_Data;
         }
+
         private static void EyeInHandConfig2D_get_XYU_Offset(Point vision_p1, Point robot_p1, Point vision_p0, Point robot_p0, double x_move, double y_move, ref double x_offset, ref double y_offset, ref double theta_offset)
         {
             {
@@ -144,7 +128,6 @@ namespace Xlent_Vision_Guided
                 beta_rad = Math.Atan2(robot_p1.Y - robot_p0.Y, robot_p1.X - robot_p0.X);
 
                 gamma_rad = alpha_rad - beta_rad;       // angle required for vision frame to align with robot frame
-
 
                 //rotated vision point x1,y1 with gamma angle, so that both frame aligned, and able to find x and y offset
                 rotated_vision_x1 = vision_p1.X * Math.Cos(gamma_rad) + vision_p1.Y * Math.Sin(gamma_rad);
@@ -198,12 +181,10 @@ namespace Xlent_Vision_Guided
             for (int i = 0; i < VisionCoords.Length; i++)
             {
                 VisionCoords[i].PixelConversion(pixel_per_mm);
-
             }
 
-            return 1/pixel_per_mm;
+            return 1 / pixel_per_mm;
         }
-
 
         public static double[] EyeInHandConfig2D_Operate(Point VisCenter, double[] Calib_Data)
         {
@@ -221,7 +202,6 @@ namespace Xlent_Vision_Guided
             VisCenter.Angle = -VisCenter.Angle;
             calib_theta_rad = Calib_Data[2] * Math.PI / 180.0;
 
-
             //rotate vision frame first
             transformed_vision_x = VisCenter.X * Math.Cos(-calib_theta_rad) + VisCenter.Y * Math.Sin(-calib_theta_rad);
             transformed_vision_y = -VisCenter.X * Math.Sin(-calib_theta_rad) + VisCenter.Y * Math.Cos(-calib_theta_rad);
@@ -235,16 +215,14 @@ namespace Xlent_Vision_Guided
                 Operate_Data[2] += 360;
             else if (Operate_Data[2] > 180.0)
                 Operate_Data[2] -= 360;
-            Debug.WriteLine("X:{0}, Y;{1}, Theta:{2}",Operate_Data[0], Operate_Data[1], Operate_Data[2]);
+            Debug.WriteLine("X:{0}, Y;{1}, Theta:{2}", Operate_Data[0], Operate_Data[1], Operate_Data[2]);
             return Operate_Data;
-            
         }
 
-
         #region legacyCode for testing
+
         public static double[] OldEyeInHandConfig2D_Calib(double[] vision_x_data, double[] vision_y_data, double[] robot_x_data, double[] robot_y_data, double x_move, double y_move, bool conversion)
         {
-
             // input variable declaration
             double[] Vision_X = new double[9];
             double[] Vision_Y = new double[9];
@@ -258,8 +236,6 @@ namespace Xlent_Vision_Guided
             double[] x_offset = new double[8];
             double[] y_offset = new double[8];
             double[] theta_offset = new double[8];
-
-
 
             if (conversion == true)
             {
@@ -292,8 +268,6 @@ namespace Xlent_Vision_Guided
                 robot_distance[10] = Math.Sqrt(Math.Pow(robot_x_data[5] - robot_x_data[2], 2) + Math.Pow(robot_y_data[5] - robot_y_data[2], 2));
                 robot_distance[11] = Math.Sqrt(Math.Pow(robot_x_data[8] - robot_x_data[5], 2) + Math.Pow(robot_y_data[8] - robot_y_data[5], 2));
 
-
-
                 double[] pixel_mm = new double[12];
                 for (int i = 0; i < 12; i++)
                 {
@@ -303,7 +277,6 @@ namespace Xlent_Vision_Guided
                 //Median method
                 Array.Sort(pixel_mm);
                 pixel_per_mm = (pixel_mm[5] + pixel_mm[6]) / 2;
-
             }
             else
             {
@@ -324,8 +297,6 @@ namespace Xlent_Vision_Guided
             Vision_Y = vision_y_data;
             Robot_X = robot_x_data;
             Robot_Y = robot_y_data;
-
-
 
             for (int i = 0; i < 4; i++)
             {
@@ -352,60 +323,47 @@ namespace Xlent_Vision_Guided
             return Calib_Data;
         }
 
-         private static void OldEyeInHandConfig2D_get_XYU_Offset(double vision_x1, double vision_y1, double robot_x1, double robot_y1, double vision_x0, double vision_y0, double robot_x0, double robot_y0, double x_move, double y_move, ref double x_offset, ref double y_offset, ref double theta_offset)
-         {
-             {
-                 double alpha_rad, beta_rad, gamma_rad;
-                 double rotated_vision_x1, rotated_vision_y1;
-                 // alpha = vision deviation angle
-                 // beta = robot deviation angle
-               // gamma = deviation angle difference
-               // gamma = deviation angle difference
+        private static void OldEyeInHandConfig2D_get_XYU_Offset(double vision_x1, double vision_y1, double robot_x1, double robot_y1, double vision_x0, double vision_y0, double robot_x0, double robot_y0, double x_move, double y_move, ref double x_offset, ref double y_offset, ref double theta_offset)
+        {
+            {
+                double alpha_rad, beta_rad, gamma_rad;
+                double rotated_vision_x1, rotated_vision_y1;
+                // alpha = vision deviation angle
+                // beta = robot deviation angle
+                // gamma = deviation angle difference
+                // gamma = deviation angle difference
 
-                 alpha_rad = Math.Atan2((vision_y0 - vision_y1), (vision_x0 - vision_x1));   //angle in vision is inverted for this configuration, thus use x0 - x1 , y0 - y1
-                 beta_rad = Math.Atan2((robot_y1 - robot_y0), (robot_x1 - robot_x0));
+                alpha_rad = Math.Atan2((vision_y0 - vision_y1), (vision_x0 - vision_x1));   //angle in vision is inverted for this configuration, thus use x0 - x1 , y0 - y1
+                beta_rad = Math.Atan2((robot_y1 - robot_y0), (robot_x1 - robot_x0));
 
-                 gamma_rad = alpha_rad - beta_rad;       // angle required for vision frame to align with robot frame
-         
+                gamma_rad = alpha_rad - beta_rad;       // angle required for vision frame to align with robot frame
 
-                 //rotated vision point x1,y1 with gamma angle, so that both frame aligned, and able to find x and y offset
-                 rotated_vision_x1 = vision_x1 * Math.Cos(gamma_rad) + vision_y1 * Math.Sin(gamma_rad);
-                 rotated_vision_y1 = -vision_x1 * Math.Sin(gamma_rad) + vision_y1 * Math.Cos(gamma_rad);
+                //rotated vision point x1,y1 with gamma angle, so that both frame aligned, and able to find x and y offset
+                rotated_vision_x1 = vision_x1 * Math.Cos(gamma_rad) + vision_y1 * Math.Sin(gamma_rad);
+                rotated_vision_y1 = -vision_x1 * Math.Sin(gamma_rad) + vision_y1 * Math.Cos(gamma_rad);
 
-                 // offset from robot frame to vision frame
-                 x_offset = -robot_x1 - x_move - rotated_vision_x1;
-                 y_offset = -robot_y1 - y_move - rotated_vision_y1;
+                // offset from robot frame to vision frame
+                x_offset = -robot_x1 - x_move - rotated_vision_x1;
+                y_offset = -robot_y1 - y_move - rotated_vision_y1;
 
-               
+                theta_offset = -gamma_rad * 180.0 / Math.PI;
+                if (theta_offset <= -180.0)
+                    theta_offset += 360;
+                else if (theta_offset > 180.0)
+                    theta_offset -= 360;
+            }
+        }
 
-                 theta_offset = -gamma_rad * 180.0 / Math.PI;
-                 if (theta_offset <= -180.0)
-                     theta_offset += 360;
-                 else if (theta_offset > 180.0)
-                     theta_offset -= 360;
-             }
-         }
-        #endregion
+        #endregion legacyCode for testing
 
-
-        static double RadToDeg(double rad)
+        private static double RadToDeg(double rad)
         {
             return rad * (180 / Math.PI);
-
-
         }
-        static double DegToRad(double deg)
+
+        private static double DegToRad(double deg)
         {
             return deg * (Math.PI / 180);
         }
-
-
-
-
-
-
-
-
-
     }
 }

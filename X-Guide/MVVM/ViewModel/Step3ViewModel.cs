@@ -22,7 +22,7 @@ namespace X_Guide.MVVM.ViewModel
         private readonly ViewModelState _viewModelState;
         private readonly IVisionDb _visionDb;
         private readonly IVisionService _visionService;
-        private CalibrationViewModel _calibration;
+        private readonly CalibrationViewModel _calibration;
         private ManualResetEventSlim _manual;
 
         public Step3ViewModel(CalibrationViewModel calibration, IVisionService visionService, IVisionDb visionDb, IMapper mapper, ViewModelState viewModelState, Notifier notifier)
@@ -93,10 +93,10 @@ namespace X_Guide.MVVM.ViewModel
 
         private async Task GetProcedures()
         {
-            IsProcedureEditable = false;
-            if (Vision is null) return;
             try
             {
+                IsProcedureEditable = false;
+                if (Vision is null) return;
                 await _visionService.ImportSol(Vision.Filepath);
                 GetCameras();
                 Procedures = new ObservableCollection<string>(_visionService.GetProcedureNames());
@@ -104,6 +104,7 @@ namespace X_Guide.MVVM.ViewModel
             }
             catch (Exception ex)
             {
+                if (ex is CriticalErrorException) throw ex;
                 Vision = null;
                 Procedure = null;
                 _notifier.ShowError(ex.Message);
