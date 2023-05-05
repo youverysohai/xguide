@@ -1,22 +1,9 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
 using System.Diagnostics;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
 using VM.Core;
 using VMControls.Interface;
-using VMControls.WPF.Release;
 
 namespace X_Guide.CustomControls
 {
@@ -25,7 +12,6 @@ namespace X_Guide.CustomControls
     /// </summary>
     public partial class CustomRenderControl : UserControl
     {
-
         public Visibility CenterBorder
         {
             get { return (Visibility)GetValue(CenterBorderProperty); }
@@ -36,12 +22,11 @@ namespace X_Guide.CustomControls
         public static readonly DependencyProperty CenterBorderProperty =
             DependencyProperty.Register("CenterBorder", typeof(Visibility), typeof(CustomRenderControl), new PropertyMetadata(Visibility.Collapsed));
 
-
-
         public IVmModule Procedure
         {
             get { return (IVmModule)GetValue(ProcedureProperty); }
-            set {
+            set
+            {
                 if (value is IVmModule)
                 {
                     SetValue(ProcedureProperty, value);
@@ -53,31 +38,44 @@ namespace X_Guide.CustomControls
         public static readonly DependencyProperty ProcedureProperty =
             DependencyProperty.Register("Procedure", typeof(IVmModule), typeof(CustomRenderControl), new PropertyMetadata(null, OnProcedureChanged));
 
- 
-
         private static void OnProcedureChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
         {
+            var custRenderControl = d as CustomRenderControl;
 
-            var RenderControl = d as CustomRenderControl;
-            try
-            {
-                RenderControl.r_control.ModuleSource = e.NewValue as IVmModule;
-            }
-            catch(Exception ex)
-            {
-                MessageBox.Show(ex.ToString());
-            }
-            RenderControl.loadingCircle.Visibility = Visibility.Collapsed;
-            RenderControl.loadingCircle.IsRunning = false;
+            var renderControl = custRenderControl.r_control;
+
+            renderControl.IsShowCustomROIMenu = true;
+            renderControl.ModuleSource = e.NewValue as IVmModule;
+
+            var i = e.NewValue as VmModule;
+            //double height = renderControl.ImageSource.Height / 2;
+            //double width = renderControl.ImageSource.Width / 2;
+            //i.ModuleResultCallBackArrived += (s, args) => testing(width, height, renderControl);
+            //RenderControl.r_control.UpdateVMResultShow();
+            custRenderControl.loadingCircle.Visibility = Visibility.Collapsed;
+            custRenderControl.loadingCircle.IsRunning = false;
         }
 
-      
+        private static void trya(object sender, SizeChangedEventArgs e)
+        {
+            Debug.WriteLine("hiya");
+        }
 
         public CustomRenderControl()
         {
             InitializeComponent();
         }
 
+        private void r_control_SourceUpdated(object sender, System.Windows.Data.DataTransferEventArgs e)
+        {
+        }
 
+        private void r_control_Initialized(object sender, EventArgs e)
+        {
+        }
+
+        private void r_control_TargetUpdated(object sender, System.Windows.Data.DataTransferEventArgs e)
+        {
+        }
     }
 }

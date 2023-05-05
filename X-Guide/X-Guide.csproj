@@ -73,6 +73,12 @@
     <Prefer32Bit>true</Prefer32Bit>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="halcondotnet">
+      <HintPath>..\..\..\..\..\..\Program Files\MVTec\HALCON-22.11-Steady\bin\dotnet35\halcondotnet.dll</HintPath>
+    </Reference>
+    <Reference Include="hdevenginedotnet">
+      <HintPath>..\..\..\..\..\..\Program Files\MVTec\HALCON-22.11-Steady\bin\dotnet35\hdevenginedotnet.dll</HintPath>
+    </Reference>
     <Reference Include="IMVSBlobFindModuCs, Version=1.0.0.0, Culture=neutral, PublicKeyToken=7fe8bad26cdedb7b, processorArchitecture=MSIL">
       <Private>False</Private>
     </Reference>
@@ -652,6 +658,9 @@
     <Compile Include="CustomControls\CustomLoadingControl.xaml.cs">
       <DependentUpon>CustomLoadingControl.xaml</DependentUpon>
     </Compile>
+    <Compile Include="CustomControls\HikVmRealTimeAcqControl.xaml.cs">
+      <DependentUpon>HikVmRealTimeAcqControl.xaml</DependentUpon>
+    </Compile>
     <Compile Include="CustomControls\MTypeCombo.xaml.cs">
       <DependentUpon>MTypeCombo.xaml</DependentUpon>
     </Compile>
@@ -800,8 +809,9 @@
     <Compile Include="Vision.cs">
       <DependentUpon>XGuideModel.tt</DependentUpon>
     </Compile>
+    <Compile Include="VisionMaster\HalcomVisionService.cs" />
     <Compile Include="VisionMaster\IVisionService.cs" />
-    <Compile Include="VisionMaster\VisionService.cs" />
+    <Compile Include="VisionMaster\HIKVisionService.cs" />
     <Compile Include="XGuideModel.Context.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -855,6 +865,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="CustomControls\CustomLoadingControl.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="CustomControls\HikVmRealTimeAcqControl.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

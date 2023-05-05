@@ -13,14 +13,14 @@ using Timer = X_Guide.HelperClass.Timer;
 
 namespace X_Guide.VisionMaster
 {
-    public class VisionService : IVisionService
+    public class HIKVisionService : IVisionService
     {
         private readonly IClientService _clientService;
         private CancellationTokenSource _cts;
 
         public string Procedure { get; set; }
 
-        public VisionService(IClientService clientService)
+        public HIKVisionService(IClientService clientService)
         {
             _clientService = clientService;
         }
@@ -62,25 +62,33 @@ namespace X_Guide.VisionMaster
             throw new Exception("Data not found!");
         }
 
-        public IEnumerable<string> GetProcedureNames()
+        public List<VmProcedure> GetAllProcedures()
         {
-            return VmSolution.Instance.GetAllProcedureList().astProcessInfo.Where(x => x.strProcessName != null).ToList().Select(x => x.strProcessName).ToList();
+            List<VmProcedure> vmProcedure = new List<VmProcedure>();
+            VmSolution.Instance.GetAllProcedureObjects(ref vmProcedure);
+            return vmProcedure;
         }
 
-        public void GetCameras()
+        public VmProcedure GetProcedure(string name)
         {
-            var i = VmSolution.Instance;
+            return VmSolution.Instance[name] as VmProcedure;
         }
 
-        public async Task<IVmModule> GetVmModule(string name)
+        public List<VmModule> GetModules(VmProcedure vmProcedure)
         {
-            return await Task.Run(() => VmSolution.Instance[$"{name}"] as IVmModule);
+            return vmProcedure.Modules.ToList();
+        }
+
+        public VmModule GetCameras()
+        {
+            return VmSolution.Instance["Basler1"] as VmModule;
         }
 
         /// <inheritdoc/>
 
         public async Task ImportSol(string filepath)
         {
+            //filepath = @"C:\Users\Xlent_XIR02\Downloads\TestGlobal.sol";
             if (!File.Exists(filepath))
             {
                 throw new Exception(StrRetriver.Get("VI002"));
@@ -113,7 +121,7 @@ namespace X_Guide.VisionMaster
         {
             return await Task.Run(() =>
             {
-                if (!(VmSolution.Instance[$"{name}"] is VmProcedure procedure))
+                if (!(VmSolution.Instance[name] is VmProcedure procedure))
                 {
                     return null;
                 }

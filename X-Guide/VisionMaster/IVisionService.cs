@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
+using VM.Core;
 using VMControls.Interface;
 
 namespace X_Guide.VisionMaster
@@ -34,12 +35,14 @@ namespace X_Guide.VisionMaster
         /// <exception cref="System.InvalidOperationException">Thrown if the specified procedure is not found.</exception>
         Task<IVmModule> RunProcedure(string name, bool continuous = false);
 
-        IEnumerable<string> GetProcedureNames();
+        List<VmProcedure> GetAllProcedures();
 
-        Task<IVmModule> GetVmModule(string name);
+        List<VmModule> GetModules(VmProcedure vmProcedure);
+
+        VmProcedure GetProcedure(string name);
 
         void RunOnceAndSaveImage();
 
-        void GetCameras();
+        VmModule GetCameras();
     }
 }

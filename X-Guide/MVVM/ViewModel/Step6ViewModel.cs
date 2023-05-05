@@ -1,94 +1,68 @@
 ﻿using AutoMapper;
-using IMVSCircleFindModuCs;
-using System;
 using System.Collections.Generic;
-using System.Diagnostics;
-using System.IO;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows.Input;
 using ToastNotifications;
+using ToastNotifications.Messages;
 using VM.Core;
 using VMControls.Interface;
-using X_Guide.Communication.Service;
 using X_Guide.MVVM.Command;
 using X_Guide.MVVM.Model;
 using X_Guide.MVVM.ViewModel.CalibrationWizardSteps;
 using X_Guide.Service;
-using X_Guide.Service.Communication;
 using X_Guide.Service.DatabaseProvider;
 using X_Guide.VisionMaster;
-using Xlent_Vision_Guided;
-using ToastNotifications.Messages;
 
 namespace X_Guide.MVVM.ViewModel
 {
     internal class Step6ViewModel : ViewModelBase
     {
+        public CalibrationViewModel Calibration { get; set; }
 
-        private CalibrationViewModel _calibration;
-        public CalibrationViewModel Calibration
-        {
-            get { return _calibration; }
-            set
-            {
-                _calibration = value;
-                OnPropertyChanged();
-            }
-        }
-        private IVmModule _visProcedure;
+        public IVmModule VisProcedure { get; set; }
 
-        public IVmModule VisProcedure
-        {
-            get { return _visProcedure; }
-            set
-            {
-                _visProcedure = value;
-                OnPropertyChanged();
-            }
-        }
+        public List<VmModule> Modules { get; set; }
+
         public RelayCommand OperationCommand { get; set; }
+
         private readonly ICalibrationDb _calibDb;
         private readonly ICalibrationService _calibService;
         private readonly IMapper _mapper;
         private readonly Notifier _notifier;
+        private readonly IVisionService _visionService;
 
         public RelayCommand SaveCommand { get; set; }
         public RelayCommand CalibrateCommand { get; set; }
 
-
-
-        public Step6ViewModel(CalibrationViewModel calibration, ICalibrationDb calibDb, ICalibrationService calibService, IMapper mapper, Notifier notifier)
+        public Step6ViewModel(CalibrationViewModel calibration, ICalibrationDb calibDb, ICalibrationService calibService, IMapper mapper, Notifier notifier, IVisionService visionService)
         {
-            _calibration = calibration;
+            Calibration = calibration;
             _calibDb = calibDb;
             _calibService = calibService;
             _mapper = mapper;
             _notifier = notifier;
+            _visionService = visionService;
             CalibrateCommand = new RelayCommand(Calibrate);
             SaveCommand = new RelayCommand(Save);
+            VisProcedure = _visionService.GetProcedure(Calibration.Procedure);
+            Modules = _visionService.GetModules(VisProcedure as VmProcedure);
         }
 
         private void Calibrate(object obj)
         {
-            _calibService.EyeInHand2DConfig_Calibrate(_calibration);
+            _calibService.EyeInHand2DConfig_Calibrate(Calibration);
         }
 
         private async void Save(object obj)
         {
-            if (!await _calibDb.IsExist(_calibration.Id))
+            if (!await _calibDb.IsExist(Calibration.Id))
             {
-                await _calibDb.Add(_mapper.Map<CalibrationModel>(_calibration));
+                await _calibDb.Add(_mapper.Map<CalibrationModel>(Calibration));
                 _notifier.ShowSuccess(StrRetriver.Get("SC000"));
             }
             else
             {
-                await _calibDb.Update(_mapper.Map<CalibrationModel>(_calibration));
-                _notifier.ShowSuccess($"{_calibration.Name} : {StrRetriver.Get("SC001")}");
+                await _calibDb.Update(_mapper.Map<CalibrationModel>(Calibration));
+                _notifier.ShowSuccess($"{Calibration.Name} : {StrRetriver.Get("SC001")}");
             }
-           
         }
-     
     }
 }

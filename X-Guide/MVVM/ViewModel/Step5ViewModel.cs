@@ -1,26 +1,15 @@
-﻿
-using ImageSourceModuleCs;
-using System;
+﻿using System;
 using System.Collections.Generic;
-using System.Collections.ObjectModel;
-using System.Diagnostics;
-using System.Linq;
-using System.Net.Sockets;
-using System.Reflection;
-using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Input;
-using System.Windows.Media.Imaging;
-using System.Windows.Threading;
 using VM.Core;
 using VMControls.Interface;
-using VMControls.WPF.Release;
-using Windows.UI.Xaml.Controls.Primitives;
+
 /*using VM.Core;*/
+
 using X_Guide.Communication.Service;
-using X_Guide.CustomEventArgs;
 using X_Guide.MVVM.Command;
 using X_Guide.MVVM.ViewModel.CalibrationWizardSteps;
 using X_Guide.Service;
@@ -32,38 +21,31 @@ namespace X_Guide.MVVM.ViewModel
 {
     internal class Step5ViewModel : ViewModelBase
     {
-
         private readonly CalibrationViewModel _calibration;
         private readonly IJogService _jogService;
         private readonly IServerService _serverService;
         private readonly IVisionService _visionService;
         private ManualResetEventSlim _manual;
 
-        private IVmModule _visProcedure;
+        public List<VmModule> Modules { get; private set; }
 
-        public IVmModule VisProcedure
-        {
-            get { return _visProcedure; }
-            set { _visProcedure = value;
-                OnPropertyChanged();
-            }
-        }
+        public IVmModule Module { get; set; }
 
         public CalibrationViewModel Calibration => _calibration;
         public string JogMode { get; set; } = "TOOL";
 
         private bool _canJog = false;
+
         public bool CanJog
         {
             get => _canJog;
-            private set {
+            private set
+            {
                 _canJog = value;
                 if (value) _jogService.Start();
                 else _jogService.Stop();
                 OnPropertyChanged();
             }
-           
-
         }
 
         private bool _isLoading = true;
@@ -80,14 +62,7 @@ namespace X_Guide.MVVM.ViewModel
 
         public ICommand ReportCommand { get; }
         public RelayCommand JogCommand { get; }
-
-        private int _jogDistance;
-        public int JogDistance
-        {
-            get { return _jogDistance; }
-            set { _jogDistance = value; }
-        }
-
+        public int JogDistance { get; set; }
 
         public Step5ViewModel(CalibrationViewModel calibration, IServerService serverService, IVisionService visionService, IJogService jogService)
         {
@@ -95,14 +70,12 @@ namespace X_Guide.MVVM.ViewModel
             _visionService = visionService;
             _calibration = calibration;
             _jogService = jogService;
-   
+
             JogCommand = new RelayCommand(Jog, (o) => _canJog);
             _serverService.ClientConnectionChange += OnConnectionChange;
-            
-           InitView();
-            
-        }
 
+            InitView();
+        }
 
         public async void InitView()
         {
@@ -110,7 +83,6 @@ namespace X_Guide.MVVM.ViewModel
             {
                 await RunProcedure();
                 _jogService.Start();
-               
             }
             catch
             {
@@ -121,7 +93,7 @@ namespace X_Guide.MVVM.ViewModel
 
         public override bool ReadyToDisplay()
         {
-            using(_manual = new ManualResetEventSlim(false))
+            using (_manual = new ManualResetEventSlim(false))
             {
                 _manual.Wait();
                 return _canDisplayViewModel;
@@ -134,22 +106,20 @@ namespace X_Guide.MVVM.ViewModel
             Application.Current.Dispatcher.Invoke(() =>
             {
                 JogCommand.OnCanExecuteChanged();
-            });  
+            });
         }
 
         private async Task RunProcedure()
         {
-            await _visionService.ImportSol(_calibration.Vision.Filepath);
-            IVmModule vmProcedure = null;
             try
             {
-                vmProcedure = await _visionService.RunProcedure($"{_calibration.Procedure}", true);
+                IVmModule procedure = await _visionService.RunProcedure(_calibration.Procedure, false);
+                Modules = _visionService.GetModules(procedure as VmProcedure);
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
                 MessageBox.Show(ex.ToString());
             }
-            VisProcedure = vmProcedure;
         }
 
         private void Jog(object parameter)
@@ -171,9 +141,8 @@ namespace X_Guide.MVVM.ViewModel
             }
             JogCommand command = new JogCommand().SetX(x).SetY(y).SetZ(z).SetRZ(rz).SetSpeed(_calibration.Speed).SetAcceleration(_calibration.Acceleration);
             _jogService.Enqueue(command);
-
         }
-       
+
         public new void Dispose()
         {
             _serverService.ClientConnectionChange -= OnConnectionChange;

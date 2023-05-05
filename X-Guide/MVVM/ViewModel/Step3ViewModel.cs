@@ -7,6 +7,7 @@ using System.Threading;
 using System.Threading.Tasks;
 using ToastNotifications;
 using ToastNotifications.Messages;
+using VM.Core;
 using X_Guide.MVVM.Model;
 using X_Guide.MVVM.ViewModel.CalibrationWizardSteps;
 using X_Guide.Service.DatabaseProvider;
@@ -53,7 +54,7 @@ namespace X_Guide.MVVM.ViewModel
             }
         }
 
-        public ObservableCollection<string> Procedures { get; set; }
+        public ObservableCollection<VmProcedure> Procedures { get; set; }
 
         public VisionViewModel Vision
         {
@@ -98,13 +99,13 @@ namespace X_Guide.MVVM.ViewModel
                 IsProcedureEditable = false;
                 if (Vision is null) return;
                 await _visionService.ImportSol(Vision.Filepath);
-                GetCameras();
-                Procedures = new ObservableCollection<string>(_visionService.GetProcedureNames());
+
+                Procedures = new ObservableCollection<VmProcedure>(_visionService.GetAllProcedures());
                 IsProcedureEditable = true;
             }
             catch (Exception ex)
             {
-                if (ex is CriticalErrorException) throw ex;
+                /*     if (ex is CriticalErrorException) throw ex;*/
                 Vision = null;
                 Procedure = null;
                 _notifier.ShowError(ex.Message);
