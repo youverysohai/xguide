@@ -78,6 +78,8 @@ namespace X_Guide
             builder.RegisterType<Step6ViewModel>();
             builder.RegisterType<SettingViewModel>();
             builder.RegisterType<CalibrationMainViewModel>();
+            builder.RegisterType<HalconLive>();
+            builder.RegisterType<HalconStep6>();
             builder.RegisterType<ViewModelState>().SingleInstance();
             builder.RegisterType<DbContextFactory>().SingleInstance();
             builder.RegisterType<ManipulatorDb>().As<IManipulatorDb>();

@@ -18,6 +18,8 @@ namespace X_Guide.MVVM
         StepTwo,
         JogRobot,
         CalibrationWizardStart,
+        HalconLive,
+        HalconStep6
     
     
 

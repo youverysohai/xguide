@@ -713,6 +713,8 @@
     <Compile Include="MVVM\ViewModel\CalibrationMainViewModel.cs" />
     <Compile Include="MVVM\ViewModel\ErrorViewModel.cs" />
     <Compile Include="MVVM\ViewModel\GeneralViewModel.cs" />
+    <Compile Include="MVVM\ViewModel\HalconLive.cs" />
+    <Compile Include="MVVM\ViewModel\HalconStep6.cs" />
     <Compile Include="MVVM\ViewModel\IViewModelLocator.cs" />
     <Compile Include="MVVM\ViewModel\JogRobotViewModel.cs" />
     <Compile Include="MVVM\ViewModel\ManipulatorViewModel.cs" />
@@ -731,6 +733,12 @@
     <Compile Include="MVVM\ViewModel\VisionViewModel.cs" />
     <Compile Include="MVVM\View\CalibrationWizardSteps\CalibrationWizardStart.xaml.cs">
       <DependentUpon>CalibrationWizardStart.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="MVVM\View\CalibrationWizardSteps\HalconLive.xaml.cs">
+      <DependentUpon>HalconLive.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="MVVM\View\CalibrationWizardSteps\HalconStep6.xaml.cs">
+      <DependentUpon>HalconStep6.xaml</DependentUpon>
     </Compile>
     <Compile Include="MVVM\View\CalibrationWizardSteps\Step1.xaml.cs">
       <DependentUpon>Step1.xaml</DependentUpon>
@@ -881,6 +889,14 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="MVVM\View\CalibrationWizardSteps\CalibrationWizardStart.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="MVVM\View\CalibrationWizardSteps\HalconLive.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="MVVM\View\CalibrationWizardSteps\HalconStep6.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
