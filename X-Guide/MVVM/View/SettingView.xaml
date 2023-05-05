@@ -171,7 +171,7 @@
             </TabItem>
 
             <!-- Vision Tab-->
-            <TabItem>
+            <TabItem >
                 <TabItem.Header>
                     <StackPanel  Width="auto" Height="auto">
                         <materialDesign:PackIcon
@@ -183,7 +183,7 @@
                 </TabItem.Header>
 
                 <materialDesign:DrawerHost OpenMode="Standard">
-                    <materialDesign:DrawerHost.LeftDrawerContent>
+                    <!--<materialDesign:DrawerHost.LeftDrawerContent>
                         <hc:ScrollViewer VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Auto">
                             <hc:SimpleStackPanel Orientation="Horizontal" 
                Background="{DynamicResource PersonPictureEllipseBadgeFillThemeBrush}">
@@ -214,25 +214,25 @@
 
                         </hc:ScrollViewer>
 
-                    </materialDesign:DrawerHost.LeftDrawerContent>
+                    </materialDesign:DrawerHost.LeftDrawerContent>-->
 
 
                     <ui:SimpleStackPanel Orientation="Vertical">
 
-                        <!-- NEW VISION -->
+                        <!-- NEW VISION --><!--
                         <ui:ContentDialog x:Name="VisionDialog" Title="New Vision" CloseButtonStyle="{DynamicResource DateTimePickerFlyoutButtonStyle}" CloseButtonText="Cancel" 
                                               PrimaryButtonText="Create" PrimaryButtonCommand="{Binding AddVisionCommand}" PrimaryButtonStyle="{DynamicResource DefaultButtonStyle}">
                             <xCust:CustomVisionForm Vision="{Binding DataContext.Vision, ElementName=SettingUserControl}"/>
-                        </ui:ContentDialog>
+                        </ui:ContentDialog>-->
                         <ui:SimpleStackPanel Orientation="Horizontal">
-                            <Button  Command="{x:Static materialDesign:DrawerHost.OpenDrawerCommand}" 
+                            <!--<Button  Command="{x:Static materialDesign:DrawerHost.OpenDrawerCommand}" 
                              CommandParameter="{x:Static Dock.Left}" 
                              Style="{DynamicResource MaterialDesignIconForegroundButton}" 
                              ToolTip="List of Manipulators"
                              ToolTipService.InitialShowDelay="122"
                              >
                                 <materialDesign:PackIcon Kind="PlaylistEdit" Style="{DynamicResource IconStyle24}"/>
-                            </Button>
+                            </Button>-->
                             <!-- data trigger for collapse and expand -->
 
 

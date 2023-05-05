@@ -12,6 +12,8 @@ namespace X_Guide.Enums
         [Description("Vision Master")]
         VisionMaster = 1,
         [Description("HIK Smart Camera")]
-        HikSmartCamera = 2
+        HikSmartCamera = 2,
+        [Description("MVTec HALCON")]
+        MVTecHALCON = 3
     }
 }
