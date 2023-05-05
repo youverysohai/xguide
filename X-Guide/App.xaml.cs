@@ -4,7 +4,6 @@ using Microsoft.Extensions.Logging;
 using Serilog;
 using System;
 using System.Configuration;
-using System.IO;
 using System.Net;
 using System.Windows;
 using ToastNotifications;
@@ -28,8 +27,10 @@ namespace X_Guide
     /// </summary>
     public partial class App : Application
     {
-        private static readonly IContainer _diContainer = BuildDIContainer();
+        private static IContainer _diContainer;
+
         //TODO: Add logger
+        public static int VisionSoftware = 1;
 
         private static IContainer BuildDIContainer()
         {
@@ -82,8 +83,12 @@ namespace X_Guide
             builder.RegisterType<DbContextFactory>().SingleInstance();
             builder.RegisterType<ManipulatorDb>().As<IManipulatorDb>();
             builder.RegisterType<UserDb>().As<IUserDb>();
-            if (true) builder.RegisterType<HIKVisionService>().As<IVisionService>();
-            else builder.RegisterType<HalcomVisionService>().As<IVisionService>();
+            switch (VisionSoftware)
+            {
+                case 1: builder.RegisterType<HIKVisionService>().As<IVisionService>(); break;
+                case 2: builder.RegisterType<HalcomVisionService>().As<IVisionService>(); break;
+                default: break;
+            }
 
             builder.RegisterType<JogService>().As<IJogService>();
             builder.RegisterType<ServerCommand>().SingleInstance();
@@ -116,11 +121,15 @@ namespace X_Guide
             }
         }
 
-        private void InitializeAppConfiguration()
+        private static void InitializeAppConfiguration()
         {
-            string appDataPath = Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData);
-            string settingPath = Path.Combine(appDataPath, "X-Guide", "Settings.xml");
-            ConfigurationManager.AppSettings["SettingPath"] = settingPath;
+            //string appDataPath = Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData);
+            //string settingPath = Path.Combine(appDataPath, "X-Guide", "Settings.xml");
+            //ConfigurationManager.AppSettings["SettingPath"] = settingPath;
+            var _configuration = ConfigurationManager.OpenExeConfiguration(ConfigurationUserLevel.None);
+            var general = (General)_configuration.GetSection("GeneralSetting");
+            VisionSoftware = general.VisionSoftware;
+            _diContainer = BuildDIContainer();
         }
 
         //        Startup Page

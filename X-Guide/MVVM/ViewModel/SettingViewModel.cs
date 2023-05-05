@@ -4,6 +4,7 @@ using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Configuration;
+using System.Windows;
 using VM.Core;
 using X_Guide.MVVM.Command;
 using X_Guide.MVVM.Model;
@@ -98,6 +99,8 @@ namespace X_Guide.MVVM.ViewModel
         private void SaveGeneral(object obj)
         {
             _generalDb.Update(General);
+            MessageBox.Show("Saved setting. Restarting the application is required for the changes to take effect.");
+            Application.Current.Shutdown();
         }
 
         private async void DeleteVision(object obj)

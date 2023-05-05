@@ -1,41 +1,32 @@
 ﻿using Autofac;
-using AutoMapper;
-using HandyControl.Controls;
 using HandyControl.Data;
 using System;
 using System.Collections.Generic;
-using System.Collections.ObjectModel;
-using System.Data.Entity.Infrastructure;
-using System.Diagnostics;
-using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
-using System.Windows.Controls;
-using System.Windows.Input;
-using System.Windows.Threading;
-using X_Guide.Communication.Service;
 using X_Guide.MVVM.Command;
 using X_Guide.MVVM.Store;
 
 using X_Guide.MVVM.ViewModel.CalibrationWizardSteps;
 using X_Guide.Service;
-using X_Guide.Service.Communication;
-using X_Guide.Service.DatabaseProvider;
+using MessageBox = HandyControl.Controls.MessageBox;
 
 namespace X_Guide.MVVM.ViewModel
 {
     public class CalibrationMainViewModel : ViewModelBase
     {
         private CalibrationViewModel _calibration;
+
         public CalibrationViewModel Calibration
         {
-            get => _calibration; 
+            get => _calibration;
             set
             {
                 _calibration = value;
                 OnPropertyChanged();
             }
         }
+
+        public List<string> Form { get; set; }
 
         private bool _canExecuteNext = true;
 
@@ -46,7 +37,6 @@ namespace X_Guide.MVVM.ViewModel
             {
                 _canExecuteNext = value;
                 WizNextCommand?.OnCanExecuteChanged();
-
             }
         }
 
@@ -62,14 +52,13 @@ namespace X_Guide.MVVM.ViewModel
             }
         }
 
-
         public LinkedList<ViewModelBase> _navigationHistory = new LinkedList<ViewModelBase>();
-
 
         public LinkedList<ViewModelBase> NavigationHistory => _navigationHistory;
 
         // Define the data list for the StepBar control
         public NavigationStore _navigationStore;
+
         private readonly INavigationService _navigationService;
         private readonly IViewModelLocator _viewModelLocator;
 
@@ -79,12 +68,10 @@ namespace X_Guide.MVVM.ViewModel
 
         public ViewModelBase CurrentViewModel => _navigationStore.CurrentViewModel;
 
-
         private int _stepIndex;
 
         private int _currentStep;
 
-     
         public int StepIndex
         {
             get { return _stepIndex; }
@@ -95,7 +82,6 @@ namespace X_Guide.MVVM.ViewModel
             }
         }
 
-
         public int CurrentStep
         {
             get { return _currentStep; }
@@ -105,9 +91,10 @@ namespace X_Guide.MVVM.ViewModel
                 StepIndex = _currentStep;
             }
         }
+
         public LinkedListNode<ViewModelBase> CurrentNode { get; set; }
 
-       public void LoadCalibSetting(TypedParameter calib)
+        public void LoadCalibSetting(TypedParameter calib)
         {
             _navigationHistory.AddLast(_viewModelLocator.Create<Step2ViewModel>(calib));
             _navigationHistory.AddLast(_viewModelLocator.Create<Step3ViewModel>(calib));
@@ -135,11 +122,8 @@ namespace X_Guide.MVVM.ViewModel
             {
                 StepIndex = CurrentStep;
                 MessageBox.Show("Page not found");
-
             }
         }
-
-
 
         public async void WizNext(object parameter)
         {
@@ -162,11 +146,10 @@ namespace X_Guide.MVVM.ViewModel
                 catch (Exception ex)
                 {
                     MessageBox.Show(ex.Message);
-                }  
+                }
             }
-
         }
-    
+
         public void WizPrev(object parameter)
         {
             LinkedListNode<ViewModelBase> prevNode = CurrentNode.Previous;
@@ -175,37 +158,54 @@ namespace X_Guide.MVVM.ViewModel
             {
                 CurrentNode = prevNode;
                 CurrentStep -= 1;
-                _navigationService.Navigate(prevNode.Value); 
+                _navigationService.Navigate(prevNode.Value);
             }
-
             else
             {
                 MessageBox.Show("This is the first page!");
             }
-
         }
 
         private async Task NavigateToStep(int currentStep)
         {
             var calibPara = new TypedParameter(typeof(CalibrationViewModel), _calibration);
-            
-            switch (currentStep)
+            if (App.VisionSoftware == 1)
             {
-                case 0: _navigationService.Navigate<Step1ViewModel>(calibPara); break;
-                case 1: _navigationService.Navigate<Step2ViewModel>(calibPara); break;
-                case 2: await _navigationService.NavigateAsync<Step3ViewModel>(calibPara); break;
-                case 3: _navigationService.Navigate<Step4ViewModel>(calibPara); break;
-                case 4: await _navigationService.NavigateAsync<Step5ViewModel>(calibPara); break;
-                case 5: _navigationService.Navigate<Step6ViewModel>(calibPara); break;
-                default: throw new Exception("Page does not exist!");
+                switch (currentStep)
+                {
+                    case 0: _navigationService.Navigate<Step1ViewModel>(calibPara); break;
+                    case 1: _navigationService.Navigate<Step2ViewModel>(calibPara); break;
+                    case 2: await _navigationService.NavigateAsync<Step3ViewModel>(calibPara); break;
+                    case 3: _navigationService.Navigate<Step4ViewModel>(calibPara); break;
+                    case 4: await _navigationService.NavigateAsync<Step5ViewModel>(calibPara); break;
+                    case 5: _navigationService.Navigate<Step6ViewModel>(calibPara); break;
+                    default: throw new Exception("Page does not exist!");
+                }
             }
-
+            else
+            {
+                switch (currentStep)
+                {
+                    case 0: _navigationService.Navigate<Step1ViewModel>(calibPara); break;
+                    case 1: _navigationService.Navigate<Step2ViewModel>(calibPara); break;
+                    case 2: _navigationService.Navigate<Step4ViewModel>(calibPara); break;
+                    case 3: _navigationService.Navigate<SettingViewModel>(); break;
+                    case 4: _navigationService.Navigate<Step2ViewModel>(calibPara); break;
+                    default: throw new Exception("Page does not exist!");
+                }
+            }
         }
 
         public CalibrationMainViewModel(CalibrationViewModel calibration, INavigationService navigationService, IViewModelLocator viewModelLocator)
         {
-
-
+            if (App.VisionSoftware == 1)
+            {
+                Form = new List<string>(new string[] { "Manipulator", "Orientation and Mounting", "Vision Flow", "Motion", "Jog", "Calibration", });
+            }
+            else
+            {
+                Form = new List<string>(new string[] { "Manipulator", "Orientation and Mounting", "Motion", "Live Image", "Calibration" });
+            }
             _navigationService = navigationService;
             _navigationStore = _navigationService.GetNavigationStore();
             _navigationStore.CurrentViewModelChanged += OnCurrentViewModelChanged;
@@ -215,10 +215,10 @@ namespace X_Guide.MVVM.ViewModel
             CancelCommand = new RelayCommand(CancelCalib);
 
             Calibration = calibration;
-            
+
             var calibPara = new TypedParameter(typeof(CalibrationViewModel), _calibration);
             Step1ViewModel Step1 = viewModelLocator.Create<Step1ViewModel>(calibPara) as Step1ViewModel;
-/*            Step1.SelectedItemChangedEvent += OnSelectedItemChangedEvent;*/
+            /*            Step1.SelectedItemChangedEvent += OnSelectedItemChangedEvent;*/
             _navigationService.Navigate(Step1);
             CurrentNode = _navigationHistory.AddLast(CurrentViewModel);
 
@@ -229,7 +229,6 @@ namespace X_Guide.MVVM.ViewModel
                   {
                       Id = 1,
                       Type = 1,
-
                   },
                   Orientation = 2,
                   Vision = new VisionViewModel
@@ -267,8 +266,5 @@ namespace X_Guide.MVVM.ViewModel
         {
             OnPropertyChanged(nameof(CurrentViewModel));
         }
-
     }
-
-
 }
