@@ -82,8 +82,9 @@ namespace X_Guide
             builder.RegisterType<DbContextFactory>().SingleInstance();
             builder.RegisterType<ManipulatorDb>().As<IManipulatorDb>();
             builder.RegisterType<UserDb>().As<IUserDb>();
-            builder.RegisterType<HIKVisionService>().As<IVisionService>();
-            //builder.RegisterType<HalcomVisionService>().Named<IVisionService>("halcom");
+            if (true) builder.RegisterType<HIKVisionService>().As<IVisionService>();
+            else builder.RegisterType<HalcomVisionService>().As<IVisionService>();
+
             builder.RegisterType<JogService>().As<IJogService>();
             builder.RegisterType<ServerCommand>().SingleInstance();
             builder.RegisterType<NavigationStore>();
