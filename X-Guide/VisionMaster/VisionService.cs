@@ -1,16 +1,14 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Diagnostics;
+using System.IO;
 using System.Linq;
-using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 using VM.Core;
 using VMControls.Interface;
 using X_Guide.Communication.Service;
 using X_Guide.CustomEventArgs;
-using X_Guide.HelperClass;
-using Xlent_Vision_Guided;
 using Timer = X_Guide.HelperClass.Timer;
 
 namespace X_Guide.VisionMaster
@@ -21,6 +19,7 @@ namespace X_Guide.VisionMaster
         private CancellationTokenSource _cts;
 
         public string Procedure { get; set; }
+
         public VisionService(IClientService clientService)
         {
             _clientService = clientService;
@@ -30,6 +29,7 @@ namespace X_Guide.VisionMaster
         {
             await _clientService.ConnectServer();
         }
+
         /// <inheritdoc/>
 
         public async Task<Point> GetVisCenter()
@@ -50,7 +50,6 @@ namespace X_Guide.VisionMaster
 
             if (data.Length == 4)
             {
-
                 if (data[0] == "1")
                 {
                     return new Point(double.Parse(data[1]), -double.Parse(data[2]), double.Parse(data[3]));
@@ -68,40 +67,50 @@ namespace X_Guide.VisionMaster
             return VmSolution.Instance.GetAllProcedureList().astProcessInfo.Where(x => x.strProcessName != null).ToList().Select(x => x.strProcessName).ToList();
         }
 
+        public void GetCameras()
+        {
+            var i = VmSolution.Instance;
+        }
+
         public async Task<IVmModule> GetVmModule(string name)
         {
             return await Task.Run(() => VmSolution.Instance[$"{name}"] as IVmModule);
         }
+
         /// <inheritdoc/>
 
         public async Task ImportSol(string filepath)
         {
-            await Task.Run(() =>
+            if (!File.Exists(filepath))
             {
-                try
-                {
-                    VmSolution.Import(filepath);
-                }
-                catch
-                {
-                    throw new Exception(StrRetriver.Get("VI002"));
-                }
-            });
-         
-
+                throw new Exception(StrRetriver.Get("VI002"));
+            }
+            if (!Path.GetExtension(filepath).Equals(".sol", StringComparison.OrdinalIgnoreCase))
+            {
+                throw new Exception(StrRetriver.Get("VI003"));
+            }
+            await Task.Run(() =>
+           {
+               try
+               {
+                   VmSolution.Load(filepath);
+               }
+               catch
+               {
+                   throw new CriticalErrorException(StrRetriver.Get("C000"));
+               }
+           });
         }
-
 
         public void RunOnceAndSaveImage()
         {
             throw new NotImplementedException();
         }
-        /// <inheritdoc/>
 
+        /// <inheritdoc/>
 
         public async Task<IVmModule> RunProcedure(string name, bool continuous = false)
         {
-
             return await Task.Run(() =>
             {
                 if (!(VmSolution.Instance[$"{name}"] is VmProcedure procedure))
@@ -118,8 +127,6 @@ namespace X_Guide.VisionMaster
                 Procedure = name;
                 return procedure;
             });
-
         }
-
     }
 }

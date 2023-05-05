@@ -1,24 +1,17 @@
 ﻿using AutoMapper;
-using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
 using X_Guide.MVVM.DBContext;
 using X_Guide.MVVM.Model;
-using X_Guide.MVVM.ViewModel;
 
 namespace X_Guide.Service.DatabaseProvider
 {
     internal class VisionDb : DbServiceBase, IVisionDb
     {
-
-
         public VisionDb(IMapper mapper, DbContextFactory contextFactory) : base(contextFactory, mapper)
         {
-
         }
-       
 
         public async Task<bool> Delete(VisionModel vision)
         {
@@ -36,8 +29,8 @@ namespace X_Guide.Service.DatabaseProvider
 
         public async Task<bool> Update(VisionModel vision)
         {
-            
-            return await AsyncQuery(c => {
+            return await AsyncQuery(c =>
+            {
                 var result = c.Visions.Find(vision.Id);
                 if (result == null) return false;
                 c.Entry(result).CurrentValues.SetValues(MapTo<Vision>(vision));
@@ -53,7 +46,6 @@ namespace X_Guide.Service.DatabaseProvider
                 return MapTo<VisionModel>(c.Visions.FirstOrDefault(x => x.Name.Equals(name)));
             });
         }
-
 
         public async Task<IEnumerable<VisionModel>> GetAll()
         {

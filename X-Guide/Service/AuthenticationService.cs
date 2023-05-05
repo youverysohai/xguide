@@ -11,7 +11,7 @@ namespace X_Guide.Service
 {
     public class AuthenticationService
     {
-        private IUserDb _userService;
+        private readonly IUserDb _userService;
         public event Action CurrentUserChanged;
 
         private UserModel userModel;
@@ -28,6 +28,7 @@ namespace X_Guide.Service
         {
             CurrentUserChanged?.Invoke();
         }
+        
         public bool IsLoggedIn => CurrentUser != null;
 
         public AuthenticationService(IUserDb userService)
@@ -45,6 +46,7 @@ namespace X_Guide.Service
             return false;
         }
 
+   
         public async Task<bool> Register(UserModel user, SecureString password)
         {
             bool success = await _userService.Add(user, password);

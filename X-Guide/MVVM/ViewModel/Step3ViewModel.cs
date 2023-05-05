@@ -2,46 +2,46 @@
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
-using System.Diagnostics;
 using System.Linq;
-using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
-using System.Windows.Forms;
-using System.Windows.Input;
-using System.Windows.Navigation;
 using ToastNotifications;
-using ToastNotifications.Core;
-using VM.Core;
-using X_Guide.Communication.Service;
-using X_Guide.MVVM.Command;
+using ToastNotifications.Messages;
 using X_Guide.MVVM.Model;
 using X_Guide.MVVM.ViewModel.CalibrationWizardSteps;
-using X_Guide.Service.Communication;
 using X_Guide.Service.DatabaseProvider;
 using X_Guide.State;
 using X_Guide.VisionMaster;
-using ToastNotifications.Messages;
 
 namespace X_Guide.MVVM.ViewModel
 {
     internal class Step3ViewModel : ViewModelBase
     {
-
-        private ManualResetEventSlim _manual;
-        private CalibrationViewModel _calibration;
-        private readonly IVisionService _visionService;
-        private readonly IVisionDb _visionDb;
         private readonly IMapper _mapper;
         private readonly Notifier _notifier;
         private readonly ViewModelState _viewModelState;
+        private readonly IVisionDb _visionDb;
+        private readonly IVisionService _visionService;
+        private readonly CalibrationViewModel _calibration;
+        private ManualResetEventSlim _manual;
+
+        public Step3ViewModel(CalibrationViewModel calibration, IVisionService visionService, IVisionDb visionDb, IMapper mapper, ViewModelState viewModelState, Notifier notifier)
+        {
+            _calibration = calibration;
+            _visionService = visionService;
+            _visionDb = visionDb;
+            _mapper = mapper;
+            _notifier = notifier;
+            _viewModelState = viewModelState;
+            InitView();
+        }
 
         public CalibrationViewModel Calibration
         {
             get { return _calibration; }
         }
 
-        private string _procedure => _calibration.Procedure;
+        public bool IsProcedureEditable { get; set; } = false;
 
         public string Procedure
         {
@@ -52,8 +52,9 @@ namespace X_Guide.MVVM.ViewModel
                 OnPropertyChanged();
             }
         }
-        public bool IsProcedureEditable { get; set; } = false;
-        private VisionViewModel _vision => _calibration.Vision;
+
+        public ObservableCollection<string> Procedures { get; set; }
+
         public VisionViewModel Vision
         {
             get { return _vision; }
@@ -68,18 +69,9 @@ namespace X_Guide.MVVM.ViewModel
             }
         }
 
-        private async void UpdateProcedures()
-        {
-  
-            _viewModelState.IsLoading = true;
-            await GetProcedures();
-            _viewModelState.IsLoading = false;
-        }
-
-
         public ObservableCollection<VisionViewModel> Visions { get; set; }
-
-        public ObservableCollection<string> Procedures { get; set; }
+        private string _procedure => _calibration.Procedure;
+        private VisionViewModel _vision => _calibration.Vision;
 
         public override bool ReadyToDisplay()
         {
@@ -92,58 +84,51 @@ namespace X_Guide.MVVM.ViewModel
                 }
             }
             return _isLoaded;
-
         }
 
-        public Step3ViewModel(CalibrationViewModel calibration, IVisionService visionService, IVisionDb visionDb, IMapper mapper, ViewModelState viewModelState, Notifier notifier)
+        private void GetCameras()
         {
-            _calibration = calibration;
-            _visionService = visionService;
-            _visionDb = visionDb;
-            _mapper = mapper;
-            _notifier = notifier;
-            _viewModelState = viewModelState;
-            InitView();
-
+            _visionService.GetCameras();
         }
 
+        private async Task GetProcedures()
+        {
+            try
+            {
+                IsProcedureEditable = false;
+                if (Vision is null) return;
+                await _visionService.ImportSol(Vision.Filepath);
+                GetCameras();
+                Procedures = new ObservableCollection<string>(_visionService.GetProcedureNames());
+                IsProcedureEditable = true;
+            }
+            catch (Exception ex)
+            {
+                if (ex is CriticalErrorException) throw ex;
+                Vision = null;
+                Procedure = null;
+                _notifier.ShowError(ex.Message);
+            }
+        }
+
+        private async Task GetVisions()
+        {
+            IEnumerable<VisionModel> models = await _visionDb.GetAll();
+            Visions = new ObservableCollection<VisionViewModel>(models.Select(x => _mapper.Map<VisionViewModel>(x)));
+        }
 
         private async void InitView()
         {
             await GetVisions();
             await GetProcedures();
             _manual?.Set();
-
         }
-        private async Task GetVisions()
+
+        private async void UpdateProcedures()
         {
-            IEnumerable<VisionModel> models = await _visionDb.GetAll();
-            Visions = new ObservableCollection<VisionViewModel>(models.Select(x => _mapper.Map<VisionViewModel>(x)));
-
+            _viewModelState.IsLoading = true;
+            await GetProcedures();
+            _viewModelState.IsLoading = false;
         }
-
-        private async Task GetProcedures()
-        {
-            IsProcedureEditable = false;
-            if (Vision is null) return;
-            try
-            {
-                await _visionService.ImportSol(Vision.Filepath);
-
-                Procedures = new ObservableCollection<string>(_visionService.GetProcedureNames());
-                IsProcedureEditable = true;
-            }
-            catch(Exception ex)
-            {
-                Vision = null;
-                Procedure = null;
-                _notifier.ShowError(ex.Message);
-            }
-            
-        }
-
-
-
     }
 }
-    

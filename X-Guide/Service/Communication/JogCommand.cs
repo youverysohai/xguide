@@ -1,15 +1,11 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace X_Guide.Service.Communication
+﻿namespace X_Guide.Service.Communication
 {
     public class JogCommand
     {
         //JOG,TOOL,{jogDistance},0,0,0,0,0,0,0\r\n
         public string Mode { get; set; } = "TOOL";
+
+        public string ManipulatorName { get; set; }
         public double X { get; set; }
         public double Y { get; set; }
         public double Z { get; set; }
@@ -21,7 +17,18 @@ namespace X_Guide.Service.Communication
 
         public JogCommand()
         {
-            
+        }
+
+        public JogCommand SetManipulatorName(string manipulatorName)
+        {
+            ManipulatorName = manipulatorName;
+            return this;
+        }
+
+        public JogCommand SetMode(string mode)
+        {
+            Mode = mode;
+            return this;
         }
 
         public JogCommand SetX(double x)
@@ -35,6 +42,7 @@ namespace X_Guide.Service.Communication
             Y = y;
             return this;
         }
+
         public JogCommand SetZ(double z)
         {
             Z = z;
@@ -59,10 +67,23 @@ namespace X_Guide.Service.Communication
             return this;
         }
 
-        public override string ToString()
+        public void Reset()
         {
-            return $"JOG,{Mode},{X},{Y},{Z},{RZ},{RX},{RY},{Speed},{Acceleration}";
+            ResetCoordinate();
+            ManipulatorName = Mode = "";
+            Speed = Acceleration = 0;
         }
 
+        public void ResetCoordinate()
+        {
+            X = Y = Z = RX = RY = RZ = 0;
+        }
+
+        public override string ToString()
+        {
+            string command = $"JOG,{ManipulatorName},{Mode},{X},{Y},{Z},{RZ},{RX},{RY},{Speed},{Acceleration}";
+            ResetCoordinate();
+            return command;
+        }
     }
 }

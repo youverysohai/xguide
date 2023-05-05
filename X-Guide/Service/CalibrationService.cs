@@ -1,8 +1,5 @@
 ﻿using IMVSCircleFindModuCs;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
 using VM.Core;
 using VMControls.Interface;
@@ -15,22 +12,27 @@ namespace X_Guide.Service
 {
     public class CalibrationService : ICalibrationService
     {
-        private readonly IVisionService _visionService;
         private readonly IJogService _jogService;
-        private IMVSCircleFindModuTool _circleFind;
+        private readonly IVisionService _visionService;
         private CalibrationViewModel _calibration;
+        private IMVSCircleFindModuTool _circleFind;
+        private JogCommand _jogCommand;
         private double[] calibData;
         private IVmModule VisProcedure;
-        public CalibrationService(IVisionService visionService, IJogService jogService) 
+
+        public CalibrationService(IVisionService visionService, IJogService jogService)
         {
             _visionService = visionService;
             _jogService = jogService;
         }
 
+        /// <inheritdoc/>
 
         public async void EyeInHand2DConfig_Calibrate(CalibrationViewModel calibration)
         {
             _calibration = calibration;
+            _jogCommand = new JogCommand().SetManipulatorName(_calibration?.Manipulator.Name);
+
             await _visionService.RunProcedure($"{_calibration.Procedure}", true);
             _circleFind = (IMVSCircleFindModuTool)VmSolution.Instance["Circle.Circle Search1"];
             VisProcedure = _circleFind;
@@ -56,97 +58,64 @@ namespace X_Guide.Service
                 return;
             }
         }
+
         private async Task<double[]> FindXMoveYMove(int jogDistance, int rotateAngle)
         {
             await Task.Delay(1000);
             Point Vis_Center = await _visionService.GetVisCenter();
 
-            await _jogService.SendJogCommand(new JogCommand().SetX(jogDistance));
+            await _jogService.SendJogCommand(_jogCommand.SetX(jogDistance));
 
             await Task.Delay(1000);
             Point Vis_Positive = await _visionService.GetVisCenter();
 
-            await _jogService.SendJogCommand(new JogCommand().SetX(-jogDistance));
-            await _jogService.SendJogCommand(new JogCommand().SetRZ(rotateAngle));
+            await _jogService.SendJogCommand(_jogCommand.SetX(-jogDistance));
+            await _jogService.SendJogCommand(_jogCommand.SetRZ(rotateAngle));
 
             await Task.Delay(1000);
             Point Vis_Rotate = await _visionService.GetVisCenter();
 
-            await _jogService.SendJogCommand(new JogCommand().SetRZ(-rotateAngle));
+            await _jogService.SendJogCommand(_jogCommand.SetRZ(-rotateAngle));
             double[] XYMove = VisionGuided.FindEyeInHandXYMoves(Vis_Center, Vis_Positive, Vis_Rotate, jogDistance, rotateAngle);
 
             return XYMove;
-
         }
+
         private async Task<(Point[], Point[])> Start9PointCalib()
         {
             int XOffset = (int)_calibration.XOffset;
             int YOffset = (int)_calibration.YOffset;
 
+            int[,] offsets = new int[9, 3] {
+            {0, -YOffset,4},
+            {XOffset,0, 1},
+            {0, YOffset,0},
+            {0,YOffset,3},
+            {-XOffset, 0,6},
+            {-XOffset, 0,7},
+            { 0, -YOffset ,8},
+            {0,-YOffset, 5},
+            {XOffset, YOffset, 2},
+            };
+
             Point[] VisionPoints = new Point[9];
             Point[] RobotPoints = new Point[9];
 
-            RobotPoints[4] = new Point(0, 0);
-            VisionPoints[4] = await _visionService.GetVisCenter();
+            int delayMs = 1000;
+            int x = 0;
+            int y = 0;
+            for (int i = 0; i < offsets.GetLength(0); i++)
+            {
+                RobotPoints[offsets[i, 2]] = new Point(x, y);
+                VisionPoints[offsets[i, 2]] = await _visionService.GetVisCenter();
 
+                x += offsets[i, 0];
+                y += offsets[i, 1];
 
-            await _jogService.SendJogCommand(new JogCommand().SetY(-YOffset));
-            await Task.Delay(1000);
+                await _jogService.SendJogCommand(_jogCommand.SetX(offsets[i, 0]).SetY(offsets[i, 1]));
+                await Task.Delay(delayMs);
+            }
 
-            RobotPoints[1] = new Point(0, -YOffset);
-            VisionPoints[1] = await _visionService.GetVisCenter();
-
-
-            await _jogService.SendJogCommand(new JogCommand().SetX(XOffset));
-            await Task.Delay(1000);
-
-            RobotPoints[0] = new Point(XOffset, -YOffset);
-            VisionPoints[0] = await _visionService.GetVisCenter();
-
-
-            await _jogService.SendJogCommand(new JogCommand().SetY(YOffset));
-            await Task.Delay(1000);
-
-            RobotPoints[3] = new Point(XOffset, 0);
-            VisionPoints[3] = await _visionService.GetVisCenter();
-
-
-            await _jogService.SendJogCommand(new JogCommand().SetY(YOffset));
-            await Task.Delay(1000);
-
-            RobotPoints[6] = new Point(XOffset, YOffset);
-            VisionPoints[6] = await _visionService.GetVisCenter();
-
-
-            await _jogService.SendJogCommand(new JogCommand().SetX(-XOffset));
-            await Task.Delay(1000);
-
-            RobotPoints[7] = new Point(0, YOffset);
-            VisionPoints[7] = await _visionService.GetVisCenter();
-
-
-            await _jogService.SendJogCommand(new JogCommand().SetX(-XOffset));
-            await Task.Delay(1000);
-
-            RobotPoints[8] = new Point(-XOffset, YOffset);
-            VisionPoints[8] = await _visionService.GetVisCenter();
-
-
-            await _jogService.SendJogCommand(new JogCommand().SetY(-YOffset));
-            await Task.Delay(1000);
-
-            RobotPoints[5] = new Point(-XOffset, 0);
-            VisionPoints[5] = await _visionService.GetVisCenter();
-
-
-            await _jogService.SendJogCommand(new JogCommand().SetY(-YOffset));
-            await Task.Delay(1000);
-
-            RobotPoints[2] = new Point(-XOffset, -YOffset);
-            VisionPoints[2] = await _visionService.GetVisCenter();
-
-
-            await _jogService.SendJogCommand(new JogCommand().SetY(YOffset).SetX(XOffset));
             return (VisionPoints, RobotPoints);
         }
     }
