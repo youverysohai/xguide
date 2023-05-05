@@ -1,14 +1,4 @@
-﻿using Autofac;
-using HandyControl.Data;
-using System;
-using System.Collections.Generic;
-using System.Threading.Tasks;
-using X_Guide.MVVM.Command;
-using X_Guide.MVVM.Store;
-
-using X_Guide.MVVM.ViewModel.CalibrationWizardSteps;
-using X_Guide.Service;
-using MessageBox = HandyControl.Controls.MessageBox;
+﻿using MessageBox = HandyControl.Controls.MessageBox;
 
 namespace X_Guide.MVVM.ViewModel
 {
@@ -219,7 +209,9 @@ namespace X_Guide.MVVM.ViewModel
             var calibPara = new TypedParameter(typeof(CalibrationViewModel), _calibration);
             Step1ViewModel Step1 = viewModelLocator.Create<Step1ViewModel>(calibPara) as Step1ViewModel;
             /*            Step1.SelectedItemChangedEvent += OnSelectedItemChangedEvent;*/
-            _navigationService.Navigate(Step1);
+            HalconLive halcon = viewModelLocator.Create<HalconLive>() as HalconLive;
+            HalconStep6 halconStep6 = viewModelLocator.Create<HalconStep6>() as HalconStep6;
+            _navigationService.Navigate(halconStep6);
             CurrentNode = _navigationHistory.AddLast(CurrentViewModel);
 
             /*  Dispatcher.CurrentDispatcher.BeginInvoke(new Action(() => _navigationService.Navigate<Step6ViewModel>(new TypedParameter(typeof(CalibrationViewModel), new CalibrationViewModel()
