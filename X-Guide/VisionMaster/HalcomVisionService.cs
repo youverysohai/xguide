@@ -1,23 +1,28 @@
-﻿using System;
+﻿using HalconDotNet;
+using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Threading.Tasks;
 using VM.Core;
 using VMControls.Interface;
-using HalconDotNet;
-using System.Threading;
 using X_Guide.Service;
-using System.Diagnostics;
 
 namespace X_Guide.VisionMaster
 {
     internal class HalcomVisionService : IVisionService, IDisposable
     {
-        HTuple acqHandle = new HTuple();
+        private readonly HTuple acqHandle = new HTuple();
         public HTuple hv_AcqHandle = new HTuple();
-        private HObject _stashedImage;
-        HObject hImage = new HObject();
+        private HObject hImage = new HObject();
+
         public event EventHandler<HObject> OnImageReturn;
-        private BackgroundService _imageGrab;
+
+        private readonly BackgroundService _imageGrab;
+
+        public event EventHandler<(HObject, object)> OnOutputImageReturn;
+
+        private readonly HObject _outputImage;
+
         public HalcomVisionService()
         {
             HOperatorSet.OpenFramegrabber("USB3Vision", 0, 0, 0, 0, 0, 0, "progressive",
@@ -26,11 +31,10 @@ namespace X_Guide.VisionMaster
             HOperatorSet.GrabImageStart(hv_AcqHandle, -1);
             _imageGrab = new BackgroundService(ImageGrab, true, 10);
             _imageGrab.Start();
-            
         }
+
         public void ConnectServer()
         {
-
         }
 
         private void ImageGrab()
@@ -39,7 +43,6 @@ namespace X_Guide.VisionMaster
             OnImageReturn?.Invoke(this, hImage);
             Debug.WriteLine(hImage.ToString());
         }
-
 
         public List<VmProcedure> GetAllProcedures()
         {
@@ -60,11 +63,7 @@ namespace X_Guide.VisionMaster
         {
             return null;
         }
-        public HObject GetImage()
-        {
-            _stashedImage = hImage.Clone();
-            return _stashedImage;
-        }             
+
         public async Task<Point> GetVisCenter()
         {
             Point result = new Point();
@@ -72,11 +71,12 @@ namespace X_Guide.VisionMaster
             if (hv_AcqHandle is null) return result;
             await Task.Run(() =>
             {
-                FindCenterPoint(result, _stashedImage);
+                FindCenterPoint(result, hImage.Clone());
             });
 
             return result;
         }
+
         private void FindCenterPoint(Point point, HObject image)
         {
             HObject hRegion = new HObject();
@@ -84,15 +84,16 @@ namespace X_Guide.VisionMaster
             HTuple row = new HTuple();
             HTuple col = new HTuple();
             HTuple area = new HTuple();
-            
+
             HOperatorSet.Threshold(image, out hRegion, 0, 236);
             HOperatorSet.SelectShape(hRegion, out hSelectedRegion, "area", "and", 15000, 99999999999);
             HOperatorSet.AreaCenter(hSelectedRegion, out area, out row, out col);
-     
+
             point.X = (double)row;
             point.Y = (double)col;
-
+            OnOutputImageReturn?.Invoke(this, (image, point));
         }
+
         public Task ImportSol(string filepath)
         {
             throw new NotImplementedException();
@@ -110,7 +111,6 @@ namespace X_Guide.VisionMaster
 
         public void snap()
         {
-
         }
 
         public void Dispose()

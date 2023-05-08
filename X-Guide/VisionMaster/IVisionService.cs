@@ -1,5 +1,4 @@
-﻿using HalconDotNet;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using VM.Core;
@@ -45,7 +44,5 @@ namespace X_Guide.VisionMaster
         void RunOnceAndSaveImage();
 
         VmModule GetCameras();
-
-        HObject GetImage();
     }
 }
