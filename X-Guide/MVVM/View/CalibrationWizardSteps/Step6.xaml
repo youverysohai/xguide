@@ -29,6 +29,7 @@
             <hc:FlexPanel JustifyContent="SpaceAround" FlexWrap="Wrap">
 
                 <!--<XCust:CustomRenderControl hc:FlexPanel.FlexBasis="640" Height="480" Procedure="{Binding VisProcedure}"></XCust:CustomRenderControl>-->
+                <XCust:HalconSmartControl Width="640" Height="480" Image="{Binding Image}" ></XCust:HalconSmartControl>
                 <ha:HSmartWindowControlWPF x:Name="OutputWindow"  Width="640" Height="480" />
 
                 <GroupBox  hc:FlexPanel.FlexBasis="300" MinHeight="550"  Grid.RowSpan="3" Grid.Column="1" Style="{StaticResource GroupBoxTab}">
