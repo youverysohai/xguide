@@ -73,6 +73,12 @@
     <Prefer32Bit>true</Prefer32Bit>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="halcondotnet">
+      <HintPath>..\..\..\..\..\..\Program Files\MVTec\HALCON-22.11-Steady\bin\dotnet35\halcondotnet.dll</HintPath>
+    </Reference>
+    <Reference Include="hdevenginedotnet">
+      <HintPath>..\..\..\..\..\..\Program Files\MVTec\HALCON-22.11-Steady\bin\dotnet35\hdevenginedotnet.dll</HintPath>
+    </Reference>
     <Reference Include="IMVSBlobFindModuCs, Version=1.0.0.0, Culture=neutral, PublicKeyToken=7fe8bad26cdedb7b, processorArchitecture=MSIL">
       <Private>False</Private>
     </Reference>
@@ -652,6 +658,9 @@
     <Compile Include="CustomControls\CustomLoadingControl.xaml.cs">
       <DependentUpon>CustomLoadingControl.xaml</DependentUpon>
     </Compile>
+    <Compile Include="CustomControls\HikVmRealTimeAcqControl.xaml.cs">
+      <DependentUpon>HikVmRealTimeAcqControl.xaml</DependentUpon>
+    </Compile>
     <Compile Include="CustomControls\MTypeCombo.xaml.cs">
       <DependentUpon>MTypeCombo.xaml</DependentUpon>
     </Compile>
@@ -693,6 +702,7 @@
     <Compile Include="MVVM\Command\VideoCommand.cs" />
     <Compile Include="MVVM\DBContext\DbContextFactory.cs" />
     <Compile Include="MVVM\DTO\UserDTO.cs" />
+    <Compile Include="MVVM\Model\CalibrationData.cs" />
     <Compile Include="MVVM\Model\CalibrationModel.cs" />
     <Compile Include="MVVM\Model\ManipulatorModel.cs" />
     <Compile Include="MVVM\Model\Point.cs" />
@@ -704,6 +714,8 @@
     <Compile Include="MVVM\ViewModel\CalibrationMainViewModel.cs" />
     <Compile Include="MVVM\ViewModel\ErrorViewModel.cs" />
     <Compile Include="MVVM\ViewModel\GeneralViewModel.cs" />
+    <Compile Include="MVVM\ViewModel\HalconLive.cs" />
+    <Compile Include="MVVM\ViewModel\HalconStep6.cs" />
     <Compile Include="MVVM\ViewModel\IViewModelLocator.cs" />
     <Compile Include="MVVM\ViewModel\JogRobotViewModel.cs" />
     <Compile Include="MVVM\ViewModel\ManipulatorViewModel.cs" />
@@ -722,6 +734,12 @@
     <Compile Include="MVVM\ViewModel\VisionViewModel.cs" />
     <Compile Include="MVVM\View\CalibrationWizardSteps\CalibrationWizardStart.xaml.cs">
       <DependentUpon>CalibrationWizardStart.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="MVVM\View\CalibrationWizardSteps\HalconLive.xaml.cs">
+      <DependentUpon>HalconLive.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="MVVM\View\CalibrationWizardSteps\HalconStep6.xaml.cs">
+      <DependentUpon>HalconStep6.xaml</DependentUpon>
     </Compile>
     <Compile Include="MVVM\View\CalibrationWizardSteps\Step1.xaml.cs">
       <DependentUpon>Step1.xaml</DependentUpon>
@@ -800,8 +818,9 @@
     <Compile Include="Vision.cs">
       <DependentUpon>XGuideModel.tt</DependentUpon>
     </Compile>
+    <Compile Include="VisionMaster\HalcomVisionService.cs" />
     <Compile Include="VisionMaster\IVisionService.cs" />
-    <Compile Include="VisionMaster\VisionService.cs" />
+    <Compile Include="VisionMaster\HIKVisionService.cs" />
     <Compile Include="XGuideModel.Context.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -858,6 +877,10 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="CustomControls\HikVmRealTimeAcqControl.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="CustomControls\MTypeCombo.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -867,6 +890,14 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="MVVM\View\CalibrationWizardSteps\CalibrationWizardStart.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="MVVM\View\CalibrationWizardSteps\HalconLive.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="MVVM\View\CalibrationWizardSteps\HalconStep6.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

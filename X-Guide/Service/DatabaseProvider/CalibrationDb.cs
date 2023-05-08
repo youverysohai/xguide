@@ -52,7 +52,7 @@ namespace X_Guide.Service.DatabaseProvider
             {
                 Calibration calib = MapTo<Calibration>(calibration);
                 calib.Manipulator = context.Manipulators.Find(calib.Manipulator.Id);
-                calib.Vision = context.Visions.Find(calib.Vision.Id);
+                //calib.Vision = context.Visions.Find(calib.Vision.Id);
                 context.Calibrations.Add(calib);
                 return context.SaveChanges();
 

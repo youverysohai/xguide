@@ -1,15 +1,15 @@
 ﻿<UserControl x:Class="X_Guide.CustomControls.CustomVisionForm"
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
-             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:local="clr-namespace:X_Guide.CustomControls"
-             mc:Ignorable="d" 
+             mc:Ignorable="d"
              d:Foreground="White"
              d:DesignHeight="450" d:DesignWidth="500"
              xmlns:xCust="clr-namespace:X_Guide.CustomControls"
              Name="CustVisionForm"
-             
+
                xmlns:ui="http://schemas.modernwpf.com/2019">
 
     <ui:SimpleStackPanel Orientation="Vertical">
@@ -42,7 +42,7 @@
             <TextBlock Text="Vision Solution Path (.sol)"  Style="{DynamicResource LabelTextBlock}" />
             <ui:SimpleStackPanel Orientation="Horizontal">
                 <TextBox x:Name="NewVisionPathTextBox" Grid.Row="2" Grid.Column="1" Margin="5" Text="{Binding Vision.Filepath,ElementName=CustVisionForm}" VerticalAlignment="Center" MinWidth="320" ToolTip="OpenFileDialog"  />
-                <local:CustomBrowse Path="{Binding Vision.Filepath, ElementName=CustVisionForm, Mode=TwoWay}" Filter="sol files (*.sol)|*.sol|All files (*.*)|*.*"/>
+                <local:CustomBrowse Path="{Binding Vision.Filepath, ElementName=CustVisionForm, Mode=TwoWay}" Filter="VM Sol File|*.sol*"/>
             </ui:SimpleStackPanel>
 
             <!--Row 3 IP-->

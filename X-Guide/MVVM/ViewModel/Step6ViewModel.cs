@@ -1,94 +1,115 @@
 ﻿using AutoMapper;
-using IMVSCircleFindModuCs;
+using HalconDotNet;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
-using System.IO;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows.Input;
+using System.Windows;
 using ToastNotifications;
+using ToastNotifications.Messages;
 using VM.Core;
 using VMControls.Interface;
-using X_Guide.Communication.Service;
 using X_Guide.MVVM.Command;
 using X_Guide.MVVM.Model;
 using X_Guide.MVVM.ViewModel.CalibrationWizardSteps;
 using X_Guide.Service;
-using X_Guide.Service.Communication;
 using X_Guide.Service.DatabaseProvider;
 using X_Guide.VisionMaster;
-using Xlent_Vision_Guided;
-using ToastNotifications.Messages;
 
 namespace X_Guide.MVVM.ViewModel
 {
     internal class Step6ViewModel : ViewModelBase
     {
+        public double XMove { get; set; } 
 
-        private CalibrationViewModel _calibration;
-        public CalibrationViewModel Calibration
-        {
-            get { return _calibration; }
-            set
-            {
-                _calibration = value;
-                OnPropertyChanged();
-            }
-        }
-        private IVmModule _visProcedure;
 
-        public IVmModule VisProcedure
-        {
-            get { return _visProcedure; }
-            set
-            {
-                _visProcedure = value;
-                OnPropertyChanged();
-            }
-        }
+        public double YMove{ get; set; } 
+
+        public CalibrationViewModel Calibration { get; set; }
+        public HTuple WindowHandle { get; set; }
+        public HTuple OutputHandle { get; set; }
+
+        public IVmModule VisProcedure { get; set; }
+
+        public List<VmModule> Modules { get; set; }
+        private bool isLive = false;
+
         public RelayCommand OperationCommand { get; set; }
+
         private readonly ICalibrationDb _calibDb;
         private readonly ICalibrationService _calibService;
         private readonly IMapper _mapper;
         private readonly Notifier _notifier;
+        private readonly IVisionService _visionService;
+
+        public event EventHandler<HObject> OnImageRecieved;
 
         public RelayCommand SaveCommand { get; set; }
         public RelayCommand CalibrateCommand { get; set; }
+        public RelayCommand LiveImageCommand { get; set; }
 
-
-
-        public Step6ViewModel(CalibrationViewModel calibration, ICalibrationDb calibDb, ICalibrationService calibService, IMapper mapper, Notifier notifier)
+        public Step6ViewModel(CalibrationViewModel calibration, ICalibrationDb calibDb, ICalibrationService calibService, IMapper mapper, Notifier notifier, IVisionService visionService)
         {
-            _calibration = calibration;
+            Calibration = calibration;
             _calibDb = calibDb;
             _calibService = calibService;
             _mapper = mapper;
             _notifier = notifier;
+            _visionService = visionService;
             CalibrateCommand = new RelayCommand(Calibrate);
             SaveCommand = new RelayCommand(Save);
+            VisProcedure = _visionService.GetProcedure(Calibration.Procedure);
+            Modules = _visionService.GetModules(VisProcedure as VmProcedure);
+            LiveImageCommand = new RelayCommand(LiveImage);
+            ((HalcomVisionService)_visionService).OnImageReturn += Step6ViewModel_OnImageReturn;
+            ((HalcomVisionService)_visionService).OnOutputImageReturn += Step6ViewModel_OnOutputImageReturn;
         }
 
-        private void Calibrate(object obj)
+        private void Step6ViewModel_OnOutputImageReturn(object sender, (HObject, object) e)
         {
-            _calibService.EyeInHand2DConfig_Calibrate(_calibration);
+            Point point = e.Item2 as Point;
+            HOperatorSet.DispImage(e.Item1 as HObject, OutputHandle);
+            HOperatorSet.SetColor(OutputHandle, "blue");
+            HOperatorSet.DispCross(OutputHandle, point.X, point.Y, 20, 0);
+            MessageBox.Show(point.ToString());
+        }
+
+        private void Step6ViewModel_OnImageReturn(object sender, HObject e)
+        {
+            if (isLive is false || WindowHandle is null) return;
+            HOperatorSet.DispObj(e, WindowHandle);
+        }
+
+        private async void LiveImage(object obj)
+        {
+            isLive = !isLive;
+        }
+
+        private async void Calibrate(object obj)
+        {
+            int XOffset = (int)Calibration.XOffset;
+            int YOffset = (int)Calibration.YOffset;
+            Debug.WriteLine(XMove + "   " + YMove);
+
+CalibrationData calibrationData = await _calibService.EyeInHand2D_Calibrate(XOffset, YOffset, XMove, YMove);
+            Calibration.CXOffSet = calibrationData.X;
+            Calibration.CYOffset = calibrationData.Y;
+           
+            Calibration.CRZOffset = calibrationData.Rz;
+            Calibration.Mm_per_pixel = calibrationData.mm_per_pixel;
         }
 
         private async void Save(object obj)
         {
-            if (!await _calibDb.IsExist(_calibration.Id))
+            if (!await _calibDb.IsExist(Calibration.Id))
             {
-                await _calibDb.Add(_mapper.Map<CalibrationModel>(_calibration));
+                await _calibDb.Add(_mapper.Map<CalibrationModel>(Calibration));
                 _notifier.ShowSuccess(StrRetriver.Get("SC000"));
             }
             else
             {
-                await _calibDb.Update(_mapper.Map<CalibrationModel>(_calibration));
-                _notifier.ShowSuccess($"{_calibration.Name} : {StrRetriver.Get("SC001")}");
+                await _calibDb.Update(_mapper.Map<CalibrationModel>(Calibration));
+                _notifier.ShowSuccess($"{Calibration.Name} : {StrRetriver.Get("SC001")}");
             }
-           
         }
-     
     }
 }

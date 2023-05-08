@@ -4,7 +4,6 @@ using Microsoft.Extensions.Logging;
 using Serilog;
 using System;
 using System.Configuration;
-using System.IO;
 using System.Net;
 using System.Windows;
 using ToastNotifications;
@@ -28,8 +27,10 @@ namespace X_Guide
     /// </summary>
     public partial class App : Application
     {
-        private static readonly IContainer _diContainer = BuildDIContainer();
+        private static IContainer _diContainer;
+
         //TODO: Add logger
+        public static int VisionSoftware = 1;
 
         private static IContainer BuildDIContainer()
         {
@@ -78,11 +79,19 @@ namespace X_Guide
             builder.RegisterType<Step6ViewModel>();
             builder.RegisterType<SettingViewModel>();
             builder.RegisterType<CalibrationMainViewModel>();
+            builder.RegisterType<HalconLive>();
+            builder.RegisterType<HalconStep6>();
             builder.RegisterType<ViewModelState>().SingleInstance();
             builder.RegisterType<DbContextFactory>().SingleInstance();
             builder.RegisterType<ManipulatorDb>().As<IManipulatorDb>();
             builder.RegisterType<UserDb>().As<IUserDb>();
-            builder.RegisterType<VisionService>().As<IVisionService>();
+            switch (VisionSoftware)
+            {
+                case 1: builder.RegisterType<HIKVisionService>().As<IVisionService>().SingleInstance(); break;
+                case 2: builder.RegisterType<HalcomVisionService>().As<IVisionService>().SingleInstance(); break;
+                default: break;
+            }
+
             builder.RegisterType<JogService>().As<IJogService>();
             builder.RegisterType<ServerCommand>().SingleInstance();
             builder.RegisterType<NavigationStore>();
@@ -92,8 +101,8 @@ namespace X_Guide
             builder.RegisterType<CalibrationDb>().As<ICalibrationDb>();
             builder.RegisterType<GeneralDb>().As<IGeneralDb>();
 
-            builder.RegisterType<ServerService>().As<IServerService>().WithParameter(new TypedParameter(typeof(IPAddress), IPAddress.Parse("192.168.10.90"))).WithParameter(new TypedParameter(typeof(int), 8000)).WithParameter(new TypedParameter(typeof(string), "\r\n")).SingleInstance();
-            builder.Register(c => new ClientService(IPAddress.Parse("192.168.10.90"), 7900, "")).As<IClientService>().SingleInstance();
+            builder.RegisterType<ServerService>().As<IServerService>().WithParameter(new TypedParameter(typeof(IPAddress), IPAddress.Parse("192.168.10.30"))).WithParameter(new TypedParameter(typeof(int), 8000)).WithParameter(new TypedParameter(typeof(string), "\r\n")).SingleInstance();
+            builder.Register(c => new ClientService(IPAddress.Parse("192.168.10.30"), 7900, "")).As<IClientService>().SingleInstance();
             return builder.Build();
         }
 
@@ -114,11 +123,15 @@ namespace X_Guide
             }
         }
 
-        private void InitializeAppConfiguration()
+        private static void InitializeAppConfiguration()
         {
-            string appDataPath = Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData);
-            string settingPath = Path.Combine(appDataPath, "X-Guide", "Settings.xml");
-            ConfigurationManager.AppSettings["SettingPath"] = settingPath;
+            //string appDataPath = Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData);
+            //string settingPath = Path.Combine(appDataPath, "X-Guide", "Settings.xml");
+            //ConfigurationManager.AppSettings["SettingPath"] = settingPath;
+            var _configuration = ConfigurationManager.OpenExeConfiguration(ConfigurationUserLevel.None);
+            var general = (General)_configuration.GetSection("GeneralSetting");
+            VisionSoftware = general.VisionSoftware;
+            _diContainer = BuildDIContainer();
         }
 
         //        Startup Page
