@@ -81,17 +81,18 @@
                         <TextBlock Text="{Binding Calibration.CRZOffset, StringFormat={}{0:F2}}" Grid.Row="4" Grid.Column="1" Margin="5" Style="{DynamicResource ReadOnlyTextBlock}" />
                         <Label Content="°" Grid.Row="4" Grid.Column="2" Margin="5" />
 
-                        <Button Grid.Row="5" Style="{DynamicResource MaterialDesignPaperButton}" Command="{Binding OperationCommand}" >Start Operation</Button>
-                        <Button Grid.Row="6"  Style="{DynamicResource MaterialDesignOutlinedButton}" Command="{Binding CalibrateCommand}" >Start Calibration</Button>
-                        <Button Grid.Row="7"  Style="{DynamicResource MaterialDesignOutlinedButton}" Command="{Binding SaveCommand}" >Save</Button>
-                        <ComboBox Grid.Row="8" ItemsSource="{Binding Modules}">
+                       <ComboBox Grid.Row="8" ItemsSource="{Binding Modules}">
                         </ComboBox>
-                        <Button Content="Live" Grid.Row="9" Command="{Binding LiveImageCommand}" CommandParameter="{Binding ElementName=HalconWindow}"></Button>
+                        <Button Content="Live" Grid.Row="5" Command="{Binding LiveImageCommand}" CommandParameter="{Binding ElementName=HalconWindow}"></Button>
                         <ui:SimpleStackPanel Orientation="Vertical" Grid.Row="10">
                             <Label Style="{DynamicResource MaterialDesignLabel}">XMove</Label>
                             <TextBox Text="{Binding XMove}"></TextBox>
                             <Label Style="{DynamicResource MaterialDesignLabel}">YMove</Label>
                             <TextBox Text="{Binding YMove}"></TextBox>
+                            <Button Grid.Row="5" Style="{DynamicResource MaterialDesignPaperButton}" Command="{Binding OperationCommand}" >Start Operation</Button>
+                            <Button Grid.Row="6"  Style="{DynamicResource MaterialDesignOutlinedButton}" Command="{Binding CalibrateCommand}" >Start Calibration</Button>
+                            <Button Grid.Row="7"  Style="{DynamicResource MaterialDesignOutlinedButton}" Command="{Binding SaveCommand}" >Save</Button>
+
                         </ui:SimpleStackPanel>
                     </Grid>
                 </GroupBox>
