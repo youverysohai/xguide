@@ -81,8 +81,8 @@ namespace X_Guide.MVVM.ViewModel
             var image = _visionService.GetImage();
             Point result = await _visionService.GetVisCenter();
             HOperatorSet.DispImage(image, OutputHandle);
-            HOperatorSet.DispColor(image, OutputHandle);
-            HOperatorSet.DispCross(OutputHandle, result.X, result.Y, 15, 0);
+            HOperatorSet.SetColor(OutputHandle,"blue");
+            HOperatorSet.DispCross(OutputHandle, result.X, result.Y, 20, 0);
             MessageBox.Show(result.ToString());
             //_calibService.EyeInHand2DConfig_Calibrate(Calibration);
         }
