@@ -48,8 +48,8 @@
 
         <DataTemplate DataType="{x:Type vm:VisionViewModel}" x:Key="VisionForm">
             <ui:SimpleStackPanel Orientation="Vertical">
-                <xCust:CustomFormButtons AddCommand="{Binding DataContext.OpenVisionFormCommand, ElementName=SettingUserControl}" AddCommandParameter="{Binding ElementName=VisionDialog}" SaveCommand="{Binding DataContext.SaveVisionCommand, ElementName=SettingUserControl}" DeleteCommand="{Binding DataContext.DeleteVisionCommand, ElementName=SettingUserControl}" />
-                <xCust:CustomVisionForm Vision="{Binding}" />
+                <!--<xCust:CustomFormButtons AddCommand="{Binding DataContext.OpenVisionFormCommand, ElementName=SettingUserControl}" AddCommandParameter="{Binding ElementName=VisionDialog}" SaveCommand="{Binding DataContext.SaveVisionCommand, ElementName=SettingUserControl}" DeleteCommand="{Binding DataContext.DeleteVisionCommand, ElementName=SettingUserControl}" />-->
+                <xCust:CustomVisionForm Vision="{Binding }" />
             </ui:SimpleStackPanel>
         </DataTemplate>
 
@@ -222,16 +222,15 @@
                                         Text="Vision" />
                         </ui:SimpleStackPanel>
 
-                        <ContentControl x:Name="VisionContent" Content="{Binding Vision}">
-
-                            <i:Interaction.Triggers>
+                        <ContentControl x:Name="VisionContent" Content="{Binding Vision}" ContentTemplate="{StaticResource VisionForm}">
+                            <!--<i:Interaction.Triggers>
                                 <i:DataTrigger Binding="{Binding Vision}" Value="{Binding Vision}">
                                     <i:ChangePropertyAction PropertyName="ContentTemplate" Value="{StaticResource VisionForm}" />
                                 </i:DataTrigger>
                                 <i:DataTrigger Binding="{Binding Vision}" Value="{x:Null}">
                                     <i:ChangePropertyAction PropertyName="ContentTemplate" Value="{StaticResource ErrorPage}" />
                                 </i:DataTrigger>
-                            </i:Interaction.Triggers>
+                            </i:Interaction.Triggers>-->     
                         </ContentControl>
                     </ui:SimpleStackPanel>
                 </materialDesign:DrawerHost>
