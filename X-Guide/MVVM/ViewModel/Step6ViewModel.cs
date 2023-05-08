@@ -55,6 +55,16 @@ namespace X_Guide.MVVM.ViewModel
             Modules = _visionService.GetModules(VisProcedure as VmProcedure);
             LiveImageCommand = new RelayCommand(LiveImage);
             ((HalcomVisionService)_visionService).OnImageReturn += Step6ViewModel_OnImageReturn;
+            ((HalcomVisionService)_visionService).OnOutputImageReturn += Step6ViewModel_OnOutputImageReturn;
+        }
+
+        private void Step6ViewModel_OnOutputImageReturn(object sender, (HObject, object) e)
+        {
+            Point point = e.Item2 as Point;
+            HOperatorSet.DispImage(e.Item1, OutputHandle);
+            HOperatorSet.SetColor(OutputHandle, "blue");
+            HOperatorSet.DispCross(OutputHandle, point.X, point.Y, 20, 0);
+            MessageBox.Show(point.ToString());
         }
 
         private void Step6ViewModel_OnImageReturn(object sender, HObject e)
@@ -70,22 +80,15 @@ namespace X_Guide.MVVM.ViewModel
 
         private async void Calibrate(object obj)
         {
-            var image = _visionService.GetImage();
-            Point result = await _visionService.GetVisCenter();
-            HOperatorSet.DispImage(image, OutputHandle);
-            HOperatorSet.SetColor(OutputHandle, "blue");
-            HOperatorSet.DispCross(OutputHandle, result.X, result.Y, 20, 0);
-            MessageBox.Show(result.ToString());
-            //int XOffset = (int)Calibration.XOffset;
-            //int YOffset = (int)Calibration.YOffset;
-            //double XMove = 10;
-            //double YMove = 20;
-            //CalibrationData calibrationData = await _calibService.EyeInHand2D_Calibrate(XOffset, YOffset, XMove, YMove);
-            //Calibration.CXOffSet = calibrationData.X;
-            //Calibration.CYOffset = calibrationData.Y;
-            //Calibration.CRZOffset = calibrationData.Rz;
-            //Calibration.Mm_per_pixel = calibrationData.mm_per_pixel;
-            //_calibService.EyeInHand2DConfig_Calibrate(Calibration);
+            int XOffset = (int)Calibration.XOffset;
+            int YOffset = (int)Calibration.YOffset;
+            double XMove = 10;
+            double YMove = 20;
+            CalibrationData calibrationData = await _calibService.EyeInHand2D_Calibrate(XOffset, YOffset, XMove, YMove);
+            Calibration.CXOffSet = calibrationData.X;
+            Calibration.CYOffset = calibrationData.Y;
+            Calibration.CRZOffset = calibrationData.Rz;
+            Calibration.Mm_per_pixel = calibrationData.mm_per_pixel;
         }
 
         private async void Save(object obj)
