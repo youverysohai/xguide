@@ -74,7 +74,6 @@ namespace X_Guide.MVVM.ViewModel
         private async void OpenVisionForm(object obj)
         {
             Vision = new VisionViewModel();
-            Vision = ((VisionViewModel)obj).Clone() as VisionViewModel;
             if (obj is ContentDialog dialog) await dialog.ShowAsync();
         }
 
