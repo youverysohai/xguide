@@ -1,22 +1,11 @@
 ﻿using System;
-using System.Collections.Concurrent;
 using System.Collections.Generic;
-using System.Diagnostics;
-using System.Linq;
-using System.Net.Sockets;
-using System.Text;
-using System.Threading;
-using System.Threading.Tasks;
-using System.Timers;
 using X_Guide.Communication.Service;
 using X_Guide.CustomEventArgs;
 using X_Guide.MVVM.Model;
-using X_Guide.MVVM.ViewModel;
-using X_Guide.Service.Communication;
 using X_Guide.Service.DatabaseProvider;
 using X_Guide.VisionMaster;
 using Xlent_Vision_Guided;
-using Timer = System.Timers.Timer;
 
 namespace X_Guide.Service.Communation
 {
@@ -35,7 +24,6 @@ namespace X_Guide.Service.Communation
             _visionService = visionService;
             _calibDb = calibDb;
             _serverService._dataReceived += ValidateSyntax;
-
         }
 
         public void ValidateSyntax(object sender, NetworkStreamEventArgs network)
@@ -48,7 +36,6 @@ namespace X_Guide.Service.Communation
                 default: break;
             }
         }
-
 
         private async void Operation(string[] parameter)
         {
@@ -65,16 +52,14 @@ namespace X_Guide.Service.Communation
                 VisCenter = await _visionService.GetVisCenter();
                 OperationData = VisionGuided.EyeInHandConfig2D_Operate(VisCenter, new double[] { calib.CXOffset, calib.CYOffset, calib.CRZOffset, calib.CameraXScaling });
                 string Mode = calib.Mode ? "GLOBAL" : "TOOL";
-                await _serverService.ServerWriteDataAsync($"XGUIDE,{calib.Mode},{OperationData[0]},{OperationData[1]},{OperationData[2]}");
+                await _serverService.ServerWriteDataAsync($"XGUIDE,{Mode},{OperationData[0]},{OperationData[1]},{OperationData[2]}");
             }
             catch (Exception ex)
             {
                 await _serverService.ServerWriteDataAsync($"XGUIDE, {ex.Message}");
                 return;
             }
-
         }
-
 
         public void Dispose()
         {
