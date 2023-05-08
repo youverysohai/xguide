@@ -46,9 +46,17 @@ namespace X_Guide.MVVM.ViewModel
             Modules = _visionService.GetModules(VisProcedure as VmProcedure);
         }
 
-        private void Calibrate(object obj)
+        private async void Calibrate(object obj)
         {
-            _calibService.EyeInHand2DConfig_Calibrate(Calibration);
+            int XOffset = (int)Calibration.XOffset;
+            int YOffset = (int)Calibration.YOffset;
+            double XMove = 10;
+            double YMove = 20;
+            CalibrationData calibrationData = await _calibService.EyeInHand2D_Calibrate(XOffset, YOffset, XMove, YMove);
+            Calibration.CXOffSet = calibrationData.X;
+            Calibration.CYOffset = calibrationData.Y;
+            Calibration.CRZOffset = calibrationData.Rz;
+            Calibration.Mm_per_pixel = calibrationData.mm_per_pixel;
         }
 
         private async void Save(object obj)
