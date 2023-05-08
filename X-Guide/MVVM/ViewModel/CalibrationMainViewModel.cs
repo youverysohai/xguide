@@ -199,11 +199,11 @@ namespace X_Guide.MVVM.ViewModel
         {
             if (App.VisionSoftware == 1)
             {
-                Form = new List<string>(new string[] { "Manipulator", "Orientation and Mounting", "Vision Flow", "Motion", "Jog", "Calibration", });
+                Form = new List<string>(new string[] { "Manipulator", "Orientation" + Environment.NewLine + "& Mounting", "Vision Flow", "Motion", "Jog", "Calibration", });
             }
             else
             {
-                Form = new List<string>(new string[] { "Manipulator", "Orientation and Mounting", "Motion", "Live Image", "Calibration" });
+                Form = new List<string>(new string[] { "Manipulator", "Orientation " + Environment.NewLine + "& Mounting", "Motion", "Live Image", "Calibration" });
             }
             _navigationService = navigationService;
             _navigationStore = _navigationService.GetNavigationStore();
