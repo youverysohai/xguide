@@ -1,4 +1,5 @@
 ﻿using HalconDotNet;
+using HandyControl.Tools.Command;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -28,62 +29,13 @@ namespace X_Guide.MVVM.View.CalibrationWizardSteps
         {
             InitializeComponent();
         }
-        private void Snap_Click(object sender, RoutedEventArgs e)
+
+        private void Calibrate(object obj)
         {
-            HTuple acqHandle = new HTuple();
-            HTuple hv_AcqHandle = new HTuple();
-            HObject hImage = new HObject();
-            HObject hRegion = new HObject();
-            HObject hSelectedRegion = new HObject();
-            HTuple row = new HTuple();
-            HTuple col = new HTuple();
-            HTuple area = new HTuple();
-            HOperatorSet.OpenFramegrabber("USB3Vision", 0, 0, 0, 0, 0, 0, "progressive",
-    -1, "default", -1, "false", "default", "0E7015_ToshibaTeli_BU130",
-    0, -1, out hv_AcqHandle);
-
-            HOperatorSet.GrabImageStart(hv_AcqHandle, -1);
-            isLive = true;
-            if (hv_AcqHandle != null)
-            {
-
-                Thread devicethread = new Thread(() =>
-                {
-                    while (true)
-                    {
-
-                        HOperatorSet.GrabImageAsync(out hImage, hv_AcqHandle, -1);
-
-                        HOperatorSet.DispObj(hImage, HalconWindow.HalconWindow);
-                        if (!isLive)
-                        {
-                            break;
-                        }
-
-
-                    }
-                    HOperatorSet.CloseFramegrabber(hv_AcqHandle);
-                    HOperatorSet.Threshold(hImage, out hRegion, 0, 236);
-                    HOperatorSet.SelectShape(hRegion, out hSelectedRegion, "area", "and", 15000, 99999999999);
-                    HOperatorSet.AreaCenter(hSelectedRegion, out area, out row, out col);
-                    HOperatorSet.SetColor(HalconWindow.HalconWindow, "blue");
-                    HOperatorSet.DispCross(HalconWindow.HalconWindow, row, col, 50, 0);
-
-                    Console.WriteLine("ROW " + (double)row);
-                    Console.WriteLine("  ");
-                    Console.WriteLine("COL " + (double)col);
-
-
-                    acqHandle.Dispose();
-                    hv_AcqHandle.Dispose();
-                    hImage.Dispose();
-                    hRegion.Dispose();
-
-                });
-                devicethread.Start();
-            }
-
+            throw new NotImplementedException();
         }
+
+      
 
         private void CloseLive_Click(object sender, RoutedEventArgs e)
         {

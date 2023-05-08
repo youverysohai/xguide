@@ -7,6 +7,7 @@
              xmlns:XCust="clr-namespace:X_Guide.CustomControls"
                xmlns:gif="https://github.com/XamlAnimatedGif/XamlAnimatedGif"
              xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
+              xmlns:ha="http://schemas.mvtec.com/halcondotnet" 
              mc:Ignorable="d"
             xmlns:hc="https://handyorg.github.io/handycontrol"
              xmlns:ui="http://schemas.modernwpf.com/2019"
@@ -26,46 +27,10 @@
         <hc:ScrollViewer  Grid.RowSpan="3" Grid.ColumnSpan="2">
 
             <hc:FlexPanel JustifyContent="SpaceAround" FlexWrap="Wrap">
-                <!--<hc:Carousel  hc:FlexPanel.FlexBasis="840" MinHeight="550" x:Name="flipView1" AutoRun="False" IsCenter="True">
-                    <hc:Carousel.ItemTemplate>
-                        <DataTemplate>
-                            <Release:VmRenderControl Loaded="p_box_Loaded" Width="840" />
-                        </DataTemplate>
-                    </hc:Carousel.ItemTemplate>
-                </hc:Carousel>-->
-
-                <!--<hc:Carousel hc:FlexPanel.FlexBasis="840" MinHeight="550" x:Name="flipView1"  AutoRun="False" IsCenter="True">
-                    <hc:CarouselItem>
-                        <Release:VmRenderControl   Name="p1_box" Loaded="p_box_Loaded" Width="840"  ></Release:VmRenderControl>
-                    </hc:CarouselItem>
-                    <hc:CarouselItem>
-                        <Release:VmRenderControl   Name="p2_box" Loaded="p_box_Loaded" Width="840"></Release:VmRenderControl>
-                    </hc:CarouselItem>
-                    <hc:CarouselItem>
-                        <Release:VmRenderControl   Name="p3_box" Loaded="p_box_Loaded" Width="840"></Release:VmRenderControl>
-                    </hc:CarouselItem>
-                    <hc:CarouselItem>
-                        <Release:VmRenderControl   Name="p4_box" Loaded="p_box_Loaded" Width="840"></Release:VmRenderControl>
-                    </hc:CarouselItem>
-                    <hc:CarouselItem>
-                        <Release:VmRenderControl   Name="p5_box" Loaded="p_box_Loaded" Width="840"></Release:VmRenderControl>
-                    </hc:CarouselItem>
-                    <hc:CarouselItem>
-                        <Release:VmRenderControl   Name="p6_box" Loaded="p_box_Loaded" Width="840"></Release:VmRenderControl>
-                    </hc:CarouselItem>
-                    <hc:CarouselItem>
-                        <Release:VmRenderControl   Name="p7_box" Loaded="p_box_Loaded" Width="840"></Release:VmRenderControl>
-                    </hc:CarouselItem>
-                    <hc:CarouselItem>
-                        <Release:VmRenderControl   Name="p8_box" Loaded="p_box_Loaded" Width="840"></Release:VmRenderControl>
-                    </hc:CarouselItem>
-                    <hc:CarouselItem>
-                        <Release:VmRenderControl   Name="p9_box" Loaded="p_box_Loaded" Width="840"></Release:VmRenderControl>
-                    </hc:CarouselItem>
-                </hc:Carousel>-->
-
-                <!--Right Side Calibration Output Data -->
-                <XCust:CustomRenderControl hc:FlexPanel.FlexBasis="640" Height="480" Procedure="{Binding VisProcedure}"></XCust:CustomRenderControl>
+         
+                <!--<XCust:CustomRenderControl hc:FlexPanel.FlexBasis="640" Height="480" Procedure="{Binding VisProcedure}"></XCust:CustomRenderControl>-->
+                <ha:HSmartWindowControlWPF x:Name="HalconWindow"  Width="640" Height="480"/>
+                <ha:HSmartWindowControlWPF x:Name="OutputWindow"  Width="640" Height="480"/>
 
                 <GroupBox  hc:FlexPanel.FlexBasis="300" MinHeight="550"  Grid.RowSpan="3" Grid.Column="1" Style="{StaticResource GroupBoxTab}">
                     <GroupBox.Header>
@@ -115,6 +80,7 @@
                         <Button Grid.Row="7"  Style="{DynamicResource MaterialDesignOutlinedButton}" Command="{Binding SaveCommand}" >Save</Button>
                         <ComboBox Grid.Row="8" ItemsSource="{Binding Modules}">
                         </ComboBox>
+                        <Button Content="Ultimate Button" Grid.Row="9" Command="{Binding LiveImageCommand}" CommandParameter="{Binding ElementName=HalconWindow}"></Button>
                     </Grid>
                 </GroupBox>
             </hc:FlexPanel>

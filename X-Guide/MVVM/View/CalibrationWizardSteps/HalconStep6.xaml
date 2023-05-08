@@ -8,15 +8,15 @@
              xmlns:hc="https://handyorg.github.io/handycontrol"
              
              xmlns:ui="http://schemas.modernwpf.com/2019"
-              xmlns:ha="http://schemas.mvtec.com/halcondotnet" 
+             
              d:DesignHeight="550" d:DesignWidth="800">
 
     <hc:FlexPanel JustifyContent="SpaceAround" FlexWrap="Wrap">
         <ui:SimpleStackPanel Orientation="Vertical" hc:FlexPanel.FlexBasis="640">
-            <ha:HSmartWindowControlWPF x:Name="HalconWindow"  Width="640" Height="480"/>
+  
 
             <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" Margin="10">
-                <Button  x:Name="Snap" Click="Snap_Click" Height="30" Content="Live"/>
+                <Button  x:Name="Snap" Height="30" Content="Live" />
 
                 <Button  x:Name="CloseLive" Click="CloseLive_Click" Height="30" Content="Pause"/>
             </StackPanel>

@@ -1,4 +1,5 @@
-﻿using System;
+﻿using HalconDotNet;
+using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
@@ -135,6 +136,11 @@ namespace X_Guide.VisionMaster
                 Procedure = name;
                 return procedure;
             });
+        }
+
+        public HObject GetImage()
+        {
+            throw new NotImplementedException();
         }
     }
 }
