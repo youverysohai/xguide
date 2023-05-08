@@ -87,8 +87,8 @@ namespace X_Guide
             builder.RegisterType<UserDb>().As<IUserDb>();
             switch (VisionSoftware)
             {
-                case 1: builder.RegisterType<HIKVisionService>().As<IVisionService>(); break;
-                case 2: builder.RegisterType<HalcomVisionService>().As<IVisionService>(); break;
+                case 1: builder.RegisterType<HIKVisionService>().As<IVisionService>().SingleInstance(); break;
+                case 2: builder.RegisterType<HalcomVisionService>().As<IVisionService>().SingleInstance(); break;
                 default: break;
             }
 

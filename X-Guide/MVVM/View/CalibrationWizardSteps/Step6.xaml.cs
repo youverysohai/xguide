@@ -1,10 +1,12 @@
-﻿using IMVSCircleFindModuCs;
+﻿using HalconDotNet;
+using IMVSCircleFindModuCs;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.IO;
 using System.Linq;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
@@ -27,54 +29,27 @@ namespace X_Guide.MVVM.View.CalibrationWizardSteps
     public partial class Step6 : UserControl
     {
 
-  
-        VmProcedure p;
-/*        public ObservableCollection<VmRenderControl> Items { get; } = new ObservableCollection<VmRenderControl>();*/
+
+        bool isLive = false;
 
         public Step6()
         {
             InitializeComponent();
-           
-     /*       Items.Add(new VmRenderControl());
-            Items.Add(new VmRenderControl());
-            Items.Add(new VmRenderControl());
-            Items.Add(new VmRenderControl());
-            Items.Add(new VmRenderControl());
-            flipView1.ItemsSource = Items;*/
+            Loaded += (s, e) =>
+            {
+                ((Step6ViewModel)(DataContext)).WindowHandle = HalconWindow.HalconWindow;
+                ((Step6ViewModel)(DataContext)).OutputHandle = OutputWindow.HalconWindow;
+            };
 
         }
-        private void p_box_Loaded(object sender, RoutedEventArgs e)
+
+
+        private void Snap_Click(object sender, RoutedEventArgs e)
         {
-            try
-            {
-
-
-                //VmSolution.CreatSolInstance();
-         /*       Items[0].ModuleSource = p;
-                Items[1].ModuleSource = p;
-                Items[2].ModuleSource = p;
-                Items[3].ModuleSource = p;
-                Items[4].ModuleSource = p;*/
-    /*            Items[0].ModuleSource = circleFind;
-                Items[1].ModuleSource = circleFind;
-                Items[2].ModuleSource = circleFind;
-                Items[3].ModuleSource = circleFind;
-                Items[4].ModuleSource = circleFind;*/
-                //p_box.LoadFrontendSource();
-
-                ////p_box.BindSingleProcedure(p.ToString());
-
-                //p_box.AutoChangeSize();
-
-            }
-            catch
-            {
-              
-            }
-
+          
         }
 
- 
-     
+
+
     }
 }

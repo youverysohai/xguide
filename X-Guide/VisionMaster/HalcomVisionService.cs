@@ -5,56 +5,94 @@ using VM.Core;
 using VMControls.Interface;
 using HalconDotNet;
 using System.Threading;
+using X_Guide.Service;
+using System.Diagnostics;
 
 namespace X_Guide.VisionMaster
 {
-    internal class HalcomVisionService : IVisionService
+    internal class HalcomVisionService : IVisionService, IDisposable
     {
-        HTuple row, col;
+        HTuple acqHandle = new HTuple();
+        public HTuple hv_AcqHandle = new HTuple();
+        private HObject _stashedImage;
+        HObject hImage = new HObject();
+        public event EventHandler<HObject> OnImageReturn;
+        private BackgroundService _imageGrab;
         public HalcomVisionService()
         {
-
+            HOperatorSet.OpenFramegrabber("USB3Vision", 0, 0, 0, 0, 0, 0, "progressive",
+-1, "default", -1, "false", "default", "0E7015_ToshibaTeli_BU130",
+0, -1, out hv_AcqHandle);
+            HOperatorSet.GrabImageStart(hv_AcqHandle, -1);
+            _imageGrab = new BackgroundService(ImageGrab, true, 10);
+            _imageGrab.Start();
+            
         }
         public void ConnectServer()
         {
-            throw new NotImplementedException();
+
         }
+
+        private void ImageGrab()
+        {
+            HOperatorSet.GrabImageAsync(out hImage, hv_AcqHandle, -1);
+            OnImageReturn?.Invoke(this, hImage);
+            Debug.WriteLine(hImage.ToString());
+        }
+
 
         public List<VmProcedure> GetAllProcedures()
         {
-            throw new NotImplementedException();
+            return null;
         }
 
         public VmModule GetCameras()
         {
-            throw new NotImplementedException();
+            return null;
         }
 
         public List<VmModule> GetModules(VmProcedure vmProcedure)
         {
-            throw new NotImplementedException();
+            return null;
         }
 
         public VmProcedure GetProcedure(string name)
         {
-            throw new NotImplementedException();
+            return null;
         }
-
-        public Task<Point> GetVisCenter()
+        public HObject GetImage()
         {
-            Task<Point> result = null;
+            _stashedImage = hImage.Clone();
+            return _stashedImage;
+        }             
+        public async Task<Point> GetVisCenter()
+        {
+            Point result = new Point();
 
-
-            new Point
+            if (hv_AcqHandle is null) return result;
+            await Task.Run(() =>
             {
-                X = 1,
-                Y = 0,
-                Angle = 0,
-                IsFound = false,
-            };
+                FindCenterPoint(result, _stashedImage);
+            });
+
             return result;
         }
+        private void FindCenterPoint(Point point, HObject image)
+        {
+            HObject hRegion = new HObject();
+            HObject hSelectedRegion = new HObject();
+            HTuple row = new HTuple();
+            HTuple col = new HTuple();
+            HTuple area = new HTuple();
+            
+            HOperatorSet.Threshold(image, out hRegion, 0, 236);
+            HOperatorSet.SelectShape(hRegion, out hSelectedRegion, "area", "and", 15000, 99999999999);
+            HOperatorSet.AreaCenter(hSelectedRegion, out area, out row, out col);
+     
+            point.X = (double)row;
+            point.Y = (double)col;
 
+        }
         public Task ImportSol(string filepath)
         {
             throw new NotImplementedException();
@@ -72,48 +110,14 @@ namespace X_Guide.VisionMaster
 
         public void snap()
         {
-            HTuple acqHandle = new HTuple();
-            HTuple hv_AcqHandle = new HTuple();
-            HObject hImage = new HObject();
-            HObject hRegion = new HObject();
-            HObject hSelectedRegion = new HObject();
-            HTuple row = new HTuple();
-            HTuple col = new HTuple();
-            HTuple area = new HTuple();
-            HOperatorSet.OpenFramegrabber("USB3Vision", 0, 0, 0, 0, 0, 0, "progressive",
-    -1, "default", -1, "false", "default", "0E7015_ToshibaTeli_BU130",
-    0, -1, out hv_AcqHandle);
 
-            HOperatorSet.GrabImageStart(hv_AcqHandle, -1);
+        }
 
-            if (hv_AcqHandle != null)
-            {
-
-                Thread devicethread = new Thread(() =>
-                {
-
-
-                    HOperatorSet.GrabImageAsync(out hImage, hv_AcqHandle, -1);
-
-                    HOperatorSet.CloseFramegrabber(hv_AcqHandle);
-                    HOperatorSet.Threshold(hImage, out hRegion, 0, 236);
-                    HOperatorSet.SelectShape(hRegion, out hSelectedRegion, "area", "and", 15000, 99999999999);
-                    HOperatorSet.AreaCenter(hSelectedRegion, out area, out row, out col);
-
-
-                    Console.WriteLine("ROW " + (double)row);
-                    Console.WriteLine("  ");
-                    Console.WriteLine("COL " + (double)col);
-
-
-                    acqHandle.Dispose();
-                    hv_AcqHandle.Dispose();
-                    hImage.Dispose();
-                    hRegion.Dispose();
-
-                });
-                devicethread.Start();
-            }
+        public void Dispose()
+        {
+            acqHandle.Dispose();
+            hv_AcqHandle.Dispose();
+            hImage.Dispose();
         }
     }
 }

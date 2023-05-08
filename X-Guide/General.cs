@@ -44,7 +44,8 @@ namespace X_Guide
         {
             get
             {
-                return int.Parse(this["VisionSoftware"].ToString());
+                //return int.Parse(this["VisionSoftware"].ToString());
+                return 2;
             }
             set { this["VisionSoftware"] = value.ToString(); }
         }
