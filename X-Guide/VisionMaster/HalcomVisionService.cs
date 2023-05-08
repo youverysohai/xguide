@@ -41,7 +41,6 @@ namespace X_Guide.VisionMaster
         {
             HOperatorSet.GrabImageAsync(out hImage, hv_AcqHandle, -1);
             OnImageReturn?.Invoke(this, hImage);
-            Debug.WriteLine(hImage.ToString());
         }
 
         public List<VmProcedure> GetAllProcedures()

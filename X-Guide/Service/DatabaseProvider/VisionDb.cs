@@ -43,7 +43,9 @@ namespace X_Guide.Service.DatabaseProvider
         {
             return await AsyncQuery(c =>
             {
-                return MapTo<VisionModel>(c.Visions.FirstOrDefault(x => x.Name.Equals(name)));
+                return MapTo<VisionModel>(c.Visions.First());
+                //return MapTo<VisionModel>(c.Visions.FirstOrDefault(x => x.Name.Equals(name)));
+
             });
         }
 

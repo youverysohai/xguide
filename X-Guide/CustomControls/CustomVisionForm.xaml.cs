@@ -2,6 +2,7 @@
 using ModernWpf.Controls;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.Text;
@@ -43,6 +44,32 @@ namespace X_Guide.CustomControls
         private static void VisionChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
         {
         
+        }
+
+        private void VisionSoftware_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            if (VisionSoftware.SelectedIndex == 2)
+            {
+                // Hide the fields
+                Fields.Visibility = Visibility.Collapsed;
+                RestartIcon.Visibility = Visibility.Visible;
+            }
+            else
+            {
+                // Show the fields
+                Fields.Visibility = Visibility.Visible;
+                RestartIcon.Visibility = Visibility.Collapsed;
+
+            }
+        }
+
+        private void RestartIcon_Click(object sender, RoutedEventArgs e)
+        {
+            // Start a new instance of the application
+            Process.Start(Application.ResourceAssembly.Location);
+
+            // Shutdown the current instance of the application
+            Application.Current.Shutdown();
         }
     }
 }

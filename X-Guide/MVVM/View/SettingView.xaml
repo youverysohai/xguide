@@ -39,15 +39,17 @@
         </Style>
 
         <DataTemplate x:Key="ErrorPage">
-            <StackPanel>
-                <TextBlock Text="Empty!" />
+            <StackPanel Orientation="Vertical" HorizontalAlignment="Center">
+                <TextBlock Style="{DynamicResource SubheaderTextBlockStyle}" Text="Nothing is selected.&#x0a;" /> 
+          
+                <TextBlock Style="{DynamicResource SubtitleTextBlockStyle}" HorizontalAlignment="Center" Text="Please select from the list." /> 
             </StackPanel>
         </DataTemplate>
 
         <DataTemplate DataType="{x:Type vm:VisionViewModel}" x:Key="VisionForm">
             <ui:SimpleStackPanel Orientation="Vertical">
-                <xCust:CustomFormButtons AddCommand="{Binding DataContext.OpenVisionFormCommand, ElementName=SettingUserControl}" AddCommandParameter="{Binding ElementName=VisionDialog}" SaveCommand="{Binding DataContext.SaveVisionCommand, ElementName=SettingUserControl}" DeleteCommand="{Binding DataContext.DeleteVisionCommand, ElementName=SettingUserControl}" />
-                <xCust:CustomVisionForm Vision="{Binding}" />
+                <!--<xCust:CustomFormButtons AddCommand="{Binding DataContext.OpenVisionFormCommand, ElementName=SettingUserControl}" AddCommandParameter="{Binding ElementName=VisionDialog}" SaveCommand="{Binding DataContext.SaveVisionCommand, ElementName=SettingUserControl}" DeleteCommand="{Binding DataContext.DeleteVisionCommand, ElementName=SettingUserControl}" />-->
+                <xCust:CustomVisionForm Vision="{Binding }" />
             </ui:SimpleStackPanel>
         </DataTemplate>
 
@@ -152,7 +154,7 @@
             </TabItem>
 
             <!-- Vision Tab-->
-            <TabItem>
+            <TabItem >
                 <TabItem.Header>
                     <StackPanel  Width="auto" Height="auto">
                         <materialDesign:PackIcon
@@ -164,55 +166,71 @@
                 </TabItem.Header>
 
                 <materialDesign:DrawerHost OpenMode="Standard">
-                    <materialDesign:DrawerHost.LeftDrawerContent>
-                        <Grid>
-                            <ItemsControl ItemsSource="{Binding Visions}">
-                                <ItemsControl.ItemTemplate>
-                                    <DataTemplate>
-                                        <StackPanel>
-                                            <RadioButton Content="{Binding Name}" GroupName="visions"
-                          Command="{Binding DataContext.VisionCommand, ElementName=SettingUserControl}" CommandParameter="{Binding}"
+                    <!--<materialDesign:DrawerHost.LeftDrawerContent>
+                        <hc:ScrollViewer VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Auto">
+                            <hc:SimpleStackPanel Orientation="Horizontal" 
+               Background="{DynamicResource PersonPictureEllipseBadgeFillThemeBrush}">
+                                <ItemsControl ItemsSource="{Binding Visions}">
+                                    <ItemsControl.ItemTemplate>
+                                        <DataTemplate>
+                                            <StackPanel>
+                                                <RadioButton Content="{Binding Name}" GroupName="visions"
+                          Command="{Binding DataContext.VisionCommand, ElementName= SettingUserControl}" CommandParameter="{Binding}"  
                                                                         Style="{StaticResource MaterialDesignChoiceChipPrimaryOutlineRadioButton}" />
-                                        </StackPanel>
-                                    </DataTemplate>
-                                </ItemsControl.ItemTemplate>
-                            </ItemsControl>
-                            <Button Command="{x:Static materialDesign:DrawerHost.CloseDrawerCommand}">
-                            </Button>
-                        </Grid>
-                    </materialDesign:DrawerHost.LeftDrawerContent>
+                                            </StackPanel>
+                                        </DataTemplate>
+                                    </ItemsControl.ItemTemplate>
+                                </ItemsControl>
+                                <Button Margin="4 15 4 4 "
+                                            VerticalAlignment="Top"
+                                                HorizontalAlignment="Center"
+                                                Command="{x:Static materialDesign:DrawerHost.CloseDrawerCommand}"
+                                                CommandParameter="{x:Static Dock.Left}"
+                                                
+                                                Style="{StaticResource MaterialDesignIconButton}" >
+                                    <materialDesign:PackIcon Kind="MenuLeft" Style="{DynamicResource IconStyle24}" />
+                                </Button>
+                            </hc:SimpleStackPanel>
 
-                    <ui:SimpleStackPanel Orientation="Vertical" Width="500" HorizontalAlignment="Left">
 
-                        <!-- NEW VISION -->
-                        <ui:ContentDialog x:Name="VisionDialog" Title="New Vision" CloseButtonStyle="{DynamicResource DateTimePickerFlyoutButtonStyle}" CloseButtonText="Cancel"
+
+
+                        </hc:ScrollViewer>
+
+                    </materialDesign:DrawerHost.LeftDrawerContent>-->
+
+
+                    <ui:SimpleStackPanel Orientation="Vertical">
+
+                        <!-- NEW VISION --><!--
+                        <ui:ContentDialog x:Name="VisionDialog" Title="New Vision" CloseButtonStyle="{DynamicResource DateTimePickerFlyoutButtonStyle}" CloseButtonText="Cancel" 
                                               PrimaryButtonText="Create" PrimaryButtonCommand="{Binding AddVisionCommand}" PrimaryButtonStyle="{DynamicResource DefaultButtonStyle}">
-                            <xCust:CustomVisionForm Vision="{Binding DataContext.Vision, ElementName=SettingUserControl}" />
-                        </ui:ContentDialog>
+                            <xCust:CustomVisionForm Vision="{Binding DataContext.Vision, ElementName=SettingUserControl}"/>
+                        </ui:ContentDialog>-->
                         <ui:SimpleStackPanel Orientation="Horizontal">
-                            <Button  Command="{x:Static materialDesign:DrawerHost.OpenDrawerCommand}"
-                             CommandParameter="{x:Static Dock.Left}"
-                             Style="{DynamicResource MaterialDesignIconForegroundButton}"
+                            <!--<Button  Command="{x:Static materialDesign:DrawerHost.OpenDrawerCommand}" 
+                             CommandParameter="{x:Static Dock.Left}" 
+                             Style="{DynamicResource MaterialDesignIconForegroundButton}" 
                              ToolTip="List of Manipulators"
-                             ToolTipService.InitialShowDelay="122">
-                                <materialDesign:PackIcon Kind="PlaylistEdit" Style="{DynamicResource IconStyle24}" />
-                            </Button>
+                             ToolTipService.InitialShowDelay="122"
+                             >
+                                <materialDesign:PackIcon Kind="PlaylistEdit" Style="{DynamicResource IconStyle24}"/>
+                            </Button>-->
                             <!-- data trigger for collapse and expand -->
 
                             <TextBlock  VerticalAlignment="Center" Style="{StaticResource SubheaderTextBlockStyle}"
                                         Text="Vision" />
                         </ui:SimpleStackPanel>
 
-                        <ContentControl x:Name="VisionContent" Content="{Binding Vision}">
-
-                            <i:Interaction.Triggers>
+                        <ContentControl x:Name="VisionContent" Content="{Binding Vision}" ContentTemplate="{StaticResource VisionForm}">
+                            <!--<i:Interaction.Triggers>
                                 <i:DataTrigger Binding="{Binding Vision}" Value="{Binding Vision}">
                                     <i:ChangePropertyAction PropertyName="ContentTemplate" Value="{StaticResource VisionForm}" />
                                 </i:DataTrigger>
                                 <i:DataTrigger Binding="{Binding Vision}" Value="{x:Null}">
                                     <i:ChangePropertyAction PropertyName="ContentTemplate" Value="{StaticResource ErrorPage}" />
                                 </i:DataTrigger>
-                            </i:Interaction.Triggers>
+                            </i:Interaction.Triggers>-->     
                         </ContentControl>
                     </ui:SimpleStackPanel>
                 </materialDesign:DrawerHost>

@@ -1,22 +1,12 @@
-﻿using AutoMapper;
-using HalconDotNet;
-using System;
-using System.Collections.Generic;
-using ToastNotifications;
-using ToastNotifications.Messages;
-using VM.Core;
-using VMControls.Interface;
-using X_Guide.MVVM.Command;
-using X_Guide.MVVM.Model;
-using X_Guide.MVVM.ViewModel.CalibrationWizardSteps;
-using X_Guide.Service;
-using X_Guide.Service.DatabaseProvider;
-using X_Guide.VisionMaster;
-
-namespace X_Guide.MVVM.ViewModel
+﻿namespace X_Guide.MVVM.ViewModel
 {
     internal class Step6ViewModel : ViewModelBase
     {
+        public double XMove { get; set; }
+
+
+        public double YMove { get; set; }
+
         public CalibrationViewModel Calibration { get; set; }
         public HTuple WindowHandle { get; set; }
         public HTuple OutputHandle { get; set; }
@@ -78,11 +68,12 @@ namespace X_Guide.MVVM.ViewModel
         {
             int XOffset = (int)Calibration.XOffset;
             int YOffset = (int)Calibration.YOffset;
-            double XMove = 10;
-            double YMove = 20;
+            Debug.WriteLine(XMove + "   " + YMove);
+
             CalibrationData calibrationData = await _calibService.EyeInHand2D_Calibrate(XOffset, YOffset, XMove, YMove);
             Calibration.CXOffSet = calibrationData.X;
             Calibration.CYOffset = calibrationData.Y;
+
             Calibration.CRZOffset = calibrationData.Rz;
             Calibration.Mm_per_pixel = calibrationData.mm_per_pixel;
         }

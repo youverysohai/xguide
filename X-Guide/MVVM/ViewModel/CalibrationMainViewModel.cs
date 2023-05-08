@@ -186,10 +186,8 @@ namespace X_Guide.MVVM.ViewModel
                 switch (currentStep)
                 {
                     case 0: _navigationService.Navigate<Step1ViewModel>(calibPara); break;
-                    case 1: _navigationService.Navigate<Step2ViewModel>(calibPara); break;
-                    case 2: _navigationService.Navigate<Step4ViewModel>(calibPara); break;
-                    case 3: _navigationService.Navigate<SettingViewModel>(); break;
-                    case 4: _navigationService.Navigate<Step2ViewModel>(calibPara); break;
+                    case 1: _navigationService.Navigate<Step4ViewModel>(calibPara); break;
+                    case 2: _navigationService.Navigate<Step6ViewModel>(calibPara); break;
                     default: throw new Exception("Page does not exist!");
                 }
             }
@@ -199,11 +197,11 @@ namespace X_Guide.MVVM.ViewModel
         {
             if (App.VisionSoftware == 1)
             {
-                Form = new List<string>(new string[] { "Manipulator", "Orientation and Mounting", "Vision Flow", "Motion", "Jog", "Calibration", });
+                Form = new List<string>(new string[] { "Manipulator", "Orientation" + Environment.NewLine + "& Mounting", "Vision Flow", "Motion", "Jog", "Calibration", });
             }
             else
             {
-                Form = new List<string>(new string[] { "Manipulator", "Orientation and Mounting", "Motion", "Live Image", "Calibration" });
+                Form = new List<string>(new string[] { "Manipulator", "Orientation " + Environment.NewLine + "& Mounting", "Motion", "Live Image", "Calibration" });
             }
             _navigationService = navigationService;
             _navigationStore = _navigationService.GetNavigationStore();
@@ -218,9 +216,8 @@ namespace X_Guide.MVVM.ViewModel
             var calibPara = new TypedParameter(typeof(CalibrationViewModel), _calibration);
             Step1ViewModel Step1 = viewModelLocator.Create<Step1ViewModel>(calibPara) as Step1ViewModel;
             /*            Step1.SelectedItemChangedEvent += OnSelectedItemChangedEvent;*/
-            HalconLive halcon = viewModelLocator.Create<HalconLive>() as HalconLive;
          
-            _navigationService.Navigate(viewModelLocator.Create<Step6ViewModel>(calibPara));
+            _navigationService.Navigate(Step1);
             CurrentNode = _navigationHistory.AddLast(CurrentViewModel);
 
             /*  Dispatcher.CurrentDispatcher.BeginInvoke(new Action(() => _navigationService.Navigate<Step6ViewModel>(new TypedParameter(typeof(CalibrationViewModel), new CalibrationViewModel()

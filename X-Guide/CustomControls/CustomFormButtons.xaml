@@ -9,7 +9,7 @@
              Name="CustFormButtons">
 
     <ui:SimpleStackPanel Orientation="Horizontal">
-        <Button Style="{DynamicResource MaterialDesignIconButton}" Command="{Binding AddCommand, ElementName=CustFormButtons}" CommandParameter="{Binding AddCommandParameter, ElementName=CustFormButtons}" ToolTip="Create New Vision">
+        <Button Style="{DynamicResource MaterialDesignIconButton}" Command="{Binding AddCommand, ElementName=CustFormButtons}" CommandParameter="{Binding AddCommandParameter, ElementName=CustFormButtons}" ToolTip="Create New Manipulator">
             <ui:FontIcon Style="{DynamicResource AddIcon}" ></ui:FontIcon>
         </Button>
         <Button Command="{Binding SaveCommand, ElementName=CustFormButtons}" Style="{DynamicResource MaterialDesignIconButton}">
