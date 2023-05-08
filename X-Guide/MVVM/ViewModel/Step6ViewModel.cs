@@ -1,4 +1,20 @@
-﻿namespace X_Guide.MVVM.ViewModel
+﻿using AutoMapper;
+using HalconDotNet;
+using System;
+using System.Collections.Generic;
+using System.Windows;
+using ToastNotifications;
+using ToastNotifications.Messages;
+using VM.Core;
+using VMControls.Interface;
+using X_Guide.MVVM.Command;
+using X_Guide.MVVM.Model;
+using X_Guide.MVVM.ViewModel.CalibrationWizardSteps;
+using X_Guide.Service;
+using X_Guide.Service.DatabaseProvider;
+using X_Guide.VisionMaster;
+
+namespace X_Guide.MVVM.ViewModel
 {
     internal class Step6ViewModel : ViewModelBase
     {
@@ -9,7 +25,7 @@
         public IVmModule VisProcedure { get; set; }
 
         public List<VmModule> Modules { get; set; }
-        bool isLive = false;
+        private bool isLive = false;
 
         public RelayCommand OperationCommand { get; set; }
 
@@ -18,6 +34,7 @@
         private readonly IMapper _mapper;
         private readonly Notifier _notifier;
         private readonly IVisionService _visionService;
+
         public event EventHandler<HObject> OnImageRecieved;
 
         public RelayCommand SaveCommand { get; set; }
