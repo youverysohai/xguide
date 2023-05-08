@@ -658,6 +658,9 @@
     <Compile Include="CustomControls\CustomLoadingControl.xaml.cs">
       <DependentUpon>CustomLoadingControl.xaml</DependentUpon>
     </Compile>
+    <Compile Include="CustomControls\HalconSmartControl.xaml.cs">
+      <DependentUpon>HalconSmartControl.xaml</DependentUpon>
+    </Compile>
     <Compile Include="CustomControls\HikVmRealTimeAcqControl.xaml.cs">
       <DependentUpon>HikVmRealTimeAcqControl.xaml</DependentUpon>
     </Compile>
@@ -874,6 +877,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="CustomControls\CustomLoadingControl.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="CustomControls\HalconSmartControl.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

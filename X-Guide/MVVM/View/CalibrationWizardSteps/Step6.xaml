@@ -7,7 +7,7 @@
              xmlns:XCust="clr-namespace:X_Guide.CustomControls"
                xmlns:gif="https://github.com/XamlAnimatedGif/XamlAnimatedGif"
              xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
-              xmlns:ha="http://schemas.mvtec.com/halcondotnet" 
+              xmlns:ha="http://schemas.mvtec.com/halcondotnet"
              mc:Ignorable="d"
             xmlns:hc="https://handyorg.github.io/handycontrol"
              xmlns:ui="http://schemas.modernwpf.com/2019"
@@ -27,10 +27,9 @@
         <hc:ScrollViewer  Grid.RowSpan="3" Grid.ColumnSpan="2">
 
             <hc:FlexPanel JustifyContent="SpaceAround" FlexWrap="Wrap">
-         
+
                 <!--<XCust:CustomRenderControl hc:FlexPanel.FlexBasis="640" Height="480" Procedure="{Binding VisProcedure}"></XCust:CustomRenderControl>-->
-                <ha:HSmartWindowControlWPF x:Name="HalconWindow"  Width="640" Height="480"/>
-                <ha:HSmartWindowControlWPF x:Name="OutputWindow"  Width="640" Height="480"/>
+                <ha:HSmartWindowControlWPF x:Name="OutputWindow"  Width="640" Height="480" />
 
                 <GroupBox  hc:FlexPanel.FlexBasis="300" MinHeight="550"  Grid.RowSpan="3" Grid.Column="1" Style="{StaticResource GroupBoxTab}">
                     <GroupBox.Header>
