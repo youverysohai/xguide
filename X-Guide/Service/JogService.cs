@@ -48,7 +48,7 @@ namespace X_Guide.Service
             CancellationTokenSource cts = new CancellationTokenSource();
             await _serverService.ServerWriteDataAsync(jogCommand.ToString());
 
-            var timer = new System.Timers.Timer(5000);
+            var timer = new System.Timers.Timer(30000);
             timer.AutoReset = false;
             timer.Elapsed += (s, o) => cts.Cancel();
             timer.Start();

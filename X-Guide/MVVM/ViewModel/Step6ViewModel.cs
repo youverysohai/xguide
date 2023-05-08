@@ -2,6 +2,7 @@
 using HalconDotNet;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Windows;
 using ToastNotifications;
 using ToastNotifications.Messages;
@@ -18,6 +19,11 @@ namespace X_Guide.MVVM.ViewModel
 {
     internal class Step6ViewModel : ViewModelBase
     {
+        public double XMove { get; set; } 
+
+
+        public double YMove{ get; set; } 
+
         public CalibrationViewModel Calibration { get; set; }
         public HTuple WindowHandle { get; set; }
         public HTuple OutputHandle { get; set; }
@@ -61,7 +67,7 @@ namespace X_Guide.MVVM.ViewModel
         private void Step6ViewModel_OnOutputImageReturn(object sender, (HObject, object) e)
         {
             Point point = e.Item2 as Point;
-            HOperatorSet.DispImage(e.Item1, OutputHandle);
+            HOperatorSet.DispImage(e.Item1 as HObject, OutputHandle);
             HOperatorSet.SetColor(OutputHandle, "blue");
             HOperatorSet.DispCross(OutputHandle, point.X, point.Y, 20, 0);
             MessageBox.Show(point.ToString());
@@ -82,11 +88,12 @@ namespace X_Guide.MVVM.ViewModel
         {
             int XOffset = (int)Calibration.XOffset;
             int YOffset = (int)Calibration.YOffset;
-            double XMove = 10;
-            double YMove = 20;
-            CalibrationData calibrationData = await _calibService.EyeInHand2D_Calibrate(XOffset, YOffset, XMove, YMove);
+            Debug.WriteLine(XMove + "   " + YMove);
+
+CalibrationData calibrationData = await _calibService.EyeInHand2D_Calibrate(XOffset, YOffset, XMove, YMove);
             Calibration.CXOffSet = calibrationData.X;
             Calibration.CYOffset = calibrationData.Y;
+           
             Calibration.CRZOffset = calibrationData.Rz;
             Calibration.Mm_per_pixel = calibrationData.mm_per_pixel;
         }

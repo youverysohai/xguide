@@ -57,11 +57,11 @@ namespace X_Guide.Service.Communation
             Point VisCenter;
             try
             {
-                if (parameter.Length < 3) throw new Exception(StrRetriver.Get("OP000"));
+                if (parameter.Length < 2) throw new Exception(StrRetriver.Get("OP000"));
                 calib = await _calibDb.Get(parameter[1]) ?? throw new Exception(StrRetriver.Get("OP001"));
-                try { await _visionService.ImportSol(String.Format(@"{0}", calib.Vision.Filepath)); }
-                catch { throw new Exception(StrRetriver.Get("OP002")); };
-                _ = await _visionService.RunProcedure($"{parameter[2]}", true) ?? throw new Exception(StrRetriver.Get("OP003"));
+                //try { await _visionService.ImportSol(String.Format(@"{0}", calib.Vision.Filepath)); }
+                //catch { throw new Exception(StrRetriver.Get("OP002")); };
+                //_ = await _visionService.RunProcedure($"{parameter[2]}", true) ?? throw new Exception(StrRetriver.Get("OP003"));
                 VisCenter = await _visionService.GetVisCenter();
                 OperationData = VisionGuided.EyeInHandConfig2D_Operate(VisCenter, new double[] { calib.CXOffset, calib.CYOffset, calib.CRZOffset, calib.CameraXScaling });
                 string Mode = calib.Mode ? "GLOBAL" : "TOOL";

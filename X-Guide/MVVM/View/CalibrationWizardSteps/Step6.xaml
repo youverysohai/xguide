@@ -29,7 +29,7 @@
             <hc:FlexPanel JustifyContent="SpaceAround" FlexWrap="Wrap">
          
                 <!--<XCust:CustomRenderControl hc:FlexPanel.FlexBasis="640" Height="480" Procedure="{Binding VisProcedure}"></XCust:CustomRenderControl>-->
-                <hc:Carousel>
+                <hc:Carousel Width="640">
                     <ha:HSmartWindowControlWPF x:Name="HalconWindow"  Width="640" Height="480"/>
 
                     <ha:HSmartWindowControlWPF x:Name="OutputWindow"  Width="640" Height="480"/>
@@ -89,9 +89,9 @@
                         <Button Content="Live" Grid.Row="9" Command="{Binding LiveImageCommand}" CommandParameter="{Binding ElementName=HalconWindow}"></Button>
                         <ui:SimpleStackPanel Orientation="Vertical" Grid.Row="10">
                             <Label Style="{DynamicResource MaterialDesignLabel}">XMove</Label>
-                            <TextBox></TextBox>
+                            <TextBox Text="{Binding XMove}"></TextBox>
                             <Label Style="{DynamicResource MaterialDesignLabel}">YMove</Label>
-                            <TextBox></TextBox>
+                            <TextBox Text="{Binding YMove}"></TextBox>
                         </ui:SimpleStackPanel>
                     </Grid>
                 </GroupBox>
