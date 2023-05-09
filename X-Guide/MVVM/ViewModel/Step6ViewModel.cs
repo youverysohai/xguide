@@ -19,7 +19,6 @@ namespace X_Guide.MVVM.ViewModel
     internal class Step6ViewModel : ViewModelBase
     {
         public double XMove { get; set; }
-
         public double YMove { get; set; }
 
         public HObject OutputImage { get; set; }
