@@ -86,13 +86,17 @@ namespace X_Guide.VisionMaster
         {
             HObject hRegion = new HObject();
             HObject hSelectedRegion = new HObject();
+            HObject hSelectedRegion1 = new HObject();
             HTuple row = new HTuple();
             HTuple col = new HTuple();
             HTuple area = new HTuple();
+            HObject hConnectedRegion = new HObject();
 
-            HOperatorSet.Threshold(image, out hRegion, 0, 236);
-            HOperatorSet.SelectShape(hRegion, out hSelectedRegion, "area", "and", 15000, 99999999999);
-            HOperatorSet.AreaCenter(hSelectedRegion, out area, out row, out col);
+            HOperatorSet.Threshold(image, out hRegion, 136, 255);
+            HOperatorSet.Connection(hRegion,out hConnectedRegion);
+            HOperatorSet.SelectShape(hConnectedRegion, out hSelectedRegion, "circularity", "and", 0.65, 1);
+            HOperatorSet.SelectShape(hSelectedRegion, out hSelectedRegion1, "area", "and", 1000, 6500);
+            HOperatorSet.AreaCenter(hSelectedRegion1, out area, out row, out col);
 
             point.X = (double)row;
             point.Y = (double)col;

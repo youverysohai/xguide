@@ -66,11 +66,14 @@ namespace X_Guide.MVVM.ViewModel
         private void Step6ViewModel_OnOutputImageReturn(object sender, (HObject, object) e)
         {
             Point point = e.Item2 as Point;
+            HOperatorSet.DispObj(e.Item1, OutputHandle);
+            HOperatorSet.SetColor(OutputHandle, "blue");
+            HOperatorSet.DispCross(OutputHandle, point.X, point.Y, 20, 0);
         }
 
         private void Step6ViewModel_OnImageReturn(object sender, HObject e)
         {
-            if (isLive is false || WindowHandle is null) return;
+            if (isLive is false) return;
             Image = e;
         }
 

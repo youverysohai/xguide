@@ -194,13 +194,13 @@
                                     <TextBlock Style="{DynamicResource ButtonInnerTextBlockCenter}">X+</TextBlock>
                                 </Button>
                                 <!-- Z rotation-->
-                                <Button Command="{Binding JogCommand}" CommandParameter="RZ+" Style="{DynamicResource ClockwiseButton}">
+                                <Button Command="{Binding JogCommand}" CommandParameter="RZ-" Style="{DynamicResource ClockwiseButton}">
 
-                                    <TextBlock Style="{DynamicResource ClockwiseTextBlock}">Rz+</TextBlock>
+                                    <TextBlock Style="{DynamicResource ClockwiseTextBlock}">Rz-</TextBlock>
                                 </Button>
-                                <Button Command="{Binding JogCommand}" CommandParameter="RZ-" Style="{DynamicResource AntiClockwiseButton}">
+                                <Button Command="{Binding JogCommand}" CommandParameter="RZ+" Style="{DynamicResource AntiClockwiseButton}">
 
-                                    <TextBlock Style="{DynamicResource AntiClockwiseTextBlock}">Rz-</TextBlock>
+                                    <TextBlock Style="{DynamicResource AntiClockwiseTextBlock}">Rz+</TextBlock>
                                 </Button>
                             </Canvas>
                         </Viewbox>
