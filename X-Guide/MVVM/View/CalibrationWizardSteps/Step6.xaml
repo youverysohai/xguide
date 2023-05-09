@@ -22,11 +22,11 @@
             <Setter Property="VerticalAlignment" Value="Center" />
         </Style>
         <Style TargetType="Button" BasedOn="{StaticResource DefaultButtonStyle}">
-            <Setter Property="Margin" Value="5"/>
+            <Setter Property="Margin" Value="5" />
         </Style>
         <Style TargetType="Label" x:Key="unitStyle" BasedOn="{StaticResource DefaultLabelStyle}">
-            <Setter Property="VerticalAlignment" Value="Bottom"/>
-            <Setter Property="FontSize" Value="11"/>
+            <Setter Property="VerticalAlignment" Value="Bottom" />
+            <Setter Property="FontSize" Value="11" />
         </Style>
     </UserControl.Resources>
     <Grid Margin="20">
@@ -37,10 +37,8 @@
 
                 <!--<XCust:CustomRenderControl hc:FlexPanel.FlexBasis="640" Height="480" Procedure="{Binding VisProcedure}"></XCust:CustomRenderControl>-->
                 <hc:Carousel Width="640">
-                    <XCust:HalconSmartControl Width="640" Height="480" Image="{Binding Image}" ></XCust:HalconSmartControl>
-
-                    <ha:HSmartWindowControlWPF x:Name="OutputWindow"  Width="640" Height="480"/>
-
+                    <XCust:HalconSmartControl Width="640" Height="480" Image="{Binding LiveImage}" Point="{Binding OutputImageParameter}" />
+                    <XCust:HalconSmartControl Width="648" Height="488" Image="{Binding OutputImage}" />
                 </hc:Carousel>
 
                 <GroupBox  hc:FlexPanel.FlexBasis="300" MinHeight="550"  Grid.RowSpan="3" Grid.Column="1" Style="{StaticResource GroupBoxTab}">
@@ -70,23 +68,23 @@
 
                         <Label Content="Camera X Scaling:" Grid.Row="0" Grid.Column="0" Margin="5" />
                         <TextBlock Text="{Binding Calibration.Mm_per_pixel, StringFormat={}{0:F2}}" Grid.Row="0" Grid.Column="1" Margin="5" Style="{DynamicResource ReadOnlyTextBlock}" />
-                        <Label Content="mm per pixel" Grid.Row="0" Grid.Column="2" Style="{DynamicResource unitStyle}"/>
+                        <Label Content="mm per pixel" Grid.Row="0" Grid.Column="2" Style="{DynamicResource unitStyle}" />
 
                         <Label Content="Camera Y Scaling:" Grid.Row="1" Grid.Column="0" Margin="5" />
                         <TextBlock Text="{Binding Calibration.Mm_per_pixel, StringFormat={}{0:F2}}" Grid.Row="1" Grid.Column="1" Margin="5" Style="{DynamicResource ReadOnlyTextBlock}" />
-                        <Label Content="mm per pixel" Grid.Row="1" Grid.Column="2"  Style="{DynamicResource unitStyle}"/>
+                        <Label Content="mm per pixel" Grid.Row="1" Grid.Column="2"  Style="{DynamicResource unitStyle}" />
 
                         <Label Content="X offset:" Grid.Row="2" Grid.Column="0" Margin="5" />
                         <TextBlock Text="{Binding Calibration.CXOffSet, StringFormat={}{0:F2}}" Grid.Row="2" Grid.Column="1" Margin="5" Style="{DynamicResource ReadOnlyTextBlock}" />
-                        <Label Content="mm" Grid.Row="2" Grid.Column="2" Style="{DynamicResource unitStyle}"/>
+                        <Label Content="mm" Grid.Row="2" Grid.Column="2" Style="{DynamicResource unitStyle}" />
 
                         <Label Content="Y offset:" Grid.Row="3" Grid.Column="0" Margin="5" />
                         <TextBlock  Text="{Binding Calibration.CYOffset, StringFormat={}{0:F2}}"  Grid.Row="3" Grid.Column="1" Margin="5" Style="{DynamicResource ReadOnlyTextBlock}" />
-                        <Label Content="mm" Grid.Row="3" Grid.Column="2" Style="{DynamicResource unitStyle}"/>
+                        <Label Content="mm" Grid.Row="3" Grid.Column="2" Style="{DynamicResource unitStyle}" />
 
                         <Label Content="RZ offset:" Grid.Row="4" Grid.Column="0" Margin="5" />
                         <TextBlock Text="{Binding Calibration.CRZOffset, StringFormat={}{0:F2}}" Grid.Row="4" Grid.Column="1" Margin="5" Style="{DynamicResource ReadOnlyTextBlock}" />
-                        <Label Content="°" Grid.Row="4" Grid.Column="2"  />
+                        <Label Content="°" Grid.Row="4" Grid.Column="2" />
 
                         <ComboBox Grid.Row="8" ItemsSource="{Binding Modules}">
                         </ComboBox>
@@ -99,7 +97,6 @@
                             <Button Grid.Row="5"  Command="{Binding OperationCommand}" >Start Operation</Button>
                             <Button Grid.Row="6"   Command="{Binding CalibrateCommand}" >Start Calibration</Button>
                             <Button Grid.Row="7"   Command="{Binding SaveCommand}" >Save</Button>
-
                         </ui:SimpleStackPanel>
                     </Grid>
                 </GroupBox>

@@ -22,10 +22,13 @@ namespace X_Guide.MVVM.ViewModel
 
         public double YMove { get; set; }
 
+        public HObject OutputImage { get; set; }
+        public Point OutputImageParameter { get; set; }
+        public HObject LiveImage { get; set; }
+
         public CalibrationViewModel Calibration { get; set; }
         public HTuple WindowHandle { get; set; }
         public HTuple OutputHandle { get; set; }
-        public HObject Image { get; set; }
 
         public IVmModule VisProcedure { get; set; }
 
@@ -58,26 +61,24 @@ namespace X_Guide.MVVM.ViewModel
             SaveCommand = new RelayCommand(Save);
             VisProcedure = _visionService.GetProcedure(Calibration.Procedure);
             Modules = _visionService.GetModules(VisProcedure as VmProcedure);
-            LiveImageCommand = new RelayCommand(LiveImage);
+            LiveImageCommand = new RelayCommand(ToggleLiveImage);
             ((HalcomVisionService)_visionService).OnImageReturn += Step6ViewModel_OnImageReturn;
             ((HalcomVisionService)_visionService).OnOutputImageReturn += Step6ViewModel_OnOutputImageReturn;
         }
 
         private void Step6ViewModel_OnOutputImageReturn(object sender, (HObject, object) e)
         {
-            Point point = e.Item2 as Point;
-            HOperatorSet.DispObj(e.Item1, OutputHandle);
-            HOperatorSet.SetColor(OutputHandle, "blue");
-            HOperatorSet.DispCross(OutputHandle, point.X, point.Y, 20, 0);
+            OutputImage = e.Item1;
+            OutputImageParameter = e.Item2 as Point;
         }
 
         private void Step6ViewModel_OnImageReturn(object sender, HObject e)
         {
             if (isLive is false) return;
-            Image = e;
+            LiveImage = e;
         }
 
-        private async void LiveImage(object obj)
+        private async void ToggleLiveImage(object obj)
         {
             isLive = !isLive;
         }
