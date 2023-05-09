@@ -2,11 +2,12 @@
 using HalconDotNet;
 using System;
 using System.Collections.Generic;
-using System.Diagnostics;
+using System.Threading.Tasks;
 using ToastNotifications;
 using ToastNotifications.Messages;
 using VM.Core;
 using VMControls.Interface;
+using X_Guide.Aspect;
 using X_Guide.MVVM.Command;
 using X_Guide.MVVM.Model;
 using X_Guide.MVVM.ViewModel.CalibrationWizardSteps;
@@ -18,23 +19,26 @@ namespace X_Guide.MVVM.ViewModel
 {
     internal class Step6ViewModel : ViewModelBase
     {
-        public double XMove { get; set; }
-        public double YMove { get; set; }
+        #region HalconSpecificParam
+
+        public event EventHandler<HObject> OnImageRecieved;
 
         public HObject OutputImage { get; set; }
         public Point OutputImageParameter { get; set; }
         public HObject LiveImage { get; set; }
+        public RelayCommand LiveImageCommand { get; set; }
+
+        #endregion HalconSpecificParam
+
+        public double XMove { get; set; }
+        public double YMove { get; set; }
 
         public CalibrationViewModel Calibration { get; set; }
-        public HTuple WindowHandle { get; set; }
-        public HTuple OutputHandle { get; set; }
 
         public IVmModule VisProcedure { get; set; }
 
         public List<VmModule> Modules { get; set; }
         private bool isLive = false;
-
-        public RelayCommand OperationCommand { get; set; }
 
         private readonly ICalibrationDb _calibDb;
         private readonly ICalibrationService _calibService;
@@ -42,11 +46,8 @@ namespace X_Guide.MVVM.ViewModel
         private readonly Notifier _notifier;
         private readonly IVisionService _visionService;
 
-        public event EventHandler<HObject> OnImageRecieved;
-
         public RelayCommand SaveCommand { get; set; }
         public RelayCommand CalibrateCommand { get; set; }
-        public RelayCommand LiveImageCommand { get; set; }
 
         public Step6ViewModel(CalibrationViewModel calibration, ICalibrationDb calibDb, ICalibrationService calibService, IMapper mapper, Notifier notifier, IVisionService visionService)
         {
@@ -56,7 +57,7 @@ namespace X_Guide.MVVM.ViewModel
             _mapper = mapper;
             _notifier = notifier;
             _visionService = visionService;
-            CalibrateCommand = new RelayCommand(Calibrate);
+            CalibrateCommand = new RelayCommand(async (param) => Calibrate());
             SaveCommand = new RelayCommand(Save);
             VisProcedure = _visionService.GetProcedure(Calibration.Procedure);
             Modules = _visionService.GetModules(VisProcedure as VmProcedure);
@@ -77,26 +78,25 @@ namespace X_Guide.MVVM.ViewModel
             LiveImage = e;
         }
 
-        private async void ToggleLiveImage(object obj)
+        private async Task ToggleLiveImage(object obj)
         {
             isLive = !isLive;
         }
 
-        private async void Calibrate(object obj)
+        [ExceptionHandlingAspect]
+        private async Task Calibrate()
         {
             int XOffset = (int)Calibration.XOffset;
             int YOffset = (int)Calibration.YOffset;
-            Debug.WriteLine(XMove + "   " + YMove);
-
             CalibrationData calibrationData = await _calibService.EyeInHand2D_Calibrate(XOffset, YOffset, XMove, YMove);
             Calibration.CXOffSet = calibrationData.X;
             Calibration.CYOffset = calibrationData.Y;
-
             Calibration.CRZOffset = calibrationData.Rz;
             Calibration.Mm_per_pixel = calibrationData.mm_per_pixel;
         }
 
-        private async void Save(object obj)
+        [ExceptionHandlingAspect]
+        private async Task Save(object param)
         {
             if (!await _calibDb.IsExist(Calibration.Id))
             {

@@ -122,7 +122,7 @@ namespace X_Guide.MVVM.ViewModel
             }
         }
 
-        private void Jog(object parameter)
+        private async Task Jog(object parameter)
         {
             if (JogDistance == 0) JogDistance = 10;
             int x = 0, y = 0, z = 0, rz = 0;

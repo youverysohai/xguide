@@ -3,33 +3,25 @@ using AutoMapper;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
-using System.Diagnostics;
 using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
-using System.Windows.Input;
-using System.Windows.Threading;
-using X_Guide.Communication.Service;
 using X_Guide.MVVM.Command;
 using X_Guide.MVVM.Model;
-using X_Guide.MVVM.Store;
 using X_Guide.MVVM.ViewModel.CalibrationWizardSteps;
 using X_Guide.Service;
-using X_Guide.Service.Communication;
 using X_Guide.Service.DatabaseProvider;
-using X_Guide.VisionMaster;
-using Xlent_Vision_Guided;
 
 namespace X_Guide.MVVM.ViewModel
 {
     internal class CalibrationWizardStartViewModel : ViewModelBase
     {
-        private IMapper _mapper;
+        private readonly IMapper _mapper;
         private readonly INavigationService _navigationService;
         private readonly ICalibrationDb _calibrationDb;
         private string _name;
 
         private ObservableCollection<CalibrationViewModel> _calibrations;
+
         public ObservableCollection<CalibrationViewModel> Calibrations
         {
             get { return _calibrations; }
@@ -40,12 +32,12 @@ namespace X_Guide.MVVM.ViewModel
             }
         }
 
-
         public string Name
         {
             get { return _name; }
             set { _name = value; OnPropertyChanged(); }
         }
+
         private bool _isStarted;
 
         public bool IsStarted
@@ -71,25 +63,22 @@ namespace X_Guide.MVVM.ViewModel
             {
                 Name = Name,
             });
-
-
         }
-
 
         private async void GetCalibrations()
         {
             IEnumerable<CalibrationModel> calibModels = await _calibrationDb.GetAll();
             Calibrations = new ObservableCollection<CalibrationViewModel>(calibModels.Select(x => _mapper.Map<CalibrationViewModel>(x)));
-
         }
-        private async void LoadCalibration(object obj)
+
+        private async Task LoadCalibration(object obj)
         {
             TypedParameter calib = new TypedParameter(typeof(CalibrationViewModel), obj);
             CalibrationMainViewModel calibMain = await _navigationService.NavigateAsync<CalibrationMainViewModel>(calib) as CalibrationMainViewModel;
-/*            calibMain.LoadCalibSetting(calib);*/
+            /*            calibMain.LoadCalibSetting(calib);*/
         }
 
-        private void StartCalibration(object obj)
+        private async Task StartCalibration(object obj)
         {
             TypedParameter calib = new TypedParameter(typeof(CalibrationViewModel), new CalibrationViewModel
             {
@@ -99,7 +88,7 @@ namespace X_Guide.MVVM.ViewModel
             _navigationService.Navigate<CalibrationMainViewModel>(calib);
         }
 
-        public async void DeleteCalibration(object obj)
+        public async Task DeleteCalibration(object obj)
         {
             CalibrationViewModel vmodel = obj as CalibrationViewModel;
             if (await _calibrationDb.Delete(vmodel.Id))
@@ -110,7 +99,6 @@ namespace X_Guide.MVVM.ViewModel
             {
                 System.Windows.MessageBox.Show("Delete failed!");
             }
-            
         }
     }
 }

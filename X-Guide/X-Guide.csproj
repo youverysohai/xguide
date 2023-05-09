@@ -613,8 +613,11 @@
       <SubType>Designer</SubType>
     </ApplicationDefinition>
     <Compile Include="ADT\QueueProcessor.cs" />
+    <Compile Include="Aspect\AsyncErrorHandler.cs" />
     <Compile Include="Aspect\CheckServerCanExecute.cs" />
+    <Compile Include="Aspect\ExceptionHandlingAspect.cs" />
     <Compile Include="Aspect\GlobalAspects.cs" />
+    <Compile Include="Aspect\ThrowExceptionAspect.cs" />
     <Compile Include="Converter\BooleanToVisibilityConverter.cs" />
     <Compile Include="Converter\ByteArrayToImageConverter.cs" />
     <Compile Include="Calibration.cs">
@@ -700,6 +703,7 @@
     <Compile Include="MappingConfiguration\GeneralProfile.cs" />
     <Compile Include="MappingConfiguration\ManipulatorProfile.cs" />
     <Compile Include="MappingConfiguration\VisionProfile.cs" />
+    <Compile Include="MVVM\Command\AsyncRelayCommand.cs" />
     <Compile Include="MVVM\Command\BrowseFileDialogCommand.cs" />
     <Compile Include="MVVM\Command\RelayCommand.cs" />
     <Compile Include="MVVM\Command\VideoCommand.cs" />
@@ -1072,7 +1076,7 @@
       <Version>6.4.4</Version>
     </PackageReference>
     <PackageReference Include="Fody">
-      <Version>6.6.4</Version>
+      <Version>6.7.0</Version>
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
       <PrivateAssets>all</PrivateAssets>
     </PackageReference>
@@ -1088,8 +1092,8 @@
     <PackageReference Include="MaterialDesignThemes.Wpf">
       <Version>1.0.1</Version>
     </PackageReference>
-    <PackageReference Include="MethodDecorator.Fody">
-      <Version>1.1.1</Version>
+    <PackageReference Include="MethodBoundaryAspect.Fody">
+      <Version>2.0.148</Version>
     </PackageReference>
     <PackageReference Include="Microsoft.CodeAnalysis.CSharp">
       <Version>4.5.0</Version>

@@ -4,6 +4,7 @@ using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Configuration;
+using System.Threading.Tasks;
 using System.Windows;
 using VM.Core;
 using X_Guide.MVVM.Command;
@@ -71,19 +72,19 @@ namespace X_Guide.MVVM.ViewModel
             TestCommand = new RelayCommand(test);
         }
 
-        private async void OpenVisionForm(object obj)
+        private async Task OpenVisionForm(object obj)
         {
             Vision = new VisionViewModel();
             if (obj is ContentDialog dialog) await dialog.ShowAsync();
         }
 
-        private async void OpenManiForm(object obj)
+        private async Task OpenManiForm(object obj)
         {
             Manipulator = new ManipulatorViewModel();
             if (obj is ContentDialog dialog) await dialog.ShowAsync();
         }
 
-        private void test(object obj)
+        private async Task test(object obj)
         {
             try
             {
@@ -96,38 +97,38 @@ namespace X_Guide.MVVM.ViewModel
             }
         }
 
-        private void SaveGeneral(object obj)
+        private async Task SaveGeneral(object obj)
         {
             _generalDb.Update(General);
             MessageBox.Show("Saved setting. Restarting the application is required for the changes to take effect.");
             Application.Current.Shutdown();
         }
 
-        private async void DeleteVision(object obj)
+        private async Task DeleteVision(object obj)
         {
             await _visionDb.Delete(_mapper.Map<VisionModel>(Vision));
             GetVisions();
         }
 
-        private async void DeleteManipulator(object obj)
+        private async Task DeleteManipulator(object obj)
         {
             await _manipulatorDb.Delete(_mapper.Map<ManipulatorModel>(Manipulator));
             GetManipulators();
         }
 
-        private async void SaveVision(object obj)
+        private async Task SaveVision(object obj)
         {
             await _visionDb.Update(_mapper.Map<VisionModel>(Vision));
             GetVisions();
         }
 
-        private async void AddVision(object obj)
+        private async Task AddVision(object obj)
         {
             await _visionDb.Add(_mapper.Map<VisionModel>(Vision));
             GetVisions();
         }
 
-        public async void GetVisions()
+        public async Task GetVisions()
         {
             IEnumerable<VisionModel> models = await _visionDb.GetAll();
             Vision = null;
@@ -138,22 +139,22 @@ namespace X_Guide.MVVM.ViewModel
             }
         }
 
-        private async void AddManipulator(object obj)
+        private async Task AddManipulator(object obj)
         {
             bool saveStatus = await _manipulatorDb.Add(_mapper.Map<ManipulatorModel>(Manipulator));
             if (saveStatus)
             {
-                System.Windows.MessageBox.Show("Added New Manipulator");
+                MessageBox.Show("Added New Manipulator");
             }
             else
             {
-                System.Windows.MessageBox.Show("Failed to save setting!");
+                MessageBox.Show("Failed to save setting!");
             }
 
             GetManipulators();
         }
 
-        private async void SaveManipulator(object obj)
+        private async Task SaveManipulator(object obj)
         {
             bool saveStatus = await _manipulatorDb.Update(_mapper.Map<ManipulatorModel>(Manipulator));
             if (saveStatus)
@@ -168,7 +169,7 @@ namespace X_Guide.MVVM.ViewModel
             GetManipulators();
         }
 
-        private async void GetManipulators()
+        private async Task GetManipulators()
         {
             IEnumerable<ManipulatorModel> models = await _manipulatorDb.GetAll();
             Manipulator = null;
@@ -180,12 +181,12 @@ namespace X_Guide.MVVM.ViewModel
             }
         }
 
-        private void OnManipulatorChangeEvent(object obj)
+        private async Task OnManipulatorChangeEvent(object obj)
         {
             Manipulator = ((ManipulatorViewModel)obj).Clone() as ManipulatorViewModel;
         }
 
-        private void OnVisionChangeEvent(object obj)
+        private async Task OnVisionChangeEvent(object obj)
         {
             Vision = ((VisionViewModel)obj).Clone() as VisionViewModel;
         }

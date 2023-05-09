@@ -1,27 +1,15 @@
 ﻿using Autofac;
-using AutoMapper;
 using Microsoft.Extensions.Logging;
 using System;
-using System.Collections.Generic;
-using System.ComponentModel;
 using System.Diagnostics;
-using System.Linq;
-using System.Net;
 using System.Security;
-using System.Text;
 using System.Threading.Tasks;
-using System.Timers;
-using System.Web.UI.WebControls;
 using System.Windows;
 using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Threading;
 using X_Guide.Communication.Service;
-using X_Guide.CustomEventArgs;
 using X_Guide.MVVM.Command;
 using X_Guide.MVVM.Model;
 using X_Guide.MVVM.Store;
-using X_Guide.MVVM.ViewModel.CalibrationWizardSteps;
 using X_Guide.Service;
 using X_Guide.Service.DatabaseProvider;
 using X_Guide.State;
@@ -33,14 +21,11 @@ namespace X_Guide.MVVM.ViewModel
     public class MainViewModel : ViewModelBase
     {
         #region CLR properties
+
         public bool Test { get; set; } = false;
         public RelayCommand TestCommand { get; }
 
-
-
         public bool IsRunning => _viewModelState.IsLoading;
-
-
 
         private bool _isLoggedIn = false;
 
@@ -58,42 +43,40 @@ namespace X_Guide.MVVM.ViewModel
 
         public ICommand RegisterCommand { get; }
 
-
         private string _inputUsername;
+
         public string InputUsername
         {
             get { return _inputUsername; }
             set
             {
                 _inputUsername = value;
-
             }
         }
 
         private SecureString _inputPassword;
+
         public SecureString InputPassword
         {
             private get { return _inputPassword; }
             set
             {
                 _inputPassword = value;
-
             }
         }
 
         private readonly AuthenticationService _auth;
         private readonly ViewModelState _viewModelState;
-        private INavigationService _navigationService;
-        private NavigationStore _navigationStore;
-
+        private readonly INavigationService _navigationService;
+        private readonly NavigationStore _navigationStore;
 
         public ViewModelBase CurrentViewModel => _navigationStore.CurrentViewModel;
         public UserModel CurrentUser => _auth.CurrentUser;
-        #endregion
+
+        #endregion CLR properties
 
         public MainViewModel(INavigationService navigationService, IServerService serverService, IUserDb userService, ILogger logger, ViewModelState viewModelState)
         {
-
             _auth = new AuthenticationService(userService);
             //_auth.CurrentUserChanged += OnCurrentUserChanged;
             _viewModelState = viewModelState;
@@ -101,7 +84,6 @@ namespace X_Guide.MVVM.ViewModel
             _navigationService = navigationService;
             _navigationStore = navigationService.GetNavigationStore();
             _navigationStore.CurrentViewModelChanged += OnCurrentViewModelChanged;
-
 
             serverService.Start();
             var nav = new TypedParameter(typeof(INavigationService), _navigationService);
@@ -113,27 +95,24 @@ namespace X_Guide.MVVM.ViewModel
             RegisterCommand = new RelayCommand(Register);
             NavigateCommand = new RelayCommand(Navigate);
             logger.LogInformation("Fak u!");
-
         }
 
         private void OnLoadingStateChanged()
         {
             OnPropertyChanged(nameof(IsRunning));
-            
         }
 
-        private void test(object obj)
+        private async Task test(object obj)
         {
             Test = !Test;
         }
 
-        private void Navigate(object obj)
+        private async Task Navigate(object obj)
         {
             var nav = new TypedParameter(typeof(INavigationService), _navigationService);
 
             switch (obj)
             {
-
                 case PageName.Security: _navigationService.Navigate<SecurityViewModel>(); break;
                 case PageName.Production: _navigationService.Navigate<ProductionViewModel>(); break;
                 case PageName.Setting: _navigationService.Navigate<SettingViewModel>(); break;
@@ -143,12 +122,7 @@ namespace X_Guide.MVVM.ViewModel
             }
         }
 
-
-
-
-
-
-        private async void Register(object obj)
+        private async Task Register(object obj)
         {
             MessageBox.Show("Halo chub");
             /*bool success = await _auth.Register(new UserModel
@@ -156,19 +130,15 @@ namespace X_Guide.MVVM.ViewModel
                 Username = "123",
                 Email = "Akimoputo.DotCom",
                 Role = 1,
-
             }, InputPassword);
             if (success)
             {
                 MessageBox.Show("Added successfully");
-
             }
             else MessageBox.Show("User is not added!");*/
         }
 
-
-
-        private async void Login(object obj)
+        private async Task Login(object obj)
         {
             bool status = await _auth.Login(InputUsername, InputPassword);
 
@@ -180,20 +150,12 @@ namespace X_Guide.MVVM.ViewModel
             {
                 MessageBox.Show("Invalid login");
             }
-
         }
-
-
-
 
         private void OnCurrentViewModelChanged()
         {
-
             OnPropertyChanged(nameof(CurrentViewModel));
             Debug.WriteLine(CurrentViewModel);
-
         }
-
     }
-
 }

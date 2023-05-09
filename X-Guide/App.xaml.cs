@@ -28,6 +28,7 @@ namespace X_Guide
     public partial class App : Application
     {
         private static IContainer _diContainer;
+        public static Notifier Notifier;
 
         //TODO: Add logger
         public static int VisionSoftware = 1;
@@ -131,14 +132,15 @@ namespace X_Guide
             var _configuration = ConfigurationManager.OpenExeConfiguration(ConfigurationUserLevel.None);
             var general = (General)_configuration.GetSection("GeneralSetting");
             VisionSoftware = general.VisionSoftware;
-            _diContainer = BuildDIContainer();
         }
 
         //        Startup Page
 
         protected override void OnStartup(StartupEventArgs e)
         {
-            var visionService = _diContainer.Resolve<IVisionService>();
+            _diContainer = BuildDIContainer();
+            _ = _diContainer.Resolve<IVisionService>();
+            Notifier = _diContainer.Resolve<Notifier>();
             MainWindow = _diContainer.Resolve<MainWindow>();
             _ = _diContainer.Resolve<ServerCommand>();
             MainWindow.Show();

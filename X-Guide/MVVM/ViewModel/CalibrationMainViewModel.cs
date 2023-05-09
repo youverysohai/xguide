@@ -124,7 +124,7 @@ namespace X_Guide.MVVM.ViewModel
             }
         }
 
-        public async void WizNext(object parameter)
+        public async Task WizNext(object parameter)
         {
             LinkedListNode<ViewModelBase> nextNode = CurrentNode.Next;
 
@@ -149,7 +149,7 @@ namespace X_Guide.MVVM.ViewModel
             }
         }
 
-        public void WizPrev(object parameter)
+        public async Task WizPrev(object parameter)
         {
             LinkedListNode<ViewModelBase> prevNode = CurrentNode.Previous;
 
@@ -216,7 +216,7 @@ namespace X_Guide.MVVM.ViewModel
             var calibPara = new TypedParameter(typeof(CalibrationViewModel), _calibration);
             Step1ViewModel Step1 = viewModelLocator.Create<Step1ViewModel>(calibPara) as Step1ViewModel;
             /*            Step1.SelectedItemChangedEvent += OnSelectedItemChangedEvent;*/
-         
+
             _navigationService.Navigate(Step1);
             CurrentNode = _navigationHistory.AddLast(CurrentViewModel);
 
@@ -244,7 +244,7 @@ namespace X_Guide.MVVM.ViewModel
               }))));*/
         }
 
-        private void CancelCalib(object obj)
+        private async Task CancelCalib(object obj)
         {
             _navigationService.Navigate<CalibrationWizardStartViewModel>();
         }

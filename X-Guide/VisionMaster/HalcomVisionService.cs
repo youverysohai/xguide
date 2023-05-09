@@ -71,36 +71,27 @@ namespace X_Guide.VisionMaster
 
         public async Task<Point> GetVisCenter()
         {
-            Point result = new Point();
+            if (hv_AcqHandle is null) throw new Exception("hv_AcqHandle is null");
 
-            if (hv_AcqHandle is null) return result;
-            await Task.Run(() =>
-            {
-                FindCenterPoint(result, hImage.Clone());
-            });
-
-            return result;
+            Point point = await FindCenterPoint(hImage.Clone());
+            return point;
         }
 
-        private void FindCenterPoint(Point point, HObject image)
+        private async Task<Point> FindCenterPoint(HObject image)
         {
-            HObject hRegion = new HObject();
-            HObject hSelectedRegion = new HObject();
-            HObject hSelectedRegion1 = new HObject();
-            HTuple row = new HTuple();
-            HTuple col = new HTuple();
-            HTuple area = new HTuple();
-            HObject hConnectedRegion = new HObject();
+            Point point = new Point();
+            HObject hRegion, hConnectedRegion, hSelectedRegion, hSelectedRegion1;
 
             HOperatorSet.Threshold(image, out hRegion, 136, 255);
-            HOperatorSet.Connection(hRegion,out hConnectedRegion);
+            HOperatorSet.Connection(hRegion, out hConnectedRegion);
             HOperatorSet.SelectShape(hConnectedRegion, out hSelectedRegion, "circularity", "and", 0.65, 1);
             HOperatorSet.SelectShape(hSelectedRegion, out hSelectedRegion1, "area", "and", 1000, 6500);
-            HOperatorSet.AreaCenter(hSelectedRegion1, out area, out row, out col);
+            HOperatorSet.AreaCenter(hSelectedRegion1, out HTuple area, out HTuple row, out HTuple col);
 
-            point.X = (double)row;
-            point.Y = (double)col;
+            point.X = row.D;
+            point.Y = col.D;
             OnOutputImageReturn?.Invoke(this, (image, point));
+            return point;
         }
 
         public Task ImportSol(string filepath)
