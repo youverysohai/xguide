@@ -1158,12 +1158,9 @@
     <Resource Include="Style\ImageSource\greyup.png" />
     <Resource Include="Style\ImageSource\greydown.png" />
     <Resource Include="FodyWeavers.xml" />
-    <Content Include="XGuideDB.mdf">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
+    <Content Include="XGuideDB.mdf" />
     <Content Include="XGuideDB_log.ldf">
       <DependentUpon>XGuideDB.mdf</DependentUpon>
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
     <Content Include="XGuideModel.Context.tt">
       <Generator>TextTemplatingFileGenerator</Generator>

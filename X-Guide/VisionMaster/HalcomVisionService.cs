@@ -1,7 +1,6 @@
 ﻿using HalconDotNet;
 using System;
 using System.Collections.Generic;
-using System.Diagnostics;
 using System.Threading.Tasks;
 using VM.Core;
 using VMControls.Interface;
@@ -25,12 +24,19 @@ namespace X_Guide.VisionMaster
 
         public HalcomVisionService()
         {
-            HOperatorSet.OpenFramegrabber("USB3Vision", 0, 0, 0, 0, 0, 0, "progressive",
--1, "default", -1, "false", "default", "0E7015_ToshibaTeli_BU130",
-0, -1, out hv_AcqHandle);
-            HOperatorSet.GrabImageStart(hv_AcqHandle, -1);
-            _imageGrab = new BackgroundService(ImageGrab, true, 10);
-            _imageGrab.Start();
+            try
+            {
+                HOperatorSet.OpenFramegrabber("USB3Vision", 0, 0, 0, 0, 0, 0, "progressive",
+    -1, "default", -1, "false", "default", "0E7015_ToshibaTeli_BU130",
+    0, -1, out hv_AcqHandle);
+
+                HOperatorSet.GrabImageStart(hv_AcqHandle, -1);
+                _imageGrab = new BackgroundService(ImageGrab, true, 10);
+                _imageGrab.Start();
+            }
+            catch
+            {
+            }
         }
 
         public void ConnectServer()
