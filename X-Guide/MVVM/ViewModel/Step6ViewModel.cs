@@ -57,8 +57,8 @@ namespace X_Guide.MVVM.ViewModel
             _mapper = mapper;
             _notifier = notifier;
             _visionService = visionService;
-            CalibrateCommand = new RelayCommand(async (param) => Calibrate());
-            SaveCommand = new RelayCommand(Save);
+            CalibrateCommand = RelayCommand.FromAsyncRelayCommand(Calibrate);
+            SaveCommand = RelayCommand.FromAsyncRelayCommand(Save);
             VisProcedure = _visionService.GetProcedure(Calibration.Procedure);
             Modules = _visionService.GetModules(VisProcedure as VmProcedure);
             LiveImageCommand = new RelayCommand(ToggleLiveImage);
@@ -78,13 +78,13 @@ namespace X_Guide.MVVM.ViewModel
             LiveImage = e;
         }
 
-        private async Task ToggleLiveImage(object obj)
+        private void ToggleLiveImage(object obj)
         {
             isLive = !isLive;
         }
 
         [ExceptionHandlingAspect]
-        private async Task Calibrate()
+        private async Task Calibrate(object param)
         {
             int XOffset = (int)Calibration.XOffset;
             int YOffset = (int)Calibration.YOffset;

@@ -3,7 +3,6 @@ using Microsoft.Extensions.Logging;
 using System;
 using System.Diagnostics;
 using System.Security;
-using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Input;
 using X_Guide.Communication.Service;
@@ -102,12 +101,12 @@ namespace X_Guide.MVVM.ViewModel
             OnPropertyChanged(nameof(IsRunning));
         }
 
-        private async Task test(object obj)
+        private async void test(object obj)
         {
             Test = !Test;
         }
 
-        private async Task Navigate(object obj)
+        private void Navigate(object obj)
         {
             var nav = new TypedParameter(typeof(INavigationService), _navigationService);
 
@@ -122,7 +121,7 @@ namespace X_Guide.MVVM.ViewModel
             }
         }
 
-        private async Task Register(object obj)
+        private async void Register(object obj)
         {
             MessageBox.Show("Halo chub");
             /*bool success = await _auth.Register(new UserModel
@@ -138,7 +137,7 @@ namespace X_Guide.MVVM.ViewModel
             else MessageBox.Show("User is not added!");*/
         }
 
-        private async Task Login(object obj)
+        private async void Login(object obj)
         {
             bool status = await _auth.Login(InputUsername, InputPassword);
 

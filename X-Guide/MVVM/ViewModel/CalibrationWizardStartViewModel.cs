@@ -4,7 +4,6 @@ using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
-using System.Threading.Tasks;
 using X_Guide.MVVM.Command;
 using X_Guide.MVVM.Model;
 using X_Guide.MVVM.ViewModel.CalibrationWizardSteps;
@@ -71,14 +70,14 @@ namespace X_Guide.MVVM.ViewModel
             Calibrations = new ObservableCollection<CalibrationViewModel>(calibModels.Select(x => _mapper.Map<CalibrationViewModel>(x)));
         }
 
-        private async Task LoadCalibration(object obj)
+        private async void LoadCalibration(object obj)
         {
             TypedParameter calib = new TypedParameter(typeof(CalibrationViewModel), obj);
             CalibrationMainViewModel calibMain = await _navigationService.NavigateAsync<CalibrationMainViewModel>(calib) as CalibrationMainViewModel;
             /*            calibMain.LoadCalibSetting(calib);*/
         }
 
-        private async Task StartCalibration(object obj)
+        private async void StartCalibration(object obj)
         {
             TypedParameter calib = new TypedParameter(typeof(CalibrationViewModel), new CalibrationViewModel
             {
@@ -88,7 +87,7 @@ namespace X_Guide.MVVM.ViewModel
             _navigationService.Navigate<CalibrationMainViewModel>(calib);
         }
 
-        public async Task DeleteCalibration(object obj)
+        public async void DeleteCalibration(object obj)
         {
             CalibrationViewModel vmodel = obj as CalibrationViewModel;
             if (await _calibrationDb.Delete(vmodel.Id))
