@@ -22,7 +22,7 @@ namespace X_Guide.MVVM.Command
             return _canExecute == null || _canExecute(parameter);
         }
 
-        public async void Execute(object parameter = null)
+        public void Execute(object parameter = null)
         {
             _execute(parameter);
         }

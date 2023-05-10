@@ -93,7 +93,7 @@ namespace X_Guide.MVVM.ViewModel
             LoginCommand = new RelayCommand(Login);
             RegisterCommand = new RelayCommand(Register);
             NavigateCommand = new RelayCommand(Navigate);
-            logger.LogInformation("Fak u!");
+            logger.LogInformation("LapisLazuli");
         }
 
         private void OnLoadingStateChanged()
@@ -101,7 +101,7 @@ namespace X_Guide.MVVM.ViewModel
             OnPropertyChanged(nameof(IsRunning));
         }
 
-        private async void test(object obj)
+        private void test(object obj)
         {
             Test = !Test;
         }
@@ -121,7 +121,7 @@ namespace X_Guide.MVVM.ViewModel
             }
         }
 
-        private async void Register(object obj)
+        private void Register(object obj)
         {
             MessageBox.Show("Halo chub");
             /*bool success = await _auth.Register(new UserModel

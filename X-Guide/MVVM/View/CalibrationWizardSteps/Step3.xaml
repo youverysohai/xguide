@@ -40,17 +40,10 @@
                         SelectedItem="{Binding Procedure}"   Style="{DynamicResource MaterialDesignOutlinedComboBox}"
                                 DisplayMemberPath="Name"
                               Width="300" IsEnabled="{Binding IsProcedureEditable}"
-                              materialDesign:HintAssist.Hint="Select Vision Flow"
+                              materialDesign:HintAssist.Hint="Select Calibration Procedure"
                                                       HorizontalAlignment="Left"
                               Margin="0">
                 </ComboBox>
-                <ComboBox
-                        ItemsSource="{Binding Cameras}"
-                        SelectedItem="{Binding Camera}"   Style="{DynamicResource MaterialDesignOutlinedComboBox}"
-                              Width="300"
-                              materialDesign:HintAssist.Hint="Select Live Camera"
-                                                      HorizontalAlignment="Left"
-                              Margin="0"></ComboBox>
             </StackPanel>
         </StackPanel>
     </Grid>

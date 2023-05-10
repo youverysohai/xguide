@@ -41,8 +41,6 @@ namespace X_Guide.VisionMaster
 
         VmProcedure GetProcedure(string name);
 
-        void RunOnceAndSaveImage();
-
         VmModule GetCameras();
     }
 }

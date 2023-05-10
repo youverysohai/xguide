@@ -83,20 +83,20 @@ namespace X_Guide.MVVM.ViewModel
             if (obj is ContentDialog dialog) await dialog.ShowAsync();
         }
 
-        private async void test(object obj)
+        private void test(object obj)
         {
             try
             {
-                VmSolution.Import(@"C:\Users\Xlent_XIR02\Desktop\livecam.sol");
+                VmSolution.Load(@"C:\Users\Xlent_XIR02\Desktop\livecam.sol");
                 var i = VmSolution.Instance["Live"];
             }
             catch (Exception ex)
             {
-                System.Windows.MessageBox.Show(ex.Message.ToString());
+                MessageBox.Show(ex.Message.ToString());
             }
         }
 
-        private async void SaveGeneral(object obj)
+        private void SaveGeneral(object obj)
         {
             _generalDb.Update(General);
             MessageBox.Show("Saved setting. Restarting the application is required for the changes to take effect.");
@@ -180,12 +180,12 @@ namespace X_Guide.MVVM.ViewModel
             }
         }
 
-        private async void OnManipulatorChangeEvent(object obj)
+        private void OnManipulatorChangeEvent(object obj)
         {
             Manipulator = ((ManipulatorViewModel)obj).Clone() as ManipulatorViewModel;
         }
 
-        private async void OnVisionChangeEvent(object obj)
+        private void OnVisionChangeEvent(object obj)
         {
             Vision = ((VisionViewModel)obj).Clone() as VisionViewModel;
         }

@@ -61,6 +61,7 @@
     <ErrorReport>prompt</ErrorReport>
     <Prefer32Bit>true</Prefer32Bit>
     <DocumentationFile>bin\x64\Debug\X-Guide.xml</DocumentationFile>
+    <NoWarn>1591</NoWarn>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Release|x64'">
     <OutputPath>bin\x64\Release\</OutputPath>
@@ -721,11 +722,13 @@
     <Compile Include="MVVM\ViewModel\CalibrationMainViewModel.cs" />
     <Compile Include="MVVM\ViewModel\ErrorViewModel.cs" />
     <Compile Include="MVVM\ViewModel\GeneralViewModel.cs" />
-    <Compile Include="MVVM\ViewModel\HalconLive.cs" />
-    <Compile Include="MVVM\ViewModel\HalconStep6.cs" />
+    <Compile Include="MVVM\ViewModel\HalconViewModel.cs" />
+    <Compile Include="MVVM\ViewModel\HikViewModel.cs" />
     <Compile Include="MVVM\ViewModel\IViewModelLocator.cs" />
+    <Compile Include="MVVM\ViewModel\IVisionViewModel.cs" />
     <Compile Include="MVVM\ViewModel\JogRobotViewModel.cs" />
     <Compile Include="MVVM\ViewModel\ManipulatorViewModel.cs" />
+    <Compile Include="MVVM\ViewModel\OperationViewModel.cs" />
     <Compile Include="MVVM\ViewModel\RenderControlViewModel.cs" />
     <Compile Include="MVVM\ViewModel\SecurityViewModel.cs" />
     <Compile Include="MVVM\ViewModel\Step1ViewModel.cs" />
@@ -741,12 +744,6 @@
     <Compile Include="MVVM\ViewModel\VisionViewModel.cs" />
     <Compile Include="MVVM\View\CalibrationWizardSteps\CalibrationWizardStart.xaml.cs">
       <DependentUpon>CalibrationWizardStart.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="MVVM\View\CalibrationWizardSteps\HalconLive.xaml.cs">
-      <DependentUpon>HalconLive.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="MVVM\View\CalibrationWizardSteps\HalconStep6.xaml.cs">
-      <DependentUpon>HalconStep6.xaml</DependentUpon>
     </Compile>
     <Compile Include="MVVM\View\CalibrationWizardSteps\Step1.xaml.cs">
       <DependentUpon>Step1.xaml</DependentUpon>
@@ -769,8 +766,17 @@
     <Compile Include="MVVM\View\CalibrationMainView.xaml.cs">
       <DependentUpon>CalibrationMainView.xaml</DependentUpon>
     </Compile>
+    <Compile Include="MVVM\View\HalconView.xaml.cs">
+      <DependentUpon>HalconView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="MVVM\View\HikView.xaml.cs">
+      <DependentUpon>HikView.xaml</DependentUpon>
+    </Compile>
     <Compile Include="MVVM\View\JogRobotView.xaml.cs">
       <DependentUpon>JogRobotView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="MVVM\View\OperationView.xaml.cs">
+      <DependentUpon>OperationView.xaml</DependentUpon>
     </Compile>
     <Compile Include="MVVM\View\SecurityView.xaml.cs">
       <DependentUpon>SecurityView.xaml</DependentUpon>
@@ -781,6 +787,7 @@
     <Compile Include="MVVM\View\UserLoginView.xaml.cs">
       <DependentUpon>UserLoginView.xaml</DependentUpon>
     </Compile>
+    <Compile Include="MVVM\View\ViewTemplateSelector.cs" />
     <Compile Include="Service\AuthenticationService.cs" />
     <Compile Include="Service\BackgroundService.cs" />
     <Compile Include="Service\CalibrationService.cs" />
@@ -825,9 +832,9 @@
     <Compile Include="Vision.cs">
       <DependentUpon>XGuideModel.tt</DependentUpon>
     </Compile>
-    <Compile Include="VisionMaster\HalcomVisionService.cs" />
+    <Compile Include="VisionMaster\HalconVisionService.cs" />
     <Compile Include="VisionMaster\IVisionService.cs" />
-    <Compile Include="VisionMaster\HIKVisionService.cs" />
+    <Compile Include="VisionMaster\HikVisionService.cs" />
     <Compile Include="XGuideModel.Context.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -904,14 +911,6 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="MVVM\View\CalibrationWizardSteps\HalconLive.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="MVVM\View\CalibrationWizardSteps\HalconStep6.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
     <Page Include="MVVM\View\CalibrationWizardSteps\Step1.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -936,6 +935,14 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="MVVM\View\HalconView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="MVVM\View\HikView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="MVVM\View\JogRobotView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -953,6 +960,10 @@
       <SubType>Code</SubType>
     </Compile>
     <Page Include="MVVM\View\CalibrationMainView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="MVVM\View\OperationView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -1056,7 +1067,7 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="App.config">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
   </ItemGroup>
   <ItemGroup>

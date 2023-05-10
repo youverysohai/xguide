@@ -80,16 +80,23 @@ namespace X_Guide
             builder.RegisterType<Step6ViewModel>();
             builder.RegisterType<SettingViewModel>();
             builder.RegisterType<CalibrationMainViewModel>();
-            builder.RegisterType<HalconLive>();
-            builder.RegisterType<HalconStep6>();
             builder.RegisterType<ViewModelState>().SingleInstance();
             builder.RegisterType<DbContextFactory>().SingleInstance();
             builder.RegisterType<ManipulatorDb>().As<IManipulatorDb>();
             builder.RegisterType<UserDb>().As<IUserDb>();
+            VisionSoftware = 1;
             switch (VisionSoftware)
             {
-                case 1: builder.RegisterType<HIKVisionService>().As<IVisionService>().SingleInstance(); break;
-                case 2: builder.RegisterType<HalcomVisionService>().As<IVisionService>().SingleInstance(); break;
+                case 1:
+                    builder.RegisterType<HikVisionService>().As<IVisionService>().SingleInstance();
+                    builder.RegisterType<HikViewModel>().As<IVisionViewModel>();
+                    break;
+
+                case 2:
+                    builder.RegisterType<HalconVisionService>().As<IVisionService>().SingleInstance();
+                    builder.RegisterType<HalconViewModel>().As<IVisionViewModel>();
+                    break;
+
                 default: break;
             }
 
@@ -102,8 +109,8 @@ namespace X_Guide
             builder.RegisterType<CalibrationDb>().As<ICalibrationDb>();
             builder.RegisterType<GeneralDb>().As<IGeneralDb>();
 
-            builder.RegisterType<ServerService>().As<IServerService>().WithParameter(new TypedParameter(typeof(IPAddress), IPAddress.Parse("192.168.10.30"))).WithParameter(new TypedParameter(typeof(int), 8000)).WithParameter(new TypedParameter(typeof(string), "\r\n")).SingleInstance();
-            builder.Register(c => new ClientService(IPAddress.Parse("192.168.10.30"), 7900, "")).As<IClientService>().SingleInstance();
+            builder.RegisterType<ServerService>().As<IServerService>().WithParameter(new TypedParameter(typeof(IPAddress), IPAddress.Parse("192.168.127.20"))).WithParameter(new TypedParameter(typeof(int), 8000)).WithParameter(new TypedParameter(typeof(string), "\r\n")).SingleInstance();
+            builder.Register(c => new ClientService(IPAddress.Parse("192.168.10.100"), 8001, "")).As<IClientService>().SingleInstance();
             return builder.Build();
         }
 

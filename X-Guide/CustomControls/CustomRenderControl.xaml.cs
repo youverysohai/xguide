@@ -2,7 +2,6 @@
 using System.Diagnostics;
 using System.Windows;
 using System.Windows.Controls;
-using VM.Core;
 using VMControls.Interface;
 
 namespace X_Guide.CustomControls
@@ -44,10 +43,8 @@ namespace X_Guide.CustomControls
 
             var renderControl = custRenderControl.r_control;
 
-            renderControl.IsShowCustomROIMenu = true;
-            renderControl.ModuleSource = e.NewValue as IVmModule;
+            renderControl.ModuleSource = (IVmModule)e.NewValue;
 
-            var i = e.NewValue as VmModule;
             //double height = renderControl.ImageSource.Height / 2;
             //double width = renderControl.ImageSource.Width / 2;
             //i.ModuleResultCallBackArrived += (s, args) => testing(width, height, renderControl);

@@ -149,7 +149,7 @@ namespace X_Guide.MVVM.ViewModel
             }
         }
 
-        public async void WizPrev(object parameter)
+        public void WizPrev(object parameter)
         {
             LinkedListNode<ViewModelBase> prevNode = CurrentNode.Previous;
 
@@ -244,7 +244,7 @@ namespace X_Guide.MVVM.ViewModel
               }))));*/
         }
 
-        private async void CancelCalib(object obj)
+        private void CancelCalib(object obj)
         {
             _navigationService.Navigate<CalibrationWizardStartViewModel>();
         }

@@ -1,11 +1,10 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Windows;
-using System.Windows.Input;
 using VM.Core;
 using VMControls.Interface;
+using X_Guide.Aspect;
 
 /*using VM.Core;*/
 
@@ -21,17 +20,17 @@ namespace X_Guide.MVVM.ViewModel
 {
     internal class Step5ViewModel : ViewModelBase
     {
-        private readonly CalibrationViewModel _calibration;
+        private readonly CalibrationViewModel _calibrationConfig;
         private readonly IJogService _jogService;
         private readonly IServerService _serverService;
         private readonly IVisionService _visionService;
         private ManualResetEventSlim _manual;
-
+        public IVisionViewModel VisionView { get; set; }
         public List<VmModule> Modules { get; private set; }
 
         public IVmModule Module { get; set; }
 
-        public CalibrationViewModel Calibration => _calibration;
+        public CalibrationViewModel Calibration => _calibrationConfig;
         public string JogMode { get; set; } = "TOOL";
 
         private bool _canJog = false;
@@ -60,21 +59,21 @@ namespace X_Guide.MVVM.ViewModel
             }
         }
 
-        public ICommand ReportCommand { get; }
         public RelayCommand JogCommand { get; }
         public int JogDistance { get; set; }
 
-        public Step5ViewModel(CalibrationViewModel calibration, IServerService serverService, IVisionService visionService, IJogService jogService)
+        public Step5ViewModel(CalibrationViewModel calibrationConfig, IServerService serverService, IVisionService visionService, IJogService jogService, IVisionViewModel visionView)
         {
             _serverService = serverService;
             _visionService = visionService;
-            _calibration = calibration;
+            _calibrationConfig = calibrationConfig;
             _jogService = jogService;
-
+            VisionView = visionView;
+            VisionView.SetConfig(_calibrationConfig);
             JogCommand = new RelayCommand(Jog, (o) => _canJog);
             _serverService.ClientConnectionChange += OnConnectionChange;
-
-            InitView();
+            VisionView.StartLiveImage();
+            //InitView();
         }
 
         public async void InitView()
@@ -95,7 +94,7 @@ namespace X_Guide.MVVM.ViewModel
         {
             using (_manual = new ManualResetEventSlim(false))
             {
-                _manual.Wait();
+                //_manual.Wait();
                 return _canDisplayViewModel;
             }
         }
@@ -109,20 +108,14 @@ namespace X_Guide.MVVM.ViewModel
             });
         }
 
+        [ExceptionHandlingAspect]
         private async Task RunProcedure()
         {
-            try
-            {
-                IVmModule procedure = await _visionService.RunProcedure(_calibration.Procedure, false);
-                Modules = _visionService.GetModules(procedure as VmProcedure);
-            }
-            catch (Exception ex)
-            {
-                MessageBox.Show(ex.ToString());
-            }
+            IVmModule procedure = await _visionService.RunProcedure(_calibrationConfig.Procedure, false);
+            Modules = _visionService.GetModules(procedure as VmProcedure);
         }
 
-        private async void Jog(object parameter)
+        private void Jog(object parameter)
         {
             if (JogDistance == 0) JogDistance = 10;
             int x = 0, y = 0, z = 0, rz = 0;
@@ -139,7 +132,7 @@ namespace X_Guide.MVVM.ViewModel
                 case "RZ-": rz = -JogDistance; break;
                 default: break;
             }
-            JogCommand command = new JogCommand().SetX(x).SetY(y).SetZ(z).SetRZ(rz).SetSpeed(_calibration.Speed).SetAcceleration(_calibration.Acceleration);
+            JogCommand command = new JogCommand().SetX(x).SetY(y).SetZ(z).SetRZ(rz).SetSpeed(_calibrationConfig.Speed).SetAcceleration(_calibrationConfig.Acceleration);
             _jogService.Enqueue(command);
         }
 

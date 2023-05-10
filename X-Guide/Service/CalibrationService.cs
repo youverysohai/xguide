@@ -1,6 +1,5 @@
 ﻿using System.Threading.Tasks;
 using X_Guide.MVVM.Model;
-using X_Guide.MVVM.ViewModel.CalibrationWizardSteps;
 using X_Guide.Service.Communication;
 using X_Guide.VisionMaster;
 using Xlent_Vision_Guided;
@@ -11,9 +10,7 @@ namespace X_Guide.Service
     {
         private readonly IJogService _jogService;
         private readonly IVisionService _visionService;
-        private readonly CalibrationViewModel _calibrationConfig;
-        private JogCommand _jogCommand = new JogCommand().SetManipulatorName("Chun");
-    
+        private readonly JogCommand _jogCommand = new JogCommand().SetManipulatorName("Chun");
 
         public CalibrationService(IVisionService visionService, IJogService jogService)
         {
@@ -64,8 +61,7 @@ namespace X_Guide.Service
 
         private async Task<(Point[], Point[])> Start9PointCalib(int XOffset, int YOffset)
         {
-          
-        int[,] offsets = new int[9, 3] {
+            int[,] offsets = new int[9, 3] {
             {0, -YOffset,4},
             {XOffset,0, 1},
             {0, YOffset,0},

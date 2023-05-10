@@ -2,28 +2,23 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
-using System.Windows;
 using X_Guide.MVVM.DBContext;
 using X_Guide.MVVM.Model;
-using X_Guide.MVVM.ViewModel.CalibrationWizardSteps;
 
 namespace X_Guide.Service.DatabaseProvider
 {
     internal class CalibrationDb : DbServiceBase, ICalibrationDb
     {
-
         public CalibrationDb(DbContextFactory dbContextFactory, IMapper mapper) : base(dbContextFactory, mapper)
         {
-       
         }
 
         public async Task<CalibrationModel> Get(string name)
         {
             return await AsyncQuery((context) =>
             {
-                return MapTo<CalibrationModel>(context.Calibrations.FirstOrDefault(x => x.Name == name)) ;
+                return MapTo<CalibrationModel>(context.Calibrations.FirstOrDefault(x => x.Name == name));
             });
         }
 
@@ -31,8 +26,7 @@ namespace X_Guide.Service.DatabaseProvider
         {
             return await AsyncQuery((context) =>
             {
-              return context.Calibrations.Include("Manipulator").Include("Vision").ToList().Select(x=> MapTo<CalibrationModel>(x));
-               
+                return context.Calibrations.Include("Manipulator").Include("Vision").ToList().Select(x => MapTo<CalibrationModel>(x));
             });
         }
 
@@ -55,8 +49,6 @@ namespace X_Guide.Service.DatabaseProvider
                 //calib.Vision = context.Visions.Find(calib.Vision.Id);
                 context.Calibrations.Add(calib);
                 return context.SaveChanges();
-
-             
             });
         }
 
@@ -66,7 +58,6 @@ namespace X_Guide.Service.DatabaseProvider
             {
                 try
                 {
-
                     Calibration calibration = context.Calibrations.Find(id);
                     if (calibration == null) throw new Exception("Data not found!");
                     context.Calibrations.Remove(calibration);
@@ -75,7 +66,6 @@ namespace X_Guide.Service.DatabaseProvider
                 }
                 catch (Exception ex)
                 {
-                    MessageBox.Show(ex.ToString());
                     return false;
                 }
             });

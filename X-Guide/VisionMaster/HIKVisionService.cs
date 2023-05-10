@@ -14,14 +14,14 @@ using Timer = X_Guide.HelperClass.Timer;
 
 namespace X_Guide.VisionMaster
 {
-    public class HIKVisionService : IVisionService
+    public class HikVisionService : IVisionService
     {
         private readonly IClientService _clientService;
         private CancellationTokenSource _cts;
 
         public string Procedure { get; set; }
 
-        public HIKVisionService(IClientService clientService)
+        public HikVisionService(IClientService clientService)
         {
             _clientService = clientService;
         }
@@ -77,6 +77,10 @@ namespace X_Guide.VisionMaster
 
         public List<VmModule> GetModules(VmProcedure vmProcedure)
         {
+            if (vmProcedure is null)
+            {
+                throw new ArgumentNullException("Procedure is null");
+            }
             return vmProcedure.Modules.ToList();
         }
 
@@ -103,6 +107,7 @@ namespace X_Guide.VisionMaster
                try
                {
                    VmSolution.Load(filepath);
+                   _clientService.ConnectServer();
                }
                catch
                {
@@ -111,22 +116,13 @@ namespace X_Guide.VisionMaster
            });
         }
 
-        public void RunOnceAndSaveImage()
-        {
-            throw new NotImplementedException();
-        }
-
         /// <inheritdoc/>
 
         public async Task<IVmModule> RunProcedure(string name, bool continuous = false)
         {
             return await Task.Run(() =>
             {
-                if (!(VmSolution.Instance[name] is VmProcedure procedure))
-                {
-                    return null;
-                }
-
+                if (!(VmSolution.Instance[name] is VmProcedure procedure)) return null;
                 if (continuous) procedure.ContinuousRunEnable = true;
                 else
                 {

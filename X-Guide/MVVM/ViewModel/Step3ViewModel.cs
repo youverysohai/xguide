@@ -8,6 +8,7 @@ using System.Threading.Tasks;
 using ToastNotifications;
 using ToastNotifications.Messages;
 using VM.Core;
+using X_Guide.Aspect;
 using X_Guide.MVVM.Model;
 using X_Guide.MVVM.ViewModel.CalibrationWizardSteps;
 using X_Guide.Service.DatabaseProvider;
@@ -87,11 +88,6 @@ namespace X_Guide.MVVM.ViewModel
             return _isLoaded;
         }
 
-        private void GetCameras()
-        {
-            _visionService.GetCameras();
-        }
-
         private async Task GetProcedures()
         {
             try
@@ -99,19 +95,19 @@ namespace X_Guide.MVVM.ViewModel
                 IsProcedureEditable = false;
                 if (Vision is null) return;
                 await _visionService.ImportSol(Vision.Filepath);
-
                 Procedures = new ObservableCollection<VmProcedure>(_visionService.GetAllProcedures());
                 IsProcedureEditable = true;
             }
             catch (Exception ex)
             {
-                /*     if (ex is CriticalErrorException) throw ex;*/
+                if (ex is CriticalErrorException) throw ex;
                 Vision = null;
                 Procedure = null;
                 _notifier.ShowError(ex.Message);
             }
         }
 
+        [ExceptionHandlingAspect]
         private async Task GetVisions()
         {
             IEnumerable<VisionModel> models = await _visionDb.GetAll();

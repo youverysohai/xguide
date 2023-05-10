@@ -77,7 +77,7 @@ namespace X_Guide.MVVM.ViewModel
             /*            calibMain.LoadCalibSetting(calib);*/
         }
 
-        private async void StartCalibration(object obj)
+        private void StartCalibration(object obj)
         {
             TypedParameter calib = new TypedParameter(typeof(CalibrationViewModel), new CalibrationViewModel
             {

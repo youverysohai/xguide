@@ -1,7 +1,5 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Diagnostics;
-using System.Linq;
 using System.Net.Sockets;
 using System.Text;
 using System.Threading;
@@ -13,11 +11,11 @@ namespace X_Guide.Service.Communication
     public class TCPBase : Attribute
 
     {
-
         public event EventHandler<NetworkStreamEventArgs> _dataReceived;
 
         private string _terminator;
         protected string Terminator { get => _terminator; set => _terminator = value ?? "\n"; }
+
         public async Task<T> RegisterSingleRequestHandler<T>(Func<NetworkStreamEventArgs, T> action, CancellationToken ct = new CancellationToken())
         {
             return await Task.Run(() =>
@@ -42,7 +40,6 @@ namespace X_Guide.Service.Communication
 
                     _dataReceived += eventHandler;
 
-
                     int index = WaitHandle.WaitAny(new WaitHandle[] { ct.WaitHandle, resetEvent.WaitHandle });
                     _dataReceived -= eventHandler;
 
@@ -51,18 +48,14 @@ namespace X_Guide.Service.Communication
             });
         }
 
-
-     
         public TCPBase(string terminator)
         {
             Terminator = terminator;
         }
 
-        virtual protected async Task RecieveDataAsync(NetworkStream stream, CancellationToken ct)
+        protected virtual async Task RecieveDataAsync(NetworkStream stream, CancellationToken ct)
         {
-
             byte[] data = new byte[1024];
-
 
             while (!ct.IsCancellationRequested)
             {
@@ -72,7 +65,6 @@ namespace X_Guide.Service.Communication
                 responseData += Encoding.ASCII.GetString(data, 0, bytes);
                 ProcessServerData(responseData, ',', stream);
                 await Task.Delay(1000);
-
             }
             stream.Close();
         }
@@ -80,10 +72,8 @@ namespace X_Guide.Service.Communication
         protected async Task WriteDataAsync(string data, NetworkStream stream)
         {
             byte[] bytes = Encoding.ASCII.GetBytes(data + Terminator);
-             _ = stream ?? throw new Exception(StrRetriver.Get("CL000"));
+            _ = stream ?? throw new Exception(StrRetriver.Get("CL000"));
             await stream.WriteAsync(bytes, 0, bytes.Length);
-           
-              
         }
 
         private void ProcessServerData(string data, char seperator, NetworkStream stream)
@@ -93,7 +83,6 @@ namespace X_Guide.Service.Communication
                 string[] segment = data.Split(seperator);
                 OnDataRecieved(this, new NetworkStreamEventArgs(stream, segment));
             }
-
             catch (Exception ex)
             {
                 Debug.WriteLine(ex.ToString());

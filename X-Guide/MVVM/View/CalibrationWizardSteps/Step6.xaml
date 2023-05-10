@@ -4,6 +4,7 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:local="clr-namespace:X_Guide.MVVM.View.CalibrationWizardSteps"
+             xmlns:views="clr-namespace:X_Guide.MVVM.View"
              xmlns:XCust="clr-namespace:X_Guide.CustomControls"
                xmlns:gif="https://github.com/XamlAnimatedGif/XamlAnimatedGif"
              xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
@@ -37,8 +38,13 @@
 
                 <!--<XCust:CustomRenderControl hc:FlexPanel.FlexBasis="640" Height="480" Procedure="{Binding VisProcedure}"></XCust:CustomRenderControl>-->
                 <hc:Carousel Width="640">
-                    <XCust:HalconSmartControl Width="640" Height="480" Image="{Binding LiveImage}" Point="{Binding OutputImageParameter}" />
-                    <XCust:HalconSmartControl Width="648" Height="488" Image="{Binding OutputImage}" />
+                    <ContentControl Width="640" Height="480" Content="{Binding VisionView}">
+                        <ContentControl.ContentTemplateSelector>
+                            <views:ViewTemplateSelector />
+                        </ContentControl.ContentTemplateSelector>
+                    </ContentControl>
+                    <!--<XCust:HalconSmartControl Width="640" Height="480" Image="{Binding LiveImage}" Point="{Binding OutputImageParameter}" />
+                    <XCust:HalconSmartControl Width="648" Height="488" Image="{Binding OutputImage}" />-->
                 </hc:Carousel>
 
                 <GroupBox  hc:FlexPanel.FlexBasis="300" MinHeight="550"  Grid.RowSpan="3" Grid.Column="1" Style="{StaticResource GroupBoxTab}">
@@ -88,7 +94,7 @@
 
                         <ComboBox Grid.Row="8" ItemsSource="{Binding Modules}">
                         </ComboBox>
-                        <Button Content="Live" Grid.Row="5" Command="{Binding LiveImageCommand}" CommandParameter="{Binding ElementName=HalconWindow}"></Button>
+
                         <ui:SimpleStackPanel Orientation="Vertical" Grid.Row="10">
                             <Label Style="{DynamicResource MaterialDesignLabel}">XMove</Label>
                             <TextBox Text="{Binding XMove}"></TextBox>

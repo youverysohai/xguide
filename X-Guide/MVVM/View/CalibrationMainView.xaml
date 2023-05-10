@@ -12,51 +12,37 @@
              xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
              d:DesignHeight="650" d:DesignWidth="1000">
 
-
-
-    <Grid Margin="10" >
+    <Grid Margin="10">
         <Grid.Resources>
             <DataTemplate DataType="{x:Type vms:Step1ViewModel}">
-                <stepsUI:Step1/>
+                <stepsUI:Step1 />
             </DataTemplate>
             <DataTemplate DataType="{x:Type vms:Step2ViewModel}">
-                <stepsUI:Step2/>
+                <stepsUI:Step2 />
             </DataTemplate>
             <DataTemplate DataType="{x:Type vms:Step3ViewModel}">
-                <stepsUI:Step3/>
+                <stepsUI:Step3 />
             </DataTemplate>
             <DataTemplate DataType="{x:Type vms:Step4ViewModel}">
-                <stepsUI:Step4/>
+                <stepsUI:Step4 />
             </DataTemplate>
             <DataTemplate DataType="{x:Type vms:Step5ViewModel}">
-                <stepsUI:Step5/>
-
+                <stepsUI:Step5 />
             </DataTemplate>
             <DataTemplate DataType="{x:Type vms:Step6ViewModel}">
-                <stepsUI:Step6/>
-
+                <stepsUI:Step6 />
             </DataTemplate>
-            <DataTemplate DataType="{x:Type vms:HalconLive}">
-                <stepsUI:HalconLive/>
-
-            </DataTemplate>
-            <DataTemplate DataType="{x:Type vms:HalconStep6}">
-                <stepsUI:HalconStep6/>
-
-            </DataTemplate>
-
         </Grid.Resources>
         <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="auto"/>
-            <ColumnDefinition Width="*"/>
+            <ColumnDefinition Width="auto" />
+            <ColumnDefinition Width="*" />
         </Grid.ColumnDefinitions>
         <Grid.RowDefinitions>
-            <RowDefinition Height="auto"/>
+            <RowDefinition Height="auto" />
 
             <RowDefinition Height="16*" />
 
-
-            <RowDefinition Height="auto"/>
+            <RowDefinition Height="auto" />
         </Grid.RowDefinitions>
         <Button  Grid.Column="1" HorizontalAlignment="Right" VerticalAlignment="Center" Style="{DynamicResource MaterialDesignIconForegroundButton}" Command="{Binding CancelCommand}">
             <materialDesign:PackIcon Kind="WindowClose" Style="{DynamicResource IconStyle16}"></materialDesign:PackIcon>
