@@ -9,12 +9,10 @@
              mc:Ignorable="d"
              d:DesignHeight="450" d:DesignWidth="800"
              xmlns:ui="http://schemas.modernwpf.com/2019">
-    <ui:SimpleStackPanel Orientation="Vertical">
+    <Grid>
 
-        <cc:CustomRenderControl Height="420"
-                    Procedure="{Binding Module}" CenterBorder="Collapsed">
+        <cc:CustomRenderControl
+                    Procedure="{Binding Module}" CenterBorder="{Binding Visible}">
         </cc:CustomRenderControl>
-        <hc:ComboBox Margin="5" SelectedIndex="0" ItemsSource="{Binding Modules}" SelectedItem="{Binding Module}" DisplayMemberPath="Name">
-        </hc:ComboBox>
-    </ui:SimpleStackPanel>
+    </Grid>
 </UserControl>

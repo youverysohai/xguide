@@ -1,16 +1,23 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Diagnostics;
 using System.Windows;
 using System.Windows.Controls;
+using VM.Core;
+using VM.PlatformSDKCS;
 using VMControls.Interface;
+using VMControls.WPF;
+using VmRenderControl = VMControls.WPF.Release.VmRenderControl;
 
 namespace X_Guide.CustomControls
 {
     /// <summary>
     /// Interaction logic for CustomRenderControl.xaml
     /// </summary>
-    public partial class CustomRenderControl : UserControl
+    public partial class CustomRenderControl : UserControl, IDisposable
     {
+        public static Dictionary<int, VmRenderControl> controls;
+
         public Visibility CenterBorder
         {
             get { return (Visibility)GetValue(CenterBorderProperty); }
@@ -19,7 +26,25 @@ namespace X_Guide.CustomControls
 
         // Using a DependencyProperty as the backing store for CenterBorder.  This enables animation, styling, binding, etc...
         public static readonly DependencyProperty CenterBorderProperty =
-            DependencyProperty.Register("CenterBorder", typeof(Visibility), typeof(CustomRenderControl), new PropertyMetadata(Visibility.Collapsed));
+            DependencyProperty.Register("CenterBorder", typeof(Visibility), typeof(CustomRenderControl), new PropertyMetadata(Visibility.Collapsed, OnCenterBorderChanged));
+
+        private static void OnCenterBorderChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
+        {
+            if (d is CustomRenderControl custRenderControl)
+            {
+                var renderControl = custRenderControl.r_control;
+
+                if (e.NewValue is Visibility.Visible)
+                {
+                    custRenderControl.DrawShape(default);
+                    custRenderControl.Subscribe();
+                }
+                else
+                {
+                    custRenderControl.Unsubscribe();
+                }
+            }
+        }
 
         public IVmModule Procedure
         {
@@ -33,6 +58,8 @@ namespace X_Guide.CustomControls
             }
         }
 
+        public static event EventHandler<VmRenderControl> OnRenderControlChanged;
+
         // Using a DependencyProperty as the backing store for Procedure.  This enables animation, styling, binding, etc...
         public static readonly DependencyProperty ProcedureProperty =
             DependencyProperty.Register("Procedure", typeof(IVmModule), typeof(CustomRenderControl), new PropertyMetadata(null, OnProcedureChanged));
@@ -41,38 +68,45 @@ namespace X_Guide.CustomControls
         {
             var custRenderControl = d as CustomRenderControl;
 
+            custRenderControl.Unsubscribe();
             var renderControl = custRenderControl.r_control;
+            renderControl.ModuleSource = e.NewValue as IVmModule;
 
-            renderControl.ModuleSource = (IVmModule)e.NewValue;
-
-            //double height = renderControl.ImageSource.Height / 2;
-            //double width = renderControl.ImageSource.Width / 2;
-            //i.ModuleResultCallBackArrived += (s, args) => testing(width, height, renderControl);
-            //RenderControl.r_control.UpdateVMResultShow();
             custRenderControl.loadingCircle.Visibility = Visibility.Collapsed;
             custRenderControl.loadingCircle.IsRunning = false;
         }
 
-        private static void trya(object sender, SizeChangedEventArgs e)
+        private void Subscribe()
         {
-            Debug.WriteLine("hiya");
+            VmSolution.OnWorkStatusEvent += DrawShape;
+        }
+
+        private void Unsubscribe()
+        {
+            VmSolution.OnWorkStatusEvent -= DrawShape;
+        }
+
+        private void DrawShape(ImvsSdkDefine.IMVS_MODULE_WORK_STAUS workStatusInfo)
+        {
+            Debug.WriteLine("Drawing");
+            var ImageSource = r_control.ImageSource;
+            var centerPoint = new System.Windows.Point(ImageSource.Width / 2, ImageSource.Height / 2);
+            double width = ImageSource.Width / 3;
+            double height = ImageSource.Height / 3;
+            RectangleEx centerRectangle = new RectangleEx(centerPoint, width, height);
+            r_control.AddShape(centerRectangle);
         }
 
         public CustomRenderControl()
         {
             InitializeComponent();
+            Debug.WriteLine("Load once");
+            //VmSolution.OnWorkStatusEvent += VmSolution_OnWorkStatusEvent;
         }
 
-        private void r_control_SourceUpdated(object sender, System.Windows.Data.DataTransferEventArgs e)
+        public void Dispose()
         {
-        }
-
-        private void r_control_Initialized(object sender, EventArgs e)
-        {
-        }
-
-        private void r_control_TargetUpdated(object sender, System.Windows.Data.DataTransferEventArgs e)
-        {
+            VmSolution.OnWorkStatusEvent -= DrawShape;
         }
     }
 }

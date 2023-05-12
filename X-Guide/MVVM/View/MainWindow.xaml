@@ -83,7 +83,7 @@
                         </ui:NavigationViewItem>
                         <ui:NavigationViewItem x:Name="Jog"
                          c:NavigationViewItemExtensions.Command="{Binding NavigateCommand}"
-                         c:NavigationViewItemExtensions.CommandParameter="{x:Static local:PageName.JogRobot}"
+                         c:NavigationViewItemExtensions.CommandParameter="{x:Static local:PageName.Operation}"
                         Tag="JogRobotView" Content="Jog" ToolTipService.ToolTip="Jog">
                             <ui:NavigationViewItem.Icon>
                                 <ui:FontIcon   Glyph="&#xE759;" />

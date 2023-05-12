@@ -42,12 +42,12 @@ namespace X_Guide.MVVM.ViewModel
             VisionView.SetConfig(calibrationConfig);
             CalibrateCommand = RelayCommand.FromAsyncRelayCommand(Calibrate);
             SaveCommand = RelayCommand.FromAsyncRelayCommand(Save);
+            VisionView.ShowOutputImage();
         }
 
         [ExceptionHandlingAspect]
         private async Task Calibrate(object param)
         {
-            VisionView.ShowOutputImage();
             int XOffset = (int)Calibration.XOffset;
             int YOffset = (int)Calibration.YOffset;
             CalibrationData calibrationData = await _calibService.EyeInHand2D_Calibrate(XOffset, YOffset);

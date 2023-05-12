@@ -5,7 +5,6 @@ using System.Net.Sockets;
 using System.Threading;
 using System.Threading.Tasks;
 using X_Guide.Logging;
-using X_Guide.Service;
 using X_Guide.Service.Communication;
 
 namespace X_Guide.Communication.Service
@@ -18,7 +17,6 @@ namespace X_Guide.Communication.Service
         private readonly IPAddress _ipAddress;
         private CancellationTokenSource cts;
         public string Flowname = "";
-        private readonly BackgroundService _connectServer;
 
         public ClientService(IPAddress ipAddress, int port, string terminator = null) : base(terminator)
         {

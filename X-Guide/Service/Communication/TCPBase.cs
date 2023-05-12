@@ -34,7 +34,7 @@ namespace X_Guide.Service.Communication
                         }
                         catch (Exception ex)
                         {
-                            System.Windows.MessageBox.Show(ex.Message);
+                            Debug.WriteLine(ex.Message);
                         }
                     };
 
@@ -80,6 +80,7 @@ namespace X_Guide.Service.Communication
         {
             try
             {
+                data = data.Replace("\r", "").Replace("\n", "");
                 string[] segment = data.Split(seperator);
                 OnDataRecieved(this, new NetworkStreamEventArgs(stream, segment));
             }

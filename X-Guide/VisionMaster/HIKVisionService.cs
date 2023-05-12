@@ -26,20 +26,15 @@ namespace X_Guide.VisionMaster
             _clientService = clientService;
         }
 
-        public async void ConnectServer()
-        {
-            await _clientService.ConnectServer();
-        }
-
         /// <inheritdoc/>
 
         public async Task<Point> GetVisCenter()
         {
             await _clientService.WriteDataAsync($"XGUIDE,{Procedure}");
             _cts = new CancellationTokenSource();
-            var timer = new Timer(5000, (s, o) => _cts.Cancel());
+            var timer = new Timer(20000, (s, o) => _cts.Cancel());
             timer.Start();
-            Point point = await _clientService.RegisterSingleRequestHandler(GetVisCenterEvent, _cts.Token) ?? throw new Exception(StrRetriver.Get("VI000"));
+            Point point = await _clientService.RegisterSingleRequestHandler(GetVisCenterEvent, _cts.Token);
             timer.Dispose();
             Debug.WriteLine(point);
             return point;
@@ -51,7 +46,7 @@ namespace X_Guide.VisionMaster
 
             if (data.Length == 4)
             {
-                if (data[0] == "1")
+                if (data[1] != "")
                 {
                     return new Point(double.Parse(data[1]), -double.Parse(data[2]), double.Parse(data[3]));
                 }
@@ -60,7 +55,7 @@ namespace X_Guide.VisionMaster
                     return null;
                 }
             }
-            throw new Exception("Data not found!");
+            throw new Exception($"{this} : Data not found!");
         }
 
         public List<VmProcedure> GetAllProcedures()
@@ -93,7 +88,6 @@ namespace X_Guide.VisionMaster
 
         public async Task ImportSol(string filepath)
         {
-            //filepath = @"C:\Users\Xlent_XIR02\Downloads\TestGlobal.sol";
             if (!File.Exists(filepath))
             {
                 throw new Exception(StrRetriver.Get("VI002"));
@@ -106,8 +100,11 @@ namespace X_Guide.VisionMaster
            {
                try
                {
-                   VmSolution.Load(filepath);
-                   _clientService.ConnectServer();
+                   if (VmSolution.Instance.SolutionPath != filepath)
+                   {
+                       VmSolution.Load(filepath);
+                       _clientService.ConnectServer();
+                   }
                }
                catch
                {
@@ -120,18 +117,12 @@ namespace X_Guide.VisionMaster
 
         public async Task<IVmModule> RunProcedure(string name, bool continuous = false)
         {
-            return await Task.Run(() =>
-            {
-                if (!(VmSolution.Instance[name] is VmProcedure procedure)) return null;
-                if (continuous) procedure.ContinuousRunEnable = true;
-                else
-                {
-                    procedure.Run();
-                }
+            if (!(VmSolution.Instance[name] is VmProcedure procedure)) return null;
+            if (procedure.ContinuousRunEnable) return procedure;
 
-                Procedure = name;
-                return procedure;
-            });
+            if (continuous) procedure.ContinuousRunEnable = true;
+            else procedure.Run();
+            return procedure;
         }
 
         public HObject GetImage()

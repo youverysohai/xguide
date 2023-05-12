@@ -1,6 +1,5 @@
 ﻿using System;
-using System.Collections.Generic;
-using VM.Core;
+using System.Windows;
 using VMControls.Interface;
 using X_Guide.MVVM.ViewModel.CalibrationWizardSteps;
 using X_Guide.VisionMaster;
@@ -12,7 +11,7 @@ namespace X_Guide.MVVM.ViewModel
         private readonly HikVisionService _visionService;
         private CalibrationViewModel _calibrationConfig { get; set; }
         public IVmModule Module { get; set; }
-        public List<VmModule> Modules { get; set; }
+        public Visibility Visible { get; set; } = Visibility.Collapsed;
 
         public HikViewModel(IVisionService visionService)
         {
@@ -23,22 +22,29 @@ namespace X_Guide.MVVM.ViewModel
         {
         }
 
-        public void SetConfig(CalibrationViewModel calibrationViewModel)
+        public void SetConfig(CalibrationViewModel calibrationConfig)
         {
-            _calibrationConfig = calibrationViewModel;
+            _calibrationConfig = calibrationConfig;
+        }
+
+        private void BindModuleToRenderControl(IVmModule module)
+        {
+            Module = module;
         }
 
         public async void StartLiveImage()
         {
-            VmProcedure procedure = await _visionService.RunProcedure("Live", true) as VmProcedure;
-            Modules = _visionService.GetModules(procedure);
+            Module = await _visionService.RunProcedure(_calibrationConfig.Procedure, true);
+            Visible = Visibility.Visible;
         }
 
-        public void ShowOutputImage()
+        public async void ShowOutputImage()
         {
             _visionService.Procedure = _calibrationConfig.Procedure;
-            VmProcedure procedure = _visionService.GetProcedure(_calibrationConfig.Procedure);
-            Modules = _visionService.GetModules(procedure);
+            await _visionService.RunProcedure(_calibrationConfig.Procedure);
+            IVmModule procedure = _visionService.GetProcedure(_calibrationConfig.Procedure);
+            Module = procedure;
+            //Modules = _visionService.GetModules(procedure);
         }
     }
 }

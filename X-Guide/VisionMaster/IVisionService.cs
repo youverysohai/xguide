@@ -8,8 +8,6 @@ namespace X_Guide.VisionMaster
 {
     public interface IVisionService
     {
-        void ConnectServer();
-
         /// <summary>
         /// Sends a command to the client service to get the visual center point.
         /// Waits for a response from the client service and returns the center point.

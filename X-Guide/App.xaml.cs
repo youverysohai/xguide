@@ -72,6 +72,7 @@ namespace X_Guide
 
             builder.RegisterType<MainViewModel>();
             builder.RegisterType<CalibrationWizardStartViewModel>();
+            builder.RegisterType<OperationViewModel>();
             builder.RegisterType<Step1ViewModel>();
             builder.RegisterType<Step2ViewModel>();
             builder.RegisterType<Step3ViewModel>();
@@ -109,8 +110,8 @@ namespace X_Guide
             builder.RegisterType<CalibrationDb>().As<ICalibrationDb>();
             builder.RegisterType<GeneralDb>().As<IGeneralDb>();
 
-            builder.RegisterType<ServerService>().As<IServerService>().WithParameter(new TypedParameter(typeof(IPAddress), IPAddress.Parse("192.168.127.20"))).WithParameter(new TypedParameter(typeof(int), 8000)).WithParameter(new TypedParameter(typeof(string), "\r\n")).SingleInstance();
-            builder.Register(c => new ClientService(IPAddress.Parse("192.168.10.100"), 8001, "")).As<IClientService>().SingleInstance();
+            builder.RegisterType<ServerService>().As<IServerService>().WithParameter(new TypedParameter(typeof(IPAddress), IPAddress.Parse("192.168.10.90"))).WithParameter(new TypedParameter(typeof(int), 8000)).WithParameter(new TypedParameter(typeof(string), "\r\n")).SingleInstance();
+            builder.Register(c => new ClientService(IPAddress.Parse("192.168.10.90"), 8001, "")).As<IClientService>().SingleInstance();
             return builder.Build();
         }
 

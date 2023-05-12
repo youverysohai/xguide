@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace X_Guide.MVVM
+﻿namespace X_Guide.MVVM
 {
     public enum PageName
     {
@@ -19,9 +13,7 @@ namespace X_Guide.MVVM
         JogRobot,
         CalibrationWizardStart,
         HalconLive,
+        Operation,
         HalconStep6
-    
-    
-
     }
 }
