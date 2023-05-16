@@ -47,17 +47,7 @@ namespace X_Guide.MVVM.ViewModel
             }
         }
 
-        private bool _isLoading = true;
-
-        public bool IsLoading
-        {
-            get { return _isLoading; }
-            set
-            {
-                _isLoading = value;
-                OnPropertyChanged();
-            }
-        }
+        public bool IsLoading { get; set; } = true;
 
         public RelayCommand JogCommand { get; }
         public int JogDistance { get; set; }
