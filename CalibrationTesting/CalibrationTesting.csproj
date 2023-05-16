@@ -36,6 +36,13 @@
     <Reference Include="Autofac, Version=7.0.0.0, Culture=neutral, PublicKeyToken=17863af14b0044da, processorArchitecture=MSIL">
       <HintPath>..\packages\Autofac.7.0.0\lib\netstandard2.0\Autofac.dll</HintPath>
     </Reference>
+    <Reference Include="halcondotnet, Version=20.11.1.2, Culture=neutral, PublicKeyToken=4973bed59ddbf2b8, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\X-Guide\bin\halcondotnet.dll</HintPath>
+    </Reference>
+    <Reference Include="hdevenginedotnet">
+      <HintPath>..\X-Guide\bin\hdevenginedotnet.dll</HintPath>
+    </Reference>
     <Reference Include="IMVSBlobFindModuCs, Version=1.0.0.0, Culture=neutral, PublicKeyToken=7fe8bad26cdedb7b, processorArchitecture=MSIL">
       <Private>False</Private>
     </Reference>
