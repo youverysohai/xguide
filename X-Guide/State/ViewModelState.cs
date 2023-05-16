@@ -1,26 +1,24 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using X_Guide.MVVM.ViewModel;
 
 namespace X_Guide.State
 {
-    public class ViewModelState
+    public class ViewModelState : ViewModelBase
     {
         public Action OnStateChanged;
 
+        public bool IsCalibValid { get; set; } = true;
 
         private bool _isLoading;
+
         public bool IsLoading
         {
             get { return _isLoading; }
-            set { _isLoading = value;
+            set
+            {
+                _isLoading = value;
                 OnStateChanged?.Invoke();
             }
         }
-
-
     }
 }

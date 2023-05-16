@@ -1,62 +1,57 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.IO;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows;
+﻿using System.IO;
+using System.Net;
 
 using System.Xml.Serialization;
 
 namespace X_Guide.MVVM.Model
 {
     /*
-     * 1.Parameterless constructor 
+     * 1.Parameterless constructor
      * 2.Constructor less scanner
      */
-    public class SettingModel
+
+    public class GeneralModel
     {
+        public string Filepath { get; set; } = "";
+        public string Terminator { get; set; } = "";
 
+        private string _ip;
 
-        public string LogFilePath { get; set; }
-
-
-        public SettingModel()
+        public string Ip
         {
-            LogFilePath = "";
+            get { return _ip; }
+            set => _ip = IPAddress.TryParse(value, out _) ? value : "127.0.0.1";
         }
 
-        public SettingModel(string logFilePath)
-        {
+        public int Port { get; set; } = 8080;
+        public bool Debug { get; set; } = false;
+        public int VisionSoftware { get; set; } = 1;
 
-            LogFilePath = logFilePath;
+        public GeneralModel()
+        {
         }
 
-        public static SettingModel ReadFromXML(string filePath)
+        public static GeneralModel ReadFromXML(string filePath)
         {
             try
             {
                 using (var reader = new StreamReader(filePath))
                 {
-                    return (SettingModel)new XmlSerializer(typeof(SettingModel)).Deserialize(reader);
-
-
-
+                    return (GeneralModel)new XmlSerializer(typeof(GeneralModel)).Deserialize(reader);
                 }
-
             }
             catch
             {
                 //Implement message
-                return new SettingModel();
+                return new GeneralModel();
             }
         }
+
         public void WriteToXML(string filePath)
         {
             CheckDirectory(filePath);
 
-            var writer = new XmlSerializer(typeof(SettingModel));
+            var writer = new XmlSerializer(typeof(GeneralModel));
 
             using (TextWriter file = new StreamWriter(filePath))
             {
@@ -68,7 +63,6 @@ namespace X_Guide.MVVM.Model
         {
             string filepath = Path.GetDirectoryName(filePath);
             if (!Directory.Exists(filepath)) { Directory.CreateDirectory(filePath); }
-
         }
     }
 }

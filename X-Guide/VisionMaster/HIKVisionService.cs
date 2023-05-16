@@ -17,13 +17,16 @@ namespace X_Guide.VisionMaster
     public class HikVisionService : IVisionService
     {
         private readonly IClientService _clientService;
+        private readonly string _solutionPath;
         private CancellationTokenSource _cts;
 
         public string Procedure { get; set; }
 
-        public HikVisionService(IClientService clientService)
+        public HikVisionService(IClientService clientService, string solutionPath)
         {
             _clientService = clientService;
+            _solutionPath = solutionPath;
+            ImportSol(_solutionPath);
         }
 
         /// <inheritdoc/>
@@ -58,11 +61,14 @@ namespace X_Guide.VisionMaster
             throw new Exception($"{this} : Data not found!");
         }
 
-        public List<VmProcedure> GetAllProcedures()
+        public async Task<List<VmProcedure>> GetAllProcedures()
         {
             List<VmProcedure> vmProcedure = new List<VmProcedure>();
-            VmSolution.Instance.GetAllProcedureObjects(ref vmProcedure);
-            return vmProcedure;
+            return await Task.Run(() =>
+            {
+                VmSolution.Instance.GetAllProcedureObjects(ref vmProcedure);
+                return vmProcedure;
+            });
         }
 
         public VmProcedure GetProcedure(string name)
@@ -85,8 +91,8 @@ namespace X_Guide.VisionMaster
         }
 
         /// <inheritdoc/>
-
-        public async Task ImportSol(string filepath)
+        ///
+        public void ImportSol(string filepath)
         {
             if (!File.Exists(filepath))
             {
@@ -96,21 +102,24 @@ namespace X_Guide.VisionMaster
             {
                 throw new Exception(StrRetriver.Get("VI003"));
             }
-            await Task.Run(() =>
-           {
-               try
-               {
-                   if (VmSolution.Instance.SolutionPath != filepath)
-                   {
-                       VmSolution.Load(filepath);
-                       _clientService.ConnectServer();
-                   }
-               }
-               catch
-               {
-                   throw new CriticalErrorException(StrRetriver.Get("C000"));
-               }
-           });
+
+            try
+            {
+                if (VmSolution.Instance.SolutionPath != filepath)
+                {
+                    VmSolution.Load(filepath);
+                    _clientService.ConnectServer();
+                }
+            }
+            catch
+            {
+                throw new CriticalErrorException(StrRetriver.Get("C000"));
+            }
+        }
+
+        public async Task ImportSolAsync(string filepath)
+        {
+            await Task.Run(() => ImportSol(filepath));
         }
 
         /// <inheritdoc/>

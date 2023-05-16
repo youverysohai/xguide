@@ -88,8 +88,8 @@ namespace X_Guide.CustomControls
 
         private void DrawShape(ImvsSdkDefine.IMVS_MODULE_WORK_STAUS workStatusInfo)
         {
-            Debug.WriteLine("Drawing");
             var ImageSource = r_control.ImageSource;
+            if (ImageSource is null) return;
             var centerPoint = new System.Windows.Point(ImageSource.Width / 2, ImageSource.Height / 2);
             double width = ImageSource.Width / 3;
             double height = ImageSource.Height / 3;

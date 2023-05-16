@@ -18,22 +18,6 @@
 
             <TextBlock  Text="Vision Flow for Calibration" HorizontalAlignment="Center" FontSize="35" Margin="0 0 0 25" />
             <StackPanel Orientation="Vertical" HorizontalAlignment="Center">
-                <ComboBox
-                        ItemsSource="{Binding Visions}"
-                        SelectedItem="{Binding Vision}"
-                   SelectedValue="{Binding Calibration.Vision.Id}"
-                    DisplayMemberPath="Name"
-                        SelectedValuePath="Id"
-                        Style="{DynamicResource MaterialDesignOutlinedComboBox}"
-                              Width="300"
-                              materialDesign:HintAssist.Hint="Select Vision Name"
-                                                      HorizontalAlignment="Left"
-                              Margin="0">
-                </ComboBox>
-                <StackPanel  Orientation="Horizontal" HorizontalAlignment="Center">
-                    <TextBlock  VerticalAlignment="Center" Text="New Vision? " />
-                    <ui:HyperlinkButton  Padding="5"  Margin="5" Command="{Binding NavigateCommand}" CommandParameter="{x:Static loc:PageName.Setting}">Create New</ui:HyperlinkButton>
-                </StackPanel>
 
                 <ComboBox
                         ItemsSource="{Binding Procedures}"

@@ -53,6 +53,11 @@ namespace X_Guide.Service.Communication
             Terminator = terminator;
         }
 
+        public TCPBase()
+        {
+            Terminator = "\n";
+        }
+
         protected virtual async Task RecieveDataAsync(NetworkStream stream, CancellationToken ct)
         {
             byte[] data = new byte[1024];

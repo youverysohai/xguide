@@ -33,7 +33,7 @@ namespace X_Guide.MVVM.ViewModel
         public CalibrationViewModel Calibration => _calibrationConfig;
         public string JogMode { get; set; } = "TOOL";
 
-        private bool _canJog = false;
+        private bool _canJog = true;
 
         public bool CanJog
         {

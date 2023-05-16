@@ -1,26 +1,19 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
+﻿using System.Collections.Generic;
 using System.Threading.Tasks;
 using X_Guide.MVVM.Model;
-using X_Guide.MVVM.ViewModel;
 
 namespace X_Guide.Service.DatabaseProvider
 {
     public interface IVisionDb
     {
-        Task<VisionModel> Get(string name);
+        HikVisionModel Get();
 
-        Task<bool> Delete(VisionModel vision);
-        Task<bool> Update(VisionModel vision);
+        Task<bool> Delete(HikVisionModel vision);
 
-        Task<IEnumerable<VisionModel>> GetAll();
+        void Update(HikVisionModel vision);
 
-        Task<bool> Add(VisionModel vision);
+        Task<IEnumerable<HikVisionModel>> GetAll();
 
-
-
-
+        Task<bool> Add(HikVisionModel vision);
     }
 }

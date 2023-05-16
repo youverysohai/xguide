@@ -49,7 +49,7 @@ namespace X_Guide.Service.Communation
                 if (parameter.Length < 2) throw new Exception(StrRetriver.Get("OP000"));
                 calib = await _calibDb.Get(parameter[1]) ?? throw new Exception(StrRetriver.Get("OP001"));
 
-                try { await _visionService.ImportSol(String.Format(@"{0}", calib.Vision.Filepath)); }
+                try { await _visionService.ImportSolAsync(String.Format(@"{0}", "")); }
                 catch { throw new Exception(StrRetriver.Get("OP002")); };
                 string procedure = parameter[2];
 

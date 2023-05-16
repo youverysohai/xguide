@@ -40,13 +40,13 @@
 
         <DataTemplate x:Key="ErrorPage">
             <StackPanel Orientation="Vertical" HorizontalAlignment="Center">
-                <TextBlock Style="{DynamicResource SubheaderTextBlockStyle}" Text="Nothing is selected.&#x0a;" /> 
-          
-                <TextBlock Style="{DynamicResource SubtitleTextBlockStyle}" HorizontalAlignment="Center" Text="Please select from the list." /> 
+                <TextBlock Style="{DynamicResource SubheaderTextBlockStyle}" Text="Nothing is selected.&#x0a;" />
+
+                <TextBlock Style="{DynamicResource SubtitleTextBlockStyle}" HorizontalAlignment="Center" Text="Please select from the list." />
             </StackPanel>
         </DataTemplate>
 
-        <DataTemplate DataType="{x:Type vm:VisionViewModel}" x:Key="VisionForm">
+        <DataTemplate DataType="{x:Type vm:HikVisionViewModel}" x:Key="VisionForm">
             <ui:SimpleStackPanel Orientation="Vertical">
                 <!--<xCust:CustomFormButtons AddCommand="{Binding DataContext.OpenVisionFormCommand, ElementName=SettingUserControl}" AddCommandParameter="{Binding ElementName=VisionDialog}" SaveCommand="{Binding DataContext.SaveVisionCommand, ElementName=SettingUserControl}" DeleteCommand="{Binding DataContext.DeleteVisionCommand, ElementName=SettingUserControl}" />-->
                 <xCust:CustomVisionForm Vision="{Binding }" />
@@ -154,7 +154,7 @@
             </TabItem>
 
             <!-- Vision Tab-->
-            <TabItem >
+            <TabItem>
                 <TabItem.Header>
                     <StackPanel  Width="auto" Height="auto">
                         <materialDesign:PackIcon
@@ -168,14 +168,14 @@
                 <materialDesign:DrawerHost OpenMode="Standard">
                     <!--<materialDesign:DrawerHost.LeftDrawerContent>
                         <hc:ScrollViewer VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Auto">
-                            <hc:SimpleStackPanel Orientation="Horizontal" 
+                            <hc:SimpleStackPanel Orientation="Horizontal"
                Background="{DynamicResource PersonPictureEllipseBadgeFillThemeBrush}">
                                 <ItemsControl ItemsSource="{Binding Visions}">
                                     <ItemsControl.ItemTemplate>
                                         <DataTemplate>
                                             <StackPanel>
                                                 <RadioButton Content="{Binding Name}" GroupName="visions"
-                          Command="{Binding DataContext.VisionCommand, ElementName= SettingUserControl}" CommandParameter="{Binding}"  
+                          Command="{Binding DataContext.VisionCommand, ElementName= SettingUserControl}" CommandParameter="{Binding}"
                                                                         Style="{StaticResource MaterialDesignChoiceChipPrimaryOutlineRadioButton}" />
                                             </StackPanel>
                                         </DataTemplate>
@@ -186,35 +186,29 @@
                                                 HorizontalAlignment="Center"
                                                 Command="{x:Static materialDesign:DrawerHost.CloseDrawerCommand}"
                                                 CommandParameter="{x:Static Dock.Left}"
-                                                
-                                                Style="{StaticResource MaterialDesignIconButton}" >
+
+                                                Style="{StaticResource MaterialDesignIconButton}">
                                     <materialDesign:PackIcon Kind="MenuLeft" Style="{DynamicResource IconStyle24}" />
                                 </Button>
                             </hc:SimpleStackPanel>
-
-
-
-
                         </hc:ScrollViewer>
-
                     </materialDesign:DrawerHost.LeftDrawerContent>-->
-
 
                     <ui:SimpleStackPanel Orientation="Vertical">
 
-                        <!-- NEW VISION --><!--
-                        <ui:ContentDialog x:Name="VisionDialog" Title="New Vision" CloseButtonStyle="{DynamicResource DateTimePickerFlyoutButtonStyle}" CloseButtonText="Cancel" 
+                        <!-- NEW VISION -->
+                        <!--
+                        <ui:ContentDialog x:Name="VisionDialog" Title="New Vision" CloseButtonStyle="{DynamicResource DateTimePickerFlyoutButtonStyle}" CloseButtonText="Cancel"
                                               PrimaryButtonText="Create" PrimaryButtonCommand="{Binding AddVisionCommand}" PrimaryButtonStyle="{DynamicResource DefaultButtonStyle}">
-                            <xCust:CustomVisionForm Vision="{Binding DataContext.Vision, ElementName=SettingUserControl}"/>
+                            <xCust:CustomVisionForm Vision="{Binding DataContext.Vision, ElementName=SettingUserControl}" />
                         </ui:ContentDialog>-->
                         <ui:SimpleStackPanel Orientation="Horizontal">
-                            <!--<Button  Command="{x:Static materialDesign:DrawerHost.OpenDrawerCommand}" 
-                             CommandParameter="{x:Static Dock.Left}" 
-                             Style="{DynamicResource MaterialDesignIconForegroundButton}" 
+                            <!--<Button  Command="{x:Static materialDesign:DrawerHost.OpenDrawerCommand}"
+                             CommandParameter="{x:Static Dock.Left}"
+                             Style="{DynamicResource MaterialDesignIconForegroundButton}"
                              ToolTip="List of Manipulators"
-                             ToolTipService.InitialShowDelay="122"
-                             >
-                                <materialDesign:PackIcon Kind="PlaylistEdit" Style="{DynamicResource IconStyle24}"/>
+                             ToolTipService.InitialShowDelay="122">
+                                <materialDesign:PackIcon Kind="PlaylistEdit" Style="{DynamicResource IconStyle24}" />
                             </Button>-->
                             <!-- data trigger for collapse and expand -->
 
@@ -222,7 +216,7 @@
                                         Text="Vision" />
                         </ui:SimpleStackPanel>
 
-                        <ContentControl x:Name="VisionContent" Content="{Binding Vision}" ContentTemplate="{StaticResource VisionForm}">
+                        <ContentControl x:Name="VisionContent" Content="{Binding HikVision}" ContentTemplate="{StaticResource VisionForm}">
                             <!--<i:Interaction.Triggers>
                                 <i:DataTrigger Binding="{Binding Vision}" Value="{Binding Vision}">
                                     <i:ChangePropertyAction PropertyName="ContentTemplate" Value="{StaticResource VisionForm}" />
@@ -230,8 +224,10 @@
                                 <i:DataTrigger Binding="{Binding Vision}" Value="{x:Null}">
                                     <i:ChangePropertyAction PropertyName="ContentTemplate" Value="{StaticResource ErrorPage}" />
                                 </i:DataTrigger>
-                            </i:Interaction.Triggers>-->     
+                            </i:Interaction.Triggers>-->
                         </ContentControl>
+
+                        <Button Content="Save vision" Command="{Binding SaveVisionCommand}" />
                     </ui:SimpleStackPanel>
                 </materialDesign:DrawerHost>
             </TabItem>
@@ -267,6 +263,7 @@
                     <!--Row 3-->
                     <TextBlock Text="Connection" Style="{DynamicResource SubtitleTextBlockStyle}" Margin="5 12 0 0" />
                     <TextBlock Margin="5 12 0 0" Text="Server IP Address" Style="{DynamicResource LabelTextBlock}" />
+                    <xCust:CustomIpInput Ip="{Binding General.Ip}"></xCust:CustomIpInput>
                     <!--<xCust:CustomIpInput Ip="{Binding General.Ip}" />-->
                     <TextBlock  Text="Server Port" Style="{DynamicResource LabelTextBlock}" />
                     <ui:NumberBox Width="150" HorizontalAlignment="Left"  SpinButtonPlacementMode="Compact"  Value="{Binding General.Port }" Margin="5"  VerticalAlignment="Center" />

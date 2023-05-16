@@ -6,6 +6,7 @@ using System.Collections.ObjectModel;
 using System.Configuration;
 using System.Windows;
 using VM.Core;
+using X_Guide.Aspect;
 using X_Guide.MVVM.Command;
 using X_Guide.MVVM.Model;
 using X_Guide.Service.DatabaseProvider;
@@ -35,15 +36,16 @@ namespace X_Guide.MVVM.ViewModel
         private readonly IVisionDb _visionDb;
         private readonly IMapper _mapper;
         private readonly IGeneralDb _generalDb;
+
         public bool Test { get; set; } = false;
         public bool HasErrors => false;
 
         public GeneralViewModel General { get; set; }
+        public HikVisionViewModel HikVision { get; set; }
         public ManipulatorViewModel Manipulator { get; set; }
-        public VisionViewModel Vision { get; set; }
         public ObservableCollection<ManipulatorViewModel> Manipulators { get; } = new ObservableCollection<ManipulatorViewModel>();
 
-        public ObservableCollection<VisionViewModel> Visions { get; } = new ObservableCollection<VisionViewModel>();
+        public ObservableCollection<HikVisionViewModel> Visions { get; } = new ObservableCollection<HikVisionViewModel>();
 
         public string LogFilePath { get; set; }
 
@@ -53,18 +55,17 @@ namespace X_Guide.MVVM.ViewModel
             _visionDb = visionDb;
             _mapper = mapper;
             _generalDb = generalDb;
-            General = _generalDb.Get();
+            General = mapper.Map<GeneralViewModel>(_generalDb.Get());
+            HikVision = mapper.Map<HikVisionViewModel>(_visionDb.Get());
             GetManipulators();
-            GetVisions();
+
             OpenVisionFormCommand = new RelayCommand(OpenVisionForm);
             OpenManiFormCommand = new RelayCommand(OpenManiForm);
-            AddVisionCommand = new RelayCommand(AddVision);
             VisionCommand = new RelayCommand(OnVisionChangeEvent);
             ManipulatorCommand = new RelayCommand(OnManipulatorChangeEvent);
             SaveManipulatorCommand = new RelayCommand(SaveManipulator);
             OpenFormCommand = new RelayCommand(OpenVisionForm);
             DeleteManipulatorCommand = new RelayCommand(DeleteManipulator);
-            DeleteVisionCommand = new RelayCommand(DeleteVision);
             SaveVisionCommand = new RelayCommand(SaveVision);
             SaveGeneralCommand = new RelayCommand(SaveGeneral);
             AddManipulatorCommand = new RelayCommand(AddManipulator);
@@ -73,7 +74,7 @@ namespace X_Guide.MVVM.ViewModel
 
         private async void OpenVisionForm(object obj)
         {
-            Vision = new VisionViewModel();
+            HikVision = new HikVisionViewModel();
             if (obj is ContentDialog dialog) await dialog.ShowAsync();
         }
 
@@ -96,46 +97,25 @@ namespace X_Guide.MVVM.ViewModel
             }
         }
 
+        [ApplicationRestartAspect]
         private void SaveGeneral(object obj)
         {
-            _generalDb.Update(General);
+            _generalDb.Update(_mapper.Map<GeneralModel>(General));
             MessageBox.Show("Saved setting. Restarting the application is required for the changes to take effect.");
-            Application.Current.Shutdown();
-        }
-
-        private async void DeleteVision(object obj)
-        {
-            await _visionDb.Delete(_mapper.Map<VisionModel>(Vision));
-            GetVisions();
         }
 
         private async void DeleteManipulator(object obj)
         {
             await _manipulatorDb.Delete(_mapper.Map<ManipulatorModel>(Manipulator));
+
             GetManipulators();
         }
 
-        private async void SaveVision(object obj)
+        [ApplicationRestartAspect]
+        private void SaveVision(object obj)
         {
-            await _visionDb.Update(_mapper.Map<VisionModel>(Vision));
-            GetVisions();
-        }
-
-        private async void AddVision(object obj)
-        {
-            await _visionDb.Add(_mapper.Map<VisionModel>(Vision));
-            GetVisions();
-        }
-
-        public async void GetVisions()
-        {
-            IEnumerable<VisionModel> models = await _visionDb.GetAll();
-            Vision = null;
-            Visions.Clear();
-            foreach (var model in models)
-            {
-                Visions.Add(_mapper.Map<VisionViewModel>(model));
-            }
+            _visionDb.Update(_mapper.Map<HikVisionModel>(HikVision));
+            MessageBox.Show("Saved setting. Restarting the application is required for the changes to take effect.");
         }
 
         private async void AddManipulator(object obj)
@@ -187,7 +167,7 @@ namespace X_Guide.MVVM.ViewModel
 
         private void OnVisionChangeEvent(object obj)
         {
-            Vision = ((VisionViewModel)obj).Clone() as VisionViewModel;
+            HikVision = ((HikVisionViewModel)obj).Clone() as HikVisionViewModel;
         }
     }
 }

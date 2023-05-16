@@ -94,7 +94,7 @@ namespace X_Guide.VisionMaster
             return point;
         }
 
-        public Task ImportSol(string filepath)
+        public Task ImportSolAsync(string filepath)
         {
             throw new NotImplementedException();
         }

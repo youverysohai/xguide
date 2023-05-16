@@ -24,7 +24,7 @@ namespace X_Guide.MVVM.ViewModel
         public bool Test { get; set; } = false;
         public RelayCommand TestCommand { get; }
 
-        public bool IsRunning => _viewModelState.IsLoading;
+        public bool IsRunning => State.IsLoading;
 
         private bool _isLoggedIn = false;
 
@@ -65,7 +65,7 @@ namespace X_Guide.MVVM.ViewModel
         }
 
         private readonly AuthenticationService _auth;
-        private readonly ViewModelState _viewModelState;
+        public ViewModelState State { get; set; }
         private readonly INavigationService _navigationService;
         private readonly NavigationStore _navigationStore;
 
@@ -74,12 +74,12 @@ namespace X_Guide.MVVM.ViewModel
 
         #endregion CLR properties
 
-        public MainViewModel(INavigationService navigationService, IServerService serverService, IUserDb userService, ILogger logger, ViewModelState viewModelState)
+        public MainViewModel(INavigationService navigationService, IServerService serverService, IUserDb userService, ILogger logger, ViewModelState state)
         {
             _auth = new AuthenticationService(userService);
             //_auth.CurrentUserChanged += OnCurrentUserChanged;
-            _viewModelState = viewModelState;
-            _viewModelState.OnStateChanged = OnLoadingStateChanged;
+            State = state;
+            State.OnStateChanged = OnLoadingStateChanged;
             _navigationService = navigationService;
             _navigationStore = navigationService.GetNavigationStore();
             _navigationStore.CurrentViewModelChanged += OnCurrentViewModelChanged;

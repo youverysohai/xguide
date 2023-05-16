@@ -10,11 +10,9 @@ using System.Windows.Threading;
 using X_Guide.CustomEventArgs;
 using X_Guide.Service;
 using X_Guide.Service.Communication;
-using X_Guide.Service.DatabaseProvider;
 
 namespace X_Guide.Communication.Service
 {
-    [AttributeUsage(AttributeTargets.Method)]
     public class ServerService : TCPBase, IServerService
     {
         private int _port { get; }
@@ -35,7 +33,7 @@ namespace X_Guide.Communication.Service
 
         private CancellationTokenSource cts;
 
-        public ServerService(IPAddress ip, int port, string terminator, ICalibrationDb calibrationDb, IClientService clientService) : base(terminator)
+        public ServerService(IPAddress ip, int port, string terminator) : base(terminator)
         {
             _port = port;
             _ip = ip;

@@ -614,6 +614,7 @@
       <SubType>Designer</SubType>
     </ApplicationDefinition>
     <Compile Include="ADT\QueueProcessor.cs" />
+    <Compile Include="Aspect\ApplicationRestartAspect.cs" />
     <Compile Include="Aspect\AsyncErrorHandler.cs" />
     <Compile Include="Aspect\CheckServerCanExecute.cs" />
     <Compile Include="Aspect\ExceptionHandlingAspect.cs" />
@@ -691,7 +692,7 @@
     <Compile Include="FileLogger.cs" />
     <Compile Include="FileLoggerExtensions.cs" />
     <Compile Include="FileLoggerProvider.cs" />
-    <Compile Include="General.cs" />
+    <Compile Include="GeneralConfiguration.cs" />
     <Compile Include="HelperClass\BitMapHelper.cs" />
     <Compile Include="HelperClass\Timer.cs">
       <SubType>Component</SubType>
@@ -717,7 +718,7 @@
     <Compile Include="MVVM\Model\UserModel.cs" />
     <Compile Include="Enums\PageName.cs" />
     <Compile Include="MVVM\Model\VisionGuided.cs" />
-    <Compile Include="MVVM\Model\VisionModel.cs" />
+    <Compile Include="MVVM\Model\HikVisionModel.cs" />
     <Compile Include="MVVM\ViewModel\CalibrationWizardStartViewModel.cs" />
     <Compile Include="MVVM\ViewModel\CalibrationMainViewModel.cs" />
     <Compile Include="MVVM\ViewModel\ErrorViewModel.cs" />
@@ -741,7 +742,7 @@
     <Compile Include="MVVM\ViewModel\UserLoginViewModel.cs" />
     <Compile Include="MVVM\ViewModel\CalibrationViewModel.cs" />
     <Compile Include="MVVM\ViewModel\ViewModelLocator.cs" />
-    <Compile Include="MVVM\ViewModel\VisionViewModel.cs" />
+    <Compile Include="MVVM\ViewModel\HikVisionViewModel.cs" />
     <Compile Include="MVVM\View\CalibrationWizardSteps\CalibrationWizardStart.xaml.cs">
       <DependentUpon>CalibrationWizardStart.xaml</DependentUpon>
     </Compile>
@@ -806,7 +807,8 @@
     <Compile Include="Service\DatabaseProvider\ManipulatorDb.cs" />
     <Compile Include="Service\DatabaseProvider\IManipulatorDb.cs" />
     <Compile Include="Service\Communication\ServerCommand.cs" />
-    <Compile Include="Service\DatabaseProvider\VisionDb.cs" />
+    <Compile Include="Service\DatabaseProvider\LegacyVisionDb.cs" />
+    <Compile Include="Service\DatabaseProvider\HikVisionDb.cs" />
     <Compile Include="Service\ICalibrationService.cs" />
     <Compile Include="Service\IJogService.cs" />
     <Compile Include="Service\ImageService.cs" />
@@ -832,6 +834,7 @@
     <Compile Include="Vision.cs">
       <DependentUpon>XGuideModel.tt</DependentUpon>
     </Compile>
+    <Compile Include="HikVisionConfiguration.cs" />
     <Compile Include="VisionMaster\HalconVisionService.cs" />
     <Compile Include="VisionMaster\IVisionService.cs" />
     <Compile Include="VisionMaster\HikVisionService.cs" />
@@ -1020,7 +1023,7 @@
   <ItemGroup>
     <Compile Include="MVVM\Command\CommandBase.cs" />
     <Compile Include="MVVM\Command\NavigateCommand.cs" />
-    <Compile Include="MVVM\Model\SettingModel.cs" />
+    <Compile Include="MVVM\Model\GeneralModel.cs" />
     <Compile Include="MVVM\Store\NavigationStore.cs" />
     <Compile Include="MVVM\ViewModel\MainViewModel.cs" />
     <Compile Include="MVVM\ViewModel\SettingViewModel.cs" />
@@ -1085,6 +1088,9 @@
     </PackageReference>
     <PackageReference Include="EntityFramework">
       <Version>6.4.4</Version>
+    </PackageReference>
+    <PackageReference Include="FluentValidation">
+      <Version>11.5.2</Version>
     </PackageReference>
     <PackageReference Include="Fody">
       <Version>6.7.0</Version>

@@ -13,19 +13,9 @@ namespace X_Guide.MVVM.ViewModel
 {
     public class CalibrationMainViewModel : ViewModelBase
     {
-        private CalibrationViewModel _calibration;
+        public CalibrationViewModel Calibration { get; set; }
 
-        public CalibrationViewModel Calibration
-        {
-            get => _calibration;
-            set
-            {
-                _calibration = value;
-                OnPropertyChanged();
-            }
-        }
-
-        public List<string> Form { get; set; }
+        private List<string> Form { get; set; }
 
         private bool _canExecuteNext = true;
 
@@ -43,7 +33,7 @@ namespace X_Guide.MVVM.ViewModel
 
         public bool CanExecutePrev
         {
-            get { return _canExecutePrev = true; }
+            get { return _canExecutePrev; }
             set
             {
                 _canExecutePrev = value;
@@ -92,6 +82,32 @@ namespace X_Guide.MVVM.ViewModel
         }
 
         public LinkedListNode<ViewModelBase> CurrentNode { get; set; }
+
+        public CalibrationMainViewModel(CalibrationViewModel calibration, INavigationService navigationService, IViewModelLocator viewModelLocator)
+        {
+            if (App.VisionSoftware == 1)
+            {
+                Form = new List<string>(new string[] { "Manipulator", "Orientation" + Environment.NewLine + "& Mounting", "Vision Flow", "Motion", "Jog", "Calibration", });
+            }
+            else
+            {
+                Form = new List<string>(new string[] { "Manipulator", "Orientation " + Environment.NewLine + "& Mounting", "Motion", "Live Image", "Calibration" });
+            }
+            _navigationService = navigationService;
+            _navigationStore = _navigationService.GetNavigationStore();
+            _navigationStore.CurrentViewModelChanged += OnCurrentViewModelChanged;
+            _viewModelLocator = viewModelLocator;
+            WizNextCommand = new RelayCommand(WizNext, (o) => CanExecuteNext);
+            WizPrevCommand = new RelayCommand(WizPrev, (o) => CanExecutePrev);
+            CancelCommand = new RelayCommand(CancelCalib);
+            Calibration = calibration;
+            var calibPara = new TypedParameter(typeof(CalibrationViewModel), Calibration);
+            Step1ViewModel Step1 = viewModelLocator.Create<Step1ViewModel>(calibPara) as Step1ViewModel;
+            /*            Step1.SelectedItemChangedEvent += OnSelectedItemChangedEvent;*/
+
+            _navigationService.Navigate(Step1);
+            CurrentNode = _navigationHistory.AddLast(CurrentViewModel);
+        }
 
         public void LoadCalibSetting(TypedParameter calib)
         {
@@ -167,7 +183,7 @@ namespace X_Guide.MVVM.ViewModel
 
         private async Task NavigateToStep(int currentStep)
         {
-            var calibPara = new TypedParameter(typeof(CalibrationViewModel), _calibration);
+            var calibPara = new TypedParameter(typeof(CalibrationViewModel), Calibration);
             if (App.VisionSoftware == 1)
             {
                 switch (currentStep)
@@ -191,57 +207,6 @@ namespace X_Guide.MVVM.ViewModel
                     default: throw new Exception("Page does not exist!");
                 }
             }
-        }
-
-        public CalibrationMainViewModel(CalibrationViewModel calibration, INavigationService navigationService, IViewModelLocator viewModelLocator)
-        {
-            if (App.VisionSoftware == 1)
-            {
-                Form = new List<string>(new string[] { "Manipulator", "Orientation" + Environment.NewLine + "& Mounting", "Vision Flow", "Motion", "Jog", "Calibration", });
-            }
-            else
-            {
-                Form = new List<string>(new string[] { "Manipulator", "Orientation " + Environment.NewLine + "& Mounting", "Motion", "Live Image", "Calibration" });
-            }
-            _navigationService = navigationService;
-            _navigationStore = _navigationService.GetNavigationStore();
-            _navigationStore.CurrentViewModelChanged += OnCurrentViewModelChanged;
-            _viewModelLocator = viewModelLocator;
-            WizNextCommand = new RelayCommand(WizNext, (o) => CanExecuteNext);
-            WizPrevCommand = new RelayCommand(WizPrev, (o) => CanExecutePrev);
-            CancelCommand = new RelayCommand(CancelCalib);
-
-            Calibration = calibration;
-
-            var calibPara = new TypedParameter(typeof(CalibrationViewModel), _calibration);
-            Step1ViewModel Step1 = viewModelLocator.Create<Step1ViewModel>(calibPara) as Step1ViewModel;
-            /*            Step1.SelectedItemChangedEvent += OnSelectedItemChangedEvent;*/
-
-            _navigationService.Navigate(Step1);
-            CurrentNode = _navigationHistory.AddLast(CurrentViewModel);
-
-            /*  Dispatcher.CurrentDispatcher.BeginInvoke(new Action(() => _navigationService.Navigate<Step6ViewModel>(new TypedParameter(typeof(CalibrationViewModel), new CalibrationViewModel()
-              {
-                  Name = "Testing",
-                  Manipulator = new ManipulatorViewModel
-                  {
-                      Id = 1,
-                      Type = 1,
-                  },
-                  Orientation = 2,
-                  Vision = new VisionViewModel
-                  {
-                      Id = 1,
-
-                      Filepath = @"C:\Users\Xlent_XIR02\Desktop\livecam.sol",
-                  },
-                  Procedure = "Circle",
-                  YOffset = 10,
-                  XOffset = 15,
-                  Speed = 69,
-                  Acceleration = 69,
-                  MotionDelay = 2,
-              }))));*/
         }
 
         private void CancelCalib(object obj)

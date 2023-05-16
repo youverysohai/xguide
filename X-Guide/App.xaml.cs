@@ -8,10 +8,12 @@ using System.Net;
 using System.Windows;
 using ToastNotifications;
 using ToastNotifications.Lifetime;
+using ToastNotifications.Messages;
 using ToastNotifications.Position;
 using X_Guide.Communication.Service;
 using X_Guide.MappingConfiguration;
 using X_Guide.MVVM.DBContext;
+using X_Guide.MVVM.Model;
 using X_Guide.MVVM.Store;
 using X_Guide.MVVM.ViewModel;
 using X_Guide.Service;
@@ -29,6 +31,8 @@ namespace X_Guide
     {
         private static IContainer _diContainer;
         public static Notifier Notifier;
+        private static GeneralModel generalSetting;
+        private static HikVisionModel hikSetting;
 
         //TODO: Add logger
         public static int VisionSoftware = 1;
@@ -53,14 +57,14 @@ namespace X_Guide
             builder.Register(c => new Notifier(cfg =>
             {
                 cfg.PositionProvider = new WindowPositionProvider(
-                    parentWindow: Application.Current.MainWindow,
+                    parentWindow: Current.MainWindow,
                     corner: Corner.TopRight,
                     offsetX: 10,
                     offsetY: 10);
                 cfg.LifetimeSupervisor = new TimeAndCountBasedLifetimeSupervisor(
                     notificationLifetime: TimeSpan.FromSeconds(3),
                     maximumNotificationCount: MaximumNotificationCount.FromCount(5));
-                cfg.Dispatcher = Application.Current.Dispatcher;
+                cfg.Dispatcher = Current.Dispatcher;
             })).SingleInstance();
             builder.Register(c => c.Resolve<MapperConfiguration>().CreateMapper()).SingleInstance();
 
@@ -89,13 +93,16 @@ namespace X_Guide
             switch (VisionSoftware)
             {
                 case 1:
-                    builder.RegisterType<HikVisionService>().As<IVisionService>().SingleInstance();
+                    builder.RegisterType<HikVisionService>().As<IVisionService>().WithParameter(new TypedParameter(typeof(string), hikSetting.Filepath)).SingleInstance();
                     builder.RegisterType<HikViewModel>().As<IVisionViewModel>();
+                    builder.RegisterType<HikVisionDb>().As<IVisionDb>();
+
                     break;
 
                 case 2:
                     builder.RegisterType<HalconVisionService>().As<IVisionService>().SingleInstance();
                     builder.RegisterType<HalconViewModel>().As<IVisionViewModel>();
+                    builder.RegisterType<LegacyVisionDb>().As<IVisionDb>();
                     break;
 
                 default: break;
@@ -106,12 +113,14 @@ namespace X_Guide
             builder.RegisterType<NavigationStore>();
             builder.RegisterType<NavigationService>().As<INavigationService>();
             builder.RegisterType<CalibrationService>().As<ICalibrationService>();
-            builder.RegisterType<VisionDb>().As<IVisionDb>();
+
             builder.RegisterType<CalibrationDb>().As<ICalibrationDb>();
             builder.RegisterType<GeneralDb>().As<IGeneralDb>();
 
-            builder.RegisterType<ServerService>().As<IServerService>().WithParameter(new TypedParameter(typeof(IPAddress), IPAddress.Parse("192.168.10.90"))).WithParameter(new TypedParameter(typeof(int), 8000)).WithParameter(new TypedParameter(typeof(string), "\r\n")).SingleInstance();
-            builder.Register(c => new ClientService(IPAddress.Parse("192.168.10.90"), 8001, "")).As<IClientService>().SingleInstance();
+            builder.RegisterType<ServerService>().As<IServerService>().WithParameter(new TypedParameter(typeof(IPAddress), IPAddress.Parse(generalSetting.Ip))).WithParameter(new TypedParameter(typeof(int), generalSetting.Port)).WithParameter(new TypedParameter(typeof(string), generalSetting.Terminator)).SingleInstance();
+
+            builder.Register(c => new ClientService(IPAddress.Parse(hikSetting.Ip), hikSetting.Port, hikSetting.Terminator)).As<IClientService>().SingleInstance();
+
             return builder.Build();
         }
 
@@ -137,22 +146,41 @@ namespace X_Guide
             //string appDataPath = Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData);
             //string settingPath = Path.Combine(appDataPath, "X-Guide", "Settings.xml");
             //ConfigurationManager.AppSettings["SettingPath"] = settingPath;
+            var mapper = new MapperConfiguration(c =>
+            {
+                c.AddProfile<GeneralProfile>();
+                c.AddProfile<VisionProfile>();
+            }).CreateMapper();
             var _configuration = ConfigurationManager.OpenExeConfiguration(ConfigurationUserLevel.None);
-            var general = (General)_configuration.GetSection("GeneralSetting");
-            VisionSoftware = general.VisionSoftware;
+            generalSetting = mapper.Map<GeneralModel>((GeneralConfiguration)_configuration.GetSection("GeneralSetting"));
+            hikSetting = mapper.Map<HikVisionModel>((HikVisionConfiguration)_configuration.GetSection("HikVisionSetting"));
+
+            VisionSoftware = generalSetting.VisionSoftware;
+
+            _diContainer = BuildDIContainer();
+            Notifier = _diContainer.Resolve<Notifier>();
         }
 
-        //        Startup Page
+        //Startup Page
 
         protected override void OnStartup(StartupEventArgs e)
         {
-            _diContainer = BuildDIContainer();
-            _ = _diContainer.Resolve<IVisionService>();
-            Notifier = _diContainer.Resolve<Notifier>();
             MainWindow = _diContainer.Resolve<MainWindow>();
-            _ = _diContainer.Resolve<ServerCommand>();
+
             MainWindow.Show();
             base.OnStartup(e);
+
+            try
+            {
+                _ = _diContainer.Resolve<IVisionService>();
+                _ = _diContainer.Resolve<ServerCommand>();
+            }
+            catch (Exception ex)
+            {
+                ViewModelState viewModelState = _diContainer.Resolve<ViewModelState>();
+                viewModelState.IsCalibValid = false;
+                Notifier.ShowError(StrRetriver.Get("VI003"));
+            }
         }
     }
 }

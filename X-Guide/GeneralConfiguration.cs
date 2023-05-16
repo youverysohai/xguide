@@ -2,7 +2,7 @@
 
 namespace X_Guide
 {
-    public class General : ConfigurationSection
+    public class GeneralConfiguration : ConfigurationSection
     {
         [ConfigurationProperty("Filepath")]
         public string Filepath
