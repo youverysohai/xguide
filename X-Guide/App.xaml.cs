@@ -79,7 +79,7 @@ namespace X_Guide
             builder.RegisterType<OperationViewModel>();
             builder.RegisterType<Step1ViewModel>();
             builder.RegisterType<Step2ViewModel>();
-            builder.RegisterType<Step3ViewModel>();
+            builder.RegisterType<Step3HikViewModel>();
             builder.RegisterType<Step4ViewModel>();
             builder.RegisterType<Step5ViewModel>();
             builder.RegisterType<Step6ViewModel>();

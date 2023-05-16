@@ -12,7 +12,7 @@ using X_Guide.VisionMaster;
 
 namespace X_Guide.MVVM.ViewModel
 {
-    internal class Step3ViewModel : ViewModelBase
+    internal class Step3HikViewModel : ViewModelBase
     {
         private readonly IMapper _mapper;
         private readonly Notifier _notifier;
@@ -21,7 +21,7 @@ namespace X_Guide.MVVM.ViewModel
         private readonly CalibrationViewModel _calibration;
         private ManualResetEventSlim _manual;
 
-        public Step3ViewModel(CalibrationViewModel calibration, IVisionService visionService, IVisionDb visionDb, IMapper mapper, ViewModelState viewModelState, Notifier notifier)
+        public Step3HikViewModel(CalibrationViewModel calibration, IVisionService visionService, IVisionDb visionDb, IMapper mapper, ViewModelState viewModelState, Notifier notifier)
         {
             _calibration = calibration;
             _visionService = (HikVisionService)visionService;

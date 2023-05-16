@@ -62,7 +62,7 @@ namespace X_Guide.MVVM.ViewModel
 
         public ViewModelBase CreateStep3(CalibrationViewModel setting)
         {
-            return _dependencyResolver?.Resolve<Step3ViewModel>(new TypedParameter[]
+            return _dependencyResolver?.Resolve<Step3HikViewModel>(new TypedParameter[]
             {
                 new TypedParameter(typeof(CalibrationViewModel), setting),
           

@@ -14,7 +14,6 @@ namespace X_Guide.MVVM.ViewModel
         public Step4ViewModel(CalibrationViewModel calibration)
         {
             _calibration = calibration;
-            _calibration.JointRotationAngle = 6969;
         }
     }
 }

@@ -15,7 +15,7 @@ namespace X_Guide.MVVM.ViewModel
     {
         public CalibrationViewModel Calibration { get; set; }
 
-        private List<string> Form { get; set; }
+        public List<string> StepBarContent { get; set; }
 
         private bool _canExecuteNext = true;
 
@@ -87,11 +87,11 @@ namespace X_Guide.MVVM.ViewModel
         {
             if (App.VisionSoftware == 1)
             {
-                Form = new List<string>(new string[] { "Manipulator", "Orientation" + Environment.NewLine + "& Mounting", "Vision Flow", "Motion", "Jog", "Calibration", });
+                StepBarContent = new List<string>(new string[] { "Manipulator", "Orientation" + Environment.NewLine + "& Mounting", "Vision Flow", "Motion", "Jog", "Calibration", });
             }
             else
             {
-                Form = new List<string>(new string[] { "Manipulator", "Orientation " + Environment.NewLine + "& Mounting", "Motion", "Live Image", "Calibration" });
+                StepBarContent = new List<string>(new string[] { "Manipulator", "Orientation " + Environment.NewLine + "& Mounting", "Motion", "Live Image", "Calibration" });
             }
             _navigationService = navigationService;
             _navigationStore = _navigationService.GetNavigationStore();
@@ -112,7 +112,7 @@ namespace X_Guide.MVVM.ViewModel
         public void LoadCalibSetting(TypedParameter calib)
         {
             _navigationHistory.AddLast(_viewModelLocator.Create<Step2ViewModel>(calib));
-            _navigationHistory.AddLast(_viewModelLocator.Create<Step3ViewModel>(calib));
+            _navigationHistory.AddLast(_viewModelLocator.Create<Step3HikViewModel>(calib));
             _navigationHistory.AddLast(_viewModelLocator.Create<Step4ViewModel>(calib));
             _navigationHistory.AddLast(_viewModelLocator.Create<Step5ViewModel>(calib));
             _navigationHistory.AddLast(_viewModelLocator.Create<Step6ViewModel>(calib));
@@ -190,7 +190,7 @@ namespace X_Guide.MVVM.ViewModel
                 {
                     case 0: _navigationService.Navigate<Step1ViewModel>(calibPara); break;
                     case 1: _navigationService.Navigate<Step2ViewModel>(calibPara); break;
-                    case 2: await _navigationService.NavigateAsync<Step3ViewModel>(calibPara); break;
+                    case 2: await _navigationService.NavigateAsync<Step3HikViewModel>(calibPara); break;
                     case 3: _navigationService.Navigate<Step4ViewModel>(calibPara); break;
                     case 4: await _navigationService.NavigateAsync<Step5ViewModel>(calibPara); break;
                     case 5: _navigationService.Navigate<Step6ViewModel>(calibPara); break;

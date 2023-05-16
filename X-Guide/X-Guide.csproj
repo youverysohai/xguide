@@ -734,7 +734,7 @@
     <Compile Include="MVVM\ViewModel\SecurityViewModel.cs" />
     <Compile Include="MVVM\ViewModel\Step1ViewModel.cs" />
     <Compile Include="MVVM\ViewModel\Step2ViewModel.cs" />
-    <Compile Include="MVVM\ViewModel\Step3ViewModel.cs" />
+    <Compile Include="MVVM\ViewModel\Step3HikViewModel.cs" />
     <Compile Include="MVVM\ViewModel\Step4ViewModel.cs" />
     <Compile Include="MVVM\ViewModel\Step5ViewModel.cs" />
     <Compile Include="MVVM\ViewModel\Step6ViewModel.cs" />
@@ -752,8 +752,8 @@
     <Compile Include="MVVM\View\CalibrationWizardSteps\Step2.xaml.cs">
       <DependentUpon>Step2.xaml</DependentUpon>
     </Compile>
-    <Compile Include="MVVM\View\CalibrationWizardSteps\Step3.xaml.cs">
-      <DependentUpon>Step3.xaml</DependentUpon>
+    <Compile Include="MVVM\View\CalibrationWizardSteps\Step3HikView.xaml.cs">
+      <DependentUpon>Step3HikView.xaml</DependentUpon>
     </Compile>
     <Compile Include="MVVM\View\CalibrationWizardSteps\Step4.xaml.cs">
       <DependentUpon>Step4.xaml</DependentUpon>
@@ -922,7 +922,7 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="MVVM\View\CalibrationWizardSteps\Step3.xaml">
+    <Page Include="MVVM\View\CalibrationWizardSteps\Step3HikView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

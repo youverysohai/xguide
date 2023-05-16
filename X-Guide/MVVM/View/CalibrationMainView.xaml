@@ -20,8 +20,8 @@
             <DataTemplate DataType="{x:Type vms:Step2ViewModel}">
                 <stepsUI:Step2 />
             </DataTemplate>
-            <DataTemplate DataType="{x:Type vms:Step3ViewModel}">
-                <stepsUI:Step3 />
+            <DataTemplate DataType="{x:Type vms:Step3HikViewModel}">
+                <stepsUI:Step3HikView />
             </DataTemplate>
             <DataTemplate DataType="{x:Type vms:Step4ViewModel}">
                 <stepsUI:Step4 />
@@ -58,7 +58,7 @@
         <!--  Side Step bar  -->
         <Border Name="Stepbar" d:Visibility="Visible" Grid.Row="1" Grid.RowSpan="2" Grid.Column="0" CornerRadius="20 0 0 20">
 
-            <hc:StepBar Margin="10" Name="step" IsMouseSelectable="True" Dock="Left" StepChanged="step_StepChanged" StepIndex="{Binding StepIndex}" ItemsSource="{Binding Form}">
+            <hc:StepBar Margin="10" Name="step" IsMouseSelectable="True" Dock="Left" StepChanged="step_StepChanged" StepIndex="{Binding StepIndex}" ItemsSource="{Binding StepBarContent}">
 
                 <hc:StepBar.ItemTemplate>
                     <DataTemplate>
