@@ -9,6 +9,7 @@
         public int Orientation { get; set; }
         public double XOffset { get; set; }
         public double YOffset { get; set; }
+        public double JointRotationAngle { get; set; }
         public double CXOffSet { get; set; }
         public double CYOffset { get; set; }
         public double CRZOffset { get; set; }

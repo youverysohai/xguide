@@ -11,6 +11,7 @@
         public double MotionDelay { get; set; }
         public double XOffset { get; set; }
         public double YOffset { get; set; }
+        public double JointRotationAngle { get; set; }
         public double CameraXScaling { get; set; }
         public double CameraYScaling { get; set; }
         public double CRZOffset { get; set; }

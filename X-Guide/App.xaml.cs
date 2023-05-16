@@ -175,7 +175,7 @@ namespace X_Guide
                 _ = _diContainer.Resolve<IVisionService>();
                 _ = _diContainer.Resolve<ServerCommand>();
             }
-            catch (Exception ex)
+            catch
             {
                 ViewModelState viewModelState = _diContainer.Resolve<ViewModelState>();
                 viewModelState.IsCalibValid = false;
