@@ -39,6 +39,7 @@
         </Grid.ColumnDefinitions>
         <Grid.RowDefinitions>
             <RowDefinition Height="auto" />
+            <RowDefinition Height="auto" />
 
             <RowDefinition Height="16*" />
 
@@ -56,14 +57,14 @@
                      materialDesign:HintAssist.Hint="Calibration Name"></TextBox>
 
         <!--  Side Step bar  -->
-        <Border Name="Stepbar" d:Visibility="Visible" Grid.Row="1" Grid.RowSpan="2" Grid.Column="0" CornerRadius="20 0 0 20">
+        <Border Name="Stepbar" d:Visibility="Visible" Grid.Row="1" Grid.ColumnSpan="2" CornerRadius="20 0 0 20">
 
-            <hc:StepBar Margin="10" Name="step" IsMouseSelectable="True" Dock="Left" StepChanged="step_StepChanged" StepIndex="{Binding StepIndex}" ItemsSource="{Binding StepBarContent}">
+            <hc:StepBar Margin="10" Name="step" IsMouseSelectable="True" Dock="Top" StepChanged="step_StepChanged" StepIndex="{Binding StepIndex}" ItemsSource="{Binding StepBarContent}">
 
                 <hc:StepBar.ItemTemplate>
                     <DataTemplate>
 
-                        <StackPanel Cursor="Hand" Height="50">
+                        <StackPanel Cursor="Hand" Height="55">
                             <StackPanel Orientation= "Horizontal">
 
                                 <TextBlock  VerticalAlignment="Center" FontSize="16" FontWeight="Bold" HorizontalAlignment="Left" Margin="0 0 5 0">
@@ -79,12 +80,12 @@
         </Border>
         <!-- Content Steps-->
 
-        <ContentControl Grid.Row="1" Grid.Column="1" Content="{Binding CurrentViewModel}"
+        <ContentControl Grid.Row="2" Grid.Column="1" Content="{Binding CurrentViewModel}"
                          Name="ContentControl">
         </ContentControl>
 
         <!-- Buttons Next and Prev-->
-        <StackPanel Grid.Row="2" Grid.Column="1" Orientation="Horizontal" HorizontalAlignment="Center">
+        <StackPanel Grid.Row="3" Grid.Column="1" Orientation="Horizontal" HorizontalAlignment="Center">
 
             <Button Style="{DynamicResource MaterialDesignPaperButton}" Margin="10" Command="{Binding WizPrevCommand}" CommandParameter="{x:Static local:PageName.StepOne}" Width="180">
                 <Button.Content>

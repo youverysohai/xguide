@@ -2,6 +2,7 @@
                     xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
                     xmlns:ui="http://schemas.modernwpf.com/2019"
                     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                    xmlns:RadialMenu="clr-namespace:RadialMenu.Controls;assembly=RadialMenu"
                     >
     <!--related to layout and positioning of controls in the application.-->
     <!--Layout control : Grid Stack Dock Wrap Canvas...-->
@@ -89,6 +90,34 @@
         
         
     </Style>
+    <Style x:Key="FancyRadialMenuCentralItem" TargetType="RadialMenu:RadialMenuCentralItem" BasedOn="{StaticResource {x:Type RadialMenu:RadialMenuCentralItem}}">
+        <Setter Property="Background" Value="{StaticResource PrimaryBlueColor}"/>
+        <Setter Property="BorderBrush"  Value="{StaticResource SecondaryBlueColor}"/>
+        <Setter Property="BorderThickness" Value="4"/>
+        <Setter Property="Width" Value="54"/>
+        <Setter Property="Cursor" Value="Hand"/>
+        <Setter Property="Height" Value="54"/>
+
+    </Style>
+
+    <Style x:Key="FancyRadialMenuItem" TargetType="RadialMenu:RadialMenuItem" BasedOn="{StaticResource {x:Type RadialMenu:RadialMenuItem}}">
+        <Setter Property="Cursor" Value="Hand"/>
+        <!--<Setter Property="Background" Value="{StaticResource SecondaryBlueColor}"/>-->
+        <Setter Property="Padding" Value="2"/>
+        <Setter Property="InnerRadius" Value="10"/>
+        <Setter Property="OuterRadius" Value="70"/>
+        <Setter Property="ContentRadius" Value="55"/>
+
+        <!--<Setter Property="EdgeBackground" Value="{StaticResource SuccessColorBrush}"/>-->
+        <Setter Property="EdgePadding" Value="4"/>
+        <Setter Property="EdgeInnerRadius" Value="35"/>
+        <Setter Property="EdgeOuterRadius" Value="75"/>
+
+        <Setter Property="ArrowBackground" Value="{StaticResource PrimaryBlueColor}"/>
+        <Setter Property="ArrowRadius" Value="67"/>
+
+    </Style>
+
     <!-- Transparent background Image button : Z+ Z- -->
     <Style x:Key="TransparentStyle" TargetType="{x:Type Button}">
         <Setter Property="Cursor" Value="Hand"></Setter>
