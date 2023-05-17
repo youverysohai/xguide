@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using System;
 using System.Threading.Tasks;
 using ToastNotifications;
 using ToastNotifications.Messages;
@@ -12,7 +13,7 @@ using X_Guide.VisionMaster;
 
 namespace X_Guide.MVVM.ViewModel
 {
-    internal class Step6ViewModel : ViewModelBase
+    internal class Step6ViewModel : ViewModelBase, ICalibrationStep
     {
         public double XMove { get; set; }
         public double YMove { get; set; }
@@ -70,6 +71,14 @@ namespace X_Guide.MVVM.ViewModel
                 await _calibDb.Update(_mapper.Map<CalibrationModel>(Calibration));
                 _notifier.ShowSuccess($"{Calibration.Name} : {StrRetriver.Get("SC001")}");
             }
+        }
+
+        public void Register(Action action)
+        {
+        }
+
+        public void RegisterStateChange(Action<bool> action)
+        {
         }
     }
 }

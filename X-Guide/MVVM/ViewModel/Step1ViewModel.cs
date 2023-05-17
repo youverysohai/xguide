@@ -16,13 +16,18 @@ namespace X_Guide.MVVM.ViewModel
 
         private readonly CalibrationViewModel _calibration;
 
-        private event EventHandler<int> OnManipulatorChanged;
+        private event Action OnManipulatorChanged;
+
+        private event Action<bool> OnStateChanged;
 
         public ManipulatorViewModel Manipulator
         {
             get
             {
                 OnPropertyChanged(nameof(Manipulator.Id));
+                if (_calibration.Manipulator != null)
+                    OnStateChanged?.Invoke(true);
+                else OnStateChanged?.Invoke(false);
                 return _calibration.Manipulator;
             } //null
             set
@@ -37,7 +42,7 @@ namespace X_Guide.MVVM.ViewModel
                 {
                     _calibration.Manipulator = value;
                     _calibration.ResetProperties();
-                    OnManipulatorChanged?.Invoke(this, 1);
+                    OnManipulatorChanged?.Invoke();
                 }
                 OnPropertyChanged();
             }
@@ -81,14 +86,14 @@ namespace X_Guide.MVVM.ViewModel
             OnPropertyChanged(nameof(Manipulator));
         }
 
-        public void Subscribe(EventHandler<int> action)
+        public void Register(Action action)
         {
-            OnManipulatorChanged += action;
+            OnManipulatorChanged = action;
         }
 
-        public void Unsubscribe(EventHandler<int> action)
+        public void RegisterStateChange(Action<bool> action)
         {
-            OnManipulatorChanged -= action;
+            OnStateChanged = action;
         }
     }
 }
