@@ -107,7 +107,7 @@
                             </ui:NumberBox.Header>
                         </ui:NumberBox>
                         <ui:NumberBox
-                           Value="{Binding Calibration.YOffset}"
+                           Value="{Binding Calibration.YOffset, UpdateSourceTrigger=PropertyChanged}"
                             Margin="20 5"
 
                             SpinButtonPlacementMode="Inline"
