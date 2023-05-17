@@ -88,6 +88,7 @@ namespace X_Guide
             builder.RegisterType<ViewModelState>().SingleInstance();
             builder.RegisterType<DbContextFactory>().SingleInstance();
             builder.RegisterType<ManipulatorDb>().As<IManipulatorDb>();
+            builder.RegisterType<MessageService>().As<IMessageService>().SingleInstance();
             builder.RegisterType<UserDb>().As<IUserDb>();
             VisionSoftware = 1;
             switch (VisionSoftware)

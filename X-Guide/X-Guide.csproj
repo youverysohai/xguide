@@ -727,6 +727,7 @@
     <Compile Include="MVVM\ViewModel\GeneralViewModel.cs" />
     <Compile Include="MVVM\ViewModel\HalconViewModel.cs" />
     <Compile Include="MVVM\ViewModel\HikViewModel.cs" />
+    <Compile Include="MVVM\ViewModel\ICalibrationStep.cs" />
     <Compile Include="MVVM\ViewModel\IViewModelLocator.cs" />
     <Compile Include="MVVM\ViewModel\IVisionViewModel.cs" />
     <Compile Include="MVVM\ViewModel\JogRobotViewModel.cs" />
@@ -814,8 +815,10 @@
     <Compile Include="Service\ICalibrationService.cs" />
     <Compile Include="Service\IJogService.cs" />
     <Compile Include="Service\ImageService.cs" />
+    <Compile Include="Service\IMessageService.cs" />
     <Compile Include="Service\INavigationService.cs" />
     <Compile Include="Service\JogService.cs" />
+    <Compile Include="Service\MessageService.cs" />
     <Compile Include="Service\NavigationService.cs" />
     <Compile Include="Service\Communication\ServerService.cs" />
     <Compile Include="Service\DatabaseProvider\UserDb.cs" />
@@ -1182,11 +1185,11 @@
     <Resource Include="Style\ImageSource\greydown.png" />
     <Resource Include="FodyWeavers.xml" />
     <Content Include="XGuideDB.mdf">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
     <Content Include="XGuideDB_log.ldf">
       <DependentUpon>XGuideDB.mdf</DependentUpon>
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
     <Content Include="XGuideModel.Context.tt">
       <Generator>TextTemplatingFileGenerator</Generator>

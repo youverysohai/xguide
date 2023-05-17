@@ -1,12 +1,15 @@
 ﻿using Autofac;
+using AutoMapper;
 using HandyControl.Data;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Threading.Tasks;
 using X_Guide.MVVM.Command;
 using X_Guide.MVVM.Store;
 using X_Guide.MVVM.ViewModel.CalibrationWizardSteps;
 using X_Guide.Service;
+using X_Guide.Service.DatabaseProvider;
 using MessageBox = HandyControl.Controls.MessageBox;
 
 namespace X_Guide.MVVM.ViewModel
@@ -41,7 +44,7 @@ namespace X_Guide.MVVM.ViewModel
             }
         }
 
-        public LinkedList<ViewModelBase> _navigationHistory = new LinkedList<ViewModelBase>();
+        private readonly LinkedList<ViewModelBase> _navigationHistory = new LinkedList<ViewModelBase>();
 
         public LinkedList<ViewModelBase> NavigationHistory => _navigationHistory;
 
@@ -83,7 +86,7 @@ namespace X_Guide.MVVM.ViewModel
 
         public LinkedListNode<ViewModelBase> CurrentNode { get; set; }
 
-        public CalibrationMainViewModel(CalibrationViewModel calibration, INavigationService navigationService, IViewModelLocator viewModelLocator)
+        public CalibrationMainViewModel(CalibrationViewModel calibration, INavigationService navigationService, IViewModelLocator viewModelLocator, IManipulatorDb manipulatorDb, IMapper mapper)
         {
             if (App.VisionSoftware == 1)
             {
@@ -101,12 +104,27 @@ namespace X_Guide.MVVM.ViewModel
             WizPrevCommand = new RelayCommand(WizPrev, (o) => CanExecutePrev);
             CancelCommand = new RelayCommand(CancelCalib);
             Calibration = calibration;
-            var calibPara = new TypedParameter(typeof(CalibrationViewModel), Calibration);
-            Step1ViewModel Step1 = viewModelLocator.Create<Step1ViewModel>(calibPara) as Step1ViewModel;
-            /*            Step1.SelectedItemChangedEvent += OnSelectedItemChangedEvent;*/
+            //calibration.Manipulator = mapper.Map<ManipulatorViewModel>(manipulatorDb.Get(1));
 
-            _navigationService.Navigate(Step1);
+            TypedParameter calibrationConfig = new TypedParameter(typeof(CalibrationViewModel), Calibration);
+            ICalibrationStep step1 = viewModelLocator.Create<Step1ViewModel>(calibrationConfig) as Step1ViewModel;
+            step1.Subscribe(ClearCalibrationStep);
+
+            _navigationService.Navigate(step1 as ViewModelBase);
             CurrentNode = _navigationHistory.AddLast(CurrentViewModel);
+        }
+
+        private void ClearCalibrationStep(object sender, int step)
+        {
+            Debug.WriteLine("ClearCalibrationStep");
+
+            var disposeNode = _navigationHistory.Last;
+            while (CurrentNode != disposeNode)
+            {
+                disposeNode.Value.Dispose();
+                NavigationHistory.Remove(disposeNode);
+                disposeNode = _navigationHistory.Last;
+            }
         }
 
         public void LoadCalibSetting(TypedParameter calib)
@@ -217,12 +235,6 @@ namespace X_Guide.MVVM.ViewModel
         private void OnCanExecuteChange(object sender, bool e)
         {
             CanExecuteNext = e;
-        }
-
-        private void OnSelectedItemChangedEvent()
-        {
-            NavigationHistory.Clear();
-            CurrentNode = NavigationHistory.AddLast(CurrentViewModel);
         }
 
         private void OnCurrentViewModelChanged()

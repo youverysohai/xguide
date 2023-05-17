@@ -13,4 +13,5 @@
     <system:String x:Key="CL000">CL-000: Communication error: Unable to connect to client.</system:String>
     <system:String x:Key="SC000">The calibration output and settings have been added.</system:String>
     <system:String x:Key="SC001">The calibration output and settings have been saved.</system:String>
+    <system:String x:Key="WA000">Please note that by changing the manipulator setting, all associated calibration data will be permanently lost.</system:String>
 </ResourceDictionary>
