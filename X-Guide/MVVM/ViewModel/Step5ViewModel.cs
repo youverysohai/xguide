@@ -51,7 +51,7 @@ namespace X_Guide.MVVM.ViewModel
         public bool IsLoading { get; set; } = true;
 
         public RelayCommand JogCommand { get; }
-        public RelayCommand CloseRadialMenuCommand { get; }
+       
         public int JogDistance { get; set; }
 
         public Step5ViewModel(CalibrationViewModel calibrationConfig, IServerService serverService, IVisionService visionService, IJogService jogService, IVisionViewModel visionView)
@@ -66,13 +66,9 @@ namespace X_Guide.MVVM.ViewModel
             _serverService.ClientConnectionChange += OnConnectionChange;
             VisionView.StartLiveImage();
             //InitView();
-            CloseRadialMenuCommand = new RelayCommand(CloseRadialMenu);
+            
         }
 
-        private void CloseRadialMenu(object obj)
-        {
-            if (IsXYOpen) { IsXYOpen = false; } else { IsXYOpen = true; }
-        }
 
         public async void InitView()
         {
@@ -134,21 +130,14 @@ namespace X_Guide.MVVM.ViewModel
             _jogService.Enqueue(command);
         }
 
-        public new void Dispose()
+        public override void Dispose()
         {
             _serverService.ClientConnectionChange -= OnConnectionChange;
             base.Dispose();
         }
 
 
-        private bool _isXYOpen = true;
-
-        public bool IsXYOpen
-        {
-            get { return _isXYOpen; }
-            set { _isXYOpen = value;
-                OnPropertyChanged(); }
-        }
+   
 
     }
 }

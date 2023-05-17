@@ -18,7 +18,7 @@
         public double MotionDelay { get; set; }
         public double Mm_per_pixel { get; set; }
         public string Procedure { get; set; }
-    }
+   
 
     public void ResetProperties()
     {
@@ -42,5 +42,6 @@
         MotionDelay = 0.0;
         Mm_per_pixel = 0.0;
         Procedure = null;
+    }
     }
 }
