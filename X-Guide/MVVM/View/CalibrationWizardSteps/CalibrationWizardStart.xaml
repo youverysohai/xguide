@@ -30,7 +30,7 @@
         <!--x:Static materialDesign:DrawerHost.CloseDrawerCommand-->
     </UserControl.Resources>
 
-    <materialDesign:Card Style="{DynamicResource CardLayout}">
+     
         <materialDesign:DrawerHost OpenMode="Standard">
             <materialDesign:DrawerHost.LeftDrawerContent>
                 <hc:ScrollViewer VerticalScrollBarVisibility="Visible">
@@ -88,5 +88,5 @@
                             IsActive="False"   MessageQueue="{materialDesign:MessageQueue}" />
             </Grid>
         </materialDesign:DrawerHost>
-    </materialDesign:Card>
+     
 </UserControl>

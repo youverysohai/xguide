@@ -24,5 +24,10 @@ namespace X_Guide.MVVM.View.CalibrationWizardSteps
         private void TextBox_TextChanged(object sender, TextChangedEventArgs e)
         {
         }
+
+        private void RadialMenuItem_Click(object sender, System.Windows.RoutedEventArgs e)
+        {
+
+        }
     }
 }
