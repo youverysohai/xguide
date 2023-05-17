@@ -36,6 +36,7 @@ namespace X_Guide.MVVM.ViewModel
                 else if (_messageService.ShowWarningMessage(StrRetriver.Get("WA000")).Equals(MessageBoxResult.Yes))
                 {
                     _calibration.Manipulator = value;
+                    _calibration.ResetProperties();
                     OnManipulatorChanged?.Invoke(this, 1);
                 }
                 OnPropertyChanged();
