@@ -1,11 +1,6 @@
 ﻿using AutoMapper;
-using System;
-using System.Collections.Generic;
 using System.Configuration;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using X_Guide.MVVM.ViewModel;
+using X_Guide.MVVM.Model;
 
 namespace X_Guide.Service.DatabaseProvider
 {
@@ -17,15 +12,15 @@ namespace X_Guide.Service.DatabaseProvider
         {
             _configuration = configuration;
         }
-        public GeneralViewModel Get()
+
+        public GeneralModel Get()
         {
-            return MapTo<GeneralViewModel>((General)_configuration.GetSection("GeneralSetting"));
-     
+            return MapTo<GeneralModel>((GeneralConfiguration)_configuration.GetSection("GeneralSetting"));
         }
 
-        public void Update(GeneralViewModel generalVm)
+        public void Update(GeneralModel generalVm)
         {
-            var general = (General)_configuration.GetSection("GeneralSetting");
+            var general = (GeneralConfiguration)_configuration.GetSection("GeneralSetting");
             Map(generalVm, general);
             _configuration.Save();
         }

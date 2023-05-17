@@ -61,6 +61,7 @@
     <ErrorReport>prompt</ErrorReport>
     <Prefer32Bit>true</Prefer32Bit>
     <DocumentationFile>bin\x64\Debug\X-Guide.xml</DocumentationFile>
+    <NoWarn>1591</NoWarn>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Release|x64'">
     <OutputPath>bin\x64\Release\</OutputPath>
@@ -73,8 +74,9 @@
     <Prefer32Bit>true</Prefer32Bit>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="halcondotnet">
-      <HintPath>..\..\..\..\..\..\Program Files\MVTec\HALCON-22.11-Steady\bin\dotnet35\halcondotnet.dll</HintPath>
+    <Reference Include="halcondotnet, Version=22.11.1.0, Culture=neutral, PublicKeyToken=4973bed59ddbf2b8, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>bin\halcondotnet.dll</HintPath>
     </Reference>
     <Reference Include="hdevenginedotnet">
       <HintPath>..\..\..\..\..\..\Program Files\MVTec\HALCON-22.11-Steady\bin\dotnet35\hdevenginedotnet.dll</HintPath>
@@ -316,6 +318,7 @@
     <Reference Include="Apps.ColorFun, Version=1.0.0.0, Culture=neutral, PublicKeyToken=cfdb8c430127f15b, processorArchitecture=MSIL">
       <Private>False</Private>
     </Reference>
+    <Reference Include="System.Design" />
     <Reference Include="VM.Core, Version=1.0.0.0, Culture=neutral, PublicKeyToken=61600122bc9264b9, processorArchitecture=MSIL">
       <Private>False</Private>
     </Reference>
@@ -591,7 +594,7 @@
       <HintPath>..\..\..\..\..\..\Program Files\VisionMaster4.1.0\Development\V4.x\ComControls\bin\x86\VMControls.WPF.dll</HintPath>
     </Reference>
     <Reference Include="System">
-      <HintPath>..\..\..\..\..\..\Program Files (x86)\Reference Assemblies\Microsoft\Framework\.NETFramework\v4.7.1\System.dll</HintPath>
+      <HintPath>..\..\..\..\..\..\Program Files (x86)\Reference Assemblies\Microsoft\Framework\.NETFramework\v4.8\System.dll</HintPath>
     </Reference>
     <Reference Include="System.Data" />
     <Reference Include="System.Xml" />
@@ -613,8 +616,12 @@
       <SubType>Designer</SubType>
     </ApplicationDefinition>
     <Compile Include="ADT\QueueProcessor.cs" />
+    <Compile Include="Aspect\ApplicationRestartAspect.cs" />
+    <Compile Include="Aspect\AsyncErrorHandler.cs" />
     <Compile Include="Aspect\CheckServerCanExecute.cs" />
+    <Compile Include="Aspect\ExceptionHandlingAspect.cs" />
     <Compile Include="Aspect\GlobalAspects.cs" />
+    <Compile Include="Aspect\ThrowExceptionAspect.cs" />
     <Compile Include="Converter\BooleanToVisibilityConverter.cs" />
     <Compile Include="Converter\ByteArrayToImageConverter.cs" />
     <Compile Include="Calibration.cs">
@@ -658,6 +665,9 @@
     <Compile Include="CustomControls\CustomLoadingControl.xaml.cs">
       <DependentUpon>CustomLoadingControl.xaml</DependentUpon>
     </Compile>
+    <Compile Include="CustomControls\HalconSmartControl.xaml.cs">
+      <DependentUpon>HalconSmartControl.xaml</DependentUpon>
+    </Compile>
     <Compile Include="CustomControls\HikVmRealTimeAcqControl.xaml.cs">
       <DependentUpon>HikVmRealTimeAcqControl.xaml</DependentUpon>
     </Compile>
@@ -684,7 +694,7 @@
     <Compile Include="FileLogger.cs" />
     <Compile Include="FileLoggerExtensions.cs" />
     <Compile Include="FileLoggerProvider.cs" />
-    <Compile Include="General.cs" />
+    <Compile Include="GeneralConfiguration.cs" />
     <Compile Include="HelperClass\BitMapHelper.cs" />
     <Compile Include="HelperClass\Timer.cs">
       <SubType>Component</SubType>
@@ -697,30 +707,37 @@
     <Compile Include="MappingConfiguration\GeneralProfile.cs" />
     <Compile Include="MappingConfiguration\ManipulatorProfile.cs" />
     <Compile Include="MappingConfiguration\VisionProfile.cs" />
+    <Compile Include="MVVM\Command\AsyncRelayCommand.cs" />
     <Compile Include="MVVM\Command\BrowseFileDialogCommand.cs" />
     <Compile Include="MVVM\Command\RelayCommand.cs" />
     <Compile Include="MVVM\Command\VideoCommand.cs" />
     <Compile Include="MVVM\DBContext\DbContextFactory.cs" />
     <Compile Include="MVVM\DTO\UserDTO.cs" />
+    <Compile Include="MVVM\Model\CalibrationData.cs" />
     <Compile Include="MVVM\Model\CalibrationModel.cs" />
     <Compile Include="MVVM\Model\ManipulatorModel.cs" />
     <Compile Include="MVVM\Model\Point.cs" />
     <Compile Include="MVVM\Model\UserModel.cs" />
     <Compile Include="Enums\PageName.cs" />
     <Compile Include="MVVM\Model\VisionGuided.cs" />
-    <Compile Include="MVVM\Model\VisionModel.cs" />
+    <Compile Include="MVVM\Model\HikVisionModel.cs" />
     <Compile Include="MVVM\ViewModel\CalibrationWizardStartViewModel.cs" />
     <Compile Include="MVVM\ViewModel\CalibrationMainViewModel.cs" />
     <Compile Include="MVVM\ViewModel\ErrorViewModel.cs" />
     <Compile Include="MVVM\ViewModel\GeneralViewModel.cs" />
+    <Compile Include="MVVM\ViewModel\HalconViewModel.cs" />
+    <Compile Include="MVVM\ViewModel\HikViewModel.cs" />
+    <Compile Include="MVVM\ViewModel\ICalibrationStep.cs" />
     <Compile Include="MVVM\ViewModel\IViewModelLocator.cs" />
+    <Compile Include="MVVM\ViewModel\IVisionViewModel.cs" />
     <Compile Include="MVVM\ViewModel\JogRobotViewModel.cs" />
     <Compile Include="MVVM\ViewModel\ManipulatorViewModel.cs" />
+    <Compile Include="MVVM\ViewModel\OperationViewModel.cs" />
     <Compile Include="MVVM\ViewModel\RenderControlViewModel.cs" />
     <Compile Include="MVVM\ViewModel\SecurityViewModel.cs" />
     <Compile Include="MVVM\ViewModel\Step1ViewModel.cs" />
     <Compile Include="MVVM\ViewModel\Step2ViewModel.cs" />
-    <Compile Include="MVVM\ViewModel\Step3ViewModel.cs" />
+    <Compile Include="MVVM\ViewModel\Step3HikViewModel.cs" />
     <Compile Include="MVVM\ViewModel\Step4ViewModel.cs" />
     <Compile Include="MVVM\ViewModel\Step5ViewModel.cs" />
     <Compile Include="MVVM\ViewModel\Step6ViewModel.cs" />
@@ -728,7 +745,7 @@
     <Compile Include="MVVM\ViewModel\UserLoginViewModel.cs" />
     <Compile Include="MVVM\ViewModel\CalibrationViewModel.cs" />
     <Compile Include="MVVM\ViewModel\ViewModelLocator.cs" />
-    <Compile Include="MVVM\ViewModel\VisionViewModel.cs" />
+    <Compile Include="MVVM\ViewModel\HikVisionViewModel.cs" />
     <Compile Include="MVVM\View\CalibrationWizardSteps\CalibrationWizardStart.xaml.cs">
       <DependentUpon>CalibrationWizardStart.xaml</DependentUpon>
     </Compile>
@@ -738,8 +755,8 @@
     <Compile Include="MVVM\View\CalibrationWizardSteps\Step2.xaml.cs">
       <DependentUpon>Step2.xaml</DependentUpon>
     </Compile>
-    <Compile Include="MVVM\View\CalibrationWizardSteps\Step3.xaml.cs">
-      <DependentUpon>Step3.xaml</DependentUpon>
+    <Compile Include="MVVM\View\CalibrationWizardSteps\Step3HikView.xaml.cs">
+      <DependentUpon>Step3HikView.xaml</DependentUpon>
     </Compile>
     <Compile Include="MVVM\View\CalibrationWizardSteps\Step4.xaml.cs">
       <DependentUpon>Step4.xaml</DependentUpon>
@@ -753,8 +770,17 @@
     <Compile Include="MVVM\View\CalibrationMainView.xaml.cs">
       <DependentUpon>CalibrationMainView.xaml</DependentUpon>
     </Compile>
+    <Compile Include="MVVM\View\HalconView.xaml.cs">
+      <DependentUpon>HalconView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="MVVM\View\HikView.xaml.cs">
+      <DependentUpon>HikView.xaml</DependentUpon>
+    </Compile>
     <Compile Include="MVVM\View\JogRobotView.xaml.cs">
       <DependentUpon>JogRobotView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="MVVM\View\OperationView.xaml.cs">
+      <DependentUpon>OperationView.xaml</DependentUpon>
     </Compile>
     <Compile Include="MVVM\View\SecurityView.xaml.cs">
       <DependentUpon>SecurityView.xaml</DependentUpon>
@@ -765,6 +791,7 @@
     <Compile Include="MVVM\View\UserLoginView.xaml.cs">
       <DependentUpon>UserLoginView.xaml</DependentUpon>
     </Compile>
+    <Compile Include="MVVM\View\ViewTemplateSelector.cs" />
     <Compile Include="Service\AuthenticationService.cs" />
     <Compile Include="Service\BackgroundService.cs" />
     <Compile Include="Service\CalibrationService.cs" />
@@ -783,12 +810,15 @@
     <Compile Include="Service\DatabaseProvider\ManipulatorDb.cs" />
     <Compile Include="Service\DatabaseProvider\IManipulatorDb.cs" />
     <Compile Include="Service\Communication\ServerCommand.cs" />
-    <Compile Include="Service\DatabaseProvider\VisionDb.cs" />
+    <Compile Include="Service\DatabaseProvider\LegacyVisionDb.cs" />
+    <Compile Include="Service\DatabaseProvider\HikVisionDb.cs" />
     <Compile Include="Service\ICalibrationService.cs" />
     <Compile Include="Service\IJogService.cs" />
     <Compile Include="Service\ImageService.cs" />
+    <Compile Include="Service\IMessageService.cs" />
     <Compile Include="Service\INavigationService.cs" />
     <Compile Include="Service\JogService.cs" />
+    <Compile Include="Service\MessageService.cs" />
     <Compile Include="Service\NavigationService.cs" />
     <Compile Include="Service\Communication\ServerService.cs" />
     <Compile Include="Service\DatabaseProvider\UserDb.cs" />
@@ -809,9 +839,10 @@
     <Compile Include="Vision.cs">
       <DependentUpon>XGuideModel.tt</DependentUpon>
     </Compile>
-    <Compile Include="VisionMaster\HalcomVisionService.cs" />
+    <Compile Include="HikVisionConfiguration.cs" />
+    <Compile Include="VisionMaster\HalconVisionService.cs" />
     <Compile Include="VisionMaster\IVisionService.cs" />
-    <Compile Include="VisionMaster\HIKVisionService.cs" />
+    <Compile Include="VisionMaster\HikVisionService.cs" />
     <Compile Include="XGuideModel.Context.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -868,6 +899,10 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="CustomControls\HalconSmartControl.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="CustomControls\HikVmRealTimeAcqControl.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -892,7 +927,7 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="MVVM\View\CalibrationWizardSteps\Step3.xaml">
+    <Page Include="MVVM\View\CalibrationWizardSteps\Step3HikView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -905,6 +940,14 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="MVVM\View\CalibrationWizardSteps\Step6.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="MVVM\View\HalconView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="MVVM\View\HikView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -925,6 +968,10 @@
       <SubType>Code</SubType>
     </Compile>
     <Page Include="MVVM\View\CalibrationMainView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="MVVM\View\OperationView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -981,7 +1028,7 @@
   <ItemGroup>
     <Compile Include="MVVM\Command\CommandBase.cs" />
     <Compile Include="MVVM\Command\NavigateCommand.cs" />
-    <Compile Include="MVVM\Model\SettingModel.cs" />
+    <Compile Include="MVVM\Model\GeneralModel.cs" />
     <Compile Include="MVVM\Store\NavigationStore.cs" />
     <Compile Include="MVVM\ViewModel\MainViewModel.cs" />
     <Compile Include="MVVM\ViewModel\SettingViewModel.cs" />
@@ -1028,7 +1075,7 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="App.config">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
   </ItemGroup>
   <ItemGroup>
@@ -1047,8 +1094,11 @@
     <PackageReference Include="EntityFramework">
       <Version>6.4.4</Version>
     </PackageReference>
+    <PackageReference Include="FluentValidation">
+      <Version>11.5.2</Version>
+    </PackageReference>
     <PackageReference Include="Fody">
-      <Version>6.6.4</Version>
+      <Version>6.7.0</Version>
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
       <PrivateAssets>all</PrivateAssets>
     </PackageReference>
@@ -1064,8 +1114,8 @@
     <PackageReference Include="MaterialDesignThemes.Wpf">
       <Version>1.0.1</Version>
     </PackageReference>
-    <PackageReference Include="MethodDecorator.Fody">
-      <Version>1.1.1</Version>
+    <PackageReference Include="MethodBoundaryAspect.Fody">
+      <Version>2.0.148</Version>
     </PackageReference>
     <PackageReference Include="Microsoft.CodeAnalysis.CSharp">
       <Version>4.5.0</Version>

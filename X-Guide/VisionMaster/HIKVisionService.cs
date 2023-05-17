@@ -1,4 +1,5 @@
-﻿using System;
+﻿using HalconDotNet;
+using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
@@ -13,21 +14,19 @@ using Timer = X_Guide.HelperClass.Timer;
 
 namespace X_Guide.VisionMaster
 {
-    public class HIKVisionService : IVisionService
+    public class HikVisionService : IVisionService
     {
         private readonly IClientService _clientService;
+        private readonly string _solutionPath;
         private CancellationTokenSource _cts;
 
         public string Procedure { get; set; }
 
-        public HIKVisionService(IClientService clientService)
+        public HikVisionService(IClientService clientService, string solutionPath)
         {
             _clientService = clientService;
-        }
-
-        public async void ConnectServer()
-        {
-            await _clientService.ConnectServer();
+            _solutionPath = solutionPath;
+            ImportSol(_solutionPath);
         }
 
         /// <inheritdoc/>
@@ -36,9 +35,9 @@ namespace X_Guide.VisionMaster
         {
             await _clientService.WriteDataAsync($"XGUIDE,{Procedure}");
             _cts = new CancellationTokenSource();
-            var timer = new Timer(5000, (s, o) => _cts.Cancel());
+            var timer = new Timer(20000, (s, o) => _cts.Cancel());
             timer.Start();
-            Point point = await _clientService.RegisterSingleRequestHandler(GetVisCenterEvent, _cts.Token) ?? throw new Exception(StrRetriver.Get("VI000"));
+            Point point = await _clientService.RegisterSingleRequestHandler(GetVisCenterEvent, _cts.Token);
             timer.Dispose();
             Debug.WriteLine(point);
             return point;
@@ -50,7 +49,7 @@ namespace X_Guide.VisionMaster
 
             if (data.Length == 4)
             {
-                if (data[0] == "1")
+                if (data[1] != "")
                 {
                     return new Point(double.Parse(data[1]), -double.Parse(data[2]), double.Parse(data[3]));
                 }
@@ -59,14 +58,17 @@ namespace X_Guide.VisionMaster
                     return null;
                 }
             }
-            throw new Exception("Data not found!");
+            throw new Exception($"{this} : Data not found!");
         }
 
-        public List<VmProcedure> GetAllProcedures()
+        public async Task<List<VmProcedure>> GetAllProcedures()
         {
             List<VmProcedure> vmProcedure = new List<VmProcedure>();
-            VmSolution.Instance.GetAllProcedureObjects(ref vmProcedure);
-            return vmProcedure;
+            return await Task.Run(() =>
+            {
+                VmSolution.Instance.GetAllProcedureObjects(ref vmProcedure);
+                return vmProcedure;
+            });
         }
 
         public VmProcedure GetProcedure(string name)
@@ -76,6 +78,10 @@ namespace X_Guide.VisionMaster
 
         public List<VmModule> GetModules(VmProcedure vmProcedure)
         {
+            if (vmProcedure is null)
+            {
+                throw new ArgumentNullException("Procedure is null");
+            }
             return vmProcedure.Modules.ToList();
         }
 
@@ -85,10 +91,9 @@ namespace X_Guide.VisionMaster
         }
 
         /// <inheritdoc/>
-
-        public async Task ImportSol(string filepath)
+        ///
+        public void ImportSol(string filepath)
         {
-            //filepath = @"C:\Users\Xlent_XIR02\Downloads\TestGlobal.sol";
             if (!File.Exists(filepath))
             {
                 throw new Exception(StrRetriver.Get("VI002"));
@@ -97,44 +102,41 @@ namespace X_Guide.VisionMaster
             {
                 throw new Exception(StrRetriver.Get("VI003"));
             }
-            await Task.Run(() =>
-           {
-               try
-               {
-                   VmSolution.Load(filepath);
-               }
-               catch
-               {
-                   throw new CriticalErrorException(StrRetriver.Get("C000"));
-               }
-           });
+
+            try
+            {
+                if (VmSolution.Instance.SolutionPath != filepath)
+                {
+                    VmSolution.Load(filepath);
+                    _clientService.ConnectServer();
+                }
+            }
+            catch
+            {
+                throw new CriticalErrorException(StrRetriver.Get("C000"));
+            }
         }
 
-        public void RunOnceAndSaveImage()
+        public async Task ImportSolAsync(string filepath)
         {
-            throw new NotImplementedException();
+            await Task.Run(() => ImportSol(filepath));
         }
 
         /// <inheritdoc/>
 
         public async Task<IVmModule> RunProcedure(string name, bool continuous = false)
         {
-            return await Task.Run(() =>
-            {
-                if (!(VmSolution.Instance[name] is VmProcedure procedure))
-                {
-                    return null;
-                }
+            if (!(VmSolution.Instance[name] is VmProcedure procedure)) return null;
+            if (procedure.ContinuousRunEnable) return procedure;
 
-                if (continuous) procedure.ContinuousRunEnable = true;
-                else
-                {
-                    procedure.Run();
-                }
+            if (continuous) procedure.ContinuousRunEnable = true;
+            else procedure.Run();
+            return procedure;
+        }
 
-                Procedure = name;
-                return procedure;
-            });
+        public HObject GetImage()
+        {
+            throw new NotImplementedException();
         }
     }
 }

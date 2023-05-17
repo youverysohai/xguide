@@ -1,19 +1,13 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Input;
-using System.Windows.Threading;
 
 namespace X_Guide.MVVM.Command
 {
     public class RelayCommand : ICommand
     {
-
         private readonly Action<object> _execute;
         private readonly Func<object, bool> _canExecute;
-        
 
         public event EventHandler CanExecuteChanged;
 
@@ -22,8 +16,6 @@ namespace X_Guide.MVVM.Command
             _execute = execute;
             _canExecute = canExecute;
         }
-
-    
 
         public bool CanExecute(object parameter)
         {
@@ -38,9 +30,18 @@ namespace X_Guide.MVVM.Command
         public void OnCanExecuteChanged()
         {
             CanExecuteChanged?.Invoke(this, EventArgs.Empty);
+        }
 
-
-           
+        public static RelayCommand FromAsyncRelayCommand(Func<object, Task> execute, Func<object, bool> canExecute = null)
+        {
+            return new RelayCommand(async (parameter) =>
+            {
+                try
+                {
+                    await execute(parameter);
+                }
+                catch { }
+            }, canExecute);
         }
     }
 }

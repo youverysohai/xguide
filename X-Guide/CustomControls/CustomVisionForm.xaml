@@ -13,38 +13,29 @@
                xmlns:ui="http://schemas.modernwpf.com/2019">
 
     <ui:SimpleStackPanel Orientation="Vertical">
+        <!--Row 1 Vision Software-->
 
         <!--Row 0 Name-->
-        <TextBlock  Text="Name" Style="{DynamicResource LabelTextBlock}" />
-        <TextBox Text="{Binding Vision.Name,ElementName=CustVisionForm}"
-                 x:Name="NameTextBox" Grid.Row="0" Grid.Column="1" VerticalAlignment="Center" Margin="5" Width="150" HorizontalAlignment="Left" />
 
-        <!--Row 2 Solution Path-->
-        <TextBlock Text="Vision Solution Path (.sol)"  Style="{DynamicResource LabelTextBlock}" />
-        <ui:SimpleStackPanel Orientation="Horizontal">
-            <TextBox x:Name="NewVisionPathTextBox" Grid.Row="2" Grid.Column="1" Margin="5" Text="{Binding Vision.Filepath,ElementName=CustVisionForm}" VerticalAlignment="Center" MinWidth="320" ToolTip="OpenFileDialog" />
-            <local:CustomBrowse Path="{Binding Vision.Filepath, ElementName=CustVisionForm, Mode=TwoWay}" Filter="VM Sol File|*.sol*" />
+        <ui:SimpleStackPanel x:Name="Fields">
+
+            <!--Row 2 Solution Path-->
+            <TextBlock Text="Vision Solution Path (.sol)"  Style="{DynamicResource LabelTextBlock}" />
+            <ui:SimpleStackPanel Orientation="Horizontal">
+                <TextBox x:Name="NewVisionPathTextBox" Grid.Row="2" Grid.Column="1" Margin="5" Text="{Binding Vision.Filepath,ElementName=CustVisionForm}" VerticalAlignment="Center" MinWidth="320" ToolTip="OpenFileDialog" />
+                <local:CustomBrowse Path="{Binding Vision.Filepath, ElementName=CustVisionForm, Mode=TwoWay}" Filter="VM Sol File|*.sol*" />
+            </ui:SimpleStackPanel>
+
+            <!--Row 3 IP-->
+            <TextBlock Text="IP Address" Style="{DynamicResource LabelTextBlock}" />
+            <xCust:CustomIpInput Ip="{Binding Vision.Ip, ElementName=CustVisionForm}" />
+            <!-- Row 4 Port -->
+            <TextBlock  Text="Port" Style="{DynamicResource LabelTextBlock}" />
+            <ui:NumberBox Width="150" HorizontalAlignment="Left" x:Name="PortTextBox" SpinButtonPlacementMode="Compact"  Value="{Binding Vision.Port, ElementName=CustVisionForm}" Margin="5"  VerticalAlignment="Center" />
+
+            <!-- Row 4 Terminator -->
+            <TextBlock  Text="Terminator " Style="{DynamicResource LabelTextBlock}" />
+            <local:TTypeCombo Terminator="{Binding Vision.Terminator,ElementName=CustVisionForm}" />
         </ui:SimpleStackPanel>
-
-        <!--Row 3 IP-->
-        <TextBlock Text="IP Address" Style="{DynamicResource LabelTextBlock}" />
-        <xCust:CustomIpInput Ip="{Binding Vision.Ip, ElementName=CustVisionForm}" />
-        <!-- Row 4 Port -->
-        <TextBlock  Text="Port" Style="{DynamicResource LabelTextBlock}" />
-        <ui:NumberBox Width="150" HorizontalAlignment="Left" x:Name="PortTextBox" SpinButtonPlacementMode="Compact"  Value="{Binding Vision.Port, ElementName=CustVisionForm}" Margin="5"  VerticalAlignment="Center" />
-
-        <!-- Row 4 Terminator -->
-        <TextBlock  Text="Terminator " Style="{DynamicResource LabelTextBlock}" />
-        <local:TTypeCombo Terminator="{Binding Vision.Terminator,ElementName=CustVisionForm}" />
-        <!--Row 1 Vision Software-->
-        <TextBlock Text="Vision Software" Style="{DynamicResource LabelTextBlock}" />
-        <ComboBox
-                                        MinWidth="150"
-                                        Margin="5"
-            ItemsSource="{Binding Source={StaticResource SoftwareType}}"
-            DisplayMemberPath="Description"
-            SelectedValue="{Binding Vision.Software, ElementName=CustVisionForm}"
-            SelectedValuePath="Value">
-        </ComboBox>
     </ui:SimpleStackPanel>
 </UserControl>

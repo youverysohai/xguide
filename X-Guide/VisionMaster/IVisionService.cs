@@ -8,8 +8,6 @@ namespace X_Guide.VisionMaster
 {
     public interface IVisionService
     {
-        void ConnectServer();
-
         /// <summary>
         /// Sends a command to the client service to get the visual center point.
         /// Waits for a response from the client service and returns the center point.
@@ -24,7 +22,7 @@ namespace X_Guide.VisionMaster
         /// </summary>
         /// <param name="filepath">The path to the solution file to import.</param>
         /// <exception cref="System.TypeInitializationException">Thrown if there is an error initializing the VmSolution class.</exception>
-        Task ImportSol(string filepath);
+        Task ImportSolAsync(string filepath);
 
         /// <summary>
         /// Runs the procedure with the specified name and returns an instance of IVmModule.
@@ -35,13 +33,9 @@ namespace X_Guide.VisionMaster
         /// <exception cref="System.InvalidOperationException">Thrown if the specified procedure is not found.</exception>
         Task<IVmModule> RunProcedure(string name, bool continuous = false);
 
-        List<VmProcedure> GetAllProcedures();
-
         List<VmModule> GetModules(VmProcedure vmProcedure);
 
         VmProcedure GetProcedure(string name);
-
-        void RunOnceAndSaveImage();
 
         VmModule GetCameras();
     }

@@ -1,55 +1,44 @@
-﻿using Microsoft.CodeAnalysis.CSharp;
-using System;
+﻿using System;
 using System.Collections.Concurrent;
-using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
 using System.Net;
 using System.Net.Sockets;
-using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
-using System.Timers;
-using System.Windows;
 using System.Windows.Threading;
-using X_Guide.Aspect;
 using X_Guide.CustomEventArgs;
-using X_Guide.MVVM.ViewModel.CalibrationWizardSteps;
 using X_Guide.Service;
 using X_Guide.Service.Communication;
-using X_Guide.Service.DatabaseProvider;
-using Xlent_Vision_Guided;
 
 namespace X_Guide.Communication.Service
 {
-    [AttributeUsage(AttributeTargets.Method)]
     public class ServerService : TCPBase, IServerService
     {
-
         private int _port { get; }
         private IPAddress _ip { get; }
 
-        private BackgroundService searchClient;
+        private readonly BackgroundService searchClient;
         private TcpListener _server;
         private bool _canExecute = false;
         private bool started = false;
+
         public event EventHandler<TcpClientEventArgs> ClientEvent;
+
         public event EventHandler<TcpListenerEventArgs> ListenerEvent;
+
         public event EventHandler<bool> ClientConnectionChange;
-       
 
         private readonly ConcurrentDictionary<int, TcpClientInfo> _connectedClient = new ConcurrentDictionary<int, TcpClientInfo>();
 
-        CancellationTokenSource cts;
+        private CancellationTokenSource cts;
 
-
-        public ServerService(IPAddress ip, int port, string terminator, ICalibrationDb calibrationDb, IClientService clientService) : base(terminator)
+        public ServerService(IPAddress ip, int port, string terminator) : base(terminator)
         {
             _port = port;
             _ip = ip;
             searchClient = new BackgroundService(SearchForClient, true);
             searchClient.Start();
-
         }
 
         private void SetValid(bool valid)
@@ -58,14 +47,11 @@ namespace X_Guide.Communication.Service
             {
                 _canExecute = valid;
                 Dispatcher.CurrentDispatcher.Invoke(() => ClientConnectionChange?.Invoke(this, valid));
-              
-         
             }
         }
 
         private void SearchForClient()
         {
-
             if (_connectedClient.Count == 0)
             {
                 SetValid(false);
@@ -73,7 +59,6 @@ namespace X_Guide.Communication.Service
             else
             {
                 SetValid(true);
-                
             }
         }
 
@@ -87,7 +72,6 @@ namespace X_Guide.Communication.Service
             cts.Cancel();
         }
 
-
         public async Task Start()
         {
             cts = new CancellationTokenSource();
@@ -97,7 +81,7 @@ namespace X_Guide.Communication.Service
             {
                 _server.Start();
                 started = true;
-          
+
                 CancellationToken sct = cts.Token;
 
                 while (!cts.IsCancellationRequested)
@@ -107,7 +91,6 @@ namespace X_Guide.Communication.Service
                     Debug.WriteLine("Client connected.");
 
                     _connectedClient.TryAdd(client.GetHashCode(), new TcpClientInfo(client));
-
 
                     // Handle the client connection in a separate task.
 #pragma warning disable CS4014 // This warning has to be suppressed to disallow the await keyword from blocking the task
@@ -125,10 +108,8 @@ namespace X_Guide.Communication.Service
                 started = false;
                 ListenerEvent?.Invoke(this, new TcpListenerEventArgs(_server));
             }
-
         }
 
-   
         public void DisposeClient(TcpClient client)
         {
             client.Close();
@@ -136,7 +117,6 @@ namespace X_Guide.Communication.Service
             ClientEvent?.Invoke(this, new TcpClientEventArgs(client));
             client.Dispose();
         }
-
 
         public ConcurrentDictionary<int, TcpClientInfo> GetConnectedClient()
         {
@@ -149,7 +129,6 @@ namespace X_Guide.Communication.Service
             TcpClientInfo tcpClientInfo;
             _connectedClient.TryGetValue(tcpClient.GetHashCode(), out tcpClientInfo);
             return tcpClientInfo;
-
         }
 
         public void SetServerReadTerminator(string terminator)
@@ -157,20 +136,9 @@ namespace X_Guide.Communication.Service
             Terminator = terminator;
         }
 
-        [CheckServerCanExecute("_canExecute")]
         public async Task ServerWriteDataAsync(string data)
         {
             await WriteDataAsync(data, _connectedClient.FirstOrDefault().Value.TcpClient.GetStream());
         }
-
-    
     }
 }
-
-
-
-
-
-
-
-

@@ -1,9 +1,5 @@
-﻿using IMVSCircleFindModuCs;
-using System;
-using System.Threading.Tasks;
-using VM.Core;
-using VMControls.Interface;
-using X_Guide.MVVM.ViewModel.CalibrationWizardSteps;
+﻿using System.Threading.Tasks;
+using X_Guide.MVVM.Model;
 using X_Guide.Service.Communication;
 using X_Guide.VisionMaster;
 using Xlent_Vision_Guided;
@@ -14,11 +10,7 @@ namespace X_Guide.Service
     {
         private readonly IJogService _jogService;
         private readonly IVisionService _visionService;
-        private CalibrationViewModel _calibration;
-        private IMVSCircleFindModuTool _circleFind;
-        private JogCommand _jogCommand;
-        private double[] calibData;
-        private IVmModule VisProcedure;
+        private readonly JogCommand _jogCommand = new JogCommand().SetManipulatorName("Chun");
 
         public CalibrationService(IVisionService visionService, IJogService jogService)
         {
@@ -26,40 +18,26 @@ namespace X_Guide.Service
             _jogService = jogService;
         }
 
-        /// <inheritdoc/>
-
-        public async void EyeInHand2DConfig_Calibrate(CalibrationViewModel calibration)
+        public async Task<CalibrationData> EyeInHand2D_Calibrate(int XOffset, int YOffset, double XMove, double YMove)
         {
-            _calibration = calibration;
-            _jogCommand = new JogCommand().SetManipulatorName(_calibration?.Manipulator.Name);
-
-            await _visionService.RunProcedure($"{_calibration.Procedure}", true);
-            _circleFind = (IMVSCircleFindModuTool)VmSolution.Instance["Circle.Circle Search1"];
-            VisProcedure = _circleFind;
-            _calibration.XOffset = _calibration.XOffset == 0 ? 10 : _calibration.XOffset;
-            _calibration.YOffset = _calibration.YOffset == 0 ? 10 : _calibration.YOffset;
-
-            double[] XYMove;
-
-            try
+            (Point[] VisionPoint, Point[] RobotPoint) = await Start9PointCalib(XOffset, YOffset);
+            var calibData = VisionGuided.EyeInHandConfig2D_Calib(VisionPoint, RobotPoint, XMove, YMove, true);
+            return new CalibrationData
             {
-                XYMove = await FindXMoveYMove(30, 15);
-                (Point[] VisionPoint, Point[] RobotPoint) = await Start9PointCalib();
-
-                calibData = VisionGuided.EyeInHandConfig2D_Calib(VisionPoint, RobotPoint, XYMove[0], XYMove[1], true);
-                _calibration.CXOffSet = calibData[0];
-                _calibration.CYOffset = calibData[1];
-                _calibration.CRZOffset = calibData[2];
-                _calibration.Mm_per_pixel = calibData[3];
-            }
-            catch (Exception ex)
-            {
-                System.Windows.MessageBox.Show($"Exception: {ex.Message} | Aborting calibration process!");
-                return;
-            }
+                X = calibData[0],
+                Y = calibData[1],
+                Rz = calibData[2],
+                mm_per_pixel = calibData[3]
+            };
         }
 
-        private async Task<double[]> FindXMoveYMove(int jogDistance, int rotateAngle)
+        public async Task<CalibrationData> EyeInHand2D_Calibrate(int XOffset, int YOffset)
+        {
+            (double XMove, double YMove) = await FindXMoveYMove(30, 15);
+            return await EyeInHand2D_Calibrate(XOffset, YOffset, XMove, YMove);
+        }
+
+        private async Task<(double, double)> FindXMoveYMove(int jogDistance, int rotateAngle)
         {
             await Task.Delay(1000);
             Point Vis_Center = await _visionService.GetVisCenter();
@@ -78,14 +56,11 @@ namespace X_Guide.Service
             await _jogService.SendJogCommand(_jogCommand.SetRZ(-rotateAngle));
             double[] XYMove = VisionGuided.FindEyeInHandXYMoves(Vis_Center, Vis_Positive, Vis_Rotate, jogDistance, rotateAngle);
 
-            return XYMove;
+            return (XYMove[0], XYMove[1]);
         }
 
-        private async Task<(Point[], Point[])> Start9PointCalib()
+        private async Task<(Point[], Point[])> Start9PointCalib(int XOffset, int YOffset)
         {
-            int XOffset = (int)_calibration.XOffset;
-            int YOffset = (int)_calibration.YOffset;
-
             int[,] offsets = new int[9, 3] {
             {0, -YOffset,4},
             {XOffset,0, 1},

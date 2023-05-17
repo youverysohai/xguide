@@ -21,8 +21,8 @@
             <ColumnDefinition Width="*" />
         </Grid.ColumnDefinitions>
         <hc:LoadingCircle x:Name="loadingCircle" Grid.Row="1" Grid.Column="1"  Width="100" Height="100" DotDiameter="10" DotCount="6" Panel.ZIndex="3" />
-        <Rectangle  x:Name="CenterRectangle" Grid.Row="1" Grid.Column="1" hc:BorderElement.Circular="True" Panel.ZIndex="3" Visibility="{Binding CenterBorder, ElementName=CustRender}" Fill="Transparent" Stroke="{StaticResource PrimaryBlueColor}" StrokeThickness="3" RadiusX="15" RadiusY="15">
-        </Rectangle>
-        <Release:VmRenderControl x:Name="r_control" Grid.RowSpan="3" Grid.ColumnSpan="3" SourceUpdated="r_control_SourceUpdated" Initialized="r_control_Initialized" TargetUpdated="r_control_TargetUpdated" />
+        <!--<Rectangle  x:Name="CenterRectangle" Grid.Row="1" Grid.Column="1" hc:BorderElement.Circular="True" Panel.ZIndex="3" Visibility="{Binding CenterBorder, ElementName=CustRender}" Fill="Transparent" Stroke="{StaticResource PrimaryBlueColor}" StrokeThickness="3" RadiusX="15" RadiusY="15">
+        </Rectangle>-->
+        <Release:VmRenderControl x:Name="r_control" Grid.RowSpan="3" Grid.ColumnSpan="3" />
     </Grid>
 </UserControl>

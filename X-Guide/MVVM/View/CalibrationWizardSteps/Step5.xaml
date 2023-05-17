@@ -9,6 +9,7 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:local="clr-namespace:X_Guide.MVVM.View.CalibrationWizardSteps"
+             xmlns:views="clr-namespace:X_Guide.MVVM.View"
              mc:Ignorable="d"
              xmlns:xctk="http://schemas.xceed.com/wpf/xaml/toolkit"
              xmlns:c="clr-namespace:X_Guide.Converter"
@@ -39,10 +40,14 @@
         <hc:FlexPanel Margin="0 20 0 0"  FlexWrap="Wrap" JustifyContent="SpaceAround" AlignContent="Center" FlexDirection="Row">
 
             <!--VM Camara-->
-
-            <XCust:CustomRenderControl
+            <ContentControl hc:FlexPanel.FlexBasis="720" Height="550" Content="{Binding VisionView}">
+                <ContentControl.ContentTemplateSelector>
+                    <views:ViewTemplateSelector />
+                </ContentControl.ContentTemplateSelector>
+            </ContentControl>
+            <!--<XCust:CustomRenderControl
                     hc:FlexPanel.FlexBasis="720" Height="550"
-                    Procedure="{Binding Module}" CenterBorder="Collapsed"></XCust:CustomRenderControl>
+                    Procedure="{Binding Module}" CenterBorder="Collapsed"></XCust:CustomRenderControl>-->
             <!--<XCust:HikVmRealTimeAcqControl hc:FlexPanel.FlexBasis="720" Height="550"  Procedure="{Binding Module}">
             </XCust:HikVmRealTimeAcqControl>-->
             <!--<Release:VmRealTimeAcqControl x:Name="acq_control" hc:FlexPanel.FlexBasis="720" Height="550" ></Release:VmRealTimeAcqControl>-->
@@ -194,13 +199,13 @@
                                     <TextBlock Style="{DynamicResource ButtonInnerTextBlockCenter}">X+</TextBlock>
                                 </Button>
                                 <!-- Z rotation-->
-                                <Button Command="{Binding JogCommand}" CommandParameter="RZ+" Style="{DynamicResource ClockwiseButton}">
+                                <Button Command="{Binding JogCommand}" CommandParameter="RZ-" Style="{DynamicResource ClockwiseButton}">
 
-                                    <TextBlock Style="{DynamicResource ClockwiseTextBlock}">Rz+</TextBlock>
+                                    <TextBlock Style="{DynamicResource ClockwiseTextBlock}">Rz-</TextBlock>
                                 </Button>
-                                <Button Command="{Binding JogCommand}" CommandParameter="RZ-" Style="{DynamicResource AntiClockwiseButton}">
+                                <Button Command="{Binding JogCommand}" CommandParameter="RZ+" Style="{DynamicResource AntiClockwiseButton}">
 
-                                    <TextBlock Style="{DynamicResource AntiClockwiseTextBlock}">Rz-</TextBlock>
+                                    <TextBlock Style="{DynamicResource AntiClockwiseTextBlock}">Rz+</TextBlock>
                                 </Button>
                             </Canvas>
                         </Viewbox>
@@ -240,8 +245,6 @@
                         <Label Margin="10 0 0 0" Content="Send/Received Command" Style="{DynamicResource DefaultLabelStyle}" />
                         <hc:TextBox Margin="5" TextWrapping="Wrap" AcceptsReturn="True" MaxLines="5" VerticalScrollBarVisibility="Auto" TextChanged="TextBox_TextChanged">
                         </hc:TextBox>
-                        <hc:ComboBox Margin="5" SelectedIndex="0" ItemsSource="{Binding Modules}" SelectedItem="{Binding Module}" DisplayMemberPath="Name">
-                        </hc:ComboBox>
                     </ui:SimpleStackPanel>
                 </Grid>
             </GroupBox>

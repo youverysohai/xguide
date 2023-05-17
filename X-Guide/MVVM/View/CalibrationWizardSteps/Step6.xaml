@@ -4,9 +4,11 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:local="clr-namespace:X_Guide.MVVM.View.CalibrationWizardSteps"
+             xmlns:views="clr-namespace:X_Guide.MVVM.View"
              xmlns:XCust="clr-namespace:X_Guide.CustomControls"
                xmlns:gif="https://github.com/XamlAnimatedGif/XamlAnimatedGif"
              xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
+              xmlns:ha="http://schemas.mvtec.com/halcondotnet"
              mc:Ignorable="d"
             xmlns:hc="https://handyorg.github.io/handycontrol"
              xmlns:ui="http://schemas.modernwpf.com/2019"
@@ -20,52 +22,30 @@
             <Setter Property="FontSize" Value="15" />
             <Setter Property="VerticalAlignment" Value="Center" />
         </Style>
+        <Style TargetType="Button" BasedOn="{StaticResource DefaultButtonStyle}">
+            <Setter Property="Margin" Value="5" />
+        </Style>
+        <Style TargetType="Label" x:Key="unitStyle" BasedOn="{StaticResource DefaultLabelStyle}">
+            <Setter Property="VerticalAlignment" Value="Bottom" />
+            <Setter Property="FontSize" Value="11" />
+        </Style>
     </UserControl.Resources>
     <Grid Margin="20">
         <!--Live Processed Image-->
         <hc:ScrollViewer  Grid.RowSpan="3" Grid.ColumnSpan="2">
 
             <hc:FlexPanel JustifyContent="SpaceAround" FlexWrap="Wrap">
-                <!--<hc:Carousel  hc:FlexPanel.FlexBasis="840" MinHeight="550" x:Name="flipView1" AutoRun="False" IsCenter="True">
-                    <hc:Carousel.ItemTemplate>
-                        <DataTemplate>
-                            <Release:VmRenderControl Loaded="p_box_Loaded" Width="840" />
-                        </DataTemplate>
-                    </hc:Carousel.ItemTemplate>
-                </hc:Carousel>-->
 
-                <!--<hc:Carousel hc:FlexPanel.FlexBasis="840" MinHeight="550" x:Name="flipView1"  AutoRun="False" IsCenter="True">
-                    <hc:CarouselItem>
-                        <Release:VmRenderControl   Name="p1_box" Loaded="p_box_Loaded" Width="840"  ></Release:VmRenderControl>
-                    </hc:CarouselItem>
-                    <hc:CarouselItem>
-                        <Release:VmRenderControl   Name="p2_box" Loaded="p_box_Loaded" Width="840"></Release:VmRenderControl>
-                    </hc:CarouselItem>
-                    <hc:CarouselItem>
-                        <Release:VmRenderControl   Name="p3_box" Loaded="p_box_Loaded" Width="840"></Release:VmRenderControl>
-                    </hc:CarouselItem>
-                    <hc:CarouselItem>
-                        <Release:VmRenderControl   Name="p4_box" Loaded="p_box_Loaded" Width="840"></Release:VmRenderControl>
-                    </hc:CarouselItem>
-                    <hc:CarouselItem>
-                        <Release:VmRenderControl   Name="p5_box" Loaded="p_box_Loaded" Width="840"></Release:VmRenderControl>
-                    </hc:CarouselItem>
-                    <hc:CarouselItem>
-                        <Release:VmRenderControl   Name="p6_box" Loaded="p_box_Loaded" Width="840"></Release:VmRenderControl>
-                    </hc:CarouselItem>
-                    <hc:CarouselItem>
-                        <Release:VmRenderControl   Name="p7_box" Loaded="p_box_Loaded" Width="840"></Release:VmRenderControl>
-                    </hc:CarouselItem>
-                    <hc:CarouselItem>
-                        <Release:VmRenderControl   Name="p8_box" Loaded="p_box_Loaded" Width="840"></Release:VmRenderControl>
-                    </hc:CarouselItem>
-                    <hc:CarouselItem>
-                        <Release:VmRenderControl   Name="p9_box" Loaded="p_box_Loaded" Width="840"></Release:VmRenderControl>
-                    </hc:CarouselItem>
-                </hc:Carousel>-->
-
-                <!--Right Side Calibration Output Data -->
-                <XCust:CustomRenderControl hc:FlexPanel.FlexBasis="640" Height="480" Procedure="{Binding VisProcedure}"></XCust:CustomRenderControl>
+                <!--<XCust:CustomRenderControl hc:FlexPanel.FlexBasis="640" Height="480" Procedure="{Binding VisProcedure}"></XCust:CustomRenderControl>-->
+                <hc:Carousel Width="640">
+                    <ContentControl Width="640" Height="480" Content="{Binding VisionView}">
+                        <ContentControl.ContentTemplateSelector>
+                            <views:ViewTemplateSelector />
+                        </ContentControl.ContentTemplateSelector>
+                    </ContentControl>
+                    <!--<XCust:HalconSmartControl Width="640" Height="480" Image="{Binding LiveImage}" Point="{Binding OutputImageParameter}" />
+                    <XCust:HalconSmartControl Width="648" Height="488" Image="{Binding OutputImage}" />-->
+                </hc:Carousel>
 
                 <GroupBox  hc:FlexPanel.FlexBasis="300" MinHeight="550"  Grid.RowSpan="3" Grid.Column="1" Style="{StaticResource GroupBoxTab}">
                     <GroupBox.Header>
@@ -73,6 +53,8 @@
                     </GroupBox.Header>
                     <Grid>
                         <Grid.RowDefinitions>
+                            <RowDefinition Height="Auto" />
+                            <RowDefinition Height="Auto" />
                             <RowDefinition Height="Auto" />
                             <RowDefinition Height="Auto" />
                             <RowDefinition Height="Auto" />
@@ -92,29 +74,36 @@
 
                         <Label Content="Camera X Scaling:" Grid.Row="0" Grid.Column="0" Margin="5" />
                         <TextBlock Text="{Binding Calibration.Mm_per_pixel, StringFormat={}{0:F2}}" Grid.Row="0" Grid.Column="1" Margin="5" Style="{DynamicResource ReadOnlyTextBlock}" />
-                        <Label Content="mm per pixel" Grid.Row="0" Grid.Column="2" Margin="5" />
+                        <Label Content="mm per pixel" Grid.Row="0" Grid.Column="2" Style="{DynamicResource unitStyle}" />
 
                         <Label Content="Camera Y Scaling:" Grid.Row="1" Grid.Column="0" Margin="5" />
                         <TextBlock Text="{Binding Calibration.Mm_per_pixel, StringFormat={}{0:F2}}" Grid.Row="1" Grid.Column="1" Margin="5" Style="{DynamicResource ReadOnlyTextBlock}" />
-                        <Label Content="mm per pixel" Grid.Row="1" Grid.Column="2" Margin="5" />
+                        <Label Content="mm per pixel" Grid.Row="1" Grid.Column="2"  Style="{DynamicResource unitStyle}" />
 
                         <Label Content="X offset:" Grid.Row="2" Grid.Column="0" Margin="5" />
                         <TextBlock Text="{Binding Calibration.CXOffSet, StringFormat={}{0:F2}}" Grid.Row="2" Grid.Column="1" Margin="5" Style="{DynamicResource ReadOnlyTextBlock}" />
-                        <Label Content="mm" Grid.Row="2" Grid.Column="2" Margin="5" />
+                        <Label Content="mm" Grid.Row="2" Grid.Column="2" Style="{DynamicResource unitStyle}" />
 
                         <Label Content="Y offset:" Grid.Row="3" Grid.Column="0" Margin="5" />
                         <TextBlock  Text="{Binding Calibration.CYOffset, StringFormat={}{0:F2}}"  Grid.Row="3" Grid.Column="1" Margin="5" Style="{DynamicResource ReadOnlyTextBlock}" />
-                        <Label Content="mm" Grid.Row="3" Grid.Column="2" Margin="5" />
+                        <Label Content="mm" Grid.Row="3" Grid.Column="2" Style="{DynamicResource unitStyle}" />
 
                         <Label Content="RZ offset:" Grid.Row="4" Grid.Column="0" Margin="5" />
                         <TextBlock Text="{Binding Calibration.CRZOffset, StringFormat={}{0:F2}}" Grid.Row="4" Grid.Column="1" Margin="5" Style="{DynamicResource ReadOnlyTextBlock}" />
-                        <Label Content="°" Grid.Row="4" Grid.Column="2" Margin="5" />
+                        <Label Content="°" Grid.Row="4" Grid.Column="2" />
 
-                        <Button Grid.Row="5" Style="{DynamicResource MaterialDesignPaperButton}" Command="{Binding OperationCommand}" >Start Operation</Button>
-                        <Button Grid.Row="6"  Style="{DynamicResource MaterialDesignOutlinedButton}" Command="{Binding CalibrateCommand}" >Start Calibration</Button>
-                        <Button Grid.Row="7"  Style="{DynamicResource MaterialDesignOutlinedButton}" Command="{Binding SaveCommand}" >Save</Button>
                         <ComboBox Grid.Row="8" ItemsSource="{Binding Modules}">
                         </ComboBox>
+
+                        <ui:SimpleStackPanel Orientation="Vertical" Grid.Row="10">
+                            <Label Style="{DynamicResource MaterialDesignLabel}">XMove</Label>
+                            <TextBox Text="{Binding XMove}"></TextBox>
+                            <Label Style="{DynamicResource MaterialDesignLabel}">YMove</Label>
+                            <TextBox Text="{Binding YMove}"></TextBox>
+                            <Button Grid.Row="5"  Command="{Binding OperationCommand}" >Start Operation</Button>
+                            <Button Grid.Row="6"   Command="{Binding CalibrateCommand}" >Start Calibration</Button>
+                            <Button Grid.Row="7"   Command="{Binding SaveCommand}" >Save</Button>
+                        </ui:SimpleStackPanel>
                     </Grid>
                 </GroupBox>
             </hc:FlexPanel>

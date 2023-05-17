@@ -1,9 +1,8 @@
 ﻿using AutoMapper;
-using System.Collections.Generic;
+using System.Threading.Tasks;
 using ToastNotifications;
 using ToastNotifications.Messages;
-using VM.Core;
-using VMControls.Interface;
+using X_Guide.Aspect;
 using X_Guide.MVVM.Command;
 using X_Guide.MVVM.Model;
 using X_Guide.MVVM.ViewModel.CalibrationWizardSteps;
@@ -15,13 +14,12 @@ namespace X_Guide.MVVM.ViewModel
 {
     internal class Step6ViewModel : ViewModelBase
     {
+        public double XMove { get; set; }
+        public double YMove { get; set; }
+
         public CalibrationViewModel Calibration { get; set; }
 
-        public IVmModule VisProcedure { get; set; }
-
-        public List<VmModule> Modules { get; set; }
-
-        public RelayCommand OperationCommand { get; set; }
+        public IVisionViewModel VisionView { get; set; }
 
         private readonly ICalibrationDb _calibDb;
         private readonly ICalibrationService _calibService;
@@ -32,26 +30,35 @@ namespace X_Guide.MVVM.ViewModel
         public RelayCommand SaveCommand { get; set; }
         public RelayCommand CalibrateCommand { get; set; }
 
-        public Step6ViewModel(CalibrationViewModel calibration, ICalibrationDb calibDb, ICalibrationService calibService, IMapper mapper, Notifier notifier, IVisionService visionService)
+        public Step6ViewModel(CalibrationViewModel calibrationConfig, ICalibrationDb calibDb, ICalibrationService calibService, IMapper mapper, Notifier notifier, IVisionService visionService, IVisionViewModel visionView)
         {
-            Calibration = calibration;
+            Calibration = calibrationConfig;
             _calibDb = calibDb;
             _calibService = calibService;
             _mapper = mapper;
             _notifier = notifier;
             _visionService = visionService;
-            CalibrateCommand = new RelayCommand(Calibrate);
-            SaveCommand = new RelayCommand(Save);
-            VisProcedure = _visionService.GetProcedure(Calibration.Procedure);
-            Modules = _visionService.GetModules(VisProcedure as VmProcedure);
+            VisionView = visionView;
+            VisionView.SetConfig(calibrationConfig);
+            CalibrateCommand = RelayCommand.FromAsyncRelayCommand(Calibrate);
+            SaveCommand = RelayCommand.FromAsyncRelayCommand(Save);
+            VisionView.ShowOutputImage();
         }
 
-        private void Calibrate(object obj)
+        [ExceptionHandlingAspect]
+        private async Task Calibrate(object param)
         {
-            _calibService.EyeInHand2DConfig_Calibrate(Calibration);
+            int XOffset = (int)Calibration.XOffset;
+            int YOffset = (int)Calibration.YOffset;
+            CalibrationData calibrationData = await _calibService.EyeInHand2D_Calibrate(XOffset, YOffset);
+            Calibration.CXOffSet = calibrationData.X;
+            Calibration.CYOffset = calibrationData.Y;
+            Calibration.CRZOffset = calibrationData.Rz;
+            Calibration.Mm_per_pixel = calibrationData.mm_per_pixel;
         }
 
-        private async void Save(object obj)
+        [ExceptionHandlingAspect]
+        private async Task Save(object param)
         {
             if (!await _calibDb.IsExist(Calibration.Id))
             {

@@ -1,10 +1,4 @@
 ﻿using AutoMapper;
-using System;
-using System.Collections.Generic;
-using System.Collections.ObjectModel;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using X_Guide.MVVM.Model;
 using X_Guide.MVVM.ViewModel;
 
@@ -14,10 +8,10 @@ namespace X_Guide.MappingConfiguration
     {
         public VisionProfile()
         {
-            CreateMap<Vision, VisionModel>();
-            CreateMap<VisionModel, Vision>();
-            CreateMap<VisionModel, VisionViewModel>();
-            CreateMap<VisionViewModel, VisionModel>();
+            CreateMap<HikVisionConfiguration, HikVisionModel>();
+            CreateMap<HikVisionModel, HikVisionConfiguration>();
+            CreateMap<HikVisionModel, HikVisionViewModel>();
+            CreateMap<HikVisionViewModel, HikVisionModel>();
         }
     }
 }

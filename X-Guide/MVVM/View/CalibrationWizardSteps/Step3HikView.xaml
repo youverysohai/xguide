@@ -1,0 +1,34 @@
+﻿<UserControl x:Class="X_Guide.MVVM.View.CalibrationWizardSteps.Step3HikView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:local="clr-namespace:X_Guide.MVVM.View.CalibrationWizardSteps"
+             xmlns:loc="clr-namespace:X_Guide.MVVM"
+             d:Foreground="White"
+             mc:Ignorable="d"
+             xmlns:hc="https://handyorg.github.io/handycontrol"
+             d:DesignHeight="450" d:DesignWidth="800"
+              xmlns:ui="http://schemas.modernwpf.com/2019"
+             xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes">
+
+    <Grid Margin="0 0 0 10">
+
+        <StackPanel Orientation="Vertical" VerticalAlignment="Center">
+
+            <TextBlock  Text="Vision Flow for Calibration" HorizontalAlignment="Center" FontSize="35" Margin="0 0 0 25" />
+            <StackPanel Orientation="Vertical" HorizontalAlignment="Center">
+
+                <ComboBox
+                        ItemsSource="{Binding Procedures}"
+                        SelectedItem="{Binding Procedure}"   Style="{DynamicResource MaterialDesignOutlinedComboBox}"
+                                DisplayMemberPath="Name"
+                              Width="300" IsEnabled="{Binding IsProcedureEditable}"
+                              materialDesign:HintAssist.Hint="Select Calibration Procedure"
+                                                      HorizontalAlignment="Left"
+                              Margin="0">
+                </ComboBox>
+            </StackPanel>
+        </StackPanel>
+    </Grid>
+</UserControl>

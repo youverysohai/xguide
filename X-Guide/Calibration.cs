@@ -31,6 +31,7 @@ namespace X_Guide
         public Nullable<int> VisionId { get; set; }
         public string Procedure { get; set; }
         public Nullable<bool> Mode { get; set; }
+        public Nullable<double> JointRotationAngle { get; set; }
     
         public virtual Manipulator Manipulator { get; set; }
         public virtual Vision Vision { get; set; }
