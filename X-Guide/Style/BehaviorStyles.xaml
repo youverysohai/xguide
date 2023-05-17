@@ -79,13 +79,13 @@
     <!-- Icon Connection Status Change Color -->
     <Style x:Key="ConnectionStatusIconForeground" TargetType="materialDesign:PackIcon" BasedOn="{StaticResource IconStyle24}">
         <Style.Triggers>
-            <DataTrigger Binding="{Binding IsLoggedIn}" Value="True">
+            <DataTrigger Binding="{Binding IsManipulatorConnected}" Value="True">
                 <Setter Property="Foreground"  Value="{DynamicResource ConnectedColor}"/>
             </DataTrigger>
-            <DataTrigger Binding="{Binding IsLoggedIn}" Value="False">
+            <DataTrigger Binding="{Binding IsManipulatorConnected}" Value="False">
                 <Setter Property="Foreground"  Value="{DynamicResource DisconnectedColor}"/>
-            </DataTrigger>                                                    
-            <DataTrigger Binding="{Binding IsLoggedIn}" Value="Error">
+            </DataTrigger>
+            <DataTrigger Binding="{Binding IsManipulatorConnected}" Value="Error">
                 <Setter Property="Foreground"  Value="{DynamicResource ErrorColor}"/>
             </DataTrigger>
         </Style.Triggers>

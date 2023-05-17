@@ -340,7 +340,7 @@
                                     Z-</TextBlock>
                             </RadialMenu:RadialMenuItem>
 
-                            <RadialMenu:RadialMenuItem   Command="{Binding JogCommand}" CommandParameter="X-" Style="{DynamicResource FancyRadialMenuItem}">
+                            <RadialMenu:RadialMenuItem   Command="{Binding JogCommand}" CommandParameter="RZ-" Style="{DynamicResource FancyRadialMenuItem}">
                                 <TextBlock>
                                     <TextBlock.LayoutTransform>
                                         <RotateTransform Angle="-45"></RotateTransform>
@@ -381,19 +381,19 @@
 
                             <!-- MenuItems Around -->
 
-                            <RadialMenu:RadialMenuItem Command="{Binding NewFileCommand}"  Style="{DynamicResource FancyRadialMenuItem}" ContentRadius="49">
-                                <TextBlock>RX+</TextBlock>
+                            <RadialMenu:RadialMenuItem Command="{Binding JogCommand}" CommandParameter="RX+" Style="{DynamicResource FancyRadialMenuItem}" ContentRadius="49">
+                                <TextBlock>RX+</TextBlock>                            
                             </RadialMenu:RadialMenuItem>
 
-                            <RadialMenu:RadialMenuItem Command="{Binding EditCommand}" Style="{DynamicResource FancyRadialMenuItem}" ContentRadius="49">
-                                <TextBlock>RY-</TextBlock>
+                            <RadialMenu:RadialMenuItem Command="{Binding JogCommand}" CommandParameter="RY-" Style="{DynamicResource FancyRadialMenuItem}" ContentRadius="49">
+                                <TextBlock>RY-</TextBlock>                            
                             </RadialMenu:RadialMenuItem>
 
-                            <RadialMenu:RadialMenuItem Command="{Binding SaveCommand}" Style="{DynamicResource FancyRadialMenuItem}" ContentRadius="49">
-                                <TextBlock>RY+</TextBlock>
+                            <RadialMenu:RadialMenuItem Command="{Binding JogCommand}" CommandParameter="RY+" Style="{DynamicResource FancyRadialMenuItem}" ContentRadius="49">
+                                <TextBlock>RY+</TextBlock>                            
                             </RadialMenu:RadialMenuItem>
 
-                            <RadialMenu:RadialMenuItem Command="{Binding DeleteCommand}" Style="{DynamicResource FancyRadialMenuItem}" ContentRadius="49">
+                            <RadialMenu:RadialMenuItem Command="{Binding JogCommand}" CommandParameter="RX-" Style="{DynamicResource FancyRadialMenuItem}" ContentRadius="49">
                                 <TextBlock>RX-</TextBlock>
                             </RadialMenu:RadialMenuItem>
 
