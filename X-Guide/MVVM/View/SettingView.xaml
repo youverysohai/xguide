@@ -49,7 +49,7 @@
         <DataTemplate DataType="{x:Type vm:HikVisionViewModel}" x:Key="VisionForm">
             <ui:SimpleStackPanel Orientation="Vertical">
                 <!--<xCust:CustomFormButtons AddCommand="{Binding DataContext.OpenVisionFormCommand, ElementName=SettingUserControl}" AddCommandParameter="{Binding ElementName=VisionDialog}" SaveCommand="{Binding DataContext.SaveVisionCommand, ElementName=SettingUserControl}" DeleteCommand="{Binding DataContext.DeleteVisionCommand, ElementName=SettingUserControl}" />-->
-                <xCust:CustomVisionForm Vision="{Binding }" />
+                <xCust:CustomVisionForm Vision="{Binding}" />
             </ui:SimpleStackPanel>
         </DataTemplate>
 
@@ -143,9 +143,6 @@
                             <i:Interaction.Triggers>
                                 <i:DataTrigger Binding="{Binding Manipulator}" Value="{Binding Manipulator}">
                                     <i:ChangePropertyAction PropertyName="ContentTemplate" Value="{StaticResource ManiForm}" />
-                                </i:DataTrigger>
-                                <i:DataTrigger Binding="{Binding Vision}" Value="{x:Null}">
-                                    <i:ChangePropertyAction PropertyName="ContentTemplate" Value="{StaticResource ErrorPage}" />
                                 </i:DataTrigger>
                             </i:Interaction.Triggers>
                         </ContentControl>

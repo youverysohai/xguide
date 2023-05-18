@@ -19,14 +19,25 @@ using X_Guide.VisionMaster;
 
 namespace X_Guide.MVVM.ViewModel
 {
-    internal class Step5ViewModel : ViewModelBase
+    internal class Step5ViewModel : ViewModelBase, ICalibrationStep
     {
         private readonly CalibrationViewModel _calibrationConfig;
         private readonly IJogService _jogService;
         private readonly IServerService _serverService;
         private readonly IVisionService _visionService;
         private ManualResetEventSlim _manual;
-        public IVisionViewModel VisionView { get; set; }
+
+        public IVisionViewModel VisionView
+        {
+            get
+            {
+                if (_visionService != null)
+                    visionView.StartLiveImage();
+                return visionView;
+            }
+            set => visionView = value;
+        }
+
         public List<VmModule> Modules { get; private set; }
 
         public IVmModule Module { get; set; }
@@ -34,7 +45,10 @@ namespace X_Guide.MVVM.ViewModel
         public CalibrationViewModel Calibration => _calibrationConfig;
         public string JogMode { get; set; } = "TOOL";
 
-        private bool _canJog;
+
+        private bool _canJog = true;
+        private IVisionViewModel visionView;
+
 
         public bool CanJog
         {
@@ -51,7 +65,7 @@ namespace X_Guide.MVVM.ViewModel
         public bool IsLoading { get; set; } = true;
 
         public RelayCommand JogCommand { get; }
-       
+
         public int JogDistance { get; set; }
 
         public Step5ViewModel(CalibrationViewModel calibrationConfig, IServerService serverService, IVisionService visionService, IJogService jogService, IVisionViewModel visionView)
@@ -65,10 +79,7 @@ namespace X_Guide.MVVM.ViewModel
             JogCommand = new RelayCommand(Jog, (o) => _canJog);
             _serverService.ClientConnectionChange += OnConnectionChange;
             VisionView.StartLiveImage();
-            //InitView();
-            
         }
-
 
         public async void InitView()
         {
@@ -81,15 +92,15 @@ namespace X_Guide.MVVM.ViewModel
             {
                 _canDisplayViewModel = false;
             }
-            _manual.Set();
+            _manual?.Set();
         }
 
         public override bool ReadyToDisplay()
         {
             using (_manual = new ManualResetEventSlim(false))
             {
-                //_manual.Wait();
-                return _canDisplayViewModel;
+                InitView();
+                return true;
             }
         }
 
@@ -136,8 +147,12 @@ namespace X_Guide.MVVM.ViewModel
             base.Dispose();
         }
 
+        public void Register(Action action)
+        {
+        }
 
-   
-
+        public void RegisterStateChange(Action<bool> action)
+        {
+        }
     }
 }

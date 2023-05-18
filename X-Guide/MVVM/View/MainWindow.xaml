@@ -132,11 +132,11 @@
                                     <ui:FontIcon.Style>
                                         <Style TargetType="ui:FontIcon">
                                             <Style.Triggers>
-                                                <DataTrigger  Binding="{Binding ElementName=toggleSwitch, Path=IsOn}" Value="True">
+                                                <DataTrigger  Binding="{Binding}" Value="True">
                                                     <Setter Property="Glyph" Value="&#xE706;" />
                                                     <Setter Property="ToolTip" Value="Bright" />
                                                 </DataTrigger>
-                                                <DataTrigger  Binding="{Binding ElementName=toggleSwitch, Path=IsOn}" Value="False">
+                                                <DataTrigger  Binding="{Binding}" Value="False">
                                                     <Setter Property="Glyph" Value="&#xE708;" />
                                                     <Setter Property="ToolTip" Value="Dark" />
                                                 </DataTrigger>

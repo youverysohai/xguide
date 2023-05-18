@@ -34,7 +34,7 @@ namespace X_Guide.MVVM.ViewModel
 
         public async void StartLiveImage()
         {
-            Module = await _visionService.RunProcedure(_calibrationConfig.Procedure, true);
+            Module = await _visionService.RunProcedure(_calibrationConfig?.Procedure, true);
             Visible = Visibility.Visible;
         }
 

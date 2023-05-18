@@ -74,7 +74,6 @@ namespace X_Guide.MVVM.ViewModel
         {
             TypedParameter calib = new TypedParameter(typeof(CalibrationViewModel), obj);
             CalibrationMainViewModel calibMain = await _navigationService.NavigateAsync<CalibrationMainViewModel>(calib) as CalibrationMainViewModel;
-            /*            calibMain.LoadCalibSetting(calib);*/
         }
 
         private void StartCalibration(object obj)
