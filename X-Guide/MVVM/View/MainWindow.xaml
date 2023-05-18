@@ -62,8 +62,8 @@
                     <ui:NavigationViewItem.MenuItems>
                         <ui:NavigationViewItem x:Name="Production"
                         c:NavigationViewItemExtensions.Command="{Binding NavigateCommand}"
-                        c:NavigationViewItemExtensions.CommandParameter="{x:Static local:PageName.Production}"
-                        Tag="ProductionView" Content="Browse" Icon="BrowsePhotos" ToolTipService.ToolTip="Notes" />
+                        c:NavigationViewItemExtensions.CommandParameter="{x:Static local:PageName.Operation}"
+                        Tag="ProductionView" Content="Operation" Icon="BrowsePhotos" ToolTipService.ToolTip="Notes" />
                     </ui:NavigationViewItem.MenuItems>
                 </ui:NavigationViewItem>
 
@@ -84,7 +84,7 @@
                         </ui:NavigationViewItem>
                         <ui:NavigationViewItem x:Name="Jog"
                          c:NavigationViewItemExtensions.Command="{Binding NavigateCommand}"
-                         c:NavigationViewItemExtensions.CommandParameter="{x:Static local:PageName.Operation}"
+                         c:NavigationViewItemExtensions.CommandParameter="{x:Static local:PageName.CalibrationWizardStart}"
                         Tag="JogRobotView" Content="Jog" ToolTipService.ToolTip="Jog">
                             <ui:NavigationViewItem.Icon>
                                 <ui:FontIcon   Glyph="&#xE759;" />
