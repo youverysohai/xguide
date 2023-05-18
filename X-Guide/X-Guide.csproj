@@ -739,6 +739,7 @@
     <Compile Include="MVVM\ViewModel\OperationViewModel.cs" />
     <Compile Include="MVVM\ViewModel\RenderControlViewModel.cs" />
     <Compile Include="MVVM\ViewModel\SecurityViewModel.cs" />
+    <Compile Include="MVVM\ViewModel\SmartCamView.cs" />
     <Compile Include="MVVM\ViewModel\Step1ViewModel.cs" />
     <Compile Include="MVVM\ViewModel\Step2ViewModel.cs" />
     <Compile Include="MVVM\ViewModel\Step3HikViewModel.cs" />
@@ -788,6 +789,9 @@
     </Compile>
     <Compile Include="MVVM\View\SecurityView.xaml.cs">
       <DependentUpon>SecurityView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="MVVM\View\SmartCamView.xaml.cs">
+      <DependentUpon>SmartCamView.xaml</DependentUpon>
     </Compile>
     <Compile Include="MVVM\View\UndefinedView.xaml.cs">
       <DependentUpon>UndefinedView.xaml</DependentUpon>
@@ -847,6 +851,7 @@
     <Compile Include="VisionMaster\HalconVisionService.cs" />
     <Compile Include="VisionMaster\IVisionService.cs" />
     <Compile Include="VisionMaster\HikVisionService.cs" />
+    <Compile Include="VisionMaster\SmartCamVisionService.cs" />
     <Compile Include="XGuideModel.Context.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -996,6 +1001,10 @@
       <SubType>Designer</SubType>
     </Page>
     <Page Include="MVVM\View\SharedResources.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="MVVM\View\SmartCamView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -1214,8 +1223,6 @@
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Vision\" />
-  </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
