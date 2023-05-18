@@ -25,9 +25,9 @@
             return this;
         }
 
-        public JogCommand SetMode(string mode)
+        public JogCommand SetMode(int mode)
         {
-            Mode = mode;
+            Mode = mode == 0 ? "TOOL" : "GLOBAL";
             return this;
         }
 
