@@ -5,6 +5,12 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:X_Guide.MVVM.View"
              mc:Ignorable="d" 
+             xmlns:c="clr-namespace:X_Guide.Converter"
+             xmlns:ui="http://schemas.modernwpf.com/2019"
+             xmlns:RadialMenu="clr-namespace:RadialMenu.Controls;assembly=RadialMenu"
+             xmlns:Release="clr-namespace:VMControls.WPF.Release;assembly=VMControls.WPF.Release"
+
+             xmlns:XCust="clr-namespace:X_Guide.CustomControls"
            xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"     
              d:DesignHeight="550" d:DesignWidth="1000">
     <UserControl.Resources>
@@ -40,7 +46,7 @@
                     </Grid.RowDefinitions>
 
                     <Image Grid.ColumnSpan="3" Grid.RowSpan="3" x:Name="videoPlayer" Stretch="Uniform" Source="{Binding VideoSource}"/>
-                   
+
                     <!--<Border Grid.Row="1" Grid.Column="1" BorderThickness="2" BorderBrush="Yellow"></Border>-->
 
                 </Grid>
@@ -68,8 +74,8 @@
                           Style="{DynamicResource MaterialDesignOutlinedDarkButton}"
                         Command="{Binding VideoCommand}" CommandParameter="Stop" 
                 Content="Pause" />
-                    </StackPanel> 
-                </StackPanel> 
+                    </StackPanel>
+                </StackPanel>
             </Grid>
 
         </materialDesign:Card>
