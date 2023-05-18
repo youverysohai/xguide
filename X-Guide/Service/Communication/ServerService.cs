@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.Concurrent;
 using System.Diagnostics;
-using System.Linq;
 using System.Net;
 using System.Net.Sockets;
 using System.Threading;
@@ -138,7 +137,10 @@ namespace X_Guide.Communication.Service
 
         public async Task ServerWriteDataAsync(string data)
         {
-            await WriteDataAsync(data, _connectedClient.FirstOrDefault().Value.TcpClient.GetStream());
+            foreach (var client in _connectedClient)
+            {
+                await WriteDataAsync(data, client.Value.TcpClient.GetStream());
+            }
         }
     }
 }
