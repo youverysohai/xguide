@@ -10,6 +10,7 @@ using X_Guide.MVVM.Command;
 using X_Guide.MVVM.Model;
 using X_Guide.MVVM.Store;
 using X_Guide.Service;
+using X_Guide.Service.Communication;
 using X_Guide.Service.DatabaseProvider;
 using X_Guide.State;
 
@@ -63,7 +64,16 @@ namespace X_Guide.MVVM.ViewModel
                 _inputPassword = value;
             }
         }
+        private bool _isManipulatorConnected;
 
+        public bool IsManipulatorConnected
+        {
+            get { return _isManipulatorConnected; }
+            set { _isManipulatorConnected = value; OnPropertyChanged(); }
+        }
+
+
+        private readonly IServerService _serverService;
         private readonly AuthenticationService _auth;
         public ViewModelState State { get; set; }
         private readonly INavigationService _navigationService;
@@ -87,13 +97,19 @@ namespace X_Guide.MVVM.ViewModel
             serverService.Start();
             var nav = new TypedParameter(typeof(INavigationService), _navigationService);
             TestCommand = new RelayCommand(test);
-
+            _serverService = serverService;
+            _serverService.ClientConnectionChange += OnConnectionChange;
             _navigationService.Navigate<SettingViewModel>();
 
             LoginCommand = new RelayCommand(Login);
             RegisterCommand = new RelayCommand(Register);
             NavigateCommand = new RelayCommand(Navigate);
             logger.LogInformation("LapisLazuli");
+        }
+
+        private void OnConnectionChange(object sender, bool e)
+        {
+            IsManipulatorConnected = e;
         }
 
         private void OnLoadingStateChanged()

@@ -18,5 +18,14 @@ namespace X_Guide.MVVM.View.CalibrationWizardSteps
         private void Snap_Click(object sender, RoutedEventArgs e)
         {
         }
+        private async void DisplayNewCalibrationDialog()
+        {
+            await NewCalibrationDialog.ShowAsync();
+        }
+
+        private void StartCalibrationBtn_Click(object sender, RoutedEventArgs e)
+        {
+            DisplayNewCalibrationDialog();
+        }
     }
 }
