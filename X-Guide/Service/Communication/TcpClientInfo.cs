@@ -15,7 +15,7 @@ namespace X_Guide.Service.Communication
         //
         private ManualResetEventSlim _jogDoneReplyRecieved = new ManualResetEventSlim(false);
         public ManualResetEventSlim JogDoneReplyRecieved => _jogDoneReplyRecieved;
-        public Boolean Jogging { get; set; }
+        public bool Jogging { get; set; }
 
         public TcpClientInfo(TcpClient tcpClient)
         {

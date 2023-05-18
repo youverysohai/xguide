@@ -106,7 +106,7 @@
                         <TextBlock  HorizontalAlignment="Center" Style="{DynamicResource TitleTextBlockStyle}" Text="Calibration Results" />
                     </GroupBox.Header>
                     <ui:SimpleStackPanel Orientation="Vertical">
-                        <XCust:CustomConnectionStatus IsConnected="{Binding CanJog}"/>
+                        <XCust:CustomConnectionStatus IsConnected="{Binding CanCalibrate}"/>
                         <Grid>
                             <Grid.RowDefinitions>
                                 <RowDefinition Height="Auto" />
