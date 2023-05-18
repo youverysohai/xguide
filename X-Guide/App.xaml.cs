@@ -168,9 +168,8 @@ namespace X_Guide
         {
             MainWindow = _diContainer.Resolve<MainWindow>();
 
-            MainWindow.Show();
             base.OnStartup(e);
-
+            ViewModelState viewModelState = _diContainer.Resolve<ViewModelState>();
             try
             {
                 _ = _diContainer.Resolve<IVisionService>();
@@ -178,9 +177,13 @@ namespace X_Guide
             }
             catch
             {
-                ViewModelState viewModelState = _diContainer.Resolve<ViewModelState>();
                 viewModelState.IsCalibValid = false;
-                Notifier.ShowError(StrRetriver.Get("VI003"));
+            }
+            finally
+            {
+                MainWindow.Show();
+                if (!viewModelState.IsCalibValid)
+                    Notifier.ShowError(StrRetriver.Get("VI003"));
             }
         }
     }

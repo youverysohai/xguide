@@ -26,7 +26,18 @@ namespace X_Guide.MVVM.ViewModel
         private readonly IServerService _serverService;
         private readonly IVisionService _visionService;
         private ManualResetEventSlim _manual;
-        public IVisionViewModel VisionView { get; set; }
+
+        public IVisionViewModel VisionView
+        {
+            get
+            {
+                if (_visionService != null)
+                    visionView.StartLiveImage();
+                return visionView;
+            }
+            set => visionView = value;
+        }
+
         public List<VmModule> Modules { get; private set; }
 
         public IVmModule Module { get; set; }
@@ -35,6 +46,7 @@ namespace X_Guide.MVVM.ViewModel
         public string JogMode { get; set; } = "TOOL";
 
         private bool _canJog = true;
+        private IVisionViewModel visionView;
 
         public bool CanJog
         {
