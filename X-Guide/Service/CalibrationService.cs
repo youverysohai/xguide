@@ -31,9 +31,9 @@ namespace X_Guide.Service
             };
         }
 
-        public async Task<CalibrationData> EyeInHand2D_Calibrate(int XOffset, int YOffset)
+        public async Task<CalibrationData> EyeInHand2D_Calibrate(int XOffset, int YOffset, int JointRotationAngle)
         {
-            (double XMove, double YMove) = await FindXMoveYMove(30, 15);
+            (double XMove, double YMove) = await FindXMoveYMove(XOffset, JointRotationAngle);
             return await EyeInHand2D_Calibrate(XOffset, YOffset, XMove, YMove);
         }
 

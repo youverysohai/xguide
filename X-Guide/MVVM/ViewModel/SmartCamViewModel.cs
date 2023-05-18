@@ -7,21 +7,20 @@ using X_Guide.MVVM.ViewModel.CalibrationWizardSteps;
 
 namespace X_Guide.MVVM.ViewModel
 {
-    internal class SmartCamView : IVisionViewModel
+    internal class SmartCamViewModel : IVisionViewModel
     {
         public void SetConfig(CalibrationViewModel calibrationViewModel)
         {
-            throw new NotImplementedException();
+  
         }
 
         public void ShowOutputImage()
         {
-            throw new NotImplementedException();
+   
         }
 
         public void StartLiveImage()
         {
-            throw new NotImplementedException();
         }
     }
 }

@@ -90,7 +90,7 @@ namespace X_Guide
             builder.RegisterType<ManipulatorDb>().As<IManipulatorDb>();
             builder.RegisterType<MessageService>().As<IMessageService>().SingleInstance();
             builder.RegisterType<UserDb>().As<IUserDb>();
-            VisionSoftware = 1;
+            VisionSoftware = 3;
             switch (VisionSoftware)
             {
                 case 1:
@@ -104,6 +104,12 @@ namespace X_Guide
                     builder.RegisterType<HalconVisionService>().As<IVisionService>().SingleInstance();
                     builder.RegisterType<HalconViewModel>().As<IVisionViewModel>();
                     builder.RegisterType<LegacyVisionDb>().As<IVisionDb>();
+                    break;
+
+                case 3:
+                    builder.RegisterType<SmartCamVisionService>().As<IVisionService>().SingleInstance();
+                    builder.RegisterType<SmartCamViewModel>().As<IVisionViewModel>();
+                    builder.RegisterType<HikVisionDb>().As<IVisionDb>();
                     break;
 
                 default: break;

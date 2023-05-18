@@ -22,10 +22,11 @@ namespace X_Guide.MVVM.ViewModel
         public Step3HikViewModel(CalibrationViewModel calibration, IVisionService visionService, ViewModelState viewModelState, Notifier notifier)
         {
             _calibration = calibration;
-            _visionService = (HikVisionService)visionService;
+            _visionService = visionService as HikVisionService;
             _notifier = notifier;
             _viewModelState = viewModelState;
-            InitView();
+            if (_visionService != null) InitView();
+          
         }
 
         public CalibrationViewModel Calibration
@@ -42,7 +43,8 @@ namespace X_Guide.MVVM.ViewModel
         {
             get
             {
-                if (_calibration.Procedure == null) OnStateChanged?.Invoke(false);
+                //patch
+                if (_calibration.Procedure == null) OnStateChanged?.Invoke(true);
                 else OnStateChanged?.Invoke(true);
                 return _procedure;
             }
@@ -62,15 +64,16 @@ namespace X_Guide.MVVM.ViewModel
 
         public override bool ReadyToDisplay()
         {
-            if (!_isLoaded)
-            {
-                using (_manual = new ManualResetEventSlim(false))
-                {
-                    _manual.Wait();
-                    _isLoaded = true;
-                }
-            }
-            return _isLoaded;
+            //if (!_isLoaded)
+            //{
+            //    using (_manual = new ManualResetEventSlim(false))
+            //    {
+            //        _manual.Wait();
+            //        _isLoaded = true;
+            //    }
+            //}
+            //return _isLoaded;
+            return true;
         }
 
         public void Register(Action action)

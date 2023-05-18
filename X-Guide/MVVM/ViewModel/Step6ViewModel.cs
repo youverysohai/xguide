@@ -75,7 +75,7 @@ namespace X_Guide.MVVM.ViewModel
         {
             int XOffset = (int)Calibration.XOffset;
             int YOffset = (int)Calibration.YOffset;
-            CalibrationData calibrationData = await _calibService.EyeInHand2D_Calibrate(XOffset, YOffset);
+            CalibrationData calibrationData = await _calibService.EyeInHand2D_Calibrate(XOffset, YOffset, (int)Calibration.JointRotationAngle);
             Calibration.CXOffSet = calibrationData.X;
             Calibration.CYOffset = calibrationData.Y;
             Calibration.CRZOffset = calibrationData.Rz;

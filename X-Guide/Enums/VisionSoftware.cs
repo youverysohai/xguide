@@ -10,7 +10,8 @@ namespace X_Guide.Enums
         [Description("Halcom")]
         HikVision = 2,
 
-        [Description("SmartCamera")]
+        [Description("Smart Camera")]
         SmartCamera = 3,
+
     }
 }

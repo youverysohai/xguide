@@ -732,6 +732,7 @@
     <Compile Include="MVVM\ViewModel\HalconViewModel.cs" />
     <Compile Include="MVVM\ViewModel\HikViewModel.cs" />
     <Compile Include="MVVM\ViewModel\ICalibrationStep.cs" />
+    <Compile Include="MVVM\ViewModel\ICalibrationStep3.cs" />
     <Compile Include="MVVM\ViewModel\IViewModelLocator.cs" />
     <Compile Include="MVVM\ViewModel\IVisionViewModel.cs" />
     <Compile Include="MVVM\ViewModel\JogRobotViewModel.cs" />
@@ -739,10 +740,11 @@
     <Compile Include="MVVM\ViewModel\OperationViewModel.cs" />
     <Compile Include="MVVM\ViewModel\RenderControlViewModel.cs" />
     <Compile Include="MVVM\ViewModel\SecurityViewModel.cs" />
-    <Compile Include="MVVM\ViewModel\SmartCamView.cs" />
+    <Compile Include="MVVM\ViewModel\SmartCamViewModel.cs" />
     <Compile Include="MVVM\ViewModel\Step1ViewModel.cs" />
     <Compile Include="MVVM\ViewModel\Step2ViewModel.cs" />
     <Compile Include="MVVM\ViewModel\Step3HikViewModel.cs" />
+    <Compile Include="MVVM\ViewModel\Step3SmartCamViewModel.cs" />
     <Compile Include="MVVM\ViewModel\Step4ViewModel.cs" />
     <Compile Include="MVVM\ViewModel\Step5ViewModel.cs" />
     <Compile Include="MVVM\ViewModel\Step6ViewModel.cs" />
