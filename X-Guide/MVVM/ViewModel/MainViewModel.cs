@@ -23,6 +23,7 @@ namespace X_Guide.MVVM.ViewModel
 
         public bool Test { get; set; } = false;
         public RelayCommand TestCommand { get; }
+        public RelayCommand ChangeThemeCommand { get; }
 
         public bool IsRunning => State.IsLoading;
 
@@ -33,6 +34,15 @@ namespace X_Guide.MVVM.ViewModel
             get { return _isLoggedIn; }
             set { _isLoggedIn = value; }
         }
+
+        private bool _isBrightTheme = false;
+
+        public bool IsBrightTheme
+        {
+            get { return _isBrightTheme; }
+            set { _isBrightTheme = value; OnPropertyChanged(); }
+        }
+
 
         public ICommand NavigateCommand { get; }
 
@@ -87,13 +97,24 @@ namespace X_Guide.MVVM.ViewModel
             serverService.Start();
             var nav = new TypedParameter(typeof(INavigationService), _navigationService);
             TestCommand = new RelayCommand(test);
-
+            ChangeThemeCommand = new RelayCommand(ToggleTheme);
             _navigationService.Navigate<SettingViewModel>();
 
             LoginCommand = new RelayCommand(Login);
             RegisterCommand = new RelayCommand(Register);
             NavigateCommand = new RelayCommand(Navigate);
             logger.LogInformation("LapisLazuli");
+        }
+
+        private void ToggleTheme(object obj)
+        {
+            if(IsBrightTheme)
+            {
+                IsBrightTheme = false;
+            } else
+            {
+                IsBrightTheme = true;
+            }
         }
 
         private void OnLoadingStateChanged()
