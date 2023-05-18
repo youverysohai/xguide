@@ -48,7 +48,7 @@
         <xCust:CustomLoadingControl IsRunning="{Binding IsRunning}" ParentControl="{Binding ElementName=m_AppWindow}" DialogContent="{Binding Path=Content, Source={StaticResource template1}}" />
         <ui:NavigationView x:Name="SideMenuNavigation"
                        IsTitleBarAutoPaddingEnabled="True"
-                       IsBackButtonVisible="Collapsed"
+                       IsBackButtonVisible="Collapsed" 
                        CompactModeThresholdWidth="720"
                        IsSettingsVisible="False">
             <!-- Header Side Menu -->
@@ -62,8 +62,8 @@
                     <ui:NavigationViewItem.MenuItems>
                         <ui:NavigationViewItem x:Name="Production"
                         c:NavigationViewItemExtensions.Command="{Binding NavigateCommand}"
-                        c:NavigationViewItemExtensions.CommandParameter="{x:Static local:PageName.Production}"
-                        Tag="ProductionView" Content="Browse" Icon="BrowsePhotos" ToolTipService.ToolTip="Notes" />
+                         c:NavigationViewItemExtensions.CommandParameter="{x:Static local:PageName.Operation}"
+                        Tag="ProductionView" Content="Operation" Icon="BrowsePhotos" ToolTipService.ToolTip="Notes" />
                     </ui:NavigationViewItem.MenuItems>
                 </ui:NavigationViewItem>
 
@@ -84,7 +84,7 @@
                         </ui:NavigationViewItem>
                         <ui:NavigationViewItem x:Name="Jog"
                          c:NavigationViewItemExtensions.Command="{Binding NavigateCommand}"
-                         c:NavigationViewItemExtensions.CommandParameter="{x:Static local:PageName.Operation}"
+                         c:NavigationViewItemExtensions.CommandParameter="{x:Static local:PageName.JogRobot}"
                         Tag="JogRobotView" Content="Jog" ToolTipService.ToolTip="Jog">
                             <ui:NavigationViewItem.Icon>
                                 <ui:FontIcon   Glyph="&#xE759;" />
@@ -126,7 +126,7 @@
             <ui:NavigationView.PaneFooter>
 
                 <ui:SimpleStackPanel>
-                    <Button Click="ToggleAppThemeHandler" Background="Transparent" x:Name="toggleSwitch"  Command="{Binding ChangeThemeCommand}" HorizontalAlignment="Left" Margin="-10 0 0 0" HorizontalContentAlignment="Left">
+                    <Button Click="ToggleAppThemeHandler" Background="Transparent" x:Name="toggleSwitch" Width="330" Command="{Binding ChangeThemeCommand}" HorizontalAlignment="Left" Margin="-10 0 0 0" HorizontalContentAlignment="Left">
 
                         <ui:SimpleStackPanel Orientation="Horizontal" >
                             <ui:FontIcon FontFamily="Segoe MDL2 Assets"  Margin="10 0 0 0">
