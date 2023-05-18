@@ -197,19 +197,8 @@
                         <Grid.RowDefinitions>
                             <RowDefinition Height="59*" />
                             <RowDefinition Height="9*" />
-                            <RowDefinition Height="auto" />
                         </Grid.RowDefinitions>
                         <ContentControl Grid.Row="0" Content="{Binding CurrentViewModel}" Grid.RowSpan="2" />
-                        <hc:SimpleStackPanel Grid.Row="2" Orientation="Horizontal" VerticalAlignment="Center" HorizontalAlignment="Right">
-
-                            <materialDesign:PackIcon Style="{DynamicResource ConnectionStatusIcon}" />
-                            <TextBlock VerticalAlignment="Center"  Style="{DynamicResource ConnectionStatusTextBlock}">Connection Status :</TextBlock>
-                            <materialDesign:PackIcon  Kind="RobotIndustrialOutline" Style="{DynamicResource ConnectionStatusIconForeground}" />
-                            <TextBlock VerticalAlignment="Center" Style="{DynamicResource ConnectionStatusTextBlockForeground}" >Manipulator</TextBlock>
-                            <materialDesign:PackIcon Style="{DynamicResource ConnectionStatusIconForeground}" Kind="EyeOutline" />
-                            <TextBlock  Style="{DynamicResource ConnectionStatusTextBlockForeground}" VerticalAlignment="Center">Vision</TextBlock>
-                            <TextBlock Text="12/3/2023" x:Name="DateTimeTextBlock" />
-                        </hc:SimpleStackPanel>
                     </Grid>
                 </hc:Card>
             </ui:NavigationView.Content>

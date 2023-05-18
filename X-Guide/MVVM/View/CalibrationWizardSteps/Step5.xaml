@@ -16,7 +16,7 @@
              xmlns:ui="http://schemas.modernwpf.com/2019"
              FontSize="16"
              xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
-
+            
              d:DesignHeight="600" d:DesignWidth="1300">
     <UserControl.Resources>
 
@@ -36,7 +36,7 @@
         <c:BooleanToVisibilityConverter x:Key="BooleanToVisibilityConverter" />
         <c:TypeToBooleanConverter x:Key="TypeToBooleanConverter" />
     </UserControl.Resources>
-    <ScrollViewer>
+    <ScrollViewer HorizontalScrollBarVisibility="Auto">
 
         <hc:FlexPanel Margin="0 20 0 0" JustifyContent="SpaceAround" AlignContent="Center" FlexDirection="Row">
 
@@ -225,10 +225,10 @@
                         <ColumnDefinition Width="*"/>
                         <ColumnDefinition Width="*"/>
                     </Grid.ColumnDefinitions>
-                    <hc:RunningBlock Grid.ColumnSpan="2" Foreground="{DynamicResource ErrorColor}" FontWeight="Bold" Content="Manipulator is not Connected"
+                    <!--<hc:RunningBlock Grid.ColumnSpan="2" Foreground="{DynamicResource ErrorColor}" FontWeight="Bold" Content="Manipulator is not Connected"
                                     Visibility="{Binding CanJog, Converter={StaticResource BooleanToVisibilityConverter}, ConverterParameter=Collapsed}"
-                                     IsRunning="{Binding IsMouseOver,RelativeSource={RelativeSource Self},Converter={StaticResource Boolean2BooleanReConverter}}" />
-
+                                     IsRunning="{Binding IsMouseOver,RelativeSource={RelativeSource Self},Converter={StaticResource Boolean2BooleanReConverter}}" />-->
+                    <XCust:CustomConnectionStatus Grid.Row="0" Grid.ColumnSpan="2" IsConnected="{Binding CanJog}"/>
                     <Canvas Grid.Row="1" Grid.Column="2"  HorizontalAlignment="Center">
                         <Canvas.RenderTransform>
                             <TransformGroup>
@@ -405,13 +405,13 @@
 
                     <ui:SimpleStackPanel  Orientation="Vertical" Grid.Row="1" Margin="5 0" >
                         <ui:NumberBox
-                              Header="Jog Distance&#x0a;(mm)"
+                              Header="Jog Distance (mm)"
                               SpinButtonPlacementMode="Inline"
                               Margin="5"
                               x:Name="FormattedNumberBox"
                                 Value="{Binding JogDistance}">
                         </ui:NumberBox>
-                        <ui:ToggleSwitch Header="Mode&#x0a;(Tool/Global)" OnContent="Global" IsOn="{Binding Calibration.Mode}" OffContent="Tool"></ui:ToggleSwitch>
+                        <ui:ToggleSwitch Header="Mode (Tool/Global)" OnContent="Global" IsOn="{Binding Calibration.Mode}" OffContent="Tool"></ui:ToggleSwitch>
                     </ui:SimpleStackPanel>
 
                       

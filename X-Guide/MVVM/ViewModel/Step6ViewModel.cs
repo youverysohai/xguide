@@ -1,8 +1,10 @@
 ﻿using AutoMapper;
+using System;
 using System.Threading.Tasks;
 using ToastNotifications;
 using ToastNotifications.Messages;
 using X_Guide.Aspect;
+using X_Guide.Communication.Service;
 using X_Guide.MVVM.Command;
 using X_Guide.MVVM.Model;
 using X_Guide.MVVM.ViewModel.CalibrationWizardSteps;
@@ -26,7 +28,7 @@ namespace X_Guide.MVVM.ViewModel
         private readonly IMapper _mapper;
         private readonly Notifier _notifier;
         private readonly IVisionService _visionService;
-
+        
         public RelayCommand SaveCommand { get; set; }
         public RelayCommand CalibrateCommand { get; set; }
 
