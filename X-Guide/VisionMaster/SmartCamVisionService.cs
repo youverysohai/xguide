@@ -40,7 +40,7 @@ namespace X_Guide.VisionMaster
 
         public async Task<Point> GetVisCenter()
         {
-            await _clientService.WriteDataAsync($"XGUIDE,Give_Me_Vision_Center(x,y,theta)");
+            await _clientService.WriteDataAsync($"Capture");
     
             Point point = await _clientService.RegisterSingleRequestHandler(GetVisCenterEvent, _cts.Token);
             Debug.WriteLine(point);
