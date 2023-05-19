@@ -65,13 +65,13 @@
         </Style>
         <c:BooleanToVisibilityConverter x:Key="FalseIsCollapse"/>
     </UserControl.Resources>
-    <ui:SimpleStackPanel Orientation="Horizontal" VerticalAlignment="Center" HorizontalAlignment="Center">
+    <ui:SimpleStackPanel Orientation="Horizontal" VerticalAlignment="Center" HorizontalAlignment="Left">
         <!--<ui:FontIcon Glyph="&#xF384;"/>
         <ui:FontIcon Glyph="&#xF385;"/>
         <ui:FontIcon Glyph="&#xF386;"/>-->
         <TextBlock Text="Manipulator " Visibility="{Binding IsMainWindow, ElementName=CustConnectionControl}" FontWeight="DemiBold" Style="{DynamicResource ConnectionStatusTextBlockForeground}"/>
 
-        <Grid>
+        <Grid Margin="10 0 5 0">
             <ui:FontIcon x:Name="ConnectionIcon" Style="{DynamicResource ConnectionStatusIconForeground}"/>
             <ui:FontIcon x:Name="CheckIcon" Style="{DynamicResource showCheckedIcon}"/>
         </Grid>
