@@ -46,13 +46,13 @@ namespace X_Guide.Service.Communation
             Point VisCenter;
             try
             {
-                if (parameter.Length < 2) throw new Exception(StrRetriver.Get("OP000"));
+                if (parameter.Length < 1) throw new Exception(StrRetriver.Get("OP000"));
                 calib = await _calibDb.Get(parameter[1]) ?? throw new Exception(StrRetriver.Get("OP001"));
 
-                string procedure = parameter[2];
+                //string procedure = parameter[2];
 
-                OnOperationCalled?.Invoke(this, procedure);
-                ((HikVisionService)_visionService).Procedure = procedure;
+                //OnOperationCalled?.Invoke(this, procedure);
+                //((HikVisionService)_visionService).Procedure = procedure;
 
                 VisCenter = await _visionService.GetVisCenter();
                 if (VisCenter is null) throw new Exception(StrRetriver.Get("VI000"));
