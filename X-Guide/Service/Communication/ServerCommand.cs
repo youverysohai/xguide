@@ -34,9 +34,9 @@ namespace X_Guide.Service.Communation
             }
         }
 
-        public void Operation(string[] parameter)
+        public async void Operation(string[] parameter)
         {
-            object operationData = _operationService.Operation(parameter);
+            object operationData = await _operationService.Operation(parameter);
             OnOperationCalled?.Invoke(this, operationData);
         }
 

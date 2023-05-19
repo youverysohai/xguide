@@ -1,4 +1,6 @@
-﻿using System;
+﻿using HandyControl.Controls;
+using System;
+using System.Threading.Tasks;
 using VM.Core;
 using X_Guide.Service.Communation;
 using X_Guide.Service.Communication;
@@ -12,7 +14,7 @@ namespace X_Guide.MVVM.ViewModel
         private readonly IVisionService _visionService;
         public HikViewModel VisionView { get; set; }
 
-        public OperationViewModel(ServerCommand serverCommand, IVisionService visionService, IVisionViewModel viewModel)
+        public OperationViewModel(IServerCommand serverCommand, IVisionService visionService, IVisionViewModel viewModel)
         {
             _serverCommand = serverCommand;
             _visionService = visionService;
@@ -20,12 +22,13 @@ namespace X_Guide.MVVM.ViewModel
             _serverCommand.SubscribeOnOperationEvent(DisplayOutputImage);
         }
 
-        private void DisplayOutputImage(object sender, object e)
+        private async void DisplayOutputImage(object sender, object e)
         {
-            string data = e as string;
-            VmModule procedure = _visionService.GetProcedure(data);
+            string s = e.ToString();
+            VmModule procedure = _visionService.GetProcedure(s);
+            await Task.Delay(500);
             VisionView.Module = procedure;
-            /* VisionView.Modules = _visionService.GetModules(procedure);*/
+       
         }
 
         public override void Dispose()
