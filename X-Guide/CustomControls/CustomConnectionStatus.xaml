@@ -72,7 +72,7 @@
             <ui:FontIcon x:Name="ConnectionIcon" Style="{DynamicResource ConnectionStatusIconForeground}"/>
             <ui:FontIcon x:Name="CheckIcon" Style="{DynamicResource showCheckedIcon}"/>
         </Grid>
-        <TextBlock d:Text=" Connected!"   x:Name="ConnectionText" Style="{DynamicResource ConnectionStatusTextBlock}"/>
+        <TextBlock d:Text=" Connected!" Margin="5 0 0 0"  x:Name="ConnectionText" Style="{DynamicResource ConnectionStatusTextBlock}"/>
 
     </ui:SimpleStackPanel>
 </UserControl>

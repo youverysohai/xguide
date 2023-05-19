@@ -12,8 +12,10 @@
         xmlns:c="clr-namespace:X_Guide.Converter"
     xmlns:xCust="clr-namespace:X_Guide.CustomControls"
         mc:Ignorable="d"
-        Title="X-Guide"
+        Title="X-Guide"                    
         Height="720" Width="1280"
+        ui:TitleBar.IsIconVisible="True"
+        Icon="../../Style/ImageSource/xgIcon.ico"
         WindowState="Maximized"
         Background="{ui:ThemeResource ResourceKey=NavigationViewExpandedPaneBackground}"
         ui:TitleBar.Background="{ui:ThemeResource ResourceKey=NavigationViewExpandedPaneBackground}"
@@ -54,7 +56,10 @@
             <!-- Header Side Menu -->
 
             <ui:NavigationView.PaneHeader>
-                <TextBlock Style="{DynamicResource TitleTextBlockStyle}" Margin="15 8 0 0">X-Guide</TextBlock>
+                <ui:SimpleStackPanel Orientation="Horizontal">
+                    <Image Source="../../Style/ImageSource/pngIcon.png" Width="40" Margin="5"/>
+                    <TextBlock Style="{DynamicResource TitleTextBlockStyle}" Margin="15 8 0 0">X-Guide</TextBlock>
+                </ui:SimpleStackPanel>
             </ui:NavigationView.PaneHeader>
 
             <ui:NavigationView.MenuItems>
