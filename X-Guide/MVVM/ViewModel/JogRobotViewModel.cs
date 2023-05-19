@@ -37,7 +37,7 @@ namespace X_Guide.MVVM.ViewModel
         public JogRobotViewModel(IServerService serverService, IJogService jogService) {
             _jogService = jogService;
             _serverService = serverService;
-            _serverService.ClientConnectionChange += OnConnectionChange;
+            _serverService.SubscribeOnClientConnectionChange(OnConnectionChange);
             JogCommand = new RelayCommand(Jog, (o) => _canJog);
         }
 
@@ -69,6 +69,11 @@ namespace X_Guide.MVVM.ViewModel
             {
                 JogCommand.OnCanExecuteChanged();
             });
+        }
+        public override void Dispose()
+        {
+            _serverService.UnsubscribeOnClientConnectionChange(OnConnectionChange);
+            base.Dispose();
         }
     }
 }
