@@ -635,6 +635,9 @@
     <Compile Include="Converter\TypeToBooleanConverter.cs" />
     <Compile Include="Converter\TypeToDescriptionConverter.cs" />
     <Compile Include="CriticalErrorException.cs" />
+    <Compile Include="CustomControls\CustomConnectionStatus.xaml.cs">
+      <DependentUpon>CustomConnectionStatus.xaml</DependentUpon>
+    </Compile>
     <Compile Include="CustomControls\CustomFormButtons.xaml.cs">
       <DependentUpon>CustomFormButtons.xaml</DependentUpon>
     </Compile>
@@ -860,6 +863,10 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>XGuideModel.edmx</DependentUpon>
     </Compile>
+    <Page Include="CustomControls\CustomConnectionStatus.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="CustomControls\CustomFormButtons.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
