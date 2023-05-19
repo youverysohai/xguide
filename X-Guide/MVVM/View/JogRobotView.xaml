@@ -40,7 +40,11 @@
             <!--<Release:VmRealTimeAcqControl x:Name="acq_control" hc:FlexPanel.FlexBasis="720" Height="550" ></Release:VmRealTimeAcqControl>-->
             <GroupBox hc:FlexPanel.FlexBasis="390" Style="{StaticResource GroupBoxTab}" Width="328">
                 <GroupBox.Header>
-                    <TextBlock  HorizontalAlignment="Center" Style="{DynamicResource TitleTextBlockStyle}" Text="Jog to Vision Center" />
+                    <ui:SimpleStackPanel Orientation="Horizontal">
+                        <TextBlock Margin="10 0"  HorizontalAlignment="Center" Style="{DynamicResource TitleTextBlockStyle}" Text="Jog" />
+                        <hc:ComboBox ItemsSource="{Binding Manipulators}"/>
+                    </ui:SimpleStackPanel>
+                   
                 </GroupBox.Header>
                 <!-- Title -->
                 <!-- JogButtons and Rotations-->
@@ -56,10 +60,7 @@
                         <ColumnDefinition Width="*"/>
                         <ColumnDefinition Width="*"/>
                     </Grid.ColumnDefinitions>
-                    <hc:RunningBlock Grid.ColumnSpan="2" Foreground="{DynamicResource ErrorColor}" FontWeight="Bold" Content="Manipulator is not Connected"
-                                    Visibility="{Binding CanJog, Converter={StaticResource BooleanToVisibilityConverter}, ConverterParameter=Collapsed}"
-                                     IsRunning="{Binding IsMouseOver,RelativeSource={RelativeSource Self},Converter={StaticResource Boolean2BooleanReConverter}}" />
-
+                    <XCust:CustomConnectionStatus IsConnected="{Binding CanJog}"/>
                     <Canvas Grid.Row="1" Grid.Column="2"  HorizontalAlignment="Center">
                         <Canvas.RenderTransform>
                             <TransformGroup>
@@ -222,19 +223,25 @@
                     </Canvas>
 
                     <ui:SimpleStackPanel  Orientation="Vertical" Grid.Row="1" Margin="5 0 0 0" >
-                        <Label Style="{DynamicResource DefaultLabelStyle}">Select Manipulator</Label>
-                        <hc:ComboBox ItemsSource="{Binding Manipulators}" Margin="5">
-                            
-                        </hc:ComboBox>
-                        <Label Style="{DynamicResource DefaultLabelStyle}">Manipulator Type</Label>
-
-                        <TextBlock Text="{Binding ManipulatorType}" Style="{DynamicResource ReadOnlyTextBlock}"></TextBlock>
+                        
                         <ui:NumberBox
                               Header="Jog Distance (mm)"
                               SpinButtonPlacementMode="Inline"
                               Margin="5"
                               x:Name="FormattedNumberBox"
                                 Value="{Binding JogDistance}">
+                        </ui:NumberBox>
+                        <ui:NumberBox
+                              Header="Speed (%)"
+                              SpinButtonPlacementMode="Inline"
+                              Margin="5"
+                                Value="{Binding JogSpeed}">
+                        </ui:NumberBox>
+                        <ui:NumberBox
+                              Header="Acceleration (%)"
+                              SpinButtonPlacementMode="Inline"
+                              Margin="5"  
+                              Value="{Binding JogAccel}">
                         </ui:NumberBox>
                         <ui:ToggleSwitch Header="Mode(Tool/Global)" OnContent="Global" IsOn="{Binding Calibration.Mode}" OffContent="Tool"></ui:ToggleSwitch>
                     </ui:SimpleStackPanel>

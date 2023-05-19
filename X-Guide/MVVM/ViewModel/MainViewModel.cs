@@ -161,6 +161,7 @@ namespace X_Guide.MVVM.ViewModel
                 case PageName.CalibrationWizardStart: _navigationService.Navigate<CalibrationWizardStartViewModel>(nav); break;
                 case PageName.Login: _navigationService.Navigate<UserLoginViewModel>(); break;
                 case PageName.Operation: _navigationService.Navigate<OperationViewModel>(); break;
+                case PageName.JogRobot: _navigationService.Navigate<JogRobotViewModel>(); break;
                 default: break;
             }
         }
