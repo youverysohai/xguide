@@ -29,7 +29,7 @@ namespace X_Guide.MVVM.ViewModel
         private readonly IMapper _mapper;
         private readonly Notifier _notifier;
         private readonly IVisionService _visionService;
-        private bool _canCalibrate;
+        private bool _canCalibrate = true;
 
         public bool CanCalibrate
         {
