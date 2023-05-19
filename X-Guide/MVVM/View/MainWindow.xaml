@@ -145,14 +145,15 @@
                                     </Style>
                                 </ui:FontIcon.Style>
                             </ui:FontIcon>
-                            <TextBlock VerticalAlignment="Center" Margin="10 0"> Theme</TextBlock>
+                            <TextBlock VerticalAlignment="Center" Margin="10 0" Text=" Theme"/>
                         </ui:SimpleStackPanel>
                     </Button>
+                    <xCust:CustomConnectionStatus IsConnected="{Binding IsManipulatorConnected}" HorizontalAlignment="Left" IsMainWindow="Collapsed"/>
                     <!-- Profile Picture and Username-->
                     <ui:SimpleStackPanel Grid.Row="1" Orientation="Horizontal"  HorizontalAlignment="Left" Margin="4 10 0 10">
                         <ui:PersonPicture Width="30" DisplayName="Xuser1">
                         </ui:PersonPicture>
-                        <TextBlock x:Name="TextBoxUsername"  Text="Admin" Margin="5 0 0 0" VerticalAlignment="Center"  FontSize="16" />
+                        <TextBlock x:Name="TextBoxUsername"  Text=" Admin" Margin="5 0 0 0" VerticalAlignment="Center"  FontSize="16" />
                     </ui:SimpleStackPanel>
                 </ui:SimpleStackPanel>
             </ui:NavigationView.PaneFooter>
