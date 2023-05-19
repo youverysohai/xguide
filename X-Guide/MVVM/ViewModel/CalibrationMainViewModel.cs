@@ -77,14 +77,7 @@ namespace X_Guide.MVVM.ViewModel
 
         public CalibrationMainViewModel(CalibrationViewModel calibration, INavigationService navigationService, IViewModelLocator viewModelLocator, IManipulatorDb manipulatorDb, IMapper mapper)
         {
-            if (App.VisionSoftware == 1)
-            {
-                StepBarContent = new List<string>(new string[] { "Manipulator", "Orientation" + Environment.NewLine + "& Mounting", "Vision Flow", "Motion", "Jog", "Calibration", });
-            }
-            else
-            {
-                StepBarContent = new List<string>(new string[] { "Manipulator", "Orientation " + Environment.NewLine + "& Mounting", "Motion", "Live Image", "Calibration" });
-            }
+            StepBarContent = new List<string>(new string[] { "Manipulator", "Orientation" + Environment.NewLine + "& Mounting", "Vision Flow", "Motion", "Jog", "Calibration", });
             _navigationService = navigationService;
             _navigationStore = _navigationService.GetNavigationStore();
             _navigationStore.CurrentViewModelChanged += OnCurrentViewModelChanged;
@@ -197,8 +190,7 @@ namespace X_Guide.MVVM.ViewModel
         {
             var calibPara = new TypedParameter(typeof(CalibrationViewModel), Calibration);
             ViewModelBase viewModel = null;
-            if (App.VisionSoftware == 1)
-            {
+          
                 switch (currentStep)
                 {
                     case 0: viewModel = _navigationService.Navigate<Step1ViewModel>(calibPara); break;
@@ -209,17 +201,7 @@ namespace X_Guide.MVVM.ViewModel
                     case 5: viewModel = _navigationService.Navigate<Step6ViewModel>(calibPara); break;
                     default: throw new Exception("Page does not exist!");
                 }
-            }
-            else
-            {
-                switch (currentStep)
-                {
-                    case 0: viewModel = _navigationService.Navigate<Step1ViewModel>(calibPara); break;
-                    case 1: viewModel = _navigationService.Navigate<Step4ViewModel>(calibPara); break;
-                    case 2: viewModel = _navigationService.Navigate<Step6ViewModel>(calibPara); break;
-                    default: throw new Exception("Page does not exist!");
-                }
-            }
+           
             (viewModel as ICalibrationStep).Register(OnCriticalDataChanged);
             (viewModel as ICalibrationStep).RegisterStateChange(OnStateChanged);
         }

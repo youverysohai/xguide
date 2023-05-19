@@ -140,5 +140,16 @@ namespace X_Guide.Communication.Service
         {
             await WriteDataAsync(data, _connectedClient.FirstOrDefault().Value.TcpClient.GetStream());
         }
+
+        public void SubscribeOnClientConnectionChange(EventHandler<bool> action)
+        {
+            ClientConnectionChange += action;
+            ClientConnectionChange.Invoke(this, _canExecute);
+        }
+
+        public void UnsubscribeOnClientConnectionChange(EventHandler<bool> action)
+        {
+            ClientConnectionChange -= action;
+        }
     }
 }
