@@ -4,6 +4,7 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:X_Guide.CustomControls"
+             xmlns:c="clr-namespace:X_Guide.Converter"
              mc:Ignorable="d"
              xmlns:ui="http://schemas.modernwpf.com/2019"
              d:DesignHeight="30" d:DesignWidth="200"
@@ -62,12 +63,13 @@
                 </DataTrigger>
             </Style.Triggers>
         </Style>
+        <c:BooleanToVisibilityConverter x:Key="FalseIsCollapse"/>
     </UserControl.Resources>
     <ui:SimpleStackPanel Orientation="Horizontal" VerticalAlignment="Center" HorizontalAlignment="Center">
         <!--<ui:FontIcon Glyph="&#xF384;"/>
         <ui:FontIcon Glyph="&#xF385;"/>
         <ui:FontIcon Glyph="&#xF386;"/>-->
-        <TextBlock Text="Manipulator " FontWeight="DemiBold" Style="{DynamicResource ConnectionStatusTextBlockForeground}"/>
+        <TextBlock Text="Manipulator " Visibility="{Binding IsMainWindow, ElementName=CustConnectionControl}" FontWeight="DemiBold" Style="{DynamicResource ConnectionStatusTextBlockForeground}"/>
 
         <Grid>
             <ui:FontIcon x:Name="ConnectionIcon" Style="{DynamicResource ConnectionStatusIconForeground}"/>

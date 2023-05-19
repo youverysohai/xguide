@@ -44,5 +44,19 @@ namespace X_Guide.CustomControls
             var i = customConnectionStatus.IsConnected;
             
         }
+
+
+
+        public Visibility IsMainWindow
+        {
+            get { return (Visibility)GetValue(IsMainWindowProperty); }
+            set { SetValue(IsMainWindowProperty, value); }
+        }
+
+        // Using a DependencyProperty as the backing store for IsMainWindow.  This enables animation, styling, binding, etc...
+        public static readonly DependencyProperty IsMainWindowProperty =
+            DependencyProperty.Register("IsMainWindow", typeof(Visibility), typeof(CustomConnectionStatus), new PropertyMetadata(Visibility.Visible));
+
+
     }
 }
