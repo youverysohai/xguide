@@ -73,6 +73,9 @@
     <ErrorReport>prompt</ErrorReport>
     <Prefer32Bit>true</Prefer32Bit>
   </PropertyGroup>
+  <PropertyGroup>
+    <ApplicationIcon>xgIcon.ico</ApplicationIcon>
+  </PropertyGroup>
   <ItemGroup>
     <Reference Include="halcondotnet, Version=22.11.1.0, Culture=neutral, PublicKeyToken=4973bed59ddbf2b8, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
@@ -1212,6 +1215,10 @@
     <Resource Include="Style\ImageSource\greyup.png" />
     <Resource Include="Style\ImageSource\greydown.png" />
     <Resource Include="FodyWeavers.xml" />
+    <Resource Include="Style\ImageSource\icon.ico" />
+    <Resource Include="xgIcon.ico" />
+    <Resource Include="Style\ImageSource\xgIcon.ico" />
+    <Resource Include="Style\ImageSource\pngIcon.png" />
     <Content Include="XGuideDB.mdf">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
