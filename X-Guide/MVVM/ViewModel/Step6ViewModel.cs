@@ -10,7 +10,6 @@ using X_Guide.MVVM.Command;
 using X_Guide.MVVM.Model;
 using X_Guide.MVVM.ViewModel.CalibrationWizardSteps;
 using X_Guide.Service;
-using X_Guide.Service.Communication;
 using X_Guide.Service.DatabaseProvider;
 using X_Guide.VisionMaster;
 
@@ -30,21 +29,22 @@ namespace X_Guide.MVVM.ViewModel
         private readonly IMapper _mapper;
         private readonly Notifier _notifier;
         private readonly IVisionService _visionService;
-        private bool _canCalibrate;
+        private bool _canCalibrate = true;
 
         public bool CanCalibrate
         {
             get { return _canCalibrate; }
-            set {
+            set
+            {
                 _canCalibrate = value;
-                OnPropertyChanged(); }
+                OnPropertyChanged();
+            }
         }
-
 
         public RelayCommand SaveCommand { get; set; }
         public RelayCommand CalibrateCommand { get; set; }
 
-        public Step6ViewModel(IServerService serverService,CalibrationViewModel calibrationConfig, ICalibrationDb calibDb, ICalibrationService calibService, IMapper mapper, Notifier notifier, IVisionService visionService, IVisionViewModel visionView)
+        public Step6ViewModel(IServerService serverService, CalibrationViewModel calibrationConfig, ICalibrationDb calibDb, ICalibrationService calibService, IMapper mapper, Notifier notifier, IVisionService visionService, IVisionViewModel visionView)
         {
             _serverService = serverService;
             Calibration = calibrationConfig;
@@ -55,7 +55,7 @@ namespace X_Guide.MVVM.ViewModel
             _visionService = visionService;
             VisionView = visionView;
             VisionView.SetConfig(calibrationConfig);
-            _serverService.ClientConnectionChange += OnConnectionChange;
+            _serverService.SubscribeOnClientConnectionChange(OnConnectionChange);
             CalibrateCommand = RelayCommand.FromAsyncRelayCommand(Calibrate);
             SaveCommand = RelayCommand.FromAsyncRelayCommand(Save);
             VisionView.ShowOutputImage();
@@ -75,7 +75,7 @@ namespace X_Guide.MVVM.ViewModel
         {
             int XOffset = (int)Calibration.XOffset;
             int YOffset = (int)Calibration.YOffset;
-            CalibrationData calibrationData = await _calibService.EyeInHand2D_Calibrate(XOffset, YOffset);
+            CalibrationData calibrationData = await _calibService.EyeInHand2D_Calibrate(XOffset, YOffset, (int)Calibration.JointRotationAngle);
             Calibration.CXOffSet = calibrationData.X;
             Calibration.CYOffset = calibrationData.Y;
             Calibration.CRZOffset = calibrationData.Rz;
@@ -95,6 +95,12 @@ namespace X_Guide.MVVM.ViewModel
                 await _calibDb.Update(_mapper.Map<CalibrationModel>(Calibration));
                 _notifier.ShowSuccess($"{Calibration.Name} : {StrRetriver.Get("SC001")}");
             }
+        }
+
+        public override void Dispose()
+        {
+            _serverService.UnsubscribeOnClientConnectionChange(OnConnectionChange);
+            base.Dispose();
         }
 
         public void Register(Action action)

@@ -114,5 +114,10 @@ namespace X_Guide.VisionMaster
             hv_AcqHandle.Dispose();
             hImage.Dispose();
         }
+
+        Task<List<VmProcedure>> IVisionService.GetAllProcedures()
+        {
+            throw new NotImplementedException();
+        }
     }
 }

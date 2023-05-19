@@ -1,10 +1,6 @@
-﻿using PropertyChanged;
-using System;
-using System.Collections.Generic;
+﻿using System;
 using System.ComponentModel;
-using System.Linq;
 using System.Runtime.CompilerServices;
-using System.Text;
 using System.Threading.Tasks;
 
 namespace X_Guide.MVVM.ViewModel
@@ -13,8 +9,10 @@ namespace X_Guide.MVVM.ViewModel
     {
         protected volatile bool _canDisplayViewModel = true;
         protected volatile bool _isLoaded = false;
-        public virtual bool ReadyToDisplay() {
-            return true;
+
+        public virtual Task<bool> ReadyToDisplay()
+        {
+            return Task.FromResult(true);
         }
 
         public event PropertyChangedEventHandler PropertyChanged;

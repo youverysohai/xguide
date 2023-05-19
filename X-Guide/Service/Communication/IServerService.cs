@@ -12,8 +12,6 @@ namespace X_Guide.Communication.Service
     {
         event EventHandler<NetworkStreamEventArgs> _dataReceived;
 
-        event EventHandler<bool> ClientConnectionChange;
-
         TcpClientInfo GetConnectedClientInfo(TcpClient tcpClient);
 
         Task ServerWriteDataAsync(string data);
@@ -27,6 +25,10 @@ namespace X_Guide.Communication.Service
         void Stop();
 
         void SetServerReadTerminator(string terminator);
+
+        void SubscribeOnClientConnectionChange(EventHandler<bool> action);
+
+        void UnsubscribeOnClientConnectionChange(EventHandler<bool> action);
 
         ConcurrentDictionary<int, TcpClientInfo> GetConnectedClient();
     }

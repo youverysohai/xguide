@@ -119,7 +119,7 @@
                         <!-- NEW MANIPULATOR -->
 
                         <ui:ContentDialog x:Name="ManipulatorDialog" Title="New Manipulator"
-
+                                              DefaultButton="Primary"
                                               CloseButtonText="Cancel" CloseButtonStyle="{DynamicResource DateTimePickerFlyoutButtonStyle}"  CloseButtonClick="ManipulatorDialog_CloseButtonClick"
 
                                               PrimaryButtonText="Create" PrimaryButtonStyle="{DynamicResource DefaultButtonStyle}" PrimaryButtonCommand="{Binding DataContext.AddManipulatorCommand,ElementName=SettingUserControl}">

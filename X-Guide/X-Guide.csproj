@@ -732,6 +732,7 @@
     <Compile Include="MVVM\ViewModel\HalconViewModel.cs" />
     <Compile Include="MVVM\ViewModel\HikViewModel.cs" />
     <Compile Include="MVVM\ViewModel\ICalibrationStep.cs" />
+    <Compile Include="MVVM\ViewModel\ICalibrationStep3.cs" />
     <Compile Include="MVVM\ViewModel\IViewModelLocator.cs" />
     <Compile Include="MVVM\ViewModel\IVisionViewModel.cs" />
     <Compile Include="MVVM\ViewModel\JogRobotViewModel.cs" />
@@ -739,9 +740,11 @@
     <Compile Include="MVVM\ViewModel\OperationViewModel.cs" />
     <Compile Include="MVVM\ViewModel\RenderControlViewModel.cs" />
     <Compile Include="MVVM\ViewModel\SecurityViewModel.cs" />
+    <Compile Include="MVVM\ViewModel\SmartCamViewModel.cs" />
     <Compile Include="MVVM\ViewModel\Step1ViewModel.cs" />
     <Compile Include="MVVM\ViewModel\Step2ViewModel.cs" />
     <Compile Include="MVVM\ViewModel\Step3HikViewModel.cs" />
+    <Compile Include="MVVM\ViewModel\Step3SmartCamViewModel.cs" />
     <Compile Include="MVVM\ViewModel\Step4ViewModel.cs" />
     <Compile Include="MVVM\ViewModel\Step5ViewModel.cs" />
     <Compile Include="MVVM\ViewModel\Step6ViewModel.cs" />
@@ -789,6 +792,9 @@
     <Compile Include="MVVM\View\SecurityView.xaml.cs">
       <DependentUpon>SecurityView.xaml</DependentUpon>
     </Compile>
+    <Compile Include="MVVM\View\SmartCamView.xaml.cs">
+      <DependentUpon>SmartCamView.xaml</DependentUpon>
+    </Compile>
     <Compile Include="MVVM\View\UndefinedView.xaml.cs">
       <DependentUpon>UndefinedView.xaml</DependentUpon>
     </Compile>
@@ -800,9 +806,15 @@
     <Compile Include="Service\BackgroundService.cs" />
     <Compile Include="Service\CalibrationService.cs" />
     <Compile Include="Service\Communication\ClientService.cs" />
+    <Compile Include="Service\Communication\HalconOperationService.cs" />
+    <Compile Include="Service\Communication\HikOperationService.cs" />
     <Compile Include="Service\Communication\IClientService.cs" />
+    <Compile Include="Service\Communication\IOperationService.cs" />
+    <Compile Include="Service\Communication\IServerCommand.cs" />
     <Compile Include="Service\Communication\IServerService.cs" />
     <Compile Include="Service\Communication\JogCommand.cs" />
+    <Compile Include="Service\Communication\OperationService.cs" />
+    <Compile Include="Service\Communication\SmartCamOperationService.cs" />
     <Compile Include="Service\Communication\TCPBase.cs" />
     <Compile Include="Service\Communication\TcpClientInfo.cs" />
     <Compile Include="Service\DatabaseProvider\CalibrationDb.cs" />
@@ -847,6 +859,7 @@
     <Compile Include="VisionMaster\HalconVisionService.cs" />
     <Compile Include="VisionMaster\IVisionService.cs" />
     <Compile Include="VisionMaster\HikVisionService.cs" />
+    <Compile Include="VisionMaster\SmartCamVisionService.cs" />
     <Compile Include="XGuideModel.Context.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -996,6 +1009,10 @@
       <SubType>Designer</SubType>
     </Page>
     <Page Include="MVVM\View\SharedResources.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="MVVM\View\SmartCamView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -1195,12 +1212,9 @@
     <Resource Include="Style\ImageSource\greyup.png" />
     <Resource Include="Style\ImageSource\greydown.png" />
     <Resource Include="FodyWeavers.xml" />
-    <Content Include="XGuideDB.mdf">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
+    <Content Include="XGuideDB.mdf" />
     <Content Include="XGuideDB_log.ldf">
       <DependentUpon>XGuideDB.mdf</DependentUpon>
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <Content Include="XGuideModel.Context.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
@@ -1214,8 +1228,6 @@
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Vision\" />
-  </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

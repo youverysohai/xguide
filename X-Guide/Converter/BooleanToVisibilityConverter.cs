@@ -13,7 +13,8 @@ namespace X_Guide.Converter
     {
         public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
         {
-            if (value is bool && (bool)value == false)
+
+            if (value is bool isVisible && !isVisible)
                 return Visibility.Visible;
             else
                 return (parameter is Visibility) ? parameter : Visibility.Collapsed;
