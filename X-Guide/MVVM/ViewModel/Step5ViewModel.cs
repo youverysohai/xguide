@@ -46,7 +46,7 @@ namespace X_Guide.MVVM.ViewModel
         public string JogMode { get; set; } = "TOOL";
 
 
-        private bool _canJog = true;
+        private bool _canJog;
         private IVisionViewModel visionView;
 
 
