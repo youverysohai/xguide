@@ -67,12 +67,13 @@
         <!--<ui:FontIcon Glyph="&#xF384;"/>
         <ui:FontIcon Glyph="&#xF385;"/>
         <ui:FontIcon Glyph="&#xF386;"/>-->
-        <TextBlock Text="Status " FontWeight="DemiBold" Style="{DynamicResource ConnectionStatusTextBlockForeground}"/>
+        <TextBlock Text="Manipulator " FontWeight="DemiBold" Style="{DynamicResource ConnectionStatusTextBlockForeground}"/>
 
-        <TextBlock d:Text=" Connected!"   x:Name="ConnectionText" Style="{DynamicResource ConnectionStatusTextBlock}"/>
         <Grid>
             <ui:FontIcon x:Name="ConnectionIcon" Style="{DynamicResource ConnectionStatusIconForeground}"/>
             <ui:FontIcon x:Name="CheckIcon" Style="{DynamicResource showCheckedIcon}"/>
         </Grid>
+        <TextBlock d:Text=" Connected!"   x:Name="ConnectionText" Style="{DynamicResource ConnectionStatusTextBlock}"/>
+
     </ui:SimpleStackPanel>
 </UserControl>

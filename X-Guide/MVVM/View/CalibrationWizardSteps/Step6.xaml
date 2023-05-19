@@ -148,8 +148,8 @@
                             <TextBlock Text="{Binding Calibration.CRZOffset, StringFormat={}{0:F2}}" Grid.Row="4" Grid.Column="1" Margin="5" Style="{DynamicResource ReadOnlyTextBlock}" />
                             <Label Content="°" Grid.Row="4" Grid.Column="2" />
 
-                            <ComboBox Grid.Row="8" ItemsSource="{Binding Modules}">
-                            </ComboBox>
+                            <!--<ComboBox Grid.Row="8" ItemsSource="{Binding Modules}">
+                            </ComboBox>-->
 
                             <ui:SimpleStackPanel Orientation="Vertical" Grid.Row="10">
                                 <Label Style="{DynamicResource MaterialDesignLabel}">XMove</Label>
