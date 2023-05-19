@@ -124,80 +124,81 @@ namespace X_Guide.MVVM.ViewModel
 
         private void ToggleTheme(object obj)
         {
-            if(IsBrightTheme)
+            if (IsBrightTheme)
             {
                 IsBrightTheme = false;
-            } else
-            {
-                IsBrightTheme = true;
-            }
-
-        private void OnConnectionChange(object sender, bool e)
-        {
-            IsManipulatorConnected = e;
-
-        }
-
-        private void OnLoadingStateChanged()
-        {
-            OnPropertyChanged(nameof(IsRunning));
-        }
-
-        private void test(object obj)
-        {
-            Test = !Test;
-        }
-
-        private void Navigate(object obj)
-        {
-            var nav = new TypedParameter(typeof(INavigationService), _navigationService);
-
-            switch (obj)
-            {
-                case PageName.Security: _navigationService.Navigate<SecurityViewModel>(); break;
-                case PageName.Production: _navigationService.Navigate<ProductionViewModel>(); break;
-                case PageName.Setting: _navigationService.Navigate<SettingViewModel>(); break;
-                case PageName.CalibrationWizardStart: _navigationService.Navigate<CalibrationWizardStartViewModel>(nav); break;
-                case PageName.Login: _navigationService.Navigate<UserLoginViewModel>(); break;
-                case PageName.Operation: _navigationService.Navigate<OperationViewModel>(); break;
-                default: break;
-            }
-        }
-
-        private void Register(object obj)
-        {
-            MessageBox.Show("Halo chub");
-            /*bool success = await _auth.Register(new UserModel
-            {
-                Username = "123",
-                Email = "Akimoputo.DotCom",
-                Role = 1,
-            }, InputPassword);
-            if (success)
-            {
-                MessageBox.Show("Added successfully");
-            }
-            else MessageBox.Show("User is not added!");*/
-        }
-
-        private async void Login(object obj)
-        {
-            bool status = await _auth.Login(InputUsername, InputPassword);
-
-            if (status)
-            {
-                MessageBox.Show($"Welcome back! {_auth.CurrentUser.Username}");
             }
             else
             {
-                MessageBox.Show("Invalid login");
+                IsBrightTheme = true;
             }
         }
+            private void OnConnectionChange(object sender, bool e)
+            {
+                IsManipulatorConnected = e;
 
-        private void OnCurrentViewModelChanged()
-        {
-            OnPropertyChanged(nameof(CurrentViewModel));
-            Debug.WriteLine(CurrentViewModel);
+            }
+
+            private void OnLoadingStateChanged()
+            {
+                OnPropertyChanged(nameof(IsRunning));
+            }
+
+            private void test(object obj)
+            {
+                Test = !Test;
+            }
+
+            private void Navigate(object obj)
+            {
+                var nav = new TypedParameter(typeof(INavigationService), _navigationService);
+
+                switch (obj)
+                {
+                    case PageName.Security: _navigationService.Navigate<SecurityViewModel>(); break;
+                    case PageName.Production: _navigationService.Navigate<ProductionViewModel>(); break;
+                    case PageName.Setting: _navigationService.Navigate<SettingViewModel>(); break;
+                    case PageName.CalibrationWizardStart: _navigationService.Navigate<CalibrationWizardStartViewModel>(nav); break;
+                    case PageName.Login: _navigationService.Navigate<UserLoginViewModel>(); break;
+                    case PageName.Operation: _navigationService.Navigate<OperationViewModel>(); break;
+                    default: break;
+                }
+            }
+
+            private void Register(object obj)
+            {
+                MessageBox.Show("Halo chub");
+                /*bool success = await _auth.Register(new UserModel
+                {
+                    Username = "123",
+                    Email = "Akimoputo.DotCom",
+                    Role = 1,
+                }, InputPassword);
+                if (success)
+                {
+                    MessageBox.Show("Added successfully");
+                }
+                else MessageBox.Show("User is not added!");*/
+            }
+
+            private async void Login(object obj)
+            {
+                bool status = await _auth.Login(InputUsername, InputPassword);
+
+                if (status)
+                {
+                    MessageBox.Show($"Welcome back! {_auth.CurrentUser.Username}");
+                }
+                else
+                {
+                    MessageBox.Show("Invalid login");
+                }
+            }
+
+            private void OnCurrentViewModelChanged()
+            {
+                OnPropertyChanged(nameof(CurrentViewModel));
+                Debug.WriteLine(CurrentViewModel);
+            }
         }
-    }
-}
+    } 
