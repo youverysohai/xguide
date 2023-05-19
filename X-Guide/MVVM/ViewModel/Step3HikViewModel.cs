@@ -2,9 +2,9 @@
 using System.Collections.ObjectModel;
 using System.Threading;
 using System.Threading.Tasks;
+using System.Windows.Threading;
 using ToastNotifications;
 using VM.Core;
-using X_Guide.Aspect;
 using X_Guide.MVVM.ViewModel.CalibrationWizardSteps;
 using X_Guide.State;
 using X_Guide.VisionMaster;
@@ -15,18 +15,16 @@ namespace X_Guide.MVVM.ViewModel
     {
         private readonly Notifier _notifier;
         private readonly ViewModelState _viewModelState;
-        private readonly HikVisionService _visionService;
+        private readonly IVisionService _visionService;
         private readonly CalibrationViewModel _calibration;
-        private ManualResetEventSlim _manual;
+        private readonly ManualResetEventSlim _manual;
 
         public Step3HikViewModel(CalibrationViewModel calibration, IVisionService visionService, ViewModelState viewModelState, Notifier notifier)
         {
             _calibration = calibration;
-            _visionService = visionService as HikVisionService;
+            _visionService = visionService;
             _notifier = notifier;
             _viewModelState = viewModelState;
-            if (_visionService != null) InitView();
-          
         }
 
         public CalibrationViewModel Calibration
@@ -62,17 +60,9 @@ namespace X_Guide.MVVM.ViewModel
 
         private string _procedure => _calibration.Procedure;
 
-        public override bool ReadyToDisplay()
+        public override async Task<bool> ReadyToDisplay()
         {
-            //if (!_isLoaded)
-            //{
-            //    using (_manual = new ManualResetEventSlim(false))
-            //    {
-            //        _manual.Wait();
-            //        _isLoaded = true;
-            //    }
-            //}
-            //return _isLoaded;
+            await Dispatcher.CurrentDispatcher.Invoke(() => GetProcedures());
             return true;
         }
 
@@ -85,16 +75,9 @@ namespace X_Guide.MVVM.ViewModel
             OnStateChanged = action;
         }
 
-        [ExceptionHandlingAspect]
         private async Task GetProcedures()
         {
             Procedures = new ObservableCollection<VmProcedure>(await _visionService.GetAllProcedures());
-        }
-
-        private async void InitView()
-        {
-            await GetProcedures();
-            _manual.Set();
         }
     }
 }

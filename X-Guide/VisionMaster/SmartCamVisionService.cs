@@ -1,28 +1,26 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Diagnostics;
-using System.Linq;
-using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 using VM.Core;
 using VMControls.Interface;
 using X_Guide.Communication.Service;
 using X_Guide.CustomEventArgs;
-using Timer = X_Guide.HelperClass.Timer;
 
 namespace X_Guide.VisionMaster
 {
     internal class SmartCamVisionService : IVisionService
     {
         private readonly IClientService _clientService;
-        private CancellationTokenSource _cts = new CancellationTokenSource();
+        private readonly CancellationTokenSource _cts = new CancellationTokenSource();
 
         public SmartCamVisionService(IClientService clientService)
         {
             _clientService = clientService;
             _clientService.ConnectServer();
         }
+
         public VmModule GetCameras()
         {
             throw new NotImplementedException();
@@ -30,7 +28,7 @@ namespace X_Guide.VisionMaster
 
         public List<VmModule> GetModules(VmProcedure vmProcedure)
         {
-            throw new NotImplementedException();
+            return null;
         }
 
         public VmProcedure GetProcedure(string name)
@@ -41,7 +39,7 @@ namespace X_Guide.VisionMaster
         public async Task<Point> GetVisCenter()
         {
             await _clientService.WriteDataAsync($"Capture");
-    
+
             Point point = await _clientService.RegisterSingleRequestHandler(GetVisCenterEvent, _cts.Token);
             Debug.WriteLine(point);
             return point;
@@ -73,6 +71,11 @@ namespace X_Guide.VisionMaster
         public Task<IVmModule> RunProcedure(string name, bool continuous = false)
         {
             throw new NotImplementedException();
+        }
+
+        public Task<List<VmProcedure>> GetAllProcedures()
+        {
+            return Task.FromResult(new List<VmProcedure>());
         }
     }
 }

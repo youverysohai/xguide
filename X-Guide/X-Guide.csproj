@@ -806,9 +806,15 @@
     <Compile Include="Service\BackgroundService.cs" />
     <Compile Include="Service\CalibrationService.cs" />
     <Compile Include="Service\Communication\ClientService.cs" />
+    <Compile Include="Service\Communication\HalconOperationService.cs" />
+    <Compile Include="Service\Communication\HikOperationService.cs" />
     <Compile Include="Service\Communication\IClientService.cs" />
+    <Compile Include="Service\Communication\IOperationService.cs" />
+    <Compile Include="Service\Communication\IServerCommand.cs" />
     <Compile Include="Service\Communication\IServerService.cs" />
     <Compile Include="Service\Communication\JogCommand.cs" />
+    <Compile Include="Service\Communication\OperationService.cs" />
+    <Compile Include="Service\Communication\SmartCamOperationService.cs" />
     <Compile Include="Service\Communication\TCPBase.cs" />
     <Compile Include="Service\Communication\TcpClientInfo.cs" />
     <Compile Include="Service\DatabaseProvider\CalibrationDb.cs" />

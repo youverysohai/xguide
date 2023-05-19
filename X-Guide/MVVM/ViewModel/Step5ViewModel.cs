@@ -45,10 +45,8 @@ namespace X_Guide.MVVM.ViewModel
         public CalibrationViewModel Calibration => _calibrationConfig;
         public string JogMode { get; set; } = "TOOL";
 
-
         private bool _canJog = true;
         private IVisionViewModel visionView;
-
 
         public bool CanJog
         {
@@ -77,7 +75,7 @@ namespace X_Guide.MVVM.ViewModel
             VisionView = visionView;
             VisionView.SetConfig(_calibrationConfig);
             JogCommand = new RelayCommand(Jog, (o) => _canJog);
-            _serverService.ClientConnectionChange += OnConnectionChange;
+            _serverService.SubscribeOnClientConnectionChange(OnConnectionChange);
             VisionView.StartLiveImage();
         }
 
@@ -95,12 +93,12 @@ namespace X_Guide.MVVM.ViewModel
             _manual?.Set();
         }
 
-        public override bool ReadyToDisplay()
+        public override async Task<bool> ReadyToDisplay()
         {
             using (_manual = new ManualResetEventSlim(false))
             {
                 InitView();
-                return true;
+                return await Task.FromResult(true);
             }
         }
 
@@ -143,7 +141,7 @@ namespace X_Guide.MVVM.ViewModel
 
         public override void Dispose()
         {
-            _serverService.ClientConnectionChange -= OnConnectionChange;
+            _serverService.UnsubscribeOnClientConnectionChange(OnConnectionChange);
             base.Dispose();
         }
 

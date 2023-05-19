@@ -18,6 +18,7 @@ using X_Guide.MVVM.Store;
 using X_Guide.MVVM.ViewModel;
 using X_Guide.Service;
 using X_Guide.Service.Communation;
+using X_Guide.Service.Communication;
 using X_Guide.Service.DatabaseProvider;
 using X_Guide.State;
 using X_Guide.VisionMaster;
@@ -90,13 +91,13 @@ namespace X_Guide
             builder.RegisterType<ManipulatorDb>().As<IManipulatorDb>();
             builder.RegisterType<MessageService>().As<IMessageService>().SingleInstance();
             builder.RegisterType<UserDb>().As<IUserDb>();
-            VisionSoftware = 3;
             switch (VisionSoftware)
             {
                 case 1:
                     builder.RegisterType<HikVisionService>().As<IVisionService>().WithParameter(new TypedParameter(typeof(string), hikSetting.Filepath)).SingleInstance();
                     builder.RegisterType<HikViewModel>().As<IVisionViewModel>();
                     builder.RegisterType<HikVisionDb>().As<IVisionDb>();
+                    builder.RegisterType<HikOperationService>().As<IOperationService>();
 
                     break;
 
@@ -104,19 +105,21 @@ namespace X_Guide
                     builder.RegisterType<HalconVisionService>().As<IVisionService>().SingleInstance();
                     builder.RegisterType<HalconViewModel>().As<IVisionViewModel>();
                     builder.RegisterType<LegacyVisionDb>().As<IVisionDb>();
+                    builder.RegisterType<HalconOperationService>().As<IOperationService>();
                     break;
 
                 case 3:
                     builder.RegisterType<SmartCamVisionService>().As<IVisionService>().SingleInstance();
                     builder.RegisterType<SmartCamViewModel>().As<IVisionViewModel>();
                     builder.RegisterType<HikVisionDb>().As<IVisionDb>();
+                    builder.RegisterType<SmartCamOperationService>().As<IOperationService>();
                     break;
 
                 default: break;
             }
 
             builder.RegisterType<JogService>().As<IJogService>();
-            builder.RegisterType<ServerCommand>().SingleInstance();
+            builder.RegisterType<ServerCommand>().As<IServerCommand>().SingleInstance();
             builder.RegisterType<NavigationStore>();
             builder.RegisterType<NavigationService>().As<INavigationService>();
             builder.RegisterType<CalibrationService>().As<ICalibrationService>();
@@ -150,9 +153,6 @@ namespace X_Guide
 
         private static void InitializeAppConfiguration()
         {
-            //string appDataPath = Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData);
-            //string settingPath = Path.Combine(appDataPath, "X-Guide", "Settings.xml");
-            //ConfigurationManager.AppSettings["SettingPath"] = settingPath;
             var mapper = new MapperConfiguration(c =>
             {
                 c.AddProfile<GeneralProfile>();
@@ -179,7 +179,7 @@ namespace X_Guide
             try
             {
                 _ = _diContainer.Resolve<IVisionService>();
-                _ = _diContainer.Resolve<ServerCommand>();
+                _ = _diContainer.Resolve<IServerCommand>();
             }
             catch
             {
