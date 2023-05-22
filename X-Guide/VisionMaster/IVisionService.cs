@@ -37,6 +37,8 @@ namespace X_Guide.VisionMaster
 
         VmProcedure GetProcedure(string name);
 
+        Task<List<VmProcedure>> GetAllProcedures();
+
         VmModule GetCameras();
     }
 }

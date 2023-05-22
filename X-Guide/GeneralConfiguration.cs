@@ -28,7 +28,7 @@ namespace X_Guide
         [ConfigurationProperty("Port")]
         public int Port
         {
-            get { return int.Parse(this["Port"].ToString()); }
+            get { return int.TryParse(this["Port"].ToString(), out int result) ? result : default; }
             set { this["Port"] = value; }
         }
 
@@ -44,7 +44,7 @@ namespace X_Guide
         {
             get
             {
-                return int.Parse(this["VisionSoftware"].ToString());
+                return int.TryParse(this["VisionSoftware"].ToString(), out int result) ? result : 1;
             }
             set { this["VisionSoftware"] = value.ToString(); }
         }

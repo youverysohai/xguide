@@ -27,10 +27,6 @@ namespace X_Guide.MVVM.ViewModel
             _calibrationConfig = calibrationConfig;
         }
 
-        private void BindModuleToRenderControl(IVmModule module)
-        {
-            Module = module;
-        }
 
         public async void StartLiveImage()
         {

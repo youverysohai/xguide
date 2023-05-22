@@ -3,7 +3,7 @@
                     xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
                     xmlns:hc="https://handyorg.github.io/handycontrol"
                     xmlns:c="clr-namespace:X_Guide.Converter"
-                    
+                    xmlns:ui="http://schemas.modernwpf.com/2019"
                     >
     <!-- #region MainWindow Styles-->
     <!-- TOP -->
@@ -75,17 +75,17 @@
         </Style.Triggers>
     </Style>
     
-    <!-- BOTTOM : incomplete not real connection binding !!!!!!!!!!!!!!!!!!!!!!!-->
+    
     <!-- Icon Connection Status Change Color -->
-    <Style x:Key="ConnectionStatusIconForeground" TargetType="materialDesign:PackIcon" BasedOn="{StaticResource IconStyle24}">
+    <Style x:Key="ConnectionStatusIconForeground" TargetType="ui:FontIcon">
         <Style.Triggers>
-            <DataTrigger Binding="{Binding IsLoggedIn}" Value="True">
+            <DataTrigger Binding="{Binding CanJog}" Value="True">
                 <Setter Property="Foreground"  Value="{DynamicResource ConnectedColor}"/>
             </DataTrigger>
-            <DataTrigger Binding="{Binding IsLoggedIn}" Value="False">
+            <DataTrigger Binding="{Binding CanJog}" Value="False">
                 <Setter Property="Foreground"  Value="{DynamicResource DisconnectedColor}"/>
-            </DataTrigger>                                                    
-            <DataTrigger Binding="{Binding IsLoggedIn}" Value="Error">
+            </DataTrigger>
+            <DataTrigger Binding="{Binding CanJog}" Value="Error">
                 <Setter Property="Foreground"  Value="{DynamicResource ErrorColor}"/>
             </DataTrigger>
         </Style.Triggers>

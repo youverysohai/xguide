@@ -64,11 +64,8 @@ namespace X_Guide.VisionMaster
         public async Task<List<VmProcedure>> GetAllProcedures()
         {
             List<VmProcedure> vmProcedure = new List<VmProcedure>();
-            return await Task.Run(() =>
-            {
-                VmSolution.Instance.GetAllProcedureObjects(ref vmProcedure);
-                return vmProcedure;
-            });
+            VmSolution.Instance.GetAllProcedureObjects(ref vmProcedure);
+            return await Task.FromResult(vmProcedure);
         }
 
         public VmProcedure GetProcedure(string name)

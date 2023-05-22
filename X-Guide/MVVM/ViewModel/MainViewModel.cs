@@ -23,6 +23,7 @@ namespace X_Guide.MVVM.ViewModel
 
         public bool Test { get; set; } = false;
         public RelayCommand TestCommand { get; }
+        public RelayCommand ChangeThemeCommand { get; }
 
         public bool IsRunning => State.IsLoading;
 
@@ -33,6 +34,15 @@ namespace X_Guide.MVVM.ViewModel
             get { return _isLoggedIn; }
             set { _isLoggedIn = value; }
         }
+
+        private bool _isBrightTheme = false;
+
+        public bool IsBrightTheme
+        {
+            get { return _isBrightTheme; }
+            set { _isBrightTheme = value; OnPropertyChanged(); }
+        }
+
 
         public ICommand NavigateCommand { get; }
 
@@ -64,6 +74,15 @@ namespace X_Guide.MVVM.ViewModel
             }
         }
 
+        private bool _isManipulatorConnected;
+
+        public bool IsManipulatorConnected
+        {
+            get { return _isManipulatorConnected; }
+            set { _isManipulatorConnected = value; OnPropertyChanged(); }
+        }
+
+        private readonly IServerService _serverService;
         private readonly AuthenticationService _auth;
         public ViewModelState State { get; set; }
         private readonly INavigationService _navigationService;
@@ -88,12 +107,36 @@ namespace X_Guide.MVVM.ViewModel
             var nav = new TypedParameter(typeof(INavigationService), _navigationService);
             TestCommand = new RelayCommand(test);
 
+            ChangeThemeCommand = new RelayCommand(ToggleTheme);
+
+            _serverService = serverService;
+
+            _serverService.SubscribeOnClientConnectionChange(OnConnectionChange);
+
             _navigationService.Navigate<SettingViewModel>();
 
             LoginCommand = new RelayCommand(Login);
             RegisterCommand = new RelayCommand(Register);
             NavigateCommand = new RelayCommand(Navigate);
             logger.LogInformation("LapisLazuli");
+        }
+
+
+        private void ToggleTheme(object obj)
+        {
+            if (IsBrightTheme)
+            {
+                IsBrightTheme = false;
+            }
+            else
+            {
+                IsBrightTheme = true;
+            }
+        }
+        private void OnConnectionChange(object sender, bool e)
+        {
+            IsManipulatorConnected = e;
+
         }
 
         private void OnLoadingStateChanged()
@@ -156,6 +199,12 @@ namespace X_Guide.MVVM.ViewModel
         {
             OnPropertyChanged(nameof(CurrentViewModel));
             Debug.WriteLine(CurrentViewModel);
+        }
+
+        public override void Dispose()
+        {
+            _serverService.UnsubscribeOnClientConnectionChange(OnConnectionChange);
+            base.Dispose();
         }
     }
 }
