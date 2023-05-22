@@ -199,7 +199,7 @@ namespace Xlent_Vision_Guided
             /* vision_capture_y = -vision_capture_y;*/
 
             // invert angle sign
-            VisCenter.Angle = -VisCenter.Angle;
+            /*VisCenter.Angle = -VisCenter.Angle;*/
             calib_theta_rad = Calib_Data[2] * Math.PI / 180.0;
 
             //rotate vision frame first

@@ -1,10 +1,10 @@
 ﻿using System;
 using System.Collections.ObjectModel;
-using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Threading;
 using ToastNotifications;
 using VM.Core;
+using X_Guide.Aspect;
 using X_Guide.MVVM.ViewModel.CalibrationWizardSteps;
 using X_Guide.State;
 using X_Guide.VisionMaster;
@@ -13,18 +13,13 @@ namespace X_Guide.MVVM.ViewModel
 {
     internal class Step3HikViewModel : ViewModelBase, ICalibrationStep
     {
-        private readonly Notifier _notifier;
-        private readonly ViewModelState _viewModelState;
         private readonly IVisionService _visionService;
         private readonly CalibrationViewModel _calibration;
-        private readonly ManualResetEventSlim _manual;
 
         public Step3HikViewModel(CalibrationViewModel calibration, IVisionService visionService, ViewModelState viewModelState, Notifier notifier)
         {
             _calibration = calibration;
             _visionService = visionService;
-            _notifier = notifier;
-            _viewModelState = viewModelState;
         }
 
         public CalibrationViewModel Calibration
@@ -75,6 +70,7 @@ namespace X_Guide.MVVM.ViewModel
             OnStateChanged = action;
         }
 
+        [ExceptionHandlingAspect]
         private async Task GetProcedures()
         {
             Procedures = new ObservableCollection<VmProcedure>(await _visionService.GetAllProcedures());

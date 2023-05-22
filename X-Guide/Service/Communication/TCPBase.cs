@@ -68,6 +68,7 @@ namespace X_Guide.Service.Communication
                 int bytes = await stream.ReadAsync(data, 0, data.Length);
                 if (bytes == 0) break;
                 responseData += Encoding.ASCII.GetString(data, 0, bytes);
+                Debug.WriteLine($"Received: {responseData}");
                 ProcessServerData(responseData, ',', stream);
                 await Task.Delay(1000);
             }
@@ -79,6 +80,7 @@ namespace X_Guide.Service.Communication
             byte[] bytes = Encoding.ASCII.GetBytes(data + Terminator);
             _ = stream ?? throw new Exception(StrRetriver.Get("CL000"));
             await stream.WriteAsync(bytes, 0, bytes.Length);
+            Debug.WriteLine($"Write: {data}");
         }
 
         private void ProcessServerData(string data, char seperator, NetworkStream stream)

@@ -49,11 +49,11 @@ namespace X_Guide.VisionMaster
         {
             string[] data = e.Data;
 
-            if (data.Length == 4)
+            if (data.Length == 5)
             {
                 if (data[1] != "")
                 {
-                    return new Point(double.Parse(data[1]), -double.Parse(data[2]), double.Parse(data[3]));
+                    return new Point(double.Parse(data[1]), -double.Parse(data[2]), -double.Parse(data[3]));
                 }
                 else
                 {

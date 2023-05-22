@@ -104,7 +104,7 @@ namespace X_Guide
                 case 2:
                     builder.RegisterType<HalconVisionService>().As<IVisionService>().SingleInstance();
                     builder.RegisterType<HalconViewModel>().As<IVisionViewModel>();
-                    builder.RegisterType<LegacyVisionDb>().As<IVisionDb>();
+                    builder.RegisterType<HikVisionDb>().As<IVisionDb>();
                     builder.RegisterType<HalconOperationService>().As<IOperationService>();
                     break;
 

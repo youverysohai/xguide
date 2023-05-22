@@ -25,7 +25,17 @@ namespace X_Guide.MVVM.Model
 
         public int Port { get; set; } = 8080;
         public bool Debug { get; set; } = false;
-        public int VisionSoftware { get; set; } = 1;
+        private int _visionSoftware;
+
+        public int VisionSoftware
+        {
+            get
+            {
+                if (_visionSoftware == 0) VisionSoftware = 1;
+                return _visionSoftware;
+            }
+            set { _visionSoftware = value; }
+        }
 
         public GeneralModel()
         {

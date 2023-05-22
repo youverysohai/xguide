@@ -16,7 +16,7 @@ namespace X_Guide
         {
             get
             {
-                return int.TryParse(this["HikPort"].ToString(), out int result) ? result : default;
+                return int.TryParse(this["HikPort"].ToString(), out int result) ? result : 1;
             }
             set { this["HikPort"] = value; }
         }
