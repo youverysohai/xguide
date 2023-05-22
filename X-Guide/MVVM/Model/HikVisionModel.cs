@@ -1,4 +1,5 @@
-﻿using System.Net;
+﻿using Newtonsoft.Json;
+using System.Net;
 
 namespace X_Guide.MVVM.Model
 {
@@ -15,8 +16,18 @@ namespace X_Guide.MVVM.Model
             }
         }
 
-        public int Port { get; set; }
-        public string Terminator { get; set; }
-        public string Filepath { get; set; }
+        public int Port { get; set; } = 8080;
+        public string Terminator { get; set; } = "";
+        public string Filepath { get; set; } = "";
+
+        public string Serialize()
+        {
+            return JsonConvert.SerializeObject(this);
+        }
+
+        public static HikVisionModel Deserialize(string json)
+        {
+            return JsonConvert.DeserializeObject<HikVisionModel>(json);
+        }
     }
 }

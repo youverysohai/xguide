@@ -25,17 +25,7 @@ namespace X_Guide.MVVM.Model
 
         public int Port { get; set; } = 8080;
         public bool Debug { get; set; } = false;
-        private int _visionSoftware;
-
-        public int VisionSoftware
-        {
-            get
-            {
-                if (_visionSoftware == 0) VisionSoftware = 1;
-                return _visionSoftware;
-            }
-            set { _visionSoftware = value; }
-        }
+        public int VisionSoftware { get; set; } = 1;
 
         public GeneralModel()
         {
@@ -55,24 +45,6 @@ namespace X_Guide.MVVM.Model
                 //Implement message
                 return new GeneralModel();
             }
-        }
-
-        public void WriteToXML(string filePath)
-        {
-            CheckDirectory(filePath);
-
-            var writer = new XmlSerializer(typeof(GeneralModel));
-
-            using (TextWriter file = new StreamWriter(filePath))
-            {
-                writer.Serialize(file, this);
-            }
-        }
-
-        private void CheckDirectory(string filePath)
-        {
-            string filepath = Path.GetDirectoryName(filePath);
-            if (!Directory.Exists(filepath)) { Directory.CreateDirectory(filePath); }
         }
     }
 }

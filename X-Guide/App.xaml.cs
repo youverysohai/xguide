@@ -2,6 +2,7 @@
 using AutoMapper;
 using Microsoft.Extensions.Logging;
 using Serilog;
+using Serilog.Core;
 using System;
 using System.Configuration;
 using System.Net;
@@ -22,6 +23,7 @@ using X_Guide.Service.Communication;
 using X_Guide.Service.DatabaseProvider;
 using X_Guide.State;
 using X_Guide.VisionMaster;
+using ILogger = Serilog.ILogger;
 
 namespace X_Guide
 {
@@ -32,8 +34,7 @@ namespace X_Guide
     {
         private static IContainer _diContainer;
         public static Notifier Notifier;
-        private static GeneralModel generalSetting;
-        private static HikVisionModel hikSetting;
+        private static readonly Logger logger = new LoggerConfiguration().WriteTo.File($"{Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments)}/X-Guide/Error_Log.txt").CreateLogger();
 
         //TODO: Add logger
         public static int VisionSoftware = 1;
@@ -92,12 +93,18 @@ namespace X_Guide
             builder.RegisterType<ManipulatorDb>().As<IManipulatorDb>();
             builder.RegisterType<MessageService>().As<IMessageService>().SingleInstance();
             builder.RegisterType<UserDb>().As<IUserDb>();
+            builder.RegisterInstance(logger).As<ILogger>();
+            builder.RegisterType<JsonDb>().As<IJsonDb>();
+            builder.Register(c =>
+            {
+                var db = c.Resolve<IJsonDb>().Get<HikVisionModel>();
+                return new ClientService(IPAddress.Parse(db.Ip), db.Port, db.Terminator);
+            }).As<IClientService>().SingleInstance();
             switch (VisionSoftware)
             {
                 case 1:
-                    builder.RegisterType<HikVisionService>().As<IVisionService>().WithParameter(new TypedParameter(typeof(string), hikSetting.Filepath)).SingleInstance();
+                    builder.Register(c => new HikVisionService(c.Resolve<IClientService>(), c.Resolve<IJsonDb>().Get<HikVisionModel>().Filepath)).As<IVisionService>();
                     builder.RegisterType<HikViewModel>().As<IVisionViewModel>();
-                    builder.RegisterType<HikVisionDb>().As<IVisionDb>();
                     builder.RegisterType<HikOperationService>().As<IOperationService>();
 
                     break;
@@ -105,14 +112,12 @@ namespace X_Guide
                 case 2:
                     builder.RegisterType<HalconVisionService>().As<IVisionService>().SingleInstance();
                     builder.RegisterType<HalconViewModel>().As<IVisionViewModel>();
-                    builder.RegisterType<HikVisionDb>().As<IVisionDb>();
                     builder.RegisterType<HalconOperationService>().As<IOperationService>();
                     break;
 
                 case 3:
                     builder.RegisterType<SmartCamVisionService>().As<IVisionService>().SingleInstance();
                     builder.RegisterType<SmartCamViewModel>().As<IVisionViewModel>();
-                    builder.RegisterType<HikVisionDb>().As<IVisionDb>();
                     builder.RegisterType<SmartCamOperationService>().As<IOperationService>();
                     break;
 
@@ -128,9 +133,11 @@ namespace X_Guide
             builder.RegisterType<CalibrationDb>().As<ICalibrationDb>();
             builder.RegisterType<GeneralDb>().As<IGeneralDb>();
 
-            builder.RegisterType<ServerService>().As<IServerService>().WithParameter(new TypedParameter(typeof(IPAddress), IPAddress.Parse(generalSetting.Ip))).WithParameter(new TypedParameter(typeof(int), generalSetting.Port)).WithParameter(new TypedParameter(typeof(string), generalSetting.Terminator)).SingleInstance();
-
-            builder.Register(c => new ClientService(IPAddress.Parse(hikSetting.Ip), hikSetting.Port, hikSetting.Terminator)).As<IClientService>().SingleInstance();
+            builder.Register(c =>
+            {
+                var db = c.Resolve<IJsonDb>().Get<GeneralModel>();
+                return new ServerService(IPAddress.Parse(db.Ip), db.Port, db.Terminator);
+            }).As<IServerService>();
 
             return builder.Build();
         }
@@ -145,6 +152,7 @@ namespace X_Guide
 
         private void CurrentDomain_UnhandledException(object sender, UnhandledExceptionEventArgs e)
         {
+            logger.Error(e.ExceptionObject.ToString());
             if (e.ExceptionObject is CriticalErrorException ex)
             {
                 HandyControl.Controls.MessageBox.Show(ex.Message, "Error", MessageBoxButton.OK, MessageBoxImage.Error);
@@ -159,12 +167,8 @@ namespace X_Guide
                 c.AddProfile<GeneralProfile>();
                 c.AddProfile<VisionProfile>();
             }).CreateMapper();
-            var _configuration = ConfigurationManager.OpenExeConfiguration(ConfigurationUserLevel.None);
-            generalSetting = mapper.Map<GeneralModel>((GeneralConfiguration)_configuration.GetSection("GeneralSetting"));
-            hikSetting = mapper.Map<HikVisionModel>((HikVisionConfiguration)_configuration.GetSection("HikVisionSetting"));
-
-            VisionSoftware = generalSetting.VisionSoftware;
-
+            IJsonDb jsonDb = new JsonDb(mapper);
+            VisionSoftware = jsonDb.Get<GeneralModel>().VisionSoftware;
             _diContainer = BuildDIContainer();
             Notifier = _diContainer.Resolve<Notifier>();
         }
@@ -177,6 +181,7 @@ namespace X_Guide
 
             base.OnStartup(e);
             ViewModelState viewModelState = _diContainer.Resolve<ViewModelState>();
+
             try
             {
                 _ = _diContainer.Resolve<IVisionService>();

@@ -33,9 +33,8 @@ namespace X_Guide.MVVM.ViewModel
         public RelayCommand SaveGeneralCommand { get; set; }
 
         private readonly IManipulatorDb _manipulatorDb;
-        private readonly IVisionDb _visionDb;
         private readonly IMapper _mapper;
-        private readonly IGeneralDb _generalDb;
+        private readonly IJsonDb _jsonDb;
 
         public bool Test { get; set; } = false;
         public bool HasErrors => false;
@@ -49,14 +48,13 @@ namespace X_Guide.MVVM.ViewModel
 
         public string LogFilePath { get; set; }
 
-        public SettingViewModel(IManipulatorDb machineDb, IVisionDb visionDb, IMapper mapper, ICalibrationDb calibrationDb, IGeneralDb generalDb)
+        public SettingViewModel(IManipulatorDb machineDb, IMapper mapper, IJsonDb jsonDb)
         {
             _manipulatorDb = machineDb;
-            _visionDb = visionDb;
             _mapper = mapper;
-            _generalDb = generalDb;
-            General = mapper.Map<GeneralViewModel>(_generalDb.Get());
-            HikVision = mapper.Map<HikVisionViewModel>(_visionDb.Get());
+            _jsonDb = jsonDb;
+            General = mapper.Map<GeneralViewModel>(_jsonDb.Get<GeneralModel>());
+            HikVision = mapper.Map<HikVisionViewModel>(_jsonDb.Get<HikVisionModel>());
             GetManipulators();
 
             OpenVisionFormCommand = new RelayCommand(OpenVisionForm);
@@ -100,7 +98,7 @@ namespace X_Guide.MVVM.ViewModel
         [ApplicationRestartAspect]
         private void SaveGeneral(object obj)
         {
-            _generalDb.Update(_mapper.Map<GeneralModel>(General));
+            _jsonDb.Update(_mapper.Map<GeneralModel>(General));
             MessageBox.Show("Saved setting. Restarting the application is required for the changes to take effect.");
         }
 
@@ -114,7 +112,7 @@ namespace X_Guide.MVVM.ViewModel
         [ApplicationRestartAspect]
         private void SaveVision(object obj)
         {
-            _visionDb.Update(_mapper.Map<HikVisionModel>(HikVision));
+            _jsonDb.Update(_mapper.Map<HikVisionModel>(HikVision));
             MessageBox.Show("Saved setting. Restarting the application is required for the changes to take effect.");
         }
 

@@ -12,6 +12,21 @@
     <FileAlignment>512</FileAlignment>
     <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
     <Deterministic>true</Deterministic>
+    <PublishUrl>publish\</PublishUrl>
+    <Install>true</Install>
+    <InstallFrom>Disk</InstallFrom>
+    <UpdateEnabled>false</UpdateEnabled>
+    <UpdateMode>Foreground</UpdateMode>
+    <UpdateInterval>7</UpdateInterval>
+    <UpdateIntervalUnits>Days</UpdateIntervalUnits>
+    <UpdatePeriodically>false</UpdatePeriodically>
+    <UpdateRequired>false</UpdateRequired>
+    <MapFileExtensions>true</MapFileExtensions>
+    <ApplicationRevision>0</ApplicationRevision>
+    <ApplicationVersion>1.0.0.%2a</ApplicationVersion>
+    <IsWebBootstrapper>false</IsWebBootstrapper>
+    <UseApplicationTrust>false</UseApplicationTrust>
+    <BootstrapperEnabled>true</BootstrapperEnabled>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <PlatformTarget>x64</PlatformTarget>
@@ -40,9 +55,6 @@
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\X-Guide\bin\halcondotnet.dll</HintPath>
     </Reference>
-    <Reference Include="hdevenginedotnet">
-      <HintPath>..\X-Guide\bin\hdevenginedotnet.dll</HintPath>
-    </Reference>
     <Reference Include="IMVSBlobFindModuCs, Version=1.0.0.0, Culture=neutral, PublicKeyToken=7fe8bad26cdedb7b, processorArchitecture=MSIL">
       <Private>False</Private>
     </Reference>
@@ -56,69 +68,6 @@
       <Private>False</Private>
     </Reference>
     <Reference Include="IMVSBoxOverlapCalculationModuCs, Version=1.0.0.0, Culture=neutral, PublicKeyToken=274d19f8bbc7ef2f, processorArchitecture=MSIL">
-      <Private>False</Private>
-    </Reference>
-    <Reference Include="IMVSCnnClassifyModuCCs, Version=1.0.0.0, Culture=neutral, PublicKeyToken=1ce48ca275f18deb, processorArchitecture=MSIL">
-      <Private>False</Private>
-    </Reference>
-    <Reference Include="IMVSCnnClassifyModuCs, Version=1.0.0.0, Culture=neutral, PublicKeyToken=a5ee55d7734e2dbf, processorArchitecture=MSIL">
-      <Private>False</Private>
-    </Reference>
-    <Reference Include="IMVSCnnSingleCharDetectModuCCs, Version=1.0.0.0, Culture=neutral, PublicKeyToken=a0a50bebe561608a, processorArchitecture=MSIL">
-      <Private>False</Private>
-    </Reference>
-    <Reference Include="IMVSCnnSingleCharDetectModuCs, Version=1.0.0.0, Culture=neutral, PublicKeyToken=ad772401d31c66c1, processorArchitecture=MSIL">
-      <Private>False</Private>
-    </Reference>
-    <Reference Include="IMVSCnnFlawModuCCs, Version=1.0.0.0, Culture=neutral, PublicKeyToken=d60f139e428105c6, processorArchitecture=MSIL">
-      <Private>False</Private>
-    </Reference>
-    <Reference Include="IMVSCnnFlawModuCs, Version=1.0.0.0, Culture=neutral, PublicKeyToken=4118cf07549972fc, processorArchitecture=MSIL">
-      <Private>False</Private>
-    </Reference>
-    <Reference Include="IMVSCnnRetrievalModuCCs, Version=1.0.0.0, Culture=neutral, PublicKeyToken=1f018be5be2f57f3, processorArchitecture=MSIL">
-      <Private>False</Private>
-    </Reference>
-    <Reference Include="IMVSCnnRetrievalModuCs, Version=1.0.0.0, Culture=neutral, PublicKeyToken=02507b3722aeb2e1, processorArchitecture=MSIL">
-      <Private>False</Private>
-    </Reference>
-    <Reference Include="IMVSCnnCharDetectModuCCs, Version=1.0.0.0, Culture=neutral, PublicKeyToken=9ff606522a42e0cf, processorArchitecture=MSIL">
-      <Private>False</Private>
-    </Reference>
-    <Reference Include="IMVSCnnCharDetectModuCs, Version=1.0.0.0, Culture=neutral, PublicKeyToken=11441092ae200d87, processorArchitecture=MSIL">
-      <Private>False</Private>
-    </Reference>
-    <Reference Include="IMVSOcrDlModuCCs, Version=1.0.0.0, Culture=neutral, PublicKeyToken=18d9baf32b5c135a, processorArchitecture=MSIL">
-      <Private>False</Private>
-    </Reference>
-    <Reference Include="IMVSOcrDlModuCs, Version=1.0.0.0, Culture=neutral, PublicKeyToken=550f37a1d881ce6f, processorArchitecture=MSIL">
-      <Private>False</Private>
-    </Reference>
-    <Reference Include="IMVSCnnInstanceSegmentModuCCs, Version=1.0.0.0, Culture=neutral, PublicKeyToken=41811bad56014bef, processorArchitecture=MSIL">
-      <Private>False</Private>
-    </Reference>
-    <Reference Include="IMVSCnnInstanceSegmentModuCs, Version=1.0.0.0, Culture=neutral, PublicKeyToken=cdf2a15ba4a21c36, processorArchitecture=MSIL">
-      <Private>False</Private>
-    </Reference>
-    <Reference Include="IMVSCnnInspectModuCCs, Version=1.0.0.0, Culture=neutral, PublicKeyToken=4b1d6c8dd732854d, processorArchitecture=MSIL">
-      <Private>False</Private>
-    </Reference>
-    <Reference Include="IMVSCnnInspectModuCs, Version=1.0.0.0, Culture=neutral, PublicKeyToken=214d901a7dfd3a90, processorArchitecture=MSIL">
-      <Private>False</Private>
-    </Reference>
-    <Reference Include="IMVSCnnUnSupervisedModuCs, Version=1.0.0.0, Culture=neutral, PublicKeyToken=3c09dd897fe1ed50, processorArchitecture=MSIL">
-      <Private>False</Private>
-    </Reference>
-    <Reference Include="IMVSCnnDetectModuCCs, Version=1.0.0.0, Culture=neutral, PublicKeyToken=f2c756fd9ccb83e0, processorArchitecture=MSIL">
-      <Private>False</Private>
-    </Reference>
-    <Reference Include="IMVSCnnDetectModuCs, Version=1.0.0.0, Culture=neutral, PublicKeyToken=5f59aabff94c4511, processorArchitecture=MSIL">
-      <Private>False</Private>
-    </Reference>
-    <Reference Include="IMVSCnnCodeRecgModuCCs, Version=1.0.0.0, Culture=neutral, PublicKeyToken=ec21f3cc2b45d9d4, processorArchitecture=MSIL">
-      <Private>False</Private>
-    </Reference>
-    <Reference Include="IMVSCnnCodeRecgModuCs, Version=1.0.0.0, Culture=neutral, PublicKeyToken=c2d1fe7f3c7d7e4d, processorArchitecture=MSIL">
       <Private>False</Private>
     </Reference>
     <Reference Include="ImageCollectDalsaModuCs, Version=1.0.0.0, Culture=neutral, PublicKeyToken=48bc90db4681f2a4, processorArchitecture=MSIL">
@@ -589,6 +538,18 @@
       <Project>{78569e50-901c-44ac-8244-55e77301d8a4}</Project>
       <Name>X-Guide</Name>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <BootstrapperPackage Include=".NETFramework,Version=v4.8">
+      <Visible>False</Visible>
+      <ProductName>Microsoft .NET Framework 4.8 %28x86 and x64%29</ProductName>
+      <Install>true</Install>
+    </BootstrapperPackage>
+    <BootstrapperPackage Include="Microsoft.Net.Framework.3.5.SP1">
+      <Visible>False</Visible>
+      <ProductName>.NET Framework 3.5 SP1</ProductName>
+      <Install>false</Install>
+    </BootstrapperPackage>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
