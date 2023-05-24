@@ -15,6 +15,7 @@ using X_Guide.VisionMaster;
 
 namespace X_Guide.MVVM.ViewModel
 {
+    //TODO: Add tooltip to inform what X and Y Offset is
     internal class Step6ViewModel : ViewModelBase, ICalibrationStep
     {
         public double XMove { get; set; }

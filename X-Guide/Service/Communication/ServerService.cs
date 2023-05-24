@@ -20,8 +20,7 @@ namespace X_Guide.Communication.Service
 
         private readonly BackgroundService searchClient;
         private TcpListener _server;
-        private bool _canExecute = false;
-        private bool started = false;
+        private readonly bool _canExecute = false;
 
         public event EventHandler<TcpClientEventArgs> ClientEvent;
 
@@ -43,15 +42,12 @@ namespace X_Guide.Communication.Service
 
         private void SetValid(bool valid)
         {
-            if (!_canExecute.Equals(valid))
-            {
-                _canExecute = valid;
-                Dispatcher.CurrentDispatcher.Invoke(() => ClientConnectionChange?.Invoke(this, valid));
-            }
+            Dispatcher.CurrentDispatcher.Invoke(() => ClientConnectionChange?.Invoke(this, valid));
         }
 
         private void SearchForClient()
         {
+            Debug.WriteLine($"Connected Client = {_connectedClient.Count}");
             if (_connectedClient.Count == 0)
             {
                 SetValid(false);
@@ -80,7 +76,6 @@ namespace X_Guide.Communication.Service
             try
             {
                 _server.Start();
-                started = true;
 
                 CancellationToken sct = cts.Token;
 
@@ -105,7 +100,6 @@ namespace X_Guide.Communication.Service
             catch
             {
                 Debug.WriteLine($"Server is closed.");
-                started = false;
                 ListenerEvent?.Invoke(this, new TcpListenerEventArgs(_server));
             }
         }
@@ -144,7 +138,7 @@ namespace X_Guide.Communication.Service
         public void SubscribeOnClientConnectionChange(EventHandler<bool> action)
         {
             ClientConnectionChange += action;
-            ClientConnectionChange.Invoke(this, _canExecute);
+            //ClientConnectionChange?.Invoke(this, _canExecute);
         }
 
         public void UnsubscribeOnClientConnectionChange(EventHandler<bool> action)

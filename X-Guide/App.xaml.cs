@@ -137,7 +137,7 @@ namespace X_Guide
             {
                 var db = c.Resolve<IJsonDb>().Get<GeneralModel>();
                 return new ServerService(IPAddress.Parse(db.Ip), db.Port, db.Terminator);
-            }).As<IServerService>();
+            }).As<IServerService>().SingleInstance();
 
             return builder.Build();
         }
