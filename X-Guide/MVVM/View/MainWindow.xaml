@@ -45,8 +45,27 @@
             <views:HikView />
         </DataTemplate>
     </Window.Resources>
-
     <Grid>
+        <ui:ContentDialog x:Name="SignUpDialog"  PrimaryButtonCommand="{Binding RegisterCommand}" DefaultButton="Primary" PrimaryButtonText="Sign Up" SecondaryButtonText="Cancel">
+            <ui:SimpleStackPanel Orientation="Vertical">
+                <TextBlock Style="{DynamicResource TitleTextBlockStyle}">Sign Up</TextBlock>
+                <Label Style="{DynamicResource MaterialDesignLabel}">Username</Label>
+                <hc:TextBox Text="{Binding InputUsername}"></hc:TextBox>
+                <Label Style="{DynamicResource MaterialDesignLabel}">Password</Label>
+                <PasswordBox PasswordChanged="PasswordBox_PasswordChanged" ui:PasswordBoxHelper.PasswordRevealMode="Peek"/>
+                <Label Style="{DynamicResource MaterialDesignLabel}">Email</Label>
+                <hc:TextBox Text="{Binding InputEmail}"></hc:TextBox>
+            </ui:SimpleStackPanel>
+        </ui:ContentDialog>
+        <ui:ContentDialog x:Name="LoginDialog" Panel.ZIndex="2" PrimaryButtonCommand="{Binding LoginCommand}" DefaultButton="Primary" PrimaryButtonText="Login" SecondaryButtonText="Cancel">
+            <ui:SimpleStackPanel Orientation="Vertical">
+                <TextBlock Style="{DynamicResource TitleTextBlockStyle}">Login</TextBlock>
+                <Label Style="{DynamicResource MaterialDesignLabel}">Username</Label>
+                <hc:TextBox Text="{Binding InputUsername}"></hc:TextBox>
+                <Label Style="{DynamicResource MaterialDesignLabel}">Password</Label>
+                <PasswordBox PasswordChanged="PasswordBox_PasswordChanged" ui:PasswordBoxHelper.PasswordRevealMode="Peek"/>
+            </ui:SimpleStackPanel>
+        </ui:ContentDialog>
         <xCust:CustomLoadingControl IsRunning="{Binding IsRunning}" ParentControl="{Binding ElementName=m_AppWindow}" DialogContent="{Binding Path=Content, Source={StaticResource template1}}" />
         <ui:NavigationView x:Name="SideMenuNavigation"
                        IsTitleBarAutoPaddingEnabled="True"
@@ -156,17 +175,23 @@
                     <xCust:CustomConnectionStatus IsConnected="{Binding IsManipulatorConnected}" HorizontalAlignment="Left" IsMainWindow="Collapsed"/>
                     <!-- Profile Picture and Username-->
                     <ui:SimpleStackPanel Grid.Row="1" Orientation="Horizontal"  HorizontalAlignment="Left" Margin="4 10 0 10">
-                        <ui:PersonPicture Width="30" DisplayName="Xuser1">
+                        <ui:PersonPicture Width="30" DisplayName="{Binding CurrentUsername}">
                         </ui:PersonPicture>
-                        <TextBlock x:Name="TextBoxUsername"  Text=" Admin" Margin="5 0 0 0" VerticalAlignment="Center"  FontSize="16" />
+                        <TextBlock x:Name="TextBoxUsername"  Text="{Binding CurrentUsername}" Margin="5 0 0 0" VerticalAlignment="Center"  FontSize="16" />
+                        <TextBlock x:Name="TextBoxUserRole"  Text="{Binding CurrentUserRole}" Margin="5 0 0 0" VerticalAlignment="Center"  FontSize="16" />
+                    
                     </ui:SimpleStackPanel>
+                    <Button Click="SignUpButton_Click" x:Name="SignUpButton" Content="Sign Up"/>
+                    <Button Click="LoginButton_Click" x:Name="LoginButton" Content="Login"/>
+                    <Button x:Name="LogoutButton" Content="Logout"/>
+                    
                 </ui:SimpleStackPanel>
             </ui:NavigationView.PaneFooter>
 
             <!-- CONTENT -->
             <ui:NavigationView.Content>
 
-                <hc:Card Margin="0 8 0 0" hc:BorderElement.CornerRadius="8 0 0 0" Background="{ui:ThemeResource ResourceKey=PersonPictureEllipseBadgeFillThemeBrush}">
+                <hc:Card Margin="2 8 0 0" hc:BorderElement.CornerRadius="8 0 0 0" Background="{ui:ThemeResource ResourceKey=PersonPictureEllipseBadgeFillThemeBrush}">
                     <!--<ui:Frame x:Name="contentFrame" />-->
 
                     <Grid x:Name="UserControlContent">

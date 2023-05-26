@@ -62,6 +62,14 @@ namespace X_Guide.MVVM.ViewModel
                 _inputUsername = value;
             }
         }
+        private string _inputEmail;
+
+        public string InputEmail
+        {
+            get { return _inputEmail; }
+            set { _inputEmail = value; }
+        }
+
 
         private SecureString _inputPassword;
 
@@ -73,6 +81,23 @@ namespace X_Guide.MVVM.ViewModel
                 _inputPassword = value;
             }
         }
+
+        private string _currentUsername;
+
+        public string CurrentUsername
+        {
+            get { return _currentUsername; }
+            set { _currentUsername = value; OnPropertyChanged(); }
+        }
+
+        private string _currentUserRole;
+
+        public string CurrentUserRole
+        {
+            get { return _currentUserRole; }
+            set { _currentUserRole = value; OnPropertyChanged(); }
+        }
+
 
         private bool _isManipulatorConnected;
 
@@ -96,7 +121,7 @@ namespace X_Guide.MVVM.ViewModel
         public MainViewModel(INavigationService navigationService, IServerService serverService, IUserDb userService, ILogger logger, ViewModelState state)
         {
             _auth = new AuthenticationService(userService);
-            //_auth.CurrentUserChanged += OnCurrentUserChanged;
+            _auth.CurrentUserChanged += OnCurrentUserChanged;
             State = state;
             State.OnStateChanged = OnLoadingStateChanged;
             _navigationService = navigationService;
@@ -121,6 +146,11 @@ namespace X_Guide.MVVM.ViewModel
             logger.LogInformation("LapisLazuli");
         }
 
+        private void OnCurrentUserChanged()
+        {
+
+            MessageBox.Show("Hi, new user");
+        }
 
         private void ToggleTheme(object obj)
         {
@@ -166,20 +196,20 @@ namespace X_Guide.MVVM.ViewModel
             }
         }
 
-        private void Register(object obj)
+        private async void Register(object obj)
         {
             MessageBox.Show("Halo chub");
-            /*bool success = await _auth.Register(new UserModel
+            bool success = await _auth.Register(new UserModel
             {
-                Username = "123",
-                Email = "Akimoputo.DotCom",
+                Username = InputUsername,
+                Email = InputEmail,
                 Role = 1,
-            }, InputPassword);
+            }, InputPassword); ;
             if (success)
             {
                 MessageBox.Show("Added successfully");
             }
-            else MessageBox.Show("User is not added!");*/
+            else MessageBox.Show("User is not added!");
         }
 
         private async void Login(object obj)
@@ -189,6 +219,8 @@ namespace X_Guide.MVVM.ViewModel
             if (status)
             {
                 MessageBox.Show($"Welcome back! {_auth.CurrentUser.Username}");
+                CurrentUsername = _auth.CurrentUser.Username;
+                CurrentUserRole = Enum.GetName(typeof(UserRole), _auth.CurrentUser.Role);
             }
             else
             {

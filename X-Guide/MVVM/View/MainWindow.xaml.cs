@@ -41,6 +41,14 @@ namespace X_Guide
             //}, this.Dispatcher);
 
         }
+        private async void DisplaySignUpDialog()
+        {
+            await SignUpDialog.ShowAsync();
+        }
+        private async void DisplayLoginDialog()
+        {
+            await LoginDialog.ShowAsync();
+        }
 
         private void ToggleAppThemeHandler(object sender, RoutedEventArgs e)
         {
@@ -86,7 +94,11 @@ namespace X_Guide
                 ThemeManager.SetRequestedTheme(this, ElementTheme.Light);
             }
         }
- 
+
+        private void SignUpButton_Click(object sender, RoutedEventArgs e)
+        {
+            DisplaySignUpDialog();
+        }
 
 
 
@@ -94,13 +106,19 @@ namespace X_Guide
 
 
 
-        //private void PasswordBox_PasswordChanged(object sender, RoutedEventArgs e)
-        //{
-        //    if(sender != null)
-        //    {
-        //        ((MainViewModel)DataContext).InputPassword = ((PasswordBox)sender).SecurePassword;
-        //    }
-        //}
+
+        private void PasswordBox_PasswordChanged(object sender, RoutedEventArgs e)
+        {
+            if (sender != null)
+            {
+                ((MainViewModel)DataContext).InputPassword = ((PasswordBox)sender).SecurePassword;
+            }
+        }
+
+        private void LoginButton_Click(object sender, RoutedEventArgs e)
+        {
+            DisplayLoginDialog();
+        }
     }
 
 
