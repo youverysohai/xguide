@@ -23,11 +23,7 @@ namespace X_Guide.MVVM.ViewModel
         {
             _userDb = userDb;
             _mapper = mapper;
-            //Users = new ObservableCollection<UserModel>();
-            // Initialize and populate the collection with sample data
-            //Users.Add(new UserModel("JohnDoe", "john@example.com"));
-            //Users.Add(new UserModel("JaneSmith", "jane@example.com"));
-            // Add more users as needed
+
             GetUsers();
         }
 

@@ -227,11 +227,13 @@ namespace X_Guide.MVVM.ViewModel
 
         private async void Register(object obj)
         {
-            MessageBox.Show("Halo chub");
+
             bool success = await _auth.Register(new UserModel
             {
                 Username = InputUsername,
                 Email = InputEmail,
+                CreatedAt = DateTime.Now,
+                UpdatedAt = DateTime.Now,
                 Role = 1,
             }, InputPassword); ;
             if (success)
