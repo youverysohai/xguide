@@ -55,6 +55,7 @@ namespace X_Guide
                 cfg.AddProfile<CalibrationProfile>();
                 cfg.AddProfile<VisionProfile>();
                 cfg.AddProfile<GeneralProfile>();
+                cfg.AddProfile<UserProfile>();
             })).SingleInstance();
             builder.Register(c => new Notifier(cfg =>
             {
@@ -86,6 +87,7 @@ namespace X_Guide
             builder.RegisterType<Step5ViewModel>();
             builder.RegisterType<Step6ViewModel>();
             builder.RegisterType<SettingViewModel>();
+            builder.RegisterType<UserManagementViewModel>();
             builder.RegisterType<CalibrationMainViewModel>();
             builder.RegisterType<JogRobotViewModel>();
             builder.RegisterType<ViewModelState>().SingleInstance();

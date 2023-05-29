@@ -10,6 +10,7 @@
              xmlns:vm="clr-namespace:X_Guide.MVVM.ViewModel"
              mc:Ignorable="d"
              d:Width="900"
+             xmlns:c="clr-namespace:X_Guide.Converter"
              xmlns:ui="http://schemas.modernwpf.com/2019"
              d:Foreground="White"
              xmlns:hc="https://handyorg.github.io/handycontrol"
@@ -101,11 +102,11 @@
                                     </ItemsControl.ItemTemplate>
                                 </ItemsControl>
                                 <Button Margin="4 15 4 4 "
-                                            VerticalAlignment="Top"
+                                        VerticalAlignment="Top"
                                                 HorizontalAlignment="Center"
                                                 Command="{x:Static materialDesign:DrawerHost.CloseDrawerCommand}"
                                                 CommandParameter="{x:Static Dock.Left}"
-
+                                         
                                                 Style="{StaticResource MaterialDesignIconButton}">
                                     <materialDesign:PackIcon Kind="MenuLeft" Style="{DynamicResource IconStyle24}" />
                                 </Button>

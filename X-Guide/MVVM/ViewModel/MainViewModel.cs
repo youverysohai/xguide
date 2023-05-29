@@ -1,5 +1,6 @@
 ﻿using Autofac;
 using Microsoft.Extensions.Logging;
+using ModernWpf.Controls;
 using System;
 using System.Diagnostics;
 using System.Security;
@@ -26,7 +27,7 @@ namespace X_Guide.MVVM.ViewModel
         public RelayCommand ChangeThemeCommand { get; }
 
         public bool IsRunning => State.IsLoading;
-
+        public UserViewModel User { get; set; }
         private bool _isLoggedIn = false;
 
         public bool IsLoggedIn
@@ -46,7 +47,11 @@ namespace X_Guide.MVVM.ViewModel
 
         public ICommand NavigateCommand { get; }
 
+        public ICommand CurrentUserCommand { get; }
+        public ICommand OpenLoginFormCommand { get; }
+        public ICommand OpenRegisterFormCommand { get; }
         public ICommand LoginCommand { get; }
+        public ICommand LogoutCommand { get; }
 
         public ICommand ServerCommand { get; }
 
@@ -140,10 +145,34 @@ namespace X_Guide.MVVM.ViewModel
 
             _navigationService.Navigate<SettingViewModel>();
 
+            CurrentUserCommand = new RelayCommand(OnUserChangeEvent);
             LoginCommand = new RelayCommand(Login);
+            LogoutCommand = new RelayCommand(Logout);
             RegisterCommand = new RelayCommand(Register);
             NavigateCommand = new RelayCommand(Navigate);
             logger.LogInformation("LapisLazuli");
+        }
+
+
+        private void OnUserChangeEvent(object obj)
+        {
+            User = ((UserViewModel)obj).Clone() as UserViewModel;
+            if (User.IsActive)
+            {
+                User.IsActive = false;
+                MessageBox.Show("Log out : " + _auth.CurrentUser.Username);
+            }
+            else
+            {
+                User.IsActive = true;
+            }
+        }
+
+        private void Logout(object obj)
+        {
+            CurrentUsername = "";
+            CurrentUserRole = "";
+            _auth.CurrentUser.Equals(null);
         }
 
         private void OnCurrentUserChanged()
@@ -189,7 +218,7 @@ namespace X_Guide.MVVM.ViewModel
                 case PageName.Production: _navigationService.Navigate<ProductionViewModel>(); break;
                 case PageName.Setting: _navigationService.Navigate<SettingViewModel>(); break;
                 case PageName.CalibrationWizardStart: _navigationService.Navigate<CalibrationWizardStartViewModel>(nav); break;
-                case PageName.Login: _navigationService.Navigate<UserLoginViewModel>(); break;
+                case PageName.UserManagement: _navigationService.Navigate<UserManagementViewModel>(); break;
                 case PageName.Operation: _navigationService.Navigate<OperationViewModel>(); break;
                 case PageName.JogRobot: _navigationService.Navigate<JogRobotViewModel>(); break;
                 default: break;

@@ -43,7 +43,7 @@ namespace X_Guide
         }
         private async void DisplaySignUpDialog()
         {
-            await SignUpDialog.ShowAsync();
+            await RegisterDialog.ShowAsync();
         }
         private async void DisplayLoginDialog()
         {

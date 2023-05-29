@@ -585,6 +585,7 @@
     <Compile Include="Converter\NavigationViewExtensions.cs" />
     <Compile Include="Converter\NavigationViewItemExtensions.cs" />
     <Compile Include="Converter\RadioButtonTagConverter.cs" />
+    <Compile Include="Converter\StringFormatConverter.cs" />
     <Compile Include="Converter\TypeToBooleanConverter.cs" />
     <Compile Include="Converter\TypeToDescriptionConverter.cs" />
     <Compile Include="CriticalErrorException.cs" />
@@ -663,6 +664,7 @@
     <Compile Include="MappingConfiguration\CalibrationProfile.cs" />
     <Compile Include="MappingConfiguration\GeneralProfile.cs" />
     <Compile Include="MappingConfiguration\ManipulatorProfile.cs" />
+    <Compile Include="MappingConfiguration\UserProfile.cs" />
     <Compile Include="MappingConfiguration\VisionProfile.cs" />
     <Compile Include="MVVM\Command\AsyncRelayCommand.cs" />
     <Compile Include="MVVM\Command\BrowseFileDialogCommand.cs" />
@@ -704,8 +706,9 @@
     <Compile Include="MVVM\ViewModel\Step5ViewModel.cs" />
     <Compile Include="MVVM\ViewModel\Step6ViewModel.cs" />
     <Compile Include="MVVM\ViewModel\UndefinedViewModel.cs" />
-    <Compile Include="MVVM\ViewModel\UserLoginViewModel.cs" />
+    <Compile Include="MVVM\ViewModel\UserManagementViewModel.cs" />
     <Compile Include="MVVM\ViewModel\CalibrationViewModel.cs" />
+    <Compile Include="MVVM\ViewModel\UserViewModel.cs" />
     <Compile Include="MVVM\ViewModel\ViewModelLocator.cs" />
     <Compile Include="MVVM\ViewModel\HikVisionViewModel.cs" />
     <Compile Include="MVVM\View\CalibrationWizardSteps\CalibrationWizardStart.xaml.cs">
@@ -753,8 +756,8 @@
     <Compile Include="MVVM\View\UndefinedView.xaml.cs">
       <DependentUpon>UndefinedView.xaml</DependentUpon>
     </Compile>
-    <Compile Include="MVVM\View\UserLoginView.xaml.cs">
-      <DependentUpon>UserLoginView.xaml</DependentUpon>
+    <Compile Include="MVVM\View\UserManagementView.xaml.cs">
+      <DependentUpon>UserManagementView.xaml</DependentUpon>
     </Compile>
     <Compile Include="MVVM\View\ViewTemplateSelector.cs" />
     <Compile Include="Service\AuthenticationService.cs" />
@@ -976,7 +979,7 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="MVVM\View\UserLoginView.xaml">
+    <Page Include="MVVM\View\UserManagementView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

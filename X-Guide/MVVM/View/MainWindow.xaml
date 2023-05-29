@@ -30,11 +30,11 @@
                                         Margin="16">
 
                     <ProgressBar
-                                          Margin="16"
-                                          HorizontalAlignment="Center"
-                                          IsIndeterminate="True"
-                                          Style="{StaticResource MaterialDesignCircularProgressBar}"
-                                          Value="0" />
+                          Margin="16"
+                          HorizontalAlignment="Center"
+                          IsIndeterminate="True"
+                          Style="{StaticResource MaterialDesignCircularProgressBar}"
+                          Value="0" />
                 </StackPanel>
             </ContentPresenter.Content>
         </ContentPresenter>
@@ -45,8 +45,9 @@
             <views:HikView />
         </DataTemplate>
     </Window.Resources>
-    <Grid>
-        <ui:ContentDialog x:Name="SignUpDialog"  PrimaryButtonCommand="{Binding RegisterCommand}" DefaultButton="Primary" PrimaryButtonText="Sign Up" SecondaryButtonText="Cancel">
+    <Grid Name="MainWin">
+        <!--Register Dialog-->
+        <ui:ContentDialog x:Name="RegisterDialog"  PrimaryButtonCommand="{Binding RegisterCommand}" DefaultButton="Primary" PrimaryButtonText="Sign Up" SecondaryButtonText="Cancel">
             <ui:SimpleStackPanel Orientation="Vertical">
                 <TextBlock Style="{DynamicResource TitleTextBlockStyle}">Sign Up</TextBlock>
                 <Label Style="{DynamicResource MaterialDesignLabel}">Username</Label>
@@ -57,6 +58,7 @@
                 <hc:TextBox Text="{Binding InputEmail}"></hc:TextBox>
             </ui:SimpleStackPanel>
         </ui:ContentDialog>
+        <!--Login Dialog-->
         <ui:ContentDialog x:Name="LoginDialog" Panel.ZIndex="2" PrimaryButtonCommand="{Binding LoginCommand}" DefaultButton="Primary" PrimaryButtonText="Login" SecondaryButtonText="Cancel">
             <ui:SimpleStackPanel Orientation="Vertical">
                 <TextBlock Style="{DynamicResource TitleTextBlockStyle}">Login</TextBlock>
@@ -66,7 +68,9 @@
                 <PasswordBox PasswordChanged="PasswordBox_PasswordChanged" ui:PasswordBoxHelper.PasswordRevealMode="Peek"/>
             </ui:SimpleStackPanel>
         </ui:ContentDialog>
+        <!--Loading Cycle-->
         <xCust:CustomLoadingControl IsRunning="{Binding IsRunning}" ParentControl="{Binding ElementName=m_AppWindow}" DialogContent="{Binding Path=Content, Source={StaticResource template1}}" />
+        <!--Sidebar Menu-->
         <ui:NavigationView x:Name="SideMenuNavigation"
                        IsTitleBarAutoPaddingEnabled="True"
                        IsBackButtonVisible="Collapsed" 
@@ -125,7 +129,7 @@
                             </ui:NavigationViewItem.Icon>
                         </ui:NavigationViewItem>
                         <ui:NavigationViewItem Content="User Management"   ToolTipService.ToolTip="User Management" c:NavigationViewItemExtensions.Command="{Binding NavigateCommand}"
-                         c:NavigationViewItemExtensions.CommandParameter="{x:Static local:PageName.Undefined}">
+                         c:NavigationViewItemExtensions.CommandParameter="{x:Static local:PageName.UserManagement}">
                             <ui:NavigationViewItem.Icon>
                                 <ui:FontIcon   Glyph="&#xE779;" />
                             </ui:NavigationViewItem.Icon>
@@ -181,9 +185,9 @@
                         <TextBlock x:Name="TextBoxUserRole"  Text="{Binding CurrentUserRole}" Margin="5 0 0 0" VerticalAlignment="Center"  FontSize="16" />
                     
                     </ui:SimpleStackPanel>
-                    <Button Click="SignUpButton_Click" x:Name="SignUpButton" Content="Sign Up"/>
-                    <Button Click="LoginButton_Click" x:Name="LoginButton" Content="Login"/>
-                    <Button x:Name="LogoutButton" Content="Logout"/>
+                    <Button x:Name="SignUpButton" Content="Sign Up" Click="SignUpButton_Click"/>
+                    <Button x:Name="LoginButton" Content="Login" Click="LoginButton_Click" />
+                    <Button x:Name="LogoutButton" Content="Logout" Command="{Binding LogoutCommand}"/>
                     
                 </ui:SimpleStackPanel>
             </ui:NavigationView.PaneFooter>
@@ -215,7 +219,7 @@
                             <DataTemplate DataType="{x:Type vms:UndefinedViewModel}">
                                 <views:UndefinedView />
                             </DataTemplate>
-                            <DataTemplate DataType="{x:Type vms:UserLoginViewModel}">
+                            <DataTemplate DataType="{x:Type vms:UserManagementViewModel}">
                                 <views:UserLoginView />
                             </DataTemplate>
                             <DataTemplate DataType="{x:Type vms:JogRobotViewModel}">

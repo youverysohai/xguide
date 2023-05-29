@@ -7,7 +7,7 @@
         Engineering,
         Security,
         Undefined,
-        Login,
+        UserManagement,
         StepOne,
         StepTwo,
         JogRobot,
