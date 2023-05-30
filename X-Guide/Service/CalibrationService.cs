@@ -30,6 +30,7 @@ namespace X_Guide.Service
             }
 
             (Point[] VisionPoint, Point[] RobotPoint) = await Start9PointCalib((int)config.XOffset, (int)config.YOffset);
+
             switch (config.Orientation)
             {
                 case (int)Orientation.EyeOnHand: calibData = VisionGuided.EyeInHand2DConfig_Calib(VisionPoint, RobotPoint, config.XMove, config.YMove); break;
