@@ -32,7 +32,7 @@ namespace X_Guide.Service.Communication
 
                 VisCenter = await _visionService.GetVisCenter();
                 if (VisCenter is null) throw new Exception(StrRetriver.Get("VI000"));
-                OperationData = VisionGuided.EyeInHandConfig2D_Operate(VisCenter, new double[] { calib.CXOffset, calib.CYOffset, calib.CRZOffset, calib.CameraXScaling });
+                OperationData = VisionGuided.EyeInHandConfig2D_Operate(VisCenter, new double[] { calib.CalibratedRzOffset, calib.CalibratedYOffset, calib.CalibratedXOffset, calib.CameraXScaling });
                 string Mode = calib.Mode ? "GLOBAL" : "TOOL";
                 await _serverService.ServerWriteDataAsync($"XGUIDE,{Mode},{OperationData[0]},{OperationData[1]},{OperationData[2]}");
             }

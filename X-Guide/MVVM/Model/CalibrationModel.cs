@@ -11,12 +11,14 @@
         public double MotionDelay { get; set; }
         public double XOffset { get; set; }
         public double YOffset { get; set; }
+        public double XMove { get; set; }
+        public double YMove { get; set; }
         public double JointRotationAngle { get; set; }
         public double CameraXScaling { get; set; }
         public double CameraYScaling { get; set; }
-        public double CRZOffset { get; set; }
-        public double CYOffset { get; set; }
-        public double CXOffset { get; set; }
+        public double CalibratedXOffset { get; set; }
+        public double CalibratedYOffset { get; set; }
+        public double CalibratedRzOffset { get; set; }
         public ManipulatorModel Manipulator { get; set; }
 
         public string Procedure { get; set; }

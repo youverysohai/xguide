@@ -1,5 +1,7 @@
-﻿using System.Threading.Tasks;
+﻿using System;
+using System.Threading.Tasks;
 using X_Guide.MVVM.Model;
+using X_Guide.MVVM.ViewModel.CalibrationWizardSteps;
 using X_Guide.Service.Communication;
 using X_Guide.VisionMaster;
 using Xlent_Vision_Guided;
@@ -10,7 +12,7 @@ namespace X_Guide.Service
     {
         private readonly IJogService _jogService;
         private readonly IVisionService _visionService;
-        private readonly JogCommand _jogCommand = new JogCommand().SetManipulatorName("Chun");
+        private readonly JogCommand _jogCommand = new JogCommand().SetManipulatorName("Ghost");
 
         public CalibrationService(IVisionService visionService, IJogService jogService)
         {
@@ -18,23 +20,33 @@ namespace X_Guide.Service
             _jogService = jogService;
         }
 
-        public async Task<CalibrationData> EyeInHand2D_Calibrate(int XOffset, int YOffset, double XMove, double YMove)
+        public async Task<CalibrationData> Calibrate(CalibrationViewModel config)
         {
-            (Point[] VisionPoint, Point[] RobotPoint) = await Start9PointCalib(XOffset, YOffset);
-            var calibData = VisionGuided.EyeInHandConfig2D_Calib(VisionPoint, RobotPoint, XMove, YMove, true);
+            (double, double, double) calibData = (0, 0, 0);
+
+            if (config.XMove == 0 || config.YMove == 0)
+            {
+                (config.XMove, config.YMove) = await FindXMoveYMove((int)config.XOffset, (int)config.JointRotationAngle);
+            }
+
+            (Point[] VisionPoint, Point[] RobotPoint) = await Start9PointCalib((int)config.XOffset, (int)config.YOffset);
+            switch (config.Orientation)
+            {
+                case (int)Orientation.EyeOnHand: calibData = VisionGuided.EyeInHand2DConfig_Calib(VisionPoint, RobotPoint, config.XMove, config.YMove); break;
+                case (int)Orientation.LookDownward:
+                case (int)Orientation.LookUpward: calibData = VisionGuided.TopConfig_Calib(VisionPoint, RobotPoint); break;
+                case (int)Orientation.MountedOnJoint2: throw new NotImplementedException();
+                case (int)Orientation.MountedOnJoint5: throw new NotImplementedException();
+                default: return new CalibrationData();
+            }
+
             return new CalibrationData
             {
-                X = calibData[0],
-                Y = calibData[1],
-                Rz = calibData[2],
-                mm_per_pixel = calibData[3]
+                X = calibData.Item1,
+                Y = calibData.Item2,
+                Rz = calibData.Item3,
+                mm_per_pixel = VisionGuided.PixelToMMConversion(VisionPoint, RobotPoint),
             };
-        }
-
-        public async Task<CalibrationData> EyeInHand2D_Calibrate(int XOffset, int YOffset, int JointRotationAngle)
-        {
-            (double XMove, double YMove) = await FindXMoveYMove(XOffset, JointRotationAngle);
-            return await EyeInHand2D_Calibrate(XOffset, YOffset, XMove, YMove);
         }
 
         private async Task<(double, double)> FindXMoveYMove(int jogDistance, int rotateAngle)

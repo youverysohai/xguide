@@ -49,7 +49,7 @@ namespace X_Guide.VisionMaster
         {
             string[] data = e.Data;
 
-            if (data.Length == 5)
+            if (data.Length == 4)
             {
                 if (data[1] != "")
                 {

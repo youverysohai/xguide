@@ -150,9 +150,9 @@
                             <ui:SimpleStackPanel Orientation="Vertical" Grid.Row="10">
 
                                 <Label Style="{DynamicResource MaterialDesignLabel}">X-Offset</Label>
-                                <TextBox Text="{Binding XMove}"></TextBox>
+                                <TextBox Text="{Binding Calibration.XMove}"></TextBox>
                                 <Label Style="{DynamicResource MaterialDesignLabel}">Y-Offset</Label>
-                                <TextBox Text="{Binding YMove}"></TextBox>
+                                <TextBox Text="{Binding Calibration.YMove}"></TextBox>
                                 <!--<Button Grid.Row="5"  Command="{Binding OperationCommand}" >Start Operation</Button>-->
                                 <Button Grid.Row="6"   Command="{Binding CalibrateCommand}" x:Name="StartCalibrationBtn" Click="StartCalibrationBtn_Click">Start Calibration</Button>
                                 <Button Grid.Row="7"   Command="{Binding SaveCommand}" >Save</Button>

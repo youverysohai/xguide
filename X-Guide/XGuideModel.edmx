@@ -20,13 +20,15 @@
           <Property Name="YOffset" Type="float" />
           <Property Name="CameraXScaling" Type="float" />
           <Property Name="CameraYScaling" Type="float" />
-          <Property Name="CRZOffset" Type="float" />
-          <Property Name="CYOffset" Type="float" />
-          <Property Name="CXOffset" Type="float" />
+          <Property Name="CalibratedRZOffset" Type="float" />
+          <Property Name="CalibratedYOffset" Type="float" />
+          <Property Name="CalibratedXOffset" Type="float" />
           <Property Name="VisionId" Type="int" />
           <Property Name="Procedure" Type="varchar(max)" />
           <Property Name="Mode" Type="bit" />
           <Property Name="JointRotationAngle" Type="float" />
+          <Property Name="XMove" Type="float" />
+          <Property Name="YMove" Type="float" />
         </EntityType>
         <EntityType Name="Manipulator">
           <Key>
@@ -193,13 +195,15 @@
           <Property Name="YOffset" Type="Double" />
           <Property Name="CameraXScaling" Type="Double" />
           <Property Name="CameraYScaling" Type="Double" />
-          <Property Name="CRZOffset" Type="Double" />
-          <Property Name="CYOffset" Type="Double" />
-          <Property Name="CXOffset" Type="Double" />
+          <Property Name="CalibratedRZOffset" Type="Double" />
+          <Property Name="CalibratedYOffset" Type="Double" />
+          <Property Name="CalibratedXOffset" Type="Double" />
           <Property Name="VisionId" Type="Int32" />
           <Property Name="Procedure" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
           <Property Name="Mode" Type="Boolean" />
           <Property Name="JointRotationAngle" Type="Double" />
+          <Property Name="XMove" Type="Double" />
+          <Property Name="YMove" Type="Double" />
           <NavigationProperty Name="Manipulator" Relationship="XGuideDBModel.FK_Calibration_To_Manipulator" FromRole="Calibration" ToRole="Manipulator" />
           <NavigationProperty Name="Vision" Relationship="XGuideDBModel.FK_Calibration_To_Vision" FromRole="Calibration" ToRole="Vision" />
         </EntityType>
@@ -285,13 +289,15 @@
           <EntitySetMapping Name="Calibrations">
             <EntityTypeMapping TypeName="XGuideDBModel.Calibration">
               <MappingFragment StoreEntitySet="Calibration">
+                <ScalarProperty Name="YMove" ColumnName="YMove" />
+                <ScalarProperty Name="XMove" ColumnName="XMove" />
                 <ScalarProperty Name="JointRotationAngle" ColumnName="JointRotationAngle" />
                 <ScalarProperty Name="Mode" ColumnName="Mode" />
                 <ScalarProperty Name="Procedure" ColumnName="Procedure" />
                 <ScalarProperty Name="VisionId" ColumnName="VisionId" />
-                <ScalarProperty Name="CXOffset" ColumnName="CXOffset" />
-                <ScalarProperty Name="CYOffset" ColumnName="CYOffset" />
-                <ScalarProperty Name="CRZOffset" ColumnName="CRZOffset" />
+                <ScalarProperty Name="CalibratedXOffset" ColumnName="CalibratedXOffset" />
+                <ScalarProperty Name="CalibratedYOffset" ColumnName="CalibratedYOffset" />
+                <ScalarProperty Name="CalibratedRZOffset" ColumnName="CalibratedRZOffset" />
                 <ScalarProperty Name="CameraYScaling" ColumnName="CameraYScaling" />
                 <ScalarProperty Name="CameraXScaling" ColumnName="CameraXScaling" />
                 <ScalarProperty Name="YOffset" ColumnName="YOffset" />

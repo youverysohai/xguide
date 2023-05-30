@@ -9,7 +9,7 @@
         <EntityTypeShape EntityType="XGuideDBModel.User" Width="1.5" PointX="0.75" PointY="5.75" />
         <EntityTypeShape EntityType="XGuideDBModel.Manipulator" Width="1.5" PointX="3" PointY="2.875" />
         <EntityTypeShape EntityType="XGuideDBModel.Vision" Width="1.5" PointX="7.375" PointY="5" />
-        <EntityTypeShape EntityType="XGuideDBModel.Calibration" Width="1.5" PointX="9.625" PointY="4.75" />
+        <EntityTypeShape EntityType="XGuideDBModel.Calibration" Width="1.5" PointX="9.625" PointY="4.625" />
         <AssociationConnector Association="XGuideDBModel.FK_Calibration_To_Manipulator" />
         <AssociationConnector Association="XGuideDBModel.FK_Calibration_To_Vision" />
         </Diagram>

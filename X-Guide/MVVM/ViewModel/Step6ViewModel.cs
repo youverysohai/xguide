@@ -45,17 +45,17 @@ namespace X_Guide.MVVM.ViewModel
         public RelayCommand SaveCommand { get; set; }
         public RelayCommand CalibrateCommand { get; set; }
 
-        public Step6ViewModel(IServerService serverService, CalibrationViewModel calibrationConfig, ICalibrationDb calibDb, ICalibrationService calibService, IMapper mapper, Notifier notifier, IVisionService visionService, IVisionViewModel visionView)
+        public Step6ViewModel(IServerService serverService, CalibrationViewModel config, ICalibrationDb calibDb, ICalibrationService calibService, IMapper mapper, Notifier notifier, IVisionService visionService, IVisionViewModel visionView)
         {
             _serverService = serverService;
-            Calibration = calibrationConfig;
+            Calibration = config;
             _calibDb = calibDb;
             _calibService = calibService;
             _mapper = mapper;
             _notifier = notifier;
             _visionService = visionService;
             VisionView = visionView;
-            VisionView.SetConfig(calibrationConfig);
+            VisionView.SetConfig(config);
             _serverService.SubscribeOnClientConnectionChange(OnConnectionChange);
             CalibrateCommand = RelayCommand.FromAsyncRelayCommand(Calibrate);
             SaveCommand = RelayCommand.FromAsyncRelayCommand(Save);
@@ -76,10 +76,10 @@ namespace X_Guide.MVVM.ViewModel
         {
             int XOffset = (int)Calibration.XOffset;
             int YOffset = (int)Calibration.YOffset;
-            CalibrationData calibrationData = await _calibService.EyeInHand2D_Calibrate(XOffset, YOffset, (int)Calibration.JointRotationAngle);
-            Calibration.CXOffSet = calibrationData.X;
-            Calibration.CYOffset = calibrationData.Y;
-            Calibration.CRZOffset = calibrationData.Rz;
+            CalibrationData calibrationData = await _calibService.Calibrate(Calibration);
+            Calibration.CalibratedXOffset = calibrationData.X;
+            Calibration.CalibratedYOffset = calibrationData.Y;
+            Calibration.CalibratedRzOffset = calibrationData.Rz;
             Calibration.Mm_per_pixel = calibrationData.mm_per_pixel;
         }
 

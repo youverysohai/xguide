@@ -25,13 +25,15 @@ namespace X_Guide
         public Nullable<double> YOffset { get; set; }
         public Nullable<double> CameraXScaling { get; set; }
         public Nullable<double> CameraYScaling { get; set; }
-        public Nullable<double> CRZOffset { get; set; }
-        public Nullable<double> CYOffset { get; set; }
-        public Nullable<double> CXOffset { get; set; }
+        public Nullable<double> CalibratedRZOffset { get; set; }
+        public Nullable<double> CalibratedYOffset { get; set; }
+        public Nullable<double> CalibratedXOffset { get; set; }
         public Nullable<int> VisionId { get; set; }
         public string Procedure { get; set; }
         public Nullable<bool> Mode { get; set; }
         public Nullable<double> JointRotationAngle { get; set; }
+        public Nullable<double> XMove { get; set; }
+        public Nullable<double> YMove { get; set; }
     
         public virtual Manipulator Manipulator { get; set; }
         public virtual Vision Vision { get; set; }
