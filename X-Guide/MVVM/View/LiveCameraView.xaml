@@ -9,9 +9,10 @@
              d:DesignHeight="450" d:DesignWidth="800">
     <Grid>
         <ContentControl Height="500" Content="{Binding VisionView}" VerticalAlignment="Top">
-            <ContentControl.ContentTemplateSelector>
+        <ContentControl.ContentTemplateSelector>
                 <local:ViewTemplateSelector />
             </ContentControl.ContentTemplateSelector>
         </ContentControl>
+    
     </Grid>
 </UserControl>
