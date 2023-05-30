@@ -6,7 +6,7 @@ using X_Guide.VisionMaster;
 
 namespace X_Guide.MVVM.ViewModel
 {
-    internal class HalconViewModel : ViewModelBase, IDisposable, IVisionViewModel
+    internal class HalconViewModel : ViewModelBase, IVisionViewModel
     {
         public HObject Image { get; set; }
         private readonly HalconVisionService _visionService;
@@ -30,7 +30,7 @@ namespace X_Guide.MVVM.ViewModel
             Image = e;
         }
 
-        public void Dispose()
+        public override void Dispose()
         {
             _visionService.OnImageReturn -= HalcomViewModel_OnImageReturn;
         }
@@ -42,7 +42,6 @@ namespace X_Guide.MVVM.ViewModel
 
         public void StartLiveImage()
         {
-            throw new NotImplementedException();
         }
 
         public void ShowOutputImage()

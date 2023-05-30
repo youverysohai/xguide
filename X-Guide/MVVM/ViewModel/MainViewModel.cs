@@ -43,7 +43,6 @@ namespace X_Guide.MVVM.ViewModel
             set { _isBrightTheme = value; OnPropertyChanged(); }
         }
 
-
         public ICommand NavigateCommand { get; }
 
         public ICommand LoginCommand { get; }
@@ -121,7 +120,6 @@ namespace X_Guide.MVVM.ViewModel
             logger.LogInformation("LapisLazuli");
         }
 
-
         private void ToggleTheme(object obj)
         {
             if (IsBrightTheme)
@@ -133,10 +131,10 @@ namespace X_Guide.MVVM.ViewModel
                 IsBrightTheme = true;
             }
         }
+
         private void OnConnectionChange(object sender, bool e)
         {
             IsManipulatorConnected = e;
-
         }
 
         private void OnLoadingStateChanged()
@@ -162,6 +160,10 @@ namespace X_Guide.MVVM.ViewModel
                 case PageName.Login: _navigationService.Navigate<UserLoginViewModel>(); break;
                 case PageName.Operation: _navigationService.Navigate<OperationViewModel>(); break;
                 case PageName.JogRobot: _navigationService.Navigate<JogRobotViewModel>(); break;
+                case PageName.LiveView:
+                    _navigationService.Navigate<LiveCameraViewModel>();
+                    break;
+
                 default: break;
             }
         }

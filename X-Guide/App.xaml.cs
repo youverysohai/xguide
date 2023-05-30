@@ -88,6 +88,7 @@ namespace X_Guide
             builder.RegisterType<SettingViewModel>();
             builder.RegisterType<CalibrationMainViewModel>();
             builder.RegisterType<JogRobotViewModel>();
+            builder.RegisterType<LiveCameraViewModel>();
             builder.RegisterType<ViewModelState>().SingleInstance();
             builder.RegisterType<DbContextFactory>().SingleInstance();
             builder.RegisterType<ManipulatorDb>().As<IManipulatorDb>();

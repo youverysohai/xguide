@@ -691,6 +691,7 @@
     <Compile Include="MVVM\ViewModel\IViewModelLocator.cs" />
     <Compile Include="MVVM\ViewModel\IVisionViewModel.cs" />
     <Compile Include="MVVM\ViewModel\JogRobotViewModel.cs" />
+    <Compile Include="MVVM\ViewModel\LiveCameraViewModel.cs" />
     <Compile Include="MVVM\ViewModel\ManipulatorViewModel.cs" />
     <Compile Include="MVVM\ViewModel\OperationViewModel.cs" />
     <Compile Include="MVVM\ViewModel\RenderControlViewModel.cs" />
@@ -740,6 +741,9 @@
     </Compile>
     <Compile Include="MVVM\View\JogRobotView.xaml.cs">
       <DependentUpon>JogRobotView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="MVVM\View\LiveCameraView.xaml.cs">
+      <DependentUpon>LiveCameraView.xaml</DependentUpon>
     </Compile>
     <Compile Include="MVVM\View\OperationView.xaml.cs">
       <DependentUpon>OperationView.xaml</DependentUpon>
@@ -929,6 +933,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="MVVM\View\JogRobotView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="MVVM\View\LiveCameraView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

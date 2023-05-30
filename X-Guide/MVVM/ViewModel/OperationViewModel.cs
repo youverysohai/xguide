@@ -1,14 +1,11 @@
-﻿using HandyControl.Controls;
-using System;
-using System.Threading.Tasks;
+﻿using System.Threading.Tasks;
 using VM.Core;
-using X_Guide.Service.Communation;
 using X_Guide.Service.Communication;
 using X_Guide.VisionMaster;
 
 namespace X_Guide.MVVM.ViewModel
 {
-    internal class OperationViewModel : ViewModelBase, IDisposable
+    internal class OperationViewModel : ViewModelBase
     {
         private readonly IServerCommand _serverCommand;
         private readonly IVisionService _visionService;
@@ -18,7 +15,7 @@ namespace X_Guide.MVVM.ViewModel
         {
             _serverCommand = serverCommand;
             _visionService = visionService;
-            VisionView = (HikViewModel)viewModel;
+            VisionView = viewModel as HikViewModel;
             _serverCommand.SubscribeOnOperationEvent(DisplayOutputImage);
         }
 
@@ -28,7 +25,6 @@ namespace X_Guide.MVVM.ViewModel
             VmModule procedure = _visionService.GetProcedure(s);
             await Task.Delay(500);
             VisionView.Module = procedure;
-       
         }
 
         public override void Dispose()

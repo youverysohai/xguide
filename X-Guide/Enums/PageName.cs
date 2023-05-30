@@ -12,6 +12,7 @@
         StepTwo,
         JogRobot,
         CalibrationWizardStart,
+        LiveView,
         HalconLive,
         Operation,
         HalconStep6

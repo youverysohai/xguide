@@ -1,4 +1,5 @@
 ﻿using HalconDotNet;
+using HandyControl.Controls;
 using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
@@ -34,8 +35,9 @@ namespace X_Guide.VisionMaster
                 _imageGrab = new BackgroundService(ImageGrab, true, 10);
                 _imageGrab.Start();
             }
-            catch
+            catch (Exception ex)
             {
+                MessageBox.Show(ex.Message);
             }
         }
 

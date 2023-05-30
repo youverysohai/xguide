@@ -12,7 +12,7 @@
         xmlns:c="clr-namespace:X_Guide.Converter"
     xmlns:xCust="clr-namespace:X_Guide.CustomControls"
         mc:Ignorable="d"
-        Title="X-Guide"                    
+        Title="X-Guide"
         Height="720" Width="1280"
         ui:TitleBar.IsIconVisible="True"
         Icon="../../Style/ImageSource/xgIcon.ico"
@@ -50,14 +50,14 @@
         <xCust:CustomLoadingControl IsRunning="{Binding IsRunning}" ParentControl="{Binding ElementName=m_AppWindow}" DialogContent="{Binding Path=Content, Source={StaticResource template1}}" />
         <ui:NavigationView x:Name="SideMenuNavigation"
                        IsTitleBarAutoPaddingEnabled="True"
-                       IsBackButtonVisible="Collapsed" 
+                       IsBackButtonVisible="Collapsed"
                        CompactModeThresholdWidth="720"
                        IsSettingsVisible="False">
             <!-- Header Side Menu -->
 
             <ui:NavigationView.PaneHeader>
                 <ui:SimpleStackPanel Orientation="Horizontal">
-                    <Image Source="../../Style/ImageSource/pngIcon.png" Width="40" Margin="5"/>
+                    <Image Source="../../Style/ImageSource/pngIcon.png" Width="40" Margin="5" />
                     <TextBlock Style="{DynamicResource TitleTextBlockStyle}" Margin="15 8 0 0">X-Guide</TextBlock>
                 </ui:SimpleStackPanel>
             </ui:NavigationView.PaneHeader>
@@ -69,6 +69,11 @@
                         c:NavigationViewItemExtensions.Command="{Binding NavigateCommand}"
                          c:NavigationViewItemExtensions.CommandParameter="{x:Static local:PageName.Operation}"
                         Tag="ProductionView" Content="Operation" Icon="BrowsePhotos" ToolTipService.ToolTip="Notes" />
+
+                        <ui:NavigationViewItem x:Name="LiveView"
+                        c:NavigationViewItemExtensions.Command="{Binding NavigateCommand}"
+                      c:NavigationViewItemExtensions.CommandParameter="{x:Static local:PageName.LiveView}"
+                        Tag="ProductionView" Content="Live View" Icon="BrowsePhotos" ToolTipService.ToolTip="Notes" />
                     </ui:NavigationViewItem.MenuItems>
                 </ui:NavigationViewItem>
 
@@ -133,7 +138,7 @@
                 <ui:SimpleStackPanel>
                     <Button Click="ToggleAppThemeHandler" Background="Transparent" x:Name="toggleSwitch" Width="330" Command="{Binding ChangeThemeCommand}" HorizontalAlignment="Left" Margin="-10 0 0 0" HorizontalContentAlignment="Left">
 
-                        <ui:SimpleStackPanel Orientation="Horizontal" >
+                        <ui:SimpleStackPanel Orientation="Horizontal">
                             <ui:FontIcon FontFamily="Segoe MDL2 Assets"  Margin="10 0 0 0">
                                 <ui:FontIcon.Style>
                                     <Style TargetType="ui:FontIcon">
@@ -150,10 +155,10 @@
                                     </Style>
                                 </ui:FontIcon.Style>
                             </ui:FontIcon>
-                            <TextBlock VerticalAlignment="Center" Margin="10 0" Text=" Theme"/>
+                            <TextBlock VerticalAlignment="Center" Margin="10 0" Text=" Theme" />
                         </ui:SimpleStackPanel>
                     </Button>
-                    <xCust:CustomConnectionStatus IsConnected="{Binding IsManipulatorConnected}" HorizontalAlignment="Left" IsMainWindow="Collapsed"/>
+                    <xCust:CustomConnectionStatus IsConnected="{Binding IsManipulatorConnected}" HorizontalAlignment="Left" IsMainWindow="Collapsed" />
                     <!-- Profile Picture and Username-->
                     <ui:SimpleStackPanel Grid.Row="1" Orientation="Horizontal"  HorizontalAlignment="Left" Margin="4 10 0 10">
                         <ui:PersonPicture Width="30" DisplayName="Xuser1">
@@ -198,6 +203,9 @@
                             </DataTemplate>
                             <DataTemplate DataType="{x:Type vms:OperationViewModel}">
                                 <views:OperationView />
+                            </DataTemplate>
+                            <DataTemplate DataType="{x:Type vms:LiveCameraViewModel}">
+                                <views:LiveCameraView />
                             </DataTemplate>
                         </Grid.Resources>
                         <Grid.RowDefinitions>
