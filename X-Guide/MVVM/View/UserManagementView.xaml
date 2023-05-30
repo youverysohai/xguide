@@ -14,7 +14,7 @@
     <UserControl.Resources>
         <c:StringFormatConverter x:Key="StringFormatConverter"/>
     </UserControl.Resources>
-    <DataGrid ui:DataGridHelper.UseModernColumnStyles="True" AlternationCount="{Binding Users}" Margin="10" ItemsSource="{Binding Users}" AlternatingRowBackground="LightGray" AutoGenerateColumns="False" CanUserAddRows="True">
+    <DataGrid ui:DataGridHelper.UseModernColumnStyles="True" AlternationCount="{Binding Users}" Margin="10" ItemsSource="{Binding Users.Count}" AlternatingRowBackground="LightGray" AutoGenerateColumns="False" CanUserAddRows="True">
         <DataGrid.Columns>
             
             <DataGridTextColumn Header="Username" Binding="{Binding Username}" />
