@@ -228,7 +228,7 @@ namespace X_Guide.MVVM.ViewModel
         private async void Register(object obj)
         {
 
-            bool success = await _auth.Register(new UserModel
+                bool success = await _auth.Register(new UserModel
             {
                 Username = InputUsername,
                 Email = InputEmail,
