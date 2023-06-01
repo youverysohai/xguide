@@ -22,6 +22,8 @@ namespace X_Guide.MVVM.ViewModel
         private readonly IMapper _mapper;
 
         public RelayCommand SaveUserCommand { get;}
+
+        public RelayCommand RemoveUserCommand { get;}
         public RelayCommand SelectedUserCommand { get;}
         public UserViewModel User { get; set; }
         public ObservableCollection<UserRole> UserRoles { get; } = new ObservableCollection<UserRole>(Enum.GetValues(typeof(UserRole)).Cast<UserRole>());
@@ -33,8 +35,13 @@ namespace X_Guide.MVVM.ViewModel
             _mapper = mapper;
             SelectedUserCommand = new RelayCommand(OnUserChangeEvent);
             SaveUserCommand = new RelayCommand(SaveUser);
-
+            RemoveUserCommand = new RelayCommand(RemoveUser);
             GetUsers();
+        }
+
+        private void RemoveUser(object obj)
+        {
+            
         }
 
         private async void GetUsers()

@@ -31,10 +31,19 @@ namespace X_Guide.MVVM.View
         {
             await EditUserDialog.ShowAsync();
         }
+        private async void DisplayRemoveUserFormDialog()
+        {
+            await RemoveUserDialog.ShowAsync();
+        }
 
         private void EditBtn_Click(object sender, RoutedEventArgs e)
         {
             DisplayEditUserFormDialog();
+        }
+
+        private void DeleteBtn_Click(object sender, RoutedEventArgs e)
+        {
+            DisplayRemoveUserFormDialog();
         }
     }
 }

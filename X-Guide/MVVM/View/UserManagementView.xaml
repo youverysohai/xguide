@@ -29,6 +29,19 @@
                 <ComboBox ItemsSource="{Binding DataContext.UserRoles, ElementName=UserManagementView}" SelectedIndex="{Binding DataContext.User.Role, ElementName=UserManagementView}"></ComboBox>
             </ui:SimpleStackPanel>
         </ui:ContentDialog>
+        <ui:ContentDialog x:Name="RemoveUserDialog" PrimaryButtonCommand="{Binding RemoveUserCommand}" DefaultButton="Primary" PrimaryButtonText="Remove" SecondaryButtonText="Cancel">
+            <ui:SimpleStackPanel Orientation="Vertical">
+                <TextBlock Style="{DynamicResource TitleTextBlockStyle}" Text="Remove User?"/>
+                <Label Style="{DynamicResource MaterialDesignLabel}" Content="Username"/>
+                <TextBlock Text="{Binding DataContext.User.Username, ElementName=UserManagementView}" Style="{DynamicResource ReadOnlyTextBlock}"/>
+                <!--<Label Style="{DynamicResource MaterialDesignLabel}">Password</Label>
+                <PasswordBox PasswordChanged="PasswordBox_PasswordChanged" ui:PasswordBoxHelper.PasswordRevealMode="Peek"/>-->
+                <Label Style="{DynamicResource MaterialDesignLabel}" Content="Email"/>
+                <TextBlock Text="{Binding DataContext.User.Email, ElementName=UserManagementView}" Style="{DynamicResource ReadOnlyTextBlock}"/>
+                <Label Style="{DynamicResource MaterialDesignLabel}" Content="Role"/>
+                <TextBlock Text="{Binding DataContext.User.Role, ElementName=UserManagementView}" Style="{DynamicResource ReadOnlyTextBlock}"/>
+            </ui:SimpleStackPanel>
+        </ui:ContentDialog>
         <DataGrid ui:DataGridHelper.UseModernColumnStyles="True" HeadersVisibility="Column" AlternationCount="{Binding Items.Count, RelativeSource={RelativeSource Self}}" Margin="10" ItemsSource="{Binding Users}" AutoGenerateColumns="False" CanUserAddRows="True">
             <DataGrid.Columns>
                 <DataGridTextColumn Header="Role" Binding="{Binding Role}" />
@@ -54,7 +67,7 @@
                 <DataGridTemplateColumn Header="Remove">
                     <DataGridTemplateColumn.CellTemplate>
                         <DataTemplate>
-                            <Button Content="Remove" Command="{Binding DataContext.RemoveRowDataCommand, RelativeSource={RelativeSource AncestorType=DataGrid}}" CommandParameter="{Binding}" />
+                            <Button Content="Remove" x:Name="DeleteBtn" Click="DeleteBtn_Click" Command="{Binding DataContext.SelectedUserCommand, RelativeSource={RelativeSource AncestorType=DataGrid}}" CommandParameter="{Binding}" />
                         </DataTemplate>
                     </DataGridTemplateColumn.CellTemplate>
                 </DataGridTemplateColumn>
