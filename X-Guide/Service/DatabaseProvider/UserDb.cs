@@ -1,4 +1,5 @@
-﻿using System;
+﻿using AutoMapper;
+using System;
 using System.Collections.Generic;
 using System.Data.Entity;
 using System.Linq;
@@ -13,11 +14,11 @@ using X_Guide.Validation;
 
 namespace X_Guide.Service.DatabaseProvider
 {
-    internal class UserDb : IUserDb
+    internal class UserDb : DbServiceBase, IUserDb
     {
         private readonly DbContextFactory _userDbContextFactory;
 
-        public UserDb(DbContextFactory userDbContextFactory)
+        public UserDb(IMapper mapper,DbContextFactory userDbContextFactory) : base(userDbContextFactory,mapper)
         {
             _userDbContextFactory = userDbContextFactory;
         }
@@ -89,7 +90,7 @@ namespace X_Guide.Service.DatabaseProvider
             using (XGuideDBEntities context = _userDbContextFactory.CreateDbContext())
             {
                 IEnumerable<User> users = await context.Users.ToListAsync();
-                return users.Select(r => new UserModel(r.Username, r.Email));
+                return context.Users.ToList().Select(r => MapTo<UserModel>(r));
             }
         }
 
@@ -107,5 +108,21 @@ namespace X_Guide.Service.DatabaseProvider
             };
         }
 
+        public async Task<bool> Update(UserModel user)
+        {
+            return await AsyncQuery((context) =>
+            {
+
+                var result = context.Users.Find(user.Id);
+
+                if (result != null)
+                {
+                    _mapper.Map(user, result);
+                    context.SaveChanges();
+                    return true;
+                }
+                return false;
+            });
+        }
     }
 }

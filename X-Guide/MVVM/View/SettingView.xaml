@@ -145,6 +145,9 @@
                                 <i:DataTrigger Binding="{Binding Manipulator}" Value="{Binding Manipulator}">
                                     <i:ChangePropertyAction PropertyName="ContentTemplate" Value="{StaticResource ManiForm}" />
                                 </i:DataTrigger>
+                                <i:DataTrigger Binding="{Binding Manipulator}" Value="{x:Null}">
+                                    <i:ChangePropertyAction PropertyName="ContentTemplate" Value="{StaticResource ErrorPage}" />
+                                </i:DataTrigger>
                             </i:Interaction.Triggers>
                         </ContentControl>
                     </StackPanel>

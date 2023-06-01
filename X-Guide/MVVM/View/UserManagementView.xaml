@@ -9,39 +9,57 @@
              Background="Transparent"
              xmlns:ui="http://schemas.modernwpf.com/2019"
              xmlns:c="clr-namespace:X_Guide.Converter"
-             
+             x:Name="UserManagementView"
              d:DesignHeight="450" d:DesignWidth="800">
     <UserControl.Resources>
         <c:StringFormatConverter x:Key="StringFormatConverter"/>
     </UserControl.Resources>
-    <DataGrid ui:DataGridHelper.UseModernColumnStyles="True" AlternationCount="{Binding Users}" Margin="10" ItemsSource="{Binding Users.Count}" AlternatingRowBackground="LightGray" AutoGenerateColumns="False" CanUserAddRows="True">
-        <DataGrid.Columns>
-            
-            <DataGridTextColumn Header="Username" Binding="{Binding Username}" />
-            <DataGridTextColumn Header="Email" Binding="{Binding Email}" />
-            <!--<DataGridTextColumn Header="Created At" Binding="{Binding CreatedAt, Converter={StaticResource StringFormatConverter},ConverterParameter='{}{0:dd/MMM/yyyy}'}" />-->
-            <DataGridTemplateColumn Header="Created At">
-                <DataGridTemplateColumn.CellTemplate>
+
+    <Grid>
+        <ui:ContentDialog x:Name="EditUserDialog" PrimaryButtonCommand="{Binding SaveUserCommand}" DefaultButton="Primary" PrimaryButtonText="Save" SecondaryButtonText="Cancel">
+            <ui:SimpleStackPanel Orientation="Vertical">
+                <TextBlock Style="{DynamicResource TitleTextBlockStyle}" Text="Edit User"/>
+                <Label Style="{DynamicResource MaterialDesignLabel}" Content="Username"/>
+                <TextBox Text="{Binding DataContext.User.Username, ElementName=UserManagementView}"></TextBox>
+                <!--<Label Style="{DynamicResource MaterialDesignLabel}">Password</Label>
+                <PasswordBox PasswordChanged="PasswordBox_PasswordChanged" ui:PasswordBoxHelper.PasswordRevealMode="Peek"/>-->
+                <Label Style="{DynamicResource MaterialDesignLabel}" Content="Email"/>
+                <TextBox Text="{Binding DataContext.User.Email, ElementName=UserManagementView}"></TextBox>
+                <Label Style="{DynamicResource MaterialDesignLabel}" Content="Role"/>
+                <ComboBox ItemsSource="{Binding DataContext.UserRoles, ElementName=UserManagementView}" SelectedIndex="{Binding DataContext.User.Role, ElementName=UserManagementView}"></ComboBox>
+            </ui:SimpleStackPanel>
+        </ui:ContentDialog>
+        <DataGrid ui:DataGridHelper.UseModernColumnStyles="True" HeadersVisibility="Column" AlternationCount="{Binding Items.Count, RelativeSource={RelativeSource Self}}" Margin="10" ItemsSource="{Binding Users}" AutoGenerateColumns="False" CanUserAddRows="True">
+            <DataGrid.Columns>
+                <DataGridTextColumn Header="Role" Binding="{Binding Role}" />
+                <DataGridTextColumn Header="Username" Binding="{Binding Username}" />
+                <DataGridTextColumn Header="Email" Binding="{Binding Email}" />
+                <!--<DataGridTextColumn Header="Created At" Binding="{Binding CreatedAt, Converter={StaticResource StringFormatConverter},ConverterParameter='{}{0:dd/MMM/yyyy}'}" />-->
+                <DataGridTextColumn Header="Crated At" IsReadOnly="True" Binding="{Binding CreatedAt, Converter={StaticResource StringFormatConverter},ConverterParameter='{}{0:dd/MMM/yyyy}'}"/>
+
+                <!--<DataGridTemplateColumn.CellEditingTemplate>
                     <DataTemplate>
-                        <TextBlock Text="{Binding CreatedAt, Converter={StaticResource StringFormatConverter},ConverterParameter='{}{0:dd/MMM/yyyy}'}"/>
+                        <DatePicker  VerticalAlignment="Center" HorizontalAlignment="Center" IsTodayHighlighted="True"  IsDropDownOpen="True" DisplayDate="{Binding CreatedAt, Mode=TwoWay}"/>
                     </DataTemplate>
-                </DataGridTemplateColumn.CellTemplate>
-                <DataGridTemplateColumn.CellEditingTemplate>
-                    <DataTemplate>
-                        <DatePicker  Margin="3,4,3,3" IsTodayHighlighted="True"  IsDropDownOpen="True" DisplayDate="{Binding CreatedAt, Mode=TwoWay}"/>
-                    </DataTemplate>
-                </DataGridTemplateColumn.CellEditingTemplate>
-            </DataGridTemplateColumn>
-            <DataGridTextColumn Header="Updated At" Binding="{Binding UpdatedAt, Converter={StaticResource StringFormatConverter},ConverterParameter='{}{0:dd/MMM/yyyy}'}"/>
-            <DataGridTextColumn Header="Role" Binding="{Binding Role}" />
-            <DataGridTemplateColumn>
-                <DataGridTemplateColumn.CellTemplate>
-                    <DataTemplate>
-                        <Button Content="Edit" Command="{Binding EditRowDataCommand}" />
-                    </DataTemplate>
-                </DataGridTemplateColumn.CellTemplate>
-            </DataGridTemplateColumn>
-            <!-- Add more columns as needed -->
-        </DataGrid.Columns>
-    </DataGrid>
+                </DataGridTemplateColumn.CellEditingTemplate>-->
+
+                <DataGridTextColumn Header="Updated At" IsReadOnly="True" Binding="{Binding UpdatedAt, Converter={StaticResource StringFormatConverter},ConverterParameter='{}{0:dd/MMM/yyyy}'}"/>
+                <DataGridTemplateColumn Header="Edit">
+                    <DataGridTemplateColumn.CellTemplate>
+                        <DataTemplate>
+                            <Button Content="Edit" x:Name="EditBtn" Click="EditBtn_Click" Command="{Binding DataContext.SelectedUserCommand, RelativeSource={RelativeSource AncestorType=DataGrid}}" CommandParameter="{Binding}" />
+                        </DataTemplate>
+                    </DataGridTemplateColumn.CellTemplate>
+                </DataGridTemplateColumn>
+                <DataGridTemplateColumn Header="Remove">
+                    <DataGridTemplateColumn.CellTemplate>
+                        <DataTemplate>
+                            <Button Content="Remove" Command="{Binding DataContext.RemoveRowDataCommand, RelativeSource={RelativeSource AncestorType=DataGrid}}" CommandParameter="{Binding}" />
+                        </DataTemplate>
+                    </DataGridTemplateColumn.CellTemplate>
+                </DataGridTemplateColumn>
+                <!-- Add more columns as needed -->
+            </DataGrid.Columns>
+        </DataGrid>
+    </Grid>
 </UserControl>

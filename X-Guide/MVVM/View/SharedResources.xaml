@@ -16,4 +16,9 @@
             <x:Type TypeName="e:VisionSoftware"/>
         </ObjectDataProvider.MethodParameters>
     </ObjectDataProvider>
+    <ObjectDataProvider x:Key="UserRole" MethodName="GetAllIntAndDescriptions" ObjectType="{x:Type e:EnumHelperClass}">
+        <ObjectDataProvider.MethodParameters>
+            <x:Type TypeName="e:UserRole"/>
+        </ObjectDataProvider.MethodParameters>
+    </ObjectDataProvider>
 </ResourceDictionary>
