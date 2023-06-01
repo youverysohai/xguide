@@ -14,6 +14,7 @@ namespace X_Guide.VisionMaster
         private readonly HTuple acqHandle = new HTuple();
         public HTuple hv_AcqHandle = new HTuple();
         private HObject hImage = new HObject();
+        public bool isLoading = false;
 
         public event EventHandler<HObject> OnImageReturn;
 
@@ -25,6 +26,18 @@ namespace X_Guide.VisionMaster
 
         public HalconVisionService()
         {
+            _imageGrab = new BackgroundService(ImageGrab, true, 10);
+        }
+
+        public async void StopGrabbingImage()
+        {
+            _imageGrab.Stop();
+            await Task.Delay(1000);
+            HOperatorSet.CloseFramegrabber(hv_AcqHandle);
+        }
+
+        public void StartGrabbingImage()
+        {
             try
             {
                 HOperatorSet.OpenFramegrabber("USB3Vision", 0, 0, 0, 0, 0, 0, "progressive",
@@ -32,7 +45,7 @@ namespace X_Guide.VisionMaster
     0, -1, out hv_AcqHandle);
 
                 HOperatorSet.GrabImageStart(hv_AcqHandle, -1);
-                _imageGrab = new BackgroundService(ImageGrab, true, 10);
+
                 _imageGrab.Start();
             }
             catch (Exception ex)
@@ -47,8 +60,15 @@ namespace X_Guide.VisionMaster
 
         private void ImageGrab()
         {
-            HOperatorSet.GrabImageAsync(out hImage, hv_AcqHandle, -1);
-            OnImageReturn?.Invoke(this, hImage);
+            try
+            {
+                HOperatorSet.GrabImageAsync(out hImage, hv_AcqHandle, -1);
+                OnImageReturn?.Invoke(this, hImage);
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("This is nothing");
+            }
         }
 
         public List<VmProcedure> GetAllProcedures()
@@ -106,12 +126,9 @@ namespace X_Guide.VisionMaster
             throw new NotImplementedException();
         }
 
-        public void snap()
-        {
-        }
-
         public void Dispose()
         {
+            HOperatorSet.CloseFramegrabber(hv_AcqHandle);
             acqHandle.Dispose();
             hv_AcqHandle.Dispose();
             hImage.Dispose();

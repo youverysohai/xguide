@@ -7,7 +7,7 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "X-Guide", "X-Guide\X-Guide.
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CalibrationTesting", "CalibrationTesting\CalibrationTesting.csproj", "{D3446941-69A6-47C8-AE3F-D15A0F715936}"
 EndProject
-Project("{54435603-DBB4-11D2-8724-00A0C9A8B90C}") = "X-Guide Setup", "X-Guide Setup\X-Guide Setup.vdproj", "{C648DCDB-EDB4-45C2-9E7D-BF2998D418F1}"
+Project("{54435603-DBB4-11D2-8724-00A0C9A8B90C}") = "X-Guide Setup", "X-Guide Setup\X-Guide Setup.vdproj", "{185EDC6A-006F-4584-AD6B-0DAC1BF0926B}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -43,13 +43,12 @@ Global
 		{D3446941-69A6-47C8-AE3F-D15A0F715936}.Release|x64.Build.0 = Release|Any CPU
 		{D3446941-69A6-47C8-AE3F-D15A0F715936}.Release|x86.ActiveCfg = Release|Any CPU
 		{D3446941-69A6-47C8-AE3F-D15A0F715936}.Release|x86.Build.0 = Release|Any CPU
-		{C648DCDB-EDB4-45C2-9E7D-BF2998D418F1}.Debug|Any CPU.ActiveCfg = Debug
-		{C648DCDB-EDB4-45C2-9E7D-BF2998D418F1}.Debug|x64.ActiveCfg = Release
-		{C648DCDB-EDB4-45C2-9E7D-BF2998D418F1}.Debug|x64.Build.0 = Release
-		{C648DCDB-EDB4-45C2-9E7D-BF2998D418F1}.Debug|x86.ActiveCfg = Debug
-		{C648DCDB-EDB4-45C2-9E7D-BF2998D418F1}.Release|Any CPU.ActiveCfg = Release
-		{C648DCDB-EDB4-45C2-9E7D-BF2998D418F1}.Release|x64.ActiveCfg = Release
-		{C648DCDB-EDB4-45C2-9E7D-BF2998D418F1}.Release|x86.ActiveCfg = Release
+		{185EDC6A-006F-4584-AD6B-0DAC1BF0926B}.Debug|Any CPU.ActiveCfg = Debug
+		{185EDC6A-006F-4584-AD6B-0DAC1BF0926B}.Debug|x64.ActiveCfg = Debug
+		{185EDC6A-006F-4584-AD6B-0DAC1BF0926B}.Debug|x86.ActiveCfg = Debug
+		{185EDC6A-006F-4584-AD6B-0DAC1BF0926B}.Release|Any CPU.ActiveCfg = Release
+		{185EDC6A-006F-4584-AD6B-0DAC1BF0926B}.Release|x64.ActiveCfg = Release
+		{185EDC6A-006F-4584-AD6B-0DAC1BF0926B}.Release|x86.ActiveCfg = Release
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

@@ -36,6 +36,14 @@ namespace X_Guide.Service
             _workerThread = null;
         }
 
+        public Task StopAsync()
+        {
+            _cts?.Cancel();
+            _workerThread?.Join();
+            _workerThread = null;
+            return Task.CompletedTask;
+        }
+
         private async void DoWork(CancellationToken ct)
         {
             if (_repeat)

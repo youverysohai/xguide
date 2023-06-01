@@ -33,6 +33,7 @@ namespace X_Guide.MVVM.ViewModel
         public override void Dispose()
         {
             _visionService.OnImageReturn -= HalcomViewModel_OnImageReturn;
+            base.Dispose();
         }
 
         public void SetConfig(CalibrationViewModel calibrationViewModel)
@@ -40,8 +41,14 @@ namespace X_Guide.MVVM.ViewModel
             throw new NotImplementedException();
         }
 
+        public void StopLiveImage()
+        {
+            _visionService.StopGrabbingImage();
+        }
+
         public void StartLiveImage()
         {
+            _visionService.StartGrabbingImage();
         }
 
         public void ShowOutputImage()
