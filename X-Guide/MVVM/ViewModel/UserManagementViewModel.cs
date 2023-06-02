@@ -39,9 +39,11 @@ namespace X_Guide.MVVM.ViewModel
             GetUsers();
         }
 
-        private void RemoveUser(object obj)
+        private async void RemoveUser(object obj)
         {
-            
+            await _userDb.Delete(_mapper.Map<UserModel>(User));
+
+            GetUsers();
         }
 
         private async void GetUsers()

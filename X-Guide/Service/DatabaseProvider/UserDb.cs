@@ -124,5 +124,16 @@ namespace X_Guide.Service.DatabaseProvider
                 return false;
             });
         }
+
+        public async Task<bool> Delete(UserModel user)
+        {
+            return await AsyncQuery((context) => {
+                var result = context.Users.Find(user.Id);
+                if (result == null) return false;
+                context.Users.Remove(result);
+                context.SaveChanges();
+                return true;
+            });
+        }
     }
 }
