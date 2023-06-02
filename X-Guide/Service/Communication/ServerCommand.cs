@@ -35,8 +35,7 @@ namespace X_Guide.Service.Communation
         public async void Operation(string[] parameter)
         {
             object operationData = await _operationService.Operation(parameter);
-            _eventAggregator.Publish(operationData);
-        }
+           }
 
         public void Dispose()
         {

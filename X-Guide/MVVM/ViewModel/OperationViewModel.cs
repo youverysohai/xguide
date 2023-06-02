@@ -1,7 +1,9 @@
 ﻿using System.Threading.Tasks;
 using VM.Core;
+using VMControls.Interface;
 using X_Guide.Service.Communication;
 using X_Guide.VisionMaster;
+using static X_Guide.Service.Communication.HikOperationService;
 
 namespace X_Guide.MVVM.ViewModel
 {
@@ -18,20 +20,17 @@ namespace X_Guide.MVVM.ViewModel
             _serverCommand = serverCommand;
             _visionService = visionService;
             VisionView = viewModel as HikViewModel;
-            _eventAggregator.Subscribe<object>(DisplayOutputImage);
+            _eventAggregator.Subscribe<Procedure>(DisplayOutputImage);
         }
 
-        private async void DisplayOutputImage(object e)
+        private void DisplayOutputImage(Procedure e)
         {
-            string s = e.ToString();
-            VmModule procedure = _visionService.GetProcedure(s);
-            await Task.Delay(500);
-            VisionView.Module = procedure;
+            VisionView.Module = e.procedure;
         }
 
         public override void Dispose()
         {
-            _eventAggregator.Unsubscribe<object>(DisplayOutputImage);
+            _eventAggregator.Unsubscribe<Procedure>(DisplayOutputImage);
             base.Dispose();
         }
     }

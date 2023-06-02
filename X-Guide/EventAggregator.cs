@@ -1,4 +1,5 @@
-﻿using System;
+﻿using HandyControl.Controls;
+using System;
 using System.Collections.Generic;
 
 namespace X_Guide
@@ -15,8 +16,10 @@ namespace X_Guide
         public void Publish<T>(T obj)
         {
             Type objType = obj.GetType();
-            if (!subscribers.ContainsKey(objType)) return;
             List<object> handlers = subscribers[objType];
+            if (!subscribers.ContainsKey(objType)) return;
+           
+ 
             foreach (var handler in handlers)
             {
                 var action = handler as Action<T>;

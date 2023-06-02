@@ -1,5 +1,7 @@
 ﻿using System;
 using System.Threading.Tasks;
+using VM.Core;
+using VMControls.Interface;
 using X_Guide.Communication.Service;
 using X_Guide.MVVM.Model;
 using X_Guide.Service.DatabaseProvider;
@@ -10,8 +12,16 @@ namespace X_Guide.Service.Communication
 {
     internal class HikOperationService : OperationService, IOperationService
     {
-        public HikOperationService(ICalibrationDb calibrationDb, IVisionService visionService, IServerService serverService) : base(calibrationDb, visionService, serverService)
+        private readonly IEventAggregator _eventAggregator;
+
+        public HikOperationService(ICalibrationDb calibrationDb, IVisionService visionService, IServerService serverService, IEventAggregator eventAggregator) : base(calibrationDb, visionService, serverService)
         {
+            _eventAggregator = eventAggregator;
+        }
+
+        public struct Procedure
+        {
+            public VmProcedure procedure;
         }
 
         public async Task<object> Operation(string[] parameter)
@@ -31,7 +41,9 @@ namespace X_Guide.Service.Communication
                 ((HikVisionService)_visionService).Procedure = procedure;
 
                 VisCenter = await _visionService.GetVisCenter();
-                if (VisCenter is null) throw new Exception(StrRetriver.Get("VI000"));
+                _eventAggregator.Publish(new Procedure { procedure = _visionService.GetProcedure(procedure) });
+
+                if (VisCenter is null)  throw new Exception(StrRetriver.Get("VI000"));
                 OperationData = VisionGuided.EyeInHandConfig2D_Operate(VisCenter, new double[] { calib.CXOffset, calib.CYOffset, calib.CRZOffset, calib.CameraXScaling });
                 string Mode = calib.Mode ? "GLOBAL" : "TOOL";
                 await _serverService.ServerWriteDataAsync($"XGUIDE,{Mode},{OperationData[0]},{OperationData[1]},{OperationData[2]}");
