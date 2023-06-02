@@ -42,7 +42,11 @@ namespace X_Guide
         private static IContainer BuildDIContainer()
         {
             ContainerBuilder builder = new ContainerBuilder();
+
+            builder.RegisterType<EventAggregator>().As<IEventAggregator>().SingleInstance();
+            builder.RegisterType<DisposeService>().As<IDisposeService>().SingleInstance();
             builder.Register(c => new ViewModelLocator(_diContainer)).As<IViewModelLocator>().SingleInstance();
+
             builder.Register(c => new MainWindow()
             {
                 DataContext = c.Resolve<MainViewModel>()
@@ -137,7 +141,7 @@ namespace X_Guide
             builder.Register(c =>
             {
                 var db = c.Resolve<IJsonDb>().Get<GeneralModel>();
-                return new ServerService(IPAddress.Parse(db.Ip), db.Port, db.Terminator);
+                return new ServerService(IPAddress.Parse(db.Ip), db.Port, db.Terminator, c.Resolve<IEventAggregator>());
             }).As<IServerService>().SingleInstance();
 
             return builder.Build();
@@ -198,6 +202,12 @@ namespace X_Guide
                 if (!viewModelState.IsCalibValid)
                     Notifier.ShowError(StrRetriver.Get("VI003"));
             }
+        }
+
+        private void Application_Exit(object sender, ExitEventArgs e)
+        {
+            IDisposeService disposeService = _diContainer.Resolve<IDisposeService>();
+            disposeService.Dispose();
         }
     }
 }

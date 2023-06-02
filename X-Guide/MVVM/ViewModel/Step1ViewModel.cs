@@ -69,8 +69,9 @@ namespace X_Guide.MVVM.ViewModel
 
         #endregion properties
 
-        public Step1ViewModel(IManipulatorDb manipulatorDb, IMapper mapper, IMessageService messageService, CalibrationViewModel calibration)
+        public Step1ViewModel(IManipulatorDb manipulatorDb, IMapper mapper, IMessageService messageService, CalibrationViewModel calibration, IDisposeService disposeService)
         {
+            disposeService.Add(this);
             _manipulatorDb = manipulatorDb;
             _messageService = messageService;
             _mapper = mapper;
@@ -94,6 +95,12 @@ namespace X_Guide.MVVM.ViewModel
         public void RegisterStateChange(Action<bool> action)
         {
             OnStateChanged = action;
+        }
+
+        public override void Dispose()
+        {
+            MessageBox.Show("MAMA I GOT CALLED :D");
+            base.Dispose();
         }
     }
 }

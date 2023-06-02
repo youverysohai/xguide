@@ -15,6 +15,8 @@ namespace X_Guide.Communication.Service
 {
     public class ServerService : TCPBase, IServerService
     {
+        private readonly IEventAggregator _eventAggregator;
+
         private int _port { get; }
         private IPAddress _ip { get; }
 
@@ -30,19 +32,23 @@ namespace X_Guide.Communication.Service
 
         private readonly ConcurrentDictionary<int, TcpClientInfo> _connectedClient = new ConcurrentDictionary<int, TcpClientInfo>();
 
+        private readonly bool _connected = false;
+
         private CancellationTokenSource cts;
 
-        public ServerService(IPAddress ip, int port, string terminator) : base(terminator)
+        public ServerService(IPAddress ip, int port, string terminator, IEventAggregator eventAggregator) : base(terminator)
         {
+            _eventAggregator = eventAggregator;
             _port = port;
             _ip = ip;
             searchClient = new BackgroundService(SearchForClient, true);
             searchClient.Start();
+            _ = Start();
         }
 
         private void SetValid(bool valid)
         {
-            Dispatcher.CurrentDispatcher.Invoke(() => ClientConnectionChange?.Invoke(this, valid));
+            Dispatcher.CurrentDispatcher.Invoke(() => _eventAggregator.Publish(valid));
         }
 
         private void SearchForClient()

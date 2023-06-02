@@ -647,6 +647,7 @@
     <Compile Include="Enums\UserRole.cs" />
     <Compile Include="Enums\ValueDescription.cs" />
     <Compile Include="Enums\VisionSoftware.cs" />
+    <Compile Include="EventAggregator.cs" />
     <Compile Include="Extension\TaskExtensions.cs" />
     <Compile Include="FileLogger.cs" />
     <Compile Include="FileLoggerExtensions.cs" />
@@ -656,6 +657,7 @@
     <Compile Include="HelperClass\Timer.cs">
       <SubType>Component</SubType>
     </Compile>
+    <Compile Include="IEventAggregator.cs" />
     <Compile Include="Logging\ILoggable.cs" />
     <Compile Include="Manipulator.cs">
       <DependentUpon>XGuideModel.tt</DependentUpon>
@@ -788,7 +790,9 @@
     <Compile Include="Service\Communication\ServerCommand.cs" />
     <Compile Include="Service\DatabaseProvider\LegacyVisionDb.cs" />
     <Compile Include="Service\DatabaseProvider\JsonDb.cs" />
+    <Compile Include="Service\DisposeService.cs" />
     <Compile Include="Service\ICalibrationService.cs" />
+    <Compile Include="Service\IDisposeService.cs" />
     <Compile Include="Service\IJogService.cs" />
     <Compile Include="Service\ImageService.cs" />
     <Compile Include="Service\IMessageService.cs" />

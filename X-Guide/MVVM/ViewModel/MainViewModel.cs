@@ -25,6 +25,8 @@ namespace X_Guide.MVVM.ViewModel
         public RelayCommand TestCommand { get; }
         public RelayCommand ChangeThemeCommand { get; }
 
+        private readonly IEventAggregator _eventAggregator;
+
         public bool IsRunning => State.IsLoading;
 
         private bool _isLoggedIn = false;
@@ -92,7 +94,7 @@ namespace X_Guide.MVVM.ViewModel
 
         #endregion CLR properties
 
-        public MainViewModel(INavigationService navigationService, IServerService serverService, IUserDb userService, ILogger logger, ViewModelState state)
+        public MainViewModel(INavigationService navigationService, IUserDb userService, ILogger logger, ViewModelState state, IEventAggregator eventAggregator)
         {
             _auth = new AuthenticationService(userService);
             //_auth.CurrentUserChanged += OnCurrentUserChanged;
@@ -102,22 +104,20 @@ namespace X_Guide.MVVM.ViewModel
             _navigationStore = navigationService.GetNavigationStore();
             _navigationStore.CurrentViewModelChanged += OnCurrentViewModelChanged;
 
-            serverService.Start();
             var nav = new TypedParameter(typeof(INavigationService), _navigationService);
             TestCommand = new RelayCommand(test);
 
+            _eventAggregator = eventAggregator;
+
+            eventAggregator.Subscribe<bool>(OnConnectionChange);
+
             ChangeThemeCommand = new RelayCommand(ToggleTheme);
-
-            _serverService = serverService;
-
-            _serverService.SubscribeOnClientConnectionChange(OnConnectionChange);
 
             _navigationService.Navigate<SettingViewModel>();
 
             LoginCommand = new RelayCommand(Login);
             RegisterCommand = new RelayCommand(Register);
             NavigateCommand = new RelayCommand(Navigate);
-            logger.LogInformation("LapisLazuli");
         }
 
         private void ToggleTheme(object obj)
@@ -132,7 +132,7 @@ namespace X_Guide.MVVM.ViewModel
             }
         }
 
-        private void OnConnectionChange(object sender, bool e)
+        private void OnConnectionChange(bool e)
         {
             IsManipulatorConnected = e;
         }
@@ -206,7 +206,7 @@ namespace X_Guide.MVVM.ViewModel
 
         public override void Dispose()
         {
-            _serverService.UnsubscribeOnClientConnectionChange(OnConnectionChange);
+            _eventAggregator.Unsubscribe<bool>(OnConnectionChange);
             base.Dispose();
         }
     }

@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using System.Threading;
 using System.Threading.Tasks;
-using System.Windows;
 using VM.Core;
 using VMControls.Interface;
 using X_Guide.Aspect;
@@ -22,6 +21,7 @@ namespace X_Guide.MVVM.ViewModel
     internal class Step5ViewModel : ViewModelBase, ICalibrationStep
     {
         private readonly CalibrationViewModel _calibrationConfig;
+        private readonly IEventAggregator _eventAggregator;
         private readonly IJogService _jogService;
         private readonly IServerService _serverService;
         private readonly IVisionService _visionService;
@@ -66,16 +66,17 @@ namespace X_Guide.MVVM.ViewModel
 
         public int JogDistance { get; set; }
 
-        public Step5ViewModel(CalibrationViewModel calibrationConfig, IServerService serverService, IVisionService visionService, IJogService jogService, IVisionViewModel visionView)
+        public Step5ViewModel(CalibrationViewModel calibrationConfig, IServerService serverService, IVisionService visionService, IJogService jogService, IVisionViewModel visionView, IEventAggregator eventAggregator)
         {
             _serverService = serverService;
             _visionService = visionService;
             _calibrationConfig = calibrationConfig;
+            _eventAggregator = eventAggregator;
             _jogService = jogService;
             VisionView = visionView;
             VisionView.SetConfig(_calibrationConfig);
             JogCommand = new RelayCommand(Jog, (o) => _canJog);
-            _serverService.SubscribeOnClientConnectionChange(OnConnectionChange);
+            _eventAggregator.Subscribe<bool>(OnConnectionChange);
             VisionView.StartLiveImage();
         }
 
@@ -102,13 +103,9 @@ namespace X_Guide.MVVM.ViewModel
             }
         }
 
-        private void OnConnectionChange(object sender, bool canJog)
+        private void OnConnectionChange(bool canJog)
         {
             CanJog = canJog;
-            Application.Current.Dispatcher.Invoke(() =>
-            {
-                JogCommand.OnCanExecuteChanged();
-            });
         }
 
         [ExceptionHandlingAspect]
@@ -141,7 +138,7 @@ namespace X_Guide.MVVM.ViewModel
 
         public override void Dispose()
         {
-            _serverService.UnsubscribeOnClientConnectionChange(OnConnectionChange);
+            _eventAggregator.Unsubscribe<bool>(OnConnectionChange);
             base.Dispose();
         }
 

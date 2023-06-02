@@ -7,19 +7,21 @@ namespace X_Guide.MVVM.ViewModel
 {
     internal class OperationViewModel : ViewModelBase
     {
+        private readonly IEventAggregator _eventAggregator;
         private readonly IServerCommand _serverCommand;
         private readonly IVisionService _visionService;
         public HikViewModel VisionView { get; set; }
 
-        public OperationViewModel(IServerCommand serverCommand, IVisionService visionService, IVisionViewModel viewModel)
+        public OperationViewModel(IServerCommand serverCommand, IVisionService visionService, IVisionViewModel viewModel, IEventAggregator eventAggregator)
         {
+            _eventAggregator = eventAggregator;
             _serverCommand = serverCommand;
             _visionService = visionService;
             VisionView = viewModel as HikViewModel;
-            _serverCommand.SubscribeOnOperationEvent(DisplayOutputImage);
+            _eventAggregator.Subscribe<object>(DisplayOutputImage);
         }
 
-        private async void DisplayOutputImage(object sender, object e)
+        private async void DisplayOutputImage(object e)
         {
             string s = e.ToString();
             VmModule procedure = _visionService.GetProcedure(s);
@@ -29,7 +31,7 @@ namespace X_Guide.MVVM.ViewModel
 
         public override void Dispose()
         {
-            _serverCommand.UnsubscribeOnOperationEvent(DisplayOutputImage);
+            _eventAggregator.Unsubscribe<object>(DisplayOutputImage);
             base.Dispose();
         }
     }

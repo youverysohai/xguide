@@ -18,14 +18,17 @@ namespace X_Guide.VisionMaster
 
         public event EventHandler<HObject> OnImageReturn;
 
+        private readonly IEventAggregator _eventAggregator;
         private readonly BackgroundService _imageGrab;
 
         public event EventHandler<(HObject, object)> OnOutputImageReturn;
 
         private readonly HObject _outputImage;
 
-        public HalconVisionService()
+        public HalconVisionService(IEventAggregator eventAggregator, IDisposeService disposeService)
         {
+            disposeService.Add(this);
+            _eventAggregator = eventAggregator;
             _imageGrab = new BackgroundService(ImageGrab, true, 10);
         }
 
@@ -63,9 +66,9 @@ namespace X_Guide.VisionMaster
             try
             {
                 HOperatorSet.GrabImageAsync(out hImage, hv_AcqHandle, -1);
-                OnImageReturn?.Invoke(this, hImage);
+                _eventAggregator.Publish(hImage);
             }
-            catch (Exception ex)
+            catch
             {
                 MessageBox.Show("This is nothing");
             }
@@ -132,6 +135,7 @@ namespace X_Guide.VisionMaster
             acqHandle.Dispose();
             hv_AcqHandle.Dispose();
             hImage.Dispose();
+            MessageBox.Show("I have closed everything :D");
         }
 
         Task<List<VmProcedure>> IVisionService.GetAllProcedures()

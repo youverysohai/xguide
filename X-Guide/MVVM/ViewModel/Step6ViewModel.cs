@@ -1,7 +1,6 @@
 ﻿using AutoMapper;
 using System;
 using System.Threading.Tasks;
-using System.Windows;
 using ToastNotifications;
 using ToastNotifications.Messages;
 using X_Guide.Aspect;
@@ -24,6 +23,8 @@ namespace X_Guide.MVVM.ViewModel
         public CalibrationViewModel Calibration { get; set; }
 
         public IVisionViewModel VisionView { get; set; }
+
+        private readonly IEventAggregator _eventAggregator;
         private readonly IServerService _serverService;
         private readonly ICalibrationDb _calibDb;
         private readonly ICalibrationService _calibService;
@@ -45,8 +46,9 @@ namespace X_Guide.MVVM.ViewModel
         public RelayCommand SaveCommand { get; set; }
         public RelayCommand CalibrateCommand { get; set; }
 
-        public Step6ViewModel(IServerService serverService, CalibrationViewModel calibrationConfig, ICalibrationDb calibDb, ICalibrationService calibService, IMapper mapper, Notifier notifier, IVisionService visionService, IVisionViewModel visionView)
+        public Step6ViewModel(IServerService serverService, CalibrationViewModel calibrationConfig, ICalibrationDb calibDb, ICalibrationService calibService, IMapper mapper, Notifier notifier, IVisionService visionService, IVisionViewModel visionView, IEventAggregator eventAggregator)
         {
+            _eventAggregator = eventAggregator;
             _serverService = serverService;
             Calibration = calibrationConfig;
             _calibDb = calibDb;
@@ -56,19 +58,17 @@ namespace X_Guide.MVVM.ViewModel
             _visionService = visionService;
             VisionView = visionView;
             VisionView.SetConfig(calibrationConfig);
-            _serverService.SubscribeOnClientConnectionChange(OnConnectionChange);
+            _eventAggregator.Subscribe<bool>(OnConnectionChange);
+
             CalibrateCommand = RelayCommand.FromAsyncRelayCommand(Calibrate);
             SaveCommand = RelayCommand.FromAsyncRelayCommand(Save);
             VisionView.ShowOutputImage();
         }
 
-        private void OnConnectionChange(object sender, bool canCalibrate)
+        private void OnConnectionChange(bool canCalibrate)
         {
             CanCalibrate = canCalibrate;
-            Application.Current.Dispatcher.Invoke(() =>
-            {
-                CalibrateCommand.OnCanExecuteChanged();
-            });
+            CalibrateCommand.OnCanExecuteChanged();
         }
 
         [ExceptionHandlingAspect]
@@ -100,7 +100,7 @@ namespace X_Guide.MVVM.ViewModel
 
         public override void Dispose()
         {
-            _serverService.UnsubscribeOnClientConnectionChange(OnConnectionChange);
+            _eventAggregator.Unsubscribe<bool>(OnConnectionChange);
             base.Dispose();
         }
 
