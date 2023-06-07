@@ -58,7 +58,6 @@ namespace X_Guide.MVVM.ViewModel
             private set
             {
                 _canJog = value;
-
                 if (value) _jogService.Start();
                 else _jogService.Stop();
                 JogCommand.OnCanExecuteChanged();

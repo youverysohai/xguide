@@ -35,11 +35,15 @@ namespace X_Guide.MVVM.ViewModel
                 {
                     _calibration.Manipulator = value;
                 }
-                else if (_messenger.Send(new MessageBoxRequest(StrRetriver.Get("VI001"), BoxState.Warning)).Equals(MessageBoxResult.Yes))
+                else
                 {
-                    _calibration.Manipulator = value;
-                    _messenger.Send(new CalibrationStateChanged(PageState.Reset));
-                    _calibration.ResetProperties();
+                    MessageBoxResult result = _messenger.Send(new MessageBoxRequest(StrRetriver.Get("VI001"), BoxState.Warning));
+                    if (result == MessageBoxResult.Yes)
+                    {
+                        _calibration.Manipulator = value;
+                        _messenger.Send(new CalibrationStateChanged(PageState.Reset));
+                        _calibration.ResetProperties();
+                    }
                 }
                 OnPropertyChanged();
             }

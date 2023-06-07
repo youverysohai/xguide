@@ -99,6 +99,7 @@ namespace X_Guide
             builder.RegisterType<DbContextFactory>().SingleInstance();
             builder.RegisterType<ManipulatorDb>().As<IManipulatorDb>();
             builder.RegisterType<MessageBoxService>().As<IMessageBoxService>().SingleInstance();
+
             builder.RegisterType<UserDb>().As<IUserDb>();
             builder.RegisterInstance(logger).As<ILogger>();
             builder.RegisterType<JsonDb>().As<IJsonDb>();
@@ -177,6 +178,7 @@ namespace X_Guide
             IJsonDb jsonDb = new JsonDb(mapper);
             VisionSoftware = jsonDb.Get<GeneralModel>().VisionSoftware;
             _diContainer = BuildDIContainer();
+            _ = _diContainer.Resolve<IMessageBoxService>();
             Notifier = _diContainer.Resolve<Notifier>();
         }
 
