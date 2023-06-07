@@ -22,6 +22,18 @@ namespace X_Guide.CustomControls
     {
 
 
+        public Visibility ShowSaveDeleteBtn
+        {
+            get { return (Visibility)GetValue(ShowSaveDeleteBtnProperty); }
+            set { SetValue(ShowSaveDeleteBtnProperty, value); }
+        }
+
+        // Using a DependencyProperty as the backing store for ShowSaveDeleteBtn.  This enables animation, styling, binding, etc...
+        public static readonly DependencyProperty ShowSaveDeleteBtnProperty =
+            DependencyProperty.Register("ShowSaveDeleteBtn", typeof(Visibility), typeof(CustomFormButtons), new PropertyMetadata(Visibility.Visible));
+
+
+
 
         public ICommand AddCommand 
         {

@@ -15,5 +15,10 @@ namespace X_Guide.MVVM.View.CalibrationWizardSteps
         private void Button_Click(object sender, RoutedEventArgs e)
         {
         }
+
+        private void UserControl_Loaded(object sender, RoutedEventArgs e)
+        {
+
+        }
     }
 }

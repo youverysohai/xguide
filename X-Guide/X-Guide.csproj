@@ -550,7 +550,7 @@
       <HintPath>..\..\..\..\..\..\Program Files\VisionMaster4.1.0\Development\V4.x\ComControls\bin\x86\VMControls.WPF.dll</HintPath>
     </Reference>
     <Reference Include="System">
-      <HintPath>..\..\..\..\..\..\Program Files (x86)\Reference Assemblies\Microsoft\Framework\.NETFramework\v4.8\System.dll</HintPath>
+      <HintPath>..\..\..\..\..\..\..\Program Files (x86)\Reference Assemblies\Microsoft\Framework\.NETFramework\v4.8\System.dll</HintPath>
     </Reference>
     <Reference Include="System.Data" />
     <Reference Include="System.Xml" />
@@ -579,15 +579,16 @@
     <Compile Include="Aspect\GlobalAspects.cs" />
     <Compile Include="Aspect\ThrowExceptionAspect.cs" />
     <Compile Include="Converter\BooleanToVisibilityConverter.cs" />
-    <Compile Include="Converter\ByteArrayToImageConverter.cs" />
     <Compile Include="Calibration.cs">
       <DependentUpon>XGuideModel.tt</DependentUpon>
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Compile>
+    <Compile Include="Converter\EnumToStringConverter.cs" />
     <Compile Include="Converter\LastCharacterConverter.cs" />
     <Compile Include="Converter\NavigationViewExtensions.cs" />
     <Compile Include="Converter\NavigationViewItemExtensions.cs" />
     <Compile Include="Converter\RadioButtonTagConverter.cs" />
+    <Compile Include="Converter\StringFormatConverter.cs" />
     <Compile Include="Converter\TypeToBooleanConverter.cs" />
     <Compile Include="Converter\TypeToDescriptionConverter.cs" />
     <Compile Include="CriticalErrorException.cs" />
@@ -668,6 +669,7 @@
     <Compile Include="MappingConfiguration\CalibrationProfile.cs" />
     <Compile Include="MappingConfiguration\GeneralProfile.cs" />
     <Compile Include="MappingConfiguration\ManipulatorProfile.cs" />
+    <Compile Include="MappingConfiguration\UserProfile.cs" />
     <Compile Include="MappingConfiguration\VisionProfile.cs" />
     <Compile Include="MessageToken\MessageBoxRequest.cs" />
     <Compile Include="MVVM\Command\AsyncRelayCommand.cs" />
@@ -708,8 +710,9 @@
     <Compile Include="MVVM\ViewModel\Step5ViewModel.cs" />
     <Compile Include="MVVM\ViewModel\Step6ViewModel.cs" />
     <Compile Include="MVVM\ViewModel\UndefinedViewModel.cs" />
-    <Compile Include="MVVM\ViewModel\UserLoginViewModel.cs" />
+    <Compile Include="MVVM\ViewModel\UserManagementViewModel.cs" />
     <Compile Include="MVVM\ViewModel\CalibrationViewModel.cs" />
+    <Compile Include="MVVM\ViewModel\UserViewModel.cs" />
     <Compile Include="MVVM\ViewModel\ViewModelLocator.cs" />
     <Compile Include="MVVM\ViewModel\HikVisionViewModel.cs" />
     <Compile Include="MVVM\View\CalibrationWizardSteps\CalibrationWizardStart.xaml.cs">
@@ -760,8 +763,8 @@
     <Compile Include="MVVM\View\UndefinedView.xaml.cs">
       <DependentUpon>UndefinedView.xaml</DependentUpon>
     </Compile>
-    <Compile Include="MVVM\View\UserLoginView.xaml.cs">
-      <DependentUpon>UserLoginView.xaml</DependentUpon>
+    <Compile Include="MVVM\View\UserManagementView.xaml.cs">
+      <DependentUpon>UserManagementView.xaml</DependentUpon>
     </Compile>
     <Compile Include="MVVM\View\ViewTemplateSelector.cs" />
     <Compile Include="Service\AuthenticationService.cs" />
@@ -991,7 +994,7 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="MVVM\View\UserLoginView.xaml">
+    <Page Include="MVVM\View\UserManagementView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -1056,6 +1059,7 @@
     <None Include="..\.editorconfig">
       <Link>.editorconfig</Link>
     </None>
+    <None Include="Properties\DataSources\X_Guide.MVVM.Model.UserModel.datasource" />
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>

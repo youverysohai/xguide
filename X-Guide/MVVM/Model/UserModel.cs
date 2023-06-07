@@ -8,6 +8,8 @@ namespace X_Guide.MVVM.Model
 {
     public class UserModel
     {
+        public int Id { get; set; }
+
         private string _Username;
 
         public string Username

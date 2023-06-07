@@ -13,5 +13,7 @@ namespace X_Guide.Service.DatabaseProvider
         Task<IEnumerable<UserModel>> GetAll();
         Task<bool> Add(UserModel user, SecureString password);
         Task<UserModel>Authenticate(string username, SecureString password);
+        Task<bool> Update(UserModel user);
+        Task<bool> Delete(UserModel user);
     }
 }

@@ -10,6 +10,7 @@
              xmlns:vm="clr-namespace:X_Guide.MVVM.ViewModel"
              mc:Ignorable="d"
              d:Width="900"
+             xmlns:c="clr-namespace:X_Guide.Converter"
              xmlns:ui="http://schemas.modernwpf.com/2019"
              d:Foreground="White"
              xmlns:hc="https://handyorg.github.io/handycontrol"
@@ -39,8 +40,9 @@
         </Style>
 
         <DataTemplate x:Key="ErrorPage">
-            <StackPanel Orientation="Vertical" HorizontalAlignment="Center">
-                <TextBlock Style="{DynamicResource SubheaderTextBlockStyle}" Text="Nothing is selected.&#x0a;" />
+            <StackPanel Orientation="Vertical" >
+                <xCust:CustomFormButtons ShowSaveDeleteBtn="Collapsed" AddCommand="{Binding DataContext.OpenManiFormCommand, ElementName=SettingUserControl}" AddCommandParameter="{Binding ElementName=ManipulatorDialog}"/>
+                <TextBlock Style="{DynamicResource SubheaderTextBlockStyle}" HorizontalAlignment="Center" Text="Nothing is selected.&#x0a;" />
 
                 <TextBlock Style="{DynamicResource SubtitleTextBlockStyle}" HorizontalAlignment="Center" Text="Please select from the list." />
             </StackPanel>
@@ -101,11 +103,11 @@
                                     </ItemsControl.ItemTemplate>
                                 </ItemsControl>
                                 <Button Margin="4 15 4 4 "
-                                            VerticalAlignment="Top"
+                                        VerticalAlignment="Top"
                                                 HorizontalAlignment="Center"
                                                 Command="{x:Static materialDesign:DrawerHost.CloseDrawerCommand}"
                                                 CommandParameter="{x:Static Dock.Left}"
-
+                                         
                                                 Style="{StaticResource MaterialDesignIconButton}">
                                     <materialDesign:PackIcon Kind="MenuLeft" Style="{DynamicResource IconStyle24}" />
                                 </Button>
@@ -143,6 +145,9 @@
                             <i:Interaction.Triggers>
                                 <i:DataTrigger Binding="{Binding Manipulator}" Value="{Binding Manipulator}">
                                     <i:ChangePropertyAction PropertyName="ContentTemplate" Value="{StaticResource ManiForm}" />
+                                </i:DataTrigger>
+                                <i:DataTrigger Binding="{Binding Manipulator}" Value="{x:Null}">
+                                    <i:ChangePropertyAction PropertyName="ContentTemplate" Value="{StaticResource ErrorPage}" />
                                 </i:DataTrigger>
                             </i:Interaction.Triggers>
                         </ContentControl>

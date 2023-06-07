@@ -41,6 +41,14 @@ namespace X_Guide
             //}, this.Dispatcher);
 
         }
+        private async void DisplaySignUpDialog()
+        {
+            await RegisterDialog.ShowAsync();
+        }
+        private async void DisplayLoginDialog()
+        {
+            await LoginDialog.ShowAsync();
+        }
 
         private void ToggleAppThemeHandler(object sender, RoutedEventArgs e)
         {
@@ -60,7 +68,10 @@ namespace X_Guide
                     Application.Current.Resources.MergedDictionaries.Add(new ResourceDictionary
                     {
                         Source = new Uri("/MaterialDesignThemes.Wpf;component/Themes/MaterialDesignTheme.Light.xaml", UriKind.Relative)
-                    });   
+                    });
+                    BrightIcon.Visibility = Visibility.Visible;
+                    DarkIcon.Visibility = Visibility.Collapsed;
+
                 }
                 else
                 {
@@ -71,6 +82,8 @@ namespace X_Guide
                     {
                         Source = new Uri("/MaterialDesignThemes.Wpf;component/Themes/MaterialDesignTheme.Dark.xaml", UriKind.Relative)
                     });
+                    BrightIcon.Visibility = Visibility.Collapsed;
+                    DarkIcon.Visibility = Visibility.Visible;
                 }
             });
         }
@@ -86,7 +99,11 @@ namespace X_Guide
                 ThemeManager.SetRequestedTheme(this, ElementTheme.Light);
             }
         }
- 
+
+        private void SignUpButton_Click(object sender, RoutedEventArgs e)
+        {
+            DisplaySignUpDialog();
+        }
 
 
 
@@ -94,13 +111,19 @@ namespace X_Guide
 
 
 
-        //private void PasswordBox_PasswordChanged(object sender, RoutedEventArgs e)
-        //{
-        //    if(sender != null)
-        //    {
-        //        ((MainViewModel)DataContext).InputPassword = ((PasswordBox)sender).SecurePassword;
-        //    }
-        //}
+
+        private void PasswordBox_PasswordChanged(object sender, RoutedEventArgs e)
+        {
+            if (sender != null)
+            {
+                ((MainViewModel)DataContext).InputPassword = ((PasswordBox)sender).SecurePassword;
+            }
+        }
+
+        private void LoginButton_Click(object sender, RoutedEventArgs e)
+        {
+            DisplayLoginDialog();
+        }
     }
 
 

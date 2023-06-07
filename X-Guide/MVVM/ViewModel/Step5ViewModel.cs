@@ -70,6 +70,7 @@ namespace X_Guide.MVVM.ViewModel
         public RelayCommand JogCommand { get; }
 
         public int JogDistance { get; set; }
+        public int RotationAngle { get; set; }
 
         public Step5ViewModel(CalibrationViewModel calibrationConfig, IServerService serverService, IVisionService visionService, IJogService jogService, IVisionViewModel visionView, StateViewModel appState, IMessenger messenger)
         {
@@ -119,7 +120,8 @@ namespace X_Guide.MVVM.ViewModel
         private void Jog(object parameter)
         {
             if (JogDistance == 0) JogDistance = 10;
-            int x = 0, y = 0, z = 0, rz = 0;
+            if (RotationAngle == 0) RotationAngle = 10;
+            int x = 0, y = 0, z = 0, rz = 0, rx = 0, ry = 0 ;
 
             switch (parameter)
             {
@@ -129,8 +131,12 @@ namespace X_Guide.MVVM.ViewModel
                 case "X-": x = -JogDistance; break;
                 case "Z+": z = JogDistance; break;
                 case "Z-": z = -JogDistance; break;
-                case "RZ+": rz = JogDistance; break;
-                case "RZ-": rz = -JogDistance; break;
+                case "RZ+": rz = RotationAngle; break;
+                case "RZ-": rz = -RotationAngle; break;
+                case "RX+": rx = RotationAngle; break;
+                case "RX-": rx = RotationAngle; break;
+                case "RY+": ry = RotationAngle; break;
+                case "RY-": ry = RotationAngle; break;
                 default: break;
             }
             JogCommand command = new JogCommand().SetX(x).SetY(y).SetZ(z).SetRZ(rz).SetSpeed(_calibrationConfig.Speed).SetAcceleration(_calibrationConfig.Acceleration);

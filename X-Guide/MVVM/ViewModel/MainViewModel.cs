@@ -1,5 +1,6 @@
 ﻿using Autofac;
 using Microsoft.Extensions.Logging;
+using ModernWpf.Controls;
 using System;
 using System.Diagnostics;
 using System.Security;
@@ -23,9 +24,12 @@ namespace X_Guide.MVVM.ViewModel
 
         public bool Test { get; set; } = false;
         public RelayCommand TestCommand { get; }
-        public RelayCommand ChangeThemeCommand { get; }
+
+
+        public UserViewModel User { get; set; }
 
         public bool IsRunning => AppState.IsLoading;
+
 
         private bool _isLoggedIn = false;
 
@@ -45,7 +49,11 @@ namespace X_Guide.MVVM.ViewModel
 
         public ICommand NavigateCommand { get; }
 
+        public ICommand CurrentUserCommand { get; }
+        public ICommand OpenLoginFormCommand { get; }
+        public ICommand OpenRegisterFormCommand { get; }
         public ICommand LoginCommand { get; }
+        public ICommand LogoutCommand { get; }
 
         public ICommand ServerCommand { get; }
 
@@ -61,6 +69,14 @@ namespace X_Guide.MVVM.ViewModel
                 _inputUsername = value;
             }
         }
+        private string _inputEmail;
+
+        public string InputEmail
+        {
+            get { return _inputEmail; }
+            set { _inputEmail = value; }
+        }
+
 
         private SecureString _inputPassword;
 
@@ -71,6 +87,32 @@ namespace X_Guide.MVVM.ViewModel
             {
                 _inputPassword = value;
             }
+        }
+
+
+        private string _currentUsername;
+
+        public string CurrentUsername
+        {
+            get { return _currentUsername; }
+            set { _currentUsername = value; OnPropertyChanged(); }
+        }
+
+        private string _currentUserRole;
+
+        public string CurrentUserRole
+        {
+            get { return _currentUserRole; }
+            set { _currentUserRole = value; OnPropertyChanged(); }
+        }
+
+
+        private bool _isManipulatorConnected;
+
+        public bool IsManipulatorConnected
+        {
+            get { return _isManipulatorConnected; }
+            set { _isManipulatorConnected = value; OnPropertyChanged(); }
         }
 
         private readonly IServerService _serverService;
@@ -87,9 +129,15 @@ namespace X_Guide.MVVM.ViewModel
         public MainViewModel(INavigationService navigationService, IUserDb userService, ILogger logger, StateViewModel state)
         {
             _auth = new AuthenticationService(userService);
+
+            _auth.CurrentUserChanged += OnCurrentUserChanged;
+            State = state;
+            State.OnStateChanged = OnLoadingStateChanged;
+
             //_auth.CurrentUserChanged += OnCurrentUserChanged;
             AppState = state;
             AppState.OnStateChanged = OnLoadingStateChanged;
+
             _navigationService = navigationService;
             _navigationStore = navigationService.GetNavigationStore();
             _navigationStore.CurrentViewModelChanged += OnCurrentViewModelChanged;
@@ -97,26 +145,52 @@ namespace X_Guide.MVVM.ViewModel
             var nav = new TypedParameter(typeof(INavigationService), _navigationService);
             TestCommand = new RelayCommand(test);
 
-            ChangeThemeCommand = new RelayCommand(ToggleTheme);
 
             _navigationService.Navigate<SettingViewModel>();
 
+            CurrentUserCommand = new RelayCommand(OnUserChangeEvent);
             LoginCommand = new RelayCommand(Login);
+            LogoutCommand = new RelayCommand(Logout);
             RegisterCommand = new RelayCommand(Register);
             NavigateCommand = new RelayCommand(Navigate);
         }
 
-        private void ToggleTheme(object obj)
+
+
+        private void OnUserChangeEvent(object obj)
         {
-            if (IsBrightTheme)
+            User = ((UserViewModel)obj).Clone() as UserViewModel;
+            if (User.IsActive)
             {
-                IsBrightTheme = false;
+                User.IsActive = false;
+                MessageBox.Show("Log out : " + _auth.CurrentUser.Username);
             }
             else
             {
-                IsBrightTheme = true;
+                User.IsActive = true;
             }
         }
+
+
+        private void Logout(object obj)
+        {
+            CurrentUsername = "";
+            CurrentUserRole = "";
+            _auth.CurrentUser.Equals(null);
+        }
+
+        private void OnCurrentUserChanged()
+        {
+
+            MessageBox.Show("Hi, new user");
+        }
+
+        private void OnConnectionChange(object sender, bool e)
+        {
+            IsManipulatorConnected = e;
+
+        }
+
 
         private void OnLoadingStateChanged()
         {
@@ -138,7 +212,7 @@ namespace X_Guide.MVVM.ViewModel
                 case PageName.Production: _navigationService.Navigate<ProductionViewModel>(); break;
                 case PageName.Setting: _navigationService.Navigate<SettingViewModel>(); break;
                 case PageName.CalibrationWizardStart: _navigationService.Navigate<CalibrationWizardStartViewModel>(nav); break;
-                case PageName.Login: _navigationService.Navigate<UserLoginViewModel>(); break;
+                case PageName.UserManagement: _navigationService.Navigate<UserManagementViewModel>(); break;
                 case PageName.Operation: _navigationService.Navigate<OperationViewModel>(); break;
                 case PageName.JogRobot: _navigationService.Navigate<JogRobotViewModel>(); break;
                 case PageName.LiveView:
@@ -149,20 +223,22 @@ namespace X_Guide.MVVM.ViewModel
             }
         }
 
-        private void Register(object obj)
+        private async void Register(object obj)
         {
-            MessageBox.Show("Halo chub");
-            /*bool success = await _auth.Register(new UserModel
+
+                bool success = await _auth.Register(new UserModel
             {
-                Username = "123",
-                Email = "Akimoputo.DotCom",
+                Username = InputUsername,
+                Email = InputEmail,
+                CreatedAt = DateTime.Now,
+                UpdatedAt = DateTime.Now,
                 Role = 1,
-            }, InputPassword);
+            }, InputPassword); ;
             if (success)
             {
                 MessageBox.Show("Added successfully");
             }
-            else MessageBox.Show("User is not added!");*/
+            else MessageBox.Show("User is not added!");
         }
 
         private async void Login(object obj)
@@ -172,6 +248,8 @@ namespace X_Guide.MVVM.ViewModel
             if (status)
             {
                 MessageBox.Show($"Welcome back! {_auth.CurrentUser.Username}");
+                CurrentUsername = _auth.CurrentUser.Username;
+                CurrentUserRole = Enum.GetName(typeof(UserRole), _auth.CurrentUser.Role);
             }
             else
             {
