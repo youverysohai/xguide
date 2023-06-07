@@ -244,6 +244,12 @@
                                 Value="{Binding JogDistance}">
                         </ui:NumberBox>
                         <ui:ToggleSwitch Header="Mode (Tool/Global)" OnContent="Global" IsOn="{Binding Calibration.Mode}" OffContent="Tool"></ui:ToggleSwitch>
+                        <ui:NumberBox
+                            Header="Rotation Degree (°)"
+                            SpinButtonPlacementMode="Inline"
+                            Margin="5"
+                            Value="{Binding RotationAngle}"
+                            />
                     </ui:SimpleStackPanel>
 
                       

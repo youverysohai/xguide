@@ -1,5 +1,6 @@
 ﻿using System.Windows;
 using System.Windows.Controls;
+using X_Guide.MVVM.ViewModel;
 
 namespace X_Guide.MVVM.View.CalibrationWizardSteps
 {
@@ -25,7 +26,10 @@ namespace X_Guide.MVVM.View.CalibrationWizardSteps
 
         private void StartCalibrationBtn_Click(object sender, RoutedEventArgs e)
         {
-            DisplayNewCalibrationDialog();
+            if (!((Step6ViewModel)DataContext).IsFirstCalibResult)
+            {
+                DisplayNewCalibrationDialog();
+            }
         }
     }
 }

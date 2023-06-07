@@ -14,6 +14,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using X_Guide.MVVM.ViewModel;
 
 namespace X_Guide.MVVM.View
 {
@@ -44,6 +45,14 @@ namespace X_Guide.MVVM.View
         private void DeleteBtn_Click(object sender, RoutedEventArgs e)
         {
             DisplayRemoveUserFormDialog();
+        }
+
+        private void PasswordBox_PasswordChanged(object sender, RoutedEventArgs e)
+        {
+            if (sender != null)
+            {
+                ((UserManagementViewModel)DataContext).InputPassword = ((PasswordBox)sender).SecurePassword;
+            }
         }
     }
 }

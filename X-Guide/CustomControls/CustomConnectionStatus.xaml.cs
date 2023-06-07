@@ -47,6 +47,32 @@ namespace X_Guide.CustomControls
 
 
 
+        public bool IsVisionConnected
+        {
+            get { return (bool)GetValue(IsVisionConnectedProperty); }
+            set { SetValue(IsVisionConnectedProperty, value); }
+        }
+
+        // Using a DependencyProperty as the backing store for IsVisionConnected.  This enables animation, styling, binding, etc...
+        public static readonly DependencyProperty IsVisionConnectedProperty =
+            DependencyProperty.Register("IsVisionConnected", typeof(bool), typeof(CustomConnectionStatus), new PropertyMetadata(false,OnVisionConnectionStatusChanged));
+
+        private static void OnVisionConnectionStatusChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
+        {
+            if (!(d is CustomConnectionStatus customConnectionStatus)) return;
+
+            var i = customConnectionStatus.IsVisionConnected;
+        }
+
+        public Visibility ShowVisionStatus
+        {
+            get { return (Visibility)GetValue(ShowVisionStatusProperty); }
+            set { SetValue(ShowVisionStatusProperty, value); }
+        }
+        // Using a DependencyProperty as the backing store for ShowVisionStatus.  This enables animation, styling, binding, etc...
+        public static readonly DependencyProperty ShowVisionStatusProperty =
+            DependencyProperty.Register("ShowVisionStatus", typeof(Visibility), typeof(CustomConnectionStatus), new PropertyMetadata(Visibility.Collapsed));
+
         public Visibility IsMainWindow
         {
             get { return (Visibility)GetValue(IsMainWindowProperty); }

@@ -40,8 +40,9 @@
         </Style>
 
         <DataTemplate x:Key="ErrorPage">
-            <StackPanel Orientation="Vertical" HorizontalAlignment="Center">
-                <TextBlock Style="{DynamicResource SubheaderTextBlockStyle}" Text="Nothing is selected.&#x0a;" />
+            <StackPanel Orientation="Vertical" >
+                <xCust:CustomFormButtons ShowSaveDeleteBtn="Collapsed" AddCommand="{Binding DataContext.OpenManiFormCommand, ElementName=SettingUserControl}" AddCommandParameter="{Binding ElementName=ManipulatorDialog}"/>
+                <TextBlock Style="{DynamicResource SubheaderTextBlockStyle}" HorizontalAlignment="Center" Text="Nothing is selected.&#x0a;" />
 
                 <TextBlock Style="{DynamicResource SubtitleTextBlockStyle}" HorizontalAlignment="Center" Text="Please select from the list." />
             </StackPanel>

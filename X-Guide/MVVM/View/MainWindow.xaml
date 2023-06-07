@@ -157,26 +157,12 @@
                     <Button Click="ToggleAppThemeHandler" Background="Transparent" x:Name="toggleSwitch" Width="330" Command="{Binding ChangeThemeCommand}" HorizontalAlignment="Left" Margin="-10 0 0 0" HorizontalContentAlignment="Left">
 
                         <ui:SimpleStackPanel Orientation="Horizontal" >
-                            <ui:FontIcon FontFamily="Segoe MDL2 Assets"  Margin="10 0 0 0">
-                                <ui:FontIcon.Style>
-                                    <Style TargetType="ui:FontIcon">
-                                        <Style.Triggers>
-                                            <DataTrigger  Binding="{Binding IsBrightTheme}" Value="True">
-                                                <Setter Property="Glyph" Value="&#xE706;" />
-                                                <Setter Property="ToolTip" Value="Bright" />
-                                            </DataTrigger>
-                                            <DataTrigger  Binding="{Binding IsBrightTheme}" Value="False">
-                                                <Setter Property="Glyph" Value="&#xE708;" />
-                                                <Setter Property="ToolTip" Value="Dark" />
-                                            </DataTrigger>
-                                        </Style.Triggers>
-                                    </Style>
-                                </ui:FontIcon.Style>
-                            </ui:FontIcon>
+                            <ui:FontIcon x:Name="BrightIcon" ToolTip="Bright Theme" FontFamily="Segoe MDL2 Assets"  Margin="10 0 0 0" Glyph="&#xE706;" Visibility="Collapsed"/>
+                            <ui:FontIcon x:Name="DarkIcon" ToolTip="Dark Theme" FontFamily="Segoe MDL2 Assets"  Margin="10 0 0 0" Glyph="&#xE708;"/>
                             <TextBlock VerticalAlignment="Center" Margin="10 0" Text=" Theme"/>
                         </ui:SimpleStackPanel>
                     </Button>
-                    <xCust:CustomConnectionStatus IsConnected="{Binding IsManipulatorConnected}" HorizontalAlignment="Left" IsMainWindow="Collapsed"/>
+                    <xCust:CustomConnectionStatus IsConnected="{Binding IsManipulatorConnected}" IsVisionConnected="{Binding IsManipulatorConnected}" ShowVisionStatus="Visible" HorizontalAlignment="Left" IsMainWindow="Collapsed"/>
                     <!-- Profile Picture and Username-->
                     <ui:SimpleStackPanel Grid.Row="1" Orientation="Horizontal"  HorizontalAlignment="Left" Margin="4 10 0 10">
                         <ui:PersonPicture Width="30" DisplayName="{Binding CurrentUsername}">

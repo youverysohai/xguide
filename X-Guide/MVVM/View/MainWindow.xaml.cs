@@ -68,7 +68,10 @@ namespace X_Guide
                     Application.Current.Resources.MergedDictionaries.Add(new ResourceDictionary
                     {
                         Source = new Uri("/MaterialDesignThemes.Wpf;component/Themes/MaterialDesignTheme.Light.xaml", UriKind.Relative)
-                    });   
+                    });
+                    BrightIcon.Visibility = Visibility.Visible;
+                    DarkIcon.Visibility = Visibility.Collapsed;
+
                 }
                 else
                 {
@@ -79,6 +82,8 @@ namespace X_Guide
                     {
                         Source = new Uri("/MaterialDesignThemes.Wpf;component/Themes/MaterialDesignTheme.Dark.xaml", UriKind.Relative)
                     });
+                    BrightIcon.Visibility = Visibility.Collapsed;
+                    DarkIcon.Visibility = Visibility.Visible;
                 }
             });
         }

@@ -24,7 +24,6 @@ namespace X_Guide.MVVM.ViewModel
 
         public bool Test { get; set; } = false;
         public RelayCommand TestCommand { get; }
-        public RelayCommand ChangeThemeCommand { get; }
 
         public bool IsRunning => State.IsLoading;
         public UserViewModel User { get; set; }
@@ -137,7 +136,6 @@ namespace X_Guide.MVVM.ViewModel
             var nav = new TypedParameter(typeof(INavigationService), _navigationService);
             TestCommand = new RelayCommand(test);
 
-            ChangeThemeCommand = new RelayCommand(ToggleTheme);
 
             _serverService = serverService;
 
@@ -181,17 +179,6 @@ namespace X_Guide.MVVM.ViewModel
             MessageBox.Show("Hi, new user");
         }
 
-        private void ToggleTheme(object obj)
-        {
-            if (IsBrightTheme)
-            {
-                IsBrightTheme = false;
-            }
-            else
-            {
-                IsBrightTheme = true;
-            }
-        }
         private void OnConnectionChange(object sender, bool e)
         {
             IsManipulatorConnected = e;

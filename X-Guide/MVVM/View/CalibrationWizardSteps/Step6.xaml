@@ -13,7 +13,8 @@
              xmlns:hc="https://handyorg.github.io/handycontrol"
              xmlns:ui="http://schemas.modernwpf.com/2019"
               xmlns:Release="clr-namespace:VMControls.WPF.Release;assembly=VMControls.WPF.Release"
-               d:DesignHeight="600" d:DesignWidth="1000" d:Foreground="Wheat">
+               d:DesignHeight="600" d:DesignWidth="1000" d:Foreground="Wheat"
+             x:Name="Step6View">
     <UserControl.Resources>
         <Style TargetType="Label" x:Key="OutputLabel" BasedOn="{StaticResource MaterialDesignLabel}">
             <Setter Property="FontSize" Value="13" />
@@ -31,7 +32,11 @@
         </Style>
     </UserControl.Resources>
     <Grid Margin="20">
-        <ui:ContentDialog x:Name="NewCalibrationDialog"  IsShadowEnabled="True" CloseButtonText="Cancel" CloseButtonStyle="{DynamicResource DateTimePickerFlyoutButtonStyle}" PrimaryButtonText="Confirm" DefaultButton="Primary" Title="New Calibration Results">
+        <Grid.RowDefinitions>
+            <RowDefinition/>
+        </Grid.RowDefinitions>
+        <ui:ContentDialog Grid.Row="0"   x:Name="NewCalibrationDialog" IsShadowEnabled="True"
+                          CloseButtonText="Cancel" CloseButtonStyle="{DynamicResource DateTimePickerFlyoutButtonStyle}" PrimaryButtonText="Confirm" DefaultButton="Primary" Title="New Calibration Results">
 
             <ui:SimpleStackPanel Orientation="Vertical">
                 <TextBlock Margin="6 5">Accept Changes?</TextBlock>
@@ -52,37 +57,45 @@
                             <ColumnDefinition Width="auto" />
                             <ColumnDefinition Width="*" />
                         </Grid.ColumnDefinitions>
-                        <Label Margin="5" FontWeight="Bold" Style="{DynamicResource MaterialDesignLabel}" Grid.Row="0" HorizontalAlignment="Left">Result</Label>
-                        <Label Margin="2" FontWeight="Bold"  Style="{DynamicResource MaterialDesignLabel}" Grid.Row="0" Grid.Column="1" HorizontalAlignment="Left" VerticalAlignment="Center">Old Value</Label>
-                        <ui:FontIcon Glyph="&#xE974;" FontWeight="Bold" Foreground="White" FontSize="8" Grid.Column="2"  VerticalAlignment="Center" HorizontalAlignment="Center"></ui:FontIcon>
-                        <Label Margin="2" FontWeight="Bold"  Style="{DynamicResource MaterialDesignLabel}" Grid.Row="0" Grid.Column="3" HorizontalAlignment="Left"  VerticalAlignment="Center">New Value</Label>
+                        <Label Content="Result" Margin="2" FontWeight="Bold" Style="{DynamicResource MaterialDesignLabel}" Grid.Row="0" HorizontalAlignment="Left"/>
+                        <Label Content="Old Value" Margin="2" FontWeight="Bold"  Style="{DynamicResource MaterialDesignLabel}" Grid.Row="0" Grid.Column="1" HorizontalAlignment="Left" VerticalAlignment="Center"/>
+                        <ui:FontIcon Glyph="&#xE974;" FontWeight="Bold" Foreground="White" FontSize="8" Grid.Column="2"  VerticalAlignment="Center" HorizontalAlignment="Center"/>
+                        <Label Content="New Value" Margin="2" FontWeight="ExtraBlack"  Style="{DynamicResource MaterialDesignLabel}" Grid.Row="0" Grid.Column="3" HorizontalAlignment="Left"  VerticalAlignment="Center"/>
                         <Border Grid.Row="0" Grid.ColumnSpan="4" Background="White" Height="1" HorizontalAlignment="Stretch" VerticalAlignment="Bottom" />
 
                         <Label Style="{DynamicResource MaterialDesignLabel}" Content="Camera X Scaling" Grid.Row="1" Grid.Column="0" Margin="5" />
-                        <TextBlock Text="{Binding Calibration.Mm_per_pixel, StringFormat={}{0:F2}}" Grid.Row="1" Grid.Column="1" Margin="5" Style="{DynamicResource ReadOnlyTextBlock}" />
+                        <TextBlock Text="{Binding DataContext.Calibration.Mm_per_pixel, StringFormat={}{0:F4}, ElementName=Step6View}" Grid.Row="1" Grid.Column="1" Margin="5" Style="{DynamicResource ReadOnlyTextBlock}" />
                         <Label Content="mm/px" Grid.Row="1" Grid.Column="2" Style="{DynamicResource unitStyle}" />
+                        <TextBlock Text="{Binding DataContext.NewCalibration.Mm_per_pixel, StringFormat={}{0:F4}, ElementName=Step6View}" Grid.Row="1" Grid.Column="1" Margin="5" Style="{DynamicResource ReadOnlyTextBlock}" />
+
 
                         <Label Style="{DynamicResource MaterialDesignLabel}" Content="Camera Y Scaling" Grid.Row="2" Grid.Column="0" Margin="5" />
-                        <TextBlock Text="{Binding Calibration.Mm_per_pixel, StringFormat={}{0:F2}}" Grid.Row="2" Grid.Column="1" Margin="5" Style="{DynamicResource ReadOnlyTextBlock}" />
+                        <TextBlock Text="{Binding DataContext.Calibration.Mm_per_pixel, StringFormat={}{0:F4}, ElementName=Step6View}" Grid.Row="2" Grid.Column="1" Margin="5" Style="{DynamicResource ReadOnlyTextBlock}" />
                         <Label Content="mm/px" Grid.Row="2" Grid.Column="2"  Style="{DynamicResource unitStyle}" />
+                        <TextBlock Text="{Binding DataContext.NewCalibration.Mm_per_pixel, StringFormat={}{0:F4}, ElementName=Step6View}" Grid.Row="1" Grid.Column="1" Margin="5" Style="{DynamicResource ReadOnlyTextBlock}" />
+
 
                         <Label Style="{DynamicResource MaterialDesignLabel}" Content="X offset" Grid.Row="3" Grid.Column="0" Margin="5" />
-                        <TextBlock Text="{Binding Calibration.CXOffSet, StringFormat={}{0:F2}}" Grid.Row="3" Grid.Column="1" Margin="5" Style="{DynamicResource ReadOnlyTextBlock}" />
+                        <TextBlock Text="{Binding DataContext.Calibration.CXOffset, StringFormat={}{0:F4}, ElementName=Step6View}" Grid.Row="3" Grid.Column="1" Margin="5" Style="{DynamicResource ReadOnlyTextBlock}" />
                         <Label Content="mm" Grid.Row="3" Grid.Column="2" Style="{DynamicResource unitStyle}" />
+                        <TextBlock Text="{Binding DataContext.NewCalibration.CXOffset, StringFormat={}{0:F4}, ElementName=Step6View}" Grid.Row="3" Grid.Column="1" Margin="5" Style="{DynamicResource ReadOnlyTextBlock}" />
 
                         <Label Style="{DynamicResource MaterialDesignLabel}" Content="Y offset" Grid.Row="4" Grid.Column="0" Margin="5" />
-                        <TextBlock  Text="{Binding Calibration.CYOffset, StringFormat={}{0:F2}}"  Grid.Row="4" Grid.Column="1" Margin="5" Style="{DynamicResource ReadOnlyTextBlock}" />
+                        <TextBlock  Text="{Binding DataContext.Calibration.CYOffset, StringFormat={}{0:F4}, ElementName=Step6View}"  Grid.Row="4" Grid.Column="1" Margin="5" Style="{DynamicResource ReadOnlyTextBlock}" />
                         <Label Content="mm" Grid.Row="4" Grid.Column="2" Style="{DynamicResource unitStyle}" />
+                        <TextBlock  Text="{Binding DataContext.NewCalibration.CYOffset, StringFormat={}{0:F4}, ElementName=Step6View}"  Grid.Row="4" Grid.Column="1" Margin="5" Style="{DynamicResource ReadOnlyTextBlock}" />
 
                         <Label Style="{DynamicResource MaterialDesignLabel}" Content="RZ offset" Grid.Row="5" Grid.Column="0" Margin="5" />
-                        <TextBlock Text="{Binding Calibration.CRZOffset, StringFormat={}{0:F2}}" Grid.Row="5" Grid.Column="1" Margin="5" Style="{DynamicResource ReadOnlyTextBlock}" />
+                        <TextBlock Text="{Binding DataContext.Calibration.CRZOffset, StringFormat={}{0:F4}, ElementName=Step6View}" Grid.Row="5" Grid.Column="1" Margin="5" Style="{DynamicResource ReadOnlyTextBlock}" />
                         <Label Content="°" Grid.Row="5" Grid.Column="2" />
+                        <TextBlock Text="{Binding DataContext.NewCalibration.CRZOffset, StringFormat={}{0:F4}, ElementName=Step6View}" Grid.Row="5" Grid.Column="1" Margin="5" Style="{DynamicResource ReadOnlyTextBlock}" />
+
                     </Grid>
                 </Border>
             </ui:SimpleStackPanel>
         </ui:ContentDialog>
         <!--Live Processed Image-->
-        <hc:ScrollViewer  Grid.RowSpan="3" Grid.ColumnSpan="2">
+        <hc:ScrollViewer Grid.Row="0"  >
 
             <hc:FlexPanel JustifyContent="SpaceAround" FlexWrap="Wrap">
 
@@ -125,23 +138,23 @@
                             </Grid.ColumnDefinitions>
 
                             <Label Content="Camera X Scaling:" Grid.Row="0" Grid.Column="0" Margin="5" />
-                            <TextBlock Text="{Binding Calibration.Mm_per_pixel, StringFormat={}{0:F2}}" Grid.Row="0" Grid.Column="1" Margin="5" Style="{DynamicResource ReadOnlyTextBlock}" />
+                            <TextBlock Text="{Binding Calibration.Mm_per_pixel, StringFormat={}{0:F4}}" Grid.Row="0" Grid.Column="1" Margin="5" Style="{DynamicResource ReadOnlyTextBlock}" />
                             <Label Content="mm per pixel" Grid.Row="0" Grid.Column="2" Style="{DynamicResource unitStyle}" />
 
                             <Label Content="Camera Y Scaling:" Grid.Row="1" Grid.Column="0" Margin="5" />
-                            <TextBlock Text="{Binding Calibration.Mm_per_pixel, StringFormat={}{0:F2}}" Grid.Row="1" Grid.Column="1" Margin="5" Style="{DynamicResource ReadOnlyTextBlock}" />
+                            <TextBlock Text="{Binding Calibration.Mm_per_pixel, StringFormat={}{0:F4}}" Grid.Row="1" Grid.Column="1" Margin="5" Style="{DynamicResource ReadOnlyTextBlock}" />
                             <Label Content="mm per pixel" Grid.Row="1" Grid.Column="2"  Style="{DynamicResource unitStyle}" />
 
                             <Label Content="X offset:" Grid.Row="2" Grid.Column="0" Margin="5" />
-                            <TextBlock Text="{Binding Calibration.CXOffSet, StringFormat={}{0:F2}}" Grid.Row="2" Grid.Column="1" Margin="5" Style="{DynamicResource ReadOnlyTextBlock}" />
+                            <TextBlock Text="{Binding Calibration.CXOffSet, StringFormat={}{0:F4}}" Grid.Row="2" Grid.Column="1" Margin="5" Style="{DynamicResource ReadOnlyTextBlock}" />
                             <Label Content="mm" Grid.Row="2" Grid.Column="2" Style="{DynamicResource unitStyle}" />
 
                             <Label Content="Y offset:" Grid.Row="3" Grid.Column="0" Margin="5" />
-                            <TextBlock  Text="{Binding Calibration.CYOffset, StringFormat={}{0:F2}}"  Grid.Row="3" Grid.Column="1" Margin="5" Style="{DynamicResource ReadOnlyTextBlock}" />
+                            <TextBlock  Text="{Binding Calibration.CYOffset, StringFormat={}{0:F4}}"  Grid.Row="3" Grid.Column="1" Margin="5" Style="{DynamicResource ReadOnlyTextBlock}" />
                             <Label Content="mm" Grid.Row="3" Grid.Column="2" Style="{DynamicResource unitStyle}" />
 
                             <Label Content="RZ offset:" Grid.Row="4" Grid.Column="0" Margin="5" />
-                            <TextBlock Text="{Binding Calibration.CRZOffset, StringFormat={}{0:F2}}" Grid.Row="4" Grid.Column="1" Margin="5" Style="{DynamicResource ReadOnlyTextBlock}" />
+                            <TextBlock Text="{Binding Calibration.CRZOffset, StringFormat={}{0:F4}}" Grid.Row="4" Grid.Column="1" Margin="5" Style="{DynamicResource ReadOnlyTextBlock}" />
                             <Label Content="°" Grid.Row="4" Grid.Column="2" />
 
                             <!--<ComboBox Grid.Row="8" ItemsSource="{Binding Modules}">
@@ -154,7 +167,7 @@
                                 <Label Style="{DynamicResource MaterialDesignLabel}">Y-Offset</Label>
                                 <TextBox Text="{Binding YMove}"></TextBox>
                                 <!--<Button Grid.Row="5"  Command="{Binding OperationCommand}" >Start Operation</Button>-->
-                                <Button Grid.Row="6"   Command="{Binding CalibrateCommand}" x:Name="StartCalibrationBtn" Click="StartCalibrationBtn_Click">Start Calibration</Button>
+                                <Button Grid.Row="6"   Command="{Binding CalibrateCommand}" x:Name="StartCalibrationBtn" Click="StartCalibrationBtn_Click" >Start Calibration</Button>
                                 <Button Grid.Row="7"   Command="{Binding SaveCommand}" >Save</Button>
                             </ui:SimpleStackPanel>
                         </Grid>

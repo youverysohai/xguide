@@ -12,11 +12,11 @@
         <Button Style="{DynamicResource MaterialDesignIconButton}" Command="{Binding AddCommand, ElementName=CustFormButtons}" CommandParameter="{Binding AddCommandParameter, ElementName=CustFormButtons}" ToolTip="Create New Manipulator">
             <ui:FontIcon Style="{DynamicResource AddIcon}" ></ui:FontIcon>
         </Button>
-        <Button Command="{Binding SaveCommand, ElementName=CustFormButtons}" Style="{DynamicResource MaterialDesignIconButton}">
+        <Button Command="{Binding SaveCommand, ElementName=CustFormButtons}" Style="{DynamicResource MaterialDesignIconButton}" Visibility="{Binding ShowSaveDeleteBtn, ElementName=CustFormButtons}">
             <ui:FontIcon Style="{DynamicResource SaveIcon}" ></ui:FontIcon>
         </Button>
 
-        <Button Command="{Binding DeleteCommand, ElementName=CustFormButtons}" Style="{DynamicResource MaterialDesignIconButton}"  ToolTip="Remove Manipulator">
+        <Button Command="{Binding DeleteCommand, ElementName=CustFormButtons}" Style="{DynamicResource MaterialDesignIconButton}" Visibility="{Binding ShowSaveDeleteBtn, ElementName=CustFormButtons}"  ToolTip="Remove Manipulator">
             <ui:FontIcon Style="{DynamicResource DeleteIcon}" ></ui:FontIcon>
 
 
