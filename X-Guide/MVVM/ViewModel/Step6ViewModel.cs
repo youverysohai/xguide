@@ -1,10 +1,12 @@
 ﻿using AutoMapper;
+using CommunityToolkit.Mvvm.Messaging;
 using System;
 using System.Threading.Tasks;
 using ToastNotifications;
 using ToastNotifications.Messages;
 using X_Guide.Aspect;
 using X_Guide.Communication.Service;
+using X_Guide.MessageToken;
 using X_Guide.MVVM.Command;
 using X_Guide.MVVM.Model;
 using X_Guide.MVVM.ViewModel.CalibrationWizardSteps;
@@ -15,7 +17,7 @@ using X_Guide.VisionMaster;
 namespace X_Guide.MVVM.ViewModel
 {
     //TODO: Add tooltip to inform what X and Y Offset is
-    internal class Step6ViewModel : ViewModelBase, ICalibrationStep
+    internal class Step6ViewModel : ViewModelBase
     {
         public double XMove { get; set; }
         public double YMove { get; set; }
@@ -24,7 +26,7 @@ namespace X_Guide.MVVM.ViewModel
 
         public IVisionViewModel VisionView { get; set; }
 
-        private readonly IEventAggregator _eventAggregator;
+        private readonly IMessenger _messenger;
         private readonly IServerService _serverService;
         private readonly ICalibrationDb _calibDb;
         private readonly ICalibrationService _calibService;
@@ -46,9 +48,8 @@ namespace X_Guide.MVVM.ViewModel
         public RelayCommand SaveCommand { get; set; }
         public RelayCommand CalibrateCommand { get; set; }
 
-        public Step6ViewModel(IServerService serverService, CalibrationViewModel calibrationConfig, ICalibrationDb calibDb, ICalibrationService calibService, IMapper mapper, Notifier notifier, IVisionService visionService, IVisionViewModel visionView, IEventAggregator eventAggregator)
+        public Step6ViewModel(IServerService serverService, CalibrationViewModel calibrationConfig, ICalibrationDb calibDb, ICalibrationService calibService, IMapper mapper, Notifier notifier, IVisionService visionService, IVisionViewModel visionView, IMessenger messenger)
         {
-            _eventAggregator = eventAggregator;
             _serverService = serverService;
             Calibration = calibrationConfig;
             _calibDb = calibDb;
@@ -57,8 +58,8 @@ namespace X_Guide.MVVM.ViewModel
             _notifier = notifier;
             _visionService = visionService;
             VisionView = visionView;
+            _messenger = messenger;
             VisionView.SetConfig(calibrationConfig);
-            _eventAggregator.Subscribe<bool>(OnConnectionChange);
 
             CalibrateCommand = RelayCommand.FromAsyncRelayCommand(Calibrate);
             SaveCommand = RelayCommand.FromAsyncRelayCommand(Save);
@@ -100,7 +101,7 @@ namespace X_Guide.MVVM.ViewModel
 
         public override void Dispose()
         {
-            _eventAggregator.Unsubscribe<bool>(OnConnectionChange);
+            _messenger.Unregister<ConnectionStatusChanged>(this);
             base.Dispose();
         }
 

@@ -1,4 +1,4 @@
-﻿using System;
+﻿using CommunityToolkit.Mvvm.Messaging;
 using System.Collections.Generic;
 using System.Threading;
 using System.Threading.Tasks;
@@ -9,19 +9,23 @@ using X_Guide.Aspect;
 /*using VM.Core;*/
 
 using X_Guide.Communication.Service;
+using X_Guide.MessageToken;
 using X_Guide.MVVM.Command;
 using X_Guide.MVVM.ViewModel.CalibrationWizardSteps;
 using X_Guide.Service;
 
 using X_Guide.Service.Communication;
+using X_Guide.State;
 using X_Guide.VisionMaster;
 
 namespace X_Guide.MVVM.ViewModel
 {
-    internal class Step5ViewModel : ViewModelBase, ICalibrationStep
+    internal class Step5ViewModel : ViewModelBase, IRecipient<ConnectionStatusChanged>
     {
         private readonly CalibrationViewModel _calibrationConfig;
-        private readonly IEventAggregator _eventAggregator;
+
+        public object AppState { get; }
+
         private readonly IJogService _jogService;
         private readonly IServerService _serverService;
         private readonly IVisionService _visionService;
@@ -45,7 +49,7 @@ namespace X_Guide.MVVM.ViewModel
         public CalibrationViewModel Calibration => _calibrationConfig;
         public string JogMode { get; set; } = "TOOL";
 
-        private bool _canJog = true;
+        private bool _canJog = false;
         private IVisionViewModel visionView;
 
         public bool CanJog
@@ -54,8 +58,10 @@ namespace X_Guide.MVVM.ViewModel
             private set
             {
                 _canJog = value;
+
                 if (value) _jogService.Start();
                 else _jogService.Stop();
+                JogCommand.OnCanExecuteChanged();
                 OnPropertyChanged();
             }
         }
@@ -66,17 +72,18 @@ namespace X_Guide.MVVM.ViewModel
 
         public int JogDistance { get; set; }
 
-        public Step5ViewModel(CalibrationViewModel calibrationConfig, IServerService serverService, IVisionService visionService, IJogService jogService, IVisionViewModel visionView, IEventAggregator eventAggregator)
+        public Step5ViewModel(CalibrationViewModel calibrationConfig, IServerService serverService, IVisionService visionService, IJogService jogService, IVisionViewModel visionView, StateViewModel appState, IMessenger messenger)
         {
             _serverService = serverService;
             _visionService = visionService;
             _calibrationConfig = calibrationConfig;
-            _eventAggregator = eventAggregator;
+            AppState = appState;
             _jogService = jogService;
             VisionView = visionView;
             VisionView.SetConfig(_calibrationConfig);
             JogCommand = new RelayCommand(Jog, (o) => _canJog);
-            _eventAggregator.Subscribe<bool>(OnConnectionChange);
+
+            messenger.Register(this);
             VisionView.StartLiveImage();
         }
 
@@ -101,11 +108,6 @@ namespace X_Guide.MVVM.ViewModel
                 InitView();
                 return await Task.FromResult(true);
             }
-        }
-
-        private void OnConnectionChange(bool canJog)
-        {
-            CanJog = canJog;
         }
 
         [ExceptionHandlingAspect]
@@ -138,16 +140,12 @@ namespace X_Guide.MVVM.ViewModel
 
         public override void Dispose()
         {
-            _eventAggregator.Unsubscribe<bool>(OnConnectionChange);
             base.Dispose();
         }
 
-        public void Register(Action action)
+        public void Receive(ConnectionStatusChanged message)
         {
-        }
-
-        public void RegisterStateChange(Action<bool> action)
-        {
+            CanJog = message.Value;
         }
     }
 }

@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
+using VisionGuided;
 using VM.Core;
 using VMControls.Interface;
 

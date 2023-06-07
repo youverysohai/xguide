@@ -1,37 +1,40 @@
-﻿using System.Threading.Tasks;
+﻿using CommunityToolkit.Mvvm.Messaging;
+using System.Threading.Tasks;
 using VM.Core;
-using VMControls.Interface;
 using X_Guide.Service.Communication;
 using X_Guide.VisionMaster;
-using static X_Guide.Service.Communication.HikOperationService;
 
 namespace X_Guide.MVVM.ViewModel
 {
-    internal class OperationViewModel : ViewModelBase
+    internal class OperationViewModel : ViewModelBase, IRecipient<VmProcedure>
     {
-        private readonly IEventAggregator _eventAggregator;
+        private readonly IMessenger _messenger;
         private readonly IServerCommand _serverCommand;
         private readonly IVisionService _visionService;
         public HikViewModel VisionView { get; set; }
+        private VmProcedure procedure = null;
 
-        public OperationViewModel(IServerCommand serverCommand, IVisionService visionService, IVisionViewModel viewModel, IEventAggregator eventAggregator)
+        public OperationViewModel(IServerCommand serverCommand, IVisionService visionService, IVisionViewModel viewModel, IMessenger messenger)
         {
-            _eventAggregator = eventAggregator;
+            _messenger = messenger;
             _serverCommand = serverCommand;
             _visionService = visionService;
             VisionView = viewModel as HikViewModel;
-            _eventAggregator.Subscribe<Procedure>(DisplayOutputImage);
-        }
-
-        private void DisplayOutputImage(Procedure e)
-        {
-            VisionView.Module = e.procedure;
+            messenger.Register<VmProcedure>(this);
         }
 
         public override void Dispose()
         {
-            _eventAggregator.Unsubscribe<Procedure>(DisplayOutputImage);
+            _messenger.Unregister<VmProcedure>(this);
             base.Dispose();
+        }
+
+        public async void Receive(VmProcedure message)
+        {
+            if (procedure == message) return;
+            procedure = message;
+            await Task.Delay(1000);
+            VisionView.Module = message;
         }
     }
 }

@@ -1,4 +1,5 @@
-﻿using System;
+﻿using CommunityToolkit.Mvvm.Messaging;
+using System;
 using System.Collections.Concurrent;
 using System.Diagnostics;
 using System.Linq;
@@ -6,21 +7,18 @@ using System.Net;
 using System.Net.Sockets;
 using System.Threading;
 using System.Threading.Tasks;
-using System.Windows.Threading;
 using X_Guide.CustomEventArgs;
-using X_Guide.Service;
+using X_Guide.MessageToken;
 using X_Guide.Service.Communication;
 
 namespace X_Guide.Communication.Service
 {
     public class ServerService : TCPBase, IServerService
     {
-        private readonly IEventAggregator _eventAggregator;
-
         private int _port { get; }
         private IPAddress _ip { get; }
 
-        private readonly BackgroundService searchClient;
+        private readonly IMessenger _messenger;
         private TcpListener _server;
         private readonly bool _canExecute = false;
 
@@ -32,36 +30,26 @@ namespace X_Guide.Communication.Service
 
         private readonly ConcurrentDictionary<int, TcpClientInfo> _connectedClient = new ConcurrentDictionary<int, TcpClientInfo>();
 
-        private readonly bool _connected = false;
+        private bool _isAnyClientConnected;
+
+        protected bool IsAnyClientConnected
+        {
+            get { return _isAnyClientConnected; }
+            set
+            {
+                _isAnyClientConnected = value;
+                _messenger.Send(new ConnectionStatusChanged(value));
+            }
+        }
 
         private CancellationTokenSource cts;
 
-        public ServerService(IPAddress ip, int port, string terminator, IEventAggregator eventAggregator) : base(terminator)
+        public ServerService(IPAddress ip, int port, string terminator, IMessenger messenger) : base(terminator)
         {
-            _eventAggregator = eventAggregator;
             _port = port;
             _ip = ip;
-            searchClient = new BackgroundService(SearchForClient, true);
-            searchClient.Start();
+            _messenger = messenger;
             _ = Start();
-        }
-
-        private void SetValid(bool valid)
-        {
-            Dispatcher.CurrentDispatcher.Invoke(() => _eventAggregator.Publish(valid));
-        }
-
-        private void SearchForClient()
-        {
-            Debug.WriteLine($"Connected Client = {_connectedClient.Count}");
-            if (_connectedClient.Count == 0)
-            {
-                SetValid(false);
-            }
-            else
-            {
-                SetValid(true);
-            }
         }
 
         public bool Status()
@@ -92,13 +80,14 @@ namespace X_Guide.Communication.Service
                     Debug.WriteLine("Client connected.");
 
                     _connectedClient.TryAdd(client.GetHashCode(), new TcpClientInfo(client));
-
+                    IsAnyClientConnected = true;
                     // Handle the client connection in a separate task.
 #pragma warning disable CS4014 // This warning has to be suppressed to disallow the await keyword from blocking the task
                     Task.Run(async () =>
                     {
                         await RecieveDataAsync(client.GetStream(), cts.Token);
                         _connectedClient.TryRemove(client.GetHashCode(), out _);
+                        if (_connectedClient.Count == 0) { IsAnyClientConnected = false; }
                     });
 #pragma warning restore CS4014
                 }

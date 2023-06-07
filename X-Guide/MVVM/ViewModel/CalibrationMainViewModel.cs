@@ -1,9 +1,11 @@
 ﻿using Autofac;
 using AutoMapper;
+using CommunityToolkit.Mvvm.Messaging;
 using HandyControl.Data;
 using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
+using X_Guide.MessageToken;
 using X_Guide.MVVM.Command;
 using X_Guide.MVVM.Store;
 using X_Guide.MVVM.ViewModel.CalibrationWizardSteps;
@@ -13,13 +15,25 @@ using MessageBox = HandyControl.Controls.MessageBox;
 
 namespace X_Guide.MVVM.ViewModel
 {
-    public class CalibrationMainViewModel : ViewModelBase
+    public class CalibrationMainViewModel : ViewModelBase, IRecipient<CalibrationStateChanged>
     {
         public CalibrationViewModel Calibration { get; set; }
 
+        private readonly IMessenger _messenger;
+
         public List<string> StepBarContent { get; set; }
 
-        public bool CanExecuteNext { get; set; }
+        private bool _canExecuteNext;
+
+        public bool CanExecuteNext
+        {
+            get { return _canExecuteNext; }
+            set
+            {
+                _canExecuteNext = value;
+                WizNextCommand?.OnCanExecuteChanged();
+            }
+        }
 
         private bool _canExecutePrev = true;
 
@@ -75,7 +89,7 @@ namespace X_Guide.MVVM.ViewModel
 
         public LinkedListNode<ViewModelBase> CurrentNode { get; set; }
 
-        public CalibrationMainViewModel(CalibrationViewModel calibration, INavigationService navigationService, IViewModelLocator viewModelLocator, IManipulatorDb manipulatorDb, IMapper mapper)
+        public CalibrationMainViewModel(CalibrationViewModel calibration, INavigationService navigationService, IViewModelLocator viewModelLocator, IManipulatorDb manipulatorDb, IMapper mapper, IMessenger messenger)
         {
             StepBarContent = new List<string>(new string[] { "Manipulator", "Orientation" + Environment.NewLine + "& Mounting", "Vision Flow", "Motion", "Jog", "Calibration", });
             _navigationService = navigationService;
@@ -86,14 +100,13 @@ namespace X_Guide.MVVM.ViewModel
             WizPrevCommand = new RelayCommand(WizPrev, (o) => CanExecutePrev);
             CancelCommand = new RelayCommand(CancelCalib);
             Calibration = calibration;
+            _messenger = messenger;
+            messenger.Register(this);
             //calibration.Manipulator = mapper.Map<ManipulatorViewModel>(manipulatorDb.Get(1));
 
             TypedParameter calibrationConfig = new TypedParameter(typeof(CalibrationViewModel), Calibration);
-            ICalibrationStep step1 = viewModelLocator.Create<Step1ViewModel>(calibrationConfig) as Step1ViewModel;
-            step1.Register(OnCriticalDataChanged);
-            step1.RegisterStateChange(OnStateChanged);
 
-            _navigationService.Navigate(step1 as ViewModelBase);
+            _navigationService.Navigate<Step1ViewModel>(calibrationConfig);
             CurrentNode = _navigationHistory.AddLast(CurrentViewModel);
         }
 
@@ -112,6 +125,12 @@ namespace X_Guide.MVVM.ViewModel
                 NavigationHistory.Remove(disposeNode);
                 disposeNode = _navigationHistory.Last;
             }
+        }
+
+        public override void Dispose()
+        {
+            _messenger.Unregister<CalibrationStateChanged>(this);
+            base.Dispose();
         }
 
         public void LoadCalibSetting(TypedParameter calib)
@@ -190,20 +209,17 @@ namespace X_Guide.MVVM.ViewModel
         {
             var calibPara = new TypedParameter(typeof(CalibrationViewModel), Calibration);
             ViewModelBase viewModel = null;
-          
-                switch (currentStep)
-                {
-                    case 0: viewModel = _navigationService.Navigate<Step1ViewModel>(calibPara); break;
-                    case 1: viewModel = _navigationService.Navigate<Step2ViewModel>(calibPara); break;
-                    case 2: viewModel = await _navigationService.NavigateAsync<Step3HikViewModel>(calibPara); break;
-                    case 3: viewModel = _navigationService.Navigate<Step4ViewModel>(calibPara); break;
-                    case 4: viewModel = await _navigationService.NavigateAsync<Step5ViewModel>(calibPara); break;
-                    case 5: viewModel = _navigationService.Navigate<Step6ViewModel>(calibPara); break;
-                    default: throw new Exception("Page does not exist!");
-                }
-           
-            (viewModel as ICalibrationStep).Register(OnCriticalDataChanged);
-            (viewModel as ICalibrationStep).RegisterStateChange(OnStateChanged);
+
+            switch (currentStep)
+            {
+                case 0: viewModel = _navigationService.Navigate<Step1ViewModel>(calibPara); break;
+                case 1: viewModel = _navigationService.Navigate<Step2ViewModel>(calibPara); break;
+                case 2: viewModel = await _navigationService.NavigateAsync<Step3HikViewModel>(calibPara); break;
+                case 3: viewModel = _navigationService.Navigate<Step4ViewModel>(calibPara); break;
+                case 4: viewModel = await _navigationService.NavigateAsync<Step5ViewModel>(calibPara); break;
+                case 5: viewModel = _navigationService.Navigate<Step6ViewModel>(calibPara); break;
+                default: throw new Exception("Page does not exist!");
+            }
         }
 
         private void CancelCalib(object obj)
@@ -211,14 +227,20 @@ namespace X_Guide.MVVM.ViewModel
             _navigationService.Navigate<CalibrationWizardStartViewModel>();
         }
 
-        private void OnCanExecuteChange(object sender, bool e)
-        {
-            CanExecuteNext = e;
-        }
-
         private void OnCurrentViewModelChanged()
         {
             OnPropertyChanged(nameof(CurrentViewModel));
+        }
+
+        void IRecipient<CalibrationStateChanged>.Receive(CalibrationStateChanged message)
+        {
+            switch (message.Value)
+            {
+                case PageState.Enable: CanExecuteNext = true; break;
+                case PageState.Disable: CanExecuteNext = false; break;
+                case PageState.Reset: OnCriticalDataChanged(); break;
+                default: return;
+            }
         }
     }
 }

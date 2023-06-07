@@ -25,9 +25,7 @@ namespace X_Guide.MVVM.ViewModel
         public RelayCommand TestCommand { get; }
         public RelayCommand ChangeThemeCommand { get; }
 
-        private readonly IEventAggregator _eventAggregator;
-
-        public bool IsRunning => State.IsLoading;
+        public bool IsRunning => AppState.IsLoading;
 
         private bool _isLoggedIn = false;
 
@@ -75,17 +73,9 @@ namespace X_Guide.MVVM.ViewModel
             }
         }
 
-        private bool _isManipulatorConnected;
-
-        public bool IsManipulatorConnected
-        {
-            get { return _isManipulatorConnected; }
-            set { _isManipulatorConnected = value; OnPropertyChanged(); }
-        }
-
         private readonly IServerService _serverService;
         private readonly AuthenticationService _auth;
-        public ViewModelState State { get; set; }
+        public StateViewModel AppState { get; set; }
         private readonly INavigationService _navigationService;
         private readonly NavigationStore _navigationStore;
 
@@ -94,22 +84,18 @@ namespace X_Guide.MVVM.ViewModel
 
         #endregion CLR properties
 
-        public MainViewModel(INavigationService navigationService, IUserDb userService, ILogger logger, ViewModelState state, IEventAggregator eventAggregator)
+        public MainViewModel(INavigationService navigationService, IUserDb userService, ILogger logger, StateViewModel state)
         {
             _auth = new AuthenticationService(userService);
             //_auth.CurrentUserChanged += OnCurrentUserChanged;
-            State = state;
-            State.OnStateChanged = OnLoadingStateChanged;
+            AppState = state;
+            AppState.OnStateChanged = OnLoadingStateChanged;
             _navigationService = navigationService;
             _navigationStore = navigationService.GetNavigationStore();
             _navigationStore.CurrentViewModelChanged += OnCurrentViewModelChanged;
 
             var nav = new TypedParameter(typeof(INavigationService), _navigationService);
             TestCommand = new RelayCommand(test);
-
-            _eventAggregator = eventAggregator;
-
-            eventAggregator.Subscribe<bool>(OnConnectionChange);
 
             ChangeThemeCommand = new RelayCommand(ToggleTheme);
 
@@ -130,11 +116,6 @@ namespace X_Guide.MVVM.ViewModel
             {
                 IsBrightTheme = true;
             }
-        }
-
-        private void OnConnectionChange(bool e)
-        {
-            IsManipulatorConnected = e;
         }
 
         private void OnLoadingStateChanged()
@@ -206,7 +187,6 @@ namespace X_Guide.MVVM.ViewModel
 
         public override void Dispose()
         {
-            _eventAggregator.Unsubscribe<bool>(OnConnectionChange);
             base.Dispose();
         }
     }

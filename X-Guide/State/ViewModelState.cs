@@ -1,29 +1,34 @@
-﻿using System;
+﻿using CommunityToolkit.Mvvm.Messaging;
+using System;
+using X_Guide.MessageToken;
 using X_Guide.MVVM.ViewModel;
 
 namespace X_Guide.State
 {
-    public class ViewModelState : ViewModelBase
+    public class StateViewModel : ViewModelBase, IRecipient<ConnectionStatusChanged>, IRecipient<LoadingState>
     {
-        public ViewModelState(IEventAggregator eventAggregator)
+        public StateViewModel(IMessenger messenger)
         {
-            _eventAggregator = eventAggregator;
-            _eventAggregator.Subscribe<bool>(OnConnected);
+            messenger.RegisterAll(this);
         }
 
-        public void OnConnected(bool connected)
+        void IRecipient<ConnectionStatusChanged>.Receive(ConnectionStatusChanged message)
         {
-            isManipulatorConnected = connected;
+            IsAnyClientConnected = message.Value;
         }
 
-        public bool isManipulatorConnected = false;
+        void IRecipient<LoadingState>.Receive(LoadingState message)
+        {
+            throw new NotImplementedException();
+        }
+
+        public bool IsAnyClientConnected { get; set; } = false;
 
         public Action OnStateChanged;
 
         public bool IsCalibValid { get; set; } = true;
 
         private bool _isLoading;
-        private readonly IEventAggregator _eventAggregator;
 
         public bool IsLoading
         {

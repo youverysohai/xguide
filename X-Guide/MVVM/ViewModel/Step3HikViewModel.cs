@@ -1,4 +1,5 @@
-﻿using System;
+﻿using CommunityToolkit.Mvvm.Messaging;
+using System;
 using System.Collections.ObjectModel;
 using System.Threading.Tasks;
 using System.Windows.Threading;
@@ -11,13 +12,15 @@ using X_Guide.VisionMaster;
 
 namespace X_Guide.MVVM.ViewModel
 {
-    internal class Step3HikViewModel : ViewModelBase, ICalibrationStep
+    internal class Step3HikViewModel : ViewModelBase
     {
         private readonly IVisionService _visionService;
+        private readonly IMessenger _messenger;
         private readonly CalibrationViewModel _calibration;
 
-        public Step3HikViewModel(CalibrationViewModel calibration, IVisionService visionService, ViewModelState viewModelState, Notifier notifier)
+        public Step3HikViewModel(CalibrationViewModel calibration, IVisionService visionService, StateViewModel viewModelState, Notifier notifier, IMessenger messenger)
         {
+            _messenger = messenger;
             _calibration = calibration;
             _visionService = visionService;
         }

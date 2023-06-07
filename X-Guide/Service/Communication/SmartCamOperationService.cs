@@ -1,10 +1,10 @@
 ﻿using System;
 using System.Threading.Tasks;
+using VisionGuided;
 using X_Guide.Communication.Service;
 using X_Guide.MVVM.Model;
 using X_Guide.Service.DatabaseProvider;
 using X_Guide.VisionMaster;
-using Xlent_Vision_Guided;
 
 namespace X_Guide.Service.Communication
 {
@@ -29,7 +29,7 @@ namespace X_Guide.Service.Communication
                 VisCenter = await _visionService.GetVisCenter();
                 if (VisCenter is null) throw new Exception(StrRetriver.Get("VI000"));
                 if (VisCenter.X == 0.0 && VisCenter.Y == 0.0 && VisCenter.Angle == 0.0) throw new Exception(StrRetriver.Get("VI000"));
-                OperationData = VisionGuided.EyeInHandConfig2D_Operate(VisCenter, new double[] { calib.CXOffset, calib.CYOffset, calib.CRZOffset, calib.CameraXScaling });
+                OperationData = VisionProcessor.EyeInHandConfig2D_Operate(VisCenter, new double[] { calib.CXOffset, calib.CYOffset, calib.CRZOffset, calib.CameraXScaling });
                 string Mode = calib.Mode ? "GLOBAL" : "TOOL";
                 await _serverService.ServerWriteDataAsync($"XGUIDE,{Mode},{OperationData[0]},{OperationData[1]},{OperationData[2]}");
             }

@@ -6,6 +6,7 @@ using System.IO;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
+using VisionGuided;
 using VM.Core;
 using VMControls.Interface;
 using X_Guide.Communication.Service;
@@ -85,6 +86,11 @@ namespace X_Guide.VisionMaster
         public VmModule GetCameras()
         {
             return VmSolution.Instance["Basler1"] as VmModule;
+        }
+
+        public void StopProcedure()
+        {
+            VmSolution.Instance.ContinuousRunEnable = false;
         }
 
         /// <inheritdoc/>

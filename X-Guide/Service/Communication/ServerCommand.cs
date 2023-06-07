@@ -9,13 +9,12 @@ namespace X_Guide.Service.Communation
     public class ServerCommand : IServerCommand, IDisposable
     {
         public Queue<string> commandQeueue = new Queue<string>();
-        private readonly IEventAggregator _eventAggregator;
+
         private readonly IServerService _serverService;
         private readonly IOperationService _operationService;
 
-        public ServerCommand(IServerService serverService, IOperationService operationService, IEventAggregator eventAggregator)
+        public ServerCommand(IServerService serverService, IOperationService operationService)
         {
-            _eventAggregator = eventAggregator;
             _serverService = serverService;
             _operationService = operationService;
             _serverService._dataReceived += ValidateSyntax;
@@ -35,7 +34,7 @@ namespace X_Guide.Service.Communation
         public async void Operation(string[] parameter)
         {
             object operationData = await _operationService.Operation(parameter);
-           }
+        }
 
         public void Dispose()
         {

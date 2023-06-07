@@ -16,7 +16,7 @@
              xmlns:ui="http://schemas.modernwpf.com/2019"
              FontSize="16"
              xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
-            
+
              d:DesignHeight="600" d:DesignWidth="1300">
     <UserControl.Resources>
 
@@ -59,32 +59,31 @@
                 <!-- Title -->
                 <!-- JogButtons and Rotations-->
 
-
                 <Grid>
                     <Grid.RowDefinitions>
-                        <RowDefinition Height="auto"/>
-                        <RowDefinition Height="*"/>
-                        <RowDefinition Height="1.8*"/>
+                        <RowDefinition Height="auto" />
+                        <RowDefinition Height="*" />
+                        <RowDefinition Height="1.8*" />
                     </Grid.RowDefinitions>
                     <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width="*"/>
-                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="*" />
+                        <ColumnDefinition Width="*" />
                     </Grid.ColumnDefinitions>
                     <!--<hc:RunningBlock Grid.ColumnSpan="2" Foreground="{DynamicResource ErrorColor}" FontWeight="Bold" Content="Manipulator is not Connected"
                                     Visibility="{Binding CanJog, Converter={StaticResource BooleanToVisibilityConverter}, ConverterParameter=Collapsed}"
                                      IsRunning="{Binding IsMouseOver,RelativeSource={RelativeSource Self},Converter={StaticResource Boolean2BooleanReConverter}}" />-->
-                    <XCust:CustomConnectionStatus Grid.Row="0" Grid.ColumnSpan="2" IsConnected="{Binding CanJog}"/>
+                    <XCust:CustomConnectionStatus Grid.Row="0" Grid.ColumnSpan="2" IsConnected="{Binding AppState.IsAnyClientConnected}" />
                     <Canvas Grid.Row="1" Grid.Column="2"  HorizontalAlignment="Center">
                         <Canvas.RenderTransform>
                             <TransformGroup>
                                 <RotateTransform Angle="45"></RotateTransform>
-                                <TranslateTransform X="-5" Y="-132"/>
+                                <TranslateTransform X="-5" Y="-132" />
                             </TransformGroup>
                         </Canvas.RenderTransform>
                         <RadialMenu:RadialMenu IsOpen="True">
                             <!-- CentralMenuItem -->
                             <!--<RadialMenu:RadialMenu.CentralItem>
-                                <RadialMenu:RadialMenuCentralItem Command="{Binding CloseRadialMenuCommand}" Style="{DynamicResource FancyRadialMenuCentralItem}" Margin="0,118,0,118" VerticalAlignment="Stretch" >
+                                <RadialMenu:RadialMenuCentralItem Command="{Binding CloseRadialMenuCommand}" Style="{DynamicResource FancyRadialMenuCentralItem}" Margin="0,118,0,118" VerticalAlignment="Stretch">
                                     <TextBlock>
                                         <TextBlock.LayoutTransform>
                                             <RotateTransform Angle="-45"></RotateTransform>
@@ -100,20 +99,20 @@
                                         <RotateTransform Angle="-45"></RotateTransform>
                                     </TextBlock.LayoutTransform>
                                     <TextBlock.RenderTransform>
-                                        <TranslateTransform X="-8" Y="-2"/>
+                                        <TranslateTransform X="-8" Y="-2" />
                                     </TextBlock.RenderTransform>
                                     X+</TextBlock>
                             </RadialMenu:RadialMenuItem>
 
                             <RadialMenu:RadialMenuItem Command="{Binding JogCommand}" CommandParameter="Y-"  Style="{DynamicResource FancyRadialMenuItem}">
-                                <TextBlock >
+                                <TextBlock>
                                     <TextBlock.LayoutTransform>
                                         <TransformGroup>
                                             <RotateTransform Angle="-45"></RotateTransform>
                                         </TransformGroup>
                                     </TextBlock.LayoutTransform>
                                     <TextBlock.RenderTransform>
-                                        <TranslateTransform X="-6" Y="-6"/>
+                                        <TranslateTransform X="-6" Y="-6" />
                                     </TextBlock.RenderTransform>
                                     Y-</TextBlock>
                             </RadialMenu:RadialMenuItem>
@@ -124,7 +123,7 @@
                                         <RotateTransform Angle="-45"></RotateTransform>
                                     </TextBlock.LayoutTransform>
                                     <TextBlock.RenderTransform>
-                                        <TranslateTransform X="-2" Y="-8"/>
+                                        <TranslateTransform X="-2" Y="-8" />
                                     </TextBlock.RenderTransform>
                                     X-</TextBlock>
                             </RadialMenu:RadialMenuItem>
@@ -136,20 +135,17 @@
                                     </TextBlock.LayoutTransform>Y+</TextBlock>
                             </RadialMenu:RadialMenuItem>
 
-
                             <!-- Add items as you want... -->
-
                         </RadialMenu:RadialMenu>
                     </Canvas>
                     <Canvas Grid.Row="2" Grid.Column="2"  HorizontalAlignment="Center">
                         <Canvas.RenderTransform>
                             <TransformGroup>
                                 <RotateTransform Angle="45"></RotateTransform>
-                                <TranslateTransform X="-5" Y="-132"/>
+                                <TranslateTransform X="-5" Y="-132" />
                             </TransformGroup>
                         </Canvas.RenderTransform>
                         <RadialMenu:RadialMenu IsOpen="True">
-                           
 
                             <!-- MenuItems Around -->
 
@@ -159,20 +155,20 @@
                                         <RotateTransform Angle="-45"></RotateTransform>
                                     </TextBlock.LayoutTransform>
                                     <TextBlock.RenderTransform>
-                                        <TranslateTransform X="-5" Y="-9"/>
+                                        <TranslateTransform X="-5" Y="-9" />
                                     </TextBlock.RenderTransform>
-                                    </TextBlock>
+                                </TextBlock>
                             </RadialMenu:RadialMenuItem>
 
                             <RadialMenu:RadialMenuItem Command="{Binding JogCommand}" CommandParameter="Z-"  Style="{DynamicResource FancyRadialMenuItem}">
-                                <TextBlock >
+                                <TextBlock>
                                     <TextBlock.LayoutTransform>
                                         <TransformGroup>
                                             <RotateTransform Angle="-45"></RotateTransform>
                                         </TransformGroup>
                                     </TextBlock.LayoutTransform>
                                     <TextBlock.RenderTransform>
-                                        <TranslateTransform X="-6" Y="-6"/>
+                                        <TranslateTransform X="-6" Y="-6" />
                                     </TextBlock.RenderTransform>
                                     Z-</TextBlock>
                             </RadialMenu:RadialMenuItem>
@@ -183,7 +179,7 @@
                                         <RotateTransform Angle="-45"></RotateTransform>
                                     </TextBlock.LayoutTransform>
                                     <TextBlock.RenderTransform>
-                                        <TranslateTransform X="0" Y="-10"/>
+                                        <TranslateTransform X="0" Y="-10" />
                                     </TextBlock.RenderTransform>
                                     RZ-</TextBlock>
                             </RadialMenu:RadialMenuItem>
@@ -195,17 +191,15 @@
                                     </TextBlock.LayoutTransform>Z+</TextBlock>
                             </RadialMenu:RadialMenuItem>
 
-
                             <!-- Add items as you want... -->
-
                         </RadialMenu:RadialMenu>
                     </Canvas>
 
                     <Canvas Grid.Row="2" Grid.Column="0"  HorizontalAlignment="Center">
                         <Canvas.RenderTransform>
                             <TransformGroup>
-                                
-                                <TranslateTransform X="-155" Y="-70"/>
+
+                                <TranslateTransform X="-155" Y="-70" />
                             </TransformGroup>
                         </Canvas.RenderTransform>
                         <RadialMenu:RadialMenu IsOpen="{Binding Calibration.Manipulator.Type, Converter={StaticResource TypeToBooleanConverter}}">
@@ -214,28 +208,26 @@
                             <!-- MenuItems Around -->
 
                             <RadialMenu:RadialMenuItem Command="{Binding JogCommand}" CommandParameter="RX+" Style="{DynamicResource FancyRadialMenuItem}" ContentRadius="49">
-                                <TextBlock>RX+</TextBlock>                            
+                                <TextBlock>RX+</TextBlock>
                             </RadialMenu:RadialMenuItem>
 
                             <RadialMenu:RadialMenuItem Command="{Binding JogCommand}" CommandParameter="RY-" Style="{DynamicResource FancyRadialMenuItem}" ContentRadius="49">
-                                <TextBlock>RY-</TextBlock>                            
+                                <TextBlock>RY-</TextBlock>
                             </RadialMenu:RadialMenuItem>
 
                             <RadialMenu:RadialMenuItem Command="{Binding JogCommand}" CommandParameter="RY+" Style="{DynamicResource FancyRadialMenuItem}" ContentRadius="49">
-                                <TextBlock>RY+</TextBlock>                            
+                                <TextBlock>RY+</TextBlock>
                             </RadialMenu:RadialMenuItem>
 
                             <RadialMenu:RadialMenuItem Command="{Binding JogCommand}" CommandParameter="RX-" Style="{DynamicResource FancyRadialMenuItem}" ContentRadius="49">
                                 <TextBlock>RX-</TextBlock>
                             </RadialMenu:RadialMenuItem>
 
-
                             <!-- Add items as you want... -->
-
                         </RadialMenu:RadialMenu>
                     </Canvas>
 
-                    <ui:SimpleStackPanel  Orientation="Vertical" Grid.Row="1" Margin="5 0" >
+                    <ui:SimpleStackPanel  Orientation="Vertical" Grid.Row="1" Margin="5 0">
                         <ui:NumberBox
                               Header="Jog Distance (mm)"
                               SpinButtonPlacementMode="Inline"
@@ -245,8 +237,6 @@
                         </ui:NumberBox>
                         <ui:ToggleSwitch Header="Mode (Tool/Global)" OnContent="Global" IsOn="{Binding Calibration.Mode}" OffContent="Tool"></ui:ToggleSwitch>
                     </ui:SimpleStackPanel>
-
-                      
                 </Grid>
             </GroupBox>
         </hc:FlexPanel>

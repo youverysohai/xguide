@@ -272,6 +272,9 @@
       <Private>False</Private>
     </Reference>
     <Reference Include="System.Design" />
+    <Reference Include="VisionGuided">
+      <HintPath>..\..\VisionGuided\VisionGuided\bin\Debug\net6.0\VisionGuided.dll</HintPath>
+    </Reference>
     <Reference Include="VM.Core, Version=1.0.0.0, Culture=neutral, PublicKeyToken=61600122bc9264b9, processorArchitecture=MSIL">
       <Private>False</Private>
     </Reference>
@@ -588,6 +591,8 @@
     <Compile Include="Converter\TypeToBooleanConverter.cs" />
     <Compile Include="Converter\TypeToDescriptionConverter.cs" />
     <Compile Include="CriticalErrorException.cs" />
+    <Compile Include="MessageToken\CalibrationStateChanged.cs" />
+    <Compile Include="MessageToken\ConnectionStatusChanged.cs" />
     <Compile Include="CustomControls\CustomConnectionStatus.xaml.cs">
       <DependentUpon>CustomConnectionStatus.xaml</DependentUpon>
     </Compile>
@@ -647,7 +652,6 @@
     <Compile Include="Enums\UserRole.cs" />
     <Compile Include="Enums\ValueDescription.cs" />
     <Compile Include="Enums\VisionSoftware.cs" />
-    <Compile Include="EventAggregator.cs" />
     <Compile Include="Extension\TaskExtensions.cs" />
     <Compile Include="FileLogger.cs" />
     <Compile Include="FileLoggerExtensions.cs" />
@@ -657,7 +661,6 @@
     <Compile Include="HelperClass\Timer.cs">
       <SubType>Component</SubType>
     </Compile>
-    <Compile Include="IEventAggregator.cs" />
     <Compile Include="Logging\ILoggable.cs" />
     <Compile Include="Manipulator.cs">
       <DependentUpon>XGuideModel.tt</DependentUpon>
@@ -666,6 +669,7 @@
     <Compile Include="MappingConfiguration\GeneralProfile.cs" />
     <Compile Include="MappingConfiguration\ManipulatorProfile.cs" />
     <Compile Include="MappingConfiguration\VisionProfile.cs" />
+    <Compile Include="MessageToken\MessageBoxRequest.cs" />
     <Compile Include="MVVM\Command\AsyncRelayCommand.cs" />
     <Compile Include="MVVM\Command\BrowseFileDialogCommand.cs" />
     <Compile Include="MVVM\Command\RelayCommand.cs" />
@@ -676,11 +680,9 @@
     <Compile Include="MVVM\Model\CalibrationModel.cs" />
     <Compile Include="MVVM\Model\HalconModel.cs" />
     <Compile Include="MVVM\Model\ManipulatorModel.cs" />
-    <Compile Include="MVVM\Model\Point.cs" />
     <Compile Include="MVVM\Model\SmartCamModel.cs" />
     <Compile Include="MVVM\Model\UserModel.cs" />
     <Compile Include="Enums\PageName.cs" />
-    <Compile Include="MVVM\Model\VisionGuided.cs" />
     <Compile Include="MVVM\Model\HikVisionModel.cs" />
     <Compile Include="MVVM\ViewModel\CalibrationWizardStartViewModel.cs" />
     <Compile Include="MVVM\ViewModel\CalibrationMainViewModel.cs" />
@@ -688,7 +690,6 @@
     <Compile Include="MVVM\ViewModel\GeneralViewModel.cs" />
     <Compile Include="MVVM\ViewModel\HalconViewModel.cs" />
     <Compile Include="MVVM\ViewModel\HikViewModel.cs" />
-    <Compile Include="MVVM\ViewModel\ICalibrationStep.cs" />
     <Compile Include="MVVM\ViewModel\ICalibrationStep3.cs" />
     <Compile Include="MVVM\ViewModel\IViewModelLocator.cs" />
     <Compile Include="MVVM\ViewModel\IVisionViewModel.cs" />
@@ -771,6 +772,7 @@
     <Compile Include="Service\Communication\HikOperationService.cs" />
     <Compile Include="Service\Communication\IClientService.cs" />
     <Compile Include="Service\Communication\IOperationService.cs" />
+    <Compile Include="Service\Communication\IRecipient.cs" />
     <Compile Include="Service\Communication\IServerCommand.cs" />
     <Compile Include="Service\Communication\IServerService.cs" />
     <Compile Include="Service\Communication\JogCommand.cs" />
@@ -795,10 +797,10 @@
     <Compile Include="Service\IDisposeService.cs" />
     <Compile Include="Service\IJogService.cs" />
     <Compile Include="Service\ImageService.cs" />
-    <Compile Include="Service\IMessageService.cs" />
+    <Compile Include="Service\IMessageBoxService.cs" />
     <Compile Include="Service\INavigationService.cs" />
     <Compile Include="Service\JogService.cs" />
-    <Compile Include="Service\MessageService.cs" />
+    <Compile Include="Service\MessageBoxService.cs" />
     <Compile Include="Service\NavigationService.cs" />
     <Compile Include="Service\Communication\ServerService.cs" />
     <Compile Include="Service\DatabaseProvider\UserDb.cs" />
@@ -807,6 +809,7 @@
       <DependentUpon>XGuideModel.tt</DependentUpon>
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Compile>
+    <Compile Include="State\LoadingState.cs" />
     <Compile Include="State\ViewModelState.cs" />
     <Compile Include="StopwatchHelper.cs" />
     <Compile Include="StringRetriever.cs" />
@@ -1084,6 +1087,9 @@
     </PackageReference>
     <PackageReference Include="AutoMapper.EF6">
       <Version>2.1.1</Version>
+    </PackageReference>
+    <PackageReference Include="CommunityToolkit.Mvvm">
+      <Version>8.2.0</Version>
     </PackageReference>
     <PackageReference Include="EntityFramework">
       <Version>6.4.4</Version>

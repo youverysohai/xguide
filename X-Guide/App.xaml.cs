@@ -1,5 +1,6 @@
 ﻿using Autofac;
 using AutoMapper;
+using CommunityToolkit.Mvvm.Messaging;
 using Microsoft.Extensions.Logging;
 using Serilog;
 using Serilog.Core;
@@ -43,7 +44,7 @@ namespace X_Guide
         {
             ContainerBuilder builder = new ContainerBuilder();
 
-            builder.RegisterType<EventAggregator>().As<IEventAggregator>().SingleInstance();
+            builder.RegisterType<WeakReferenceMessenger>().As<IMessenger>().SingleInstance();
             builder.RegisterType<DisposeService>().As<IDisposeService>().SingleInstance();
             builder.Register(c => new ViewModelLocator(_diContainer)).As<IViewModelLocator>().SingleInstance();
 
@@ -89,14 +90,15 @@ namespace X_Guide
             builder.RegisterType<Step4ViewModel>();
             builder.RegisterType<Step5ViewModel>();
             builder.RegisterType<Step6ViewModel>();
+
             builder.RegisterType<SettingViewModel>();
             builder.RegisterType<CalibrationMainViewModel>();
             builder.RegisterType<JogRobotViewModel>();
             builder.RegisterType<LiveCameraViewModel>();
-            builder.RegisterType<ViewModelState>().SingleInstance();
+            builder.RegisterType<StateViewModel>().SingleInstance();
             builder.RegisterType<DbContextFactory>().SingleInstance();
             builder.RegisterType<ManipulatorDb>().As<IManipulatorDb>();
-            builder.RegisterType<MessageService>().As<IMessageService>().SingleInstance();
+            builder.RegisterType<MessageBoxService>().As<IMessageBoxService>().SingleInstance();
             builder.RegisterType<UserDb>().As<IUserDb>();
             builder.RegisterInstance(logger).As<ILogger>();
             builder.RegisterType<JsonDb>().As<IJsonDb>();
@@ -141,7 +143,7 @@ namespace X_Guide
             builder.Register(c =>
             {
                 var db = c.Resolve<IJsonDb>().Get<GeneralModel>();
-                return new ServerService(IPAddress.Parse(db.Ip), db.Port, db.Terminator, c.Resolve<IEventAggregator>());
+                return new ServerService(IPAddress.Parse(db.Ip), db.Port, db.Terminator, c.Resolve<IMessenger>());
             }).As<IServerService>().SingleInstance();
 
             return builder.Build();
@@ -185,7 +187,7 @@ namespace X_Guide
             MainWindow = _diContainer.Resolve<MainWindow>();
 
             base.OnStartup(e);
-            ViewModelState viewModelState = _diContainer.Resolve<ViewModelState>();
+            StateViewModel viewModelState = _diContainer.Resolve<StateViewModel>();
 
             try
             {
@@ -206,8 +208,7 @@ namespace X_Guide
 
         private void Application_Exit(object sender, ExitEventArgs e)
         {
-            IDisposeService disposeService = _diContainer.Resolve<IDisposeService>();
-            disposeService.Dispose();
+            _diContainer.Resolve<IDisposeService>().Dispose();
         }
     }
 }

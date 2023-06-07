@@ -1,6 +1,7 @@
 ﻿using HalconDotNet;
 using System.Windows;
 using System.Windows.Controls;
+using Point = VisionGuided.Point;
 
 namespace X_Guide.CustomControls
 {

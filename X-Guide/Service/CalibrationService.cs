@@ -1,8 +1,8 @@
 ﻿using System.Threading.Tasks;
+using VisionGuided;
 using X_Guide.MVVM.Model;
 using X_Guide.Service.Communication;
 using X_Guide.VisionMaster;
-using Xlent_Vision_Guided;
 
 namespace X_Guide.Service
 {
@@ -21,7 +21,8 @@ namespace X_Guide.Service
         public async Task<CalibrationData> EyeInHand2D_Calibrate(int XOffset, int YOffset, double XMove, double YMove)
         {
             (Point[] VisionPoint, Point[] RobotPoint) = await Start9PointCalib(XOffset, YOffset);
-            var calibData = VisionGuided.EyeInHandConfig2D_Calib(VisionPoint, RobotPoint, XMove, YMove, true);
+
+            var calibData = VisionProcessor.EyeInHandConfig2D_Calib(VisionPoint, RobotPoint, XMove, YMove, true);
             return new CalibrationData
             {
                 X = calibData[0],
@@ -54,7 +55,7 @@ namespace X_Guide.Service
             Point Vis_Rotate = await _visionService.GetVisCenter();
 
             await _jogService.SendJogCommand(_jogCommand.SetRZ(-rotateAngle));
-            double[] XYMove = VisionGuided.FindEyeInHandXYMoves(Vis_Center, Vis_Positive, Vis_Rotate, jogDistance, rotateAngle);
+            double[] XYMove = VisionProcessor.FindEyeInHandXYMoves(Vis_Center, Vis_Positive, Vis_Rotate, jogDistance, rotateAngle);
 
             return (XYMove[0], XYMove[1]);
         }

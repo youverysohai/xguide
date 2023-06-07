@@ -1,8 +1,10 @@
-﻿using HalconDotNet;
+﻿using CommunityToolkit.Mvvm.Messaging;
+using HalconDotNet;
 using HandyControl.Controls;
 using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
+using VisionGuided;
 using VM.Core;
 using VMControls.Interface;
 using X_Guide.Service;
@@ -18,17 +20,17 @@ namespace X_Guide.VisionMaster
 
         public event EventHandler<HObject> OnImageReturn;
 
-        private readonly IEventAggregator _eventAggregator;
+        private readonly IMessenger _messenger;
         private readonly BackgroundService _imageGrab;
 
         public event EventHandler<(HObject, object)> OnOutputImageReturn;
 
         private readonly HObject _outputImage;
 
-        public HalconVisionService(IEventAggregator eventAggregator, IDisposeService disposeService)
+        public HalconVisionService(IMessenger messenger, IDisposeService disposeService)
         {
             disposeService.Add(this);
-            _eventAggregator = eventAggregator;
+            _messenger = messenger;
             _imageGrab = new BackgroundService(ImageGrab, true, 10);
         }
 
@@ -66,7 +68,7 @@ namespace X_Guide.VisionMaster
             try
             {
                 HOperatorSet.GrabImageAsync(out hImage, hv_AcqHandle, -1);
-                _eventAggregator.Publish(hImage);
+                _messenger.Send(hImage);
             }
             catch
             {

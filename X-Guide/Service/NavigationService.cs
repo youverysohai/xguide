@@ -18,9 +18,9 @@ namespace X_Guide.Service
     {
         private NavigationStore _navigationStore;
         private readonly IViewModelLocator _viewModelLocator;
-        private readonly ViewModelState _viewModelState;
+        private readonly StateViewModel _viewModelState;
 
-        public NavigationService(NavigationStore navigationStore, IViewModelLocator viewModelLocator, ViewModelState viewModelState)
+        public NavigationService(NavigationStore navigationStore, IViewModelLocator viewModelLocator, StateViewModel viewModelState)
         {
             _navigationStore = navigationStore;
             _viewModelLocator = viewModelLocator;

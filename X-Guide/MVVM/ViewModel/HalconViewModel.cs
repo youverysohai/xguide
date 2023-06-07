@@ -1,38 +1,36 @@
-﻿using HalconDotNet;
+﻿using CommunityToolkit.Mvvm.Messaging;
+using HalconDotNet;
 using System;
+using VisionGuided;
 using X_Guide.MVVM.Command;
 using X_Guide.MVVM.ViewModel.CalibrationWizardSteps;
 using X_Guide.VisionMaster;
 
 namespace X_Guide.MVVM.ViewModel
 {
-    internal class HalconViewModel : ViewModelBase, IVisionViewModel
+    internal class HalconViewModel : ViewModelBase, IVisionViewModel, IRecipient<HObject>
     {
         public HObject Image { get; set; }
 
-        private readonly IEventAggregator _eventAggregator;
         private readonly HalconVisionService _visionService;
+        private readonly IMessenger _messenger;
+
         public HObject OutputImage { get; set; }
         public Point OutputImageParameter { get; set; }
         public HObject LiveImage { get; set; }
 
         public RelayCommand LiveImageCommand { get; set; }
 
-        public HalconViewModel(IVisionService visionService, IEventAggregator eventAggregator)
+        public HalconViewModel(IVisionService visionService, IMessenger messenger)
         {
-            _eventAggregator = eventAggregator;
-            _eventAggregator.Subscribe<HObject>(OnImageReturn);
+            _messenger = messenger;
+            _messenger.Register<HObject>(this);
             _visionService = (HalconVisionService)visionService;
-        }
-
-        private void OnImageReturn(HObject image)
-        {
-            Image = image;
         }
 
         public override void Dispose()
         {
-            _eventAggregator.Unsubscribe<HObject>(OnImageReturn);
+            _messenger.Unregister<HObject>(this);
             base.Dispose();
         }
 
@@ -54,6 +52,11 @@ namespace X_Guide.MVVM.ViewModel
         public void ShowOutputImage()
         {
             throw new NotImplementedException();
+        }
+
+        public void Receive(HObject message)
+        {
+            Image = message;
         }
     }
 }

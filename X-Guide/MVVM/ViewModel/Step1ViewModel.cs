@@ -1,24 +1,21 @@
 ﻿using AutoMapper;
-using System;
+using CommunityToolkit.Mvvm.Messaging;
 using System.Collections.ObjectModel;
 using System.Linq;
 using System.Windows;
 using X_Guide.Communication.Service;
+using X_Guide.MessageToken;
 using X_Guide.MVVM.ViewModel.CalibrationWizardSteps;
 using X_Guide.Service;
 using X_Guide.Service.DatabaseProvider;
 
 namespace X_Guide.MVVM.ViewModel
 {
-    internal class Step1ViewModel : ViewModelBase, ICalibrationStep
+    internal class Step1ViewModel : ViewModelBase
     {
         #region properties
 
         private readonly CalibrationViewModel _calibration;
-
-        private event Action OnManipulatorChanged;
-
-        private event Action<bool> OnStateChanged;
 
         public ManipulatorViewModel Manipulator
         {
@@ -26,10 +23,10 @@ namespace X_Guide.MVVM.ViewModel
             {
                 OnPropertyChanged(nameof(Manipulator.Id));
                 if (_calibration.Manipulator != null)
-                    OnStateChanged?.Invoke(true);
-                else OnStateChanged?.Invoke(false);
+                    _messenger?.Send(new CalibrationStateChanged(PageState.Enable));
+                else _messenger?.Send(new CalibrationStateChanged(PageState.Disable));
                 return _calibration.Manipulator;
-            } //null
+            }
             set
             {
                 if (_calibration.Manipulator == value) return;
@@ -38,17 +35,18 @@ namespace X_Guide.MVVM.ViewModel
                 {
                     _calibration.Manipulator = value;
                 }
-                else if (_messageService.ShowWarningMessage(StrRetriver.Get("WA000")).Equals(MessageBoxResult.Yes))
+                else if (_messenger.Send(new MessageBoxRequest(StrRetriver.Get("VI001"), BoxState.Warning)).Equals(MessageBoxResult.Yes))
                 {
                     _calibration.Manipulator = value;
+                    _messenger.Send(new CalibrationStateChanged(PageState.Reset));
                     _calibration.ResetProperties();
-                    OnManipulatorChanged?.Invoke();
                 }
                 OnPropertyChanged();
             }
         }
 
         private ObservableCollection<ManipulatorViewModel> _manipulators;
+        private readonly IMessenger _messenger;
 
         public ObservableCollection<ManipulatorViewModel> Manipulators
         {
@@ -62,18 +60,16 @@ namespace X_Guide.MVVM.ViewModel
 
         public IManipulatorDb _manipulatorDb { get; }
 
-        private readonly IMessageService _messageService;
-
         private IMapper _mapper { get; }
         public IServerService _serverService { get; }
 
         #endregion properties
 
-        public Step1ViewModel(IManipulatorDb manipulatorDb, IMapper mapper, IMessageService messageService, CalibrationViewModel calibration, IDisposeService disposeService)
+        public Step1ViewModel(IManipulatorDb manipulatorDb, IMapper mapper, CalibrationViewModel calibration, IDisposeService disposeService, IMessenger messenger)
         {
+            _messenger = messenger;
             disposeService.Add(this);
             _manipulatorDb = manipulatorDb;
-            _messageService = messageService;
             _mapper = mapper;
             _calibration = calibration;
             GetManipulators();
@@ -85,22 +81,6 @@ namespace X_Guide.MVVM.ViewModel
             var viewModels = models.Select(x => _mapper.Map<ManipulatorViewModel>(x));
             Manipulators = new ObservableCollection<ManipulatorViewModel>(viewModels);
             OnPropertyChanged(nameof(Manipulator));
-        }
-
-        public void Register(Action action)
-        {
-            OnManipulatorChanged = action;
-        }
-
-        public void RegisterStateChange(Action<bool> action)
-        {
-            OnStateChanged = action;
-        }
-
-        public override void Dispose()
-        {
-            MessageBox.Show("MAMA I GOT CALLED :D");
-            base.Dispose();
         }
     }
 }
