@@ -53,7 +53,7 @@
                 <Label Style="{DynamicResource MaterialDesignLabel}">Username</Label>
                 <hc:TextBox Text="{Binding InputUsername}"></hc:TextBox>
                 <Label Style="{DynamicResource MaterialDesignLabel}">Password</Label>
-                <PasswordBox PasswordChanged="PasswordBox_PasswordChanged" ui:PasswordBoxHelper.PasswordRevealMode="Peek"/>
+                <PasswordBox PasswordChanged="PasswordBox_PasswordChanged" ui:PasswordBoxHelper.PasswordRevealMode="Peek" />
                 <Label Style="{DynamicResource MaterialDesignLabel}">Email</Label>
                 <hc:TextBox Text="{Binding InputEmail}"></hc:TextBox>
             </ui:SimpleStackPanel>
@@ -65,7 +65,7 @@
                 <Label Style="{DynamicResource MaterialDesignLabel}">Username</Label>
                 <hc:TextBox Text="{Binding InputUsername}"></hc:TextBox>
                 <Label Style="{DynamicResource MaterialDesignLabel}">Password</Label>
-                <PasswordBox PasswordChanged="PasswordBox_PasswordChanged" ui:PasswordBoxHelper.PasswordRevealMode="Peek"/>
+                <PasswordBox PasswordChanged="PasswordBox_PasswordChanged" ui:PasswordBoxHelper.PasswordRevealMode="Peek" />
             </ui:SimpleStackPanel>
         </ui:ContentDialog>
         <!--Loading Cycle-->
@@ -161,14 +161,13 @@
                 <ui:SimpleStackPanel>
                     <Button Click="ToggleAppThemeHandler" Background="Transparent" x:Name="toggleSwitch" Width="330" HorizontalAlignment="Left" Margin="-10 0 0 0" HorizontalContentAlignment="Left">
 
-
-                        <ui:SimpleStackPanel Orientation="Horizontal" >
-                            <ui:FontIcon x:Name="BrightIcon" ToolTip="Bright Theme" FontFamily="Segoe MDL2 Assets"  Margin="10 0 0 0" Glyph="&#xE706;" Visibility="Collapsed"/>
-                            <ui:FontIcon x:Name="DarkIcon" ToolTip="Dark Theme" FontFamily="Segoe MDL2 Assets"  Margin="10 0 0 0" Glyph="&#xE708;"/>
-                            <TextBlock VerticalAlignment="Center" Margin="10 0" Text=" Theme"/>
+                        <ui:SimpleStackPanel Orientation="Horizontal">
+                            <ui:FontIcon x:Name="BrightIcon" ToolTip="Bright Theme" FontFamily="Segoe MDL2 Assets"  Margin="10 0 0 0" Glyph="&#xE706;" Visibility="Collapsed" />
+                            <ui:FontIcon x:Name="DarkIcon" ToolTip="Dark Theme" FontFamily="Segoe MDL2 Assets"  Margin="10 0 0 0" Glyph="&#xE708;" />
+                            <TextBlock VerticalAlignment="Center" Margin="10 0" Text=" Theme" />
                         </ui:SimpleStackPanel>
-                    </Button>     
-                    <xCust:CustomConnectionStatus HorizontalAlignment="Left" ShowTitle="Collapsed" IsConnected="{Binding AppState.IsAnyClientConnected}"  IsVisionConnected="{Binding AppState.IsAnyClientConnected}" ShowVisionStatus="Visible" HorizontalAlignment="Left" />
+                    </Button>
+                    <xCust:CustomConnectionStatus HorizontalAlignment="Left" ShowTitle="Collapsed" IsConnected="{Binding AppState.IsAnyClientConnected}"  IsVisionConnected="{Binding AppState.IsAnyClientConnected}" ShowVisionStatus="Visible" />
 
                     <!-- Profile Picture and Username-->
                     <ui:SimpleStackPanel Grid.Row="1" Orientation="Horizontal"  HorizontalAlignment="Left" Margin="4 10 0 10">
@@ -176,12 +175,10 @@
                         </ui:PersonPicture>
                         <TextBlock x:Name="TextBoxUsername"  Text="{Binding CurrentUsername}" Margin="5 0 0 0" VerticalAlignment="Center"  FontSize="16" />
                         <TextBlock x:Name="TextBoxUserRole"  Text="{Binding CurrentUserRole}" Margin="5 0 0 0" VerticalAlignment="Center"  FontSize="16" />
-                    
                     </ui:SimpleStackPanel>
-                    <Button x:Name="SignUpButton" Content="Sign Up" Click="SignUpButton_Click"/>
+                    <Button x:Name="SignUpButton" Content="Sign Up" Click="SignUpButton_Click" />
                     <Button x:Name="LoginButton" Content="Login" Click="LoginButton_Click" />
-                    <Button x:Name="LogoutButton" Content="Logout" Command="{Binding LogoutCommand}"/>
-                    
+                    <Button x:Name="LogoutButton" Content="Logout" Command="{Binding LogoutCommand}" />
                 </ui:SimpleStackPanel>
             </ui:NavigationView.PaneFooter>
 

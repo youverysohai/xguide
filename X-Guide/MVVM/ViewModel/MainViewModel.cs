@@ -1,6 +1,5 @@
 ﻿using Autofac;
 using Microsoft.Extensions.Logging;
-using ModernWpf.Controls;
 using System;
 using System.Diagnostics;
 using System.Security;
@@ -25,11 +24,9 @@ namespace X_Guide.MVVM.ViewModel
         public bool Test { get; set; } = false;
         public RelayCommand TestCommand { get; }
 
-
         public UserViewModel User { get; set; }
 
         public bool IsRunning => AppState.IsLoading;
-
 
         private bool _isLoggedIn = false;
 
@@ -69,6 +66,7 @@ namespace X_Guide.MVVM.ViewModel
                 _inputUsername = value;
             }
         }
+
         private string _inputEmail;
 
         public string InputEmail
@@ -76,7 +74,6 @@ namespace X_Guide.MVVM.ViewModel
             get { return _inputEmail; }
             set { _inputEmail = value; }
         }
-
 
         private SecureString _inputPassword;
 
@@ -88,7 +85,6 @@ namespace X_Guide.MVVM.ViewModel
                 _inputPassword = value;
             }
         }
-
 
         private string _currentUsername;
 
@@ -105,7 +101,6 @@ namespace X_Guide.MVVM.ViewModel
             get { return _currentUserRole; }
             set { _currentUserRole = value; OnPropertyChanged(); }
         }
-
 
         private bool _isManipulatorConnected;
 
@@ -131,8 +126,6 @@ namespace X_Guide.MVVM.ViewModel
             _auth = new AuthenticationService(userService);
 
             _auth.CurrentUserChanged += OnCurrentUserChanged;
-            State = state;
-            State.OnStateChanged = OnLoadingStateChanged;
 
             //_auth.CurrentUserChanged += OnCurrentUserChanged;
             AppState = state;
@@ -145,7 +138,6 @@ namespace X_Guide.MVVM.ViewModel
             var nav = new TypedParameter(typeof(INavigationService), _navigationService);
             TestCommand = new RelayCommand(test);
 
-
             _navigationService.Navigate<SettingViewModel>();
 
             CurrentUserCommand = new RelayCommand(OnUserChangeEvent);
@@ -154,8 +146,6 @@ namespace X_Guide.MVVM.ViewModel
             RegisterCommand = new RelayCommand(Register);
             NavigateCommand = new RelayCommand(Navigate);
         }
-
-
 
         private void OnUserChangeEvent(object obj)
         {
@@ -171,7 +161,6 @@ namespace X_Guide.MVVM.ViewModel
             }
         }
 
-
         private void Logout(object obj)
         {
             CurrentUsername = "";
@@ -181,16 +170,13 @@ namespace X_Guide.MVVM.ViewModel
 
         private void OnCurrentUserChanged()
         {
-
             MessageBox.Show("Hi, new user");
         }
 
         private void OnConnectionChange(object sender, bool e)
         {
             IsManipulatorConnected = e;
-
         }
-
 
         private void OnLoadingStateChanged()
         {
@@ -225,8 +211,7 @@ namespace X_Guide.MVVM.ViewModel
 
         private async void Register(object obj)
         {
-
-                bool success = await _auth.Register(new UserModel
+            bool success = await _auth.Register(new UserModel
             {
                 Username = InputUsername,
                 Email = InputEmail,

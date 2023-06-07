@@ -272,8 +272,9 @@
       <Private>False</Private>
     </Reference>
     <Reference Include="System.Design" />
-    <Reference Include="VisionGuided">
-      <HintPath>..\..\VisionGuided\VisionGuided\bin\Debug\net6.0\VisionGuided.dll</HintPath>
+    <Reference Include="VisionGuided, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>src\VisionGuided.dll</HintPath>
     </Reference>
     <Reference Include="VM.Core, Version=1.0.0.0, Culture=neutral, PublicKeyToken=61600122bc9264b9, processorArchitecture=MSIL">
       <Private>False</Private>
