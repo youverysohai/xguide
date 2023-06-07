@@ -13,14 +13,14 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 
-namespace X_Guide.MVVM.View
+namespace X_Guide.CustomControls
 {
     /// <summary>
-    /// Interaction logic for UserLoginView.xaml
+    /// Interaction logic for CustomPasswordBox.xaml
     /// </summary>
-    public partial class UserLoginView : UserControl
+    public partial class CustomPasswordBox : UserControl
     {
-        public UserLoginView()
+        public CustomPasswordBox()
         {
             InitializeComponent();
         }

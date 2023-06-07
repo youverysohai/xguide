@@ -1,5 +1,8 @@
 ﻿using AutoMapper;
+using ModernWpf.Controls;
+
 using CommunityToolkit.Mvvm.Messaging;
+
 using System;
 using System.Threading.Tasks;
 using ToastNotifications;
@@ -23,6 +26,7 @@ namespace X_Guide.MVVM.ViewModel
         public double YMove { get; set; }
 
         public CalibrationViewModel Calibration { get; set; }
+        public CalibrationViewModel NewCalibration { get; set; }
 
         public IVisionViewModel VisionView { get; set; }
 
@@ -44,9 +48,17 @@ namespace X_Guide.MVVM.ViewModel
                 OnPropertyChanged();
             }
         }
+        private bool _isFirstCalibResult;
+
+        public bool IsFirstCalibResult
+        {
+            get { return _isFirstCalibResult; }
+            set { _isFirstCalibResult = value; OnPropertyChanged(); }
+        }
 
         public RelayCommand SaveCommand { get; set; }
         public RelayCommand CalibrateCommand { get; set; }
+        public RelayCommand ConfirmCalibDataCommand { get; set; }
 
         public Step6ViewModel(IServerService serverService, CalibrationViewModel calibrationConfig, ICalibrationDb calibDb, ICalibrationService calibService, IMapper mapper, Notifier notifier, IVisionService visionService, IVisionViewModel visionView, IMessenger messenger)
         {
@@ -63,7 +75,20 @@ namespace X_Guide.MVVM.ViewModel
 
             CalibrateCommand = RelayCommand.FromAsyncRelayCommand(Calibrate);
             SaveCommand = RelayCommand.FromAsyncRelayCommand(Save);
+            ConfirmCalibDataCommand = new RelayCommand(ConfirmCalibData);
             VisionView.ShowOutputImage();
+        }
+
+
+        private void ConfirmCalibData(object obj)
+        {
+            if (NewCalibration != null)
+            {
+                Calibration.CXOffSet = NewCalibration.CXOffSet;
+                Calibration.CYOffset = NewCalibration.CYOffset;
+                Calibration.CRZOffset = NewCalibration.CRZOffset;
+                Calibration.Mm_per_pixel = NewCalibration.Mm_per_pixel;
+            }
         }
 
         private void OnConnectionChange(bool canCalibrate)
@@ -78,11 +103,24 @@ namespace X_Guide.MVVM.ViewModel
             int XOffset = (int)Calibration.XOffset;
             int YOffset = (int)Calibration.YOffset;
             CalibrationData calibrationData = await _calibService.EyeInHand2D_Calibrate(XOffset, YOffset, (int)Calibration.JointRotationAngle);
-            Calibration.CXOffSet = calibrationData.X;
-            Calibration.CYOffset = calibrationData.Y;
-            Calibration.CRZOffset = calibrationData.Rz;
-            Calibration.Mm_per_pixel = calibrationData.mm_per_pixel;
+            if (Calibration.Mm_per_pixel != 0.0)
+            {
+                NewCalibration.CXOffSet = calibrationData.X;
+                NewCalibration.CYOffset = calibrationData.Y;
+                NewCalibration.CRZOffset = calibrationData.Rz;
+                NewCalibration.Mm_per_pixel = calibrationData.mm_per_pixel;
+                _isFirstCalibResult = false;
+            }
+            else
+            {
+                Calibration.CXOffSet = calibrationData.X;
+                Calibration.CYOffset = calibrationData.Y;
+                Calibration.CRZOffset = calibrationData.Rz;
+                Calibration.Mm_per_pixel = calibrationData.mm_per_pixel;
+                _isFirstCalibResult = true;
+            }
         }
+
 
         [ExceptionHandlingAspect]
         private async Task Save(object param)

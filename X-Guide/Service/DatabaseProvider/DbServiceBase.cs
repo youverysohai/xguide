@@ -12,7 +12,7 @@ namespace X_Guide.Service.DatabaseProvider
     internal class DbServiceBase
     {
         private readonly DbContextFactory _dbContextFactory;
-        private readonly IMapper _mapper;
+        protected readonly IMapper _mapper;
 
         public DbServiceBase(DbContextFactory dbContextFactory, IMapper mapper)
         {

@@ -1,0 +1,113 @@
+﻿<UserControl x:Class="X_Guide.MVVM.View.UserLoginView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:X_Guide.MVVM.View"
+             xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
+             mc:Ignorable="d" 
+             Background="Transparent"
+             d:Foreground="White"
+             xmlns:ui="http://schemas.modernwpf.com/2019"
+             xmlns:c="clr-namespace:X_Guide.Converter"
+             xmlns:xCust="clr-namespace:X_Guide.CustomControls"
+             x:Name="UserManagementView"
+             d:DesignHeight="450" d:DesignWidth="800">
+    <UserControl.Resources>
+        <c:StringFormatConverter x:Key="StringFormatConverter"/>
+        <c:EnumToStringConverter x:Key="EnumToStringConverter"/>
+    </UserControl.Resources>
+
+    <Grid>
+        <ui:ContentDialog x:Name="EditUserDialog" PrimaryButtonCommand="{Binding SaveUserCommand}" DefaultButton="Primary" PrimaryButtonText="Save" SecondaryButtonText="Cancel">
+            <ui:SimpleStackPanel Orientation="Vertical">
+                <TextBlock Style="{DynamicResource TitleTextBlockStyle}" Text="Edit User"/>
+                <Label Style="{DynamicResource MaterialDesignLabel}" Content="Username"/>
+                <TextBox Text="{Binding DataContext.User.Username, ElementName=UserManagementView}"></TextBox>
+                <!--<Label Style="{DynamicResource MaterialDesignLabel}">Password</Label>
+                <PasswordBox PasswordChanged="PasswordBox_PasswordChanged" ui:PasswordBoxHelper.PasswordRevealMode="Peek"/>-->
+                <Label Style="{DynamicResource MaterialDesignLabel}" Content="Email"/>
+                <TextBox Text="{Binding DataContext.User.Email, ElementName=UserManagementView}"></TextBox>
+                <Label Style="{DynamicResource MaterialDesignLabel}" Content="Role"/>
+                <ComboBox ItemsSource="{Binding DataContext.UserRoles, ElementName=UserManagementView}" SelectedIndex="{Binding DataContext.User.Role, ElementName=UserManagementView}"></ComboBox>
+            </ui:SimpleStackPanel>
+        </ui:ContentDialog>
+        <ui:ContentDialog x:Name="RemoveUserDialog" PrimaryButtonCommand="{Binding RemoveUserCommand}" DefaultButton="Primary" PrimaryButtonText="Remove" SecondaryButtonText="Cancel">
+             
+            <ui:SimpleStackPanel Orientation="Vertical">
+                <TextBlock Style="{DynamicResource TitleTextBlockStyle}" Text="Remove User?"/>
+                <Label Style="{DynamicResource MaterialDesignLabel}" Content="Username"/>
+                <TextBlock Text="{Binding DataContext.User.Username, ElementName=UserManagementView}" Style="{DynamicResource ReadOnlyTextBlock}"/>
+                <!--<Label Style="{DynamicResource MaterialDesignLabel}">Password</Label>
+                <PasswordBox PasswordChanged="PasswordBox_PasswordChanged" ui:PasswordBoxHelper.PasswordRevealMode="Peek"/>-->
+                <Label Style="{DynamicResource MaterialDesignLabel}" Content="Email"/>
+                <TextBlock Text="{Binding DataContext.User.Email, ElementName=UserManagementView}" Style="{DynamicResource ReadOnlyTextBlock}"/>
+                <Label Style="{DynamicResource MaterialDesignLabel}" Content="Role"/>
+                <TextBlock Text="{Binding DataContext.User.Role, ElementName=UserManagementView,Converter={StaticResource EnumToStringConverter}}" Style="{DynamicResource ReadOnlyTextBlock}"/>
+            </ui:SimpleStackPanel>
+        </ui:ContentDialog>
+        <ui:ContentDialog x:Name="AddUserDialog" PrimaryButtonCommand="{Binding AddUserCommand}" DefaultButton="Primary" PrimaryButtonText="Add" SecondaryButtonText="Cancel">
+            <ui:SimpleStackPanel Orientation="Vertical">
+                <TextBlock Style="{DynamicResource TitleTextBlockStyle}" Text="Add New User?"/>
+                <Label Style="{DynamicResource MaterialDesignLabel}" Content="Username"/>
+                <TextBox Text="{Binding DataContext.User.Username, ElementName=UserManagementView}"></TextBox>
+                <Label Style="{DynamicResource MaterialDesignLabel}">Password</Label>
+                <PasswordBox PasswordChanged="PasswordBox_PasswordChanged" ui:PasswordBoxHelper.PasswordRevealMode="Peek"/>
+                <Label Style="{DynamicResource MaterialDesignLabel}" Content="Email"/>
+                <TextBox Text="{Binding DataContext.User.Email, ElementName=UserManagementView}"></TextBox>
+                <Label Style="{DynamicResource MaterialDesignLabel}" Content="Role"/>
+                <ComboBox ItemsSource="{Binding DataContext.UserRoles, ElementName=UserManagementView}" SelectedIndex="{Binding DataContext.User.Role, ElementName=UserManagementView}"></ComboBox>
+            </ui:SimpleStackPanel>
+        </ui:ContentDialog>
+        <ui:SimpleStackPanel Orientation="Vertical">
+            <TextBlock Margin="10 0" Style="{DynamicResource TitleTextBlockStyle}" Text="User Management"/>
+            <xCust:CustomFormButtons ShowSaveDeleteBtn="Collapsed"  AddCommand="{Binding DataContext.OpenUserFormCommand, ElementName=UserManagementView}" AddCommandParameter="{Binding ElementName=AddUserDialog}"/>
+            <DataGrid ui:DataGridHelper.UseModernColumnStyles="True" HeadersVisibility="Column" AlternationCount="{Binding Items.Count, RelativeSource={RelativeSource Self}}" Margin="10" ItemsSource="{Binding Users}" AutoGenerateColumns="False" CanUserAddRows="True">
+                <DataGrid.Columns>
+                    <DataGridTextColumn Header="Username" Binding="{Binding Username}" IsReadOnly="True"/>
+                    <DataGridTextColumn Header="Role" Binding="{Binding Role, Converter={StaticResource EnumToStringConverter}}" IsReadOnly="True"/>
+                    <DataGridTextColumn Header="Email" Binding="{Binding Email}" IsReadOnly="True"/>
+                    <!--<DataGridTextColumn Header="Created At" Binding="{Binding CreatedAt, Converter={StaticResource StringFormatConverter},ConverterParameter='{}{0:dd/MMM/yyyy}'}" />-->
+                    <DataGridTextColumn Header="Created At" IsReadOnly="True" Binding="{Binding CreatedAt, Converter={StaticResource StringFormatConverter},ConverterParameter='{}{0:dd/MMM/yyyy}'}"/>
+
+                    <!--<DataGridTemplateColumn.CellEditingTemplate>
+                    <DataTemplate>
+                        <DatePicker  VerticalAlignment="Center" HorizontalAlignment="Center" IsTodayHighlighted="True"  IsDropDownOpen="True" DisplayDate="{Binding CreatedAt, Mode=TwoWay}"/>
+                    </DataTemplate>
+                </DataGridTemplateColumn.CellEditingTemplate>-->
+
+                    <DataGridTextColumn Header="Updated At" IsReadOnly="True" Binding="{Binding UpdatedAt, Converter={StaticResource StringFormatConverter},ConverterParameter='{}{0:dd/MMM/yyyy}'}"/>
+                    <DataGridTemplateColumn Header="Edit">
+                        <DataGridTemplateColumn.CellTemplate>
+                            <DataTemplate>
+                                <Button x:Name="EditBtn" Click="EditBtn_Click" 
+                                    Command="{Binding DataContext.SelectedUserCommand,
+                                RelativeSource={RelativeSource AncestorType=DataGrid}}"
+                                    Foreground="{StaticResource PrimaryBlueColor}"
+                                    Style="{DynamicResource MaterialDesignIconForegroundButton}"
+                                    CommandParameter="{Binding}">
+                                    <ui:FontIcon Glyph="&#xE70F;"/>
+                                </Button>
+                            </DataTemplate>
+                        </DataGridTemplateColumn.CellTemplate>
+                    </DataGridTemplateColumn>
+                    <DataGridTemplateColumn Header="Remove">
+                        <DataGridTemplateColumn.CellTemplate>
+                            <DataTemplate>
+                                <Button x:Name="DeleteBtn" Click="DeleteBtn_Click"
+                                    Command="{Binding DataContext.SelectedUserCommand, 
+                                RelativeSource={RelativeSource AncestorType=DataGrid}}"
+                                    Foreground="{StaticResource ErrorColor}"
+                                    CommandParameter="{Binding}" Style="{DynamicResource MaterialDesignIconForegroundButton}">
+                                    <ui:FontIcon Glyph="&#xE74D;"/>
+                                </Button>
+
+                            </DataTemplate>
+                        </DataGridTemplateColumn.CellTemplate>
+                    </DataGridTemplateColumn>
+                    <!-- Add more columns as needed -->
+                </DataGrid.Columns>
+            </DataGrid>
+        </ui:SimpleStackPanel>
+    </Grid>
+</UserControl>

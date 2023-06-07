@@ -18,8 +18,26 @@ namespace X_Guide.Converter
             //else
             //    return (parameter is Visibility) ? parameter : Visibility.Collapsed;
             switch (value) {
-                case (int)ManipulatorType.SixAxis: return true;
+                case (int)ManipulatorType.SixAxis: return true; 
+                case (int)ManipulatorType.GantrySystemWR: return true;
                 default: return false;
+            }
+        }
+
+        public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
+        {
+            throw new NotImplementedException();
+        }
+    }
+    public class InverseTypeToBooleanConverter : IValueConverter
+    {
+        public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
+        {
+            switch (value)
+            {
+                case (int)ManipulatorType.SixAxis: return true;
+                case (int)ManipulatorType.GantrySystemWR: return false;
+                default: return true;
             }
         }
 
