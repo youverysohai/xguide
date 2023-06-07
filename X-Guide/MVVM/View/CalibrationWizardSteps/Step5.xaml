@@ -34,7 +34,42 @@
             </Style.Triggers>
         </Style>
         <c:BooleanToVisibilityConverter x:Key="BooleanToVisibilityConverter" />
+        <c:InverseTypeToBooleanConverter x:Key="InverseTypeToBooleanConverter" />
+        <c:TypeToDescriptionConverter x:Key="TypeToDescriptionConverter" />
         <c:TypeToBooleanConverter x:Key="TypeToBooleanConverter" />
+
+        <Style x:Key="HideRZ" TargetType="RadialMenu:RadialMenu">
+            <Style.Triggers>
+                <DataTrigger Binding="{Binding Calibration.Manipulator.Type,Converter={StaticResource TypeToDescriptionConverter}}"  Value="Gantry Without Rotary Axis">
+                    <Setter Property="Visibility" Value="Visible"/>
+                </DataTrigger>
+                <DataTrigger Binding="{Binding Calibration.Manipulator.Type,Converter={StaticResource TypeToDescriptionConverter}}"  Value="Gantry With Rotary Axis">
+                    <Setter Property="Visibility" Value="Collapsed"/>
+                </DataTrigger>
+                <DataTrigger Binding="{Binding Calibration.Manipulator.Type,Converter={StaticResource TypeToDescriptionConverter}}"  Value="SCARA">
+                    <Setter Property="Visibility" Value="Collapsed"/>
+                </DataTrigger>
+                <DataTrigger Binding="{Binding Calibration.Manipulator.Type,Converter={StaticResource TypeToDescriptionConverter}}"  Value="6-Axis">
+                    <Setter Property="Visibility" Value="Collapsed"/>
+                </DataTrigger>
+            </Style.Triggers>
+        </Style>
+        <Style x:Key="HideRXRY" TargetType="RadialMenu:RadialMenu">
+            <Style.Triggers>
+                <DataTrigger Binding="{Binding Calibration.Manipulator.Type,Converter={StaticResource TypeToDescriptionConverter}}"  Value="Gantry Without Rotary Axis">
+                    <Setter Property="Visibility" Value="Collapsed"/>
+                </DataTrigger>
+                <DataTrigger Binding="{Binding Calibration.Manipulator.Type,Converter={StaticResource TypeToDescriptionConverter}}"  Value="Gantry With Rotary Axis">
+                    <Setter Property="Visibility" Value="Collapsed"/>
+                </DataTrigger>
+                <DataTrigger Binding="{Binding Calibration.Manipulator.Type,Converter={StaticResource TypeToDescriptionConverter}}"  Value="SCARA">
+                    <Setter Property="Visibility" Value="Collapsed"/>
+                </DataTrigger>
+                <DataTrigger Binding="{Binding Calibration.Manipulator.Type,Converter={StaticResource TypeToDescriptionConverter}}"  Value="6-Axis">
+                    <Setter Property="Visibility" Value="Visible"/>
+                </DataTrigger>
+            </Style.Triggers>
+        </Style>
     </UserControl.Resources>
     <ScrollViewer HorizontalScrollBarVisibility="Auto">
 
@@ -148,12 +183,42 @@
                                 <TranslateTransform X="-5" Y="-132"/>
                             </TransformGroup>
                         </Canvas.RenderTransform>
-                        <RadialMenu:RadialMenu IsOpen="True">
+                        <RadialMenu:RadialMenu  IsOpen="{Binding Calibration.Manipulator.Type,Converter={StaticResource TypeToBooleanConverter}}" Style="{DynamicResource HideRZ}">
+
+                            <!-- MenuItems Around -->
+
+                            <RadialMenu:RadialMenuItem Command="{Binding JogCommand}" CommandParameter="Z-"  Style="{DynamicResource FancyRadialMenuItem}">
+                                <TextBlock >
+                                    <TextBlock.LayoutTransform>
+                                        <TransformGroup>
+                                            <RotateTransform Angle="-45"></RotateTransform>
+                                        </TransformGroup>
+                                    </TextBlock.LayoutTransform>
+                                    <TextBlock.RenderTransform>
+                                        <TranslateTransform X="-6" Y="-6"/>
+                                    </TextBlock.RenderTransform>
+                                    Z-</TextBlock>
+                            </RadialMenu:RadialMenuItem>
+
+
+
+                            <RadialMenu:RadialMenuItem  Command="{Binding JogCommand}" CommandParameter="Z+" Style="{DynamicResource FancyRadialMenuItem}">
+                                <TextBlock>
+                                    <TextBlock.LayoutTransform>
+                                        <RotateTransform Angle="-45"></RotateTransform>
+                                    </TextBlock.LayoutTransform>Z+</TextBlock>
+                            </RadialMenu:RadialMenuItem>
+
+
+                            <!-- Add items as you want... -->
+
+                        </RadialMenu:RadialMenu>
+                        <RadialMenu:RadialMenu IsOpen="{Binding Calibration.Manipulator.Type, Converter={StaticResource InverseTypeToBooleanConverter}}">
                            
 
                             <!-- MenuItems Around -->
 
-                            <RadialMenu:RadialMenuItem Command="{Binding JogCommand}" CommandParameter="X+"  Style="{DynamicResource FancyRadialMenuItem}">
+                            <RadialMenu:RadialMenuItem Command="{Binding JogCommand}" CommandParameter="RZ+"  Style="{DynamicResource FancyRadialMenuItem}">
                                 <TextBlock Text="RZ+ ">
                                     <TextBlock.LayoutTransform>
                                         <RotateTransform Angle="-45"></RotateTransform>
@@ -177,7 +242,7 @@
                                     Z-</TextBlock>
                             </RadialMenu:RadialMenuItem>
 
-                            <RadialMenu:RadialMenuItem   Command="{Binding JogCommand}" CommandParameter="RZ-" Style="{DynamicResource FancyRadialMenuItem}">
+                            <RadialMenu:RadialMenuItem  Command="{Binding JogCommand}" CommandParameter="RZ-" Style="{DynamicResource FancyRadialMenuItem}" >
                                 <TextBlock>
                                     <TextBlock.LayoutTransform>
                                         <RotateTransform Angle="-45"></RotateTransform>
@@ -208,7 +273,7 @@
                                 <TranslateTransform X="-155" Y="-70"/>
                             </TransformGroup>
                         </Canvas.RenderTransform>
-                        <RadialMenu:RadialMenu IsOpen="{Binding Calibration.Manipulator.Type, Converter={StaticResource TypeToBooleanConverter}}">
+                        <RadialMenu:RadialMenu Style="{DynamicResource HideRXRY}" IsOpen="{Binding Calibration.Manipulator.Type, Converter={StaticResource TypeToBooleanConverter}}">
                             <!-- CentralMenuItem -->
 
                             <!-- MenuItems Around -->

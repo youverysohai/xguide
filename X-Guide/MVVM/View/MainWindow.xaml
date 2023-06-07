@@ -154,7 +154,7 @@
             <ui:NavigationView.PaneFooter>
 
                 <ui:SimpleStackPanel>
-                    <Button Click="ToggleAppThemeHandler" Background="Transparent" x:Name="toggleSwitch" Width="330" Command="{Binding ChangeThemeCommand}" HorizontalAlignment="Left" Margin="-10 0 0 0" HorizontalContentAlignment="Left">
+                    <Button Click="ToggleAppThemeHandler" Background="Transparent" x:Name="toggleSwitch" Width="330" HorizontalAlignment="Left" Margin="-10 0 0 0" HorizontalContentAlignment="Left">
 
                         <ui:SimpleStackPanel Orientation="Horizontal" >
                             <ui:FontIcon x:Name="BrightIcon" ToolTip="Bright Theme" FontFamily="Segoe MDL2 Assets"  Margin="10 0 0 0" Glyph="&#xE706;" Visibility="Collapsed"/>
