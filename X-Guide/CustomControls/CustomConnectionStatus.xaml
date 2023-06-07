@@ -5,17 +5,21 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:X_Guide.CustomControls"
              xmlns:c="clr-namespace:X_Guide.Converter"
+              xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
              mc:Ignorable="d"
              xmlns:ui="http://schemas.modernwpf.com/2019"
              d:DesignHeight="80" d:DesignWidth="200"
              x:Name="CustConnectionControl">
     <UserControl.Resources>
         <!-- Icon Connection Status Change Color -->
-        <Style x:Key="ConnectionStatusIconForeground" TargetType="ui:FontIcon">
+       
+        <Style x:Key="ClientConnectStatusIcon" TargetType="materialDesign:PackIcon">
             <Style.Triggers>
                 <DataTrigger Binding="{Binding IsConnected, ElementName=CustConnectionControl}" Value="True">
                     <Setter Property="Foreground"  Value="{DynamicResource ConnectedColor}"/>
-                    <Setter Property="Glyph" Value="&#xF385;"/>
+                </DataTrigger>
+                <DataTrigger Binding="{Binding IsConnected, ElementName=CustConnectionControl}" Value="False">
+                    <Setter Property="Foreground"  Value="{DynamicResource DisconnectedColor}"/>
                 </DataTrigger>
             </Style.Triggers>
         </Style>
@@ -27,7 +31,7 @@
                 </DataTrigger>
                 <DataTrigger Binding="{Binding IsConnected, ElementName=CustConnectionControl}" Value="False">
                     <Setter Property="Foreground"  Value="{DynamicResource DisconnectedColor}"/>
-                    <Setter Property="Glyph" Value="&#xF384;"/>
+                    <Setter Property="Glyph" Value="&#xED2E;"/>
                 </DataTrigger>
                 <DataTrigger Binding="{Binding IsConnected, ElementName=CustConnectionControl}" Value="Error">
                     <Setter Property="Foreground"  Value="{DynamicResource ErrorColor}"/>
@@ -80,11 +84,11 @@
             <Style.Triggers>
                 <DataTrigger Binding="{Binding IsVisionConnected, ElementName=CustConnectionControl}" Value="True">
                     <Setter Property="Foreground"  Value="{DynamicResource ConnectedColor}"/>
-                    <Setter Property="Glyph" Value="&#xF0B7;"/>
+                    <Setter Property="Glyph" Value="&#xF386;"/>
                 </DataTrigger>
                 <DataTrigger Binding="{Binding IsVisionConnected, ElementName=CustConnectionControl}" Value="False">
                     <Setter Property="Foreground"  Value="{DynamicResource DisconnectedColor}"/>
-                    <Setter Property="Glyph" Value="&#xF0B8;"/>
+                    <Setter Property="Glyph" Value="&#xED2E;"/>
                 </DataTrigger>
                 <DataTrigger Binding="{Binding IsVisionConnected, ElementName=CustConnectionControl}" Value="Error">
                     <Setter Property="Foreground"  Value="{DynamicResource ErrorColor}"/>
@@ -93,15 +97,15 @@
         </Style>
         <Style x:Key="VisionConnectionStatusTextBlock" TargetType="TextBlock" BasedOn="{StaticResource ConnectionStatusTextBlockForeground}">
             <Style.Triggers>
-                <DataTrigger Binding="{Binding IsConnected, ElementName=CustConnectionControl}" Value="True">
+                <DataTrigger Binding="{Binding IsVisionConnected, ElementName=CustConnectionControl}" Value="True">
 
                     <Setter Property="Text" Value=" Connected!"/>
                 </DataTrigger>
-                <DataTrigger Binding="{Binding IsConnected, ElementName=CustConnectionControl}" Value="False">
+                <DataTrigger Binding="{Binding IsVisionConnected, ElementName=CustConnectionControl}" Value="False">
 
                     <Setter Property="Text" Value=" Offline!"/>
                 </DataTrigger>
-                <DataTrigger Binding="{Binding IsConnected, ElementName=CustConnectionControl}" Value="Error">
+                <DataTrigger Binding="{Binding IsVisionConnected, ElementName=CustConnectionControl}" Value="Error">
                     <Setter Property="Text" Value=" Error!"/>
                 </DataTrigger>
             </Style.Triggers>
@@ -113,7 +117,7 @@
             <TextBlock Text="Manipulator " Visibility="{Binding IsMainWindow, ElementName=CustConnectionControl}" FontWeight="DemiBold" Style="{DynamicResource ConnectionStatusTextBlockForeground}"/>
 
             <Grid Margin="10 0 8 0">
-                <ui:FontIcon x:Name="ConnectionIcon" Style="{DynamicResource ConnectionStatusIconForeground}"/>
+                <materialDesign:PackIcon Kind="RobotIndustrialOutline" Style="{DynamicResource ClientConnectStatusIcon}" />
                 <ui:FontIcon x:Name="CheckIcon" Style="{DynamicResource showCheckedIcon}"/>
             </Grid>
             <TextBlock d:Text=" Connected!" Margin="5 0 0 0"  x:Name="ConnectionText" Style="{DynamicResource ConnectionStatusTextBlock}"/>
