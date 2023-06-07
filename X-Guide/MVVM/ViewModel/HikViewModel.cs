@@ -27,7 +27,6 @@ namespace X_Guide.MVVM.ViewModel
             _calibrationConfig = calibrationConfig;
         }
 
-
         public async void StartLiveImage()
         {
             Module = await _visionService.RunProcedure(_calibrationConfig?.Procedure, true);
@@ -41,6 +40,11 @@ namespace X_Guide.MVVM.ViewModel
             IVmModule procedure = _visionService.GetProcedure(_calibrationConfig.Procedure);
             Module = procedure;
             //Modules = _visionService.GetModules(procedure);
+        }
+
+        public void StopLiveImage()
+        {
+            throw new NotImplementedException();
         }
     }
 }

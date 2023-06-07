@@ -1,40 +1,40 @@
-﻿using HandyControl.Controls;
-using System;
+﻿using CommunityToolkit.Mvvm.Messaging;
 using System.Threading.Tasks;
 using VM.Core;
-using X_Guide.Service.Communation;
 using X_Guide.Service.Communication;
 using X_Guide.VisionMaster;
 
 namespace X_Guide.MVVM.ViewModel
 {
-    internal class OperationViewModel : ViewModelBase, IDisposable
+    internal class OperationViewModel : ViewModelBase, IRecipient<VmProcedure>
     {
+        private readonly IMessenger _messenger;
         private readonly IServerCommand _serverCommand;
         private readonly IVisionService _visionService;
         public HikViewModel VisionView { get; set; }
+        private VmProcedure procedure = null;
 
-        public OperationViewModel(IServerCommand serverCommand, IVisionService visionService, IVisionViewModel viewModel)
+        public OperationViewModel(IServerCommand serverCommand, IVisionService visionService, IVisionViewModel viewModel, IMessenger messenger)
         {
+            _messenger = messenger;
             _serverCommand = serverCommand;
             _visionService = visionService;
-            VisionView = (HikViewModel)viewModel;
-            _serverCommand.SubscribeOnOperationEvent(DisplayOutputImage);
-        }
-
-        private async void DisplayOutputImage(object sender, object e)
-        {
-            string s = e.ToString();
-            VmModule procedure = _visionService.GetProcedure(s);
-            await Task.Delay(500);
-            VisionView.Module = procedure;
-       
+            VisionView = viewModel as HikViewModel;
+            messenger.Register<VmProcedure>(this);
         }
 
         public override void Dispose()
         {
-            _serverCommand.UnsubscribeOnOperationEvent(DisplayOutputImage);
+            _messenger.Unregister<VmProcedure>(this);
             base.Dispose();
+        }
+
+        public async void Receive(VmProcedure message)
+        {
+            if (procedure == message) return;
+            procedure = message;
+            await Task.Delay(1000);
+            VisionView.Module = message;
         }
     }
 }

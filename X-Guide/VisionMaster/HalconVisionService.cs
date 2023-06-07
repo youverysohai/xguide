@@ -1,7 +1,10 @@
-﻿using HalconDotNet;
+﻿using CommunityToolkit.Mvvm.Messaging;
+using HalconDotNet;
+using HandyControl.Controls;
 using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
+using VisionGuided;
 using VM.Core;
 using VMControls.Interface;
 using X_Guide.Service;
@@ -13,16 +16,32 @@ namespace X_Guide.VisionMaster
         private readonly HTuple acqHandle = new HTuple();
         public HTuple hv_AcqHandle = new HTuple();
         private HObject hImage = new HObject();
+        public bool isLoading = false;
 
         public event EventHandler<HObject> OnImageReturn;
 
+        private readonly IMessenger _messenger;
         private readonly BackgroundService _imageGrab;
 
         public event EventHandler<(HObject, object)> OnOutputImageReturn;
 
         private readonly HObject _outputImage;
 
-        public HalconVisionService()
+        public HalconVisionService(IMessenger messenger, IDisposeService disposeService)
+        {
+            disposeService.Add(this);
+            _messenger = messenger;
+            _imageGrab = new BackgroundService(ImageGrab, true, 10);
+        }
+
+        public async void StopGrabbingImage()
+        {
+            _imageGrab.Stop();
+            await Task.Delay(1000);
+            HOperatorSet.CloseFramegrabber(hv_AcqHandle);
+        }
+
+        public void StartGrabbingImage()
         {
             try
             {
@@ -31,11 +50,12 @@ namespace X_Guide.VisionMaster
     0, -1, out hv_AcqHandle);
 
                 HOperatorSet.GrabImageStart(hv_AcqHandle, -1);
-                _imageGrab = new BackgroundService(ImageGrab, true, 10);
+
                 _imageGrab.Start();
             }
-            catch
+            catch (Exception ex)
             {
+                MessageBox.Show(ex.Message);
             }
         }
 
@@ -45,8 +65,15 @@ namespace X_Guide.VisionMaster
 
         private void ImageGrab()
         {
-            HOperatorSet.GrabImageAsync(out hImage, hv_AcqHandle, -1);
-            OnImageReturn?.Invoke(this, hImage);
+            try
+            {
+                HOperatorSet.GrabImageAsync(out hImage, hv_AcqHandle, -1);
+                _messenger.Send(hImage);
+            }
+            catch
+            {
+                MessageBox.Show("This is nothing");
+            }
         }
 
         public List<VmProcedure> GetAllProcedures()
@@ -104,15 +131,13 @@ namespace X_Guide.VisionMaster
             throw new NotImplementedException();
         }
 
-        public void snap()
-        {
-        }
-
         public void Dispose()
         {
+            HOperatorSet.CloseFramegrabber(hv_AcqHandle);
             acqHandle.Dispose();
             hv_AcqHandle.Dispose();
             hImage.Dispose();
+            MessageBox.Show("I have closed everything :D");
         }
 
         Task<List<VmProcedure>> IVisionService.GetAllProcedures()

@@ -1,17 +1,27 @@
-﻿using System;
+﻿using CommunityToolkit.Mvvm.Messaging;
+using System;
 using System.Threading.Tasks;
+using VisionGuided;
+using VM.Core;
 using X_Guide.Communication.Service;
 using X_Guide.MVVM.Model;
 using X_Guide.Service.DatabaseProvider;
 using X_Guide.VisionMaster;
-using Xlent_Vision_Guided;
 
 namespace X_Guide.Service.Communication
 {
     internal class HikOperationService : OperationService, IOperationService
     {
-        public HikOperationService(ICalibrationDb calibrationDb, IVisionService visionService, IServerService serverService) : base(calibrationDb, visionService, serverService)
+        private readonly IMessenger _messenger;
+
+        public HikOperationService(ICalibrationDb calibrationDb, IVisionService visionService, IServerService serverService, IMessenger messenger) : base(calibrationDb, visionService, serverService)
         {
+            _messenger = messenger;
+        }
+
+        public struct Procedure
+        {
+            public VmProcedure procedure;
         }
 
         public async Task<object> Operation(string[] parameter)
@@ -31,8 +41,10 @@ namespace X_Guide.Service.Communication
                 ((HikVisionService)_visionService).Procedure = procedure;
 
                 VisCenter = await _visionService.GetVisCenter();
+                _messenger.Send(_visionService.GetProcedure(procedure));
+
                 if (VisCenter is null) throw new Exception(StrRetriver.Get("VI000"));
-                OperationData = VisionGuided.EyeInHandConfig2D_Operate(VisCenter, new double[] { calib.CXOffset, calib.CYOffset, calib.CRZOffset, calib.CameraXScaling });
+                OperationData = VisionProcessor.EyeInHandConfig2D_Operate(VisCenter, new double[] { calib.CXOffset, calib.CYOffset, calib.CRZOffset, calib.CameraXScaling });
                 string Mode = calib.Mode ? "GLOBAL" : "TOOL";
                 await _serverService.ServerWriteDataAsync($"XGUIDE,{Mode},{OperationData[0]},{OperationData[1]},{OperationData[2]}");
             }

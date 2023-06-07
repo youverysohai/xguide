@@ -1,11 +1,13 @@
-﻿using System;
+﻿using CommunityToolkit.Mvvm.Messaging;
+using X_Guide.MessageToken;
 using X_Guide.MVVM.ViewModel.CalibrationWizardSteps;
 
 namespace X_Guide.MVVM.ViewModel
 {
-    internal class Step4ViewModel : ViewModelBase, ICalibrationStep
+    internal class Step4ViewModel : ViewModelBase
     {
         private readonly CalibrationViewModel _calibration;
+        private readonly IMessenger _messenger;
 
         public CalibrationViewModel Calibration
         {
@@ -18,24 +20,14 @@ namespace X_Guide.MVVM.ViewModel
 
         private void CheckState()
         {
-            if (_calibration.XOffset == 0 || _calibration.YOffset == 0 || _calibration.JointRotationAngle == 0) OnStateChanged?.Invoke(false);
-            else OnStateChanged?.Invoke(true);
+            if (_calibration.XOffset == 0 || _calibration.YOffset == 0 || _calibration.JointRotationAngle == 0) _messenger.Send(new CalibrationStateChanged(PageState.Disable));
+            else _messenger.Send(new CalibrationStateChanged(PageState.Enable));
         }
 
-        public Action<bool> OnStateChanged { get; private set; }
-
-        public Step4ViewModel(CalibrationViewModel calibration)
+        public Step4ViewModel(CalibrationViewModel calibration, IMessenger messenger)
         {
             _calibration = calibration;
-        }
-
-        public void Register(Action action)
-        {
-        }
-
-        public void RegisterStateChange(Action<bool> action)
-        {
-            OnStateChanged = action;
+            _messenger = messenger;
         }
     }
 }

@@ -9,5 +9,6 @@ namespace X_Guide.MVVM.ViewModel
         void StartLiveImage();
 
         void ShowOutputImage();
+        void StopLiveImage();
     }
 }

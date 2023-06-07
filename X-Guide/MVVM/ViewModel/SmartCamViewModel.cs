@@ -1,8 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using X_Guide.MVVM.ViewModel.CalibrationWizardSteps;
 
 namespace X_Guide.MVVM.ViewModel
@@ -11,16 +7,19 @@ namespace X_Guide.MVVM.ViewModel
     {
         public void SetConfig(CalibrationViewModel calibrationViewModel)
         {
-  
         }
 
         public void ShowOutputImage()
         {
-   
         }
 
         public void StartLiveImage()
         {
+        }
+
+        public void StopLiveImage()
+        {
+            throw new NotImplementedException();
         }
     }
 }

@@ -1,17 +1,19 @@
-﻿using HalconDotNet;
+﻿using CommunityToolkit.Mvvm.Messaging;
+using HalconDotNet;
 using System;
+using VisionGuided;
 using X_Guide.MVVM.Command;
 using X_Guide.MVVM.ViewModel.CalibrationWizardSteps;
 using X_Guide.VisionMaster;
 
 namespace X_Guide.MVVM.ViewModel
 {
-    internal class HalconViewModel : ViewModelBase, IDisposable, IVisionViewModel
+    internal class HalconViewModel : ViewModelBase, IVisionViewModel, IRecipient<HObject>
     {
         public HObject Image { get; set; }
-        private readonly HalconVisionService _visionService;
 
-        public event EventHandler<HObject> OnImageRecieved;
+        private readonly HalconVisionService _visionService;
+        private readonly IMessenger _messenger;
 
         public HObject OutputImage { get; set; }
         public Point OutputImageParameter { get; set; }
@@ -19,20 +21,17 @@ namespace X_Guide.MVVM.ViewModel
 
         public RelayCommand LiveImageCommand { get; set; }
 
-        public HalconViewModel(IVisionService visionService)
+        public HalconViewModel(IVisionService visionService, IMessenger messenger)
         {
+            _messenger = messenger;
+            _messenger.Register<HObject>(this);
             _visionService = (HalconVisionService)visionService;
-            _visionService.OnImageReturn += HalcomViewModel_OnImageReturn;
         }
 
-        private void HalcomViewModel_OnImageReturn(object sender, HObject e)
+        public override void Dispose()
         {
-            Image = e;
-        }
-
-        public void Dispose()
-        {
-            _visionService.OnImageReturn -= HalcomViewModel_OnImageReturn;
+            _messenger.Unregister<HObject>(this);
+            base.Dispose();
         }
 
         public void SetConfig(CalibrationViewModel calibrationViewModel)
@@ -40,14 +39,24 @@ namespace X_Guide.MVVM.ViewModel
             throw new NotImplementedException();
         }
 
+        public void StopLiveImage()
+        {
+            _visionService.StopGrabbingImage();
+        }
+
         public void StartLiveImage()
         {
-            throw new NotImplementedException();
+            _visionService.StartGrabbingImage();
         }
 
         public void ShowOutputImage()
         {
             throw new NotImplementedException();
+        }
+
+        public void Receive(HObject message)
+        {
+            Image = message;
         }
     }
 }

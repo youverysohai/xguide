@@ -7,7 +7,8 @@
              xmlns:ui="http://schemas.modernwpf.com/2019"
              xmlns:mah="http://metro.mahapps.com/winfx/xaml/controls"
              xmlns:vms="clr-namespace:X_Guide.MVVM.ViewModel"
-             xmlns:views="clr-namespace:X_Guide.MVVM.View">
+             xmlns:views="clr-namespace:X_Guide.MVVM.View"
+             Exit="Application_Exit">
     <Application.Resources>
 
         <ResourceDictionary>

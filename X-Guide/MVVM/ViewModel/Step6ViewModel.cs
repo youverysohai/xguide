@@ -1,12 +1,15 @@
 ﻿using AutoMapper;
 using ModernWpf.Controls;
+
+using CommunityToolkit.Mvvm.Messaging;
+
 using System;
 using System.Threading.Tasks;
-using System.Windows;
 using ToastNotifications;
 using ToastNotifications.Messages;
 using X_Guide.Aspect;
 using X_Guide.Communication.Service;
+using X_Guide.MessageToken;
 using X_Guide.MVVM.Command;
 using X_Guide.MVVM.Model;
 using X_Guide.MVVM.ViewModel.CalibrationWizardSteps;
@@ -17,7 +20,7 @@ using X_Guide.VisionMaster;
 namespace X_Guide.MVVM.ViewModel
 {
     //TODO: Add tooltip to inform what X and Y Offset is
-    internal class Step6ViewModel : ViewModelBase, ICalibrationStep
+    internal class Step6ViewModel : ViewModelBase
     {
         public double XMove { get; set; }
         public double YMove { get; set; }
@@ -26,6 +29,8 @@ namespace X_Guide.MVVM.ViewModel
         public CalibrationViewModel NewCalibration { get; set; }
 
         public IVisionViewModel VisionView { get; set; }
+
+        private readonly IMessenger _messenger;
         private readonly IServerService _serverService;
         private readonly ICalibrationDb _calibDb;
         private readonly ICalibrationService _calibService;
@@ -55,7 +60,7 @@ namespace X_Guide.MVVM.ViewModel
         public RelayCommand CalibrateCommand { get; set; }
         public RelayCommand ConfirmCalibDataCommand { get; set; }
 
-        public Step6ViewModel(IServerService serverService, CalibrationViewModel calibrationConfig, ICalibrationDb calibDb, ICalibrationService calibService, IMapper mapper, Notifier notifier, IVisionService visionService, IVisionViewModel visionView)
+        public Step6ViewModel(IServerService serverService, CalibrationViewModel calibrationConfig, ICalibrationDb calibDb, ICalibrationService calibService, IMapper mapper, Notifier notifier, IVisionService visionService, IVisionViewModel visionView, IMessenger messenger)
         {
             _serverService = serverService;
             Calibration = calibrationConfig;
@@ -65,13 +70,15 @@ namespace X_Guide.MVVM.ViewModel
             _notifier = notifier;
             _visionService = visionService;
             VisionView = visionView;
+            _messenger = messenger;
             VisionView.SetConfig(calibrationConfig);
-            _serverService.SubscribeOnClientConnectionChange(OnConnectionChange);
+
             CalibrateCommand = RelayCommand.FromAsyncRelayCommand(Calibrate);
             SaveCommand = RelayCommand.FromAsyncRelayCommand(Save);
             ConfirmCalibDataCommand = new RelayCommand(ConfirmCalibData);
             VisionView.ShowOutputImage();
         }
+
 
         private void ConfirmCalibData(object obj)
         {
@@ -83,13 +90,11 @@ namespace X_Guide.MVVM.ViewModel
                 Calibration.Mm_per_pixel = NewCalibration.Mm_per_pixel;
             }
         }
-        private void OnConnectionChange(object sender, bool canCalibrate)
+
+        private void OnConnectionChange(bool canCalibrate)
         {
             CanCalibrate = canCalibrate;
-            Application.Current.Dispatcher.Invoke(() =>
-            {
-                CalibrateCommand.OnCanExecuteChanged();
-            });
+            CalibrateCommand.OnCanExecuteChanged();
         }
 
         [ExceptionHandlingAspect]
@@ -134,7 +139,7 @@ namespace X_Guide.MVVM.ViewModel
 
         public override void Dispose()
         {
-            _serverService.UnsubscribeOnClientConnectionChange(OnConnectionChange);
+            _messenger.Unregister<ConnectionStatusChanged>(this);
             base.Dispose();
         }
 

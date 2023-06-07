@@ -25,8 +25,12 @@ namespace X_Guide.MVVM.ViewModel
         public bool Test { get; set; } = false;
         public RelayCommand TestCommand { get; }
 
-        public bool IsRunning => State.IsLoading;
+
         public UserViewModel User { get; set; }
+
+        public bool IsRunning => AppState.IsLoading;
+
+
         private bool _isLoggedIn = false;
 
         public bool IsLoggedIn
@@ -42,7 +46,6 @@ namespace X_Guide.MVVM.ViewModel
             get { return _isBrightTheme; }
             set { _isBrightTheme = value; OnPropertyChanged(); }
         }
-
 
         public ICommand NavigateCommand { get; }
 
@@ -86,6 +89,7 @@ namespace X_Guide.MVVM.ViewModel
             }
         }
 
+
         private string _currentUsername;
 
         public string CurrentUsername
@@ -113,7 +117,7 @@ namespace X_Guide.MVVM.ViewModel
 
         private readonly IServerService _serverService;
         private readonly AuthenticationService _auth;
-        public ViewModelState State { get; set; }
+        public StateViewModel AppState { get; set; }
         private readonly INavigationService _navigationService;
         private readonly NavigationStore _navigationStore;
 
@@ -122,24 +126,25 @@ namespace X_Guide.MVVM.ViewModel
 
         #endregion CLR properties
 
-        public MainViewModel(INavigationService navigationService, IServerService serverService, IUserDb userService, ILogger logger, ViewModelState state)
+        public MainViewModel(INavigationService navigationService, IUserDb userService, ILogger logger, StateViewModel state)
         {
             _auth = new AuthenticationService(userService);
+
             _auth.CurrentUserChanged += OnCurrentUserChanged;
             State = state;
             State.OnStateChanged = OnLoadingStateChanged;
+
+            //_auth.CurrentUserChanged += OnCurrentUserChanged;
+            AppState = state;
+            AppState.OnStateChanged = OnLoadingStateChanged;
+
             _navigationService = navigationService;
             _navigationStore = navigationService.GetNavigationStore();
             _navigationStore.CurrentViewModelChanged += OnCurrentViewModelChanged;
 
-            serverService.Start();
             var nav = new TypedParameter(typeof(INavigationService), _navigationService);
             TestCommand = new RelayCommand(test);
 
-
-            _serverService = serverService;
-
-            _serverService.SubscribeOnClientConnectionChange(OnConnectionChange);
 
             _navigationService.Navigate<SettingViewModel>();
 
@@ -148,8 +153,8 @@ namespace X_Guide.MVVM.ViewModel
             LogoutCommand = new RelayCommand(Logout);
             RegisterCommand = new RelayCommand(Register);
             NavigateCommand = new RelayCommand(Navigate);
-            logger.LogInformation("LapisLazuli");
         }
+
 
 
         private void OnUserChangeEvent(object obj)
@@ -165,6 +170,7 @@ namespace X_Guide.MVVM.ViewModel
                 User.IsActive = true;
             }
         }
+
 
         private void Logout(object obj)
         {
@@ -184,6 +190,7 @@ namespace X_Guide.MVVM.ViewModel
             IsManipulatorConnected = e;
 
         }
+
 
         private void OnLoadingStateChanged()
         {
@@ -208,6 +215,10 @@ namespace X_Guide.MVVM.ViewModel
                 case PageName.UserManagement: _navigationService.Navigate<UserManagementViewModel>(); break;
                 case PageName.Operation: _navigationService.Navigate<OperationViewModel>(); break;
                 case PageName.JogRobot: _navigationService.Navigate<JogRobotViewModel>(); break;
+                case PageName.LiveView:
+                    _navigationService.Navigate<LiveCameraViewModel>();
+                    break;
+
                 default: break;
             }
         }
@@ -254,7 +265,6 @@ namespace X_Guide.MVVM.ViewModel
 
         public override void Dispose()
         {
-            _serverService.UnsubscribeOnClientConnectionChange(OnConnectionChange);
             base.Dispose();
         }
     }
