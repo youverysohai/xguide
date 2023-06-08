@@ -1,4 +1,5 @@
 ﻿using CommunityToolkit.Mvvm.Messaging;
+using System.Diagnostics;
 using X_Guide.MessageToken;
 using X_Guide.MVVM.ViewModel.CalibrationWizardSteps;
 
@@ -14,6 +15,7 @@ namespace X_Guide.MVVM.ViewModel
             get
             {
                 CheckState();
+                Debug.WriteLine("CheckState");
                 return _calibration;
             }
         }

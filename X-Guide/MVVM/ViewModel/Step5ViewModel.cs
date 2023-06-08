@@ -58,9 +58,10 @@ namespace X_Guide.MVVM.ViewModel
             private set
             {
                 _canJog = value;
+                JogCommand.OnCanExecuteChanged();
                 if (value) _jogService.Start();
                 else _jogService.Stop();
-                JogCommand.OnCanExecuteChanged();
+
                 OnPropertyChanged();
             }
         }
@@ -121,7 +122,7 @@ namespace X_Guide.MVVM.ViewModel
         {
             if (JogDistance == 0) JogDistance = 10;
             if (RotationAngle == 0) RotationAngle = 10;
-            int x = 0, y = 0, z = 0, rz = 0, rx = 0, ry = 0 ;
+            int x = 0, y = 0, z = 0, rz = 0, rx = 0, ry = 0;
 
             switch (parameter)
             {

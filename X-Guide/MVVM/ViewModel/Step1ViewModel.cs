@@ -1,6 +1,7 @@
 ﻿using AutoMapper;
 using CommunityToolkit.Mvvm.Messaging;
 using System.Collections.ObjectModel;
+using System.Diagnostics;
 using System.Linq;
 using System.Windows;
 using X_Guide.Communication.Service;
@@ -21,6 +22,7 @@ namespace X_Guide.MVVM.ViewModel
         {
             get
             {
+                Debug.WriteLine("ManipulatorGet");
                 OnPropertyChanged(nameof(Manipulator.Id));
                 if (_calibration.Manipulator != null)
                     _messenger?.Send(new CalibrationStateChanged(PageState.Enable));
