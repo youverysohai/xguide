@@ -1,6 +1,9 @@
 ﻿using CommunityToolkit.Mvvm.Messaging;
 using System;
+using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.Linq;
+using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Threading;
 using ToastNotifications;
@@ -12,18 +15,11 @@ using X_Guide.VisionMaster;
 
 namespace X_Guide.MVVM.ViewModel
 {
-    internal class Step3HikViewModel : ViewModelBase
+    internal class HikVisionCalibrationStep : ViewModelBase, IVisionCalibrationStep
     {
-        private readonly IVisionService _visionService;
         private readonly IMessenger _messenger;
-        private readonly CalibrationViewModel _calibration;
-
-        public Step3HikViewModel(CalibrationViewModel calibration, IVisionService visionService, StateViewModel viewModelState, Notifier notifier, IMessenger messenger)
-        {
-            _messenger = messenger;
-            _calibration = calibration;
-            _visionService = visionService;
-        }
+        private CalibrationViewModel _calibration;
+        private IVisionService _visionService;
 
         public CalibrationViewModel Calibration
         {
@@ -31,7 +27,19 @@ namespace X_Guide.MVVM.ViewModel
             {
                 return _calibration;
             }
+            set
+            {
+                _calibration = value;
+            }
         }
+
+
+        public HikVisionCalibrationStep(IVisionService visionService, IMessenger messenger)
+        {
+            _messenger = messenger;
+            _visionService = visionService;
+        }
+
 
         public bool IsProcedureEditable { get; set; } = true;
 
@@ -77,6 +85,11 @@ namespace X_Guide.MVVM.ViewModel
         private async Task GetProcedures()
         {
             Procedures = new ObservableCollection<VmProcedure>(await _visionService.GetAllProcedures());
+        }
+
+        public void SetConfig(CalibrationViewModel config)
+        {
+            Calibration = config;
         }
     }
 }

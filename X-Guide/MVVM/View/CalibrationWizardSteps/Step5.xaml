@@ -77,9 +77,6 @@
 
             <!--VM Camara-->
             <ContentControl hc:FlexPanel.FlexBasis="720" Height="500" Content="{Binding VisionView}" VerticalAlignment="Top">
-                <ContentControl.ContentTemplateSelector>
-                    <views:ViewTemplateSelector />
-                </ContentControl.ContentTemplateSelector>
             </ContentControl>
             <!--<XCust:CustomRenderControl
                     hc:FlexPanel.FlexBasis="720" Height="550"
@@ -261,7 +258,23 @@
                             <!-- Add items as you want... -->
                         </RadialMenu:RadialMenu>
                     </Canvas>
-
+                    <ui:SimpleStackPanel Grid.Row="2" Grid.Column="0" Margin="10">
+                        <ui:SimpleStackPanel.Style>
+                            <Style TargetType="ui:SimpleStackPanel">
+                                <Setter Property="Visibility" Value="Collapsed"/>
+                                <Style.Triggers>
+                                    <DataTrigger Binding="{Binding Calibration.Manipulator.Type,Converter={StaticResource TypeToDescriptionConverter}}" Value="Gantry Without Rotary Axis">
+                                        <Setter Property="Visibility" Value="Visible"/>
+                                    </DataTrigger>
+                                </Style.Triggers>
+                            </Style>
+                        </ui:SimpleStackPanel.Style>
+                        <Button Content="Start Jog Tracking" Command="{Binding StartJogTrackingCommand}"/>
+                        <Label Content="XMove"/>
+                        <TextBlock Text="{Binding TrackedXMove}" Style="{DynamicResource ReadOnlyTextBlock}"/>
+                        <Label Content="YMove"/>
+                        <TextBlock Text="{Binding TrackedYMove}" Style="{DynamicResource ReadOnlyTextBlock}" />
+                    </ui:SimpleStackPanel>
                     <Canvas Grid.Row="2" Grid.Column="0"  HorizontalAlignment="Center">
                         <Canvas.RenderTransform>
                             <TransformGroup>

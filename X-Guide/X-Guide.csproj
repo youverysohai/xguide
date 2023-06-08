@@ -693,19 +693,21 @@
     <Compile Include="MVVM\ViewModel\GeneralViewModel.cs" />
     <Compile Include="MVVM\ViewModel\HalconViewModel.cs" />
     <Compile Include="MVVM\ViewModel\HikViewModel.cs" />
-    <Compile Include="MVVM\ViewModel\ICalibrationStep3.cs" />
+    <Compile Include="MVVM\ViewModel\HikVisionCalibrationStep.cs" />
+    <Compile Include="MVVM\ViewModel\IVisionCalibrationStep.cs" />
     <Compile Include="MVVM\ViewModel\IViewModelLocator.cs" />
     <Compile Include="MVVM\ViewModel\IVisionViewModel.cs" />
     <Compile Include="MVVM\ViewModel\JogRobotViewModel.cs" />
     <Compile Include="MVVM\ViewModel\LiveCameraViewModel.cs" />
     <Compile Include="MVVM\ViewModel\ManipulatorViewModel.cs" />
     <Compile Include="MVVM\ViewModel\OperationViewModel.cs" />
+    <Compile Include="MVVM\ViewModel\OthersVisionCalibrationStep.cs" />
     <Compile Include="MVVM\ViewModel\RenderControlViewModel.cs" />
     <Compile Include="MVVM\ViewModel\SecurityViewModel.cs" />
     <Compile Include="MVVM\ViewModel\SmartCamViewModel.cs" />
     <Compile Include="MVVM\ViewModel\Step1ViewModel.cs" />
     <Compile Include="MVVM\ViewModel\Step2ViewModel.cs" />
-    <Compile Include="MVVM\ViewModel\Step3HikViewModel.cs" />
+    <Compile Include="MVVM\ViewModel\Step3ViewModel.cs" />
     <Compile Include="MVVM\ViewModel\Step3SmartCamViewModel.cs" />
     <Compile Include="MVVM\ViewModel\Step4ViewModel.cs" />
     <Compile Include="MVVM\ViewModel\Step5ViewModel.cs" />
@@ -716,6 +718,9 @@
     <Compile Include="MVVM\ViewModel\UserViewModel.cs" />
     <Compile Include="MVVM\ViewModel\ViewModelLocator.cs" />
     <Compile Include="MVVM\ViewModel\HikVisionViewModel.cs" />
+    <Compile Include="MVVM\View\CalibrationVisionView.xaml.cs">
+      <DependentUpon>CalibrationVisionView.xaml</DependentUpon>
+    </Compile>
     <Compile Include="MVVM\View\CalibrationWizardSteps\CalibrationWizardStart.xaml.cs">
       <DependentUpon>CalibrationWizardStart.xaml</DependentUpon>
     </Compile>
@@ -725,8 +730,8 @@
     <Compile Include="MVVM\View\CalibrationWizardSteps\Step2.xaml.cs">
       <DependentUpon>Step2.xaml</DependentUpon>
     </Compile>
-    <Compile Include="MVVM\View\CalibrationWizardSteps\Step3HikView.xaml.cs">
-      <DependentUpon>Step3HikView.xaml</DependentUpon>
+    <Compile Include="MVVM\View\CalibrationWizardSteps\Step3.xaml.cs">
+      <DependentUpon>Step3.xaml</DependentUpon>
     </Compile>
     <Compile Include="MVVM\View\CalibrationWizardSteps\Step4.xaml.cs">
       <DependentUpon>Step4.xaml</DependentUpon>
@@ -745,6 +750,9 @@
     </Compile>
     <Compile Include="MVVM\View\HikView.xaml.cs">
       <DependentUpon>HikView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="MVVM\View\HikVisionCalibrationStepView.xaml.cs">
+      <DependentUpon>HikVisionCalibrationStepView.xaml</DependentUpon>
     </Compile>
     <Compile Include="MVVM\View\JogRobotView.xaml.cs">
       <DependentUpon>JogRobotView.xaml</DependentUpon>
@@ -767,7 +775,6 @@
     <Compile Include="MVVM\View\UserManagementView.xaml.cs">
       <DependentUpon>UserManagementView.xaml</DependentUpon>
     </Compile>
-    <Compile Include="MVVM\View\ViewTemplateSelector.cs" />
     <Compile Include="Service\AuthenticationService.cs" />
     <Compile Include="Service\BackgroundService.cs" />
     <Compile Include="Service\CalibrationService.cs" />
@@ -907,6 +914,10 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="MVVM\View\CalibrationVisionView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="MVVM\View\CalibrationWizardSteps\CalibrationWizardStart.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -919,7 +930,7 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="MVVM\View\CalibrationWizardSteps\Step3HikView.xaml">
+    <Page Include="MVVM\View\CalibrationWizardSteps\Step3.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -940,6 +951,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="MVVM\View\HikView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="MVVM\View\HikVisionCalibrationStepView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

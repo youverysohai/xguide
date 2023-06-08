@@ -100,15 +100,12 @@
             <hc:FlexPanel JustifyContent="SpaceAround" FlexWrap="Wrap">
 
                 <!--<XCust:CustomRenderControl hc:FlexPanel.FlexBasis="640" Height="480" Procedure="{Binding VisProcedure}"></XCust:CustomRenderControl>-->
-                <hc:Carousel Width="720">
-                    <ContentControl Width="720" Height="500" Content="{Binding VisionView}">
-                        <ContentControl.ContentTemplateSelector>
-                            <views:ViewTemplateSelector />
-                        </ContentControl.ContentTemplateSelector>
-                    </ContentControl>
+
+                <ContentControl Width="720" Height="500" Content="{Binding VisionView}">
+                </ContentControl>
                     <!--<XCust:HalconSmartControl Width="640" Height="480" Image="{Binding LiveImage}" Point="{Binding OutputImageParameter}" />
                     <XCust:HalconSmartControl Width="648" Height="488" Image="{Binding OutputImage}" />-->
-                </hc:Carousel>
+
 
                 <GroupBox  hc:FlexPanel.FlexBasis="300" MinHeight="500"  Grid.RowSpan="3" Grid.Column="1" Style="{StaticResource GroupBoxTab}">
                     <GroupBox.Header>

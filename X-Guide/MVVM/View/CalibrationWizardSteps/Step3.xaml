@@ -1,0 +1,20 @@
+﻿<UserControl x:Class="X_Guide.MVVM.View.CalibrationWizardSteps.Step3"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:local="clr-namespace:X_Guide.MVVM.View.CalibrationWizardSteps"
+             xmlns:loc="clr-namespace:X_Guide.MVVM"
+                                      xmlns:views="clr-namespace:X_Guide.MVVM.View"
+             d:Foreground="White"
+             mc:Ignorable="d"
+             xmlns:hc="https://handyorg.github.io/handycontrol"
+             d:DesignHeight="450" d:DesignWidth="800"
+              xmlns:ui="http://schemas.modernwpf.com/2019"
+             xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes">
+
+    <Grid Margin="0 0 0 10">
+        <ContentControl hc:FlexPanel.FlexBasis="720" Height="500" Content="{Binding VisionTemplate}" VerticalAlignment="Top">
+        </ContentControl>
+    </Grid>
+</UserControl>
