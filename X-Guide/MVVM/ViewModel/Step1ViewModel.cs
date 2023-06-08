@@ -1,7 +1,6 @@
 ﻿using AutoMapper;
 using CommunityToolkit.Mvvm.Messaging;
 using System.Collections.ObjectModel;
-using System.Diagnostics;
 using System.Linq;
 using System.Windows;
 using X_Guide.Communication.Service;
@@ -18,35 +17,16 @@ namespace X_Guide.MVVM.ViewModel
 
         private readonly CalibrationViewModel _calibration;
 
+        private ManipulatorViewModel _manipulator;
+
         public ManipulatorViewModel Manipulator
         {
-            get
-            {
-                Debug.WriteLine("ManipulatorGet");
-                OnPropertyChanged(nameof(Manipulator.Id));
-                if (_calibration.Manipulator != null)
-                    _messenger?.Send(new CalibrationStateChanged(PageState.Enable));
-                else _messenger?.Send(new CalibrationStateChanged(PageState.Disable));
-                return _calibration.Manipulator;
-            }
+            get => _manipulator;
+
             set
             {
-                if (_calibration.Manipulator == value) return;
-
-                if (_calibration.Manipulator is null)
-                {
-                    _calibration.Manipulator = value;
-                }
-                else
-                {
-                    MessageBoxResult result = _messenger.Send(new MessageBoxRequest(StrRetriver.Get("VI001"), BoxState.Warning));
-                    if (result == MessageBoxResult.Yes)
-                    {
-                        _calibration.Manipulator = value;
-                        _messenger.Send(new CalibrationStateChanged(PageState.Reset));
-                        _calibration.ResetProperties();
-                    }
-                }
+                _manipulator = CheckManipulatorChange(value);
+                CheckEnableState();
                 OnPropertyChanged();
             }
         }
@@ -71,6 +51,25 @@ namespace X_Guide.MVVM.ViewModel
 
         #endregion properties
 
+        public ManipulatorViewModel CheckManipulatorChange(ManipulatorViewModel value)
+        {
+            if (value == _calibration.Manipulator || _manipulator == null) return value;
+
+            MessageBoxResult result = _messenger.Send(new MessageBoxRequest(StrRetriver.Get("WA000"), BoxState.Warning));
+            if (result != MessageBoxResult.Yes) return _calibration.Manipulator;
+
+            _calibration.Manipulator = value;
+            _messenger.Send(new CalibrationStateChanged(PageState.Reset));
+            _calibration.ResetProperties();
+            return value;
+        }
+
+        public void CheckEnableState()
+        {
+            PageState state = _calibration.Manipulator is null ? PageState.Disable : PageState.Enable;
+            _messenger.Send(new CalibrationStateChanged(state));
+        }
+
         public Step1ViewModel(IManipulatorDb manipulatorDb, IMapper mapper, CalibrationViewModel calibration, IDisposeService disposeService, IMessenger messenger)
         {
             _messenger = messenger;
@@ -78,6 +77,8 @@ namespace X_Guide.MVVM.ViewModel
             _manipulatorDb = manipulatorDb;
             _mapper = mapper;
             _calibration = calibration;
+            _manipulator = _calibration.Manipulator;
+            CheckEnableState();
             GetManipulators();
         }
 
