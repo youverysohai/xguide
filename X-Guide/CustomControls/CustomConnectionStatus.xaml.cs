@@ -73,5 +73,18 @@ namespace X_Guide.CustomControls
         // Using a DependencyProperty as the backing store for IsMainWindow.  This enables animation, styling, binding, etc...
         public static readonly DependencyProperty IsMainWindowProperty =
             DependencyProperty.Register("IsMainWindow", typeof(Visibility), typeof(CustomConnectionStatus), new PropertyMetadata(Visibility.Visible));
+
+
+        public string ManipulatorType
+        {
+            get { return (string)GetValue(ManipulatorTypeProperty); }
+            set { SetValue(ManipulatorTypeProperty, value); }
+        }
+
+        // Using a DependencyProperty as the backing store for ManipulatorType.  This enables animation, styling, binding, etc...
+        public static readonly DependencyProperty ManipulatorTypeProperty =
+            DependencyProperty.Register("ManipulatorType", typeof(string), typeof(CustomConnectionStatus), new PropertyMetadata(""));
+
+
     }
 }

@@ -28,9 +28,7 @@
 
             <!--VM Camara-->
             <ContentControl hc:FlexPanel.FlexBasis="720" Height="500" Content="{Binding VisionView}" VerticalAlignment="Top">
-                <ContentControl.ContentTemplateSelector>
-                    <views:ViewTemplateSelector />
-                </ContentControl.ContentTemplateSelector>
+               
             </ContentControl>
             <!--<XCust:CustomRenderControl
                     hc:FlexPanel.FlexBasis="720" Height="550"

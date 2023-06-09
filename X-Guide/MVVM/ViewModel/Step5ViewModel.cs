@@ -1,4 +1,5 @@
 ﻿using CommunityToolkit.Mvvm.Messaging;
+using System;
 using System.Collections.Generic;
 using System.Threading;
 using System.Threading.Tasks;
@@ -30,16 +31,16 @@ namespace X_Guide.MVVM.ViewModel
         private readonly IServerService _serverService;
         private readonly IVisionService _visionService;
         private ManualResetEventSlim _manual;
-
+        private IVisionViewModel _visionView;
         public IVisionViewModel VisionView
         {
             get
             {
                 if (_visionService != null)
-                    visionView.StartLiveImage();
-                return visionView;
+                    _visionView.StartLiveImage();
+                return _visionView;
             }
-            set => visionView = value;
+            set => _visionView = value;
         }
 
         public List<VmModule> Modules { get; private set; }
@@ -50,7 +51,7 @@ namespace X_Guide.MVVM.ViewModel
         public string JogMode { get; set; } = "TOOL";
 
         private bool _canJog = false;
-        private IVisionViewModel visionView;
+     
 
         public bool CanJog
         {
@@ -69,9 +70,12 @@ namespace X_Guide.MVVM.ViewModel
         public bool IsLoading { get; set; } = true;
 
         public RelayCommand JogCommand { get; }
+        public RelayCommand StartJogTrackingCommand { get; }
 
         public int JogDistance { get; set; }
         public int RotationAngle { get; set; }
+        public int TrackedXMove { get; set; }
+        public int TrackedYMove { get; set; }
 
         public Step5ViewModel(CalibrationViewModel calibrationConfig, IServerService serverService, IVisionService visionService, IJogService jogService, IVisionViewModel visionView, StateViewModel appState, IMessenger messenger)
         {
@@ -83,9 +87,15 @@ namespace X_Guide.MVVM.ViewModel
             VisionView = visionView;
             VisionView.SetConfig(_calibrationConfig);
             JogCommand = new RelayCommand(Jog, (o) => _canJog);
-
+            StartJogTrackingCommand = new RelayCommand(StartJogTracking);
             messenger.Register(this);
             VisionView.StartLiveImage();
+        }
+
+        private void StartJogTracking(object obj)
+        {
+            if (TrackedXMove != 0) TrackedXMove = 0;
+            if (TrackedYMove != 0) TrackedYMove = 0;
         }
 
         public async void InitView()
@@ -126,10 +136,10 @@ namespace X_Guide.MVVM.ViewModel
 
             switch (parameter)
             {
-                case "Y+": y = JogDistance; break;
-                case "Y-": y = -JogDistance; break;
-                case "X+": x = JogDistance; break;
-                case "X-": x = -JogDistance; break;
+                case "Y+": y = JogDistance;TrackedYMove += JogDistance; break;
+                case "Y-": y = -JogDistance; TrackedYMove -= JogDistance; break;
+                case "X+": x = JogDistance; TrackedXMove += JogDistance; break;
+                case "X-": x = -JogDistance; TrackedXMove -= JogDistance; break;
                 case "Z+": z = JogDistance; break;
                 case "Z-": z = -JogDistance; break;
                 case "RZ+": rz = RotationAngle; break;

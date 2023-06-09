@@ -12,7 +12,7 @@
              x:Name="CustConnectionControl">
     <UserControl.Resources>
         <!-- Icon Connection Status Change Color -->
-       
+
         <Style x:Key="ClientConnectStatusIcon" TargetType="materialDesign:PackIcon">
             <Style.Triggers>
                 <DataTrigger Binding="{Binding IsConnected, ElementName=CustConnectionControl}" Value="True">
@@ -67,7 +67,8 @@
                 </DataTrigger>
             </Style.Triggers>
         </Style>
-       <!-- Vision Status-->
+        
+        <!-- Vision Status-->
         <Style x:Key="VisionStatusIconForeground" TargetType="ui:FontIcon">
             <Style.Triggers>
                 <DataTrigger Binding="{Binding IsVisionConnected, ElementName=CustConnectionControl}" Value="True">
@@ -95,7 +96,20 @@
                 </DataTrigger>
             </Style.Triggers>
         </Style>
-        <Style x:Key="VisionConnectionStatusTextBlock" TargetType="TextBlock" BasedOn="{StaticResource ConnectionStatusTextBlockForeground}">
+        <Style x:Key="VisionConnectionStatusTextBlockForeground" TargetType="TextBlock">
+            <Style.Triggers>
+                <DataTrigger Binding="{Binding IsConnected, ElementName=CustConnectionControl}" Value="True">
+                    <Setter Property="Foreground"  Value="{DynamicResource ConnectedColor}"/>
+                </DataTrigger>
+                <DataTrigger Binding="{Binding IsConnected, ElementName=CustConnectionControl}" Value="False">
+                    <Setter Property="Foreground"  Value="{DynamicResource DisconnectedColor}"/>
+                </DataTrigger>
+                <DataTrigger Binding="{Binding IsConnected, ElementName=CustConnectionControl}" Value="Error">
+                    <Setter Property="Foreground"  Value="{DynamicResource ErrorColor}"/>
+                </DataTrigger>
+            </Style.Triggers>
+        </Style>
+        <Style x:Key="VisionConnectionStatusTextBlock" TargetType="TextBlock" BasedOn="{StaticResource VisionConnectionStatusTextBlockForeground}">
             <Style.Triggers>
                 <DataTrigger Binding="{Binding IsVisionConnected, ElementName=CustConnectionControl}" Value="True">
 
@@ -113,13 +127,13 @@
     </UserControl.Resources>
     <ui:SimpleStackPanel Orientation="Vertical">
         <ui:SimpleStackPanel Orientation="Horizontal" VerticalAlignment="Center" HorizontalAlignment="Left" Margin="0 8">
-
-            <TextBlock Text="Manipulator " Visibility="{Binding IsMainWindow, ElementName=CustConnectionControl}" FontWeight="DemiBold" Style="{DynamicResource ConnectionStatusTextBlockForeground}"/>
-
             <Grid Margin="10 0 8 0">
                 <materialDesign:PackIcon Kind="RobotIndustrialOutline" Style="{DynamicResource ClientConnectStatusIcon}" />
                 <ui:FontIcon x:Name="CheckIcon" Style="{DynamicResource showCheckedIcon}"/>
             </Grid>
+            <TextBlock Text="{Binding ManipulatorType, ElementName=CustConnectionControl}" Visibility="{Binding ShowTitle, ElementName=CustConnectionControl}" FontWeight="DemiBold" Style="{DynamicResource ConnectionStatusTextBlockForeground}"/>
+
+
             <TextBlock d:Text=" Connected!" Margin="5 0 0 0"  x:Name="ConnectionText" Style="{DynamicResource ConnectionStatusTextBlock}"/>
 
         </ui:SimpleStackPanel>

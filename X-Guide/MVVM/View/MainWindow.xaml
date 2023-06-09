@@ -44,6 +44,7 @@
         <DataTemplate x:Key="HikViewTemplate" DataType="{x:Type vms:HikViewModel}">
             <views:HikView />
         </DataTemplate>
+ 
     </Window.Resources>
     <Grid Name="MainWin">
         <!--Register Dialog-->
@@ -107,7 +108,7 @@
                     <ui:NavigationViewItem.MenuItems>
 
                         <ui:NavigationViewItem x:Name="CalibrationWizard"
-                                               IsEnabled="{Binding State.IsCalibValid}"
+                                               IsEnabled="{Binding AppState.IsCalibValid}"
                          c:NavigationViewItemExtensions.Command="{Binding NavigateCommand}"
                          c:NavigationViewItemExtensions.CommandParameter="{x:Static local:PageName.CalibrationWizardStart}"
                         Tag="CalibrationWizardStartView" Content="Calibration Wizard"  ToolTipService.ToolTip="Calibration Wizard">
@@ -167,7 +168,7 @@
                             <TextBlock VerticalAlignment="Center" Margin="10 0" Text=" Theme" />
                         </ui:SimpleStackPanel>
                     </Button>
-                    <xCust:CustomConnectionStatus HorizontalAlignment="Left" ShowTitle="Collapsed" IsConnected="{Binding AppState.IsAnyClientConnected}"  IsVisionConnected="{Binding AppState.IsAnyClientConnected}" ShowVisionStatus="Visible" />
+                    <xCust:CustomConnectionStatus HorizontalAlignment="Left" ShowTitle="Collapsed" IsConnected="{Binding AppState.IsAnyClientConnected}"  IsVisionConnected="{Binding AppState.IsConnectedToServer}" ShowVisionStatus="Visible" />
 
                     <!-- Profile Picture and Username-->
                     <ui:SimpleStackPanel Grid.Row="1" Orientation="Horizontal"  HorizontalAlignment="Left" Margin="4 10 0 10">

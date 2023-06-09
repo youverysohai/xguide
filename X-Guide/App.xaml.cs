@@ -87,7 +87,7 @@ namespace X_Guide
             builder.RegisterType<OperationViewModel>();
             builder.RegisterType<Step1ViewModel>();
             builder.RegisterType<Step2ViewModel>();
-            builder.RegisterType<Step3HikViewModel>();
+            builder.RegisterType<Step3ViewModel>();
             builder.RegisterType<Step4ViewModel>();
             builder.RegisterType<Step5ViewModel>();
             builder.RegisterType<Step6ViewModel>();
@@ -108,32 +108,45 @@ namespace X_Guide
             builder.Register(c =>
             {
                 var db = c.Resolve<IJsonDb>().Get<HikVisionModel>();
-                return new ClientService(IPAddress.Parse(db.Ip), db.Port, db.Terminator);
+                return new ClientService(IPAddress.Parse(db.Ip), db.Port, c.Resolve<IMessenger>(),db.Terminator);
             }).As<IClientService>().SingleInstance();
             switch (VisionSoftware)
             {
                 case 1:
                     builder.Register(c => new HikVisionService(c.Resolve<IClientService>(), c.Resolve<IJsonDb>().Get<HikVisionModel>().Filepath)).As<IVisionService>();
                     builder.RegisterType<HikViewModel>().As<IVisionViewModel>();
+                    builder.RegisterType<HikVisionCalibrationStep>().As<IVisionCalibrationStep>();
                     builder.RegisterType<HikOperationService>().As<IOperationService>();
+                    builder.RegisterType<HikVisionCalibrationStep>().As<IVisionCalibrationStep>();
 
                     break;
 
                 case 2:
                     builder.RegisterType<HalconVisionService>().As<IVisionService>().SingleInstance();
                     builder.RegisterType<HalconViewModel>().As<IVisionViewModel>();
+                    builder.RegisterType<HikVisionCalibrationStep>().As<IVisionCalibrationStep>();
                     builder.RegisterType<HalconOperationService>().As<IOperationService>();
+         
                     break;
 
                 case 3:
                     builder.RegisterType<SmartCamVisionService>().As<IVisionService>().SingleInstance();
                     builder.RegisterType<SmartCamViewModel>().As<IVisionViewModel>();
+                    builder.RegisterType<HikVisionCalibrationStep>().As<IVisionCalibrationStep>();
                     builder.RegisterType<SmartCamOperationService>().As<IOperationService>();
+             
+                    break;
+
+                case 4:
+                    builder.RegisterType<SmartCamVisionService>().As<IVisionService>().SingleInstance();
+                    builder.RegisterType<SmartCamViewModel>().As<IVisionViewModel>();
+                    builder.RegisterType<SmartCamOperationService>().As<IOperationService>();
+                    builder.RegisterType<OthersVisionCalibrationStep>().As<IVisionCalibrationStep>();
                     break;
 
                 default: break;
             }
-
+            builder.RegisterType<OthersVisionCalibrationStep>();
             builder.RegisterType<JogService>().As<IJogService>();
             builder.RegisterType<ServerCommand>().As<IServerCommand>().SingleInstance();
             builder.RegisterType<NavigationStore>();

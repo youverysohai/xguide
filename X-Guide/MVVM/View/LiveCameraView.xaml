@@ -10,9 +10,6 @@
     <Grid>
         <hc:SimpleStackPanel Orientation="Vertical">
             <ContentControl Height="500" Content="{Binding VisionView}" VerticalAlignment="Top">
-                <ContentControl.ContentTemplateSelector>
-                    <local:ViewTemplateSelector />
-                </ContentControl.ContentTemplateSelector>
             </ContentControl>
             <Button Content="Start" Command="{Binding StartLiveImageCommand}"></Button>
             <Button Content="Stop" Command="{Binding StopLiveImageCommand}"></Button>

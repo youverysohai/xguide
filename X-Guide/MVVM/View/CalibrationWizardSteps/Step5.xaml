@@ -41,32 +41,32 @@
         <Style x:Key="HideRZ" TargetType="RadialMenu:RadialMenu">
             <Style.Triggers>
                 <DataTrigger Binding="{Binding Calibration.Manipulator.Type,Converter={StaticResource TypeToDescriptionConverter}}"  Value="Gantry Without Rotary Axis">
-                    <Setter Property="Visibility" Value="Visible"/>
+                    <Setter Property="IsOpen" Value="True"/>
                 </DataTrigger>
                 <DataTrigger Binding="{Binding Calibration.Manipulator.Type,Converter={StaticResource TypeToDescriptionConverter}}"  Value="Gantry With Rotary Axis">
-                    <Setter Property="Visibility" Value="Collapsed"/>
+                    <Setter Property="IsOpen" Value="False"/>
                 </DataTrigger>
                 <DataTrigger Binding="{Binding Calibration.Manipulator.Type,Converter={StaticResource TypeToDescriptionConverter}}"  Value="SCARA">
-                    <Setter Property="Visibility" Value="Collapsed"/>
+                    <Setter Property="IsOpen" Value="False"/>
                 </DataTrigger>
                 <DataTrigger Binding="{Binding Calibration.Manipulator.Type,Converter={StaticResource TypeToDescriptionConverter}}"  Value="6-Axis">
-                    <Setter Property="Visibility" Value="Collapsed"/>
+                    <Setter Property="IsOpen" Value="False"/>
                 </DataTrigger>
             </Style.Triggers>
         </Style>
         <Style x:Key="HideRXRY" TargetType="RadialMenu:RadialMenu">
             <Style.Triggers>
                 <DataTrigger Binding="{Binding Calibration.Manipulator.Type,Converter={StaticResource TypeToDescriptionConverter}}"  Value="Gantry Without Rotary Axis">
-                    <Setter Property="Visibility" Value="Collapsed"/>
+                    <Setter Property="IsOpen" Value="False"/>
                 </DataTrigger>
                 <DataTrigger Binding="{Binding Calibration.Manipulator.Type,Converter={StaticResource TypeToDescriptionConverter}}"  Value="Gantry With Rotary Axis">
-                    <Setter Property="Visibility" Value="Collapsed"/>
+                    <Setter Property="IsOpen" Value="False"/>
                 </DataTrigger>
                 <DataTrigger Binding="{Binding Calibration.Manipulator.Type,Converter={StaticResource TypeToDescriptionConverter}}"  Value="SCARA">
-                    <Setter Property="Visibility" Value="Collapsed"/>
+                    <Setter Property="IsOpen" Value="False"/>
                 </DataTrigger>
                 <DataTrigger Binding="{Binding Calibration.Manipulator.Type,Converter={StaticResource TypeToDescriptionConverter}}"  Value="6-Axis">
-                    <Setter Property="Visibility" Value="Visible"/>
+                    <Setter Property="IsOpen" Value="True"/>
                 </DataTrigger>
             </Style.Triggers>
         </Style>
@@ -77,9 +77,6 @@
 
             <!--VM Camara-->
             <ContentControl hc:FlexPanel.FlexBasis="720" Height="500" Content="{Binding VisionView}" VerticalAlignment="Top">
-                <ContentControl.ContentTemplateSelector>
-                    <views:ViewTemplateSelector />
-                </ContentControl.ContentTemplateSelector>
             </ContentControl>
             <!--<XCust:CustomRenderControl
                     hc:FlexPanel.FlexBasis="720" Height="550"
@@ -107,7 +104,7 @@
                     <!--<hc:RunningBlock Grid.ColumnSpan="2" Foreground="{DynamicResource ErrorColor}" FontWeight="Bold" Content="Manipulator is not Connected"
                                     Visibility="{Binding CanJog, Converter={StaticResource BooleanToVisibilityConverter}, ConverterParameter=Collapsed}"
                                      IsRunning="{Binding IsMouseOver,RelativeSource={RelativeSource Self},Converter={StaticResource Boolean2BooleanReConverter}}" />-->
-                    <XCust:CustomConnectionStatus Grid.Row="0" Grid.ColumnSpan="2" IsConnected="{Binding AppState.IsAnyClientConnected}" />
+                    <XCust:CustomConnectionStatus Grid.Row="0" Grid.ColumnSpan="2" IsConnected="{Binding AppState.IsAnyClientConnected}" ManipulatorType="{Binding Calibration.Manipulator.Type,Converter={StaticResource TypeToDescriptionConverter}}"/>
                     <Canvas Grid.Row="1" Grid.Column="2"  HorizontalAlignment="Center">
                         <Canvas.RenderTransform>
                             <TransformGroup>
@@ -181,7 +178,7 @@
                             </TransformGroup>
                         </Canvas.RenderTransform>
 
-                        <RadialMenu:RadialMenu  IsOpen="{Binding Calibration.Manipulator.Type,Converter={StaticResource TypeToBooleanConverter}}" Style="{DynamicResource HideRZ}">
+                        <RadialMenu:RadialMenu Style="{DynamicResource HideRZ}">
 
                             <!-- MenuItems Around -->
 
@@ -261,7 +258,23 @@
                             <!-- Add items as you want... -->
                         </RadialMenu:RadialMenu>
                     </Canvas>
-
+                    <ui:SimpleStackPanel Grid.Row="2" Grid.Column="0" Margin="10">
+                        <ui:SimpleStackPanel.Style>
+                            <Style TargetType="ui:SimpleStackPanel">
+                                <Setter Property="Visibility" Value="Collapsed"/>
+                                <Style.Triggers>
+                                    <DataTrigger Binding="{Binding Calibration.Manipulator.Type,Converter={StaticResource TypeToDescriptionConverter}}" Value="Gantry Without Rotary Axis">
+                                        <Setter Property="Visibility" Value="Visible"/>
+                                    </DataTrigger>
+                                </Style.Triggers>
+                            </Style>
+                        </ui:SimpleStackPanel.Style>
+                        <Button Content="Start Jog Tracking" Command="{Binding StartJogTrackingCommand}"/>
+                        <Label Content="XMove"/>
+                        <TextBlock Text="{Binding TrackedXMove}" Style="{DynamicResource ReadOnlyTextBlock}"/>
+                        <Label Content="YMove"/>
+                        <TextBlock Text="{Binding TrackedYMove}" Style="{DynamicResource ReadOnlyTextBlock}" />
+                    </ui:SimpleStackPanel>
                     <Canvas Grid.Row="2" Grid.Column="0"  HorizontalAlignment="Center">
                         <Canvas.RenderTransform>
                             <TransformGroup>
@@ -269,7 +282,7 @@
                                 <TranslateTransform X="-155" Y="-70" />
                             </TransformGroup>
                         </Canvas.RenderTransform>
-                        <RadialMenu:RadialMenu Style="{DynamicResource HideRXRY}" IsOpen="{Binding Calibration.Manipulator.Type, Converter={StaticResource TypeToBooleanConverter}}">
+                        <RadialMenu:RadialMenu Style="{DynamicResource HideRXRY}" >
                             <!-- CentralMenuItem -->
 
                             <!-- MenuItems Around -->
