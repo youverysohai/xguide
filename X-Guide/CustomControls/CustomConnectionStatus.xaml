@@ -98,13 +98,13 @@
         </Style>
         <Style x:Key="VisionConnectionStatusTextBlockForeground" TargetType="TextBlock">
             <Style.Triggers>
-                <DataTrigger Binding="{Binding IsConnected, ElementName=CustConnectionControl}" Value="True">
+                <DataTrigger Binding="{Binding IsVisionConnected, ElementName=CustConnectionControl}" Value="True">
                     <Setter Property="Foreground"  Value="{DynamicResource ConnectedColor}"/>
                 </DataTrigger>
-                <DataTrigger Binding="{Binding IsConnected, ElementName=CustConnectionControl}" Value="False">
+                <DataTrigger Binding="{Binding IsVisionConnected, ElementName=CustConnectionControl}" Value="False">
                     <Setter Property="Foreground"  Value="{DynamicResource DisconnectedColor}"/>
                 </DataTrigger>
-                <DataTrigger Binding="{Binding IsConnected, ElementName=CustConnectionControl}" Value="Error">
+                <DataTrigger Binding="{Binding IsVisionConnected, ElementName=CustConnectionControl}" Value="Error">
                     <Setter Property="Foreground"  Value="{DynamicResource ErrorColor}"/>
                 </DataTrigger>
             </Style.Triggers>
