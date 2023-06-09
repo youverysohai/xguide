@@ -594,6 +594,7 @@
     <Compile Include="Converter\TypeToDescriptionConverter.cs" />
     <Compile Include="CriticalErrorException.cs" />
     <Compile Include="MessageToken\CalibrationStateChanged.cs" />
+    <Compile Include="MessageToken\ClientStatusChanged.cs" />
     <Compile Include="MessageToken\ConnectionStatusChanged.cs" />
     <Compile Include="CustomControls\CustomConnectionStatus.xaml.cs">
       <DependentUpon>CustomConnectionStatus.xaml</DependentUpon>

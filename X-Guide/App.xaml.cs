@@ -108,7 +108,7 @@ namespace X_Guide
             builder.Register(c =>
             {
                 var db = c.Resolve<IJsonDb>().Get<HikVisionModel>();
-                return new ClientService(IPAddress.Parse(db.Ip), db.Port, db.Terminator);
+                return new ClientService(IPAddress.Parse(db.Ip), db.Port, c.Resolve<IMessenger>(),db.Terminator);
             }).As<IClientService>().SingleInstance();
             switch (VisionSoftware)
             {
@@ -134,7 +134,7 @@ namespace X_Guide
                     builder.RegisterType<SmartCamViewModel>().As<IVisionViewModel>();
                     builder.RegisterType<HikVisionCalibrationStep>().As<IVisionCalibrationStep>();
                     builder.RegisterType<SmartCamOperationService>().As<IOperationService>();
-            
+             
                     break;
 
                 case 4:

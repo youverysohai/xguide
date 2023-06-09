@@ -67,6 +67,7 @@
                 </DataTrigger>
             </Style.Triggers>
         </Style>
+        
         <!-- Vision Status-->
         <Style x:Key="VisionStatusIconForeground" TargetType="ui:FontIcon">
             <Style.Triggers>
@@ -95,7 +96,20 @@
                 </DataTrigger>
             </Style.Triggers>
         </Style>
-        <Style x:Key="VisionConnectionStatusTextBlock" TargetType="TextBlock" BasedOn="{StaticResource ConnectionStatusTextBlockForeground}">
+        <Style x:Key="VisionConnectionStatusTextBlockForeground" TargetType="TextBlock">
+            <Style.Triggers>
+                <DataTrigger Binding="{Binding IsConnected, ElementName=CustConnectionControl}" Value="True">
+                    <Setter Property="Foreground"  Value="{DynamicResource ConnectedColor}"/>
+                </DataTrigger>
+                <DataTrigger Binding="{Binding IsConnected, ElementName=CustConnectionControl}" Value="False">
+                    <Setter Property="Foreground"  Value="{DynamicResource DisconnectedColor}"/>
+                </DataTrigger>
+                <DataTrigger Binding="{Binding IsConnected, ElementName=CustConnectionControl}" Value="Error">
+                    <Setter Property="Foreground"  Value="{DynamicResource ErrorColor}"/>
+                </DataTrigger>
+            </Style.Triggers>
+        </Style>
+        <Style x:Key="VisionConnectionStatusTextBlock" TargetType="TextBlock" BasedOn="{StaticResource VisionConnectionStatusTextBlockForeground}">
             <Style.Triggers>
                 <DataTrigger Binding="{Binding IsVisionConnected, ElementName=CustConnectionControl}" Value="True">
 

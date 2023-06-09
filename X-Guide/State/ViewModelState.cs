@@ -5,7 +5,7 @@ using X_Guide.MVVM.ViewModel;
 
 namespace X_Guide.State
 {
-    public class StateViewModel : ViewModelBase, IRecipient<ConnectionStatusChanged>, IRecipient<LoadingState>
+    public class StateViewModel : ViewModelBase, IRecipient<ConnectionStatusChanged>, IRecipient<LoadingState>, IRecipient<ClientStatusChanged>
     {
         public StateViewModel(IMessenger messenger)
         {
@@ -22,10 +22,16 @@ namespace X_Guide.State
             throw new NotImplementedException();
         }
 
+        void IRecipient<ClientStatusChanged>.Receive(ClientStatusChanged message)
+        {
+            IsConnectedToServer = message.Value;
+        }
+
         public bool IsAnyClientConnected { get; set; } = false;
 
         public Action OnStateChanged;
 
+        public bool IsConnectedToServer { get; set; } = false;
         public bool IsCalibValid { get; set; } = true;
 
         private bool _isLoading;
