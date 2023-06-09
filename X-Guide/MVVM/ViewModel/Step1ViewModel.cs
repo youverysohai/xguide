@@ -53,8 +53,14 @@ namespace X_Guide.MVVM.ViewModel
 
         public ManipulatorViewModel CheckManipulatorChange(ManipulatorViewModel value)
         {
-            if (value == _calibration.Manipulator || _manipulator == null) return value;
+            //if null or same as initial manipulator -> nothing happens
+            if (value == _calibration.Manipulator || _manipulator == null)
+            {
+                _calibration.Manipulator = value;
+                return value;
+            }
 
+            //If different, prompt a confirmation message box -> yes : change & reset | no : nothing happens
             MessageBoxResult result = _messenger.Send(new MessageBoxRequest(StrRetriver.Get("WA000"), BoxState.Warning));
             if (result != MessageBoxResult.Yes) return _calibration.Manipulator;
 
