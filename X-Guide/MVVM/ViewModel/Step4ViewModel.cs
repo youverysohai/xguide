@@ -23,8 +23,15 @@ namespace X_Guide.MVVM.ViewModel
 
         private void CheckState()
         {
-            if (_calibration.XOffset == 0 || _calibration.YOffset == 0 || _calibration.JointRotationAngle == 0) _messenger.Send(new CalibrationStateChanged(PageState.Disable));
-            else _messenger.Send(new CalibrationStateChanged(PageState.Enable));
+
+            bool isCalibrationValid = _calibration.XOffset > 0 && _calibration.JointRotationAngle > 0 && _calibration.YOffset > 0;
+
+            if (_calibration.Manipulator.Type == Enums.ManipulatorType.GantrySystemWR)
+            {
+                isCalibrationValid = isCalibrationValid || (_calibration.XOffset > 0 && _calibration.YOffset > 0);
+            }
+
+            _messenger.Send(new CalibrationStateChanged(isCalibrationValid ? PageState.Enable : PageState.Disable));
         }
 
         public Step4ViewModel(CalibrationViewModel calibration, IMessenger messenger)
