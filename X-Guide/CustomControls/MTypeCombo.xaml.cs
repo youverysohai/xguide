@@ -12,6 +12,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using X_Guide.Enums;
 
 namespace X_Guide.CustomControls
 {
@@ -23,20 +24,21 @@ namespace X_Guide.CustomControls
 
 
 
-        public int Type
+        public ManipulatorType Type
         {
-            get { return (int)GetValue(TypeProperty); }
+            get { return (ManipulatorType)GetValue(TypeProperty); }
             set { SetValue(TypeProperty, value); }
         }
 
         // Using a DependencyProperty as the backing store for Type.  This enables animation, styling, binding, etc...
         public static readonly DependencyProperty TypeProperty =
-            DependencyProperty.Register("Type", typeof(int), typeof(ManipulatorComboBox), new FrameworkPropertyMetadata(-1,FrameworkPropertyMetadataOptions.BindsTwoWayByDefault));
+            DependencyProperty.Register("Type", typeof(ManipulatorType), typeof(ManipulatorComboBox), new FrameworkPropertyMetadata(ManipulatorType.GantrySystemR,FrameworkPropertyMetadataOptions.BindsTwoWayByDefault));
 
 
         public ManipulatorComboBox()
         {
             InitializeComponent();
+            
         }
     }
 }

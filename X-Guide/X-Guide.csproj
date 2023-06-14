@@ -593,6 +593,9 @@
     <Compile Include="Converter\TypeToBooleanConverter.cs" />
     <Compile Include="Converter\TypeToDescriptionConverter.cs" />
     <Compile Include="CriticalErrorException.cs" />
+    <Compile Include="CustomControls\MotionCalibrationControl.xaml.cs">
+      <DependentUpon>MotionCalibrationControl.xaml</DependentUpon>
+    </Compile>
     <Compile Include="MessageToken\CalibrationStateChanged.cs" />
     <Compile Include="MessageToken\ClientStatusChanged.cs" />
     <Compile Include="MessageToken\ConnectionStatusChanged.cs" />
@@ -674,6 +677,8 @@
     <Compile Include="MappingConfiguration\UserProfile.cs" />
     <Compile Include="MappingConfiguration\VisionProfile.cs" />
     <Compile Include="MessageToken\MessageBoxRequest.cs" />
+    <Compile Include="MessageToken\AuthenticationRequest.cs" />
+    <Compile Include="MessageToken\UserLoginChanged.cs" />
     <Compile Include="MVVM\Command\AsyncRelayCommand.cs" />
     <Compile Include="MVVM\Command\BrowseFileDialogCommand.cs" />
     <Compile Include="MVVM\Command\RelayCommand.cs" />
@@ -904,6 +909,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="CustomControls\HikVmRealTimeAcqControl.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="CustomControls\MotionCalibrationControl.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -1219,10 +1228,11 @@
     <Resource Include="Style\ImageSource\xgIcon.ico" />
     <Resource Include="Style\ImageSource\pngIcon.png" />
     <Content Include="XGuideDB.mdf">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
     <Content Include="XGuideDB_log.ldf">
       <DependentUpon>XGuideDB.mdf</DependentUpon>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
     <Content Include="XGuideModel.Context.tt">
       <Generator>TextTemplatingFileGenerator</Generator>

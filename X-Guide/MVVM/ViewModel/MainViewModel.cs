@@ -1,4 +1,6 @@
 ﻿using Autofac;
+using CommunityToolkit.Mvvm.Messaging;
+using ControlzEx.Standard;
 using Microsoft.Extensions.Logging;
 using System;
 using System.Diagnostics;
@@ -115,17 +117,18 @@ namespace X_Guide.MVVM.ViewModel
         public StateViewModel AppState { get; set; }
         private readonly INavigationService _navigationService;
         private readonly NavigationStore _navigationStore;
+        private readonly IMessenger _messenger;
 
         public ViewModelBase CurrentViewModel => _navigationStore.CurrentViewModel;
         public UserModel CurrentUser => _auth.CurrentUser;
 
         #endregion CLR properties
 
-        public MainViewModel(INavigationService navigationService, IUserDb userService, ILogger logger, StateViewModel state)
+        public MainViewModel(INavigationService navigationService, IUserDb userService, ILogger logger, StateViewModel state, IMessenger messenger)
         {
-            _auth = new AuthenticationService(userService);
+            //_auth = new AuthenticationService(userService);
 
-            _auth.CurrentUserChanged += OnCurrentUserChanged;
+            //_auth.CurrentUserChanged += OnCurrentUserChanged;
 
             //_auth.CurrentUserChanged += OnCurrentUserChanged;
             AppState = state;
@@ -134,7 +137,7 @@ namespace X_Guide.MVVM.ViewModel
             _navigationService = navigationService;
             _navigationStore = navigationService.GetNavigationStore();
             _navigationStore.CurrentViewModelChanged += OnCurrentViewModelChanged;
-
+            _messenger = messenger;
             var nav = new TypedParameter(typeof(INavigationService), _navigationService);
             TestCommand = new RelayCommand(test);
 
@@ -228,7 +231,7 @@ namespace X_Guide.MVVM.ViewModel
 
         private async void Login(object obj)
         {
-            bool status = await _auth.Login(InputUsername, InputPassword);
+            bool status = false;
 
             if (status)
             {

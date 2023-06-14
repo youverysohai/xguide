@@ -51,7 +51,7 @@ namespace X_Guide.MVVM.ViewModel
         public UserManagementViewModel(IUserDb userDb, IMapper mapper)
         {
             _userDb = userDb;
-            _auth = new AuthenticationService(userDb);
+      
             _mapper = mapper;
             SelectedUserCommand = new RelayCommand(OnUserChangeEvent);
             SaveUserCommand = new RelayCommand(SaveUser);

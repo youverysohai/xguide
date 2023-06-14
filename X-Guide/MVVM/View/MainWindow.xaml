@@ -172,10 +172,10 @@
 
                     <!-- Profile Picture and Username-->
                     <ui:SimpleStackPanel Grid.Row="1" Orientation="Horizontal"  HorizontalAlignment="Left" Margin="4 10 0 10">
-                        <ui:PersonPicture Width="30" DisplayName="{Binding CurrentUsername}">
+                        <ui:PersonPicture Width="30" DisplayName="{Binding AppState.CurrentUser.Username}">
                         </ui:PersonPicture>
-                        <TextBlock x:Name="TextBoxUsername"  Text="{Binding CurrentUsername}" Margin="5 0 0 0" VerticalAlignment="Center"  FontSize="16" />
-                        <TextBlock x:Name="TextBoxUserRole"  Text="{Binding CurrentUserRole}" Margin="5 0 0 0" VerticalAlignment="Center"  FontSize="16" />
+                        <TextBlock x:Name="TextBoxUsername"  Text="{Binding AppState.CurrentUser.Username}" Margin="5 0 0 0" VerticalAlignment="Center"  FontSize="16" />
+                        <TextBlock x:Name="TextBoxUserRole"  Text="{Binding AppState.CurrentUser.Role}" Margin="5 0 0 0" VerticalAlignment="Center"  FontSize="16" />
                     </ui:SimpleStackPanel>
                     <Button x:Name="SignUpButton" Content="Sign Up" Click="SignUpButton_Click" />
                     <Button x:Name="LoginButton" Content="Login" Click="LoginButton_Click" />

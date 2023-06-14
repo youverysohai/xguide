@@ -6,6 +6,7 @@ using System.Security.Permissions;
 using System.Text;
 using System.Threading.Tasks;
 using VM.Core;
+using X_Guide.Enums;
 
 namespace X_Guide.MVVM.Model
 {
@@ -13,18 +14,18 @@ namespace X_Guide.MVVM.Model
     {
         public int Id { get; set; }
         public string Name { get; set; }
-        public int Type { get; set; }
+        public ManipulatorType Type { get; set; }
         public string Description { get; set; }
         
         public ManipulatorModel()
         {
           
             Name = "Default";
-            Type = 1;
+            Type = default;
             Description = "Default";
         }
 
-        public ManipulatorModel(int id, string name, int type, string description)
+        public ManipulatorModel(int id, string name, ManipulatorType type, string description)
         {
             Id = id;
             Name = name;

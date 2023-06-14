@@ -30,8 +30,9 @@ namespace X_Guide
         public Nullable<double> CXOffset { get; set; }
         public Nullable<int> VisionId { get; set; }
         public string Procedure { get; set; }
-        public Nullable<bool> Mode { get; set; }
+        public Nullable<bool> JogMode { get; set; }
         public Nullable<double> JointRotationAngle { get; set; }
+        public Nullable<bool> CalibrationMode { get; set; }
     
         public virtual Manipulator Manipulator { get; set; }
         public virtual Vision Vision { get; set; }

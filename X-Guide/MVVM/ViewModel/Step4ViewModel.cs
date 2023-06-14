@@ -14,6 +14,7 @@ namespace X_Guide.MVVM.ViewModel
         {
             get
             {
+                Debug.WriteLine(_calibration.XOffset);
                 CheckState();
                 Debug.WriteLine("CheckState");
                 return _calibration;

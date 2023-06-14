@@ -45,7 +45,7 @@ namespace X_Guide.Service.Communication
 
                 if (VisCenter is null) throw new Exception(StrRetriver.Get("VI000"));
                 OperationData = VisionProcessor.EyeInHandConfig2D_Operate(VisCenter, new double[] { calib.CXOffset, calib.CYOffset, calib.CRZOffset, calib.CameraXScaling });
-                string Mode = calib.Mode ? "GLOBAL" : "TOOL";
+                string Mode = calib.JogMode ? "GLOBAL" : "TOOL";
                 await _serverService.ServerWriteDataAsync($"XGUIDE,{Mode},{OperationData[0]},{OperationData[1]},{OperationData[2]}");
             }
             catch (Exception ex)

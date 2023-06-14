@@ -13,6 +13,7 @@ using ToastNotifications.Lifetime;
 using ToastNotifications.Messages;
 using ToastNotifications.Position;
 using X_Guide.Communication.Service;
+using X_Guide.Enums;
 using X_Guide.MappingConfiguration;
 using X_Guide.MVVM.DBContext;
 using X_Guide.MVVM.Model;
@@ -46,6 +47,7 @@ namespace X_Guide
 
             builder.RegisterType<WeakReferenceMessenger>().As<IMessenger>().SingleInstance();
             builder.RegisterType<DisposeService>().As<IDisposeService>().SingleInstance();
+            builder.Register(c => new AuthenticationService(c.Resolve<IUserDb>(), c.Resolve<IMessenger>())).SingleInstance();
             builder.Register(c => new ViewModelLocator(_diContainer)).As<IViewModelLocator>().SingleInstance();
 
             builder.Register(c => new MainWindow()
@@ -139,7 +141,6 @@ namespace X_Guide
 
                 case 4:
                     builder.RegisterType<SmartCamVisionService>().As<IVisionService>().SingleInstance();
-                    builder.RegisterType<SmartCamViewModel>().As<IVisionViewModel>();
                     builder.RegisterType<SmartCamOperationService>().As<IOperationService>();
                     builder.RegisterType<OthersVisionCalibrationStep>().As<IVisionCalibrationStep>();
                     break;
@@ -169,6 +170,7 @@ namespace X_Guide
         {
             AppDomain.CurrentDomain.UnhandledException += CurrentDomain_UnhandledException;
 
+            var i = Enum.GetValues(typeof(ManipulatorType));
             //App specific settings
             InitializeAppConfiguration();
         }
@@ -194,6 +196,7 @@ namespace X_Guide
             VisionSoftware = jsonDb.Get<GeneralModel>().VisionSoftware;
             _diContainer = BuildDIContainer();
             _ = _diContainer.Resolve<IMessageBoxService>();
+            _ = _diContainer.Resolve<AuthenticationService>();
             Notifier = _diContainer.Resolve<Notifier>();
         }
 

@@ -5,7 +5,8 @@
         public int Id { get; set; }
         public string Name { get; set; }
         public ManipulatorViewModel Manipulator { get; set; }
-        public bool Mode { get; set; }
+        public bool JogMode { get; set; }
+        public bool CalibrationMode { get; set; }
         public int Orientation { get; set; }
         public double XOffset { get; set; }
         public double YOffset { get; set; }
@@ -29,7 +30,8 @@
         Id = 0;
         Name = null;
         Manipulator = currentManipulator; // Restore the saved Manipulator value
-        Mode = false;
+        JogMode = false;
+        CalibrationMode = false;
         Orientation = 0;
         XOffset = 0.0;
         YOffset = 0.0;

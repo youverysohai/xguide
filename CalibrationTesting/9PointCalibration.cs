@@ -1,8 +1,10 @@
 ﻿using System;
 using System.Threading.Tasks;
+using VisionGuided;
 using X_Guide;
 using X_Guide.MVVM.ViewModel.CalibrationWizardSteps;
 using X_Guide.Service.Communication;
+
 
 namespace CalibrationTest
 {

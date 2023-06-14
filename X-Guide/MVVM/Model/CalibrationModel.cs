@@ -20,6 +20,7 @@
         public ManipulatorModel Manipulator { get; set; }
 
         public string Procedure { get; set; }
-        public bool Mode { get; set; }
+        public bool JogMode { get; set; }
+        public bool CalibrationMode { get; set; }
     }
 }

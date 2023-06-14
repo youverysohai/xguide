@@ -40,10 +40,10 @@ namespace X_Guide.MVVM.ViewModel
             _calibration = calibration;
             switch (calibration.Manipulator.Type)
             {
-                case (int)ManipulatorType.GantrySystemR:
-                case (int)ManipulatorType.GantrySystemWR: _orientationType = _orientationType.GetRange(0, 3); break;
-                case (int)ManipulatorType.SCARA: _orientationType.RemoveAt(4); break;
-                case (int)ManipulatorType.SixAxis: _orientationType.RemoveAt(3); break;
+                case ManipulatorType.GantrySystemR:
+                case ManipulatorType.GantrySystemWR: _orientationType = _orientationType.GetRange(0, 3); break;
+                case ManipulatorType.SCARA: _orientationType.RemoveAt(4); break;
+                case ManipulatorType.SixAxis: _orientationType.RemoveAt(3); break;
             }
         }
     }

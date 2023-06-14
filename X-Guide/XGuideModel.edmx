@@ -25,8 +25,9 @@
           <Property Name="CXOffset" Type="float" />
           <Property Name="VisionId" Type="int" />
           <Property Name="Procedure" Type="varchar(max)" />
-          <Property Name="Mode" Type="bit" />
+          <Property Name="JogMode" Type="bit" />
           <Property Name="JointRotationAngle" Type="float" />
+          <Property Name="CalibrationMode" Type="bit" />
         </EntityType>
         <EntityType Name="Manipulator">
           <Key>
@@ -198,8 +199,9 @@
           <Property Name="CXOffset" Type="Double" />
           <Property Name="VisionId" Type="Int32" />
           <Property Name="Procedure" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
-          <Property Name="Mode" Type="Boolean" />
+          <Property Name="JogMode" Type="Boolean" />
           <Property Name="JointRotationAngle" Type="Double" />
+          <Property Name="CalibrationMode" Type="Boolean" />
           <NavigationProperty Name="Manipulator" Relationship="XGuideDBModel.FK_Calibration_To_Manipulator" FromRole="Calibration" ToRole="Manipulator" />
           <NavigationProperty Name="Vision" Relationship="XGuideDBModel.FK_Calibration_To_Vision" FromRole="Calibration" ToRole="Vision" />
         </EntityType>
@@ -285,8 +287,9 @@
           <EntitySetMapping Name="Calibrations">
             <EntityTypeMapping TypeName="XGuideDBModel.Calibration">
               <MappingFragment StoreEntitySet="Calibration">
+                <ScalarProperty Name="CalibrationMode" ColumnName="CalibrationMode" />
                 <ScalarProperty Name="JointRotationAngle" ColumnName="JointRotationAngle" />
-                <ScalarProperty Name="Mode" ColumnName="Mode" />
+                <ScalarProperty Name="JogMode" ColumnName="JogMode" />
                 <ScalarProperty Name="Procedure" ColumnName="Procedure" />
                 <ScalarProperty Name="VisionId" ColumnName="VisionId" />
                 <ScalarProperty Name="CXOffset" ColumnName="CXOffset" />
