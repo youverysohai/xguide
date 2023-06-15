@@ -3,13 +3,14 @@ using ModernWpf.Controls;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
-using System.Configuration;
 using System.Windows;
 using VM.Core;
 using X_Guide.Aspect;
 using X_Guide.MVVM.Command;
 using X_Guide.MVVM.Model;
 using X_Guide.Service.DatabaseProvider;
+using XGuideSQLiteDB;
+using XGuideSQLiteDB.Models;
 
 namespace X_Guide.MVVM.ViewModel
 {
@@ -32,7 +33,7 @@ namespace X_Guide.MVVM.ViewModel
         public RelayCommand OperationCommand { get; set; }
         public RelayCommand SaveGeneralCommand { get; set; }
 
-        private readonly IManipulatorDb _manipulatorDb;
+        private readonly IRepository _repository;
         private readonly IMapper _mapper;
         private readonly IJsonDb _jsonDb;
 
@@ -48,9 +49,9 @@ namespace X_Guide.MVVM.ViewModel
 
         public string LogFilePath { get; set; }
 
-        public SettingViewModel(IManipulatorDb machineDb, IMapper mapper, IJsonDb jsonDb)
+        public SettingViewModel(IRepository repository, IMapper mapper, IJsonDb jsonDb)
         {
-            _manipulatorDb = machineDb;
+            _repository = repository;
             _mapper = mapper;
             _jsonDb = jsonDb;
             General = mapper.Map<GeneralViewModel>(_jsonDb.Get<GeneralModel>());
@@ -102,10 +103,9 @@ namespace X_Guide.MVVM.ViewModel
             MessageBox.Show("Saved setting. Restarting the application is required for the changes to take effect.");
         }
 
-        private async void DeleteManipulator(object obj)
+        private void DeleteManipulator(object obj)
         {
-            await _manipulatorDb.Delete(_mapper.Map<ManipulatorModel>(Manipulator));
-
+            _repository.Delete(_mapper.Map<Manipulator>(Manipulator));
             GetManipulators();
         }
 
@@ -116,39 +116,21 @@ namespace X_Guide.MVVM.ViewModel
             MessageBox.Show("Saved setting. Restarting the application is required for the changes to take effect.");
         }
 
-        private async void AddManipulator(object obj)
+        private void AddManipulator(object obj)
         {
-            bool saveStatus = await _manipulatorDb.Add(_mapper.Map<ManipulatorModel>(Manipulator));
-            if (saveStatus)
-            {
-                MessageBox.Show("Added New Manipulator");
-            }
-            else
-            {
-                MessageBox.Show("Failed to save setting!");
-            }
-
+            _repository.Create(_mapper.Map<Manipulator>(Manipulator));
             GetManipulators();
         }
 
-        private async void SaveManipulator(object obj)
+        private void SaveManipulator(object obj)
         {
-            bool saveStatus = await _manipulatorDb.Update(_mapper.Map<ManipulatorModel>(Manipulator));
-            if (saveStatus)
-            {
-                System.Windows.MessageBox.Show(ConfigurationManager.AppSettings["SaveSettingCommand_SaveMessage"]);
-            }
-            else
-            {
-                System.Windows.MessageBox.Show("Failed to save setting!");
-            }
-
+            _repository.Update(_mapper.Map<Manipulator>(Manipulator));
             GetManipulators();
         }
 
         private async void GetManipulators()
         {
-            IEnumerable<ManipulatorModel> models = await _manipulatorDb.GetAll();
+            List<Manipulator> models = _repository.GetAll<Manipulator>();
             Manipulator = null;
             Manipulators.Clear();
 

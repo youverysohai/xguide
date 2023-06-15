@@ -7,11 +7,11 @@ using System.Windows;
 using System.Windows.Input;
 using X_Guide.Communication.Service;
 using X_Guide.MVVM.Command;
-using X_Guide.MVVM.Model;
 using X_Guide.MVVM.Store;
 using X_Guide.Service;
-using X_Guide.Service.DatabaseProvider;
 using X_Guide.State;
+using XGuideSQLiteDB;
+using XGuideSQLiteDB.Models;
 
 namespace X_Guide.MVVM.ViewModel
 {
@@ -117,17 +117,14 @@ namespace X_Guide.MVVM.ViewModel
         private readonly NavigationStore _navigationStore;
 
         public ViewModelBase CurrentViewModel => _navigationStore.CurrentViewModel;
-        public UserModel CurrentUser => _auth.CurrentUser;
+        public User CurrentUser => _auth.CurrentUser;
 
         #endregion CLR properties
 
-        public MainViewModel(INavigationService navigationService, IUserDb userService, ILogger logger, StateViewModel state)
+        public MainViewModel(INavigationService navigationService, ILogger logger, StateViewModel state, IRepository repository)
         {
-            _auth = new AuthenticationService(userService);
+            _auth = new AuthenticationService(repository);
 
-            _auth.CurrentUserChanged += OnCurrentUserChanged;
-
-            //_auth.CurrentUserChanged += OnCurrentUserChanged;
             AppState = state;
             AppState.OnStateChanged = OnLoadingStateChanged;
 
@@ -211,24 +208,11 @@ namespace X_Guide.MVVM.ViewModel
 
         private async void Register(object obj)
         {
-            bool success = await _auth.Register(new UserModel
-            {
-                Username = InputUsername,
-                Email = InputEmail,
-                CreatedAt = DateTime.Now,
-                UpdatedAt = DateTime.Now,
-                Role = 1,
-            }, InputPassword); ;
-            if (success)
-            {
-                MessageBox.Show("Added successfully");
-            }
-            else MessageBox.Show("User is not added!");
         }
 
-        private async void Login(object obj)
+        private void Login(object obj)
         {
-            bool status = await _auth.Login(InputUsername, InputPassword);
+            bool status = _auth.Login(InputUsername, InputPassword);
 
             if (status)
             {

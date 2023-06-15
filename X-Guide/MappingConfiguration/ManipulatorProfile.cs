@@ -1,12 +1,6 @@
 ﻿using AutoMapper;
-using System;
-using System.Collections.Generic;
-using System.Collections.ObjectModel;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using X_Guide.MVVM.Model;
 using X_Guide.MVVM.ViewModel;
+using XGuideSQLiteDB.Models;
 
 namespace X_Guide.MappingConfiguration
 {
@@ -14,14 +8,8 @@ namespace X_Guide.MappingConfiguration
     {
         public ManipulatorProfile()
         {
-
-            CreateMap<ManipulatorModel, ManipulatorViewModel>();
-       
-            CreateMap<ManipulatorViewModel, ManipulatorModel>();
-
-            CreateMap<Manipulator, ManipulatorModel>();
-            CreateMap<ManipulatorModel, Manipulator>();
+            CreateMap<Manipulator, ManipulatorViewModel>();
+            CreateMap<ManipulatorViewModel, Manipulator>();
         }
-      
     }
 }

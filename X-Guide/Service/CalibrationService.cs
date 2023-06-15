@@ -10,6 +10,7 @@ namespace X_Guide.Service
     {
         private readonly IJogService _jogService;
         private readonly IVisionService _visionService;
+        private int _motionDelay;
         private readonly JogCommand _jogCommand = new JogCommand().SetManipulatorName("Chun");
 
         public CalibrationService(IVisionService visionService, IJogService jogService)
@@ -40,18 +41,18 @@ namespace X_Guide.Service
 
         private async Task<(double, double)> FindXMoveYMove(int jogDistance, int rotateAngle)
         {
-            await Task.Delay(1000);
+            await Task.Delay(_motionDelay);
             Point Vis_Center = await _visionService.GetVisCenter();
 
             await _jogService.SendJogCommand(_jogCommand.SetX(jogDistance));
 
-            await Task.Delay(1000);
+            await Task.Delay(_motionDelay);
             Point Vis_Positive = await _visionService.GetVisCenter();
 
             await _jogService.SendJogCommand(_jogCommand.SetX(-jogDistance));
             await _jogService.SendJogCommand(_jogCommand.SetRZ(rotateAngle));
 
-            await Task.Delay(1000);
+            await Task.Delay(_motionDelay);
             Point Vis_Rotate = await _visionService.GetVisCenter();
 
             await _jogService.SendJogCommand(_jogCommand.SetRZ(-rotateAngle));
@@ -77,7 +78,6 @@ namespace X_Guide.Service
             Point[] VisionPoints = new Point[9];
             Point[] RobotPoints = new Point[9];
 
-            int delayMs = 1000;
             int x = 0;
             int y = 0;
             for (int i = 0; i < offsets.GetLength(0); i++)
@@ -89,10 +89,15 @@ namespace X_Guide.Service
                 y += offsets[i, 1];
 
                 await _jogService.SendJogCommand(_jogCommand.SetX(offsets[i, 0]).SetY(offsets[i, 1]));
-                await Task.Delay(delayMs);
+                await Task.Delay(_motionDelay);
             }
 
             return (VisionPoints, RobotPoints);
+        }
+
+        public void SetMotionDelay(int motionDelay)
+        {
+            _motionDelay = motionDelay;
         }
     }
 }

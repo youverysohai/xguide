@@ -8,5 +8,7 @@ namespace X_Guide.Service
         Task<CalibrationData> EyeInHand2D_Calibrate(int XOffset, int YOffset, int JointRotationAngle);
 
         Task<CalibrationData> EyeInHand2D_Calibrate(int XOffset, int YOffset, double XMove, double YMove);
+
+        void SetMotionDelay(int motionDelay);
     }
 }

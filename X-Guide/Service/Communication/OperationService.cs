@@ -1,18 +1,18 @@
 ﻿using X_Guide.Communication.Service;
-using X_Guide.Service.DatabaseProvider;
 using X_Guide.VisionMaster;
+using XGuideSQLiteDB;
 
 namespace X_Guide.Service.Communication
 {
     internal class OperationService
     {
-        protected readonly ICalibrationDb _calibrationDb;
+        protected readonly IRepository _repository;
         protected readonly IVisionService _visionService;
         protected readonly IServerService _serverService;
 
-        public OperationService(ICalibrationDb calibrationDb, IVisionService visionService, IServerService serverService)
+        public OperationService(IRepository repository, IVisionService visionService, IServerService serverService)
         {
-            _calibrationDb = calibrationDb;
+            _repository = repository;
             _visionService = visionService;
             _serverService = serverService;
         }

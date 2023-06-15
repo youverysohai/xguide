@@ -7,7 +7,8 @@ using X_Guide.Communication.Service;
 using X_Guide.MessageToken;
 using X_Guide.MVVM.ViewModel.CalibrationWizardSteps;
 using X_Guide.Service;
-using X_Guide.Service.DatabaseProvider;
+using XGuideSQLiteDB;
+using XGuideSQLiteDB.Models;
 
 namespace X_Guide.MVVM.ViewModel
 {
@@ -44,7 +45,7 @@ namespace X_Guide.MVVM.ViewModel
             }
         }
 
-        public IManipulatorDb _manipulatorDb { get; }
+        private readonly IRepository _repository;
 
         private IMapper _mapper { get; }
         public IServerService _serverService { get; }
@@ -76,11 +77,11 @@ namespace X_Guide.MVVM.ViewModel
             _messenger.Send(new CalibrationStateChanged(state));
         }
 
-        public Step1ViewModel(IManipulatorDb manipulatorDb, IMapper mapper, CalibrationViewModel calibration, IDisposeService disposeService, IMessenger messenger)
+        public Step1ViewModel(IRepository repository, IMapper mapper, CalibrationViewModel calibration, IDisposeService disposeService, IMessenger messenger)
         {
             _messenger = messenger;
             disposeService.Add(this);
-            _manipulatorDb = manipulatorDb;
+            _repository = repository;
             _mapper = mapper;
             _calibration = calibration;
             _manipulator = _calibration.Manipulator;
@@ -88,9 +89,9 @@ namespace X_Guide.MVVM.ViewModel
             GetManipulators();
         }
 
-        private async void GetManipulators()
+        private void GetManipulators()
         {
-            var models = await _manipulatorDb.GetAll();
+            var models = _repository.GetAll<Manipulator>();
             var viewModels = models.Select(x => _mapper.Map<ManipulatorViewModel>(x));
             Manipulators = new ObservableCollection<ManipulatorViewModel>(viewModels);
             OnPropertyChanged(nameof(Manipulator));

@@ -1,5 +1,4 @@
-﻿using AutoMapper;
-using Newtonsoft.Json;
+﻿using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -7,7 +6,7 @@ using X_Guide.MVVM.Model;
 
 namespace X_Guide.Service.DatabaseProvider
 {
-    internal class JsonDb : DbServiceBase, IJsonDb
+    internal class JsonDb : IJsonDb
     {
         private static readonly string specialFolder = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments) + "/X-Guide";
 
@@ -20,10 +19,6 @@ namespace X_Guide.Service.DatabaseProvider
         };
 
         private readonly HikVisionConfiguration _visionConfiguration;
-
-        public JsonDb(IMapper mapper) : base(null, mapper)
-        {
-        }
 
         public T Get<T>() where T : new()
         {

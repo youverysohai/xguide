@@ -1,9 +1,9 @@
 ﻿using AutoMapper;
-using ModernWpf.Controls;
 
 using CommunityToolkit.Mvvm.Messaging;
 
 using System;
+using System.Linq;
 using System.Threading.Tasks;
 using ToastNotifications;
 using ToastNotifications.Messages;
@@ -14,8 +14,9 @@ using X_Guide.MVVM.Command;
 using X_Guide.MVVM.Model;
 using X_Guide.MVVM.ViewModel.CalibrationWizardSteps;
 using X_Guide.Service;
-using X_Guide.Service.DatabaseProvider;
 using X_Guide.VisionMaster;
+using XGuideSQLiteDB;
+using XGuideSQLiteDB.Models;
 
 namespace X_Guide.MVVM.ViewModel
 {
@@ -32,7 +33,7 @@ namespace X_Guide.MVVM.ViewModel
 
         private readonly IMessenger _messenger;
         private readonly IServerService _serverService;
-        private readonly ICalibrationDb _calibDb;
+        private readonly IRepository _repository;
         private readonly ICalibrationService _calibService;
         private readonly IMapper _mapper;
         private readonly Notifier _notifier;
@@ -48,6 +49,7 @@ namespace X_Guide.MVVM.ViewModel
                 OnPropertyChanged();
             }
         }
+
         private bool _isFirstCalibResult;
 
         public bool IsFirstCalibResult
@@ -60,12 +62,13 @@ namespace X_Guide.MVVM.ViewModel
         public RelayCommand CalibrateCommand { get; set; }
         public RelayCommand ConfirmCalibDataCommand { get; set; }
 
-        public Step6ViewModel(IServerService serverService, CalibrationViewModel calibrationConfig, ICalibrationDb calibDb, ICalibrationService calibService, IMapper mapper, Notifier notifier, IVisionService visionService, IVisionViewModel visionView, IMessenger messenger)
+        public Step6ViewModel(IServerService serverService, CalibrationViewModel calibrationConfig, IRepository repository, ICalibrationService calibService, IMapper mapper, Notifier notifier, IVisionService visionService, IVisionViewModel visionView, IMessenger messenger)
         {
             _serverService = serverService;
             Calibration = calibrationConfig;
-            _calibDb = calibDb;
+            _repository = repository;
             _calibService = calibService;
+            _calibService.SetMotionDelay(Calibration.MotionDelay);
             _mapper = mapper;
             _notifier = notifier;
             _visionService = visionService;
@@ -78,7 +81,6 @@ namespace X_Guide.MVVM.ViewModel
             ConfirmCalibDataCommand = new RelayCommand(ConfirmCalibData);
             VisionView.ShowOutputImage();
         }
-
 
         private void ConfirmCalibData(object obj)
         {
@@ -100,8 +102,8 @@ namespace X_Guide.MVVM.ViewModel
         [ExceptionHandlingAspect]
         private async Task Calibrate(object param)
         {
-            int XOffset = (int)Calibration.XOffset;
-            int YOffset = (int)Calibration.YOffset;
+            int XOffset = Calibration.XOffset;
+            int YOffset = Calibration.YOffset;
             CalibrationData calibrationData = await _calibService.EyeInHand2D_Calibrate(XOffset, YOffset, (int)Calibration.JointRotationAngle);
             if (Calibration.Mm_per_pixel != 0.0)
             {
@@ -121,18 +123,19 @@ namespace X_Guide.MVVM.ViewModel
             }
         }
 
-
         [ExceptionHandlingAspect]
         private async Task Save(object param)
         {
-            if (!await _calibDb.IsExist(Calibration.Id))
+            Calibration calibration = _repository.Find<Calibration>(q => q.Id.Equals(Calibration.Id)).FirstOrDefault();
+
+            if (calibration is null)
             {
-                await _calibDb.Add(_mapper.Map<CalibrationModel>(Calibration));
+                _repository.Create(_mapper.Map<Calibration>(Calibration));
                 _notifier.ShowSuccess(StrRetriver.Get("SC000"));
             }
             else
             {
-                await _calibDb.Update(_mapper.Map<CalibrationModel>(Calibration));
+                _repository.Update(_mapper.Map<Calibration>(Calibration));
                 _notifier.ShowSuccess($"{Calibration.Name} : {StrRetriver.Get("SC001")}");
             }
         }

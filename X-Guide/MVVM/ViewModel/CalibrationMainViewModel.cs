@@ -10,7 +10,6 @@ using X_Guide.MVVM.Command;
 using X_Guide.MVVM.Store;
 using X_Guide.MVVM.ViewModel.CalibrationWizardSteps;
 using X_Guide.Service;
-using X_Guide.Service.DatabaseProvider;
 using MessageBox = HandyControl.Controls.MessageBox;
 
 namespace X_Guide.MVVM.ViewModel
@@ -89,7 +88,7 @@ namespace X_Guide.MVVM.ViewModel
 
         public LinkedListNode<ViewModelBase> CurrentNode { get; set; }
 
-        public CalibrationMainViewModel(CalibrationViewModel calibration, INavigationService navigationService, IViewModelLocator viewModelLocator, IManipulatorDb manipulatorDb, IMapper mapper, IMessenger messenger)
+        public CalibrationMainViewModel(CalibrationViewModel calibration, INavigationService navigationService, IViewModelLocator viewModelLocator, IMapper mapper, IMessenger messenger)
         {
             StepBarContent = new List<string>(new string[] { "Manipulator", "Orientation" + Environment.NewLine + "& Mounting", "Vision Flow", "Motion", "Jog", "Calibration", });
             _navigationService = navigationService;

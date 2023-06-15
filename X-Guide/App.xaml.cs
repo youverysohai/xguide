@@ -14,7 +14,6 @@ using ToastNotifications.Messages;
 using ToastNotifications.Position;
 using X_Guide.Communication.Service;
 using X_Guide.MappingConfiguration;
-using X_Guide.MVVM.DBContext;
 using X_Guide.MVVM.Model;
 using X_Guide.MVVM.Store;
 using X_Guide.MVVM.ViewModel;
@@ -24,6 +23,7 @@ using X_Guide.Service.Communication;
 using X_Guide.Service.DatabaseProvider;
 using X_Guide.State;
 using X_Guide.VisionMaster;
+using XGuideSQLiteDB;
 using ILogger = Serilog.ILogger;
 
 namespace X_Guide
@@ -98,17 +98,14 @@ namespace X_Guide
             builder.RegisterType<JogRobotViewModel>();
             builder.RegisterType<LiveCameraViewModel>();
             builder.RegisterType<StateViewModel>().SingleInstance();
-            builder.RegisterType<DbContextFactory>().SingleInstance();
-            builder.RegisterType<ManipulatorDb>().As<IManipulatorDb>();
+            builder.RegisterType<Repository>().As<IRepository>();
             builder.RegisterType<MessageBoxService>().As<IMessageBoxService>().SingleInstance();
-
-            builder.RegisterType<UserDb>().As<IUserDb>();
             builder.RegisterInstance(logger).As<ILogger>();
             builder.RegisterType<JsonDb>().As<IJsonDb>();
             builder.Register(c =>
             {
                 var db = c.Resolve<IJsonDb>().Get<HikVisionModel>();
-                return new ClientService(IPAddress.Parse(db.Ip), db.Port, c.Resolve<IMessenger>(),db.Terminator);
+                return new ClientService(IPAddress.Parse(db.Ip), db.Port, c.Resolve<IMessenger>(), db.Terminator);
             }).As<IClientService>().SingleInstance();
             switch (VisionSoftware)
             {
@@ -126,7 +123,7 @@ namespace X_Guide
                     builder.RegisterType<HalconViewModel>().As<IVisionViewModel>();
                     builder.RegisterType<HikVisionCalibrationStep>().As<IVisionCalibrationStep>();
                     builder.RegisterType<HalconOperationService>().As<IOperationService>();
-         
+
                     break;
 
                 case 3:
@@ -134,7 +131,7 @@ namespace X_Guide
                     builder.RegisterType<SmartCamViewModel>().As<IVisionViewModel>();
                     builder.RegisterType<HikVisionCalibrationStep>().As<IVisionCalibrationStep>();
                     builder.RegisterType<SmartCamOperationService>().As<IOperationService>();
-             
+
                     break;
 
                 case 4:
@@ -152,10 +149,6 @@ namespace X_Guide
             builder.RegisterType<NavigationStore>();
             builder.RegisterType<NavigationService>().As<INavigationService>();
             builder.RegisterType<CalibrationService>().As<ICalibrationService>();
-
-            builder.RegisterType<CalibrationDb>().As<ICalibrationDb>();
-            builder.RegisterType<GeneralDb>().As<IGeneralDb>();
-
             builder.Register(c =>
             {
                 var db = c.Resolve<IJsonDb>().Get<GeneralModel>();
@@ -190,7 +183,7 @@ namespace X_Guide
                 c.AddProfile<GeneralProfile>();
                 c.AddProfile<VisionProfile>();
             }).CreateMapper();
-            IJsonDb jsonDb = new JsonDb(mapper);
+            IJsonDb jsonDb = new JsonDb();
             VisionSoftware = jsonDb.Get<GeneralModel>().VisionSoftware;
             _diContainer = BuildDIContainer();
             _ = _diContainer.Resolve<IMessageBoxService>();

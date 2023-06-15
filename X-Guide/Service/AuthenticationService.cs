@@ -1,43 +1,36 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
+﻿using System.Linq;
 using System.Security;
-using System.Text;
-using System.Threading.Tasks;
-using X_Guide.MVVM.Model;
-using X_Guide.Service.DatabaseProvider;
+using X_Guide.Validation;
+using XGuideSQLiteDB;
+using XGuideSQLiteDB.Models;
 
 namespace X_Guide.Service
 {
     public class AuthenticationService
     {
-        private readonly IUserDb _userService;
-        public event Action CurrentUserChanged;
+        private readonly IRepository _repository;
 
-        private UserModel userModel;
+        private User userModel;
 
-        public UserModel CurrentUser
+        public User CurrentUser
         {
             get { return userModel; }
-            set { userModel = value;
-                OnCurrentUserChanged();
+            set
+            {
+                userModel = value;
             }
         }
 
-        private void OnCurrentUserChanged()
-        {
-            CurrentUserChanged?.Invoke();
-        }
-        
         public bool IsLoggedIn => CurrentUser != null;
 
-        public AuthenticationService(IUserDb userService)
+        public AuthenticationService(IRepository repository)
         {
-            _userService = userService;
+            _repository = repository;
         }
-        public async Task<bool> Login(string username, SecureString password)
+
+        public bool Login(string username, SecureString password)
         {
-            UserModel user = await _userService.Authenticate(username, password);
+            User user = Authenticate(username, password);
             if (user != null)
             {
                 CurrentUser = user;
@@ -46,11 +39,22 @@ namespace X_Guide.Service
             return false;
         }
 
-   
-        public async Task<bool> Register(UserModel user, SecureString password)
+        private User Authenticate(string username, SecureString password)
         {
-            bool success = await _userService.Add(user, password);
-            return success;
+            User user = _repository.Find<User>(r => r.Username.Equals(username)).FirstOrDefault();
+            return user;
+        }
+
+        public bool Register(User user, SecureString password)
+        {
+            user.PasswordHash = PasswordHashUtility.HashSecureString(password);
+            _repository.Create(user);
+            return true;
+        }
+
+        public async void Delete(int id)
+        {
+            await _repository.DeleteById<User>(id);
         }
     }
 }
