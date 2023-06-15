@@ -10,7 +10,7 @@
              xmlns:hc="https://handyorg.github.io/handycontrol"
              xmlns:XCust ="clr-namespace:X_Guide.CustomControls"
              xmlns:enum ="clr-namespace:X_Guide.Enums"
-             xmlns:i ="http://schemas.microsoft.com/xaml/behaviors"
+            
              x:Name="Step4View"
              xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes">
     <ScrollViewer Margin="0 0 0 10">

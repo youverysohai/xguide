@@ -117,7 +117,7 @@ namespace X_Guide.CustomControls
 
         // Using a DependencyProperty as the backing store for IsManual.  This enables animation, styling, binding, etc...
         public static readonly DependencyProperty IsManualProperty =
-            DependencyProperty.Register("IsManual", typeof(bool), typeof(MotionCalibrationControl), new PropertyMetadata(false, OnEnabledChanged));
+            DependencyProperty.Register("IsManual", typeof(bool), typeof(MotionCalibrationControl), new FrameworkPropertyMetadata(false, FrameworkPropertyMetadataOptions.BindsTwoWayByDefault, OnEnabledChanged));
 
 
 

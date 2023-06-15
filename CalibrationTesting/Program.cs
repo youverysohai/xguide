@@ -1,6 +1,7 @@
 ﻿using CalibrationTest;
 using System;
 using System.Threading.Tasks;
+using VisionGuided;
 using X_Guide;
 
 namespace CalibrationTesting

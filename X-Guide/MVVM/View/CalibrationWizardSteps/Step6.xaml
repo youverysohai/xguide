@@ -6,14 +6,14 @@
              xmlns:local="clr-namespace:X_Guide.MVVM.View.CalibrationWizardSteps"
              xmlns:views="clr-namespace:X_Guide.MVVM.View"
              xmlns:XCust="clr-namespace:X_Guide.CustomControls"
-               xmlns:gif="https://github.com/XamlAnimatedGif/XamlAnimatedGif"
+             xmlns:gif="https://github.com/XamlAnimatedGif/XamlAnimatedGif"
              xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
-              xmlns:ha="http://schemas.mvtec.com/halcondotnet"
+             xmlns:ha="http://schemas.mvtec.com/halcondotnet"
              mc:Ignorable="d"
              xmlns:hc="https://handyorg.github.io/handycontrol"
              xmlns:ui="http://schemas.modernwpf.com/2019"
-              xmlns:Release="clr-namespace:VMControls.WPF.Release;assembly=VMControls.WPF.Release"
-               d:DesignHeight="600" d:DesignWidth="1000" d:Foreground="Wheat"
+             xmlns:Release="clr-namespace:VMControls.WPF.Release;assembly=VMControls.WPF.Release"
+             d:DesignHeight="600" d:DesignWidth="1000" d:Foreground="Wheat"
              x:Name="Step6View">
     <UserControl.Resources>
         <Style TargetType="Label" x:Key="OutputLabel" BasedOn="{StaticResource MaterialDesignLabel}">
