@@ -6,7 +6,31 @@
              xmlns:local="clr-namespace:X_Guide.MVVM.View"
              mc:Ignorable="d" 
              d:DesignHeight="450" d:DesignWidth="800">
+
     <Grid>
-        <TextBlock>This is other view!</TextBlock>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="Auto"/>
+            <ColumnDefinition Width="Auto"/>
+        </Grid.ColumnDefinitions>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+        </Grid.RowDefinitions>
+        <Grid.Style>
+            <Style TargetType="Grid">
+                <Setter Property="HorizontalAlignment" Value="Center"/>
+                <Setter Property="VerticalAlignment" Value="Center"/>
+            </Style>
+        </Grid.Style>
+        <TextBlock  Text="Custom Command to Trigger Capture" Grid.ColumnSpan="2" HorizontalAlignment="Center" FontSize="35" Margin="0 20 0 25" />
+        <!-- Vision Trigger Command -->
+        <Label Content="Trigger Vision Capture Command"  HorizontalAlignment="Center" VerticalAlignment="Center" Grid.Row="1"   Style="{DynamicResource DefaultLabelStyle}" />
+        <TextBox Width="250" Text="{Binding VisionTriggerFormat}" Margin="0 5" Grid.Row="1" Grid.Column="1"/>
+
+        <!-- Vision Result Format -->
+        <Label Content="Vision Output Result Format" Grid.Row="3"  HorizontalAlignment="Center" VerticalAlignment="Center"/>
+        <TextBlock Style="{DynamicResource ReadOnlyTextBlock}" Margin="0 5" Width="250" Text="XGUIDE,Status(1,0),X,Y,θ" Grid.Row="4" Grid.Column="1"/>
     </Grid>
 </UserControl>

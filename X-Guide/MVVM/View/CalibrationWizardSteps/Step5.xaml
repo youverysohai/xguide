@@ -15,11 +15,16 @@
              xmlns:c="clr-namespace:X_Guide.Converter"
              xmlns:ui="http://schemas.modernwpf.com/2019"
              FontSize="16"
+             xmlns:i ="http://schemas.microsoft.com/xaml/behaviors"
              xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
-
+             xmlns:enums ="clr-namespace:X_Guide.Enums"
              d:DesignHeight="600" d:DesignWidth="1300">
     <UserControl.Resources>
-
+        <RotateTransform x:Key="RotationTransform" Angle="-45"/>
+        <TranslateTransform x:Key="LeftTransform" X="-2" Y="-8" />
+        <TranslateTransform x:Key="TopTransform" X="0" Y="0" />
+        <TranslateTransform x:Key="BottomTransform" X="-6" Y="-6" />
+        <TranslateTransform x:Key="RightTransform" X="-8" Y="-2" />
         <Style TargetType="Label" BasedOn="{x:Null}"></Style>
         <Style TargetType="ComboBox" BasedOn="{x:Null}"></Style>
         <Style TargetType="Image" x:Key="GreyDisabledImg">
@@ -38,42 +43,10 @@
         <c:TypeToDescriptionConverter x:Key="TypeToDescriptionConverter" />
         <c:TypeToBooleanConverter x:Key="TypeToBooleanConverter" />
 
-        <Style x:Key="HideRZ" TargetType="RadialMenu:RadialMenu">
-            <Style.Triggers>
-                <DataTrigger Binding="{Binding Calibration.Manipulator.Type,Converter={StaticResource TypeToDescriptionConverter}}"  Value="Gantry Without Rotary Axis">
-                    <Setter Property="IsOpen" Value="True"/>
-                </DataTrigger>
-                <DataTrigger Binding="{Binding Calibration.Manipulator.Type,Converter={StaticResource TypeToDescriptionConverter}}"  Value="Gantry With Rotary Axis">
-                    <Setter Property="IsOpen" Value="False"/>
-                </DataTrigger>
-                <DataTrigger Binding="{Binding Calibration.Manipulator.Type,Converter={StaticResource TypeToDescriptionConverter}}"  Value="SCARA">
-                    <Setter Property="IsOpen" Value="False"/>
-                </DataTrigger>
-                <DataTrigger Binding="{Binding Calibration.Manipulator.Type,Converter={StaticResource TypeToDescriptionConverter}}"  Value="6-Axis">
-                    <Setter Property="IsOpen" Value="False"/>
-                </DataTrigger>
-            </Style.Triggers>
-        </Style>
-        <Style x:Key="HideRXRY" TargetType="RadialMenu:RadialMenu">
-            <Style.Triggers>
-                <DataTrigger Binding="{Binding Calibration.Manipulator.Type,Converter={StaticResource TypeToDescriptionConverter}}"  Value="Gantry Without Rotary Axis">
-                    <Setter Property="IsOpen" Value="False"/>
-                </DataTrigger>
-                <DataTrigger Binding="{Binding Calibration.Manipulator.Type,Converter={StaticResource TypeToDescriptionConverter}}"  Value="Gantry With Rotary Axis">
-                    <Setter Property="IsOpen" Value="False"/>
-                </DataTrigger>
-                <DataTrigger Binding="{Binding Calibration.Manipulator.Type,Converter={StaticResource TypeToDescriptionConverter}}"  Value="SCARA">
-                    <Setter Property="IsOpen" Value="False"/>
-                </DataTrigger>
-                <DataTrigger Binding="{Binding Calibration.Manipulator.Type,Converter={StaticResource TypeToDescriptionConverter}}"  Value="6-Axis">
-                    <Setter Property="IsOpen" Value="True"/>
-                </DataTrigger>
-            </Style.Triggers>
-        </Style>
     </UserControl.Resources>
     <ScrollViewer HorizontalScrollBarVisibility="Auto">
 
-        <hc:FlexPanel Margin="0 20 0 0" JustifyContent="SpaceAround" AlignContent="Center" FlexDirection="Row">
+        <hc:FlexPanel Margin="0 20 0 0" JustifyContent="Center" AlignContent="Center" FlexDirection="Row">
 
             <!--VM Camara-->
             <ContentControl hc:FlexPanel.FlexBasis="720" Height="500" Content="{Binding VisionView}" VerticalAlignment="Top">
@@ -84,247 +57,366 @@
             <!--<XCust:HikVmRealTimeAcqControl hc:FlexPanel.FlexBasis="720" Height="550"  Procedure="{Binding Module}">
             </XCust:HikVmRealTimeAcqControl>-->
             <!--<Release:VmRealTimeAcqControl x:Name="acq_control" hc:FlexPanel.FlexBasis="720" Height="550" ></Release:VmRealTimeAcqControl>-->
-            <GroupBox hc:FlexPanel.FlexBasis="390" Style="{StaticResource GroupBoxTab}" Width="328">
-                <GroupBox.Header>
-                    <TextBlock  HorizontalAlignment="Center" Style="{DynamicResource TitleTextBlockStyle}" Text="Jog to Vision Center" />
-                </GroupBox.Header>
-                <!-- Title -->
-                <!-- JogButtons and Rotations-->
+            <Grid hc:FlexPanel.FlexBasis="390">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="4*"/>
+                    <RowDefinition Height="auto"/>
 
-                <Grid>
-                    <Grid.RowDefinitions>
-                        <RowDefinition Height="auto" />
-                        <RowDefinition Height="*" />
-                        <RowDefinition Height="1.8*" />
-                    </Grid.RowDefinitions>
-                    <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width="*" />
-                        <ColumnDefinition Width="*" />
-                    </Grid.ColumnDefinitions>
-                    <!--<hc:RunningBlock Grid.ColumnSpan="2" Foreground="{DynamicResource ErrorColor}" FontWeight="Bold" Content="Manipulator is not Connected"
-                                    Visibility="{Binding CanJog, Converter={StaticResource BooleanToVisibilityConverter}, ConverterParameter=Collapsed}"
-                                     IsRunning="{Binding IsMouseOver,RelativeSource={RelativeSource Self},Converter={StaticResource Boolean2BooleanReConverter}}" />-->
-                    <XCust:CustomConnectionStatus Grid.Row="0" Grid.ColumnSpan="2" IsConnected="{Binding AppState.IsAnyClientConnected}" ManipulatorType="{Binding Calibration.Manipulator.Type,Converter={StaticResource TypeToDescriptionConverter}}"/>
-                    <Canvas Grid.Row="1" Grid.Column="2"  HorizontalAlignment="Center">
-                        <Canvas.RenderTransform>
-                            <TransformGroup>
-                                <RotateTransform Angle="45"></RotateTransform>
-                                <TranslateTransform X="-5" Y="-132" />
-                            </TransformGroup>
-                        </Canvas.RenderTransform>
-                        <RadialMenu:RadialMenu IsOpen="True">
-                            <!-- CentralMenuItem -->
-                            <!--<RadialMenu:RadialMenu.CentralItem>
-                                <RadialMenu:RadialMenuCentralItem Command="{Binding CloseRadialMenuCommand}" Style="{DynamicResource FancyRadialMenuCentralItem}" Margin="0,118,0,118" VerticalAlignment="Stretch">
-                                    <TextBlock>
+                </Grid.RowDefinitions>
+
+                <!--XMOVE YMOVE-->
+                <GroupBox Grid.Row="1" Style="{StaticResource GroupBoxTab}">
+                    <GroupBox.Header>
+                        <ui:SimpleStackPanel Orientation="Horizontal">
+                            <materialDesign:PackIcon Kind="VectorLine" VerticalAlignment="Center" Margin="3 0"/>
+                            <TextBlock Style="{DynamicResource SubtitleTextBlockStyle}" Text="Point to Point Measurement"/>
+                        </ui:SimpleStackPanel>
+                    </GroupBox.Header>
+                    <ui:SimpleStackPanel Orientation="Horizontal">
+                        <!-- Manual -->
+                        <Label Content="X Move: " Style="{DynamicResource DefaultLabelStyle}" VerticalAlignment="Center"/>
+                        <TextBox HorizontalAlignment="Left">
+                            <i:Interaction.Triggers>
+                                <i:DataTrigger Binding="{Binding Calibration.CalibrationMode}" Value="False">
+                                    <i:ChangePropertyAction PropertyName="Visibility" Value="Collapsed"/>
+                                </i:DataTrigger>
+                            </i:Interaction.Triggers>
+                        </TextBox>
+                        <TextBlock Text="{Binding TrackedXMove}" Style="{DynamicResource ReadOnlyTextBlock}" >
+                            <i:Interaction.Triggers>
+                                <i:DataTrigger Binding="{Binding Calibration.Manipulator.Type}" Value="{x:Static enums:ManipulatorType.GantrySystemWR}">
+                                    <i:ChangePropertyAction PropertyName="Visibility" Value="Visible"/>
+                                </i:DataTrigger>
+                            <i:DataTrigger Binding="{Binding Calibration.CalibrationMode}" Value="True">
+                                    <i:ChangePropertyAction PropertyName="Visibility" Value="Collapsed"/>
+                                </i:DataTrigger>
+                            </i:Interaction.Triggers>
+                        </TextBlock>
+                        <Label Content="Y Move: " Style="{DynamicResource DefaultLabelStyle}"  VerticalAlignment="Center" Margin="5 0 0 0"/>
+                        <TextBox HorizontalAlignment="Left">
+                            <i:Interaction.Triggers>
+                                <i:DataTrigger Binding="{Binding Calibration.CalibrationMode}" Value="False">
+                                    <i:ChangePropertyAction PropertyName="Visibility" Value="Collapsed"/>
+                                </i:DataTrigger>
+                            </i:Interaction.Triggers>
+                        </TextBox>
+                        <TextBlock Text="{Binding TrackedYMove}" Style="{DynamicResource ReadOnlyTextBlock}" >
+                            <i:Interaction.Triggers>
+                                <i:DataTrigger Binding="{Binding Calibration.Manipulator.Type}" Value="{x:Static enums:ManipulatorType.GantrySystemWR}">
+                                    <i:ChangePropertyAction PropertyName="Visibility" Value="Visible"/>
+                                </i:DataTrigger>
+                            <i:DataTrigger Binding="{Binding Calibration.CalibrationMode}" Value="True">
+                                    <i:ChangePropertyAction PropertyName="Visibility" Value="Collapsed"/>
+                                </i:DataTrigger>
+                            </i:Interaction.Triggers>
+                        </TextBlock>
+                        <!-- Semi Auto(GWR) -->
+                        <Button  Content="Start Jog Tracking" Command="{Binding StartJogTrackingCommand}" Margin="10 0">
+                            <i:Interaction.Triggers>
+                                <i:DataTrigger Binding="{Binding Calibration.Manipulator.Type}" Value="{x:Static enums:ManipulatorType.GantrySystemWR}">
+                                    <i:ChangePropertyAction PropertyName="Visibility" Value="Visible"/>
+                                </i:DataTrigger>
+                                <i:DataTrigger Binding="{Binding Calibration.CalibrationMode}" Value="True">
+                                    <i:ChangePropertyAction PropertyName="Visibility" Value="Collapsed"/>
+                                </i:DataTrigger>
+                            </i:Interaction.Triggers>
+                        </Button>
+
+
+                    </ui:SimpleStackPanel>
+
+                </GroupBox>
+                <GroupBox Grid.Row="0" HorizontalAlignment="Center" Width="390" Style="{StaticResource GroupBoxTab}" >
+                    <i:Interaction.Triggers>
+                        <i:DataTrigger Binding="{Binding Calibration.CalibrationMode}"  Value="True">
+                            <i:ChangePropertyAction PropertyName="Visibility" Value="Collapsed"/>
+                        </i:DataTrigger>
+                    </i:Interaction.Triggers>
+                    <GroupBox.Header>
+                        <ui:SimpleStackPanel Orientation="Horizontal">
+                            <ui:FontIcon Glyph="&#xECE9;" Margin="3 0"/>
+                            <TextBlock  HorizontalAlignment="Center" Style="{DynamicResource TitleTextBlockStyle}" Text="Jog to Vision Center" />
+                        </ui:SimpleStackPanel>
+                    </GroupBox.Header>
+                    <!-- Title -->
+                    <!-- JogButtons and Rotations-->
+
+                    <Grid>
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="auto" />
+                            <RowDefinition Height="*" />
+                            <RowDefinition Height="1.8*" />
+                        </Grid.RowDefinitions>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*" />
+                            <ColumnDefinition Width="*" />
+                        </Grid.ColumnDefinitions>
+                        <XCust:CustomConnectionStatus Grid.Row="0" Grid.ColumnSpan="2" IsConnected="{Binding AppState.IsAnyClientConnected}" ManipulatorType="{Binding Calibration.Manipulator.Type,Converter={StaticResource TypeToDescriptionConverter}}"/>
+                        <!--X+ Y+ -->
+                        <Canvas Grid.Row="1" Grid.Column="2" HorizontalAlignment="Center">
+                            <Canvas.RenderTransform>
+                                <TransformGroup>
+                                    <RotateTransform Angle="45"></RotateTransform>
+                                    <TranslateTransform X="-5" Y="-132" />
+                                </TransformGroup>
+                            </Canvas.RenderTransform>
+                            <RadialMenu:RadialMenu IsOpen="True">
+                                <!-- MenuItems Around -->
+
+                                <RadialMenu:RadialMenuItem Command="{Binding JogCommand}" CommandParameter="X+"  Style="{DynamicResource FancyRadialMenuItem}">
+                                    <TextBlock Text="X+">
+                                        <TextBlock.LayoutTransform>
+                                            <StaticResource ResourceKey="RotationTransform" />
+                                        </TextBlock.LayoutTransform>
+                                        <TextBlock.RenderTransform>
+                                            <StaticResource ResourceKey="RightTransform"/>
+                                        </TextBlock.RenderTransform>
+                                    </TextBlock>
+                                </RadialMenu:RadialMenuItem>
+
+                                <RadialMenu:RadialMenuItem CommandParameter="Y-" Command="{Binding JogCommand}" Style="{DynamicResource FancyRadialMenuItem}">
+                                    <TextBlock Text="Y-">
+                                        <TextBlock.LayoutTransform>
+                                            <StaticResource ResourceKey="RotationTransform" />
+                                        </TextBlock.LayoutTransform>
+                                        <TextBlock.RenderTransform>
+                                            <StaticResource ResourceKey="BottomTransform"/>
+                                        </TextBlock.RenderTransform>
+                                    </TextBlock>
+                                </RadialMenu:RadialMenuItem>
+
+                                <RadialMenu:RadialMenuItem   Command="{Binding JogCommand}" CommandParameter="X-" Style="{DynamicResource FancyRadialMenuItem}">
+                                    <TextBlock Text="X-">
+                                        <TextBlock.LayoutTransform>
+                                            <StaticResource ResourceKey="RotationTransform" />
+                                        </TextBlock.LayoutTransform>
+                                        <TextBlock.RenderTransform>
+                                            <TranslateTransform X="-2" Y="-8" />
+                                        </TextBlock.RenderTransform>
+                                    </TextBlock>
+                                </RadialMenu:RadialMenuItem>
+
+                                <RadialMenu:RadialMenuItem  Command="{Binding JogCommand}" CommandParameter="Y+" Style="{DynamicResource FancyRadialMenuItem}">
+                                    <TextBlock Text="Y+">
                                         <TextBlock.LayoutTransform>
                                             <RotateTransform Angle="-45"></RotateTransform>
-                                        </TextBlock.LayoutTransform>Close</TextBlock>
-                                </RadialMenu:RadialMenuCentralItem>
-                            </RadialMenu:RadialMenu.CentralItem>-->
+                                        </TextBlock.LayoutTransform>
+                                    </TextBlock>
+                                </RadialMenu:RadialMenuItem>
 
-                            <!-- MenuItems Around -->
+                                <!-- Add items as you want... -->
+                            </RadialMenu:RadialMenu>
+                        </Canvas>
 
-                            <RadialMenu:RadialMenuItem Command="{Binding JogCommand}" CommandParameter="X+"  Style="{DynamicResource FancyRadialMenuItem}">
-                                <TextBlock>
-                                    <TextBlock.LayoutTransform>
-                                        <RotateTransform Angle="-45"></RotateTransform>
-                                    </TextBlock.LayoutTransform>
-                                    <TextBlock.RenderTransform>
-                                        <TranslateTransform X="-8" Y="-2" />
-                                    </TextBlock.RenderTransform>
-                                    X+</TextBlock>
-                            </RadialMenu:RadialMenuItem>
+                        <Canvas Grid.Row="2" Grid.Column="2"  HorizontalAlignment="Center" >
+                            <Canvas.RenderTransform>
+                                <TransformGroup>
+                                    <RotateTransform Angle="45"></RotateTransform>
+                                    <TranslateTransform X="-5" Y="-132" />
+                                </TransformGroup>
+                            </Canvas.RenderTransform>
+                            <!-- Z- Z+ -->
+                            <RadialMenu:RadialMenu Margin="20 20 0 0" >
+                                <i:Interaction.Triggers>
+                                    <i:DataTrigger Binding="{Binding Calibration.Manipulator.Type}" Value="{x:Static enums:ManipulatorType.GantrySystemWR}">
+                                        <i:ChangePropertyAction PropertyName="IsOpen" Value="True"/>
+                                    </i:DataTrigger>
+                                    <i:DataTrigger Binding="{Binding Calibration.Manipulator.Type}" Value="{x:Static enums:ManipulatorType.GantrySystemR}">
+                                        <i:ChangePropertyAction PropertyName="IsOpen" Value="False"/>
+                                    </i:DataTrigger>
+                                    <i:DataTrigger Binding="{Binding Calibration.Manipulator.Type}" Value="{x:Static enums:ManipulatorType.SCARA}">
+                                        <i:ChangePropertyAction PropertyName="IsOpen" Value="False"/>
+                                    </i:DataTrigger>
+                                    <i:DataTrigger Binding="{Binding Calibration.Manipulator.Type}" Value="{x:Static enums:ManipulatorType.SixAxis}">
+                                        <i:ChangePropertyAction PropertyName="IsOpen" Value="False"/>
+                                    </i:DataTrigger>
+                                </i:Interaction.Triggers>
+                                <!-- MenuItems Around -->
 
-                            <RadialMenu:RadialMenuItem Command="{Binding JogCommand}" CommandParameter="Y-"  Style="{DynamicResource FancyRadialMenuItem}">
-                                <TextBlock>
-                                    <TextBlock.LayoutTransform>
-                                        <TransformGroup>
+                                <RadialMenu:RadialMenuItem Command="{Binding JogCommand}" CommandParameter="Z-"  Style="{DynamicResource FancyRadialMenuItem}">
+                                    <TextBlock Text="Z-">
+                                        <TextBlock.LayoutTransform>
+                                            <TransformGroup>
+                                                <RotateTransform Angle="-45"></RotateTransform>
+                                            </TransformGroup>
+                                        </TextBlock.LayoutTransform>
+                                        <TextBlock.RenderTransform>
+                                            <TranslateTransform X="-6" Y="-6"/>
+                                        </TextBlock.RenderTransform>
+                                    </TextBlock>
+                                </RadialMenu:RadialMenuItem>
+
+
+
+                                <RadialMenu:RadialMenuItem  Command="{Binding JogCommand}" CommandParameter="Z+" Style="{DynamicResource FancyRadialMenuItem}">
+                                    <TextBlock Text="Z+">
+                                        <TextBlock.LayoutTransform>
                                             <RotateTransform Angle="-45"></RotateTransform>
-                                        </TransformGroup>
-                                    </TextBlock.LayoutTransform>
-                                    <TextBlock.RenderTransform>
-                                        <TranslateTransform X="-6" Y="-6" />
-                                    </TextBlock.RenderTransform>
-                                    Y-</TextBlock>
-                            </RadialMenu:RadialMenuItem>
+                                        </TextBlock.LayoutTransform>
+                                    </TextBlock>
+                                </RadialMenu:RadialMenuItem>
 
-                            <RadialMenu:RadialMenuItem   Command="{Binding JogCommand}" CommandParameter="X-" Style="{DynamicResource FancyRadialMenuItem}">
-                                <TextBlock>
-                                    <TextBlock.LayoutTransform>
-                                        <RotateTransform Angle="-45"></RotateTransform>
-                                    </TextBlock.LayoutTransform>
-                                    <TextBlock.RenderTransform>
-                                        <TranslateTransform X="-2" Y="-8" />
-                                    </TextBlock.RenderTransform>
-                                    X-</TextBlock>
-                            </RadialMenu:RadialMenuItem>
 
-                            <RadialMenu:RadialMenuItem  Command="{Binding JogCommand}" CommandParameter="Y+" Style="{DynamicResource FancyRadialMenuItem}">
-                                <TextBlock>
-                                    <TextBlock.LayoutTransform>
-                                        <RotateTransform Angle="-45"></RotateTransform>
-                                    </TextBlock.LayoutTransform>Y+</TextBlock>
-                            </RadialMenu:RadialMenuItem>
+                                
 
-                            <!-- Add items as you want... -->
-                        </RadialMenu:RadialMenu>
-                    </Canvas>
-                    <Canvas Grid.Row="2" Grid.Column="2"  HorizontalAlignment="Center">
-                        <Canvas.RenderTransform>
-                            <TransformGroup>
-                                <RotateTransform Angle="45"></RotateTransform>
-                                <TranslateTransform X="-5" Y="-132" />
-                            </TransformGroup>
-                        </Canvas.RenderTransform>
+                            </RadialMenu:RadialMenu>
+                            <!-- Z- Z+ RZ- RZ+-->
+                            <RadialMenu:RadialMenu>
+                                <i:Interaction.Triggers>
+                                    <i:DataTrigger Binding="{Binding Calibration.Manipulator.Type}" Value="{x:Static enums:ManipulatorType.GantrySystemWR}">
+                                        <i:ChangePropertyAction PropertyName="IsOpen" Value="False"/>
+                                    </i:DataTrigger>
+                                    <i:DataTrigger Binding="{Binding Calibration.Manipulator.Type}" Value="{x:Static enums:ManipulatorType.GantrySystemR}">
+                                        <i:ChangePropertyAction PropertyName="IsOpen" Value="True"/>
+                                    </i:DataTrigger>
+                                    <i:DataTrigger Binding="{Binding Calibration.Manipulator.Type}" Value="{x:Static enums:ManipulatorType.SCARA}">
+                                        <i:ChangePropertyAction PropertyName="IsOpen" Value="True"/>
+                                    </i:DataTrigger>
+                                    <i:DataTrigger Binding="{Binding Calibration.Manipulator.Type}" Value="{x:Static enums:ManipulatorType.SixAxis}">
+                                        <i:ChangePropertyAction PropertyName="IsOpen" Value="True"/>
+                                    </i:DataTrigger>
+                                </i:Interaction.Triggers>
 
-                        <RadialMenu:RadialMenu Style="{DynamicResource HideRZ}">
+                                <!-- MenuItems Around -->
 
-                            <!-- MenuItems Around -->
-
-                            <RadialMenu:RadialMenuItem Command="{Binding JogCommand}" CommandParameter="Z-"  Style="{DynamicResource FancyRadialMenuItem}">
-                                <TextBlock >
-                                    <TextBlock.LayoutTransform>
-                                        <TransformGroup>
+                                <RadialMenu:RadialMenuItem Command="{Binding JogCommand}" CommandParameter="RZ+"  Style="{DynamicResource FancyRadialMenuItem}">
+                                    <TextBlock Text="RZ+">
+                                        <TextBlock.LayoutTransform>
                                             <RotateTransform Angle="-45"></RotateTransform>
-                                        </TransformGroup>
-                                    </TextBlock.LayoutTransform>
-                                    <TextBlock.RenderTransform>
-                                        <TranslateTransform X="-6" Y="-6"/>
-                                    </TextBlock.RenderTransform>
-                                    Z-</TextBlock>
-                            </RadialMenu:RadialMenuItem>
+                                        </TextBlock.LayoutTransform>
+                                        <TextBlock.RenderTransform>
+                                            <TranslateTransform X="-5" Y="-9" />
+                                        </TextBlock.RenderTransform>
+                                    </TextBlock>
+                                </RadialMenu:RadialMenuItem>
 
+                                <RadialMenu:RadialMenuItem Command="{Binding JogCommand}" CommandParameter="Z-"  Style="{DynamicResource FancyRadialMenuItem}">
+                                    <TextBlock Text="Z-">
+                                        <TextBlock.LayoutTransform>
+                                            <TransformGroup>
+                                                <RotateTransform Angle="-45"></RotateTransform>
+                                            </TransformGroup>
+                                        </TextBlock.LayoutTransform>
+                                        <TextBlock.RenderTransform>
+                                            <TranslateTransform X="-6" Y="-6" />
+                                        </TextBlock.RenderTransform>
+                                    </TextBlock>
+                                </RadialMenu:RadialMenuItem>
 
-
-                            <RadialMenu:RadialMenuItem  Command="{Binding JogCommand}" CommandParameter="Z+" Style="{DynamicResource FancyRadialMenuItem}">
-                                <TextBlock>
-                                    <TextBlock.LayoutTransform>
-                                        <RotateTransform Angle="-45"></RotateTransform>
-                                    </TextBlock.LayoutTransform>Z+</TextBlock>
-                            </RadialMenu:RadialMenuItem>
-
-
-                            <!-- Add items as you want... -->
-
-                        </RadialMenu:RadialMenu>
-                        <RadialMenu:RadialMenu IsOpen="{Binding Calibration.Manipulator.Type, Converter={StaticResource InverseTypeToBooleanConverter}}">
-
-
-                            <!-- MenuItems Around -->
-
-                            <RadialMenu:RadialMenuItem Command="{Binding JogCommand}" CommandParameter="RZ+"  Style="{DynamicResource FancyRadialMenuItem}">
-                                <TextBlock Text="RZ+ ">
-                                    <TextBlock.LayoutTransform>
-                                        <RotateTransform Angle="-45"></RotateTransform>
-                                    </TextBlock.LayoutTransform>
-                                    <TextBlock.RenderTransform>
-                                        <TranslateTransform X="-5" Y="-9" />
-                                    </TextBlock.RenderTransform>
-                                </TextBlock>
-                            </RadialMenu:RadialMenuItem>
-
-                            <RadialMenu:RadialMenuItem Command="{Binding JogCommand}" CommandParameter="Z-"  Style="{DynamicResource FancyRadialMenuItem}">
-                                <TextBlock>
-                                    <TextBlock.LayoutTransform>
-                                        <TransformGroup>
+                                <RadialMenu:RadialMenuItem  Command="{Binding JogCommand}" CommandParameter="RZ-" Style="{DynamicResource FancyRadialMenuItem}" >
+                                    <TextBlock Text="RZ-">
+                                        <TextBlock.LayoutTransform>
                                             <RotateTransform Angle="-45"></RotateTransform>
-                                        </TransformGroup>
-                                    </TextBlock.LayoutTransform>
-                                    <TextBlock.RenderTransform>
-                                        <TranslateTransform X="-6" Y="-6" />
-                                    </TextBlock.RenderTransform>
-                                    Z-</TextBlock>
-                            </RadialMenu:RadialMenuItem>
+                                        </TextBlock.LayoutTransform>
+                                        <TextBlock.RenderTransform>
+                                            <TranslateTransform X="0" Y="-10" />
+                                        </TextBlock.RenderTransform>
+                                    </TextBlock>
+                                </RadialMenu:RadialMenuItem>
 
-                            <RadialMenu:RadialMenuItem  Command="{Binding JogCommand}" CommandParameter="RZ-" Style="{DynamicResource FancyRadialMenuItem}" >
-                                <TextBlock>
-                                    <TextBlock.LayoutTransform>
-                                        <RotateTransform Angle="-45"></RotateTransform>
-                                    </TextBlock.LayoutTransform>
-                                    <TextBlock.RenderTransform>
-                                        <TranslateTransform X="0" Y="-10" />
-                                    </TextBlock.RenderTransform>
-                                    RZ-</TextBlock>
-                            </RadialMenu:RadialMenuItem>
+                                <RadialMenu:RadialMenuItem  Command="{Binding JogCommand}" CommandParameter="Z+" Style="{DynamicResource FancyRadialMenuItem}">
+                                    <TextBlock Text="Z+">
+                                        <TextBlock.LayoutTransform>
+                                            <RotateTransform Angle="-45"></RotateTransform>
+                                        </TextBlock.LayoutTransform>
+                                    </TextBlock>
+                                </RadialMenu:RadialMenuItem>
 
-                            <RadialMenu:RadialMenuItem  Command="{Binding JogCommand}" CommandParameter="Z+" Style="{DynamicResource FancyRadialMenuItem}">
-                                <TextBlock>
-                                    <TextBlock.LayoutTransform>
-                                        <RotateTransform Angle="-45"></RotateTransform>
-                                    </TextBlock.LayoutTransform>Z+</TextBlock>
-                            </RadialMenu:RadialMenuItem>
+                                <!-- Add items as you want... -->
+                            </RadialMenu:RadialMenu>
+                        </Canvas>
+                        <!--Inputs -->
+                        <ui:SimpleStackPanel Grid.Row="2" Grid.Column="0" Margin="10">
+                            <ui:SimpleStackPanel.Style>
+                                <Style TargetType="ui:SimpleStackPanel">
+                                    <Setter Property="Visibility" Value="Collapsed"/>
+                                    <Style.Triggers>
+                                        <DataTrigger Binding="{Binding Calibration.Manipulator.Type}" Value="{x:Static enums:ManipulatorType.SixAxis}">
+                                            <Setter Property="Visibility" Value="Visible"/>
+                                        </DataTrigger>
+                                    </Style.Triggers>
+                                </Style>
+                            </ui:SimpleStackPanel.Style>
 
-                            <!-- Add items as you want... -->
-                        </RadialMenu:RadialMenu>
-                    </Canvas>
-                    <ui:SimpleStackPanel Grid.Row="2" Grid.Column="0" Margin="10">
-                        <ui:SimpleStackPanel.Style>
-                            <Style TargetType="ui:SimpleStackPanel">
-                                <Setter Property="Visibility" Value="Collapsed"/>
-                                <Style.Triggers>
-                                    <DataTrigger Binding="{Binding Calibration.Manipulator.Type,Converter={StaticResource TypeToDescriptionConverter}}" Value="Gantry Without Rotary Axis">
-                                        <Setter Property="Visibility" Value="Visible"/>
-                                    </DataTrigger>
-                                </Style.Triggers>
-                            </Style>
-                        </ui:SimpleStackPanel.Style>
-                        <Button Content="Start Jog Tracking" Command="{Binding StartJogTrackingCommand}"/>
-                        <Label Content="XMove"/>
-                        <TextBlock Text="{Binding TrackedXMove}" Style="{DynamicResource ReadOnlyTextBlock}"/>
-                        <Label Content="YMove"/>
-                        <TextBlock Text="{Binding TrackedYMove}" Style="{DynamicResource ReadOnlyTextBlock}" />
-                    </ui:SimpleStackPanel>
-                    <Canvas Grid.Row="2" Grid.Column="0"  HorizontalAlignment="Center">
-                        <Canvas.RenderTransform>
-                            <TransformGroup>
+                        </ui:SimpleStackPanel>
 
-                                <TranslateTransform X="-155" Y="-70" />
-                            </TransformGroup>
-                        </Canvas.RenderTransform>
-                        <RadialMenu:RadialMenu Style="{DynamicResource HideRXRY}" >
-                            <!-- CentralMenuItem -->
+                        <!--RX RY-->
+                        <Canvas Grid.Row="2" Grid.Column="0"  HorizontalAlignment="Center">
+                            <Canvas.RenderTransform>
+                                <TransformGroup>
+                                    <TranslateTransform X="-155" Y="-70" />
+                                </TransformGroup>
+                            </Canvas.RenderTransform>
+                            <RadialMenu:RadialMenu >
+                                <i:Interaction.Triggers>
+                                    <i:DataTrigger Binding="{Binding Calibration.Manipulator.Type}" Value="{x:Static enums:ManipulatorType.GantrySystemWR}">
+                                        <i:ChangePropertyAction PropertyName="IsOpen" Value="False"/>
+                                    </i:DataTrigger>
+                                    <i:DataTrigger Binding="{Binding Calibration.Manipulator.Type}" Value="{x:Static enums:ManipulatorType.GantrySystemR}">
+                                        <i:ChangePropertyAction PropertyName="IsOpen" Value="False"/>
+                                    </i:DataTrigger>
+                                    <i:DataTrigger Binding="{Binding Calibration.Manipulator.Type}" Value="{x:Static enums:ManipulatorType.SCARA}">
+                                        <i:ChangePropertyAction PropertyName="IsOpen" Value="False"/>
+                                    </i:DataTrigger>
+                                    <i:DataTrigger Binding="{Binding Calibration.Manipulator.Type}" Value="{x:Static enums:ManipulatorType.SixAxis}">
+                                        <i:ChangePropertyAction PropertyName="IsOpen" Value="True"/>
+                                    </i:DataTrigger>
+                                </i:Interaction.Triggers>
 
-                            <!-- MenuItems Around -->
+                                <!-- MenuItems Around -->
 
-                            <RadialMenu:RadialMenuItem Command="{Binding JogCommand}" CommandParameter="RX+" Style="{DynamicResource FancyRadialMenuItem}" ContentRadius="49">
-                                <TextBlock>RX+</TextBlock>
-                            </RadialMenu:RadialMenuItem>
+                                <RadialMenu:RadialMenuItem Command="{Binding JogCommand}" CommandParameter="RX+" Style="{DynamicResource FancyRadialMenuItem}" ContentRadius="49">
+                                    <TextBlock Text="RX+"/>
+                                </RadialMenu:RadialMenuItem>
 
-                            <RadialMenu:RadialMenuItem Command="{Binding JogCommand}" CommandParameter="RY-" Style="{DynamicResource FancyRadialMenuItem}" ContentRadius="49">
-                                <TextBlock>RY-</TextBlock>
-                            </RadialMenu:RadialMenuItem>
+                                <RadialMenu:RadialMenuItem Command="{Binding JogCommand}" CommandParameter="RY-" Style="{DynamicResource FancyRadialMenuItem}" ContentRadius="49">
+                                    <TextBlock Text="RY-"/>
+                                </RadialMenu:RadialMenuItem>
 
-                            <RadialMenu:RadialMenuItem Command="{Binding JogCommand}" CommandParameter="RY+" Style="{DynamicResource FancyRadialMenuItem}" ContentRadius="49">
-                                <TextBlock>RY+</TextBlock>
-                            </RadialMenu:RadialMenuItem>
+                                <RadialMenu:RadialMenuItem Command="{Binding JogCommand}" CommandParameter="RY+" Style="{DynamicResource FancyRadialMenuItem}" ContentRadius="49">
+                                    <TextBlock Text="RY+"/>
+                                </RadialMenu:RadialMenuItem>
 
-                            <RadialMenu:RadialMenuItem Command="{Binding JogCommand}" CommandParameter="RX-" Style="{DynamicResource FancyRadialMenuItem}" ContentRadius="49">
-                                <TextBlock>RX-</TextBlock>
-                            </RadialMenu:RadialMenuItem>
+                                <RadialMenu:RadialMenuItem Command="{Binding JogCommand}" CommandParameter="RX-" Style="{DynamicResource FancyRadialMenuItem}" ContentRadius="49">
+                                    <TextBlock Text="RX-"/>
+                                </RadialMenu:RadialMenuItem>
 
-                            <!-- Add items as you want... -->
-                        </RadialMenu:RadialMenu>
-                    </Canvas>
-
-                    <ui:SimpleStackPanel  Orientation="Vertical" Grid.Row="1" Margin="5 0">
-                        <ui:NumberBox
+                                <!-- Add items as you want... -->
+                            </RadialMenu:RadialMenu>
+                        </Canvas>
+                        <ui:SimpleStackPanel  Orientation="Vertical" Grid.Row="1" Margin="5 0">
+                            <ui:NumberBox
                               Header="Jog Distance (mm)"
                               SpinButtonPlacementMode="Inline"
                               Margin="5"
                               x:Name="FormattedNumberBox"
                                 Value="{Binding JogDistance}">
-                        </ui:NumberBox>
-                        <ui:ToggleSwitch Header="Mode (Tool/Global)" OnContent="Global" IsOn="{Binding Calibration.Mode}" OffContent="Tool"></ui:ToggleSwitch>
-                        <ui:NumberBox
+                            </ui:NumberBox>
+                            <ui:ToggleSwitch Header="Mode (Tool/Global)" OnContent="Global" IsOn="{Binding Calibration.JogMode}" OffContent="Tool"></ui:ToggleSwitch>
+                            <ui:NumberBox
+                           
                             Header="Rotation Degree (°)"
                             SpinButtonPlacementMode="Inline"
                             Margin="5"
-                            Value="{Binding RotationAngle}"
-                            />
-                    </ui:SimpleStackPanel>
-                </Grid>
-            </GroupBox>
+                            Value="{Binding RotationAngle}"        
+                            >
+                                <ui:NumberBox.Style>
+                                    <Style TargetType="ui:NumberBox">
+                                        <Style.Triggers>
+                                            <DataTrigger Binding="{Binding Calibration.Manipulator.Type}" Value="{x:Static enums:ManipulatorType.GantrySystemWR}">
+                                                <Setter Property="Visibility" Value="Collapsed"/>
+                                            </DataTrigger>
+                                        </Style.Triggers>
+                                    </Style>
+                                </ui:NumberBox.Style>
+                            </ui:NumberBox>
+                        </ui:SimpleStackPanel>
+                    </Grid>
+                </GroupBox>
+
+
+            </Grid>
+
         </hc:FlexPanel>
     </ScrollViewer>
 </UserControl>

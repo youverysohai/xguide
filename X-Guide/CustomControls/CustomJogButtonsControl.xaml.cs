@@ -9,26 +9,20 @@ using System.Windows.Data;
 using System.Windows.Documents;
 using System.Windows.Input;
 using System.Windows.Media;
-using System.Windows.Media.Animation;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
-using Windows.Globalization.NumberFormatting;
 
-namespace X_Guide.MVVM.View.CalibrationWizardSteps
+namespace X_Guide.CustomControls
 {
     /// <summary>
-    /// Interaction logic for Step4.xaml
+    /// Interaction logic for CustomJogButtonsControl.xaml
     /// </summary>
-    public partial class Step4 : UserControl
+    public partial class CustomJogButtonsControl : UserControl
     {
-        public Step4()
+        public CustomJogButtonsControl()
         {
             InitializeComponent();
-        }
-        private void SetNumberBoxNumberFormatter()
-        {
-           
         }
     }
 }

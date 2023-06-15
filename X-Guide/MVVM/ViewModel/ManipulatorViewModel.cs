@@ -6,6 +6,7 @@ using System.Linq;
 using System.Runtime.InteropServices;
 using System.Text;
 using System.Threading.Tasks;
+using X_Guide.Enums;
 using X_Guide.MVVM.Model;
 
 namespace X_Guide.MVVM.ViewModel
@@ -20,7 +21,7 @@ namespace X_Guide.MVVM.ViewModel
         public string Description { get; set; }
 
 
-        public int Type { get; set; }
+        public ManipulatorType Type { get; set; }
 
         public object Clone()
         {

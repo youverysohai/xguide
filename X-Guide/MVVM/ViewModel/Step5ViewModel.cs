@@ -37,7 +37,7 @@ namespace X_Guide.MVVM.ViewModel
             get
             {
                 if (_visionService != null)
-                    _visionView.StartLiveImage();
+                    _visionView?.StartLiveImage();
                 return _visionView;
             }
             set => _visionView = value;
@@ -77,7 +77,7 @@ namespace X_Guide.MVVM.ViewModel
         public int TrackedXMove { get; set; }
         public int TrackedYMove { get; set; }
 
-        public Step5ViewModel(CalibrationViewModel calibrationConfig, IServerService serverService, IVisionService visionService, IJogService jogService, IVisionViewModel visionView, StateViewModel appState, IMessenger messenger)
+        public Step5ViewModel(CalibrationViewModel calibrationConfig, IServerService serverService, IVisionService visionService, IJogService jogService, StateViewModel appState, IMessenger messenger, IVisionViewModel visionView = null)
         {
             _serverService = serverService;
             _visionService = visionService;
@@ -85,11 +85,11 @@ namespace X_Guide.MVVM.ViewModel
             AppState = appState;
             _jogService = jogService;
             VisionView = visionView;
-            VisionView.SetConfig(_calibrationConfig);
+            VisionView?.SetConfig(_calibrationConfig);
             JogCommand = new RelayCommand(Jog, (o) => _canJog);
             StartJogTrackingCommand = new RelayCommand(StartJogTracking);
             messenger.Register(this);
-            VisionView.StartLiveImage();
+            VisionView?.StartLiveImage();
         }
 
         private void StartJogTracking(object obj)
