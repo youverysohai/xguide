@@ -3,6 +3,7 @@
 using CommunityToolkit.Mvvm.Messaging;
 
 using System;
+using System.Diagnostics.Tracing;
 using System.Linq;
 using System.Threading.Tasks;
 using ToastNotifications;
@@ -61,9 +62,10 @@ namespace X_Guide.MVVM.ViewModel
         public RelayCommand SaveCommand { get; set; }
         public RelayCommand CalibrateCommand { get; set; }
         public RelayCommand ConfirmCalibDataCommand { get; set; }
-
+        public event EventHandler OnCalibrationChanged;                         
         public Step6ViewModel(IServerService serverService, CalibrationViewModel calibrationConfig, IRepository repository, ICalibrationService calibService, IMapper mapper, Notifier notifier, IVisionService visionService, IVisionViewModel visionView, IMessenger messenger)
         {
+  
             _serverService = serverService;
             Calibration = calibrationConfig;
             _repository = repository;
@@ -125,19 +127,19 @@ namespace X_Guide.MVVM.ViewModel
 
         [ExceptionHandlingAspect]
         private async Task Save(object param)
-        {
-            Calibration calibration = _repository.Find<Calibration>(q => q.Id.Equals(Calibration.Id)).FirstOrDefault();
+        { 
+            //Calibration calibration = _repository.Find<Calibration>(q => q.Id.Equals(Calibration.Id)).FirstOrDefault();
 
-            if (calibration is null)
-            {
-                _repository.Create(_mapper.Map<Calibration>(Calibration));
-                _notifier.ShowSuccess(StrRetriver.Get("SC000"));
-            }
-            else
-            {
-                _repository.Update(_mapper.Map<Calibration>(Calibration));
-                _notifier.ShowSuccess($"{Calibration.Name} : {StrRetriver.Get("SC001")}");
-            }
+            //if (calibration is null)
+            //{
+            //    _repository.Create(_mapper.Map<Calibration>(Calibration));
+            //    _notifier.ShowSuccess(StrRetriver.Get("SC000"));
+            //}
+            //else
+            //{
+            //    _repository.Update(_mapper.Map<Calibration>(Calibration));
+            //    _notifier.ShowSuccess($"{Calibration.Name} : {StrRetriver.Get("SC001")}");
+            //}
         }
 
         public override void Dispose()

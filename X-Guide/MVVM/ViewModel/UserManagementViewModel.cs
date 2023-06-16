@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using CommunityToolkit.Mvvm.Messaging;
 using ModernWpf.Controls;
 using System;
 using System.Collections.ObjectModel;
@@ -41,9 +42,9 @@ namespace X_Guide.MVVM.ViewModel
 
         public ObservableCollection<UserRole> UserRoles { get; } = new ObservableCollection<UserRole>(Enum.GetValues(typeof(UserRole)).Cast<UserRole>());
 
-        public UserManagementViewModel(IMapper mapper, IRepository repository)
+        public UserManagementViewModel(IMapper mapper, IRepository repository, IMessenger messenger)
         {
-            _auth = new AuthenticationService(repository);
+            _auth = new AuthenticationService(repository, messenger);
             _mapper = mapper;
             SelectedUserCommand = new RelayCommand(OnUserChangeEvent);
             SaveUserCommand = new RelayCommand(SaveUser);

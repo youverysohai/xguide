@@ -47,7 +47,7 @@ namespace X_Guide
 
             builder.RegisterType<WeakReferenceMessenger>().As<IMessenger>().SingleInstance();
             builder.RegisterType<DisposeService>().As<IDisposeService>().SingleInstance();
-            builder.Register(c => new AuthenticationService(c.Resolve<IUserDb>(), c.Resolve<IMessenger>())).SingleInstance();
+            builder.Register(c => new AuthenticationService(c.Resolve<IRepository>(), c.Resolve<IMessenger>())).SingleInstance();
             builder.Register(c => new ViewModelLocator(_diContainer)).As<IViewModelLocator>().SingleInstance();
 
             builder.Register(c => new MainWindow()

@@ -1,4 +1,5 @@
 ﻿using Autofac;
+using CommunityToolkit.Mvvm.Messaging;
 using Microsoft.Extensions.Logging;
 using System;
 using System.Diagnostics;
@@ -121,9 +122,9 @@ namespace X_Guide.MVVM.ViewModel
 
         #endregion CLR properties
 
-        public MainViewModel(INavigationService navigationService, ILogger logger, StateViewModel state, IRepository repository)
+        public MainViewModel(INavigationService navigationService, ILogger logger, StateViewModel state, IRepository repository, IMessenger messenger)
         {
-            _auth = new AuthenticationService(repository);
+            _auth = new AuthenticationService(repository, messenger);
 
             AppState = state;
             AppState.OnStateChanged = OnLoadingStateChanged;

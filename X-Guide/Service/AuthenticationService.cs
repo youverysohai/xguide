@@ -1,4 +1,5 @@
-﻿using System.Linq;
+﻿using CommunityToolkit.Mvvm.Messaging;
+using System.Linq;
 using System.Security;
 using X_Guide.Validation;
 using XGuideSQLiteDB;
@@ -9,7 +10,7 @@ namespace X_Guide.Service
     public class AuthenticationService
     {
         private readonly IRepository _repository;
-
+        private readonly IMessenger _messenger;
         private User userModel;
 
         public User CurrentUser
@@ -23,9 +24,10 @@ namespace X_Guide.Service
 
         public bool IsLoggedIn => CurrentUser != null;
 
-        public AuthenticationService(IRepository repository)
+        public AuthenticationService(IRepository repository, IMessenger messenger)
         {
             _repository = repository;
+            _messenger = messenger;
         }
 
         public bool Login(string username, SecureString password)
