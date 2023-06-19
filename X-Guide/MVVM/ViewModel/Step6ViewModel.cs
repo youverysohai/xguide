@@ -3,9 +3,11 @@
 using CommunityToolkit.Mvvm.Messaging;
 
 using System;
+using System.Collections.Generic;
 using System.Diagnostics.Tracing;
 using System.Linq;
 using System.Threading.Tasks;
+using System.Windows.Documents;
 using ToastNotifications;
 using ToastNotifications.Messages;
 using X_Guide.Aspect;
@@ -29,6 +31,8 @@ namespace X_Guide.MVVM.ViewModel
 
         public CalibrationViewModel Calibration { get; set; }
         public CalibrationViewModel NewCalibration { get; set; }
+
+        public List<int> Order { get; set; } = new List<int>(new int[] { 0, 1, 2, 3, 4, 5, 6, 7, 8 });
 
         public IVisionViewModel VisionView { get; set; }
 
@@ -60,6 +64,7 @@ namespace X_Guide.MVVM.ViewModel
         }
 
         public RelayCommand SaveCommand { get; set; }
+        public RelayCommand TestingCommand { get; }
         public RelayCommand CalibrateCommand { get; set; }
         public RelayCommand ConfirmCalibDataCommand { get; set; }
         public event EventHandler OnCalibrationChanged;                         
@@ -77,18 +82,23 @@ namespace X_Guide.MVVM.ViewModel
             VisionView = visionView;
             _messenger = messenger;
             VisionView.SetConfig(calibrationConfig);
-
+            TestingCommand = new RelayCommand(Testing);
             CalibrateCommand = RelayCommand.FromAsyncRelayCommand(Calibrate);
             SaveCommand = RelayCommand.FromAsyncRelayCommand(Save);
             ConfirmCalibDataCommand = new RelayCommand(ConfirmCalibData);
             VisionView.ShowOutputImage();
         }
 
+        private void Testing(object obj)
+        {
+            WeakReferenceMessenger.Default.Send<CalibRequest>();
+        }
+
         private void ConfirmCalibData(object obj)
         {
             if (NewCalibration != null)
             {
-                Calibration.CXOffSet = NewCalibration.CXOffSet;
+                Calibration.CXOffset = NewCalibration.CXOffset;
                 Calibration.CYOffset = NewCalibration.CYOffset;
                 Calibration.CRZOffset = NewCalibration.CRZOffset;
                 Calibration.Mm_per_pixel = NewCalibration.Mm_per_pixel;
@@ -109,7 +119,7 @@ namespace X_Guide.MVVM.ViewModel
             CalibrationData calibrationData = await _calibService.EyeInHand2D_Calibrate(XOffset, YOffset, (int)Calibration.JointRotationAngle);
             if (Calibration.Mm_per_pixel != 0.0)
             {
-                NewCalibration.CXOffSet = calibrationData.X;
+                NewCalibration.CXOffset = calibrationData.X;
                 NewCalibration.CYOffset = calibrationData.Y;
                 NewCalibration.CRZOffset = calibrationData.Rz;
                 NewCalibration.Mm_per_pixel = calibrationData.mm_per_pixel;
@@ -117,7 +127,7 @@ namespace X_Guide.MVVM.ViewModel
             }
             else
             {
-                Calibration.CXOffSet = calibrationData.X;
+                Calibration.CXOffset = calibrationData.X;
                 Calibration.CYOffset = calibrationData.Y;
                 Calibration.CRZOffset = calibrationData.Rz;
                 Calibration.Mm_per_pixel = calibrationData.mm_per_pixel;

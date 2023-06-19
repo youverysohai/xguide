@@ -11,7 +11,7 @@
         public int XOffset { get; set; }
         public int YOffset { get; set; }
         public double JointRotationAngle { get; set; }
-        public double CXOffSet { get; set; }
+        public double CXOffset { get; set; }
         public double CYOffset { get; set; }
         public double CRZOffset { get; set; }
         public double Speed { get; set; }
@@ -35,7 +35,7 @@
         XOffset = 0;
         YOffset = 0;
         JointRotationAngle = 0.0;
-        CXOffSet = 0.0;
+        CXOffset = 0.0;
         CYOffset = 0.0;
         CRZOffset = 0.0;
         Speed = 0.0;
