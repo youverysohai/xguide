@@ -672,6 +672,7 @@
     <Compile Include="MappingConfiguration\ManipulatorProfile.cs" />
     <Compile Include="MappingConfiguration\UserProfile.cs" />
     <Compile Include="MappingConfiguration\VisionProfile.cs" />
+    <Compile Include="MessageToken\ReadyRequest.cs" />
     <Compile Include="MessageToken\MessageBoxRequest.cs" />
     <Compile Include="MessageToken\AuthenticationRequest.cs" />
     <Compile Include="MessageToken\UserLoginChanged.cs" />
