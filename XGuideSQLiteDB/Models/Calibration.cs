@@ -17,6 +17,8 @@ namespace XGuideSQLiteDB.Models
         public Nullable<int> MotionDelay { get; set; }
         public Nullable<int> XOffset { get; set; }
         public Nullable<int> YOffset { get; set; }
+        public int? XMove { get; set; }
+        public int? YMove { get; set; }
         public double MMPerPixel { get; set; }
         public double CRZOffset { get; set; }
         public double CYOffset { get; set; }

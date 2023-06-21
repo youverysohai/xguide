@@ -69,13 +69,13 @@ namespace X_Guide.CustomControls
             var custRenderControl = d as CustomRenderControl;
 
             custRenderControl.Unsubscribe();
-            
+
             var renderControl = custRenderControl.r_control;
-                       
+
             renderControl.ImageSource = null;
-            
+
             renderControl.ModuleSource = e.NewValue as IVmModule;
-                       
+
             custRenderControl.loadingCircle.Visibility = Visibility.Collapsed;
             custRenderControl.loadingCircle.IsRunning = false;
         }

@@ -1,29 +1,8 @@
-﻿
-using MaterialDesignThemes.Wpf;
-using ModernWpf;
-using ModernWpf.Controls;
+﻿using ModernWpf;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
-using System.Windows.Threading;
-using X_Guide.MVVM.View;
-using X_Guide.MVVM.View.CalibrationWizardSteps;
 using X_Guide.MVVM.ViewModel;
-using Microsoft.Xaml.Behaviors;
-using X_Guide.MVVM.ViewModel.CalibrationWizardSteps;
-using X_Guide.MVVM;
-using Windows.UI.WindowManagement;
 
 namespace X_Guide
 {
@@ -39,12 +18,13 @@ namespace X_Guide
             //{
             //    this.DateTimeTextBlock.Text = DateTime.Now.ToString("dddd, MMM dd yyyy, hh:mm:ss");
             //}, this.Dispatcher);
-
         }
+
         private async void DisplaySignUpDialog()
         {
             await RegisterDialog.ShowAsync();
         }
+
         private async void DisplayLoginDialog()
         {
             await LoginDialog.ShowAsync();
@@ -58,26 +38,25 @@ namespace X_Guide
             {
                 var tm = ThemeManager.Current;
                 var handyTM = HandyControl.Themes.ThemeManager.Current;
-                
+
                 if (tm.ActualApplicationTheme == ApplicationTheme.Dark)
                 {
                     tm.ApplicationTheme = ApplicationTheme.Light;
                     handyTM.ApplicationTheme = HandyControl.Themes.ApplicationTheme.Light;
                     // Set the Light theme ResourceDictionary
-              
+
                     Application.Current.Resources.MergedDictionaries.Add(new ResourceDictionary
                     {
                         Source = new Uri("/MaterialDesignThemes.Wpf;component/Themes/MaterialDesignTheme.Light.xaml", UriKind.Relative)
                     });
                     BrightIcon.Visibility = Visibility.Visible;
                     DarkIcon.Visibility = Visibility.Collapsed;
-
                 }
                 else
                 {
                     tm.ApplicationTheme = ApplicationTheme.Dark;
                     handyTM.ApplicationTheme = HandyControl.Themes.ApplicationTheme.Dark;
-                     
+
                     Application.Current.Resources.MergedDictionaries.Add(new ResourceDictionary
                     {
                         Source = new Uri("/MaterialDesignThemes.Wpf;component/Themes/MaterialDesignTheme.Dark.xaml", UriKind.Relative)
@@ -105,13 +84,6 @@ namespace X_Guide
             DisplaySignUpDialog();
         }
 
-
-
-
-
-
-
-
         private void PasswordBox_PasswordChanged(object sender, RoutedEventArgs e)
         {
             if (sender != null)
@@ -125,7 +97,4 @@ namespace X_Guide
             DisplayLoginDialog();
         }
     }
-
-
 }
-

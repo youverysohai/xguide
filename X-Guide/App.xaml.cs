@@ -10,7 +10,8 @@ using System.Net;
 using System.Windows;
 using ToastNotifications;
 using ToastNotifications.Lifetime;
-using ToastNotifications.Messages;
+
+//using ToastNotifications.Messages;
 using ToastNotifications.Position;
 using X_Guide.Communication.Service;
 using X_Guide.Enums;
@@ -214,8 +215,8 @@ namespace X_Guide
             finally
             {
                 MainWindow.Show();
-                if (!viewModelState.IsCalibValid)
-                    Notifier.ShowError(StrRetriver.Get("VI003"));
+                //if (!viewModelState.IsCalibValid)
+                //    Notifier.ShowError(StrRetriver.Get("VI003"));
             }
         }
 

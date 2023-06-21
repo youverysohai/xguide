@@ -1,15 +1,12 @@
-﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.2.32630.192
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "X-Guide", "X-Guide\X-Guide.csproj", "{78569E50-901C-44AC-8244-55E77301D8A4}"
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CalibrationTesting", "CalibrationTesting\CalibrationTesting.csproj", "{D3446941-69A6-47C8-AE3F-D15A0F715936}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "X-Guide", "X-Guide\X-Guide.csproj", "{78569E50-901C-44AC-8244-55E77301D8A4}"
 EndProject
 Project("{54435603-DBB4-11D2-8724-00A0C9A8B90C}") = "X-Guide Setup", "X-Guide Setup\X-Guide Setup.vdproj", "{185EDC6A-006F-4584-AD6B-0DAC1BF0926B}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "XGuideSQLiteDB", "XGuideSQLiteDB\XGuideSQLiteDB.csproj", "{3224366D-9BAC-476C-8C39-1D819B9BADB8}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "XGuideSQLiteDB", "XGuideSQLiteDB\XGuideSQLiteDB.csproj", "{3224366D-9BAC-476C-8C39-1D819B9BADB8}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -23,8 +20,8 @@ Global
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
 		{78569E50-901C-44AC-8244-55E77301D8A4}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{78569E50-901C-44AC-8244-55E77301D8A4}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{78569E50-901C-44AC-8244-55E77301D8A4}.Debug|x64.ActiveCfg = Debug|x64
-		{78569E50-901C-44AC-8244-55E77301D8A4}.Debug|x64.Build.0 = Debug|x64
+		{78569E50-901C-44AC-8244-55E77301D8A4}.Debug|x64.ActiveCfg = Debug|Any CPU
+		{78569E50-901C-44AC-8244-55E77301D8A4}.Debug|x64.Build.0 = Debug|Any CPU
 		{78569E50-901C-44AC-8244-55E77301D8A4}.Debug|x86.ActiveCfg = Debug|x64
 		{78569E50-901C-44AC-8244-55E77301D8A4}.Debug|x86.Build.0 = Debug|x64
 		{78569E50-901C-44AC-8244-55E77301D8A4}.Release|Any CPU.ActiveCfg = Release|Any CPU
@@ -33,18 +30,6 @@ Global
 		{78569E50-901C-44AC-8244-55E77301D8A4}.Release|x64.Build.0 = Release|x64
 		{78569E50-901C-44AC-8244-55E77301D8A4}.Release|x86.ActiveCfg = Release|Any CPU
 		{78569E50-901C-44AC-8244-55E77301D8A4}.Release|x86.Build.0 = Release|Any CPU
-		{D3446941-69A6-47C8-AE3F-D15A0F715936}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{D3446941-69A6-47C8-AE3F-D15A0F715936}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{D3446941-69A6-47C8-AE3F-D15A0F715936}.Debug|x64.ActiveCfg = Debug|Any CPU
-		{D3446941-69A6-47C8-AE3F-D15A0F715936}.Debug|x64.Build.0 = Debug|Any CPU
-		{D3446941-69A6-47C8-AE3F-D15A0F715936}.Debug|x86.ActiveCfg = Debug|Any CPU
-		{D3446941-69A6-47C8-AE3F-D15A0F715936}.Debug|x86.Build.0 = Debug|Any CPU
-		{D3446941-69A6-47C8-AE3F-D15A0F715936}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{D3446941-69A6-47C8-AE3F-D15A0F715936}.Release|Any CPU.Build.0 = Release|Any CPU
-		{D3446941-69A6-47C8-AE3F-D15A0F715936}.Release|x64.ActiveCfg = Release|Any CPU
-		{D3446941-69A6-47C8-AE3F-D15A0F715936}.Release|x64.Build.0 = Release|Any CPU
-		{D3446941-69A6-47C8-AE3F-D15A0F715936}.Release|x86.ActiveCfg = Release|Any CPU
-		{D3446941-69A6-47C8-AE3F-D15A0F715936}.Release|x86.Build.0 = Release|Any CPU
 		{185EDC6A-006F-4584-AD6B-0DAC1BF0926B}.Debug|Any CPU.ActiveCfg = Debug
 		{185EDC6A-006F-4584-AD6B-0DAC1BF0926B}.Debug|x64.ActiveCfg = Debug
 		{185EDC6A-006F-4584-AD6B-0DAC1BF0926B}.Debug|x86.ActiveCfg = Debug

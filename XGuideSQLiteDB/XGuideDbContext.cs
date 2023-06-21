@@ -1,36 +1,24 @@
-﻿using SQLite.CodeFirst;
-using System.Data.Entity;
-using System.Data.Entity.Migrations;
-using System.Data.SQLite.EF6.Migrations;
+﻿using Microsoft.EntityFrameworkCore;
+using System;
 using XGuideSQLiteDB.Models;
 
 namespace XGuideSQLiteDB
 {
     public class XGuideDbContext : DbContext
     {
-        static XGuideDbContext()
-        {
-            Database.SetInitializer(new MigrateDatabaseToLatestVersion<XGuideDbContext, ContextMigrationConfiguration>());
-        }
-
-        protected override void OnModelCreating(DbModelBuilder modelBuilder)
-        {
-            var sqliteConnectionInitializer = new SqliteCreateDatabaseIfNotExists<XGuideDbContext>(modelBuilder);
-            Database.SetInitializer(sqliteConnectionInitializer);
-        }
-
         public DbSet<User> Users { get; set; }
         public DbSet<Calibration> Calibrations { get; set; }
         public DbSet<Manipulator> Manipulators { get; set; }
-    }
 
-    public sealed class ContextMigrationConfiguration : DbMigrationsConfiguration<XGuideDbContext>
-    {
-        public ContextMigrationConfiguration()
+        public string DbPath { get; }
+
+        public XGuideDbContext()
         {
-            AutomaticMigrationsEnabled = true;
-            AutomaticMigrationDataLossAllowed = true;
-            SetSqlGenerator("System.Data.SQLite", new SQLiteMigrationSqlGenerator());
+            var folder = Environment.SpecialFolder.LocalApplicationData;
+            var path = Environment.GetFolderPath(folder);
+            DbPath = System.IO.Path.Join(path, "blogging.db");
         }
+
+        protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder) => optionsBuilder.UseSqlite($"Data Source={DbPath}");
     }
 }

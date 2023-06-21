@@ -1,5 +1,6 @@
 ﻿using System;
-using ToastNotifications.Messages;
+
+//using ToastNotifications.Messages;
 
 namespace X_Guide.Aspect
 {
@@ -7,7 +8,7 @@ namespace X_Guide.Aspect
     {
         public static void HandleException(Exception exception)
         {
-            App.Notifier.ShowError(exception.Message);
+            //App.Notifier.ShowError(exception.Message);
         }
     }
 }

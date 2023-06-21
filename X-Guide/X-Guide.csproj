@@ -1,21 +1,9 @@
-﻿<?xml version="1.0" encoding="utf-8"?>
-<Project ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
-  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+﻿<Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
+    <TargetFramework>net7.0-windows</TargetFramework>
     <NullableContextOptions>enable</NullableContextOptions>
-    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
-    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{78569E50-901C-44AC-8244-55E77301D8A4}</ProjectGuid>
     <OutputType>WinExe</OutputType>
     <RootNamespace>X_Guide</RootNamespace>
-    <AssemblyName>X-Guide</AssemblyName>
-    <TargetFrameworkVersion>v4.8</TargetFrameworkVersion>
-    <FileAlignment>512</FileAlignment>
-    <ProjectTypeGuids>{60dc8134-eba5-43b8-bcc9-bb4bc16c2548};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
-    <WarningLevel>4</WarningLevel>
-    <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
-    <Deterministic>true</Deterministic>
-    <TargetFrameworkProfile />
     <IsWebBootstrapper>false</IsWebBootstrapper>
     <PublishUrl>C:\Users\Xlent_XIR02\source\XGuideV1.0\</PublishUrl>
     <Install>true</Install>
@@ -33,47 +21,18 @@
     <UseApplicationTrust>false</UseApplicationTrust>
     <PublishWizardCompleted>true</PublishWizardCompleted>
     <BootstrapperEnabled>true</BootstrapperEnabled>
-  </PropertyGroup>
-  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
-    <PlatformTarget>AnyCPU</PlatformTarget>
-    <DebugSymbols>true</DebugSymbols>
-    <DebugType>full</DebugType>
-    <Optimize>false</Optimize>
-    <OutputPath>bin\Debug\</OutputPath>
-    <DefineConstants>DEBUG;TRACE</DefineConstants>
-    <ErrorReport>prompt</ErrorReport>
-    <WarningLevel>4</WarningLevel>
-  </PropertyGroup>
-  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
-    <PlatformTarget>AnyCPU</PlatformTarget>
-    <DebugType>pdbonly</DebugType>
-    <Optimize>true</Optimize>
-    <OutputPath>bin\Release\</OutputPath>
-    <DefineConstants>TRACE</DefineConstants>
-    <ErrorReport>prompt</ErrorReport>
-    <WarningLevel>4</WarningLevel>
+    <GenerateAssemblyInfo>false</GenerateAssemblyInfo>
+    <UseWindowsForms>true</UseWindowsForms>
+    <UseWPF>true</UseWPF>
+    <ImportWindowsDesktopTargets>true</ImportWindowsDesktopTargets>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug|x64'">
-    <DebugSymbols>true</DebugSymbols>
     <OutputPath>bin\x64\Debug\</OutputPath>
-    <DefineConstants>DEBUG;TRACE</DefineConstants>
-    <DebugType>full</DebugType>
-    <PlatformTarget>x64</PlatformTarget>
-    <LangVersion>7.3</LangVersion>
-    <ErrorReport>prompt</ErrorReport>
-    <Prefer32Bit>true</Prefer32Bit>
     <DocumentationFile>bin\x64\Debug\X-Guide.xml</DocumentationFile>
     <NoWarn>1591</NoWarn>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Release|x64'">
     <OutputPath>bin\x64\Release\</OutputPath>
-    <DefineConstants>TRACE</DefineConstants>
-    <Optimize>true</Optimize>
-    <DebugType>pdbonly</DebugType>
-    <PlatformTarget>x64</PlatformTarget>
-    <LangVersion>7.3</LangVersion>
-    <ErrorReport>prompt</ErrorReport>
-    <Prefer32Bit>true</Prefer32Bit>
   </PropertyGroup>
   <PropertyGroup>
     <ManifestCertificateThumbprint>552639BF0B627E9C3E5877D587B66DC729419387</ManifestCertificateThumbprint>
@@ -94,987 +53,58 @@
     <Reference Include="halcondotnet">
       <HintPath>..\..\..\..\..\..\Program Files\MVTec\HALCON-22.11-Steady\bin\dotnet35\halcondotnet.dll</HintPath>
     </Reference>
-    <Reference Include="hdevenginedotnet">
-      <HintPath>..\..\..\..\..\..\Program Files\MVTec\HALCON-22.11-Steady\bin\dotnet35\hdevenginedotnet.dll</HintPath>
-    </Reference>
-    <Reference Include="IMVSBlobFindModuCs, Version=1.0.0.0, Culture=neutral, PublicKeyToken=7fe8bad26cdedb7b, processorArchitecture=MSIL">
-      <Private>False</Private>
-    </Reference>
-    <Reference Include="IMVSBlobFindLabelsModuCs, Version=1.0.0.0, Culture=neutral, PublicKeyToken=b8b30db40c995949, processorArchitecture=MSIL">
-      <Private>False</Private>
-    </Reference>
-    <Reference Include="IMVSBoxMergeModuCs, Version=1.0.0.0, Culture=neutral, PublicKeyToken=c869d688c6719f8d, processorArchitecture=MSIL">
-      <Private>False</Private>
-    </Reference>
-    <Reference Include="IMVSBoxFilterModuleCs, Version=1.0.0.0, Culture=neutral, PublicKeyToken=619b5d81294f24b3, processorArchitecture=MSIL">
-      <Private>False</Private>
-    </Reference>
-    <Reference Include="IMVSBoxOverlapCalculationModuCs, Version=1.0.0.0, Culture=neutral, PublicKeyToken=274d19f8bbc7ef2f, processorArchitecture=MSIL">
-      <Private>False</Private>
-    </Reference>
-    <Reference Include="ImageCollectDalsaModuCs, Version=1.0.0.0, Culture=neutral, PublicKeyToken=48bc90db4681f2a4, processorArchitecture=MSIL">
-      <Private>False</Private>
-    </Reference>
-    <Reference Include="ImageCollectIKModuCs, Version=1.0.0.0, Culture=neutral, PublicKeyToken=0181360a23a70c81, processorArchitecture=MSIL">
-      <Private>False</Private>
-    </Reference>
-    <Reference Include="IMVSNImageCalibModuCs, Version=1.0.0.0, Culture=neutral, PublicKeyToken=0702e4ab0478508e, processorArchitecture=MSIL">
-      <Private>False</Private>
-    </Reference>
-    <Reference Include="IMVSNPointCalibModuCs, Version=1.0.0.0, Culture=neutral, PublicKeyToken=da4efc9666ec3aaa, processorArchitecture=MSIL">
-      <Private>False</Private>
-    </Reference>
-    <Reference Include="IMVSMedianLineFindModuCs, Version=1.0.0.0, Culture=neutral, PublicKeyToken=487755f75952dd4d, processorArchitecture=MSIL">
-      <Private>False</Private>
-    </Reference>
-    <Reference Include="IMVS2dBcrModuCs, Version=1.0.0.0, Culture=neutral, PublicKeyToken=2d71b6e5385ea779, processorArchitecture=MSIL">
-      <Private>False</Private>
-    </Reference>
-    <Reference Include="IMVS2dArrayCorrectModuCs, Version=1.0.0.0, Culture=neutral, PublicKeyToken=9debcbec6ff7603a, processorArchitecture=MSIL">
-      <Private>False</Private>
-    </Reference>
-    <Reference Include="IMVSIntensityMeasureModuCs, Version=1.0.0.0, Culture=neutral, PublicKeyToken=6f453ce2b77ccc58, processorArchitecture=MSIL">
-      <Private>False</Private>
-    </Reference>
-    <Reference Include="IMVSAffineTransformModuCs, Version=1.0.0.0, Culture=neutral, PublicKeyToken=791f18aaf7c22f80, processorArchitecture=MSIL">
-      <Private>False</Private>
-    </Reference>
-    <Reference Include="IMVSFixtureModuCs, Version=1.0.0.0, Culture=neutral, PublicKeyToken=e4dad505120a5f52, processorArchitecture=MSIL">
-      <Private>False</Private>
-    </Reference>
-    <Reference Include="IMVSPixelCountModuCs, Version=1.0.0.0, Culture=neutral, PublicKeyToken=1fa808cae911914b, processorArchitecture=MSIL">
-      <Private>False</Private>
-    </Reference>
-    <Reference Include="LightModuleCs, Version=1.0.0.0, Culture=neutral, PublicKeyToken=1fb84aefb2e60473, processorArchitecture=MSIL">
-      <Private>False</Private>
-    </Reference>
-    <Reference Include="LightControlCs, Version=1.0.0.0, Culture=neutral, PublicKeyToken=d708150847bf22aa, processorArchitecture=MSIL">
-      <Private>False</Private>
-    </Reference>
-    <Reference Include="GlobalVariableModuleCs, Version=1.0.0.0, Culture=neutral, PublicKeyToken=df9beaf7c020f858, processorArchitecture=MSIL">
-      <Private>False</Private>
-    </Reference>
-    <Reference Include="GlobalCameraModuleCs, Version=1.0.0.0, Culture=neutral, PublicKeyToken=48e7ef5a1f43f965, processorArchitecture=MSIL">
-      <Private>False</Private>
-    </Reference>
-    <Reference Include="GeometryCreateCs, Version=1.0.0.0, Culture=neutral, PublicKeyToken=e5ea1d4f14e531ae, processorArchitecture=MSIL">
-      <Private>False</Private>
-    </Reference>
-    <Reference Include="IMVSGeometricTransformModuCs, Version=1.0.0.0, Culture=neutral, PublicKeyToken=0d28241102e48e42, processorArchitecture=MSIL">
-      <Private>False</Private>
-    </Reference>
-    <Reference Include="BranchStringCpmLCs, Version=1.0.0.0, Culture=neutral, PublicKeyToken=9f2feacddadafb85, processorArchitecture=MSIL">
-      <Private>False</Private>
-    </Reference>
-    <Reference Include="BranchModule_STDCs, Version=1.0.0.0, Culture=neutral, PublicKeyToken=b25f4e77d5151502, processorArchitecture=MSIL">
-      <Private>False</Private>
-    </Reference>
-    <Reference Include="IMVSDivideImageModuCs, Version=1.0.0.0, Culture=neutral, PublicKeyToken=8e6b2d97ab3e4c5d, processorArchitecture=MSIL">
-      <Private>False</Private>
-    </Reference>
-    <Reference Include="DataAssembleModuleCs, Version=1.0.0.0, Culture=neutral, PublicKeyToken=d8aaebd8aa6cb7f2, processorArchitecture=MSIL">
-      <Private>False</Private>
-    </Reference>
-    <Reference Include="DataAnalysisModuleCs, Version=1.0.0.0, Culture=neutral, PublicKeyToken=d044ff23bc3e0a86, processorArchitecture=MSIL">
-      <Private>False</Private>
-    </Reference>
-    <Reference Include="IMVSScaleTransformModuCs, Version=1.0.0.0, Culture=neutral, PublicKeyToken=2359f74d2b1d4722, processorArchitecture=MSIL">
-      <Private>False</Private>
-    </Reference>
-    <Reference Include="IMVSSinglePointAlignModuCs, Version=1.0.0.0, Culture=neutral, PublicKeyToken=b3fdadaaeb190014, processorArchitecture=MSIL">
-      <Private>False</Private>
-    </Reference>
-    <Reference Include="SinglePointGrabModuCs, Version=1.0.0.0, Culture=neutral, PublicKeyToken=fb4f07aaff38d00b, processorArchitecture=MSIL">
-      <Private>False</Private>
-    </Reference>
-    <Reference Include="SinglePointMapAlignModuCs, Version=1.0.0.0, Culture=neutral, PublicKeyToken=edbf9ebcc0decc59, processorArchitecture=MSIL">
-      <Private>False</Private>
-    </Reference>
-    <Reference Include="SinglePointRectifyModuCs, Version=1.0.0.0, Culture=neutral, PublicKeyToken=843323ef518abdec, processorArchitecture=MSIL">
-      <Private>False</Private>
-    </Reference>
-    <Reference Include="IMVSCaliperModuCs, Version=1.0.0.0, Culture=neutral, PublicKeyToken=edbac3fa644be2c3, processorArchitecture=MSIL">
-      <Private>False</Private>
-    </Reference>
-    <Reference Include="SendDatasModuleCs, Version=1.0.0.0, Culture=neutral, PublicKeyToken=b327819980f6c95d, processorArchitecture=MSIL">
-      <Private>False</Private>
-    </Reference>
-    <Reference Include="CalculatorModuleCs, Version=1.0.0.0, Culture=neutral, PublicKeyToken=05c54d68067b9216, processorArchitecture=MSIL">
-      <Private>False</Private>
-    </Reference>
-    <Reference Include="IMVSQuadrangleFindModuCs, Version=1.0.0.0, Culture=neutral, PublicKeyToken=9cd04858519c6211, processorArchitecture=MSIL">
-      <Private>False</Private>
-    </Reference>
-    <Reference Include="IMVSBinaryModuCs, Version=1.0.0.0, Culture=neutral, PublicKeyToken=56b1b826c649d79f, processorArchitecture=MSIL">
-      <Private>False</Private>
-    </Reference>
-    <Reference Include="IMVSImageFixtureModuCs, Version=1.0.0.0, Culture=neutral, PublicKeyToken=5ace97d2205d0b8b, processorArchitecture=MSIL">
-      <Private>False</Private>
-    </Reference>
-    <Reference Include="IMVSImageEnhanceModuCs, Version=1.0.0.0, Culture=neutral, PublicKeyToken=3cb886856ce96947, processorArchitecture=MSIL">
-      <Private>False</Private>
-    </Reference>
-    <Reference Include="IMVSImageNormlizeModuCs, Version=1.0.0.0, Culture=neutral, PublicKeyToken=e6513c7a5ccaae57, processorArchitecture=MSIL">
-      <Private>False</Private>
-    </Reference>
-    <Reference Include="IMVSImgStitchCalibModuCs, Version=1.0.0.0, Culture=neutral, PublicKeyToken=0e461369836383d8, processorArchitecture=MSIL">
-      <Private>False</Private>
-    </Reference>
-    <Reference Include="ImageSourceModuleCs, Version=1.0.0.0, Culture=neutral, PublicKeyToken=6a03c4a48a6df5e6, processorArchitecture=MSIL">
-      <Private>False</Private>
-    </Reference>
-    <Reference Include="IMVSImageFilterModuCs, Version=1.0.0.0, Culture=neutral, PublicKeyToken=ed6eecc75ac3200c, processorArchitecture=MSIL">
-      <Private>False</Private>
-    </Reference>
-    <Reference Include="IMVSImageCorrectManualModuCs, Version=1.0.0.0, Culture=neutral, PublicKeyToken=254d45ffa21143af, processorArchitecture=MSIL">
-      <Private>False</Private>
-    </Reference>
-    <Reference Include="IMVSImageCombineProcessModuCs, Version=1.0.0.0, Culture=neutral, PublicKeyToken=10a06994332f2fc3, processorArchitecture=MSIL">
-      <Private>False</Private>
-    </Reference>
-    <Reference Include="IMVSImageResizeModuCs, Version=1.0.0.0, Culture=neutral, PublicKeyToken=2259d23cef2bdbc9, processorArchitecture=MSIL">
-      <Private>False</Private>
-    </Reference>
-    <Reference Include="IMVSImageMathModuCs, Version=1.0.0.0, Culture=neutral, PublicKeyToken=c2ed9ac3e656449a, processorArchitecture=MSIL">
-      <Private>False</Private>
-    </Reference>
-    <Reference Include="IMVSMarkFindModuCs, Version=1.0.0.0, Culture=neutral, PublicKeyToken=f5b7001f1805d7f5, processorArchitecture=MSIL">
-      <Private>False</Private>
-    </Reference>
-    <Reference Include="GraphicsSetModuleCs, Version=1.0.0.0, Culture=neutral, PublicKeyToken=969f13d2d78c3370, processorArchitecture=MSIL">
-      <Private>False</Private>
-    </Reference>
-    <Reference Include="IMVSC2CMeasureModuCs, Version=1.0.0.0, Culture=neutral, PublicKeyToken=50a6501e070f5742, processorArchitecture=MSIL">
-      <Private>False</Private>
-    </Reference>
-    <Reference Include="IMVSCircleEdgePairInspModuCs, Version=1.0.0.0, Culture=neutral, PublicKeyToken=dbd7725f6ba13758, processorArchitecture=MSIL">
-      <Private>False</Private>
-    </Reference>
-    <Reference Include="IMVSCircleEdgeInspModuCs, Version=1.0.0.0, Culture=neutral, PublicKeyToken=2a7209f682f18210, processorArchitecture=MSIL">
-      <Private>False</Private>
-    </Reference>
-    <Reference Include="IMVSCircleFitModuCs, Version=1.0.0.0, Culture=neutral, PublicKeyToken=43056db02cf11d53, processorArchitecture=MSIL">
-      <Private>False</Private>
-    </Reference>
-    <Reference Include="IMVSCircleFindModuCs, Version=1.0.0.0, Culture=neutral, PublicKeyToken=cbed95538e129137, processorArchitecture=MSIL">
-      <Private>False</Private>
-    </Reference>
-    <Reference Include="IMVSPolarUnwarpModuCs, Version=1.0.0.0, Culture=neutral, PublicKeyToken=db47c4ad5a33133d, processorArchitecture=MSIL">
-      <Private>False</Private>
-    </Reference>
-    <Reference Include="CoordinateTransformCs, Version=1.0.0.0, Culture=neutral, PublicKeyToken=7f0c5d9200530b61, processorArchitecture=MSIL">
-      <Private>False</Private>
-    </Reference>
-    <Reference Include="IMVSVerticalLineFindModuCs, Version=1.0.0.0, Culture=neutral, PublicKeyToken=5e28ebef07bf0020, processorArchitecture=MSIL">
-      <Private>False</Private>
-    </Reference>
-    <Reference Include="Apps.ColorFun, Version=1.0.0.0, Culture=neutral, PublicKeyToken=cfdb8c430127f15b, processorArchitecture=MSIL">
-      <Private>False</Private>
-    </Reference>
-    <Reference Include="System.Design" />
     <Reference Include="VisionGuided, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>src\VisionGuided.dll</HintPath>
     </Reference>
-    <Reference Include="VM.Core, Version=1.0.0.0, Culture=neutral, PublicKeyToken=61600122bc9264b9, processorArchitecture=MSIL">
-      <Private>False</Private>
+    <Reference Include="VM.Core">
+      <HintPath>..\..\..\..\..\..\Program Files\VisionMaster4.2.0\Development\V4.x\ComControls\Assembly\VM.Core.dll</HintPath>
     </Reference>
-    <Reference Include="VM.PlatformSDKCS, Version=1.0.0.0, Culture=neutral, PublicKeyToken=c1484a72052ee3d4, processorArchitecture=MSIL">
-      <Private>False</Private>
+    <Reference Include="VM.PlatformSDKCS">
+      <HintPath>..\..\..\..\..\..\Program Files\VisionMaster4.2.0\Development\V4.x\ComControls\Assembly\VM.PlatformSDKCS.dll</HintPath>
     </Reference>
-    <Reference Include="VMControls.BaseInterface, Version=1.0.0.0, Culture=neutral, PublicKeyToken=14444b8df74b6e6a, processorArchitecture=MSIL">
-      <Private>False</Private>
+    <Reference Include="VMControls.Interface">
+      <HintPath>..\..\..\..\..\..\Program Files\VisionMaster4.2.0\Development\V4.x\ComControls\Assembly\VMControls.Interface.dll</HintPath>
     </Reference>
-    <Reference Include="VMControls.WPF.Release, Version=1.0.0.0, Culture=neutral, PublicKeyToken=fdd2c8be7291c30c, processorArchitecture=MSIL">
-      <Private>False</Private>
+    <Reference Include="VMControls.RenderInterface">
+      <HintPath>..\..\..\..\..\..\Program Files\VisionMaster4.2.0\Development\V4.x\ComControls\Assembly\VMControls.RenderInterface.dll</HintPath>
     </Reference>
-    <Reference Include="VMControls.Interface, Version=1.0.0.0, Culture=neutral, PublicKeyToken=cb41614600cf774b, processorArchitecture=MSIL">
-      <Private>False</Private>
-    </Reference>
-    <Reference Include="VMControls.RenderInterface, Version=1.0.0.0, Culture=neutral, PublicKeyToken=4bcfc50547abbb24, processorArchitecture=MSIL">
-      <Private>False</Private>
-    </Reference>
-    <Reference Include="VMControls.Winform.Release, Version=1.0.0.0, Culture=neutral, PublicKeyToken=2efa940dfee4dc7e, processorArchitecture=MSIL">
-      <Private>False</Private>
-    </Reference>
-    <Reference Include="IMVSMultiImageFusionModuCs, Version=1.0.0.0, Culture=neutral, PublicKeyToken=55d88779c0e91b06, processorArchitecture=MSIL">
-      <Private>False</Private>
-    </Reference>
-    <Reference Include="ImageAcquisitionModuleCs, Version=1.0.0.0, Culture=neutral, PublicKeyToken=8581e2b6399e0aa2, processorArchitecture=MSIL">
-      <Private>False</Private>
-    </Reference>
-    <Reference Include="IMVSMultiLabelFilterModuCs, Version=1.0.0.0, Culture=neutral, PublicKeyToken=d6c20246f1ff35fd, processorArchitecture=MSIL">
-      <Private>False</Private>
-    </Reference>
-    <Reference Include="IMVSMultiLineFindModuCs, Version=1.0.0.0, Culture=neutral, PublicKeyToken=77d8fa6b2e05bf95, processorArchitecture=MSIL">
-      <Private>False</Private>
-    </Reference>
-    <Reference Include="StringCompareModuleCs, Version=1.0.0.0, Culture=neutral, PublicKeyToken=5685c4304d825d01, processorArchitecture=MSIL">
-      <Private>False</Private>
-    </Reference>
-    <Reference Include="IMVSMarkInspModuCs, Version=1.0.0.0, Culture=neutral, PublicKeyToken=318c90ff9c62747f, processorArchitecture=MSIL">
-      <Private>False</Private>
-    </Reference>
-    <Reference Include="IMVSMarkInspModuVACs, Version=1.0.0.0, Culture=neutral, PublicKeyToken=fd756fe7f28d3445, processorArchitecture=MSIL">
-      <Private>False</Private>
-    </Reference>
-    <Reference Include="IMVSOcrModuCs, Version=1.0.0.0, Culture=neutral, PublicKeyToken=aac3512f35327143, processorArchitecture=MSIL">
-      <Private>False</Private>
-    </Reference>
-    <Reference Include="IMVSFrameMeanModuCs, Version=1.0.0.0, Culture=neutral, PublicKeyToken=08a547c1de91a86e, processorArchitecture=MSIL">
-      <Private>False</Private>
-    </Reference>
-    <Reference Include="TranslationCalibModuCs, Version=1.0.0.0, Culture=neutral, PublicKeyToken=865e9170186261eb, processorArchitecture=MSIL">
-      <Private>False</Private>
-    </Reference>
-    <Reference Include="IMVSPairLineModuCs, Version=1.0.0.0, Culture=neutral, PublicKeyToken=2f9b5c6cdf56b08e, processorArchitecture=MSIL">
-      <Private>False</Private>
-    </Reference>
-    <Reference Include="IMVSParallelCalculateModuCs, Version=1.0.0.0, Culture=neutral, PublicKeyToken=c7e0f6a183706769, processorArchitecture=MSIL">
-      <Private>False</Private>
-    </Reference>
-    <Reference Include="IMVSInspectModuCs, Version=1.0.0.0, Culture=neutral, PublicKeyToken=a54341d93c0fea08, processorArchitecture=MSIL">
-      <Private>False</Private>
-    </Reference>
-    <Reference Include="IMVSImageMorphModuCs, Version=1.0.0.0, Culture=neutral, PublicKeyToken=345d161ad378bbca, processorArchitecture=MSIL">
-      <Private>False</Private>
-    </Reference>
-    <Reference Include="IMVSFastFeatureMatchModuCs, Version=1.0.0.0, Culture=neutral, PublicKeyToken=5ca9d2dd350762d2, processorArchitecture=MSIL">
-      <Private>False</Private>
-    </Reference>
-    <Reference Include="IMVSRegionCopyModuCs, Version=1.0.0.0, Culture=neutral, PublicKeyToken=80a44d101397d808, processorArchitecture=MSIL">
-      <Private>False</Private>
-    </Reference>
-    <Reference Include="ReadDatasModuleCs, Version=1.0.0.0, Culture=neutral, PublicKeyToken=2a989deb766dd29c, processorArchitecture=MSIL">
-      <Private>False</Private>
-    </Reference>
-    <Reference Include="DataQueueModuleCs, Version=1.0.0.0, Culture=neutral, PublicKeyToken=67d60b40029f11c3, processorArchitecture=MSIL">
-      <Private>False</Private>
-    </Reference>
-    <Reference Include="DataSetModuleCs, Version=1.0.0.0, Culture=neutral, PublicKeyToken=c4b4ade4437b1703, processorArchitecture=MSIL">
-      <Private>False</Private>
-    </Reference>
-    <Reference Include="SaveTextModuleCs, Version=1.0.0.0, Culture=neutral, PublicKeyToken=a3cde6a94e7998ed, processorArchitecture=MSIL">
-      <Private>False</Private>
-    </Reference>
-    <Reference Include="RotateCalibModuCs, Version=1.0.0.0, Culture=neutral, PublicKeyToken=9d51363f4f396d36, processorArchitecture=MSIL">
-      <Private>False</Private>
-    </Reference>
-    <Reference Include="IMVSRotateCalculateModuCs, Version=1.0.0.0, Culture=neutral, PublicKeyToken=0b24ef9e00dbf488, processorArchitecture=MSIL">
-      <Private>False</Private>
-    </Reference>
-    <Reference Include="IMVSMapCalibModuCs, Version=1.0.0.0, Culture=neutral, PublicKeyToken=3873379fa7af2da6, processorArchitecture=MSIL">
-      <Private>False</Private>
-    </Reference>
-    <Reference Include="IfBranchModuleCs, Version=1.0.0.0, Culture=neutral, PublicKeyToken=d1cd8cf5ae69cd49, processorArchitecture=MSIL">
-      <Private>False</Private>
-    </Reference>
-    <Reference Include="IfModuleCs, Version=1.0.0.0, Culture=neutral, PublicKeyToken=1ba1107829384f3c, processorArchitecture=MSIL">
-      <Private>False</Private>
-    </Reference>
-    <Reference Include="IMVSBcrModuCs, Version=1.0.0.0, Culture=neutral, PublicKeyToken=6c8e56e03ac48b2e, processorArchitecture=MSIL">
-      <Private>False</Private>
-    </Reference>
-    <Reference Include="ReadCalibFileModuCs, Version=1.0.0.0, Culture=neutral, PublicKeyToken=fc2c1c71094a56c4, processorArchitecture=MSIL">
-      <Private>False</Private>
-    </Reference>
-    <Reference Include="IMVSCalibBoardCalibModuCs, Version=1.0.0.0, Culture=neutral, PublicKeyToken=90420971e52f2d79, processorArchitecture=MSIL">
-      <Private>False</Private>
-    </Reference>
-    <Reference Include="IMVSCalibTransformModuCs, Version=1.0.0.0, Culture=neutral, PublicKeyToken=737ede30d70c90df, processorArchitecture=MSIL">
-      <Private>False</Private>
-    </Reference>
-    <Reference Include="FormatModuleCs, Version=1.0.0.0, Culture=neutral, PublicKeyToken=dc3399e8d740ba6a, processorArchitecture=MSIL">
-      <Private>False</Private>
-    </Reference>
-    <Reference Include="IMVSImageSharpnessModuCs, Version=1.0.0.0, Culture=neutral, PublicKeyToken=15fee5829ecec07c, processorArchitecture=MSIL">
-      <Private>False</Private>
-    </Reference>
-    <Reference Include="IMVSGrayMatchModuCs, Version=1.0.0.0, Culture=neutral, PublicKeyToken=a3f74a1522c95aea, processorArchitecture=MSIL">
-      <Private>False</Private>
-    </Reference>
-    <Reference Include="IMVSGrayMatchModuVACs, Version=1.0.0.0, Culture=neutral, PublicKeyToken=96929120b239ec13, processorArchitecture=MSIL">
-      <Private>False</Private>
-    </Reference>
-    <Reference Include="IMVSP2CMeasureModuCs, Version=1.0.0.0, Culture=neutral, PublicKeyToken=5cfb496049812c42, processorArchitecture=MSIL">
-      <Private>False</Private>
-    </Reference>
-    <Reference Include="IMVSP2PMeasureModuCs, Version=1.0.0.0, Culture=neutral, PublicKeyToken=2830a24bac4c62d2, processorArchitecture=MSIL">
-      <Private>False</Private>
-    </Reference>
-    <Reference Include="IMVSP2LMeasureModuCs, Version=1.0.0.0, Culture=neutral, PublicKeyToken=54056a7ec1941bc3, processorArchitecture=MSIL">
-      <Private>False</Private>
-    </Reference>
-    <Reference Include="PointSetMODU_STDCs, Version=1.0.0.0, Culture=neutral, PublicKeyToken=febca48962b3ccf5, processorArchitecture=MSIL">
-      <Private>False</Private>
-    </Reference>
-    <Reference Include="IMVSMultiPointAlignModuCs, Version=1.0.0.0, Culture=neutral, PublicKeyToken=cad5b8e53a935847, processorArchitecture=MSIL">
-      <Private>False</Private>
-    </Reference>
-    <Reference Include="IMVSImageCalibModuCs, Version=1.0.0.0, Culture=neutral, PublicKeyToken=24f57d5e2a91a31e, processorArchitecture=MSIL">
-      <Private>False</Private>
-    </Reference>
-    <Reference Include="IMVSImageCorrectCalibModuCs, Version=1.0.0.0, Culture=neutral, PublicKeyToken=adb7d0f94ce1512f, processorArchitecture=MSIL">
-      <Private>False</Private>
-    </Reference>
-    <Reference Include="IMVSTargetTrackModuCs, Version=1.0.0.0, Culture=neutral, PublicKeyToken=c68d1bd5b7229054, processorArchitecture=MSIL">
-      <Private>False</Private>
-    </Reference>
-    <Reference Include="IMVSHistToolModuCs, Version=1.0.0.0, Culture=neutral, PublicKeyToken=d10c7ddae66a54c8, processorArchitecture=MSIL">
-      <Private>False</Private>
-    </Reference>
-    <Reference Include="IMVSLineEdgePairInspModuCs, Version=1.0.0.0, Culture=neutral, PublicKeyToken=41789021bb481978, processorArchitecture=MSIL">
-      <Private>False</Private>
-    </Reference>
-    <Reference Include="IMVSLineFitModuCs, Version=1.0.0.0, Culture=neutral, PublicKeyToken=d48adae15822c46d, processorArchitecture=MSIL">
-      <Private>False</Private>
-    </Reference>
-    <Reference Include="IMVSLineFindModuCs, Version=1.0.0.0, Culture=neutral, PublicKeyToken=15941e18b10db20b, processorArchitecture=MSIL">
-      <Private>False</Private>
-    </Reference>
-    <Reference Include="IMVSLineFindGroupModuCs, Version=1.0.0.0, Culture=neutral, PublicKeyToken=285bb1ce9a494e3f, processorArchitecture=MSIL">
-      <Private>False</Private>
-    </Reference>
-    <Reference Include="IMVSLineEdgeInspModuCs, Version=1.0.0.0, Culture=neutral, PublicKeyToken=8c1bbb53f1f3cb07, processorArchitecture=MSIL">
-      <Private>False</Private>
-    </Reference>
-    <Reference Include="CameraIOModuleCs, Version=1.0.0.0, Culture=neutral, PublicKeyToken=15b4774d678cd082, processorArchitecture=MSIL">
-      <Private>False</Private>
-    </Reference>
-    <Reference Include="IMVSCameraMapModuCs, Version=1.0.0.0, Culture=neutral, PublicKeyToken=369f02cc6412392e, processorArchitecture=MSIL">
-      <Private>False</Private>
-    </Reference>
-    <Reference Include="IMVSRectFindModuCs, Version=1.0.0.0, Culture=neutral, PublicKeyToken=721f5f3c8736a915, processorArchitecture=MSIL">
-      <Private>False</Private>
-    </Reference>
-    <Reference Include="IMVSL2CMeasureModuCs, Version=1.0.0.0, Culture=neutral, PublicKeyToken=05f448b89216c3f5, processorArchitecture=MSIL">
-      <Private>False</Private>
-    </Reference>
-    <Reference Include="IMVSLineAlignModuCs, Version=1.0.0.0, Culture=neutral, PublicKeyToken=10b02c3045f7473d, processorArchitecture=MSIL">
-      <Private>False</Private>
-    </Reference>
-    <Reference Include="IMVSL2LMeasureModuCs, Version=1.0.0.0, Culture=neutral, PublicKeyToken=81fb95483587e890, processorArchitecture=MSIL">
-      <Private>False</Private>
-    </Reference>
-    <Reference Include="IMVSGroupCs, Version=1.0.0.0, Culture=neutral, PublicKeyToken=93c2eed79fa68a0a, processorArchitecture=MSIL">
-      <Private>False</Private>
-    </Reference>
-    <Reference Include="ImageBufferModuleCs, Version=1.0.0.0, Culture=neutral, PublicKeyToken=88dbcb3c86128e2d, processorArchitecture=MSIL">
-      <Private>False</Private>
-    </Reference>
-    <Reference Include="TimeStatisticModuleCs, Version=1.0.0.0, Culture=neutral, PublicKeyToken=1d7fec45a504a815, processorArchitecture=MSIL">
-      <Private>False</Private>
-    </Reference>
-    <Reference Include="ShellModuleCs, Version=1.0.0.0, Culture=neutral, PublicKeyToken=a88b3f19f0240810, processorArchitecture=MSIL">
-      <Private>False</Private>
-    </Reference>
-    <Reference Include="IMVSSurfaceDefectFilterModuCs, Version=1.0.0.0, Culture=neutral, PublicKeyToken=5375bd3473fcb9f0, processorArchitecture=MSIL">
-      <Private>False</Private>
-    </Reference>
-    <Reference Include="IMVSAngleBisectorFindModuCs, Version=1.0.0.0, Culture=neutral, PublicKeyToken=4784e51992e9031d, processorArchitecture=MSIL">
-      <Private>False</Private>
-    </Reference>
-    <Reference Include="TriggerModuleCs, Version=1.0.0.0, Culture=neutral, PublicKeyToken=7dfc417f04c596e4, processorArchitecture=MSIL">
-      <Private>False</Private>
-    </Reference>
-    <Reference Include="IMVSGluePathConductModuCs, Version=1.0.0.0, Culture=neutral, PublicKeyToken=e482d4f1fe22af0c, processorArchitecture=MSIL">
-      <Private>False</Private>
-    </Reference>
-    <Reference Include="SaveImageCs, Version=1.0.0.0, Culture=neutral, PublicKeyToken=71ec4914c8d95fd5, processorArchitecture=MSIL">
-      <Private>False</Private>
-    </Reference>
-    <Reference Include="IMVSCaliperCornerModuCs, Version=1.0.0.0, Culture=neutral, PublicKeyToken=afa702cf00f4d5ad, processorArchitecture=MSIL">
-      <Private>False</Private>
-    </Reference>
-    <Reference Include="IMVSEdgePosTrendAnalyModuCs, Version=1.0.0.0, Culture=neutral, PublicKeyToken=b81611952a50af6c, processorArchitecture=MSIL">
-      <Private>False</Private>
-    </Reference>
-    <Reference Include="IMVSEdgePairPosTrendAnalyModuCs, Version=1.0.0.0, Culture=neutral, PublicKeyToken=eca536b23bb46fbe, processorArchitecture=MSIL">
-      <Private>False</Private>
-    </Reference>
-    <Reference Include="IMVSEdgePairFlawInspModuCs, Version=1.0.0.0, Culture=neutral, PublicKeyToken=4ad240f48982cf78, processorArchitecture=MSIL">
-      <Private>False</Private>
-    </Reference>
-    <Reference Include="IMVSEdgePairInspGroupModuCs, Version=1.0.0.0, Culture=neutral, PublicKeyToken=9c81e11d424f49e3, processorArchitecture=MSIL">
-      <Private>False</Private>
-    </Reference>
-    <Reference Include="IMVSCaliperEdgeModuCs, Version=1.0.0.0, Culture=neutral, PublicKeyToken=2e9b837021fe7c82, processorArchitecture=MSIL">
-      <Private>False</Private>
-    </Reference>
-    <Reference Include="IMVSEdgeFlawInspModuCs, Version=1.0.0.0, Culture=neutral, PublicKeyToken=20026c1ba1b73a11, processorArchitecture=MSIL">
-      <Private>False</Private>
-    </Reference>
-    <Reference Include="IMVSEdgeInspGroupModuCs, Version=1.0.0.0, Culture=neutral, PublicKeyToken=15301fd466445214, processorArchitecture=MSIL">
-      <Private>False</Private>
-    </Reference>
-    <Reference Include="ImageCollectModuCs, Version=1.0.0.0, Culture=neutral, PublicKeyToken=1456d47d4d035431, processorArchitecture=MSIL">
-      <Private>False</Private>
-    </Reference>
-    <Reference Include="CommManagerModuleCs, Version=1.0.0.0, Culture=neutral, PublicKeyToken=17913397e05a26ba, processorArchitecture=MSIL">
-      <Private>False</Private>
-    </Reference>
-    <Reference Include="AndModuleCs, Version=1.0.0.0, Culture=neutral, PublicKeyToken=426f9e88d7a6a158, processorArchitecture=MSIL">
-      <Private>False</Private>
-    </Reference>
-    <Reference Include="IMVSEdgeWidthFindModuCs, Version=1.0.0.0, Culture=neutral, PublicKeyToken=b66ff8cc847f0230, processorArchitecture=MSIL">
-      <Private>False</Private>
-    </Reference>
-    <Reference Include="IMVSShadeCorrectModuCs, Version=1.0.0.0, Culture=neutral, PublicKeyToken=b06e146d1a4ca667, processorArchitecture=MSIL">
-      <Private>False</Private>
-    </Reference>
-    <Reference Include="IMVSPeakFindModuCs, Version=1.0.0.0, Culture=neutral, PublicKeyToken=79a990e1e78ccb57, processorArchitecture=MSIL">
-      <Private>False</Private>
-    </Reference>
-    <Reference Include="IMVSColorExtractModuCs, Version=1.0.0.0, Culture=neutral, PublicKeyToken=3e790bdd13bf266c, processorArchitecture=MSIL">
-      <Private>False</Private>
-    </Reference>
-    <Reference Include="IMVSColorMeasureModuCs, Version=1.0.0.0, Culture=neutral, PublicKeyToken=46d87ec08fc6b297, processorArchitecture=MSIL">
-      <Private>False</Private>
-    </Reference>
-    <Reference Include="IMVSColorRecognitionModuCs, Version=1.0.0.0, Culture=neutral, PublicKeyToken=2e91c65aeb847a34, processorArchitecture=MSIL">
-      <Private>False</Private>
-    </Reference>
-    <Reference Include="IMVSColorTransformModuCs, Version=1.0.0.0, Culture=neutral, PublicKeyToken=d910a412aa93dc5e, processorArchitecture=MSIL">
-      <Private>False</Private>
-    </Reference>
-    <Reference Include="IMVSHPFeatureMatchModuCs, Version=1.0.0.0, Culture=neutral, PublicKeyToken=3a8001c24b4e8881, processorArchitecture=MSIL">
-      <Private>False</Private>
-    </Reference>
-    <Reference Include="System.Web.Extensions" />
-    <Reference Include="System.Configuration" />
-    <Reference Include="System.Drawing" />
-    <Reference Include="System.Runtime.Serialization" />
-    <Reference Include="System.Security" />
-    <Reference Include="System.Web" />
-    <Reference Include="System.Windows.Forms" />
     <Reference Include="VMControls.WPF">
-      <HintPath>..\..\..\..\..\..\Program Files\VisionMaster4.1.0\Development\V4.x\ComControls\bin\x86\VMControls.WPF.dll</HintPath>
+      <HintPath>..\..\..\..\..\..\Program Files\VisionMaster4.2.0\Development\V4.x\ComControls\Assembly\VMControls.WPF.dll</HintPath>
     </Reference>
-    <Reference Include="System">
+    <Reference Include="VMControls.WPF.Release">
+      <HintPath>..\..\..\..\..\..\Program Files\VisionMaster4.2.0\Development\V4.x\ComControls\Assembly\VMControls.WPF.Release.dll</HintPath>
+    </Reference>
+    <Reference Update="System">
       <HintPath>..\..\..\..\..\..\..\Program Files (x86)\Reference Assemblies\Microsoft\Framework\.NETFramework\v4.8\System.dll</HintPath>
     </Reference>
-    <Reference Include="System.Data" />
-    <Reference Include="System.Xml" />
-    <Reference Include="Microsoft.CSharp" />
-    <Reference Include="System.Core" />
-    <Reference Include="System.Xml.Linq" />
-    <Reference Include="System.Data.DataSetExtensions" />
-    <Reference Include="System.Net.Http" />
-    <Reference Include="System.Xaml">
-      <RequiredTargetFramework>4.0</RequiredTargetFramework>
-    </Reference>
-    <Reference Include="WindowsBase" />
-    <Reference Include="PresentationCore" />
-    <Reference Include="PresentationFramework" />
   </ItemGroup>
   <ItemGroup>
-    <ApplicationDefinition Include="App.xaml">
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
-    </ApplicationDefinition>
-    <Compile Include="ADT\QueueProcessor.cs" />
-    <Compile Include="Aspect\ApplicationRestartAspect.cs" />
-    <Compile Include="Aspect\AsyncErrorHandler.cs" />
-    <Compile Include="Aspect\CheckServerCanExecute.cs" />
-    <Compile Include="Aspect\ExceptionHandlingAspect.cs" />
-    <Compile Include="Aspect\GlobalAspects.cs" />
-    <Compile Include="Aspect\ThrowExceptionAspect.cs" />
-    <Compile Include="Converter\BooleanToVisibilityConverter.cs" />
-    <Compile Include="Converter\EnumToStringConverter.cs" />
-    <Compile Include="Converter\LastCharacterConverter.cs" />
-    <Compile Include="Converter\NavigationViewExtensions.cs" />
-    <Compile Include="Converter\NavigationViewItemExtensions.cs" />
-    <Compile Include="Converter\RadioButtonTagConverter.cs" />
-    <Compile Include="Converter\StringFormatConverter.cs" />
-    <Compile Include="Converter\TypeToBooleanConverter.cs" />
-    <Compile Include="Converter\TypeToDescriptionConverter.cs" />
-    <Compile Include="CriticalErrorException.cs" />
-    <Compile Include="CustomControls\CustomJogButtonsControl.xaml.cs">
-      <DependentUpon>CustomJogButtonsControl.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="CustomControls\MotionCalibrationControl.xaml.cs">
-      <DependentUpon>MotionCalibrationControl.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="MessageToken\CalibrationStateChanged.cs" />
-    <Compile Include="MessageToken\ClientStatusChanged.cs" />
-    <Compile Include="MessageToken\ConnectionStatusChanged.cs" />
-    <Compile Include="CustomControls\CustomConnectionStatus.xaml.cs">
-      <DependentUpon>CustomConnectionStatus.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="CustomControls\CustomFormButtons.xaml.cs">
-      <DependentUpon>CustomFormButtons.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="CustomControls\CustomLeftDrawer.xaml.cs">
-      <DependentUpon>CustomLeftDrawer.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="CustomControls\CustomBrowse.xaml.cs">
-      <DependentUpon>CustomBrowse.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="CustomControls\CustomLoading.xaml.cs">
-      <DependentUpon>CustomLoading.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="CustomControls\CustomRadioControl.xaml.cs">
-      <DependentUpon>CustomRadioControl.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="CustomControls\CustomIpInput.xaml.cs">
-      <DependentUpon>CustomIpInput.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="CustomControls\CustomManipulatorForm.xaml.cs">
-      <DependentUpon>CustomManipulatorForm.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="CustomControls\CustomRenderControl.xaml.cs">
-      <DependentUpon>CustomRenderControl.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="CustomControls\CustomVisionForm.xaml.cs">
-      <DependentUpon>CustomVisionForm.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="CustomControls\DialogBehavior.cs" />
-    <Compile Include="CustomControls\CustomLoadingControl.xaml.cs">
-      <DependentUpon>CustomLoadingControl.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="CustomControls\HalconSmartControl.xaml.cs">
-      <DependentUpon>HalconSmartControl.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="CustomControls\HikVmRealTimeAcqControl.xaml.cs">
-      <DependentUpon>HikVmRealTimeAcqControl.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="CustomControls\MTypeCombo.xaml.cs">
-      <DependentUpon>MTypeCombo.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="CustomControls\TTypeCombo.xaml.cs">
-      <DependentUpon>TTypeCombo.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="CustomEventArgs\BitMapImageArgs.cs" />
-    <Compile Include="CustomEventArgs\NetworkStreamEventArgs.cs" />
-    <Compile Include="CustomEventArgs\TcpClientEventArgs.cs" />
-    <Compile Include="CustomEventArgs\TcpListenerEventArgs.cs" />
-    <Compile Include="Enums\Mode.cs" />
-    <Compile Include="Enums\Orientation.cs" />
-    <Compile Include="Enums\Terminator.cs" />
-    <Compile Include="Enums\EnumHelperClass.cs" />
-    <Compile Include="Converter\EnumToCollectionConverter.cs" />
-    <Compile Include="Enums\ManipulatorType.cs" />
-    <Compile Include="Enums\UserRole.cs" />
-    <Compile Include="Enums\ValueDescription.cs" />
-    <Compile Include="Enums\VisionSoftware.cs" />
-    <Compile Include="Extension\TaskExtensions.cs" />
-    <Compile Include="FileLogger.cs" />
-    <Compile Include="FileLoggerExtensions.cs" />
-    <Compile Include="FileLoggerProvider.cs" />
-    <Compile Include="GeneralConfiguration.cs" />
-    <Compile Include="HelperClass\BitMapHelper.cs" />
-    <Compile Include="HelperClass\Timer.cs">
+    <Compile Update="HelperClass\Timer.cs">
       <SubType>Component</SubType>
     </Compile>
-    <Compile Include="Logging\ILoggable.cs" />
-    <Compile Include="MappingConfiguration\CalibrationProfile.cs" />
-    <Compile Include="MappingConfiguration\GeneralProfile.cs" />
-    <Compile Include="MappingConfiguration\ManipulatorProfile.cs" />
-    <Compile Include="MappingConfiguration\UserProfile.cs" />
-    <Compile Include="MappingConfiguration\VisionProfile.cs" />
-    <Compile Include="MessageToken\ReadyRequest.cs" />
-    <Compile Include="MessageToken\MessageBoxRequest.cs" />
-    <Compile Include="MessageToken\AuthenticationRequest.cs" />
-    <Compile Include="MessageToken\UserLoginChanged.cs" />
-    <Compile Include="MVVM\Command\AsyncRelayCommand.cs" />
-    <Compile Include="MVVM\Command\BrowseFileDialogCommand.cs" />
-    <Compile Include="MVVM\Command\RelayCommand.cs" />
-    <Compile Include="MVVM\Command\VideoCommand.cs" />
-    <Compile Include="MVVM\DTO\UserDTO.cs" />
-    <Compile Include="MVVM\Model\CalibrationData.cs" />
-    <Compile Include="MVVM\Model\HalconModel.cs" />
-    <Compile Include="MVVM\Model\SmartCamModel.cs" />
-    <Compile Include="Enums\PageName.cs" />
-    <Compile Include="MVVM\Model\HikVisionModel.cs" />
-    <Compile Include="MVVM\ViewModel\CalibrationWizardStartViewModel.cs" />
-    <Compile Include="MVVM\ViewModel\CalibrationMainViewModel.cs" />
-    <Compile Include="MVVM\ViewModel\ErrorViewModel.cs" />
-    <Compile Include="MVVM\ViewModel\GeneralViewModel.cs" />
-    <Compile Include="MVVM\ViewModel\HalconViewModel.cs" />
-    <Compile Include="MVVM\ViewModel\HikViewModel.cs" />
-    <Compile Include="MVVM\ViewModel\HikVisionCalibrationStep.cs" />
-    <Compile Include="MVVM\ViewModel\IVisionCalibrationStep.cs" />
-    <Compile Include="MVVM\ViewModel\IViewModelLocator.cs" />
-    <Compile Include="MVVM\ViewModel\IVisionViewModel.cs" />
-    <Compile Include="MVVM\ViewModel\JogRobotViewModel.cs" />
-    <Compile Include="MVVM\ViewModel\LiveCameraViewModel.cs" />
-    <Compile Include="MVVM\ViewModel\ManipulatorViewModel.cs" />
-    <Compile Include="MVVM\ViewModel\OperationViewModel.cs" />
-    <Compile Include="MVVM\ViewModel\OthersVisionCalibrationStep.cs" />
-    <Compile Include="MVVM\ViewModel\RenderControlViewModel.cs" />
-    <Compile Include="MVVM\ViewModel\SecurityViewModel.cs" />
-    <Compile Include="MVVM\ViewModel\SmartCamViewModel.cs" />
-    <Compile Include="MVVM\ViewModel\Step1ViewModel.cs" />
-    <Compile Include="MVVM\ViewModel\Step2ViewModel.cs" />
-    <Compile Include="MVVM\ViewModel\Step3ViewModel.cs" />
-    <Compile Include="MVVM\ViewModel\Step3SmartCamViewModel.cs" />
-    <Compile Include="MVVM\ViewModel\Step4ViewModel.cs" />
-    <Compile Include="MVVM\ViewModel\Step5ViewModel.cs" />
-    <Compile Include="MVVM\ViewModel\Step6ViewModel.cs" />
-    <Compile Include="MVVM\ViewModel\UndefinedViewModel.cs" />
-    <Compile Include="MVVM\ViewModel\UserManagementViewModel.cs" />
-    <Compile Include="MVVM\ViewModel\CalibrationViewModel.cs" />
-    <Compile Include="MVVM\ViewModel\UserViewModel.cs" />
-    <Compile Include="MVVM\ViewModel\ViewModelLocator.cs" />
-    <Compile Include="MVVM\ViewModel\HikVisionViewModel.cs" />
-    <Compile Include="MVVM\View\CalibrationVisionView.xaml.cs">
-      <DependentUpon>CalibrationVisionView.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="MVVM\View\CalibrationWizardSteps\CalibrationWizardStart.xaml.cs">
-      <DependentUpon>CalibrationWizardStart.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="MVVM\View\CalibrationWizardSteps\Step1.xaml.cs">
-      <DependentUpon>Step1.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="MVVM\View\CalibrationWizardSteps\Step2.xaml.cs">
-      <DependentUpon>Step2.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="MVVM\View\CalibrationWizardSteps\Step3.xaml.cs">
-      <DependentUpon>Step3.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="MVVM\View\CalibrationWizardSteps\Step4.xaml.cs">
-      <DependentUpon>Step4.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="MVVM\View\CalibrationWizardSteps\Step5.xaml.cs">
-      <DependentUpon>Step5.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="MVVM\View\CalibrationWizardSteps\Step6.xaml.cs">
-      <DependentUpon>Step6.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="MVVM\View\CalibrationMainView.xaml.cs">
-      <DependentUpon>CalibrationMainView.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="MVVM\View\HalconView.xaml.cs">
-      <DependentUpon>HalconView.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="MVVM\View\HikView.xaml.cs">
-      <DependentUpon>HikView.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="MVVM\View\HikVisionCalibrationStepView.xaml.cs">
-      <DependentUpon>HikVisionCalibrationStepView.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="MVVM\View\JogRobotView.xaml.cs">
-      <DependentUpon>JogRobotView.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="MVVM\View\LiveCameraView.xaml.cs">
-      <DependentUpon>LiveCameraView.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="MVVM\View\OperationView.xaml.cs">
-      <DependentUpon>OperationView.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="MVVM\View\SecurityView.xaml.cs">
-      <DependentUpon>SecurityView.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="MVVM\View\SmartCamView.xaml.cs">
-      <DependentUpon>SmartCamView.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="MVVM\View\UndefinedView.xaml.cs">
-      <DependentUpon>UndefinedView.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="MVVM\View\UserManagementView.xaml.cs">
-      <DependentUpon>UserManagementView.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="Service\AuthenticationService.cs" />
-    <Compile Include="Service\BackgroundService.cs" />
-    <Compile Include="Service\CalibrationService.cs" />
-    <Compile Include="Service\Communication\ClientService.cs" />
-    <Compile Include="Service\Communication\HalconOperationService.cs" />
-    <Compile Include="Service\Communication\HikOperationService.cs" />
-    <Compile Include="Service\Communication\IClientService.cs" />
-    <Compile Include="Service\Communication\IOperationService.cs" />
-    <Compile Include="Service\Communication\IRecipient.cs" />
-    <Compile Include="Service\Communication\IServerCommand.cs" />
-    <Compile Include="Service\Communication\IServerService.cs" />
-    <Compile Include="Service\Communication\JogCommand.cs" />
-    <Compile Include="Service\Communication\OperationService.cs" />
-    <Compile Include="Service\Communication\SmartCamOperationService.cs" />
-    <Compile Include="Service\Communication\TCPBase.cs" />
-    <Compile Include="Service\Communication\TcpClientInfo.cs" />
-    <Compile Include="Service\Communication\ServerCommand.cs" />
-    <Compile Include="Service\DatabaseProvider\IJsonDb.cs" />
-    <Compile Include="Service\DatabaseProvider\JsonDb.cs" />
-    <Compile Include="Service\DisposeService.cs" />
-    <Compile Include="Service\ICalibrationService.cs" />
-    <Compile Include="Service\IDisposeService.cs" />
-    <Compile Include="Service\IJogService.cs" />
-    <Compile Include="Service\ImageService.cs" />
-    <Compile Include="Service\IMessageBoxService.cs" />
-    <Compile Include="Service\INavigationService.cs" />
-    <Compile Include="Service\JogService.cs" />
-    <Compile Include="Service\MessageBoxService.cs" />
-    <Compile Include="Service\NavigationService.cs" />
-    <Compile Include="Service\Communication\ServerService.cs" />
-    <Compile Include="State\LoadingState.cs" />
-    <Compile Include="State\ViewModelState.cs" />
-    <Compile Include="StopwatchHelper.cs" />
-    <Compile Include="StringRetriever.cs" />
-    <Compile Include="Validation\IPValidation.cs" />
-    <Compile Include="Utility\PasswordHashUtility.cs" />
-    <Compile Include="HikVisionConfiguration.cs" />
-    <Compile Include="VisionMaster\HalconVisionService.cs" />
-    <Compile Include="VisionMaster\IVisionService.cs" />
-    <Compile Include="VisionMaster\HikVisionService.cs" />
-    <Compile Include="VisionMaster\SmartCamVisionService.cs" />
-    <Page Include="CustomControls\CustomConnectionStatus.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="CustomControls\CustomFormButtons.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="CustomControls\CustomJogButtonsControl.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="CustomControls\CustomLeftDrawer.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="CustomControls\CustomBrowse.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="CustomControls\CustomIpInput.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="CustomControls\CustomLoading.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="CustomControls\CustomManipulatorForm.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="CustomControls\CustomRadioControl.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="CustomControls\CustomRenderControl.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="CustomControls\CustomVisionForm.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="CustomControls\CustomLoadingControl.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="CustomControls\HalconSmartControl.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="CustomControls\HikVmRealTimeAcqControl.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="CustomControls\MotionCalibrationControl.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="CustomControls\MTypeCombo.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="CustomControls\TTypeCombo.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="MVVM\View\CalibrationVisionView.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="MVVM\View\CalibrationWizardSteps\CalibrationWizardStart.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="MVVM\View\CalibrationWizardSteps\Step1.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="MVVM\View\CalibrationWizardSteps\Step2.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="MVVM\View\CalibrationWizardSteps\Step3.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="MVVM\View\CalibrationWizardSteps\Step4.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="MVVM\View\CalibrationWizardSteps\Step5.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="MVVM\View\CalibrationWizardSteps\Step6.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="MVVM\View\HalconView.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="MVVM\View\HikView.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="MVVM\View\HikVisionCalibrationStepView.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="MVVM\View\JogRobotView.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="MVVM\View\LiveCameraView.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="MVVM\View\MainWindow.xaml">
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
-    </Page>
-    <Compile Include="App.xaml.cs">
-      <DependentUpon>App.xaml</DependentUpon>
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="MVVM\View\MainWindow.xaml.cs">
-      <DependentUpon>MainWindow.xaml</DependentUpon>
-      <SubType>Code</SubType>
-    </Compile>
-    <Page Include="MVVM\View\CalibrationMainView.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="MVVM\View\OperationView.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="MVVM\View\SecurityView.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="MVVM\View\SettingView.xaml">
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
-    </Page>
-    <Page Include="MVVM\View\ProductionView.xaml">
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
-    </Page>
-    <Page Include="MVVM\View\SharedResources.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="MVVM\View\SmartCamView.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="MVVM\View\UndefinedView.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="MVVM\View\UserManagementView.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="Strings.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="Style\BehaviorStyles.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="Style\DesignTimeResources.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-      <ContainsDesignTimeResources>True</ContainsDesignTimeResources>
-    </Page>
-    <Page Include="Style\Fonts.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="Style\Colors.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="Style\Layouts.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="MVVM\Command\CommandBase.cs" />
-    <Compile Include="MVVM\Command\NavigateCommand.cs" />
-    <Compile Include="MVVM\Model\GeneralModel.cs" />
-    <Compile Include="MVVM\Store\NavigationStore.cs" />
-    <Compile Include="MVVM\ViewModel\MainViewModel.cs" />
-    <Compile Include="MVVM\ViewModel\SettingViewModel.cs" />
-    <Compile Include="MVVM\ViewModel\ProductionViewModel.cs" />
-    <Compile Include="MVVM\ViewModel\ViewModelBase.cs" />
-    <Compile Include="MVVM\View\SettingView.xaml.cs">
-      <DependentUpon>SettingView.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="MVVM\View\ProductionView.xaml.cs">
-      <DependentUpon>ProductionView.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="Properties\AssemblyInfo.cs">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="Properties\Resources.Designer.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>Resources.resx</DependentUpon>
-    </Compile>
-    <Compile Include="Properties\Settings.Designer.cs">
-      <AutoGen>True</AutoGen>
-      <DependentUpon>Settings.settings</DependentUpon>
-      <DesignTimeSharedInput>True</DesignTimeSharedInput>
-    </Compile>
-    <EmbeddedResource Include="Properties\Resources.resx">
-      <Generator>ResXFileCodeGenerator</Generator>
-      <LastGenOutput>Resources.Designer.cs</LastGenOutput>
-    </EmbeddedResource>
     <None Include="..\.editorconfig">
       <Link>.editorconfig</Link>
     </None>
     <None Include="Properties\DataSources\X_Guide.MVVM.Model.UserModel.datasource" />
-    <None Include="Properties\Settings.settings">
-      <Generator>SettingsSingleFileGenerator</Generator>
-      <LastGenOutput>Settings.Designer.cs</LastGenOutput>
-    </None>
-    <None Include="Style\camFrontEnd.vmd" />
-    <None Include="X-Guide_TemporaryKey.pfx" />
-  </ItemGroup>
-  <ItemGroup>
-    <Content Include="App.config">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
   </ItemGroup>
   <ItemGroup>
     <WCFMetadata Include="Connected Services\" />
   </ItemGroup>
   <ItemGroup>
     <PackageReference Include="Autofac">
-      <Version>7.0.0</Version>
+      <Version>7.0.1</Version>
     </PackageReference>
     <PackageReference Include="AutoMapper">
-      <Version>9.0.0</Version>
+      <Version>12.0.1</Version>
     </PackageReference>
     <PackageReference Include="AutoMapper.EF6">
       <Version>2.1.1</Version>
     </PackageReference>
     <PackageReference Include="CommunityToolkit.Mvvm">
       <Version>8.2.0</Version>
-    </PackageReference>
-    <PackageReference Include="EntityFramework">
-      <Version>6.4.4</Version>
     </PackageReference>
     <PackageReference Include="FluentValidation">
       <Version>11.5.2</Version>
@@ -1085,13 +115,13 @@
       <PrivateAssets>all</PrivateAssets>
     </PackageReference>
     <PackageReference Include="HandyControls">
-      <Version>3.4.4</Version>
+      <Version>3.4.5</Version>
     </PackageReference>
     <PackageReference Include="MahApps.Metro">
       <Version>2.4.9</Version>
     </PackageReference>
     <PackageReference Include="MaterialDesignThemes">
-      <Version>4.7.1</Version>
+      <Version>4.9.0</Version>
     </PackageReference>
     <PackageReference Include="MaterialDesignThemes.Wpf">
       <Version>1.0.1</Version>
@@ -1100,22 +130,19 @@
       <Version>2.0.148</Version>
     </PackageReference>
     <PackageReference Include="Microsoft.CodeAnalysis.CSharp">
-      <Version>4.5.0</Version>
+      <Version>4.6.0</Version>
     </PackageReference>
-    <PackageReference Include="Microsoft.Extensions.Logging.Console">
-      <Version>7.0.0</Version>
-    </PackageReference>
-    <PackageReference Include="Microsoft.Windows.SDK.Contracts">
-      <Version>10.0.22621.755</Version>
+    <PackageReference Include="Microsoft.CSharp" Version="4.7.0" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore" Version="7.0.7" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="7.0.7">
+      <PrivateAssets>all</PrivateAssets>
+      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
     </PackageReference>
     <PackageReference Include="Microsoft.Xaml.Behaviors.Wpf">
       <Version>1.1.39</Version>
     </PackageReference>
     <PackageReference Include="ModernWpfUI">
       <Version>0.9.6</Version>
-    </PackageReference>
-    <PackageReference Include="Newtonsoft.Json">
-      <Version>13.0.3</Version>
     </PackageReference>
     <PackageReference Include="PropertyChanged.Fody">
       <Version>4.1.0</Version>
@@ -1124,7 +151,7 @@
       <Version>1.3.0</Version>
     </PackageReference>
     <PackageReference Include="Serilog.Extensions.Logging">
-      <Version>3.1.0</Version>
+      <Version>7.0.0</Version>
     </PackageReference>
     <PackageReference Include="Serilog.Sinks.Console">
       <Version>4.1.0</Version>
@@ -1132,19 +159,10 @@
     <PackageReference Include="Serilog.Sinks.File">
       <Version>5.0.0</Version>
     </PackageReference>
-    <PackageReference Include="Stub.System.Data.SQLite.Core.NetFramework">
-      <Version>1.0.118</Version>
-    </PackageReference>
     <PackageReference Include="System.Data.SQLite">
       <Version>1.0.118</Version>
     </PackageReference>
-    <PackageReference Include="System.ServiceProcess.ServiceController">
-      <Version>7.0.0</Version>
-    </PackageReference>
     <PackageReference Include="ToastNotifications">
-      <Version>2.5.1</Version>
-    </PackageReference>
-    <PackageReference Include="ToastNotifications.Messages">
       <Version>2.5.1</Version>
     </PackageReference>
     <PackageReference Include="WpfAnimatedGif">
@@ -1153,6 +171,9 @@
     <PackageReference Include="XamlAnimatedGif">
       <Version>2.1.1</Version>
     </PackageReference>
+    <PackageReference Include="Microsoft.Extensions.Logging.Console" Version="7.0.0" />
+    <PackageReference Include="Newtonsoft.Json" Version="13.0.3" />
+    <PackageReference Include="System.ServiceProcess.ServiceController" Version="7.0.1" />
   </ItemGroup>
   <ItemGroup>
     <BootstrapperPackage Include=".NETFramework,Version=v4.7.1">
@@ -1185,20 +206,19 @@
     <Resource Include="xgIcon.ico" />
     <Resource Include="Style\ImageSource\xgIcon.ico" />
     <Resource Include="Style\ImageSource\pngIcon.png" />
-    <Content Include="XGuideDB.mdf">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
-    <Content Include="XGuideDB_log.ldf">
-      <DependentUpon>XGuideDB.mdf</DependentUpon>
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\XGuideSQLiteDB\XGuideSQLiteDB.csproj">
-      <Project>{3224366d-9bac-476c-8c39-1d819b9badb8}</Project>
-      <Name>XGuideSQLiteDB</Name>
-    </ProjectReference>
+    <ProjectReference Include="..\XGuideSQLiteDB\XGuideSQLiteDB.csproj" />
   </ItemGroup>
-  <ItemGroup />
-  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <ItemGroup>
+    <Compile Remove="CustomControls\CustomPasswordBox.xaml.cs" />
+    <Compile Remove="Debug\Calibration.cs" />
+    <Compile Remove="MVVM\ViewModel\MachineViewModel.cs" />
+    <Compile Remove="MVVM\View\CalibrationWizardSteps\Halcon.xaml.cs" />
+    <Compile Remove="MVVM\View\CalibrationWizardSteps\HalconStep5.xaml.cs" />
+    <Page Remove="CustomControls\CustomPasswordBox.xaml" />
+    <Page Remove="MVVM\View\CalibrationWizardSteps\Halcon.xaml" />
+    <Page Remove="MVVM\View\CalibrationWizardSteps\HalconStep5.xaml" />
+    <Page Remove="MVVM\View\CalibrationWizardSteps\JogRobotView.xaml" />
+  </ItemGroup>
 </Project>

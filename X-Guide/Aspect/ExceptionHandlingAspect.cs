@@ -1,5 +1,6 @@
 ﻿using MethodBoundaryAspect.Fody.Attributes;
-using ToastNotifications.Messages;
+
+//using ToastNotifications.Messages;
 
 namespace X_Guide.Aspect
 {
@@ -19,7 +20,7 @@ namespace X_Guide.Aspect
 
         public override void OnException(MethodExecutionArgs arg)
         {
-            App.Notifier.ShowError(arg.Exception.Message);
+            //App.Notifier.ShowError(arg.Exception.Message);
             arg.FlowBehavior = _flowBehavior;
         }
     }
