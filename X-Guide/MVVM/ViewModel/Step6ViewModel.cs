@@ -26,8 +26,7 @@ namespace X_Guide.MVVM.ViewModel
     //TODO: Add tooltip to inform what X and Y Offset is
     internal class Step6ViewModel : ViewModelBase
     {
-        public double XMove { get; set; }
-        public double YMove { get; set; }
+
 
         public CalibrationViewModel Calibration { get; set; }
         public CalibrationViewModel NewCalibration { get; set; }
@@ -55,22 +54,25 @@ namespace X_Guide.MVVM.ViewModel
             }
         }
 
-        private bool _isFirstCalibResult;
-
-        public bool IsFirstCalibResult
+        private bool _isCalibrationCompleted;
+        public bool IsCalibrationCompleted
         {
-            get { return _isFirstCalibResult; }
-            set { _isFirstCalibResult = value; OnPropertyChanged(); }
+            get { return _isCalibrationCompleted; }
+            set
+            {
+                _isCalibrationCompleted = value;
+                OnPropertyChanged();
+            }
         }
 
         public RelayCommand SaveCommand { get; set; }
         public RelayCommand TestingCommand { get; }
         public RelayCommand CalibrateCommand { get; set; }
         public RelayCommand ConfirmCalibDataCommand { get; set; }
-        public event EventHandler OnCalibrationChanged;                         
+        public event EventHandler OnCalibrationChanged;
         public Step6ViewModel(IServerService serverService, CalibrationViewModel calibrationConfig, IRepository repository, ICalibrationService calibService, IMapper mapper, Notifier notifier, IVisionService visionService, IVisionViewModel visionView, IMessenger messenger)
         {
-  
+
             _serverService = serverService;
             Calibration = calibrationConfig;
             _repository = repository;
@@ -117,27 +119,16 @@ namespace X_Guide.MVVM.ViewModel
             int XOffset = Calibration.XOffset;
             int YOffset = Calibration.YOffset;
             CalibrationData calibrationData = await _calibService.EyeInHand2D_Calibrate(XOffset, YOffset, (int)Calibration.JointRotationAngle);
-            if (Calibration.Mm_per_pixel != 0.0)
-            {
-                NewCalibration.CXOffset = calibrationData.X;
-                NewCalibration.CYOffset = calibrationData.Y;
-                NewCalibration.CRZOffset = calibrationData.Rz;
-                NewCalibration.Mm_per_pixel = calibrationData.mm_per_pixel;
-                _isFirstCalibResult = false;
-            }
-            else
-            {
-                Calibration.CXOffset = calibrationData.X;
-                Calibration.CYOffset = calibrationData.Y;
-                Calibration.CRZOffset = calibrationData.Rz;
-                Calibration.Mm_per_pixel = calibrationData.mm_per_pixel;
-                _isFirstCalibResult = true;
-            }
+            Calibration.CXOffset = calibrationData.X;
+            Calibration.CYOffset = calibrationData.Y;
+            Calibration.CRZOffset = calibrationData.Rz;
+            Calibration.Mm_per_pixel = calibrationData.mm_per_pixel;
+            IsCalibrationCompleted = true;
         }
 
         [ExceptionHandlingAspect]
         private async Task Save(object param)
-        { 
+        {
             //Calibration calibration = _repository.Find<Calibration>(q => q.Id.Equals(Calibration.Id)).FirstOrDefault();
 
             //if (calibration is null)
