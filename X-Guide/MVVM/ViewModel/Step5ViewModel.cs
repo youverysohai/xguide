@@ -136,10 +136,10 @@ namespace X_Guide.MVVM.ViewModel
 
             switch (parameter)
             {
-                case "Y+": y = JogDistance;TrackedYMove += JogDistance; break;
-                case "Y-": y = -JogDistance; TrackedYMove -= JogDistance; break;
-                case "X+": x = JogDistance; TrackedXMove += JogDistance; break;
-                case "X-": x = -JogDistance; TrackedXMove -= JogDistance; break;
+                case "Y+": y = JogDistance; _calibrationConfig.YMove += JogDistance; break;
+                case "Y-": y = -JogDistance; _calibrationConfig.YMove -= JogDistance; break;
+                case "X+": x = JogDistance; _calibrationConfig.XMove += JogDistance; break;
+                case "X-": x = -JogDistance; _calibrationConfig.XMove -= JogDistance; break;
                 case "Z+": z = JogDistance; break;
                 case "Z-": z = -JogDistance; break;
                 case "RZ+": rz = RotationAngle; break;

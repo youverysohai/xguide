@@ -1,4 +1,5 @@
 ﻿using System;
+using System.ComponentModel;
 using System.Windows;
 using System.Windows.Controls;
 using X_Guide.MVVM.ViewModel;
@@ -36,13 +37,17 @@ namespace X_Guide.MVVM.View.CalibrationWizardSteps
         {
             await NewCalibrationDialog.ShowAsync();
         }
-
-        private void StartCalibrationBtn_Click(object sender, RoutedEventArgs e)
+        
+        private void ViewModel_PropertyChanged(object sender, PropertyChangedEventArgs e)
         {
-            if (!((Step6ViewModel)DataContext).IsFirstCalibResult)
+            if (e.PropertyName == "IsCalibrationCompleted")
             {
-                DisplayNewCalibrationDialog();
+                if (((Step6ViewModel)DataContext).IsCalibrationCompleted)
+                {
+                    DisplayNewCalibrationDialog();
+                }
             }
         }
+
     }
 }

@@ -595,7 +595,11 @@
     <Compile Include="CustomControls\MotionCalibrationControl.xaml.cs">
       <DependentUpon>MotionCalibrationControl.xaml</DependentUpon>
     </Compile>
+    <Compile Include="CustomControls\NinePointCalibLayout.xaml.cs">
+      <DependentUpon>NinePointCalibLayout.xaml</DependentUpon>
+    </Compile>
     <Compile Include="MessageToken\CalibrationStateChanged.cs" />
+    <Compile Include="MessageToken\CalibRequest.cs" />
     <Compile Include="MessageToken\ClientStatusChanged.cs" />
     <Compile Include="MessageToken\ConnectionStatusChanged.cs" />
     <Compile Include="CustomControls\CustomConnectionStatus.xaml.cs">
@@ -878,6 +882,10 @@
     <Page Include="CustomControls\MTypeCombo.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="CustomControls\NinePointCalibLayout.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
     </Page>
     <Page Include="CustomControls\TTypeCombo.xaml">
       <SubType>Designer</SubType>
