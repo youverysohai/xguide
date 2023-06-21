@@ -23,8 +23,6 @@ namespace X_Guide.MVVM.Model
 
         public string Serialize()
         {
-            VisionProcessor.EyeInHandConfig2D_Calib();
-            VisionProcessor.EyeInHandConfig2D_Operate();
             return JsonConvert.SerializeObject(this);
         }
 
