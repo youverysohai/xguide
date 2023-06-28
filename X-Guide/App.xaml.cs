@@ -1,19 +1,25 @@
 ﻿using Autofac;
 using AutoMapper;
 using CommunityToolkit.Mvvm.Messaging;
+using HikVisionProvider;
 using Microsoft.Extensions.Logging;
 using Serilog;
 using Serilog.Core;
 using System;
 using System.Configuration;
 using System.Net;
+using System.Runtime.Versioning;
 using System.Windows;
+using TcpConnectionHandler;
+using TcpConnectionHandler.Client;
+using TcpConnectionHandler.Server;
 using ToastNotifications;
 using ToastNotifications.Lifetime;
 
 //using ToastNotifications.Messages;
 using ToastNotifications.Position;
-using X_Guide.Communication.Service;
+using VisionProvider.Interfaces;
+using VM.Core;
 using X_Guide.Enums;
 using X_Guide.MappingConfiguration;
 using X_Guide.MVVM.Model;
@@ -24,7 +30,6 @@ using X_Guide.Service.Communation;
 using X_Guide.Service.Communication;
 using X_Guide.Service.DatabaseProvider;
 using X_Guide.State;
-using X_Guide.VisionMaster;
 using XGuideSQLiteDB;
 using ILogger = Serilog.ILogger;
 
@@ -33,6 +38,8 @@ namespace X_Guide
     /// <summary>
     /// Interaction logic for App.xaml
     /// </summary>
+    ///
+    [SupportedOSPlatform("windows")]
     public partial class App : Application
     {
         private static IContainer _diContainer;
@@ -108,12 +115,25 @@ namespace X_Guide
             builder.Register(c =>
             {
                 var db = c.Resolve<IJsonDb>().Get<HikVisionModel>();
-                return new ClientService(IPAddress.Parse(db.Ip), db.Port, c.Resolve<IMessenger>(), db.Terminator);
-            }).As<IClientService>().SingleInstance();
+                var config = new TcpConfiguration
+                {
+                    IPAddress = IPAddress.Parse(db.Ip),
+                    Port = db.Port,
+                    Terminator = db.Terminator
+                };
+                return new ClientTcp(config);
+            }).As<IClientTcp>().SingleInstance();
+
             switch (VisionSoftware)
             {
                 case 1:
-                    builder.Register(c => new HikVisionService(c.Resolve<IClientService>(), c.Resolve<IJsonDb>().Get<HikVisionModel>().Filepath)).As<IVisionService>();
+                    builder.Register(c =>
+                    {
+                        string filepath = c.Resolve<IJsonDb>().Get<HikVisionModel>().Filepath;
+                        IClientTcp client = c.Resolve<IClientTcp>();
+                        return new HikVisionService(filepath, client);
+                    }
+                    ).As<IVisionService>().SingleInstance();
                     builder.RegisterType<HikViewModel>().As<IVisionViewModel>();
                     builder.RegisterType<HikVisionCalibrationStep>().As<IVisionCalibrationStep>();
                     builder.RegisterType<HikOperationService>().As<IOperationService>();
@@ -122,7 +142,7 @@ namespace X_Guide
                     break;
 
                 case 2:
-                    builder.RegisterType<HalconVisionService>().As<IVisionService>().SingleInstance();
+
                     builder.RegisterType<HalconViewModel>().As<IVisionViewModel>();
                     builder.RegisterType<HikVisionCalibrationStep>().As<IVisionCalibrationStep>();
                     builder.RegisterType<HalconOperationService>().As<IOperationService>();
@@ -130,7 +150,7 @@ namespace X_Guide
                     break;
 
                 case 3:
-                    builder.RegisterType<SmartCamVisionService>().As<IVisionService>().SingleInstance();
+
                     builder.RegisterType<SmartCamViewModel>().As<IVisionViewModel>();
                     builder.RegisterType<HikVisionCalibrationStep>().As<IVisionCalibrationStep>();
                     builder.RegisterType<SmartCamOperationService>().As<IOperationService>();
@@ -138,7 +158,7 @@ namespace X_Guide
                     break;
 
                 case 4:
-                    builder.RegisterType<SmartCamVisionService>().As<IVisionService>().SingleInstance();
+
                     builder.RegisterType<SmartCamOperationService>().As<IOperationService>();
                     builder.RegisterType<OthersVisionCalibrationStep>().As<IVisionCalibrationStep>();
                     break;
@@ -154,8 +174,14 @@ namespace X_Guide
             builder.Register(c =>
             {
                 var db = c.Resolve<IJsonDb>().Get<GeneralModel>();
-                return new ServerService(IPAddress.Parse(db.Ip), db.Port, db.Terminator, c.Resolve<IMessenger>());
-            }).As<IServerService>().SingleInstance();
+                var config = new TcpConfiguration
+                {
+                    IPAddress = IPAddress.Parse(db.Ip),
+                    Port = db.Port,
+                    Terminator = db.Terminator,
+                };
+                return new ServerTcp(config);
+            }).As<IServerTcp>().SingleInstance();
 
             return builder.Build();
         }
@@ -198,6 +224,8 @@ namespace X_Guide
 
         protected override void OnStartup(StartupEventArgs e)
         {
+            VmSolution.Load(@"C:\Users\Xlent_XIR02\Desktop\circle.sol");
+
             MainWindow = _diContainer.Resolve<MainWindow>();
 
             base.OnStartup(e);
@@ -205,12 +233,12 @@ namespace X_Guide
 
             try
             {
-                _ = _diContainer.Resolve<IVisionService>();
                 _ = _diContainer.Resolve<IServerCommand>();
             }
-            catch
+            catch (Exception ex)
             {
                 viewModelState.IsCalibValid = false;
+                MessageBox.Show(ex.ToString());
             }
             finally
             {

@@ -1,9 +1,9 @@
 ﻿using System;
 using System.Linq;
 using System.Threading.Tasks;
+using TcpConnectionHandler.Server;
 using VisionGuided;
-using X_Guide.Communication.Service;
-using X_Guide.VisionMaster;
+using VisionProvider.Interfaces;
 using XGuideSQLiteDB;
 using XGuideSQLiteDB.Models;
 
@@ -11,7 +11,7 @@ namespace X_Guide.Service.Communication
 {
     internal class SmartCamOperationService : OperationService, IOperationService
     {
-        public SmartCamOperationService(IRepository repository, IVisionService visionService, IServerService serverService) : base(repository, visionService, serverService)
+        public SmartCamOperationService(IRepository repository, IVisionService visionService, IServerTcp serverService) : base(repository, visionService, serverService)
         {
         }
 
@@ -34,11 +34,11 @@ namespace X_Guide.Service.Communication
                 OperationData = VisionProcessor.EyeInHandConfig2D_Operate(VisCenter, new double[] { calib.CXOffset, calib.CYOffset, calib.CRZOffset, calib.MMPerPixel });
 
                 string Mode = calib.Mode ? "GLOBAL" : "TOOL";
-                await _serverService.ServerWriteDataAsync($"XGUIDE,{Mode},{OperationData[0]},{OperationData[1]},{OperationData[2]}");
+                await _serverService.WriteDataAsync($"XGUIDE,{Mode},{OperationData[0]},{OperationData[1]},{OperationData[2]}");
             }
             catch (Exception ex)
             {
-                await _serverService.ServerWriteDataAsync($"XGUIDE, {ex.Message}");
+                await _serverService.WriteDataAsync($"XGUIDE, {ex.Message}");
             }
             return procedure;
         }

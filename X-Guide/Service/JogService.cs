@@ -5,19 +5,19 @@ using System.Net.Sockets;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Windows;
-using X_Guide.Communication.Service;
-using X_Guide.CustomEventArgs;
+using TcpConnectionHandler;
+using TcpConnectionHandler.Server;
 using X_Guide.Service.Communication;
 
 namespace X_Guide.Service
 {
     public class JogService : IJogService
     {
-        private readonly IServerService _serverService;
-        private Queue<JogCommand> _jogQueue = new Queue<JogCommand>();
+        private readonly IServerTcp _serverService;
+        private readonly Queue<JogCommand> _jogQueue = new Queue<JogCommand>();
         private readonly BackgroundService _jogTask;
 
-        public JogService(IServerService serverService)
+        public JogService(IServerTcp serverService)
         {
             _serverService = serverService;
             _jogTask = new BackgroundService(StartJog, true);
@@ -40,13 +40,12 @@ namespace X_Guide.Service
                 MessageBox.Show("Client disconnected when sending jog command. All queued commands are deleted.");
                 _jogQueue.Clear();
             }
-
         }
 
         public async Task<bool> SendJogCommand(JogCommand jogCommand)
         {
             CancellationTokenSource cts = new CancellationTokenSource();
-            await _serverService.ServerWriteDataAsync(jogCommand.ToString());
+            await _serverService.WriteDataAsync(jogCommand.ToString());
 
             var timer = new System.Timers.Timer(300000);
             timer.AutoReset = false;
@@ -75,7 +74,4 @@ namespace X_Guide.Service
             _jogQueue.Clear();
         }
     }
-
-
 }
-

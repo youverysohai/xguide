@@ -1,6 +1,6 @@
 ﻿using System.Timers;
 
-namespace X_Guide.HelperClass
+namespace WinCommonUtils
 {
     internal class Timer : System.Timers.Timer
     {

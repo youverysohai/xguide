@@ -1,14 +1,17 @@
 ﻿using CommunityToolkit.Mvvm.Messaging;
+using HikVisionProvider;
 using System;
 using System.Collections.ObjectModel;
+using System.Runtime.Versioning;
 using System.Threading.Tasks;
+using VisionProvider.Interfaces;
 using VM.Core;
 using X_Guide.MessageToken;
 using X_Guide.MVVM.ViewModel.CalibrationWizardSteps;
-using X_Guide.VisionMaster;
 
 namespace X_Guide.MVVM.ViewModel
 {
+    [SupportedOSPlatform("windows")]
     internal class HikVisionCalibrationStep : ViewModelBase, IRecipient<ReadyRequest>, IVisionCalibrationStep
     {
         private readonly IMessenger _messenger;
@@ -80,7 +83,8 @@ namespace X_Guide.MVVM.ViewModel
 
         void IRecipient<ReadyRequest>.Receive(ReadyRequest message)
         {
-            Procedures = new ObservableCollection<VmProcedure>(_visionService.GetAllProcedures().GetAwaiter().GetResult());
+            HikVisionService hikVisionService = _visionService as HikVisionService;
+            Procedures = new ObservableCollection<VmProcedure>(hikVisionService.GetAllProcedures().GetAwaiter().GetResult());
             message.Reply(true);
         }
     }

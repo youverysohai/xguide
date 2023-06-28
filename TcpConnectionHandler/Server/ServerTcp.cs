@@ -1,32 +1,15 @@
-﻿using CommunityToolkit.Mvvm.Messaging;
-using System;
-using System.Collections.Concurrent;
+﻿using System.Collections.Concurrent;
 using System.Diagnostics;
-using System.Linq;
-using System.Net;
 using System.Net.Sockets;
-using System.Threading;
-using System.Threading.Tasks;
-using X_Guide.CustomEventArgs;
-using X_Guide.MessageToken;
-using X_Guide.Service.Communication;
 
-namespace X_Guide.Communication.Service
+namespace TcpConnectionHandler.Server
 {
-    public class ServerService : TCPBase, IServerService
+    public class ServerTcp : Tcp, IServerTcp
     {
-        private int _port { get; }
-        private IPAddress _ip { get; }
-
-        private readonly IMessenger _messenger;
-        private TcpListener _server;
+        private TcpListener? _server;
         private readonly bool _canExecute = false;
 
-        public event EventHandler<TcpClientEventArgs> ClientEvent;
-
-        public event EventHandler<TcpListenerEventArgs> ListenerEvent;
-
-        public event EventHandler<bool> ClientConnectionChange;
+        public event EventHandler<NetworkStreamEventArgs>? _dataReceived;
 
         private readonly ConcurrentDictionary<int, TcpClientInfo> _connectedClient = new ConcurrentDictionary<int, TcpClientInfo>();
 
@@ -38,18 +21,13 @@ namespace X_Guide.Communication.Service
             set
             {
                 _isAnyClientConnected = value;
-                _messenger.Send(new ConnectionStatusChanged(value));
             }
         }
 
-        private CancellationTokenSource cts;
+        private CancellationTokenSource? cts;
 
-        public ServerService(IPAddress ip, int port, string terminator, IMessenger messenger) : base(terminator)
+        public ServerTcp(TcpConfiguration configuration) : base(configuration)
         {
-            _port = port;
-            _ip = ip;
-            _messenger = messenger;
-            _ = Start();
         }
 
         public bool Status()
@@ -59,23 +37,21 @@ namespace X_Guide.Communication.Service
 
         public void Stop()
         {
-            cts.Cancel();
+            cts!.Cancel();
         }
 
-        public async Task Start()
+        public async void Start()
         {
             cts = new CancellationTokenSource();
-            _server = new TcpListener(_ip, _port);
+            _server = new TcpListener(_configuration.IPAddress, _configuration.Port);
 
             try
             {
                 _server.Start();
 
-                CancellationToken sct = cts.Token;
-
                 while (!cts.IsCancellationRequested)
                 {
-                    TcpClient client = await Task.Run(() => _server.AcceptTcpClientAsync(), cts.Token);
+                    TcpClient client = await Task.Run(_server.AcceptTcpClientAsync, cts.Token);
 
                     Debug.WriteLine("Client connected.");
 
@@ -83,6 +59,7 @@ namespace X_Guide.Communication.Service
                     IsAnyClientConnected = true;
                     // Handle the client connection in a separate task.
 #pragma warning disable CS4014 // This warning has to be suppressed to disallow the await keyword from blocking the task
+
                     Task.Run(async () =>
                     {
                         await RecieveDataAsync(client.GetStream(), cts.Token);
@@ -95,7 +72,6 @@ namespace X_Guide.Communication.Service
             catch
             {
                 Debug.WriteLine($"Server is closed.");
-                ListenerEvent?.Invoke(this, new TcpListenerEventArgs(_server));
             }
         }
 
@@ -103,7 +79,6 @@ namespace X_Guide.Communication.Service
         {
             client.Close();
             _connectedClient.TryRemove(client.GetHashCode(), out _);
-            ClientEvent?.Invoke(this, new TcpClientEventArgs(client));
             client.Dispose();
         }
 
@@ -112,33 +87,28 @@ namespace X_Guide.Communication.Service
             return _connectedClient;
         }
 
-        public TcpClientInfo GetConnectedClientInfo(TcpClient tcpClient)
+        public TcpClientInfo? GetConnectedClientInfo(TcpClient tcpClient)
         {
             if (tcpClient == null) return null;
-            TcpClientInfo tcpClientInfo;
+            TcpClientInfo? tcpClientInfo;
             _connectedClient.TryGetValue(tcpClient.GetHashCode(), out tcpClientInfo);
             return tcpClientInfo;
         }
 
-        public void SetServerReadTerminator(string terminator)
-        {
-            Terminator = terminator;
-        }
-
-        public async Task ServerWriteDataAsync(string data)
+        public async Task WriteDataAsync(string data)
         {
             await WriteDataAsync(data, _connectedClient.FirstOrDefault().Value.TcpClient.GetStream());
         }
 
         public void SubscribeOnClientConnectionChange(EventHandler<bool> action)
         {
-            ClientConnectionChange += action;
+            //ClientConnectionChange += action;
             //ClientConnectionChange?.Invoke(this, _canExecute);
         }
 
         public void UnsubscribeOnClientConnectionChange(EventHandler<bool> action)
         {
-            ClientConnectionChange -= action;
+            //ClientConnectionChange -= action;
         }
     }
 }

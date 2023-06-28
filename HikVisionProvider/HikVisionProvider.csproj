@@ -1,0 +1,29 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net7.0-windows</TargetFramework>
+    <UseWPF>true</UseWPF>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>enable</Nullable>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="CommunityToolkit.Mvvm" Version="8.2.0" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\TcpConnectionHandler\TcpConnectionHandler.csproj" />
+    <ProjectReference Include="..\VisionProvider.Interfaces\VisionProvider.csproj" />
+    <ProjectReference Include="..\WinCommonUtils\WinCommonUtils.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Reference Include="VM.Core">
+      <HintPath>..\..\..\..\..\..\Program Files\VisionMaster4.2.0\Development\V4.x\ComControls\Assembly\VM.Core.dll</HintPath>
+    </Reference>
+    <Reference Include="VMControls.Interface">
+      <HintPath>..\..\..\..\..\..\Program Files\VisionMaster4.2.0\Development\V4.x\ComControls\Assembly\VMControls.Interface.dll</HintPath>
+    </Reference>
+  </ItemGroup>
+
+</Project>

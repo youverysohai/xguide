@@ -1,11 +1,13 @@
 ﻿using CommunityToolkit.Mvvm.Messaging;
+using System.Runtime.Versioning;
 using System.Threading.Tasks;
+using VisionProvider.Interfaces;
 using VM.Core;
 using X_Guide.Service.Communication;
-using X_Guide.VisionMaster;
 
 namespace X_Guide.MVVM.ViewModel
 {
+    [SupportedOSPlatform("windows")]
     internal class OperationViewModel : ViewModelBase, IRecipient<VmProcedure>
     {
         private readonly IMessenger _messenger;

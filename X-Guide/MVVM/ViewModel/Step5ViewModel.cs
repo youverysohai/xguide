@@ -1,23 +1,20 @@
 ﻿using CommunityToolkit.Mvvm.Messaging;
-using System;
 using System.Collections.Generic;
 using System.Threading;
 using System.Threading.Tasks;
+using TcpConnectionHandler.Server;
+using VisionProvider.Interfaces;
 using VM.Core;
 using VMControls.Interface;
-using X_Guide.Aspect;
 
 /*using VM.Core;*/
 
-using X_Guide.Communication.Service;
 using X_Guide.MessageToken;
 using X_Guide.MVVM.Command;
 using X_Guide.MVVM.ViewModel.CalibrationWizardSteps;
 using X_Guide.Service;
-
 using X_Guide.Service.Communication;
 using X_Guide.State;
-using X_Guide.VisionMaster;
 
 namespace X_Guide.MVVM.ViewModel
 {
@@ -28,10 +25,11 @@ namespace X_Guide.MVVM.ViewModel
         public object AppState { get; }
 
         private readonly IJogService _jogService;
-        private readonly IServerService _serverService;
+        private readonly IServerTcp _serverService;
         private readonly IVisionService _visionService;
         private ManualResetEventSlim _manual;
         private IVisionViewModel _visionView;
+
         public IVisionViewModel VisionView
         {
             get
@@ -51,7 +49,6 @@ namespace X_Guide.MVVM.ViewModel
         public string JogMode { get; set; } = "TOOL";
 
         private bool _canJog = false;
-     
 
         public bool CanJog
         {
@@ -77,7 +74,7 @@ namespace X_Guide.MVVM.ViewModel
         public int TrackedXMove { get; set; }
         public int TrackedYMove { get; set; }
 
-        public Step5ViewModel(CalibrationViewModel calibrationConfig, IServerService serverService, IVisionService visionService, IJogService jogService, StateViewModel appState, IMessenger messenger, IVisionViewModel visionView = null)
+        public Step5ViewModel(CalibrationViewModel calibrationConfig, IServerTcp serverService, IVisionService visionService, IJogService jogService, StateViewModel appState, IMessenger messenger, IVisionViewModel visionView = null)
         {
             _serverService = serverService;
             _visionService = visionService;
@@ -102,7 +99,6 @@ namespace X_Guide.MVVM.ViewModel
         {
             try
             {
-                await RunProcedure();
                 _jogService.Start();
             }
             catch
@@ -121,13 +117,6 @@ namespace X_Guide.MVVM.ViewModel
             }
         }
 
-        [ExceptionHandlingAspect]
-        private async Task RunProcedure()
-        {
-            IVmModule procedure = await _visionService.RunProcedure(_calibrationConfig.Procedure, false);
-            Modules = _visionService.GetModules(procedure as VmProcedure);
-        }
-
         private void Jog(object parameter)
         {
             if (JogDistance == 0) JogDistance = 10;
@@ -136,7 +125,7 @@ namespace X_Guide.MVVM.ViewModel
 
             switch (parameter)
             {
-                case "Y+": y = JogDistance;TrackedYMove += JogDistance; break;
+                case "Y+": y = JogDistance; TrackedYMove += JogDistance; break;
                 case "Y-": y = -JogDistance; TrackedYMove -= JogDistance; break;
                 case "X+": x = JogDistance; TrackedXMove += JogDistance; break;
                 case "X-": x = -JogDistance; TrackedXMove -= JogDistance; break;

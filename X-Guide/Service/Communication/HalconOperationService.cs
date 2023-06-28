@@ -1,14 +1,14 @@
 ﻿using System;
 using System.Threading.Tasks;
-using X_Guide.Communication.Service;
-using X_Guide.VisionMaster;
+using TcpConnectionHandler.Server;
+using VisionProvider.Interfaces;
 using XGuideSQLiteDB;
 
 namespace X_Guide.Service.Communication
 {
     internal class HalconOperationService : OperationService, IOperationService
     {
-        public HalconOperationService(IRepository repository, IVisionService visionService, IServerService serverService) : base(repository, visionService, serverService)
+        public HalconOperationService(IRepository repository, IVisionService visionService, IServerTcp serverService) : base(repository, visionService, serverService)
         {
         }
 

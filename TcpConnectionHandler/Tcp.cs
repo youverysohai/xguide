@@ -1,29 +1,28 @@
-﻿using System;
-using System.Diagnostics;
+﻿using System.Diagnostics;
 using System.Net.Sockets;
 using System.Text;
-using System.Threading;
-using System.Threading.Tasks;
-using X_Guide.CustomEventArgs;
 
-namespace X_Guide.Service.Communication
+namespace TcpConnectionHandler
 {
-    public class TCPBase : Attribute
-
+    public class Tcp : Attribute
     {
-        public event EventHandler<NetworkStreamEventArgs> _dataReceived;
+        public event EventHandler<NetworkStreamEventArgs>? DataReceived;
 
-        private string _terminator;
-        protected string Terminator { get => _terminator; set => _terminator = value ?? "\n"; }
+        protected readonly TcpConfiguration _configuration;
 
-        public async Task<T> RegisterSingleRequestHandler<T>(Func<NetworkStreamEventArgs, T> action, CancellationToken ct = new CancellationToken())
+        public Tcp(TcpConfiguration configuration)
+        {
+            _configuration = configuration;
+        }
+
+        public async Task<T?> RegisterSingleRequestHandler<T>(Func<NetworkStreamEventArgs, T> action, CancellationToken ct = new CancellationToken())
         {
             return await Task.Run(() =>
             {
                 using (ManualResetEventSlim resetEvent = new ManualResetEventSlim())
                 {
                     ct.Register(() => { Debug.WriteLine("OperationCanceled"); resetEvent.Set(); });
-                    T data = default(T);
+                    T? data = default(T);
 
                     EventHandler<NetworkStreamEventArgs> eventHandler = (s, e) =>
                     {
@@ -38,24 +37,14 @@ namespace X_Guide.Service.Communication
                         }
                     };
 
-                    _dataReceived += eventHandler;
+                    DataReceived += eventHandler;
 
                     int index = WaitHandle.WaitAny(new WaitHandle[] { ct.WaitHandle, resetEvent.WaitHandle });
-                    _dataReceived -= eventHandler;
+                    DataReceived -= eventHandler;
 
                     return data;
                 }
             });
-        }
-
-        public TCPBase(string terminator)
-        {
-            Terminator = terminator;
-        }
-
-        public TCPBase()
-        {
-            Terminator = "\n";
         }
 
         protected virtual async Task RecieveDataAsync(NetworkStream stream, CancellationToken ct)
@@ -77,8 +66,8 @@ namespace X_Guide.Service.Communication
 
         protected async Task WriteDataAsync(string data, NetworkStream stream)
         {
-            byte[] bytes = Encoding.ASCII.GetBytes(data + Terminator);
-            _ = stream ?? throw new Exception(StrRetriver.Get("CL000"));
+            byte[] bytes = Encoding.ASCII.GetBytes(data + _configuration.Terminator);
+            _ = stream ?? throw new Exception("Can't send data");
             await stream.WriteAsync(bytes, 0, bytes.Length);
             Debug.WriteLine($"Write: {data}");
         }
@@ -99,7 +88,7 @@ namespace X_Guide.Service.Communication
 
         protected void OnDataRecieved(object s, NetworkStreamEventArgs e)
         {
-            _dataReceived?.Invoke(s, e);
+            DataReceived?.Invoke(s, e);
         }
     }
 }

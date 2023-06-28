@@ -1,10 +1,9 @@
 ﻿using CommunityToolkit.Mvvm.Messaging;
 using HalconDotNet;
 using System;
-using VisionGuided;
+using VisionProvider.Interfaces;
 using X_Guide.MVVM.Command;
 using X_Guide.MVVM.ViewModel.CalibrationWizardSteps;
-using X_Guide.VisionMaster;
 
 namespace X_Guide.MVVM.ViewModel
 {
@@ -12,11 +11,12 @@ namespace X_Guide.MVVM.ViewModel
     {
         public HObject Image { get; set; }
 
-        private readonly HalconVisionService _visionService;
+        private readonly IVisionService _visionService;
         private readonly IMessenger _messenger;
 
         public HObject OutputImage { get; set; }
-        public Point OutputImageParameter { get; set; }
+
+        //public Point OutputImageParameter { get; set; }
         public HObject LiveImage { get; set; }
 
         public RelayCommand LiveImageCommand { get; set; }
@@ -25,7 +25,7 @@ namespace X_Guide.MVVM.ViewModel
         {
             _messenger = messenger;
             _messenger.Register<HObject>(this);
-            _visionService = (HalconVisionService)visionService;
+            //_visionService = (HalconVisionService)visionService;
         }
 
         public override void Dispose()
@@ -41,12 +41,12 @@ namespace X_Guide.MVVM.ViewModel
 
         public void StopLiveImage()
         {
-            _visionService.StopGrabbingImage();
+            //_visionService.StopGrabbingImage();
         }
 
         public void StartLiveImage()
         {
-            _visionService.StartGrabbingImage();
+            //_visionService.StartGrabbingImage();
         }
 
         public void ShowOutputImage()

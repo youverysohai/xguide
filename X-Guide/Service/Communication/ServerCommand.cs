@@ -1,23 +1,25 @@
 ﻿using System;
 using System.Collections.Generic;
-using X_Guide.Communication.Service;
-using X_Guide.CustomEventArgs;
+using System.Runtime.Versioning;
+using TcpConnectionHandler;
+using TcpConnectionHandler.Server;
 using X_Guide.Service.Communication;
 
 namespace X_Guide.Service.Communation
 {
+    [SupportedOSPlatform("windows")]
     public class ServerCommand : IServerCommand, IDisposable
     {
         public Queue<string> commandQeueue = new Queue<string>();
 
-        private readonly IServerService _serverService;
+        private readonly IServerTcp _serverService;
         private readonly IOperationService _operationService;
 
-        public ServerCommand(IServerService serverService, IOperationService operationService)
+        public ServerCommand(IServerTcp serverService, IOperationService operationService)
         {
             _serverService = serverService;
             _operationService = operationService;
-            _serverService._dataReceived += ValidateSyntax;
+            //_serverService._dataReceived += ValidateSyntax;
         }
 
         public void ValidateSyntax(object sender, NetworkStreamEventArgs network)
@@ -38,7 +40,7 @@ namespace X_Guide.Service.Communation
 
         public void Dispose()
         {
-            _serverService._dataReceived -= ValidateSyntax;
+            //_serverService._dataReceived -= ValidateSyntax;
         }
     }
 }

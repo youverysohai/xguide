@@ -1,8 +1,8 @@
 ﻿using System.Threading.Tasks;
 using VisionGuided;
+using VisionProvider.Interfaces;
 using X_Guide.MVVM.Model;
 using X_Guide.Service.Communication;
-using X_Guide.VisionMaster;
 
 namespace X_Guide.Service
 {

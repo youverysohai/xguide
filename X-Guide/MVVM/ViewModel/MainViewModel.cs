@@ -1,12 +1,11 @@
 ﻿using Autofac;
 using CommunityToolkit.Mvvm.Messaging;
-using Microsoft.Extensions.Logging;
 using System;
 using System.Diagnostics;
 using System.Security;
 using System.Windows;
 using System.Windows.Input;
-using X_Guide.Communication.Service;
+using TcpConnectionHandler.Server;
 using X_Guide.MVVM.Command;
 using X_Guide.MVVM.Store;
 using X_Guide.Service;
@@ -24,7 +23,6 @@ namespace X_Guide.MVVM.ViewModel
 
         public bool Test { get; set; } = false;
         public RelayCommand TestCommand { get; }
-
         public UserViewModel User { get; set; }
 
         public bool IsRunning => AppState.IsLoading;
@@ -46,15 +44,12 @@ namespace X_Guide.MVVM.ViewModel
         }
 
         public ICommand NavigateCommand { get; }
-
         public ICommand CurrentUserCommand { get; }
         public ICommand OpenLoginFormCommand { get; }
         public ICommand OpenRegisterFormCommand { get; }
         public ICommand LoginCommand { get; }
         public ICommand LogoutCommand { get; }
-
         public ICommand ServerCommand { get; }
-
         public ICommand RegisterCommand { get; }
 
         private string _inputUsername;
@@ -111,7 +106,7 @@ namespace X_Guide.MVVM.ViewModel
             set { _isManipulatorConnected = value; OnPropertyChanged(); }
         }
 
-        private readonly IServerService _serverService;
+        private readonly IServerTcp _serverService;
         private readonly AuthenticationService _auth;
         public StateViewModel AppState { get; set; }
         private readonly INavigationService _navigationService;
@@ -122,7 +117,7 @@ namespace X_Guide.MVVM.ViewModel
 
         #endregion CLR properties
 
-        public MainViewModel(INavigationService navigationService, ILogger logger, StateViewModel state, IRepository repository, IMessenger messenger)
+        public MainViewModel(INavigationService navigationService, StateViewModel state, IRepository repository, IMessenger messenger)
         {
             _auth = new AuthenticationService(repository, messenger);
 

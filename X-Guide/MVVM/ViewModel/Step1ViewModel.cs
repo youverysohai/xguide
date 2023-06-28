@@ -3,7 +3,7 @@ using CommunityToolkit.Mvvm.Messaging;
 using System.Collections.ObjectModel;
 using System.Linq;
 using System.Windows;
-using X_Guide.Communication.Service;
+using TcpConnectionHandler.Server;
 using X_Guide.MessageToken;
 using X_Guide.MVVM.ViewModel.CalibrationWizardSteps;
 using X_Guide.Service;
@@ -48,7 +48,7 @@ namespace X_Guide.MVVM.ViewModel
         private readonly IRepository _repository;
 
         private IMapper _mapper { get; }
-        public IServerService _serverService { get; }
+        public IServerTcp _serverService { get; }
 
         #endregion properties
 

@@ -1,11 +1,14 @@
-﻿using System;
+﻿using HikVisionProvider;
+using System;
+using System.Runtime.Versioning;
 using System.Windows;
+using VisionProvider.Interfaces;
 using VMControls.Interface;
 using X_Guide.MVVM.ViewModel.CalibrationWizardSteps;
-using X_Guide.VisionMaster;
 
 namespace X_Guide.MVVM.ViewModel
 {
+    [SupportedOSPlatform("windows")]
     internal class HikViewModel : ViewModelBase, IVisionViewModel, IDisposable
     {
         private readonly HikVisionService _visionService;
@@ -18,25 +21,21 @@ namespace X_Guide.MVVM.ViewModel
             _visionService = (HikVisionService)visionService;
         }
 
-        public void Dispose()
-        {
-        }
-
         public void SetConfig(CalibrationViewModel calibrationConfig)
         {
             _calibrationConfig = calibrationConfig;
         }
 
-        public async void StartLiveImage()
+        public void StartLiveImage()
         {
-            Module = await _visionService.RunProcedure(_calibrationConfig?.Procedure, true);
+            Module = _visionService.RunProcedure(_calibrationConfig?.Procedure, true);
             Visible = Visibility.Visible;
         }
 
-        public async void ShowOutputImage()
+        public void ShowOutputImage()
         {
             _visionService.Procedure = _calibrationConfig.Procedure;
-            await _visionService.RunProcedure(_calibrationConfig.Procedure);
+            _visionService.RunProcedure(_calibrationConfig.Procedure);
             IVmModule procedure = _visionService.GetProcedure(_calibrationConfig.Procedure);
             Module = procedure;
             //Modules = _visionService.GetModules(procedure);

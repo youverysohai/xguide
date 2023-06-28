@@ -4,17 +4,17 @@ using CommunityToolkit.Mvvm.Messaging;
 
 using System;
 using System.Threading.Tasks;
+using TcpConnectionHandler.Server;
 using ToastNotifications;
+using VisionProvider.Interfaces;
 
 //using ToastNotifications.Messages;
 using X_Guide.Aspect;
-using X_Guide.Communication.Service;
 using X_Guide.MessageToken;
 using X_Guide.MVVM.Command;
 using X_Guide.MVVM.Model;
 using X_Guide.MVVM.ViewModel.CalibrationWizardSteps;
 using X_Guide.Service;
-using X_Guide.VisionMaster;
 using XGuideSQLiteDB;
 
 namespace X_Guide.MVVM.ViewModel
@@ -31,7 +31,7 @@ namespace X_Guide.MVVM.ViewModel
         public IVisionViewModel VisionView { get; set; }
 
         private readonly IMessenger _messenger;
-        private readonly IServerService _serverService;
+        private readonly IServerTcp _serverService;
         private readonly IRepository _repository;
         private readonly ICalibrationService _calibService;
         private readonly IMapper _mapper;
@@ -63,7 +63,7 @@ namespace X_Guide.MVVM.ViewModel
 
         public event EventHandler OnCalibrationChanged;
 
-        public Step6ViewModel(IServerService serverService, CalibrationViewModel calibrationConfig, IRepository repository, ICalibrationService calibService, IMapper mapper, Notifier notifier, IVisionService visionService, IVisionViewModel visionView, IMessenger messenger)
+        public Step6ViewModel(IServerTcp serverService, CalibrationViewModel calibrationConfig, IRepository repository, ICalibrationService calibService, IMapper mapper, Notifier notifier, IVisionService visionService, IVisionViewModel visionView, IMessenger messenger)
         {
             _serverService = serverService;
             Calibration = calibrationConfig;

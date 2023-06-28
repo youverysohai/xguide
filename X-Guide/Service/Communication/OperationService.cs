@@ -1,5 +1,5 @@
-﻿using X_Guide.Communication.Service;
-using X_Guide.VisionMaster;
+﻿using TcpConnectionHandler.Server;
+using VisionProvider.Interfaces;
 using XGuideSQLiteDB;
 
 namespace X_Guide.Service.Communication
@@ -8,9 +8,9 @@ namespace X_Guide.Service.Communication
     {
         protected readonly IRepository _repository;
         protected readonly IVisionService _visionService;
-        protected readonly IServerService _serverService;
+        protected readonly IServerTcp _serverService;
 
-        public OperationService(IRepository repository, IVisionService visionService, IServerService serverService)
+        public OperationService(IRepository repository, IVisionService visionService, IServerTcp serverService)
         {
             _repository = repository;
             _visionService = visionService;

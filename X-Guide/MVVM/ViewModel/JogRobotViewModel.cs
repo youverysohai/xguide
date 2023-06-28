@@ -1,40 +1,32 @@
-﻿
-using System;
-using System.Collections.Generic;
-using System.Collections.ObjectModel;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows.Input;
-using System.Windows.Media.Imaging;
+﻿using System.Runtime.Versioning;
 using System.Windows;
-using X_Guide.CustomEventArgs;
+using TcpConnectionHandler.Server;
 using X_Guide.MVVM.Command;
 using X_Guide.Service;
-using X_Guide.Communication.Service;
 using X_Guide.Service.Communication;
-using Serilog;
 
 namespace X_Guide.MVVM.ViewModel
 {
-    class JogRobotViewModel:ViewModelBase
+    [SupportedOSPlatform("windows")]
+    internal class JogRobotViewModel : ViewModelBase
     {
         private readonly IJogService _jogService;
-        private readonly IServerService _serverService;
+        private readonly IServerTcp _serverService;
         private bool _canJog;
         public int JogDistance { get; set; }
         public int JogSpeed { get; set; }
         public int JogAccel { get; set; }
 
         public RelayCommand JogCommand { get; }
+
         public bool CanJog
         {
             get { return _canJog; }
             set { _canJog = value; OnPropertyChanged(); }
         }
 
-
-        public JogRobotViewModel(IServerService serverService, IJogService jogService) {
+        public JogRobotViewModel(IServerTcp serverService, IJogService jogService)
+        {
             _jogService = jogService;
             _serverService = serverService;
             _serverService.SubscribeOnClientConnectionChange(OnConnectionChange);
@@ -70,6 +62,7 @@ namespace X_Guide.MVVM.ViewModel
                 JogCommand.OnCanExecuteChanged();
             });
         }
+
         public override void Dispose()
         {
             _serverService.UnsubscribeOnClientConnectionChange(OnConnectionChange);
