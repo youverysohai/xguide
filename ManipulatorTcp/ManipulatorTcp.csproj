@@ -1,4 +1,4 @@
-<Project Sdk="Microsoft.NET.Sdk">
+﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
     <TargetFramework>net7.0-windows</TargetFramework>
@@ -7,11 +7,9 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="CommunityToolkit.Mvvm" Version="8.2.0" />
-  </ItemGroup>
-
-  <ItemGroup>
     <ProjectReference Include="..\..\VisionGuided\VisionGuided\VisionGuided.csproj" />
+    <ProjectReference Include="..\TcpConnectionHandler\TcpConnectionHandler.csproj" />
+    <ProjectReference Include="..\WinCommonUtils\WinCommonUtils.csproj" />
   </ItemGroup>
 
 </Project>

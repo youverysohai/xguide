@@ -1,4 +1,5 @@
-﻿using System.Diagnostics;
+﻿using CommunityToolkit.Mvvm.Messaging;
+using System.Diagnostics;
 using TcpConnectionHandler;
 using TcpConnectionHandler.Client;
 using VisionGuided;
@@ -13,9 +14,14 @@ namespace TcpVisionProvider
 
         public string Trigger { get; set; } = "CAPTURE";
 
-        public TcpVisionService(IClientTcp clientTcp)
+        public TcpVisionService(IClientTcp clientTcp, IMessenger messenger) : base(messenger)
         {
             _clientTcp = clientTcp;
+        }
+
+        public override void Receive(VisionCenterRequest message)
+        {
+            message.Reply(GetVisCenter().GetAwaiter().GetResult());
         }
 
         /// <inheritdoc/>

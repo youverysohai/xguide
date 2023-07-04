@@ -7,11 +7,9 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="CommunityToolkit.Mvvm" Version="8.2.0" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <ProjectReference Include="..\..\VisionGuided\VisionGuided\VisionGuided.csproj" />
+    <ProjectReference Include="..\ManipulatorTcp\ManipulatorTcp.csproj" />
+    <ProjectReference Include="..\VisionProvider.Interfaces\VisionProvider.csproj" />
+    <ProjectReference Include="..\XGuideSQLiteDB\XGuideSQLiteDB.csproj" />
   </ItemGroup>
 
 </Project>

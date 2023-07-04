@@ -13,13 +13,13 @@ using System.Windows;
 using TcpConnectionHandler;
 using TcpConnectionHandler.Client;
 using TcpConnectionHandler.Server;
+using TcpVisionProvider;
 using ToastNotifications;
 using ToastNotifications.Lifetime;
 
 //using ToastNotifications.Messages;
 using ToastNotifications.Position;
 using VisionProvider.Interfaces;
-using VM.Core;
 using X_Guide.Enums;
 using X_Guide.MappingConfiguration;
 using X_Guide.MVVM.Model;
@@ -159,6 +159,8 @@ namespace X_Guide
 
                 case 4:
 
+                    builder.RegisterType<TcpVisionService>().As<IVisionService>();
+                    builder.RegisterType<SmartCamViewModel>().As<IVisionViewModel>();
                     builder.RegisterType<SmartCamOperationService>().As<IOperationService>();
                     builder.RegisterType<OthersVisionCalibrationStep>().As<IVisionCalibrationStep>();
                     break;
@@ -224,8 +226,6 @@ namespace X_Guide
 
         protected override void OnStartup(StartupEventArgs e)
         {
-            VmSolution.Load(@"C:\Users\Xlent_XIR02\Desktop\circle.sol");
-
             MainWindow = _diContainer.Resolve<MainWindow>();
 
             base.OnStartup(e);

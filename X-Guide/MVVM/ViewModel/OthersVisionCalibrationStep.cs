@@ -10,6 +10,7 @@ namespace X_Guide.MVVM.ViewModel
 
         public void SetConfig(CalibrationViewModel config)
         {
+         
         }
     }
 }

@@ -63,7 +63,7 @@ namespace X_Guide.MVVM.ViewModel
 
         public event EventHandler OnCalibrationChanged;
 
-        public Step6ViewModel(IServerTcp serverService, CalibrationViewModel calibrationConfig, IRepository repository, ICalibrationService calibService, IMapper mapper, Notifier notifier, IVisionService visionService, IVisionViewModel visionView, IMessenger messenger)
+        public Step6ViewModel(IServerTcp serverService, CalibrationViewModel calibrationConfig, IRepository repository, ICalibrationService calibService, IMapper mapper, Notifier notifier, IVisionService visionService, IMessenger messenger, IVisionViewModel visionView = null)
         {
             _serverService = serverService;
             Calibration = calibrationConfig;
