@@ -1,4 +1,4 @@
-<Project Sdk="Microsoft.NET.Sdk">
+﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
     <TargetFramework>net7.0-windows</TargetFramework>
@@ -8,6 +8,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\ManipulatorTcp\ManipulatorTcp.csproj" />
+    <ProjectReference Include="..\TcpConnectionHandler\TcpConnectionHandler.csproj" />
     <ProjectReference Include="..\VisionProvider.Interfaces\VisionProvider.csproj" />
     <ProjectReference Include="..\XGuideSQLiteDB\XGuideSQLiteDB.csproj" />
   </ItemGroup>

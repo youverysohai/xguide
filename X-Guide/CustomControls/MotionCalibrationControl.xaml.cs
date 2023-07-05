@@ -16,6 +16,7 @@ using System.Windows.Shapes;
 using X_Guide.Enums;
 using X_Guide.MVVM.ViewModel;
 using X_Guide.MVVM.ViewModel.CalibrationWizardSteps;
+using Orientation = X_Guide.Enums.Orientation;
 
 namespace X_Guide.CustomControls
 {
@@ -105,7 +106,21 @@ namespace X_Guide.CustomControls
         public static readonly DependencyProperty ManipulatorTypeProperty =
             DependencyProperty.Register("ManipulatorType", typeof(ManipulatorType), typeof(MotionCalibrationControl), new FrameworkPropertyMetadata(ManipulatorType.GantrySystemWR, FrameworkPropertyMetadataOptions.BindsTwoWayByDefault));
 
-        
+
+
+
+
+        public Orientation CalibOrientation
+        {
+            get { return (Orientation)GetValue(CalibOrientationProperty); }
+            set { SetValue(CalibOrientationProperty, value); }
+        }
+
+        // Using a DependencyProperty as the backing store for CalibOrientation.  This enables animation, styling, binding, etc...
+        public static readonly DependencyProperty CalibOrientationProperty =
+            DependencyProperty.Register("CalibOrientation", typeof(Orientation), typeof(MotionCalibrationControl), new PropertyMetadata(Orientation.LookDownward));
+
+
 
 
 

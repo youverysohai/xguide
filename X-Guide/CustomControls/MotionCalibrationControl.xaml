@@ -77,7 +77,7 @@
                                   materialDesign:HintAssist.Hint="Acceleration %" materialDesign:HintAssist.FloatingScale=".63"
                                     materialDesign:HintAssist.FloatingOffset="-15,-17" />
             <!-- Row 3: Motion Delay-->
-            <StackPanel Orientation="Horizontal" Grid.Row="2" Grid.Column="0" VerticalAlignment="Bottom">
+            <StackPanel Orientation="Horizontal" Grid.Row="2" Grid.Column="0" VerticalAlignment="Bottom" >
                 <Label Content="0" Style="{DynamicResource MaterialDesignLabel}" />
                 <hc:PreviewSlider x:Name="Slider3" Value="{Binding MotionDelay,ElementName=MotionCalibrationControlView}" IsSnapToTickEnabled="True" TickFrequency="1"  Width="300"  Minimum="0" Maximum="2000">
                     <hc:PreviewSlider.PreviewContent>
@@ -87,14 +87,20 @@
                 <Label Content="2000" Style="{DynamicResource MaterialDesignLabel}" />
             </StackPanel>
             <ui:NumberBox  Grid.Row="2" Grid.Column="1"
+                         
                                   x:Name="NumberBoxMotionDelay"
                                    Value="{Binding MotionDelay, StringFormat={}{0:F2},ElementName=MotionCalibrationControlView}"
                                    SpinButtonPlacementMode="Compact"
                                    Padding="10 1"      MinWidth="100"
                                    Header="Motion Delay (ms)" />
-            <!--X Y offset-->
+            <!--X Y offset Rotation Angle-->
 
-            <StackPanel Orientation="Horizontal" Grid.ColumnSpan="2" Grid.Row="3" Visibility="Visible">
+            <StackPanel Orientation="Horizontal" Grid.ColumnSpan="2" Grid.Row="3" >
+                <!--<i:Interaction.Triggers>
+                    <i:DataTrigger Binding="{Binding CalibOrientation, ElementName=MotionCalibrationControlView}" Value="{x:Static enum:Orientation.LookDownward}">
+                        <i:ChangePropertyAction PropertyName="Visibility" Value="Hidden"/>
+                    </i:DataTrigger>
+                </i:Interaction.Triggers>-->
                 <ui:NumberBox
                               Value="{Binding XOffset, ElementName=MotionCalibrationControlView}"
                             Margin="10 5"

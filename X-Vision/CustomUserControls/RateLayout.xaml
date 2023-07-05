@@ -1,0 +1,91 @@
+﻿<UserControl x:Class="X_Vision.CustomUserControls.RateLayout"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:i="http://schemas.microsoft.com/xaml/behaviors"
+             xmlns:local="clr-namespace:X_Vision.CustomUserControls" xmlns:hc="https://handyorg.github.io/handycontrol"
+             xmlns:c="clr-namespace:X_Vision.Converter"
+             mc:Ignorable="d" 
+             d:DesignHeight="150" d:DesignWidth="500"
+             x:Name="RateLayoutView">
+    <UserControl.Resources>
+        <SolidColorBrush x:Key="SuccessPrimary" Color="#0f9b0f"/>
+        <SolidColorBrush x:Key="FailPrimary" Color="#b31217"/>
+        <SolidColorBrush x:Key="SecondaryCol" Color="#333333"/>
+        <c:RateToValueConverter x:Key="RateToValueConverter"/>
+    </UserControl.Resources>
+    <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="3*"/>
+            <ColumnDefinition Width="7*"/>
+        </Grid.ColumnDefinitions>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+        <hc:WaveProgressBar Grid.RowSpan="2" Background="LightGray" FontSize="16" ShowText="True" Width="60"  WaveThickness="4" WaveStroke="#333333">
+            <hc:WaveProgressBar.Value>
+                <MultiBinding Converter="{StaticResource RateToValueConverter}">
+                    <Binding Path="RateCount" ElementName="RateLayoutView"/>
+                    <Binding Path="TotalUnit" ElementName="RateLayoutView"/>
+                </MultiBinding>
+            </hc:WaveProgressBar.Value>
+            <i:Interaction.Triggers>
+                <i:DataTrigger Binding="{Binding IsPassRate,ElementName=RateLayoutView}" Value="True">
+                    <i:ChangePropertyAction PropertyName="Visibility" Value="Visible"/>
+                </i:DataTrigger>
+                <i:DataTrigger Binding="{Binding IsPassRate,ElementName=RateLayoutView}" Value="False">
+                    <i:ChangePropertyAction PropertyName="Visibility" Value="Collapsed"/>
+                </i:DataTrigger>
+            </i:Interaction.Triggers>
+            <hc:WaveProgressBar.WaveFill>
+                <LinearGradientBrush EndPoint="0,1" StartPoint="0,0">
+                    <GradientStop Offset="0" Color="#0f9b0f"/>
+                    <GradientStop Color="#333333" Offset="1"/>
+                </LinearGradientBrush>
+            </hc:WaveProgressBar.WaveFill>
+        </hc:WaveProgressBar>
+        <hc:WaveProgressBar Grid.RowSpan="2" Background="LightGray" FontSize="16" ShowText="True" Width="60"  WaveThickness="4" WaveStroke="#333333">
+            <hc:WaveProgressBar.Value>
+                <MultiBinding Converter="{StaticResource RateToValueConverter}">
+                    <Binding Path="RateCount" ElementName="RateLayoutView"/>
+                    <Binding Path="TotalUnit" ElementName="RateLayoutView"/>
+                </MultiBinding>
+            </hc:WaveProgressBar.Value>
+            <i:Interaction.Triggers>
+                <i:DataTrigger Binding="{Binding IsPassRate,ElementName=RateLayoutView}" Value="True">
+                    <i:ChangePropertyAction PropertyName="Visibility" Value="Collapsed"/>
+                </i:DataTrigger>
+                <i:DataTrigger Binding="{Binding IsPassRate,ElementName=RateLayoutView}" Value="False">
+                    <i:ChangePropertyAction PropertyName="Visibility" Value="Visible"/>
+                </i:DataTrigger>
+            </i:Interaction.Triggers>
+            <hc:WaveProgressBar.WaveFill>
+                <LinearGradientBrush EndPoint="0,1" StartPoint="0,0">
+                    <GradientStop Offset="0" Color="#b31217">
+
+                    </GradientStop>
+                    <GradientStop Color="#333333" Offset="1"/>
+                </LinearGradientBrush>
+            </hc:WaveProgressBar.WaveFill>
+        </hc:WaveProgressBar>
+
+        <TextBlock Grid.Column="1" HorizontalAlignment="Center" VerticalAlignment="Center" Style="{DynamicResource TitleTextBlockStyle}">
+            <i:Interaction.Triggers>
+                <i:DataTrigger Binding="{Binding IsPassRate,ElementName=RateLayoutView}" Value="True">
+                    <i:ChangePropertyAction PropertyName="Text" Value="Pass Rate"/>
+                </i:DataTrigger>
+                <i:DataTrigger Binding="{Binding IsPassRate,ElementName=RateLayoutView}" Value="False">
+                    <i:ChangePropertyAction PropertyName="Text" Value="Fail Rate"/>
+                </i:DataTrigger>
+            </i:Interaction.Triggers>
+        </TextBlock>
+        <hc:SimpleStackPanel Grid.Column="1" Grid.Row="1" Orientation="Horizontal" HorizontalAlignment="Center">
+            <TextBlock Text="{Binding RateCount,ElementName=RateLayoutView}" Style="{DynamicResource TextBlockDefaultInfo}"/>
+            <TextBlock Text="/" Style="{DynamicResource TextBlockDefaultInfo}"/>
+            <TextBlock Text="{Binding TotalUnit,ElementName=RateLayoutView}" Style="{DynamicResource TextBlockDefaultInfo}"/>
+        </hc:SimpleStackPanel>
+
+    </Grid>
+</UserControl>

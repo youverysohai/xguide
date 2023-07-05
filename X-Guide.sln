@@ -24,6 +24,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CalibrationProvider", "Cali
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "UnitTestingDriver", "UnitTestingDriver\UnitTestingDriver.csproj", "{D16BF89B-A619-4C2B-A80A-12D8BB18FB5F}"
 EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "X-Vision", "X-Vision\X-Vision.csproj", "{6B18BFF4-3B80-4A7C-84AF-F856C4AB988D}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -160,6 +162,18 @@ Global
 		{D16BF89B-A619-4C2B-A80A-12D8BB18FB5F}.Release|x64.Build.0 = Release|Any CPU
 		{D16BF89B-A619-4C2B-A80A-12D8BB18FB5F}.Release|x86.ActiveCfg = Release|Any CPU
 		{D16BF89B-A619-4C2B-A80A-12D8BB18FB5F}.Release|x86.Build.0 = Release|Any CPU
+		{6B18BFF4-3B80-4A7C-84AF-F856C4AB988D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{6B18BFF4-3B80-4A7C-84AF-F856C4AB988D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{6B18BFF4-3B80-4A7C-84AF-F856C4AB988D}.Debug|x64.ActiveCfg = Debug|Any CPU
+		{6B18BFF4-3B80-4A7C-84AF-F856C4AB988D}.Debug|x64.Build.0 = Debug|Any CPU
+		{6B18BFF4-3B80-4A7C-84AF-F856C4AB988D}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{6B18BFF4-3B80-4A7C-84AF-F856C4AB988D}.Debug|x86.Build.0 = Debug|Any CPU
+		{6B18BFF4-3B80-4A7C-84AF-F856C4AB988D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{6B18BFF4-3B80-4A7C-84AF-F856C4AB988D}.Release|Any CPU.Build.0 = Release|Any CPU
+		{6B18BFF4-3B80-4A7C-84AF-F856C4AB988D}.Release|x64.ActiveCfg = Release|Any CPU
+		{6B18BFF4-3B80-4A7C-84AF-F856C4AB988D}.Release|x64.Build.0 = Release|Any CPU
+		{6B18BFF4-3B80-4A7C-84AF-F856C4AB988D}.Release|x86.ActiveCfg = Release|Any CPU
+		{6B18BFF4-3B80-4A7C-84AF-F856C4AB988D}.Release|x86.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
