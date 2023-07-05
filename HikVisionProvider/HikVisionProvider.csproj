@@ -1,4 +1,4 @@
-<Project Sdk="Microsoft.NET.Sdk">
+﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
     <TargetFramework>net7.0-windows</TargetFramework>
@@ -18,6 +18,9 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Reference Include="VisionGuided">
+      <HintPath>..\..\..\..\Documents\VisionGuided.dll</HintPath>
+    </Reference>
     <Reference Include="VM.Core">
       <HintPath>..\..\..\..\..\..\Program Files\VisionMaster4.2.0\Development\V4.x\ComControls\Assembly\VM.Core.dll</HintPath>
     </Reference>

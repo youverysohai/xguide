@@ -55,6 +55,9 @@
     <Reference Include="halcondotnet">
       <HintPath>..\..\..\..\..\..\Program Files\MVTec\HALCON-22.11-Steady\bin\dotnet35\halcondotnet.dll</HintPath>
     </Reference>
+    <Reference Include="VisionGuided">
+      <HintPath>..\..\..\..\Documents\VisionGuided.dll</HintPath>
+    </Reference>
     <Reference Include="VM.Core">
       <HintPath>..\..\..\..\..\..\Program Files\VisionMaster4.2.0\Development\V4.x\ComControls\Assembly\VM.Core.dll</HintPath>
     </Reference>
