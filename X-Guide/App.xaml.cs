@@ -160,7 +160,7 @@ namespace X_Guide
 
                 case 4:
 
-                    builder.RegisterType<TcpVisionService>().As<IVisionService>();
+                    builder.RegisterType<TcpVisionService>().As<IVisionService>().SingleInstance();
                     builder.RegisterType<SmartCamViewModel>().As<IVisionViewModel>();
                     builder.RegisterType<SmartCamOperationService>().As<IOperationService>();
                     builder.RegisterType<OthersVisionCalibrationStep>().As<IVisionCalibrationStep>();

@@ -28,10 +28,8 @@ namespace X_Guide.MVVM.ViewModel
         public CalibrationViewModel Calibration { get; set; }
         public CalibrationViewModel NewCalibration { get; set; }
 
-        public ObservableCollection<bool> GridStatus { get; set; } = new ObservableCollection<bool>(new bool[9]);
-
         public List<int> Order { get; set; } = new List<int>(new int[] { 0, 1, 2, 3, 4, 5, 6, 7, 8 });
-        public List<bool> NinePointState { get; set; } = new List<bool>(new bool[] {false,true, false, true, false, true, false, true, false});
+        public ObservableCollection<bool> NinePointState { get; set; } = new ObservableCollection<bool>(new bool[9]);
         public IVisionViewModel VisionView { get; set; }
 
         private readonly IMessenger _messenger;
@@ -92,15 +90,17 @@ namespace X_Guide.MVVM.ViewModel
             VisionView.ShowOutputImage();
         }
 
-        private void Testing(object obj)
+        private async void Testing(object obj)
         {
-            _calibService.TopConfig9Point(BlockingCall);
+            await _calibService.TopConfig9Point(BlockingCall);
         }
 
         private Task BlockingCall(int index)
         {
-            System.Windows.MessageBox.Show($"Confirm point for {index}");
-            GridStatus[index] = true;
+            _messenger.Send(new MessageBoxRequest("Do you want to proceed?", BoxState.Normal));
+
+            NinePointState[index] = true;
+
             return Task.CompletedTask;
         }
 
