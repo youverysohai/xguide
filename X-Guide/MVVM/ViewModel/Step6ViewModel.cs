@@ -1,32 +1,16 @@
-﻿using AutoMapper;
-
-using CommunityToolkit.Mvvm.Messaging;
-
-using System;
-using System.Threading.Tasks;
-using TcpConnectionHandler.Server;
-using ToastNotifications;
-using VisionProvider.Interfaces;
-
-//using ToastNotifications.Messages;
-using X_Guide.Aspect;
-using X_Guide.MessageToken;
-using X_Guide.MVVM.Command;
-using X_Guide.MVVM.Model;
-using X_Guide.MVVM.ViewModel.CalibrationWizardSteps;
-using X_Guide.Service;
-using XGuideSQLiteDB;
+﻿//using ToastNotifications.Messages;
 
 namespace X_Guide.MVVM.ViewModel
 {
     //TODO: Add tooltip to inform what X and Y Offset is
     internal class Step6ViewModel : ViewModelBase
     {
-        public double XMove { get; set; }
-        public double YMove { get; set; }
+
 
         public CalibrationViewModel Calibration { get; set; }
         public CalibrationViewModel NewCalibration { get; set; }
+
+        public List<int> Order { get; set; } = new List<int>(new int[] { 0, 1, 2, 3, 4, 5, 6, 7, 8 });
 
         public IVisionViewModel VisionView { get; set; }
 
@@ -49,15 +33,19 @@ namespace X_Guide.MVVM.ViewModel
             }
         }
 
-        private bool _isFirstCalibResult;
-
-        public bool IsFirstCalibResult
+        private bool _isCalibrationCompleted;
+        public bool IsCalibrationCompleted
         {
-            get { return _isFirstCalibResult; }
-            set { _isFirstCalibResult = value; OnPropertyChanged(); }
+            get { return _isCalibrationCompleted; }
+            set
+            {
+                _isCalibrationCompleted = value;
+                OnPropertyChanged();
+            }
         }
 
         public RelayCommand SaveCommand { get; set; }
+        public RelayCommand TestingCommand { get; }
         public RelayCommand CalibrateCommand { get; set; }
         public RelayCommand ConfirmCalibDataCommand { get; set; }
 
@@ -76,18 +64,23 @@ namespace X_Guide.MVVM.ViewModel
             VisionView = visionView;
             _messenger = messenger;
             VisionView.SetConfig(calibrationConfig);
-
+            TestingCommand = new RelayCommand(Testing);
             CalibrateCommand = RelayCommand.FromAsyncRelayCommand(Calibrate);
             SaveCommand = RelayCommand.FromAsyncRelayCommand(Save);
             ConfirmCalibDataCommand = new RelayCommand(ConfirmCalibData);
             VisionView.ShowOutputImage();
         }
 
+        private void Testing(object obj)
+        {
+            WeakReferenceMessenger.Default.Send<CalibRequest>();
+        }
+
         private void ConfirmCalibData(object obj)
         {
             if (NewCalibration != null)
             {
-                Calibration.CXOffSet = NewCalibration.CXOffSet;
+                Calibration.CXOffset = NewCalibration.CXOffset;
                 Calibration.CYOffset = NewCalibration.CYOffset;
                 Calibration.CRZOffset = NewCalibration.CRZOffset;
                 Calibration.Mm_per_pixel = NewCalibration.Mm_per_pixel;
@@ -106,22 +99,11 @@ namespace X_Guide.MVVM.ViewModel
             int XOffset = Calibration.XOffset;
             int YOffset = Calibration.YOffset;
             CalibrationData calibrationData = await _calibService.EyeInHand2D_Calibrate(XOffset, YOffset, (int)Calibration.JointRotationAngle);
-            if (Calibration.Mm_per_pixel != 0.0)
-            {
-                NewCalibration.CXOffSet = calibrationData.X;
-                NewCalibration.CYOffset = calibrationData.Y;
-                NewCalibration.CRZOffset = calibrationData.Rz;
-                NewCalibration.Mm_per_pixel = calibrationData.mm_per_pixel;
-                _isFirstCalibResult = false;
-            }
-            else
-            {
-                Calibration.CXOffSet = calibrationData.X;
-                Calibration.CYOffset = calibrationData.Y;
-                Calibration.CRZOffset = calibrationData.Rz;
-                Calibration.Mm_per_pixel = calibrationData.mm_per_pixel;
-                _isFirstCalibResult = true;
-            }
+            Calibration.CXOffset = calibrationData.X;
+            Calibration.CYOffset = calibrationData.Y;
+            Calibration.CRZOffset = calibrationData.Rz;
+            Calibration.Mm_per_pixel = calibrationData.mm_per_pixel;
+            IsCalibrationCompleted = true;
         }
 
         [ExceptionHandlingAspect]

@@ -1,20 +1,4 @@
-﻿using CommunityToolkit.Mvvm.Messaging;
-using System.Collections.Generic;
-using System.Threading;
-using System.Threading.Tasks;
-using TcpConnectionHandler.Server;
-using VisionProvider.Interfaces;
-using VM.Core;
-using VMControls.Interface;
-
-/*using VM.Core;*/
-
-using X_Guide.MessageToken;
-using X_Guide.MVVM.Command;
-using X_Guide.MVVM.ViewModel.CalibrationWizardSteps;
-using X_Guide.Service;
-using X_Guide.Service.Communication;
-using X_Guide.State;
+﻿/*using VM.Core;*/
 
 namespace X_Guide.MVVM.ViewModel
 {
@@ -125,10 +109,10 @@ namespace X_Guide.MVVM.ViewModel
 
             switch (parameter)
             {
-                case "Y+": y = JogDistance; TrackedYMove += JogDistance; break;
-                case "Y-": y = -JogDistance; TrackedYMove -= JogDistance; break;
-                case "X+": x = JogDistance; TrackedXMove += JogDistance; break;
-                case "X-": x = -JogDistance; TrackedXMove -= JogDistance; break;
+                case "Y+": y = JogDistance; _calibrationConfig.YMove += JogDistance; break;
+                case "Y-": y = -JogDistance; _calibrationConfig.YMove -= JogDistance; break;
+                case "X+": x = JogDistance; _calibrationConfig.XMove += JogDistance; break;
+                case "X-": x = -JogDistance; _calibrationConfig.XMove -= JogDistance; break;
                 case "Z+": z = JogDistance; break;
                 case "Z-": z = -JogDistance; break;
                 case "RZ+": rz = RotationAngle; break;

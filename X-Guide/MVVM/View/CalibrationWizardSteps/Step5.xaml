@@ -75,14 +75,14 @@
                     <ui:SimpleStackPanel Orientation="Horizontal">
                         <!-- Manual -->
                         <Label Content="X Move: " Style="{DynamicResource DefaultLabelStyle}" VerticalAlignment="Center"/>
-                        <TextBox HorizontalAlignment="Left">
+                        <TextBox HorizontalAlignment="Left" Text="{Binding Calibration.XMove}">
                             <i:Interaction.Triggers>
                                 <i:DataTrigger Binding="{Binding Calibration.CalibrationMode}" Value="False">
                                     <i:ChangePropertyAction PropertyName="Visibility" Value="Collapsed"/>
                                 </i:DataTrigger>
                             </i:Interaction.Triggers>
                         </TextBox>
-                        <TextBlock Text="{Binding TrackedXMove}" Style="{DynamicResource ReadOnlyTextBlock}" >
+                        <TextBlock x:Name="TrackXMoveTextBlock" Text="{Binding Calibration.XMove}" Style="{DynamicResource ReadOnlyTextBlock}" >
                             <i:Interaction.Triggers>
                                 <i:DataTrigger Binding="{Binding Calibration.Manipulator.Type}" Value="{x:Static enums:ManipulatorType.GantrySystemWR}">
                                     <i:ChangePropertyAction PropertyName="Visibility" Value="Visible"/>
@@ -93,14 +93,14 @@
                             </i:Interaction.Triggers>
                         </TextBlock>
                         <Label Content="Y Move: " Style="{DynamicResource DefaultLabelStyle}"  VerticalAlignment="Center" Margin="5 0 0 0"/>
-                        <TextBox HorizontalAlignment="Left">
+                        <TextBox HorizontalAlignment="Left" Text="{Binding Calibration.YMove}">
                             <i:Interaction.Triggers>
                                 <i:DataTrigger Binding="{Binding Calibration.CalibrationMode}" Value="False">
                                     <i:ChangePropertyAction PropertyName="Visibility" Value="Collapsed"/>
                                 </i:DataTrigger>
                             </i:Interaction.Triggers>
                         </TextBox>
-                        <TextBlock Text="{Binding TrackedYMove}" Style="{DynamicResource ReadOnlyTextBlock}" >
+                        <TextBlock  x:Name="TrackYMoveTextBlock" Text="{Binding Calibration.YMove}" Style="{DynamicResource ReadOnlyTextBlock}" >
                             <i:Interaction.Triggers>
                                 <i:DataTrigger Binding="{Binding Calibration.Manipulator.Type}" Value="{x:Static enums:ManipulatorType.GantrySystemWR}">
                                     <i:ChangePropertyAction PropertyName="Visibility" Value="Visible"/>

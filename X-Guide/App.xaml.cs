@@ -1,36 +1,5 @@
-﻿using Autofac;
-using AutoMapper;
-using CommunityToolkit.Mvvm.Messaging;
-using HikVisionProvider;
-using Microsoft.Extensions.Logging;
-using Serilog;
-using Serilog.Core;
-using System;
-using System.Configuration;
-using System.Net;
-using System.Runtime.Versioning;
-using System.Windows;
-using TcpConnectionHandler;
-using TcpConnectionHandler.Client;
-using TcpConnectionHandler.Server;
-using TcpVisionProvider;
-using ToastNotifications;
-using ToastNotifications.Lifetime;
-
+﻿
 //using ToastNotifications.Messages;
-using ToastNotifications.Position;
-using VisionProvider.Interfaces;
-using X_Guide.Enums;
-using X_Guide.MappingConfiguration;
-using X_Guide.MVVM.Model;
-using X_Guide.MVVM.Store;
-using X_Guide.MVVM.ViewModel;
-using X_Guide.Service;
-using X_Guide.Service.Communation;
-using X_Guide.Service.Communication;
-using X_Guide.Service.DatabaseProvider;
-using X_Guide.State;
-using XGuideSQLiteDB;
 using ILogger = Serilog.ILogger;
 
 namespace X_Guide

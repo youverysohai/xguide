@@ -1,5 +1,6 @@
 ﻿using Newtonsoft.Json;
 using System.Net;
+using VisionGuided;
 
 namespace X_Guide.MVVM.Model
 {
@@ -15,7 +16,7 @@ namespace X_Guide.MVVM.Model
                 _ip = IPAddress.TryParse(value, out _) ? value : "127.0.0.1";
             }
         }
-
+    
         public int Port { get; set; } = 8080;
         public string Terminator { get; set; } = "";
         public string Filepath { get; set; } = "";
