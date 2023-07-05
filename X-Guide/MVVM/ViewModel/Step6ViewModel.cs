@@ -31,7 +31,7 @@ namespace X_Guide.MVVM.ViewModel
         public ObservableCollection<bool> GridStatus { get; set; } = new ObservableCollection<bool>(new bool[9]);
 
         public List<int> Order { get; set; } = new List<int>(new int[] { 0, 1, 2, 3, 4, 5, 6, 7, 8 });
-
+        public List<bool> NinePointState { get; set; } = new List<bool>(new bool[] {false,true, false, true, false, true, false, true, false});
         public IVisionViewModel VisionView { get; set; }
 
         private readonly IMessenger _messenger;

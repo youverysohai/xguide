@@ -1,0 +1,22 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net7.0-windows</TargetFramework>
+    <Nullable>enable</Nullable>
+    <UseWPF>true</UseWPF>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="ModernWpfUI" Version="0.9.6" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Reference Include="VMControls.WPF.Release">
+      <HintPath>..\..\..\..\..\..\Program Files\VisionMaster4.2.0\Development\V4.x\ComControls\Assembly\VMControls.WPF.Release.dll</HintPath>
+    </Reference>
+  </ItemGroup>
+
+</Project>
+
+
+

@@ -29,6 +29,7 @@
                                                 XOffset="{Binding Calibration.XOffset}"
                                                 YOffset="{Binding Calibration.YOffset}"
                                                 JointRotationAngle="{Binding Calibration.JointRotationAngle}"
+                                                CalibOrientation="{Binding Calibration.Orientation}"
                                                 />
 
             </StackPanel>
