@@ -92,12 +92,12 @@ namespace CalibrationProvider
                 VisionPoints[i] = point;
             }
 
-            for (int i = 0; i < 9; i++)
-            {
-                Point? point = _messenger.Send<ManipulatorTcpRequest>();
-                if (point is null) throw new Exception();
-                RobotPoints[i] = point;
-            }
+            //for (int i = 0; i < 9; i++)
+            //{
+            //    Point? point = _messenger.Send<ManipulatorTcpRequest>();
+            //    if (point is null) throw new Exception();
+            //    RobotPoints[i] = point;
+            //}
 
             return (VisionPoints, RobotPoints);
         }
