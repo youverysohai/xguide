@@ -1,9 +1,8 @@
-﻿using System.Runtime.Versioning;
+﻿using ManipulatorTcp;
+using System.Runtime.Versioning;
 using System.Windows;
 using TcpConnectionHandler.Server;
 using X_Guide.MVVM.Command;
-using X_Guide.Service;
-using X_Guide.Service.Communication;
 
 namespace X_Guide.MVVM.ViewModel
 {

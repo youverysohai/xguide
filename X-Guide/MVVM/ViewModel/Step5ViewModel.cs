@@ -1,5 +1,19 @@
 ﻿/*using VM.Core;*/
 
+using CommunityToolkit.Mvvm.Messaging;
+using ManipulatorTcp;
+using System.Collections.Generic;
+using System.Threading;
+using System.Threading.Tasks;
+using TcpConnectionHandler.Server;
+using VisionProvider.Interfaces;
+using VM.Core;
+using VMControls.Interface;
+using X_Guide.MessageToken;
+using X_Guide.MVVM.Command;
+using X_Guide.MVVM.ViewModel.CalibrationWizardSteps;
+using X_Guide.State;
+
 namespace X_Guide.MVVM.ViewModel
 {
     internal class Step5ViewModel : ViewModelBase, IRecipient<ConnectionStatusChanged>

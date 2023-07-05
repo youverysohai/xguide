@@ -202,7 +202,9 @@
     <Resource Include="Style\ImageSource\pngIcon.png" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\CalibrationService\CalibrationProvider.csproj" />
     <ProjectReference Include="..\HikVisionProvider\HikVisionProvider.csproj" />
+    <ProjectReference Include="..\ManipulatorTcp\ManipulatorTcp.csproj" />
     <ProjectReference Include="..\TcpConnectionHandler\TcpConnectionHandler.csproj" />
     <ProjectReference Include="..\TcpVisionProvider\TcpVisionProvider.csproj" />
     <ProjectReference Include="..\VisionProvider.Interfaces\VisionProvider.csproj" />

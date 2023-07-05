@@ -1,12 +1,29 @@
 ﻿//using ToastNotifications.Messages;
 
+using AutoMapper;
+using CalibrationProvider;
+using CommunityToolkit.Mvvm.Messaging;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Runtime.Versioning;
+using System.Threading.Tasks;
+using TcpConnectionHandler.Server;
+using ToastNotifications;
+using VisionProvider.Interfaces;
+using X_Guide.Aspect;
+using X_Guide.MessageToken;
+using X_Guide.MVVM.Command;
+using X_Guide.MVVM.ViewModel.CalibrationWizardSteps;
+using XGuideSQLiteDB;
+using XGuideSQLiteDB.Models;
+
 namespace X_Guide.MVVM.ViewModel
 {
     //TODO: Add tooltip to inform what X and Y Offset is
+    [SupportedOSPlatform("windows")]
     internal class Step6ViewModel : ViewModelBase
     {
-
-
         public CalibrationViewModel Calibration { get; set; }
         public CalibrationViewModel NewCalibration { get; set; }
 
@@ -34,6 +51,7 @@ namespace X_Guide.MVVM.ViewModel
         }
 
         private bool _isCalibrationCompleted;
+
         public bool IsCalibrationCompleted
         {
             get { return _isCalibrationCompleted; }
@@ -73,7 +91,14 @@ namespace X_Guide.MVVM.ViewModel
 
         private void Testing(object obj)
         {
-            WeakReferenceMessenger.Default.Send<CalibRequest>();
+            _messenger.Register<ReadyProceed>(this, (r, m) =>
+            {
+                System.Windows.MessageBox.Show("Ready!");
+                m.Reply(true);
+                if (!m.Ready) _messenger.Unregister<ReadyProceed>(this);
+            });
+
+            //_ = Task.Run(_calibService.TopConfig9Point);
         }
 
         private void ConfirmCalibData(object obj)
@@ -109,18 +134,18 @@ namespace X_Guide.MVVM.ViewModel
         [ExceptionHandlingAspect]
         private async Task Save(object param)
         {
-            //Calibration calibration = _repository.Find<Calibration>(q => q.Id.Equals(Calibration.Id)).FirstOrDefault();
+            Calibration calibration = _repository.Find<Calibration>(q => q.Id.Equals(Calibration.Id)).FirstOrDefault();
 
-            //if (calibration is null)
-            //{
-            //    _repository.Create(_mapper.Map<Calibration>(Calibration));
-            //    _notifier.ShowSuccess(StrRetriver.Get("SC000"));
-            //}
-            //else
-            //{
-            //    _repository.Update(_mapper.Map<Calibration>(Calibration));
-            //    _notifier.ShowSuccess($"{Calibration.Name} : {StrRetriver.Get("SC001")}");
-            //}
+            if (calibration is null)
+            {
+                _repository.Create(_mapper.Map<Calibration>(Calibration));
+                //_notifier.ShowSuccess(StrRetriver.Get("SC000"));
+            }
+            else
+            {
+                _repository.Update(_mapper.Map<Calibration>(Calibration));
+                //_notifier.ShowSuccess($"{Calibration.Name} : {StrRetriver.Get("SC001")}");
+            }
         }
 
         public override void Dispose()

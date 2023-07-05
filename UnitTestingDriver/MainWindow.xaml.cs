@@ -51,13 +51,13 @@ namespace UnitTestingDriver
 
         private async void Button_Click(object sender, RoutedEventArgs e)
         {
-            messenger.Register<ReadyProceed>(this, (r, m) =>
-            {
-                MessageBox.Show("Ready!");
-                m.Reply(true);
-                if (!m.Ready) messenger.Unregister<ReadyProceed>(this);
-            });
-            _ = Task.Run(calibrationService.TopConfig9Point);
+            await calibrationService.TopConfig9Point(BlockingCall);
+        }
+
+        private Task BlockingCall(int i)
+        {
+            MessageBox.Show($"Current index = {i}");
+            return Task.CompletedTask;
         }
     }
 }

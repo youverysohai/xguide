@@ -18,6 +18,6 @@ namespace CalibrationProvider
 
         void SetMotionDelay(int motionDelay);
 
-        public Task<(Point[], Point[])> TopConfig9Point();
+        public Task<(Point[], Point[])> TopConfig9Point(Func<int, Task> action);
     }
 }

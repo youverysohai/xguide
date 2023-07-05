@@ -34,12 +34,9 @@
         </Style>
     </UserControl.Resources>
 
-
-
-
     <Grid>
         <Grid.RowDefinitions>
-            <RowDefinition/>
+            <RowDefinition />
         </Grid.RowDefinitions>
         <ui:ContentDialog Grid.Row="0"   x:Name="NewCalibrationDialog" IsShadowEnabled="True"
                           CloseButtonText="Cancel" CloseButtonStyle="{DynamicResource DateTimePickerFlyoutButtonStyle}" PrimaryButtonText="Confirm" DefaultButton="Primary" Title="New Calibration Results">
@@ -63,10 +60,10 @@
                             <ColumnDefinition Width="auto" />
                             <ColumnDefinition Width="*" />
                         </Grid.ColumnDefinitions>
-                        <Label Content="Result" Margin="2" FontWeight="Bold" Style="{DynamicResource MaterialDesignLabel}" Grid.Row="0" HorizontalAlignment="Left"/>
-                        <Label Content="Old Value" Margin="2" FontWeight="Bold"  Style="{DynamicResource MaterialDesignLabel}" Grid.Row="0" Grid.Column="1" HorizontalAlignment="Left" VerticalAlignment="Center"/>
-                        <ui:FontIcon Glyph="&#xE974;" FontWeight="Bold" Foreground="White" FontSize="8" Grid.Column="2"  VerticalAlignment="Center" HorizontalAlignment="Center"/>
-                        <Label Content="New Value" Margin="2" FontWeight="ExtraBlack"  Style="{DynamicResource MaterialDesignLabel}" Grid.Row="0" Grid.Column="3" HorizontalAlignment="Left"  VerticalAlignment="Center"/>
+                        <Label Content="Result" Margin="2" FontWeight="Bold" Style="{DynamicResource MaterialDesignLabel}" Grid.Row="0" HorizontalAlignment="Left" />
+                        <Label Content="Old Value" Margin="2" FontWeight="Bold"  Style="{DynamicResource MaterialDesignLabel}" Grid.Row="0" Grid.Column="1" HorizontalAlignment="Left" VerticalAlignment="Center" />
+                        <ui:FontIcon Glyph="&#xE974;" FontWeight="Bold" Foreground="White" FontSize="8" Grid.Column="2"  VerticalAlignment="Center" HorizontalAlignment="Center" />
+                        <Label Content="New Value" Margin="2" FontWeight="ExtraBlack"  Style="{DynamicResource MaterialDesignLabel}" Grid.Row="0" Grid.Column="3" HorizontalAlignment="Left"  VerticalAlignment="Center" />
                         <Border Grid.Row="0" Grid.ColumnSpan="4" Background="White" Height="1" HorizontalAlignment="Stretch" VerticalAlignment="Bottom" />
 
                         <Label Style="{DynamicResource MaterialDesignLabel}" Content="Camera X Scaling" Grid.Row="1" Grid.Column="0" Margin="5" />
@@ -74,12 +71,10 @@
                         <Label Content="mm/px" Grid.Row="1" Grid.Column="2" Style="{DynamicResource unitStyle}" />
                         <TextBlock Text="{Binding DataContext.NewCalibration.Mm_per_pixel, StringFormat={}{0:F4}, ElementName=Step6View}" Grid.Row="1" Grid.Column="1" Margin="5" Style="{DynamicResource ReadOnlyTextBlock}" />
 
-
                         <Label Style="{DynamicResource MaterialDesignLabel}" Content="Camera Y Scaling" Grid.Row="2" Grid.Column="0" Margin="5" />
                         <TextBlock Text="{Binding DataContext.Calibration.Mm_per_pixel, StringFormat={}{0:F4}, ElementName=Step6View}" Grid.Row="2" Grid.Column="1" Margin="5" Style="{DynamicResource ReadOnlyTextBlock}" />
                         <Label Content="mm/px" Grid.Row="2" Grid.Column="2"  Style="{DynamicResource unitStyle}" />
                         <TextBlock Text="{Binding DataContext.NewCalibration.Mm_per_pixel, StringFormat={}{0:F4}, ElementName=Step6View}" Grid.Row="1" Grid.Column="1" Margin="5" Style="{DynamicResource ReadOnlyTextBlock}" />
-
 
                         <Label Style="{DynamicResource MaterialDesignLabel}" Content="X offset" Grid.Row="3" Grid.Column="0" Margin="5" />
                         <TextBlock Text="{Binding DataContext.Calibration.CXOffset, StringFormat={}{0:F4}, ElementName=Step6View}" Grid.Row="3" Grid.Column="1" Margin="5" Style="{DynamicResource ReadOnlyTextBlock}" />
@@ -95,14 +90,13 @@
                         <TextBlock Text="{Binding DataContext.Calibration.CRZOffset, StringFormat={}{0:F4}, ElementName=Step6View}" Grid.Row="5" Grid.Column="1" Margin="5" Style="{DynamicResource ReadOnlyTextBlock}" />
                         <Label Content="°" Grid.Row="5" Grid.Column="2" />
                         <TextBlock Text="{Binding DataContext.NewCalibration.CRZOffset, StringFormat={}{0:F4}, ElementName=Step6View}" Grid.Row="5" Grid.Column="1" Margin="5" Style="{DynamicResource ReadOnlyTextBlock}" />
-
                     </Grid>
                 </Border>
             </ui:SimpleStackPanel>
         </ui:ContentDialog>
 
         <!--Live Processed Image-->
-        <hc:ScrollViewer Grid.Row="0"  >
+        <hc:ScrollViewer Grid.Row="0">
 
             <hc:FlexPanel JustifyContent="SpaceBetween" FlexWrap="Wrap">
 
@@ -112,7 +106,7 @@
                 </ContentControl>
                 <!--<XCust:HalconSmartControl Width="640" Height="480" Image="{Binding LiveImage}" Point="{Binding OutputImageParameter}" />
                     <XCust:HalconSmartControl Width="648" Height="488" Image="{Binding OutputImage}" />-->
-                <ui:SimpleStackPanel hc:FlexPanel.FlexBasis="300" Orientation="Vertical" >
+                <ui:SimpleStackPanel hc:FlexPanel.FlexBasis="300" Orientation="Vertical">
                     <GroupBox Visibility="Collapsed" Style="{StaticResource GroupBoxTab}" MinHeight="210">
                         <i:Interaction.Triggers>
                             <i:DataTrigger Binding="{Binding DataContext.Calibration.Orientation,ElementName=Step6View}" Value="{x:Static enums:Orientation.LookDownward}">
@@ -120,16 +114,14 @@
                             </i:DataTrigger>
                         </i:Interaction.Triggers>
                         <GroupBox.Header>
-                            <TextBlock Text="Top Config Calibration" Style="{StaticResource SubtitleTextBlockStyle}"  HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                            <TextBlock Text="Top Config Calibration" Style="{StaticResource SubtitleTextBlockStyle}"  HorizontalAlignment="Center" VerticalAlignment="Center" />
                         </GroupBox.Header>
-                        <XCust:NinePointCalibLayout Orders="{Binding Order}"/>
-
+                        <XCust:NinePointCalibLayout Orders="{Binding Order}" />
                     </GroupBox>
                     <GroupBox MinHeight="350"  Grid.RowSpan="3" Grid.Column="1" Style="{StaticResource GroupBoxTab}" Visibility="Visible">
-                        
+
                         <GroupBox.Header>
                             <TextBlock  HorizontalAlignment="Center" VerticalAlignment="Center" Style="{DynamicResource TitleTextBlockStyle}" Text="Calibration Results" />
-
                         </GroupBox.Header>
 
                         <ui:SimpleStackPanel Orientation="Vertical">
@@ -184,14 +176,13 @@
                                     <!--<Button Grid.Row="5"  Command="{Binding OperationCommand}" >Start Operation</Button>-->
                                     <Button Grid.Row="6"   Command="{Binding CalibrateCommand}" >Start Calibration</Button>
                                     <Button Grid.Row="7"   Command="{Binding SaveCommand}" >Save</Button>
+                                    <Button Content="Testing" Command="{Binding TestingCommand}"></Button>
                                 </ui:SimpleStackPanel>
                             </Grid>
                         </ui:SimpleStackPanel>
                     </GroupBox>
                 </ui:SimpleStackPanel>
-
             </hc:FlexPanel>
         </hc:ScrollViewer>
     </Grid>
-
 </UserControl>

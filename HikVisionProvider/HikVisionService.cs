@@ -1,4 +1,5 @@
-﻿using System.Diagnostics;
+﻿using CommunityToolkit.Mvvm.Messaging;
+using System.Diagnostics;
 using System.Runtime.Versioning;
 using TcpConnectionHandler;
 using TcpConnectionHandler.Client;
@@ -18,7 +19,7 @@ namespace HikVisionProvider
         private CancellationTokenSource? _cts;
         public string? Procedure { get; set; }
 
-        public HikVisionService(string solutionPath, IClientTcp clientService)
+        public HikVisionService(string solutionPath, IClientTcp clientService, IMessenger messenger) : base(messenger)
         {
             _solutionPath = solutionPath;
             _clientService = clientService;

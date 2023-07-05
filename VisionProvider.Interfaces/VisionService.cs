@@ -19,7 +19,7 @@ namespace VisionProvider.Interfaces
         }
     }
 
-    public class VisionCenterRequest : RequestMessage<Point?>
+    public class VisionCenterRequest : AsyncRequestMessage<Point?>
     {
     }
 }

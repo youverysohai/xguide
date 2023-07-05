@@ -6,6 +6,7 @@ namespace X_Guide.CustomControls
     /// <summary>
     /// Interaction logic for CustomConnectionStatus.xaml
     /// </summary>
+
     public partial class CustomConnectionStatus : UserControl
     {
         public CustomConnectionStatus()
@@ -24,16 +25,12 @@ namespace X_Guide.CustomControls
         public static readonly DependencyProperty IsConnectedProperty =
             DependencyProperty.Register("IsConnected", typeof(bool), typeof(CustomConnectionStatus), new PropertyMetadata(false));
 
-
         private static void OnConnectedStatusChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
         {
             if (!(d is CustomConnectionStatus customConnectionStatus)) return;
 
             var i = customConnectionStatus.IsConnected;
-            
         }
-
-
 
         public bool IsVisionConnected
         {
@@ -43,7 +40,7 @@ namespace X_Guide.CustomControls
 
         // Using a DependencyProperty as the backing store for IsVisionConnected.  This enables animation, styling, binding, etc...
         public static readonly DependencyProperty IsVisionConnectedProperty =
-            DependencyProperty.Register("IsVisionConnected", typeof(bool), typeof(CustomConnectionStatus), new PropertyMetadata(false,OnVisionConnectionStatusChanged));
+            DependencyProperty.Register("IsVisionConnected", typeof(bool), typeof(CustomConnectionStatus), new PropertyMetadata(false, OnVisionConnectionStatusChanged));
 
         private static void OnVisionConnectionStatusChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
         {
@@ -57,11 +54,10 @@ namespace X_Guide.CustomControls
             get { return (Visibility)GetValue(ShowVisionStatusProperty); }
             set { SetValue(ShowVisionStatusProperty, value); }
         }
+
         // Using a DependencyProperty as the backing store for ShowVisionStatus.  This enables animation, styling, binding, etc...
         public static readonly DependencyProperty ShowVisionStatusProperty =
             DependencyProperty.Register("ShowVisionStatus", typeof(Visibility), typeof(CustomConnectionStatus), new PropertyMetadata(Visibility.Collapsed));
-
-
 
         public Visibility ShowTitle
 
@@ -74,7 +70,6 @@ namespace X_Guide.CustomControls
         public static readonly DependencyProperty IsMainWindowProperty =
             DependencyProperty.Register("IsMainWindow", typeof(Visibility), typeof(CustomConnectionStatus), new PropertyMetadata(Visibility.Visible));
 
-
         public string ManipulatorType
         {
             get { return (string)GetValue(ManipulatorTypeProperty); }
@@ -84,7 +79,5 @@ namespace X_Guide.CustomControls
         // Using a DependencyProperty as the backing store for ManipulatorType.  This enables animation, styling, binding, etc...
         public static readonly DependencyProperty ManipulatorTypeProperty =
             DependencyProperty.Register("ManipulatorType", typeof(string), typeof(CustomConnectionStatus), new PropertyMetadata(""));
-
-
     }
 }

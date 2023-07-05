@@ -1,6 +1,38 @@
-﻿
-//using ToastNotifications.Messages;
+﻿//using ToastNotifications.Messages;
+using Autofac;
+using AutoMapper;
+using CalibrationProvider;
+using CommunityToolkit.Mvvm.Messaging;
+using HikVisionProvider;
+using ManipulatorTcp;
+using Microsoft.Extensions.Logging;
+using Serilog;
+using Serilog.Core;
+using System;
+using System.Configuration;
+using System.Runtime.Versioning;
+using System.Windows;
+using TcpConnectionHandler;
+using TcpConnectionHandler.Client;
+using TcpConnectionHandler.Server;
+using TcpVisionProvider;
+using ToastNotifications;
+using ToastNotifications.Lifetime;
+using ToastNotifications.Position;
+using VisionProvider.Interfaces;
+using X_Guide.Enums;
+using X_Guide.MappingConfiguration;
+using X_Guide.MVVM.Model;
+using X_Guide.MVVM.Store;
+using X_Guide.MVVM.ViewModel;
+using X_Guide.Service;
+using X_Guide.Service.Communation;
+using X_Guide.Service.Communication;
+using X_Guide.Service.DatabaseProvider;
+using X_Guide.State;
+using XGuideSQLiteDB;
 using ILogger = Serilog.ILogger;
+using IPAddress = System.Net.IPAddress;
 
 namespace X_Guide
 {
@@ -100,7 +132,7 @@ namespace X_Guide
                     {
                         string filepath = c.Resolve<IJsonDb>().Get<HikVisionModel>().Filepath;
                         IClientTcp client = c.Resolve<IClientTcp>();
-                        return new HikVisionService(filepath, client);
+                        return new HikVisionService(filepath, client, c.Resolve<IMessenger>());
                     }
                     ).As<IVisionService>().SingleInstance();
                     builder.RegisterType<HikViewModel>().As<IVisionViewModel>();
@@ -188,6 +220,8 @@ namespace X_Guide
             _diContainer = BuildDIContainer();
             _ = _diContainer.Resolve<IMessageBoxService>();
             _ = _diContainer.Resolve<AuthenticationService>();
+            IClientTcp clientTcp = _diContainer.Resolve<IClientTcp>();
+            clientTcp.ConnectServer();
             Notifier = _diContainer.Resolve<Notifier>();
         }
 

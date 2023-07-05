@@ -1,7 +1,6 @@
 ﻿using CommunityToolkit.Mvvm.Messaging;
 using CommunityToolkit.Mvvm.Messaging.Messages;
 using ManipulatorTcp;
-using System.Diagnostics;
 using VisionGuided;
 using VisionProvider.Interfaces;
 using Point = VisionGuided.Point;
@@ -80,21 +79,18 @@ namespace CalibrationProvider
             _motionDelay = motionDelay;
         }
 
-        public async Task<(Point[], Point[])> TopConfig9Point()
+        public async Task<(Point[], Point[])> TopConfig9Point(Func<int, Task> BlockingCall)
         {
             Point[] VisionPoints = new Point[9];
             Point[] RobotPoints = new Point[9];
 
             for (int i = 0; i < 9; i++)
             {
-                await _messenger.Send(new ReadyProceed(true));
-                Debug.WriteLine($"Pass through {i}");
-                Point? point = _messenger.Send<VisionCenterRequest>();
+                await BlockingCall.Invoke(i);
+                Point? point = await _messenger.Send<VisionCenterRequest>();
                 if (point is null) throw new Exception();
                 VisionPoints[i] = point;
             }
-
-            await _messenger.Send(new ReadyProceed(false));
 
             for (int i = 0; i < 9; i++)
             {
@@ -128,7 +124,8 @@ namespace CalibrationProvider
             for (int i = 0; i < offsets.GetLength(0); i++)
             {
                 RobotPoints[offsets[i, 2]] = new Point(x, y);
-                VisionPoints[offsets[i, 2]] = _messenger.Send<VisionCenterRequest>();
+                //TODO: Error Handling
+                VisionPoints[offsets[i, 2]] = await _messenger.Send<VisionCenterRequest>();
 
                 x += offsets[i, 0];
                 y += offsets[i, 1];

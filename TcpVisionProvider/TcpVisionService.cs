@@ -21,7 +21,7 @@ namespace TcpVisionProvider
 
         public override void Receive(VisionCenterRequest message)
         {
-            message.Reply(GetVisCenter().GetAwaiter().GetResult());
+            message.Reply(GetVisCenter());
         }
 
         /// <inheritdoc/>
@@ -30,7 +30,7 @@ namespace TcpVisionProvider
         {
             await _clientTcp.WriteDataAsync($"{Trigger}");
             _cancellationTokenSource = new CancellationTokenSource();
-            var timer = new Timer(20000);
+            var timer = new Timer(30000);
             timer.Elapsed += (s, e) => _cancellationTokenSource.Cancel();
             timer.AutoReset = false;
             timer.Start();
