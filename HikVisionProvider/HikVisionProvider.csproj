@@ -18,6 +18,9 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Reference Include="VisionGuided">
+      <HintPath>..\X-Guide\src\VisionGuided.dll</HintPath>
+    </Reference>
     <Reference Include="VM.Core">
       <HintPath>..\..\..\..\..\..\Program Files\VisionMaster4.2.0\Development\V4.x\ComControls\Assembly\VM.Core.dll</HintPath>
     </Reference>

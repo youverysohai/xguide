@@ -18,13 +18,11 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "VisionProvider", "VisionPro
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TcpVisionProvider", "TcpVisionProvider\TcpVisionProvider.csproj", "{F9513E5D-093B-4495-B4CF-F24139B25861}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "VisionGuided", "..\VisionGuided\VisionGuided\VisionGuided.csproj", "{9716E586-C4AE-4B59-AE71-549D91598A82}"
-EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ManipulatorTcp", "ManipulatorTcp\ManipulatorTcp.csproj", "{BD1341DB-36EB-43D8-8D4E-42901B83CE0A}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CalibrationProvider", "CalibrationService\CalibrationProvider.csproj", "{D89B9106-54CA-48FC-BDEC-A686656CD9C8}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "UnitTestingDriver", "UnitTestingDriver\UnitTestingDriver.csproj", "{D16BF89B-A619-4C2B-A80A-12D8BB18FB5F}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "UnitTestingDriver", "UnitTestingDriver\UnitTestingDriver.csproj", "{D16BF89B-A619-4C2B-A80A-12D8BB18FB5F}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -126,18 +124,6 @@ Global
 		{F9513E5D-093B-4495-B4CF-F24139B25861}.Release|x64.Build.0 = Release|Any CPU
 		{F9513E5D-093B-4495-B4CF-F24139B25861}.Release|x86.ActiveCfg = Release|Any CPU
 		{F9513E5D-093B-4495-B4CF-F24139B25861}.Release|x86.Build.0 = Release|Any CPU
-		{9716E586-C4AE-4B59-AE71-549D91598A82}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{9716E586-C4AE-4B59-AE71-549D91598A82}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{9716E586-C4AE-4B59-AE71-549D91598A82}.Debug|x64.ActiveCfg = Debug|Any CPU
-		{9716E586-C4AE-4B59-AE71-549D91598A82}.Debug|x64.Build.0 = Debug|Any CPU
-		{9716E586-C4AE-4B59-AE71-549D91598A82}.Debug|x86.ActiveCfg = Debug|Any CPU
-		{9716E586-C4AE-4B59-AE71-549D91598A82}.Debug|x86.Build.0 = Debug|Any CPU
-		{9716E586-C4AE-4B59-AE71-549D91598A82}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{9716E586-C4AE-4B59-AE71-549D91598A82}.Release|Any CPU.Build.0 = Release|Any CPU
-		{9716E586-C4AE-4B59-AE71-549D91598A82}.Release|x64.ActiveCfg = Release|Any CPU
-		{9716E586-C4AE-4B59-AE71-549D91598A82}.Release|x64.Build.0 = Release|Any CPU
-		{9716E586-C4AE-4B59-AE71-549D91598A82}.Release|x86.ActiveCfg = Release|Any CPU
-		{9716E586-C4AE-4B59-AE71-549D91598A82}.Release|x86.Build.0 = Release|Any CPU
 		{BD1341DB-36EB-43D8-8D4E-42901B83CE0A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{BD1341DB-36EB-43D8-8D4E-42901B83CE0A}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{BD1341DB-36EB-43D8-8D4E-42901B83CE0A}.Debug|x64.ActiveCfg = Debug|Any CPU

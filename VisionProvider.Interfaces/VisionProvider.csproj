@@ -11,7 +11,9 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\..\VisionGuided\VisionGuided\VisionGuided.csproj" />
+    <Reference Include="VisionGuided">
+      <HintPath>..\X-Guide\src\VisionGuided.dll</HintPath>
+    </Reference>
   </ItemGroup>
 
 </Project>

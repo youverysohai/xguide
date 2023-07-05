@@ -12,4 +12,10 @@
     <ProjectReference Include="..\XGuideSQLiteDB\XGuideSQLiteDB.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Reference Include="VisionGuided">
+      <HintPath>..\X-Guide\src\VisionGuided.dll</HintPath>
+    </Reference>
+  </ItemGroup>
+
 </Project>

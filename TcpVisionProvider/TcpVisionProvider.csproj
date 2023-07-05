@@ -11,4 +11,10 @@
     <ProjectReference Include="..\VisionProvider.Interfaces\VisionProvider.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Reference Include="VisionGuided">
+      <HintPath>..\X-Guide\src\VisionGuided.dll</HintPath>
+    </Reference>
+  </ItemGroup>
+
 </Project>

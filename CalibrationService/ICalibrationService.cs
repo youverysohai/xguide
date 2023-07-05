@@ -16,6 +16,8 @@ namespace CalibrationProvider
 
         Task<CalibrationData> EyeInHand2D_Calibrate(int XOffset, int YOffset, double XMove, double YMove);
 
+        Task<CalibrationData> LookingDownward2D_Calibrate(Func<int, Task> action);
+
         void SetMotionDelay(int motionDelay);
 
         public Task<(Point[], Point[])> TopConfig9Point(Func<int, Task> action);

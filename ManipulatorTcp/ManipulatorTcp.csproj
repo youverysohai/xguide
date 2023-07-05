@@ -7,9 +7,14 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\..\VisionGuided\VisionGuided\VisionGuided.csproj" />
     <ProjectReference Include="..\TcpConnectionHandler\TcpConnectionHandler.csproj" />
     <ProjectReference Include="..\WinCommonUtils\WinCommonUtils.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Reference Include="VisionGuided">
+      <HintPath>..\X-Guide\src\VisionGuided.dll</HintPath>
+    </Reference>
   </ItemGroup>
 
 </Project>

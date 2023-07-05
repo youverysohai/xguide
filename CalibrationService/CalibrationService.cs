@@ -136,6 +136,11 @@ namespace CalibrationProvider
 
             return (VisionPoints, RobotPoints);
         }
+
+        public Task<CalibrationData> LookingDownward2D_Calibrate(Func<int, Task> action)
+        {
+            throw new NotImplementedException();
+        }
     }
 
     public class ReadyProceed : AsyncRequestMessage<bool>
