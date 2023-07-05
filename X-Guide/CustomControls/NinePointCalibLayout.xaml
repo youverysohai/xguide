@@ -26,8 +26,8 @@
         </Grid>
         <StackPanel Grid.Row="1" Orientation="Horizontal" >
 
-            <Button  Content="DONE?" Click="Button_Click" Margin="10 0"  />
-            <Button  Content="RESET?" Name="ResetButton" Click="ResetButton_Click"   />
+            <!--<Button  Content="DONE?" Click="Button_Click" Margin="10 0"  />
+            <Button  Content="RESET?" Name="ResetButton" Click="ResetButton_Click"   />-->
         </StackPanel>
     </Grid>
 </UserControl>

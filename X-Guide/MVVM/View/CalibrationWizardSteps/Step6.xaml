@@ -113,7 +113,7 @@
                 <!--<XCust:HalconSmartControl Width="640" Height="480" Image="{Binding LiveImage}" Point="{Binding OutputImageParameter}" />
                     <XCust:HalconSmartControl Width="648" Height="488" Image="{Binding OutputImage}" />-->
                 <ui:SimpleStackPanel hc:FlexPanel.FlexBasis="300" Orientation="Vertical" >
-                    <GroupBox Visibility="Collapsed" Style="{StaticResource GroupBoxTab}" MinHeight="210">
+                    <GroupBox Visibility="Visible" Style="{StaticResource GroupBoxTab}" MinHeight="210">
                         <i:Interaction.Triggers>
                             <i:DataTrigger Binding="{Binding DataContext.Calibration.Orientation,ElementName=Step6View}" Value="{x:Static enums:Orientation.LookDownward}">
                                 <i:ChangePropertyAction PropertyName="Visibility" Value="Visible" />
@@ -122,8 +122,91 @@
                         <GroupBox.Header>
                             <TextBlock Text="Top Config Calibration" Style="{StaticResource SubtitleTextBlockStyle}"  HorizontalAlignment="Center" VerticalAlignment="Center"/>
                         </GroupBox.Header>
-                        <XCust:NinePointCalibLayout Orders="{Binding Order}"/>
-
+                        <Grid>
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="*"/>
+                                <RowDefinition Height="auto"/>
+                            </Grid.RowDefinitions>
+                            <!--<XCust:NinePointCalibLayout Orders="{Binding Order}"/>-->
+                            <UniformGrid Rows="3" Columns="3" >
+                                <Border BorderBrush="{DynamicResource PrimaryBlueColor}" Grid.Row="1" Grid.Column="1">
+                                    <i:Interaction.Triggers>
+                                        <i:DataTrigger Binding="{Binding NinePointState[0]}" Value="True">
+                                            <i:ChangePropertyAction PropertyName="Background" Value="{DynamicResource PrimaryBlueColor}"></i:ChangePropertyAction>
+                                        </i:DataTrigger>
+                                    </i:Interaction.Triggers>
+                                    <TextBlock Text="1"/>
+                                </Border>
+                                <Border BorderBrush="{DynamicResource PrimaryBlueColor}">
+                                    <i:Interaction.Triggers>
+                                        <i:DataTrigger Binding="{Binding NinePointState[1]}" Value="True">
+                                            <i:ChangePropertyAction PropertyName="Background" Value="{DynamicResource PrimaryBlueColor}"></i:ChangePropertyAction>
+                                        </i:DataTrigger>
+                                    </i:Interaction.Triggers>
+                                    <TextBlock Text="2"/>
+                                </Border>
+                                <Border BorderBrush="{DynamicResource PrimaryBlueColor}">
+                                    <i:Interaction.Triggers>
+                                        <i:DataTrigger Binding="{Binding NinePointState[2]}" Value="True">
+                                            <i:ChangePropertyAction PropertyName="Background" Value="{DynamicResource PrimaryBlueColor}"></i:ChangePropertyAction>
+                                        </i:DataTrigger>
+                                    </i:Interaction.Triggers>
+                                    <TextBlock Text="3"/>
+                                </Border>
+                                <Border BorderBrush="{DynamicResource PrimaryBlueColor}">
+                                    <i:Interaction.Triggers>
+                                        <i:DataTrigger Binding="{Binding NinePointState[3]}" Value="True">
+                                            <i:ChangePropertyAction PropertyName="Background" Value="{DynamicResource PrimaryBlueColor}"></i:ChangePropertyAction>
+                                        </i:DataTrigger>
+                                    </i:Interaction.Triggers>
+                                    <TextBlock Text="4"/>
+                                </Border>
+                                <Border >
+                                    <i:Interaction.Triggers>
+                                        <i:DataTrigger Binding="{Binding NinePointState[4]}" Value="True">
+                                            <i:ChangePropertyAction PropertyName="Background" Value="{DynamicResource PrimaryBlueColor}"></i:ChangePropertyAction>
+                                        </i:DataTrigger>
+                                    </i:Interaction.Triggers>
+                                    <TextBlock Text="5"/>
+                                </Border>
+                                <Border>
+                                    <i:Interaction.Triggers>
+                                        <i:DataTrigger Binding="{Binding NinePointState[5]}" Value="True">
+                                            <i:ChangePropertyAction PropertyName="Background" Value="{DynamicResource PrimaryBlueColor}"></i:ChangePropertyAction>
+                                        </i:DataTrigger>
+                                    </i:Interaction.Triggers>
+                                    <TextBlock Text="6"/>
+                                </Border>
+                                <Border BorderBrush="{DynamicResource PrimaryBlueColor}">
+                                    <i:Interaction.Triggers>
+                                        <i:DataTrigger Binding="{Binding NinePointState[6]}" Value="True">
+                                            <i:ChangePropertyAction PropertyName="Background" Value="{DynamicResource PrimaryBlueColor}"></i:ChangePropertyAction>
+                                        </i:DataTrigger>
+                                    </i:Interaction.Triggers>
+                                    <TextBlock Text="7"/>
+                                </Border>
+                                <Border BorderBrush="{DynamicResource PrimaryBlueColor}">
+                                    <i:Interaction.Triggers>
+                                        <i:DataTrigger Binding="{Binding NinePointState[7]}" Value="True">
+                                            <i:ChangePropertyAction PropertyName="Background" Value="{DynamicResource PrimaryBlueColor}"></i:ChangePropertyAction>
+                                        </i:DataTrigger>
+                                    </i:Interaction.Triggers>
+                                    <TextBlock Text="8"/>
+                                </Border>
+                                <Border BorderBrush="{DynamicResource PrimaryBlueColor}">
+                                    <i:Interaction.Triggers>
+                                        <i:DataTrigger Binding="{Binding NinePointState[8]}" Value="True">
+                                            <i:ChangePropertyAction PropertyName="Background" Value="{DynamicResource PrimaryBlueColor}"></i:ChangePropertyAction>
+                                        </i:DataTrigger>
+                                    </i:Interaction.Triggers>
+                                    <TextBlock Text="9"/>
+                                </Border>
+                            </UniformGrid>
+                            <ui:SimpleStackPanel Orientation="Horizontal" Grid.Row="1">
+                                <Button Content="Start" Command="{Binding }"/>
+                                <Button Content="Reset"/>
+                            </ui:SimpleStackPanel>
+                        </Grid>
                     </GroupBox>
                     <GroupBox MinHeight="350"  Grid.RowSpan="3" Grid.Column="1" Style="{StaticResource GroupBoxTab}" Visibility="Visible">
                         
