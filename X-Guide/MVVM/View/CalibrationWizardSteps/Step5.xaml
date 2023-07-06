@@ -58,7 +58,7 @@
             <ContentControl hc:FlexPanel.FlexBasis="390"  Content="{Binding Calibration}" ContentTemplateSelector="{StaticResource MyTemplateSelector}">
                 <ContentControl.Resources>
                     <DataTemplate  x:Key="TopConfigView">
-                        <view:Step5TopConfig/>
+                        <view:Step5TopConfig Calibration="{Binding}"/>
                     </DataTemplate>
                 </ContentControl.Resources>
             </ContentControl>
