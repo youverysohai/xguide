@@ -9,9 +9,19 @@
              d:DesignHeight="450" d:DesignWidth="800"
              xmlns:i ="http://schemas.microsoft.com/xaml/behaviors"
              xmlns:enums ="clr-namespace:X_Guide.Enums">
-    <Canvas>
-        <RadialMenu:RadialMenu>
-            
+
+        <RadialMenu:RadialMenu IsOpen="True" HalfShiftedItems="{Binding IsHalfShifted}">
+            <RadialMenu:RadialMenuItem Command="{Binding ButtonCommand}" CommandParameter="{Binding TopCommandParameter}" Style="{DynamicResource FancyRadialMenuItem}">
+                <TextBlock Text="{Binding TopCommandParameter}"/>
+            </RadialMenu:RadialMenuItem>
+        <RadialMenu:RadialMenuItem Command="{Binding ButtonCommand}" CommandParameter="{Binding BottomCommandParameter}"  Style="{DynamicResource FancyRadialMenuItem}">
+                <TextBlock Text="{Binding BottomCommandParameter}"/>
+            </RadialMenu:RadialMenuItem>
+        <RadialMenu:RadialMenuItem Command="{Binding ButtonCommand}" CommandParameter="{Binding LeftCommandParameter}"  Style="{DynamicResource FancyRadialMenuItem}">
+                <TextBlock Text="{Binding LeftCommandParameter}"/>
+            </RadialMenu:RadialMenuItem>
+        <RadialMenu:RadialMenuItem Command="{Binding ButtonCommand}" CommandParameter="{Binding RightCommandParameter}"  Style="{DynamicResource FancyRadialMenuItem}">
+                <TextBlock Text="{Binding RightCommandParameter}"/>
+            </RadialMenu:RadialMenuItem>
         </RadialMenu:RadialMenu>
-    </Canvas>
 </UserControl>

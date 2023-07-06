@@ -23,6 +23,18 @@ namespace X_Guide.CustomControls
 
 
 
+        public bool IsHalfShifted
+        {
+            get { return (bool)GetValue(IsHalfShiftedProperty); }
+            set { SetValue(IsHalfShiftedProperty, value); }
+        }
+
+        // Using a DependencyProperty as the backing store for IsHalfShifted.  This enables animation, styling, binding, etc...
+        public static readonly DependencyProperty IsHalfShiftedProperty =
+            DependencyProperty.Register("IsHalfShifted", typeof(bool), typeof(CustomJogButtonsControl), new PropertyMetadata(true));
+
+
+
         public ICommand ButtonCommand
         {
             get { return (ICommand)GetValue(ButtonCommandProperty); }
