@@ -1,0 +1,387 @@
+﻿<UserControl x:Class="X_Guide.MVVM.View.CalibrationWizardSteps.Step5TopConfig"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:X_Guide.MVVM.View.CalibrationWizardSteps" xmlns:i="http://schemas.microsoft.com/xaml/behaviors"
+             xmlns:enums="clr-namespace:X_Guide.Enums" xmlns:XCust="clr-namespace:X_Guide.CustomControls" xmlns:RadialMenu="clr-namespace:RadialMenu.Controls;assembly=RadialMenu" 
+             xmlns:ui="http://schemas.modernwpf.com/2019"
+             mc:Ignorable="d" 
+             d:DesignHeight="450" d:DesignWidth="800">
+    <Grid>
+        <Grid>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="auto" />
+                <RowDefinition Height="*" />
+                <RowDefinition Height="1.8*" />
+            </Grid.RowDefinitions>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*" />
+                <ColumnDefinition Width="*" />
+            </Grid.ColumnDefinitions>
+            <XCust:CustomConnectionStatus Grid.Row="0" Grid.ColumnSpan="2" IsConnected="{Binding AppState.IsAnyClientConnected}" ManipulatorType="{Binding Calibration.Manipulator.Type}" />
+
+            <!--X+ Y+ -->
+
+            <Canvas Grid.Row="1" Grid.Column="2" HorizontalAlignment="Center">
+                <Canvas.RenderTransform>
+                    <TransformGroup>
+                        <RotateTransform Angle="45"></RotateTransform>
+                        <TranslateTransform X="-5" Y="-132" />
+                    </TransformGroup>
+                </Canvas.RenderTransform>
+                <RadialMenu:RadialMenu IsOpen="True">
+
+                    <!-- MenuItems Around -->
+
+
+                    <RadialMenu:RadialMenuItem Command="{Binding JogCommand}" CommandParameter="X+"  Style="{DynamicResource FancyRadialMenuItem}">
+                        <TextBlock Text="X+">
+                            <TextBlock.LayoutTransform>
+                                <StaticResource ResourceKey="RotationTransform" />
+                            </TextBlock.LayoutTransform>
+                            <TextBlock.RenderTransform>
+                                <StaticResource ResourceKey="RightTransform" />
+                            </TextBlock.RenderTransform>
+                        </TextBlock>
+                    </RadialMenu:RadialMenuItem>
+
+                    <RadialMenu:RadialMenuItem CommandParameter="Y-" Command="{Binding JogCommand}" Style="{DynamicResource FancyRadialMenuItem}">
+                        <TextBlock Text="Y-">
+                            <TextBlock.LayoutTransform>
+                                <StaticResource ResourceKey="RotationTransform" />
+                            </TextBlock.LayoutTransform>
+                            <TextBlock.RenderTransform>
+                                <StaticResource ResourceKey="BottomTransform" />
+                            </TextBlock.RenderTransform>
+                        </TextBlock>
+                    </RadialMenu:RadialMenuItem>
+
+                    <RadialMenu:RadialMenuItem   Command="{Binding JogCommand}" CommandParameter="X-" Style="{DynamicResource FancyRadialMenuItem}">
+                        <TextBlock Text="X-">
+                            <TextBlock.LayoutTransform>
+                                <StaticResource ResourceKey="RotationTransform" />
+                            </TextBlock.LayoutTransform>
+                            <TextBlock.RenderTransform>
+                                <TranslateTransform X="-2" Y="-8" />
+                            </TextBlock.RenderTransform>
+                        </TextBlock>
+                    </RadialMenu:RadialMenuItem>
+
+                    <RadialMenu:RadialMenuItem  Command="{Binding JogCommand}" CommandParameter="Y+" Style="{DynamicResource FancyRadialMenuItem}">
+                        <TextBlock Text="Y+">
+                            <TextBlock.LayoutTransform>
+                                <RotateTransform Angle="-45"></RotateTransform>
+                            </TextBlock.LayoutTransform>
+                        </TextBlock>
+                    </RadialMenu:RadialMenuItem>
+
+                    <!-- Add items as you want... -->
+
+                </RadialMenu:RadialMenu>
+            </Canvas>
+            <Canvas Grid.Row="2" Grid.Column="2"  HorizontalAlignment="Center">
+                <Canvas.RenderTransform>
+                    <TransformGroup>
+                        <RotateTransform Angle="45"></RotateTransform>
+                        <TranslateTransform X="-5" Y="-132" />
+                    </TransformGroup>
+                </Canvas.RenderTransform>
+
+                <!-- Z- Z+ -->
+
+                <RadialMenu:RadialMenu Margin="20 20 0 0">
+                    <i:Interaction.Triggers>
+                        <i:DataTrigger Binding="{Binding Calibration.Manipulator.Type}" Value="{x:Static enums:ManipulatorType.GantrySystemWR}">
+                            <i:ChangePropertyAction PropertyName="IsOpen" Value="True" />
+                        </i:DataTrigger>
+                        <i:DataTrigger Binding="{Binding Calibration.Manipulator.Type}" Value="{x:Static enums:ManipulatorType.GantrySystemR}">
+                            <i:ChangePropertyAction PropertyName="IsOpen" Value="False" />
+                        </i:DataTrigger>
+                        <i:DataTrigger Binding="{Binding Calibration.Manipulator.Type}" Value="{x:Static enums:ManipulatorType.SCARA}">
+                            <i:ChangePropertyAction PropertyName="IsOpen" Value="False" />
+                        </i:DataTrigger>
+                        <i:DataTrigger Binding="{Binding Calibration.Manipulator.Type}" Value="{x:Static enums:ManipulatorType.SixAxis}">
+                            <i:ChangePropertyAction PropertyName="IsOpen" Value="False" />
+                        </i:DataTrigger>
+                    </i:Interaction.Triggers>
+                  
+                    <!-- MenuItems Around -->
+
+
+                    <RadialMenu:RadialMenuItem Command="{Binding JogCommand}" CommandParameter="Z-"  Style="{DynamicResource FancyRadialMenuItem}">
+                        <TextBlock Text="Z-">
+                            <TextBlock.LayoutTransform>
+                                <TransformGroup>
+                                    <RotateTransform Angle="-45"></RotateTransform>
+                                </TransformGroup>
+                            </TextBlock.LayoutTransform>
+                            <TextBlock.RenderTransform>
+                                <TranslateTransform X="-6" Y="-6" />
+                            </TextBlock.RenderTransform>
+                        </TextBlock>
+                    </RadialMenu:RadialMenuItem>
+
+                    <RadialMenu:RadialMenuItem  Command="{Binding JogCommand}" CommandParameter="Z+" Style="{DynamicResource FancyRadialMenuItem}">
+                        <TextBlock Text="Z+">
+                            <TextBlock.LayoutTransform>
+                                <RotateTransform Angle="-45"></RotateTransform>
+                            </TextBlock.LayoutTransform>
+                        </TextBlock>
+                    </RadialMenu:RadialMenuItem>
+                </RadialMenu:RadialMenu>
+                 
+                <!-- Z- Z+ RZ- RZ+-->
+
+                <RadialMenu:RadialMenu>
+                    <i:Interaction.Triggers>
+                        <i:DataTrigger Binding="{Binding Calibration.Manipulator.Type}" Value="{x:Static enums:ManipulatorType.GantrySystemWR}">
+                            <i:ChangePropertyAction PropertyName="IsOpen" Value="False" />
+                        </i:DataTrigger>
+                        <i:DataTrigger Binding="{Binding Calibration.Manipulator.Type}" Value="{x:Static enums:ManipulatorType.GantrySystemR}">
+                            <i:ChangePropertyAction PropertyName="IsOpen" Value="True" />
+                        </i:DataTrigger>
+                        <i:DataTrigger Binding="{Binding Calibration.Manipulator.Type}" Value="{x:Static enums:ManipulatorType.SCARA}">
+                            <i:ChangePropertyAction PropertyName="IsOpen" Value="True" />
+                        </i:DataTrigger>
+                        <i:DataTrigger Binding="{Binding Calibration.Manipulator.Type}" Value="{x:Static enums:ManipulatorType.SixAxis}">
+                            <i:ChangePropertyAction PropertyName="IsOpen" Value="True" />
+                        </i:DataTrigger>
+                    </i:Interaction.Triggers>
+
+                     
+                    <!-- MenuItems Around -->
+
+
+                    <RadialMenu:RadialMenuItem Command="{Binding JogCommand}" CommandParameter="RZ+"  Style="{DynamicResource FancyRadialMenuItem}">
+                        <TextBlock Text="RZ+">
+                            <TextBlock.LayoutTransform>
+                                <RotateTransform Angle="-45"></RotateTransform>
+                            </TextBlock.LayoutTransform>
+                            <TextBlock.RenderTransform>
+                                <TranslateTransform X="-5" Y="-9" />
+                            </TextBlock.RenderTransform>
+                        </TextBlock>
+                    </RadialMenu:RadialMenuItem>
+
+                    <RadialMenu:RadialMenuItem Command="{Binding JogCommand}" CommandParameter="Z-"  Style="{DynamicResource FancyRadialMenuItem}">
+                        <TextBlock Text="Z-">
+                            <TextBlock.LayoutTransform>
+                                <TransformGroup>
+                                    <RotateTransform Angle="-45"></RotateTransform>
+                                </TransformGroup>
+                            </TextBlock.LayoutTransform>
+                            <TextBlock.RenderTransform>
+                                <TranslateTransform X="-6" Y="-6" />
+                            </TextBlock.RenderTransform>
+                        </TextBlock>
+                    </RadialMenu:RadialMenuItem>
+
+                    <RadialMenu:RadialMenuItem  Command="{Binding JogCommand}" CommandParameter="RZ-" Style="{DynamicResource FancyRadialMenuItem}">
+                        <TextBlock Text="RZ-">
+                            <TextBlock.LayoutTransform>
+                                <RotateTransform Angle="-45"></RotateTransform>
+                            </TextBlock.LayoutTransform>
+                            <TextBlock.RenderTransform>
+                                <TranslateTransform X="0" Y="-10" />
+                            </TextBlock.RenderTransform>
+                        </TextBlock>
+                    </RadialMenu:RadialMenuItem>
+
+                    <RadialMenu:RadialMenuItem  Command="{Binding JogCommand}" CommandParameter="Z+" Style="{DynamicResource FancyRadialMenuItem}">
+                        <TextBlock Text="Z+">
+                            <TextBlock.LayoutTransform>
+                                <RotateTransform Angle="-45"></RotateTransform>
+                            </TextBlock.LayoutTransform>
+                        </TextBlock>
+                    </RadialMenu:RadialMenuItem>
+
+
+                    <!-- Add items as you want... -->
+
+                </RadialMenu:RadialMenu>
+            </Canvas>
+             
+            <!--Inputs -->
+
+            <ui:SimpleStackPanel Grid.Row="2" Grid.Column="0" Margin="10">
+                <ui:SimpleStackPanel.Style>
+                    <Style TargetType="ui:SimpleStackPanel">
+                        <Setter Property="Visibility" Value="Collapsed" />
+                        <Style.Triggers>
+                            <DataTrigger Binding="{Binding Calibration.Manipulator.Type}" Value="{x:Static enums:ManipulatorType.SixAxis}">
+                                <Setter Property="Visibility" Value="Visible" />
+                            </DataTrigger>
+                        </Style.Triggers>
+                    </Style>
+                </ui:SimpleStackPanel.Style>
+            </ui:SimpleStackPanel>
+ 
+            <!--RX RY-->
+
+            <Canvas Grid.Row="2" Grid.Column="0"  HorizontalAlignment="Center">
+                <Canvas.RenderTransform>
+                    <TransformGroup>
+                        <TranslateTransform X="-155" Y="-70" />
+                    </TransformGroup>
+                </Canvas.RenderTransform>
+                <RadialMenu:RadialMenu>
+                    <i:Interaction.Triggers>
+                        <i:DataTrigger Binding="{Binding Calibration.Manipulator.Type}" Value="{x:Static enums:ManipulatorType.GantrySystemWR}">
+                            <i:ChangePropertyAction PropertyName="IsOpen" Value="False" />
+                        </i:DataTrigger>
+                        <i:DataTrigger Binding="{Binding Calibration.Manipulator.Type}" Value="{x:Static enums:ManipulatorType.GantrySystemR}">
+                            <i:ChangePropertyAction PropertyName="IsOpen" Value="False" />
+                        </i:DataTrigger>
+                        <i:DataTrigger Binding="{Binding Calibration.Manipulator.Type}" Value="{x:Static enums:ManipulatorType.SCARA}">
+                            <i:ChangePropertyAction PropertyName="IsOpen" Value="False" />
+                        </i:DataTrigger>
+                        <i:DataTrigger Binding="{Binding Calibration.Manipulator.Type}" Value="{x:Static enums:ManipulatorType.SixAxis}">
+                            <i:ChangePropertyAction PropertyName="IsOpen" Value="True" />
+                        </i:DataTrigger>
+                    </i:Interaction.Triggers>
+ 
+                    <!-- MenuItems Around -->
+
+
+                    <RadialMenu:RadialMenuItem Command="{Binding JogCommand}" CommandParameter="RX+" Style="{DynamicResource FancyRadialMenuItem}" ContentRadius="49">
+                        <TextBlock Text="RX+" />
+                    </RadialMenu:RadialMenuItem>
+
+                    <RadialMenu:RadialMenuItem Command="{Binding JogCommand}" CommandParameter="RY-" Style="{DynamicResource FancyRadialMenuItem}" ContentRadius="49">
+                        <TextBlock Text="RY-" />
+                    </RadialMenu:RadialMenuItem>
+
+                    <RadialMenu:RadialMenuItem Command="{Binding JogCommand}" CommandParameter="RY+" Style="{DynamicResource FancyRadialMenuItem}" ContentRadius="49">
+                        <TextBlock Text="RY+" />
+                    </RadialMenu:RadialMenuItem>
+
+                    <RadialMenu:RadialMenuItem Command="{Binding JogCommand}" CommandParameter="RX-" Style="{DynamicResource FancyRadialMenuItem}" ContentRadius="49">
+                        <TextBlock Text="RX-" />
+                    </RadialMenu:RadialMenuItem>
+
+
+                    <!-- Add items as you want... -->
+
+                </RadialMenu:RadialMenu>
+            </Canvas>
+            <ui:SimpleStackPanel  Orientation="Vertical" Grid.Row="1" Margin="5 0">
+                <ui:NumberBox
+                              Header="Jog Distance (mm)"
+                              SpinButtonPlacementMode="Inline"
+                              Margin="5"
+                              x:Name="FormattedNumberBox"
+                                Value="{Binding JogDistance}">
+                </ui:NumberBox>
+                <ui:ToggleSwitch Header="Mode (Tool/Global)" OnContent="Global" IsOn="{Binding Calibration.JogMode}" OffContent="Tool"></ui:ToggleSwitch>
+                <ui:NumberBox
+
+                            Header="Rotation Degree (°)"
+                            SpinButtonPlacementMode="Inline"
+                            Margin="5"
+                            Value="{Binding RotationAngle}">
+                    <ui:NumberBox.Style>
+                        <Style TargetType="ui:NumberBox">
+                            <Style.Triggers>
+                                <DataTrigger Binding="{Binding Calibration.Manipulator.Type}" Value="{x:Static enums:ManipulatorType.GantrySystemWR}">
+                                    <Setter Property="Visibility" Value="Collapsed" />
+                                </DataTrigger>
+                            </Style.Triggers>
+                        </Style>
+                    </ui:NumberBox.Style>
+                </ui:NumberBox>
+            </ui:SimpleStackPanel>
+        </Grid>
+        <GroupBox Visibility="Visible" Grid.Row="2" Style="{StaticResource GroupBoxTab}" MinHeight="210">
+            <i:Interaction.Triggers>
+                <i:DataTrigger Binding="{Binding DataContext.Calibration.Orientation,ElementName=Step6View}" Value="{x:Static enums:Orientation.LookDownward}">
+                    <i:ChangePropertyAction PropertyName="Visibility" Value="Visible" />
+                </i:DataTrigger>
+            </i:Interaction.Triggers>
+            <GroupBox.Header>
+                <TextBlock Text="Top Config Calibration" Style="{StaticResource SubtitleTextBlockStyle}"  HorizontalAlignment="Center" VerticalAlignment="Center" />
+            </GroupBox.Header>
+            <Grid>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="*" />
+                    <RowDefinition Height="auto" />
+                </Grid.RowDefinitions>
+
+                <UniformGrid Rows="3" Columns="3">
+                    <Border BorderBrush="{DynamicResource PrimaryBlueColor}" Grid.Row="1" Grid.Column="1">
+                        <i:Interaction.Triggers>
+                            <i:DataTrigger Binding="{Binding NinePointState[0]}" Value="True">
+                                <i:ChangePropertyAction PropertyName="Background" Value="{DynamicResource PrimaryBlueColor}"></i:ChangePropertyAction>
+                            </i:DataTrigger>
+                        </i:Interaction.Triggers>
+                        <TextBlock Text="1" />
+                    </Border>
+                    <Border BorderBrush="{DynamicResource PrimaryBlueColor}">
+                        <i:Interaction.Triggers>
+                            <i:DataTrigger Binding="{Binding NinePointState[1]}" Value="True">
+                                <i:ChangePropertyAction PropertyName="Background" Value="{DynamicResource PrimaryBlueColor}"></i:ChangePropertyAction>
+                            </i:DataTrigger>
+                        </i:Interaction.Triggers>
+                        <TextBlock Text="2" />
+                    </Border>
+                    <Border BorderBrush="{DynamicResource PrimaryBlueColor}">
+                        <i:Interaction.Triggers>
+                            <i:DataTrigger Binding="{Binding NinePointState[2]}" Value="True">
+                                <i:ChangePropertyAction PropertyName="Background" Value="{DynamicResource PrimaryBlueColor}"></i:ChangePropertyAction>
+                            </i:DataTrigger>
+                        </i:Interaction.Triggers>
+                        <TextBlock Text="3" />
+                    </Border>
+                    <Border BorderBrush="{DynamicResource PrimaryBlueColor}">
+                        <i:Interaction.Triggers>
+                            <i:DataTrigger Binding="{Binding NinePointState[3]}" Value="True">
+                                <i:ChangePropertyAction PropertyName="Background" Value="{DynamicResource PrimaryBlueColor}"></i:ChangePropertyAction>
+                            </i:DataTrigger>
+                        </i:Interaction.Triggers>
+                        <TextBlock Text="4" />
+                    </Border>
+                    <Border>
+                        <i:Interaction.Triggers>
+                            <i:DataTrigger Binding="{Binding NinePointState[4]}" Value="True">
+                                <i:ChangePropertyAction PropertyName="Background" Value="{DynamicResource PrimaryBlueColor}"></i:ChangePropertyAction>
+                            </i:DataTrigger>
+                        </i:Interaction.Triggers>
+                        <TextBlock Text="5" />
+                    </Border>
+                    <Border>
+                        <i:Interaction.Triggers>
+                            <i:DataTrigger Binding="{Binding NinePointState[5]}" Value="True">
+                                <i:ChangePropertyAction PropertyName="Background" Value="{DynamicResource PrimaryBlueColor}"></i:ChangePropertyAction>
+                            </i:DataTrigger>
+                        </i:Interaction.Triggers>
+                        <TextBlock Text="6" />
+                    </Border>
+                    <Border BorderBrush="{DynamicResource PrimaryBlueColor}">
+                        <i:Interaction.Triggers>
+                            <i:DataTrigger Binding="{Binding NinePointState[6]}" Value="True">
+                                <i:ChangePropertyAction PropertyName="Background" Value="{DynamicResource PrimaryBlueColor}"></i:ChangePropertyAction>
+                            </i:DataTrigger>
+                        </i:Interaction.Triggers>
+                        <TextBlock Text="7" />
+                    </Border>
+                    <Border BorderBrush="{DynamicResource PrimaryBlueColor}">
+                        <i:Interaction.Triggers>
+                            <i:DataTrigger Binding="{Binding NinePointState[7]}" Value="True">
+                                <i:ChangePropertyAction PropertyName="Background" Value="{DynamicResource PrimaryBlueColor}"></i:ChangePropertyAction>
+                            </i:DataTrigger>
+                        </i:Interaction.Triggers>
+                        <TextBlock Text="8" />
+                    </Border>
+                    <Border BorderBrush="{DynamicResource PrimaryBlueColor}">
+                        <i:Interaction.Triggers>
+                            <i:DataTrigger Binding="{Binding NinePointState[8]}" Value="True">
+                                <i:ChangePropertyAction PropertyName="Background" Value="{DynamicResource PrimaryBlueColor}"></i:ChangePropertyAction>
+                            </i:DataTrigger>
+                        </i:Interaction.Triggers>
+                        <TextBlock Text="9" />
+                    </Border>
+                </UniformGrid>
+            </Grid>
+        </GroupBox>
+    </Grid>
+</UserControl>

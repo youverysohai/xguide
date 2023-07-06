@@ -15,9 +15,11 @@
              xmlns:c="clr-namespace:X_Guide.Converter"
              xmlns:ui="http://schemas.modernwpf.com/2019"
              FontSize="16"
+             xmlns:ext ="clr-namespace:X_Guide.Extension"
              xmlns:i ="http://schemas.microsoft.com/xaml/behaviors"
              xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
              xmlns:enums ="clr-namespace:X_Guide.Enums"
+             xmlns:view="clr-namespace:X_Guide.MVVM.View.CalibrationWizardSteps"
              d:DesignHeight="600" d:DesignWidth="1300">
     <UserControl.Resources>
         <RotateTransform x:Key="RotationTransform" Angle="-45" />
@@ -42,6 +44,8 @@
         <c:InverseTypeToBooleanConverter x:Key="InverseTypeToBooleanConverter" />
         <c:TypeToDescriptionConverter x:Key="TypeToDescriptionConverter" />
         <c:TypeToBooleanConverter x:Key="TypeToBooleanConverter" />
+
+        <ext:TemplateSelector x:Key="MyTemplateSelector"/>
     </UserControl.Resources>
     <ScrollViewer HorizontalScrollBarVisibility="Auto">
 
@@ -49,6 +53,14 @@
 
             <!--VM Camara-->
             <ContentControl hc:FlexPanel.FlexBasis="720" Height="500" Content="{Binding VisionView}" VerticalAlignment="Top">
+                
+            </ContentControl>
+            <ContentControl hc:FlexPanel.FlexBasis="390"  Content="{Binding Calibration}" ContentTemplateSelector="{StaticResource MyTemplateSelector}">
+                <ContentControl.Resources>
+                    <DataTemplate  x:Key="TopConfigView">
+                        <view:Step5TopConfig/>
+                    </DataTemplate>
+                </ContentControl.Resources>
             </ContentControl>
             <!--<XCust:CustomRenderControl
                     hc:FlexPanel.FlexBasis="720" Height="550"
@@ -56,14 +68,14 @@
             <!--<XCust:HikVmRealTimeAcqControl hc:FlexPanel.FlexBasis="720" Height="550"  Procedure="{Binding Module}">
             </XCust:HikVmRealTimeAcqControl>-->
             <!--<Release:VmRealTimeAcqControl x:Name="acq_control" hc:FlexPanel.FlexBasis="720" Height="550" ></Release:VmRealTimeAcqControl>-->
-            <Grid hc:FlexPanel.FlexBasis="390">
+            <!--<Grid hc:FlexPanel.FlexBasis="390">
                 <Grid.RowDefinitions>
                     <RowDefinition Height="4*" />
                     <RowDefinition Height="auto" />
                     <RowDefinition Height="auto" />
                 </Grid.RowDefinitions>
 
-                <!--XMOVE YMOVE-->
+                --><!--XMOVE YMOVE--><!--
                 <GroupBox Grid.Row="1" Style="{StaticResource GroupBoxTab}">
                     <GroupBox.Header>
                         <ui:SimpleStackPanel Orientation="Horizontal">
@@ -72,7 +84,7 @@
                         </ui:SimpleStackPanel>
                     </GroupBox.Header>
                     <ui:SimpleStackPanel Orientation="Horizontal">
-                        <!-- Manual -->
+                        --><!-- Manual --><!--
                         <Label Content="X Move: " Style="{DynamicResource DefaultLabelStyle}" VerticalAlignment="Center" />
                         <TextBox HorizontalAlignment="Left" Text="{Binding Calibration.XMove}">
                             <i:Interaction.Triggers>
@@ -109,7 +121,7 @@
                                 </i:DataTrigger>
                             </i:Interaction.Triggers>
                         </TextBlock>
-                        <!-- Semi Auto(GWR) -->
+                        --><!-- Semi Auto(GWR) --><!--
                         <Button  Content="Start Jog Tracking" Command="{Binding StartJogTrackingCommand}" Margin="10 0">
                             <i:Interaction.Triggers>
                                 <i:DataTrigger Binding="{Binding Calibration.Manipulator.Type}" Value="{x:Static enums:ManipulatorType.GantrySystemWR}">
@@ -134,8 +146,8 @@
                             <TextBlock  HorizontalAlignment="Center" Style="{DynamicResource TitleTextBlockStyle}" Text="Jog to Vision Center" />
                         </ui:SimpleStackPanel>
                     </GroupBox.Header>
-                    <!-- Title -->
-                    <!-- JogButtons and Rotations-->
+                    --><!-- Title -->
+                    <!-- JogButtons and Rotations--><!--
 
                     <Grid>
                         <Grid.RowDefinitions>
@@ -148,7 +160,7 @@
                             <ColumnDefinition Width="*" />
                         </Grid.ColumnDefinitions>
                         <XCust:CustomConnectionStatus Grid.Row="0" Grid.ColumnSpan="2" IsConnected="{Binding AppState.IsAnyClientConnected}" ManipulatorType="{Binding Calibration.Manipulator.Type,Converter={StaticResource TypeToDescriptionConverter}}" />
-                        <!--X+ Y+ -->
+                        --><!--X+ Y+ --><!--
                         <Canvas Grid.Row="1" Grid.Column="2" HorizontalAlignment="Center">
                             <Canvas.RenderTransform>
                                 <TransformGroup>
@@ -157,7 +169,7 @@
                                 </TransformGroup>
                             </Canvas.RenderTransform>
                             <RadialMenu:RadialMenu IsOpen="True">
-                                <!-- MenuItems Around -->
+                                --><!-- MenuItems Around --><!--
 
                                 <RadialMenu:RadialMenuItem Command="{Binding JogCommand}" CommandParameter="X+"  Style="{DynamicResource FancyRadialMenuItem}">
                                     <TextBlock Text="X+">
@@ -200,7 +212,7 @@
                                     </TextBlock>
                                 </RadialMenu:RadialMenuItem>
 
-                                <!-- Add items as you want... -->
+                                --><!-- Add items as you want... --><!--
                             </RadialMenu:RadialMenu>
                         </Canvas>
 
@@ -211,7 +223,7 @@
                                     <TranslateTransform X="-5" Y="-132" />
                                 </TransformGroup>
                             </Canvas.RenderTransform>
-                            <!-- Z- Z+ -->
+                            --><!-- Z- Z+ --><!--
                             <RadialMenu:RadialMenu Margin="20 20 0 0">
                                 <i:Interaction.Triggers>
                                     <i:DataTrigger Binding="{Binding Calibration.Manipulator.Type}" Value="{x:Static enums:ManipulatorType.GantrySystemWR}">
@@ -227,7 +239,7 @@
                                         <i:ChangePropertyAction PropertyName="IsOpen" Value="False" />
                                     </i:DataTrigger>
                                 </i:Interaction.Triggers>
-                                <!-- MenuItems Around -->
+                                --><!-- MenuItems Around --><!--
 
                                 <RadialMenu:RadialMenuItem Command="{Binding JogCommand}" CommandParameter="Z-"  Style="{DynamicResource FancyRadialMenuItem}">
                                     <TextBlock Text="Z-">
@@ -250,7 +262,7 @@
                                     </TextBlock>
                                 </RadialMenu:RadialMenuItem>
                             </RadialMenu:RadialMenu>
-                            <!-- Z- Z+ RZ- RZ+-->
+                            --><!-- Z- Z+ RZ- RZ+--><!--
                             <RadialMenu:RadialMenu>
                                 <i:Interaction.Triggers>
                                     <i:DataTrigger Binding="{Binding Calibration.Manipulator.Type}" Value="{x:Static enums:ManipulatorType.GantrySystemWR}">
@@ -267,7 +279,7 @@
                                     </i:DataTrigger>
                                 </i:Interaction.Triggers>
 
-                                <!-- MenuItems Around -->
+                                --><!-- MenuItems Around --><!--
 
                                 <RadialMenu:RadialMenuItem Command="{Binding JogCommand}" CommandParameter="RZ+"  Style="{DynamicResource FancyRadialMenuItem}">
                                     <TextBlock Text="RZ+">
@@ -312,10 +324,10 @@
                                     </TextBlock>
                                 </RadialMenu:RadialMenuItem>
 
-                                <!-- Add items as you want... -->
+                                --><!-- Add items as you want... --><!--
                             </RadialMenu:RadialMenu>
                         </Canvas>
-                        <!--Inputs -->
+                        --><!--Inputs --><!--
                         <ui:SimpleStackPanel Grid.Row="2" Grid.Column="0" Margin="10">
                             <ui:SimpleStackPanel.Style>
                                 <Style TargetType="ui:SimpleStackPanel">
@@ -329,7 +341,7 @@
                             </ui:SimpleStackPanel.Style>
                         </ui:SimpleStackPanel>
 
-                        <!--RX RY-->
+                        --><!--RX RY--><!--
                         <Canvas Grid.Row="2" Grid.Column="0"  HorizontalAlignment="Center">
                             <Canvas.RenderTransform>
                                 <TransformGroup>
@@ -352,7 +364,7 @@
                                     </i:DataTrigger>
                                 </i:Interaction.Triggers>
 
-                                <!-- MenuItems Around -->
+                                --><!-- MenuItems Around --><!--
 
                                 <RadialMenu:RadialMenuItem Command="{Binding JogCommand}" CommandParameter="RX+" Style="{DynamicResource FancyRadialMenuItem}" ContentRadius="49">
                                     <TextBlock Text="RX+" />
@@ -370,7 +382,7 @@
                                     <TextBlock Text="RX-" />
                                 </RadialMenu:RadialMenuItem>
 
-                                <!-- Add items as you want... -->
+                                --><!-- Add items as you want... --><!--
                             </RadialMenu:RadialMenu>
                         </Canvas>
                         <ui:SimpleStackPanel  Orientation="Vertical" Grid.Row="1" Margin="5 0">
@@ -402,98 +414,7 @@
                     </Grid>
                 </GroupBox>
 
-                <GroupBox Visibility="Visible" Grid.Row="2" Style="{StaticResource GroupBoxTab}" MinHeight="210">
-                    <i:Interaction.Triggers>
-                        <i:DataTrigger Binding="{Binding DataContext.Calibration.Orientation,ElementName=Step6View}" Value="{x:Static enums:Orientation.LookDownward}">
-                            <i:ChangePropertyAction PropertyName="Visibility" Value="Visible" />
-                        </i:DataTrigger>
-                    </i:Interaction.Triggers>
-                    <GroupBox.Header>
-                        <TextBlock Text="Top Config Calibration" Style="{StaticResource SubtitleTextBlockStyle}"  HorizontalAlignment="Center" VerticalAlignment="Center" />
-                    </GroupBox.Header>
-                    <Grid>
-                        <Grid.RowDefinitions>
-                            <RowDefinition Height="*" />
-                            <RowDefinition Height="auto" />
-                        </Grid.RowDefinitions>
-
-                        <UniformGrid Rows="3" Columns="3">
-                            <Border BorderBrush="{DynamicResource PrimaryBlueColor}" Grid.Row="1" Grid.Column="1">
-                                <i:Interaction.Triggers>
-                                    <i:DataTrigger Binding="{Binding NinePointState[0]}" Value="True">
-                                        <i:ChangePropertyAction PropertyName="Background" Value="{DynamicResource PrimaryBlueColor}"></i:ChangePropertyAction>
-                                    </i:DataTrigger>
-                                </i:Interaction.Triggers>
-                                <TextBlock Text="1" />
-                            </Border>
-                            <Border BorderBrush="{DynamicResource PrimaryBlueColor}">
-                                <i:Interaction.Triggers>
-                                    <i:DataTrigger Binding="{Binding NinePointState[1]}" Value="True">
-                                        <i:ChangePropertyAction PropertyName="Background" Value="{DynamicResource PrimaryBlueColor}"></i:ChangePropertyAction>
-                                    </i:DataTrigger>
-                                </i:Interaction.Triggers>
-                                <TextBlock Text="2" />
-                            </Border>
-                            <Border BorderBrush="{DynamicResource PrimaryBlueColor}">
-                                <i:Interaction.Triggers>
-                                    <i:DataTrigger Binding="{Binding NinePointState[2]}" Value="True">
-                                        <i:ChangePropertyAction PropertyName="Background" Value="{DynamicResource PrimaryBlueColor}"></i:ChangePropertyAction>
-                                    </i:DataTrigger>
-                                </i:Interaction.Triggers>
-                                <TextBlock Text="3" />
-                            </Border>
-                            <Border BorderBrush="{DynamicResource PrimaryBlueColor}">
-                                <i:Interaction.Triggers>
-                                    <i:DataTrigger Binding="{Binding NinePointState[3]}" Value="True">
-                                        <i:ChangePropertyAction PropertyName="Background" Value="{DynamicResource PrimaryBlueColor}"></i:ChangePropertyAction>
-                                    </i:DataTrigger>
-                                </i:Interaction.Triggers>
-                                <TextBlock Text="4" />
-                            </Border>
-                            <Border>
-                                <i:Interaction.Triggers>
-                                    <i:DataTrigger Binding="{Binding NinePointState[4]}" Value="True">
-                                        <i:ChangePropertyAction PropertyName="Background" Value="{DynamicResource PrimaryBlueColor}"></i:ChangePropertyAction>
-                                    </i:DataTrigger>
-                                </i:Interaction.Triggers>
-                                <TextBlock Text="5" />
-                            </Border>
-                            <Border>
-                                <i:Interaction.Triggers>
-                                    <i:DataTrigger Binding="{Binding NinePointState[5]}" Value="True">
-                                        <i:ChangePropertyAction PropertyName="Background" Value="{DynamicResource PrimaryBlueColor}"></i:ChangePropertyAction>
-                                    </i:DataTrigger>
-                                </i:Interaction.Triggers>
-                                <TextBlock Text="6" />
-                            </Border>
-                            <Border BorderBrush="{DynamicResource PrimaryBlueColor}">
-                                <i:Interaction.Triggers>
-                                    <i:DataTrigger Binding="{Binding NinePointState[6]}" Value="True">
-                                        <i:ChangePropertyAction PropertyName="Background" Value="{DynamicResource PrimaryBlueColor}"></i:ChangePropertyAction>
-                                    </i:DataTrigger>
-                                </i:Interaction.Triggers>
-                                <TextBlock Text="7" />
-                            </Border>
-                            <Border BorderBrush="{DynamicResource PrimaryBlueColor}">
-                                <i:Interaction.Triggers>
-                                    <i:DataTrigger Binding="{Binding NinePointState[7]}" Value="True">
-                                        <i:ChangePropertyAction PropertyName="Background" Value="{DynamicResource PrimaryBlueColor}"></i:ChangePropertyAction>
-                                    </i:DataTrigger>
-                                </i:Interaction.Triggers>
-                                <TextBlock Text="8" />
-                            </Border>
-                            <Border BorderBrush="{DynamicResource PrimaryBlueColor}">
-                                <i:Interaction.Triggers>
-                                    <i:DataTrigger Binding="{Binding NinePointState[8]}" Value="True">
-                                        <i:ChangePropertyAction PropertyName="Background" Value="{DynamicResource PrimaryBlueColor}"></i:ChangePropertyAction>
-                                    </i:DataTrigger>
-                                </i:Interaction.Triggers>
-                                <TextBlock Text="9" />
-                            </Border>
-                        </UniformGrid>
-                    </Grid>
-                </GroupBox>
-            </Grid>
+            </Grid>-->
         </hc:FlexPanel>
     </ScrollViewer>
 </UserControl>
