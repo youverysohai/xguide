@@ -43,14 +43,14 @@
                         </ItemsControl.ItemsPanel>
                         <ItemsControl.ItemTemplate>
                             <DataTemplate>
-                                <Border Margin="10" Background="MediumPurple" CornerRadius="10">
+                                <Border Margin="10" Background="{DynamicResource PrimaryHueLightBrush}" CornerRadius="10">
                                     <Border.Style>
                                         <Style TargetType="Border">
                                             <Style.Triggers>
                                                 <Trigger Property="IsMouseOver" Value="True">
                                                     <Setter Property="Effect">
                                                         <Setter.Value>
-                                                            <DropShadowEffect BlurRadius="10" ShadowDepth="1" Color="#DDDDDD"/> 
+                                                            <DropShadowEffect BlurRadius="10" ShadowDepth="1" Color="#DDDDDD"/>
                                                         </Setter.Value>
                                                     </Setter>
                                                 </Trigger>
@@ -129,7 +129,7 @@
                                     <TextBlock FontWeight="Bold" FontSize="20" Text="Log"/>
                                     <Button  VerticalAlignment="Top"
                                              DockPanel.Dock="Right"
-                                             
+                                               Visibility="Collapsed"
                                              Width="30"
                                              Height="30"
                                         Style="{StaticResource MaterialDesignFloatingActionAccentButton}">
@@ -143,8 +143,12 @@
                                     <ListBox.ItemTemplate>
                                         <DataTemplate>
                                             <StackPanel Orientation="Vertical" MaxHeight="80">
-                                                <TextBlock Margin="10 0" Style="{DynamicResource MaterialDesignBody1TextBlock}" Text="{Binding Title}"></TextBlock>
-                                                <TextBlock Margin="15 2" Opacity="0.5" Text="{Binding Content}"></TextBlock>
+                                                <TextBlock Margin="15 2" Opacity="0.5" Text="{Binding CreateDate}"></TextBlock>
+
+                                                <ui:SimpleStackPanel Orientation="Horizontal">
+                                                    <TextBlock Margin="10 0" Style="{DynamicResource MaterialDesignBody1TextBlock}" Text="{Binding Title}"></TextBlock>
+                                                    <TextBlock Margin="15 2" Opacity="0.5" Text="{Binding Content}"></TextBlock>
+                                                </ui:SimpleStackPanel>
                                             </StackPanel>
                                         </DataTemplate>
                                     </ListBox.ItemTemplate>

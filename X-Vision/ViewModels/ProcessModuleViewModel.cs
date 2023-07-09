@@ -134,8 +134,9 @@ namespace X_Vision.ViewModels
 
             for(int i = 0; i<10; i++)
             {
-                LogDtos.Add(new LogDto() { Title ="Process Module", Content="Opened Process Module" });
-                LogDtos.Add(new LogDto() { Title ="Process Module", Content="Start Process Module" });
+                LogDtos.Add(new LogDto() { Title ="Process Module", Content="Opened Process Module", CreateDate = DateTime.Now });
+                LogDtos.Add(new LogDto() { Title = "Process Module", Content = "Start Process Module", CreateDate = new DateTime(2023, 7, 10, 10, 30, 0) 
+            });
             }
         }
     }
