@@ -16,7 +16,9 @@
             <RowDefinition Height="*"/>
         </Grid.RowDefinitions>
         <Grid>
-            <XCust:JogControllersLayout Type="{Binding Calibration.Manipulator.Type, ElementName=TopConfig}" ></XCust:JogControllersLayout> 
+            <XCust:JogControllersLayout Type="{Binding Calibration.Manipulator.Type, ElementName=TopConfig}"  ></XCust:JogControllersLayout>
+        
+
         </Grid>
         <GroupBox Visibility="Visible" Grid.Row="2" Style="{StaticResource GroupBoxTab}" MinHeight="210">
             <i:Interaction.Triggers>
@@ -32,7 +34,6 @@
                     <RowDefinition Height="*" />
                     <RowDefinition Height="auto" />
                 </Grid.RowDefinitions>
-
                 <UniformGrid Rows="3" Columns="3">
                     <Border BorderBrush="{DynamicResource PrimaryBlueColor}" Grid.Row="1" Grid.Column="1">
                         <i:Interaction.Triggers>

@@ -1,7 +1,9 @@
 ﻿/*using VM.Core;*/
 
 using CommunityToolkit.Mvvm.Messaging;
+using HandyControl.Controls;
 using ManipulatorTcp;
+using System;
 using System.Collections.Generic;
 using System.Threading;
 using System.Threading.Tasks;
@@ -65,13 +67,17 @@ namespace X_Guide.MVVM.ViewModel
         public bool IsLoading { get; set; } = true;
 
         public RelayCommand JogCommand { get; }
+        public RelayCommand TestCommand { get; }
         public RelayCommand StartJogTrackingCommand { get; }
 
         public int JogDistance { get; set; }
         public int RotationAngle { get; set; }
         public int TrackedXMove { get; set; }
         public int TrackedYMove { get; set; }
-
+        public Step5ViewModel()
+        {
+            TestCommand = new RelayCommand(Test);
+        }
         public Step5ViewModel(CalibrationViewModel calibrationConfig, IServerTcp serverService, IVisionService visionService, IJogService jogService, StateViewModel appState, IMessenger messenger, IVisionViewModel visionView = null)
         {
             _serverService = serverService;
@@ -83,8 +89,14 @@ namespace X_Guide.MVVM.ViewModel
             VisionView?.SetConfig(_calibrationConfig);
             JogCommand = new RelayCommand(Jog, (o) => _canJog);
             StartJogTrackingCommand = new RelayCommand(StartJogTracking);
+            TestCommand = new RelayCommand(Test);
             messenger.Register(this);
             VisionView?.StartLiveImage();
+        }
+
+        private void Test(object obj)
+        {
+            MessageBox.Show("NI HAo NI KEYI KANDAO WO MA?");
         }
 
         private void StartJogTracking(object obj)

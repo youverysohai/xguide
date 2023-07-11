@@ -3,16 +3,35 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
-             xmlns:local="clr-namespace:X_Guide.CustomControls"
+             xmlns:local="clr-namespace:X_Guide.CustomControls" xmlns:RadialMenu="clr-namespace:RadialMenu.Controls;assembly=RadialMenu"
              mc:Ignorable="d" 
              d:DesignHeight="450" d:DesignWidth="800">
-    <ScrollViewer VerticalScrollBarVisibility="Auto">
-        <StackPanel>
-            <Canvas >
-                <local:CustomJogButtonsControl Canvas.Left="0"  TopCommandParameter="Y+" BottomCommandParameter="Y-" LeftCommandParameter="X-" RightCommandParameter="X+" ButtonCommand="{Binding JogCommand}"></local:CustomJogButtonsControl>
-                <local:CustomJogButtonsControl x:Name="GRSCARA" Canvas.Left="160"  TopCommandParameter="Z+" BottomCommandParameter="Z-" LeftCommandParameter="RZ-" RightCommandParameter="RZ+" ButtonCommand="{Binding JogCommand}"></local:CustomJogButtonsControl>
-                <local:CustomJogButtonsControl x:Name="SixAxis" Canvas.Right="150"  IsHalfShifted="False" TopCommandParameter="RY+" BottomCommandParameter="RY-" LeftCommandParameter="RX-" RightCommandParameter="RX+" ButtonCommand="{Binding JogCommand}"></local:CustomJogButtonsControl>
-            </Canvas>
-        </StackPanel>
-    </ScrollViewer>
+    <UserControl.Resources>
+        <Style TargetType="RadialMenu:RadialMenuItem" BasedOn="{StaticResource FancyRadialMenuItem}">
+            
+        </Style>
+    </UserControl.Resources>
+
+    <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="*"/>
+            <ColumnDefinition Width="*"/>
+        </Grid.ColumnDefinitions>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+
+        <RadialMenu:RadialMenu Grid.Row="0" Grid.Column="0" x:Name="RadialMenu" IsOpen="True" >
+
+        </RadialMenu:RadialMenu>
+        <Canvas Grid.Column="1">
+            <!--<local:CustomJogButtonsControl  TopCommandParameter="Y+" BottomCommandParameter="Y-" LeftCommandParameter="X-" RightCommandParameter="X+" ButtonCommand="{Binding JogCommand}"></local:CustomJogButtonsControl>
+
+            <local:CustomJogButtonsControl  x:Name="GRSCARA" TopCommandParameter="Z+" BottomCommandParameter="Z-" LeftCommandParameter="RZ-" RightCommandParameter="RZ+" ButtonCommand="{Binding JogCommand}"></local:CustomJogButtonsControl>
+            <local:CustomJogButtonsControl  x:Name="ZAxis" TopCommandParameter="Z+" BottomCommandParameter="Z-" ButtonCommand="{Binding JogCommand}"></local:CustomJogButtonsControl>
+
+            <local:CustomJogButtonsControl  x:Name="SixAxis" IsHalfShifted="False" TopCommandParameter="RY+" BottomCommandParameter="RY-" LeftCommandParameter="RX-" RightCommandParameter="RX+" ButtonCommand="{Binding JogCommand}"></local:CustomJogButtonsControl>-->
+        </Canvas>
+    </Grid>
 </UserControl>

@@ -12,6 +12,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using VM.Core;
 
 namespace X_Vision.Views
 {
@@ -23,6 +24,13 @@ namespace X_Vision.Views
         public CameraModuleView()
         {
             InitializeComponent();
+        }
+
+        private void Button_Click(object sender, RoutedEventArgs e)
+        {
+            VmSolution.Load("C:\\Users\\dumbchun\\source\\repos\\X-Guide\\pic.sol");
+            vmRealTimeAcqControl.ModuleSource = VmSolution.Instance["Flow1"] as VmModule;
+
         }
     }
 }

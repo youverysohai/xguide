@@ -12,6 +12,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using X_Guide.CustomControls;
 using X_Guide.MVVM.ViewModel.CalibrationWizardSteps;
 
 namespace X_Guide.MVVM.View.CalibrationWizardSteps
@@ -33,6 +34,16 @@ namespace X_Guide.MVVM.View.CalibrationWizardSteps
         public static readonly DependencyProperty CalibrationProperty =
             DependencyProperty.Register("Calibration", typeof(CalibrationViewModel), typeof(Step5TopConfig), new PropertyMetadata(null));
 
+
+        public ICommand ButtonCommand
+        {
+            get { return (ICommand)GetValue(ButtonCommandProperty); }
+            set { SetValue(ButtonCommandProperty, value); }
+        }
+
+        // Using a DependencyProperty as the backing store for ButtonCommand.  This enables animation, styling, binding, etc...
+        public static readonly DependencyProperty ButtonCommandProperty =
+            DependencyProperty.Register("ButtonCommand", typeof(ICommand), typeof(Step5TopConfig), new PropertyMetadata(null));
 
         public Step5TopConfig()
         {

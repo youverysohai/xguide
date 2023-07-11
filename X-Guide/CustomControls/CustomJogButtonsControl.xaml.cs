@@ -12,6 +12,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using X_Guide.MVVM.ViewModel;
 
 namespace X_Guide.CustomControls
 {
@@ -106,6 +107,8 @@ namespace X_Guide.CustomControls
         public CustomJogButtonsControl()
         {
             InitializeComponent();
+            Step5ViewModel vm = new Step5ViewModel();
+            ButtonCommand = vm.TestCommand; 
         }
     }
 }

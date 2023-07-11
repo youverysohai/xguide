@@ -8,54 +8,83 @@
              xmlns:stepsUI="clr-namespace:X_Guide.MVVM.View.CalibrationWizardSteps"
              xmlns:hc="https://handyorg.github.io/handycontrol"
              xmlns:vms="clr-namespace:X_Guide.MVVM.ViewModel"
-                           
+                        
              mc:Ignorable="d"
-             xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
+             xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes" xmlns:RadialMenu="clr-namespace:RadialMenu.Controls;assembly=RadialMenu"
              d:DesignHeight="650" d:DesignWidth="1000">
 
-    <Grid Margin="10">
-        <Grid.Resources>
-            <DataTemplate DataType="{x:Type vms:Step1ViewModel}">
-                <stepsUI:Step1 />
-            </DataTemplate>
-            <DataTemplate DataType="{x:Type vms:Step2ViewModel}">
-                <stepsUI:Step2 />
-            </DataTemplate>
-            <DataTemplate DataType="{x:Type vms:Step3ViewModel}">
-                <stepsUI:Step3 />
-            </DataTemplate>
-            <DataTemplate DataType="{x:Type vms:Step4ViewModel}">
-                <stepsUI:Step4 />
-            </DataTemplate>
-            <DataTemplate DataType="{x:Type vms:Step5ViewModel}">
-                <stepsUI:Step5 />
-            </DataTemplate>
-            <DataTemplate DataType="{x:Type vms:Step6ViewModel}">
-                <stepsUI:Step6 />
-            </DataTemplate>
-            <DataTemplate DataType="{x:Type vms:OthersVisionCalibrationStep}">
-                <views:CalibrationVisionView/>
-            </DataTemplate>
-            <DataTemplate DataType="{x:Type vms:HikVisionCalibrationStep}">
-                <views:HikVisionCalibrationStepView/>
-            </DataTemplate>
-        </Grid.Resources>
-        <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="auto" />
-            <ColumnDefinition Width="*" />
-        </Grid.ColumnDefinitions>
-        <Grid.RowDefinitions>
-            <RowDefinition Height="auto" />
-            <RowDefinition Height="auto" />
+    <materialDesign:DrawerHost IsTopDrawerOpen="True" >
+        <materialDesign:DrawerHost.TopDrawerContent>
+            <StackPanel Orientation="Horizontal">
+                <RadialMenu:RadialMenu IsOpen="True">
+                    <RadialMenu:RadialMenuItem Style="{DynamicResource FancyRadialMenuItem}">X+</RadialMenu:RadialMenuItem>
+                    <RadialMenu:RadialMenuItem Style="{DynamicResource FancyRadialMenuItem}">X-</RadialMenu:RadialMenuItem>
+                    <RadialMenu:RadialMenuItem Style="{DynamicResource FancyRadialMenuItem}">Y+</RadialMenu:RadialMenuItem>
+                    <RadialMenu:RadialMenuItem Style="{DynamicResource FancyRadialMenuItem}">Y-</RadialMenu:RadialMenuItem>
+                </RadialMenu:RadialMenu>
+                <RadialMenu:RadialMenu IsOpen="True">
+                    <RadialMenu:RadialMenuItem Style="{DynamicResource FancyRadialMenuItem}">X+</RadialMenu:RadialMenuItem>
+                    <RadialMenu:RadialMenuItem Style="{DynamicResource FancyRadialMenuItem}">X-</RadialMenu:RadialMenuItem>
+                    <RadialMenu:RadialMenuItem Style="{DynamicResource FancyRadialMenuItem}">Y+</RadialMenu:RadialMenuItem>
+                    <RadialMenu:RadialMenuItem Style="{DynamicResource FancyRadialMenuItem}">Y-</RadialMenu:RadialMenuItem>
+                </RadialMenu:RadialMenu>
+                <Button Margin="4"
+                    HorizontalAlignment="Center"
+                    Command="{x:Static materialDesign:DrawerHost.CloseDrawerCommand}"
+                    CommandParameter="{x:Static Dock.Left}"
+                    Content="Close"
+                    Style="{StaticResource MaterialDesignFlatButton}" />
+            </StackPanel>
 
-            <RowDefinition Height="16*" />
+        </materialDesign:DrawerHost.TopDrawerContent>
+        <Grid Margin="10">
+            <Grid.Resources>
+                <DataTemplate DataType="{x:Type vms:Step1ViewModel}">
+                    <stepsUI:Step1 />
+                </DataTemplate>
+                <DataTemplate DataType="{x:Type vms:Step2ViewModel}">
+                    <stepsUI:Step2 />
+                </DataTemplate>
+                <DataTemplate DataType="{x:Type vms:Step3ViewModel}">
+                    <stepsUI:Step3 />
+                </DataTemplate>
+                <DataTemplate DataType="{x:Type vms:Step4ViewModel}">
+                    <stepsUI:Step4 />
+                </DataTemplate>
+                <DataTemplate DataType="{x:Type vms:Step5ViewModel}">
+                    <stepsUI:Step5 />
+                </DataTemplate>
+                <DataTemplate DataType="{x:Type vms:Step6ViewModel}">
+                    <stepsUI:Step6 />
+                </DataTemplate>
+                <DataTemplate DataType="{x:Type vms:OthersVisionCalibrationStep}">
+                    <views:CalibrationVisionView/>
+                </DataTemplate>
+                <DataTemplate DataType="{x:Type vms:HikVisionCalibrationStep}">
+                    <views:HikVisionCalibrationStepView/>
+                </DataTemplate>
+            </Grid.Resources>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="auto" />
+                <ColumnDefinition Width="*" />
+            </Grid.ColumnDefinitions>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="auto" />
+                <RowDefinition Height="auto" />
 
-            <RowDefinition Height="auto" />
-        </Grid.RowDefinitions>
-        <Button  Grid.Column="1" HorizontalAlignment="Right" VerticalAlignment="Center" Style="{DynamicResource MaterialDesignIconForegroundButton}" Command="{Binding CancelCommand}">
-            <materialDesign:PackIcon Kind="WindowClose" Style="{DynamicResource IconStyle16}"></materialDesign:PackIcon>
-        </Button>
-        <TextBox materialDesign:TextFieldAssist.HasClearButton="True"
+                <RowDefinition Height="16*" />
+
+                <RowDefinition Height="auto" />
+            </Grid.RowDefinitions>
+            <Button Grid.Column="1" Grid.Row="0" Command="{x:Static materialDesign:DrawerHost.OpenDrawerCommand}"
+                             CommandParameter="{x:Static Dock.Top}"
+                             Style="{DynamicResource MaterialDesignIconForegroundButton}"
+                             ToolTip="Edit"
+                             ToolTipService.InitialShowDelay="122"/>
+            <Button  Grid.Column="1" HorizontalAlignment="Right" VerticalAlignment="Center" Style="{DynamicResource MaterialDesignIconForegroundButton}" Command="{Binding CancelCommand}">
+                <materialDesign:PackIcon Kind="WindowClose" Style="{DynamicResource IconStyle16}"></materialDesign:PackIcon>
+            </Button>
+            <TextBox materialDesign:TextFieldAssist.HasClearButton="True"
                      Cursor="Hand"
                      Text="{Binding Calibration.Name}"
                      Grid.ColumnSpan="2" Width="300"
@@ -63,51 +92,52 @@
 
                      materialDesign:HintAssist.Hint="Calibration Name"></TextBox>
 
-        <!--  Side Step bar  -->
-        <Border Name="Stepbar" d:Visibility="Visible" Grid.Row="1" Grid.ColumnSpan="2" CornerRadius="20 0 0 20">
+            <!--  Side Step bar  -->
+            <Border Name="Stepbar" d:Visibility="Visible" Grid.Row="1" Grid.ColumnSpan="2" CornerRadius="20 0 0 20">
 
-            <hc:StepBar Margin="0 10 0 -5" Name="step" IsMouseSelectable="True" Dock="Top" StepChanged="step_StepChanged" StepIndex="{Binding StepIndex}" ItemsSource="{Binding StepBarContent}">
+                <hc:StepBar Margin="0 10 0 -5" Name="step" IsMouseSelectable="True" Dock="Top" StepChanged="step_StepChanged" StepIndex="{Binding StepIndex}" ItemsSource="{Binding StepBarContent}">
 
-                <hc:StepBar.ItemTemplate>
-                    <DataTemplate>
+                    <hc:StepBar.ItemTemplate>
+                        <DataTemplate>
 
-                        <StackPanel Cursor="Hand" Height="55">
-                            <StackPanel Orientation= "Horizontal">
+                            <StackPanel Cursor="Hand" Height="55">
+                                <StackPanel Orientation= "Horizontal">
 
-                                <TextBlock  VerticalAlignment="Center" FontSize="16" FontWeight="Bold" HorizontalAlignment="Left" Margin="0 0 5 0">
+                                    <TextBlock  VerticalAlignment="Center" FontSize="16" FontWeight="Bold" HorizontalAlignment="Left" Margin="0 0 5 0">
                                         <Run>Step </Run>
                                         <Run Text="{Binding Index,RelativeSource={RelativeSource AncestorType=hc:StepBarItem}}"></Run>
-                                </TextBlock>
+                                    </TextBlock>
+                                </StackPanel>
+                                <TextBlock Text="{Binding}"></TextBlock>
                             </StackPanel>
-                            <TextBlock Text="{Binding}"></TextBlock>
-                        </StackPanel>
-                    </DataTemplate>
-                </hc:StepBar.ItemTemplate>
-            </hc:StepBar>
-        </Border>
-        <!-- Content Steps-->
+                        </DataTemplate>
+                    </hc:StepBar.ItemTemplate>
+                </hc:StepBar>
+            </Border>
+            <!-- Content Steps-->
 
-        <ContentControl Grid.Row="2" Grid.Column="1" Content="{Binding CurrentViewModel}"
+            <ContentControl Grid.Row="2" Grid.Column="1" Content="{Binding CurrentViewModel}"
                          Name="ContentControl">
-        </ContentControl>
+            </ContentControl>
 
-        <!-- Buttons Next and Prev-->
-        <StackPanel Grid.Row="3" Grid.Column="1" Orientation="Horizontal" HorizontalAlignment="Center">
+            <!-- Buttons Next and Prev-->
+            <StackPanel Grid.Row="3" Grid.Column="1" Orientation="Horizontal" HorizontalAlignment="Center">
 
-            <Button Style="{DynamicResource MaterialDesignPaperButton}" Margin="10" Command="{Binding WizPrevCommand}" CommandParameter="{x:Static local:PageName.StepOne}" Width="180">
-                <Button.Content>
-                    <hc:SimpleStackPanel Orientation="Horizontal">
-                        <materialDesign:PackIcon Kind="ChevronLeft" Style="{DynamicResource IconStyle16}" />
-                        <TextBlock Text="Prev" />
-                    </hc:SimpleStackPanel>
-                </Button.Content>
-            </Button>
-            <Button Style="{DynamicResource MaterialDesignPaperButton}" Command="{Binding WizNextCommand}" CommandParameter="{x:Static local:PageName.StepTwo}" Width="180">
-                <StackPanel Orientation="Horizontal">
-                    <TextBlock Text="Next" />
-                    <materialDesign:PackIcon Kind="ChevronRight" Style="{DynamicResource IconStyle16}" />
-                </StackPanel>
-            </Button>
-        </StackPanel>
-    </Grid>
+                <Button Style="{DynamicResource MaterialDesignPaperButton}" Margin="10" Command="{Binding WizPrevCommand}" CommandParameter="{x:Static local:PageName.StepOne}" Width="180">
+                    <Button.Content>
+                        <hc:SimpleStackPanel Orientation="Horizontal">
+                            <materialDesign:PackIcon Kind="ChevronLeft" Style="{DynamicResource IconStyle16}" />
+                            <TextBlock Text="Prev" />
+                        </hc:SimpleStackPanel>
+                    </Button.Content>
+                </Button>
+                <Button Style="{DynamicResource MaterialDesignPaperButton}" Command="{Binding WizNextCommand}" CommandParameter="{x:Static local:PageName.StepTwo}" Width="180">
+                    <StackPanel Orientation="Horizontal">
+                        <TextBlock Text="Next" />
+                        <materialDesign:PackIcon Kind="ChevronRight" Style="{DynamicResource IconStyle16}" />
+                    </StackPanel>
+                </Button>
+            </StackPanel>
+        </Grid>
+    </materialDesign:DrawerHost>
 </UserControl>

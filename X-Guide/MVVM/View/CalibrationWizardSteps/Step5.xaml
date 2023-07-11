@@ -55,6 +55,7 @@
             <ContentControl hc:FlexPanel.FlexBasis="720" Height="500" Content="{Binding VisionView}" VerticalAlignment="Top">
                 
             </ContentControl>
+
             <ContentControl hc:FlexPanel.FlexBasis="390"  Content="{Binding Calibration}" ContentTemplateSelector="{StaticResource MyTemplateSelector}">
                 <ContentControl.Resources>
                     <DataTemplate  x:Key="TopConfigView">
@@ -62,6 +63,8 @@
                     </DataTemplate>
                 </ContentControl.Resources>
             </ContentControl>
+            
+            
             <!--<XCust:CustomRenderControl
                     hc:FlexPanel.FlexBasis="720" Height="550"
                     Procedure="{Binding Module}" CenterBorder="Collapsed"></XCust:CustomRenderControl>-->

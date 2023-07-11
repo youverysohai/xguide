@@ -17,8 +17,14 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Reference Include="VM.Core">
+      <HintPath>..\..\..\..\..\..\Program Files\VisionMaster4.2.0\Development\V4.x\ComControls\Assembly\VM.Core.dll</HintPath>
+    </Reference>
     <Reference Include="VM.PlatformSDKCS">
       <HintPath>..\..\..\..\..\..\Program Files\VisionMaster4.2.0\Development\V4.x\ComControls\Assembly\VM.PlatformSDKCS.dll</HintPath>
+    </Reference>
+    <Reference Include="VMControls.Interface">
+      <HintPath>..\..\..\..\..\..\Program Files\VisionMaster4.2.0\Development\V4.x\ComControls\Assembly\VMControls.Interface.dll</HintPath>
     </Reference>
     <Reference Include="VMControls.WPF.Release">
       <HintPath>..\..\..\..\..\..\Program Files\VisionMaster4.2.0\Development\V4.x\ComControls\Assembly\VMControls.WPF.Release.dll</HintPath>

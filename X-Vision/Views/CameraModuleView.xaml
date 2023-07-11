@@ -5,7 +5,7 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:X_Vision.Views" xmlns:ui="http://schemas.modernwpf.com/2019"
              mc:Ignorable="d" 
-             xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
+             xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes" xmlns:Release="clr-namespace:VMControls.WPF.Release;assembly=VMControls.WPF.Release"
              d:DesignHeight="450" d:DesignWidth="800">
     <Grid Margin="10">
         <TabControl  Style="{DynamicResource MaterialDesignFilledTabControl}">
@@ -31,7 +31,19 @@
                 </ui:SimpleStackPanel> 
 
             </TabItem>
-            <TabItem Header="Device 2" Style="{DynamicResource MaterialDesignTabItem}"></TabItem>
+            <TabItem Header="Live" Style="{DynamicResource MaterialDesignTabItem}">
+                <Grid>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="auto"/>
+                        <RowDefinition Height="*"/>
+                    </Grid.RowDefinitions>
+                    <Button Content="Load" HorizontalAlignment="Left" Click="Button_Click" />
+                    <Release:VmRealTimeAcqControl Margin="0" x:Name="vmRealTimeAcqControl" Grid.Row="1">
+                        
+                    </Release:VmRealTimeAcqControl> 
+                </Grid>
+
+            </TabItem>
         </TabControl>
     </Grid>
 </UserControl>
