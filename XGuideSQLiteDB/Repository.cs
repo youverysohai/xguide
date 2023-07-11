@@ -14,6 +14,7 @@ namespace XGuideSQLiteDB
 
         public async void Create<T>(T entity) where T : class
         {
+            //TODO: Fix database append issue
             using (XGuideDbContext db = new XGuideDbContext())
             {
                 db.Set<T>().Add(entity);

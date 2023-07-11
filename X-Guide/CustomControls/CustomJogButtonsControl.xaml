@@ -1,10 +1,10 @@
 ﻿<UserControl x:Class="X_Guide.CustomControls.CustomJogButtonsControl"
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
-             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:local="clr-namespace:X_Guide.CustomControls"
-             mc:Ignorable="d" 
+             mc:Ignorable="d"
              x:Name="JogButtonLayout"
              xmlns:RadialMenu="clr-namespace:RadialMenu.Controls;assembly=RadialMenu"
              d:DesignHeight="300" d:DesignWidth="300"
@@ -12,23 +12,23 @@
              xmlns:enums ="clr-namespace:X_Guide.Enums">
 
     <ScrollViewer HorizontalScrollBarVisibility="Visible">
-        <Grid >
-            <RadialMenu:RadialMenu IsOpen="{Binding IsOpen, ElementName=JogButtonLayout}" HalfShiftedItems="{Binding IsHalfShifted, ElementName=JogButtonLayout }">
-                <RadialMenu:RadialMenuItem Command="{Binding ButtonCommand,ElementName=JogButtonLayout}" CommandParameter="{Binding TopCommandParameter,ElementName=JogButtonLayout}" Style="{DynamicResource FancyRadialMenuItem}">
+        <Grid>
 
-                    <TextBlock Text="{Binding TopCommandParameter,ElementName=JogButtonLayout}"/>
+            <RadialMenu:RadialMenu IsOpen="{Binding IsOpen, ElementName=JogButtonLayout}" HalfShiftedItems="{Binding IsHalfShifted, ElementName=JogButtonLayout }">
+                <RadialMenu:RadialMenuItem Command="{Binding ElementName=JogButtonLayout, Path=ButtonCommand}" CommandParameter="{Binding ElementName=JogButtonLayout, Path=TopCommandParameter}" Style="{DynamicResource FancyRadialMenuItem}">
+
+                    <TextBlock Text="{Binding ElementName=JogButtonLayout, Path=TopCommandParameter}" />
                 </RadialMenu:RadialMenuItem>
-                <RadialMenu:RadialMenuItem Command="{Binding ButtonCommand,ElementName=JogButtonLayout}" CommandParameter="{Binding RightCommandParameter,ElementName=JogButtonLayout}"  Style="{DynamicResource FancyRadialMenuItem}">
-                    <TextBlock Text="{Binding RightCommandParameter,ElementName=JogButtonLayout}"/>
+                <RadialMenu:RadialMenuItem Command="{Binding ElementName=JogButtonLayout, Path=ButtonCommand}" CommandParameter="{Binding ElementName=JogButtonLayout, Path=RightCommandParameter}"  Style="{DynamicResource FancyRadialMenuItem}">
+                    <TextBlock Text="{Binding RightCommandParameter,ElementName=JogButtonLayout}" />
                 </RadialMenu:RadialMenuItem>
-                <RadialMenu:RadialMenuItem Command="{Binding ButtonCommand,ElementName=JogButtonLayout}" CommandParameter="{Binding BottomCommandParameter,ElementName=JogButtonLayout}"  Style="{DynamicResource FancyRadialMenuItem}">
-                    <TextBlock Text="{Binding BottomCommandParameter,ElementName=JogButtonLayout}"/>
+                <RadialMenu:RadialMenuItem Command="{Binding ElementName=JogButtonLayout, Path=ButtonCommand}" CommandParameter="{Binding ElementName=JogButtonLayout, Path=BottomCommandParameter}"  Style="{DynamicResource FancyRadialMenuItem}">
+                    <TextBlock Text="{Binding BottomCommandParameter,ElementName=JogButtonLayout}" />
                 </RadialMenu:RadialMenuItem>
-                <RadialMenu:RadialMenuItem Command="{Binding ButtonCommand,ElementName=JogButtonLayout}" CommandParameter="{Binding LeftCommandParameter,ElementName=JogButtonLayout}"  Style="{DynamicResource FancyRadialMenuItem}">
-                    <TextBlock Text="{Binding LeftCommandParameter,ElementName=JogButtonLayout}"/>
+                <RadialMenu:RadialMenuItem Command="{Binding ElementName=JogButtonLayout, Path=ButtonCommand}" CommandParameter="{Binding ElementName=JogButtonLayout, Path=LeftCommandParameter}"  Style="{DynamicResource FancyRadialMenuItem}">
+                    <TextBlock Text="{Binding LeftCommandParameter,ElementName=JogButtonLayout}" />
                 </RadialMenu:RadialMenuItem>
             </RadialMenu:RadialMenu>
         </Grid>
     </ScrollViewer>
-
 </UserControl>

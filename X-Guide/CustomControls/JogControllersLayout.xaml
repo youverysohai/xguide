@@ -1,17 +1,18 @@
 ﻿<UserControl x:Class="X_Guide.CustomControls.JogControllersLayout"
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
-             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:local="clr-namespace:X_Guide.CustomControls"
-             mc:Ignorable="d" 
-             d:DesignHeight="450" d:DesignWidth="800">
+             mc:Ignorable="d"
+             d:DesignHeight="450" d:DesignWidth="800"
+             x:Name="JogController">
     <ScrollViewer VerticalScrollBarVisibility="Auto">
         <StackPanel>
-            <Canvas >
-                <local:CustomJogButtonsControl Canvas.Left="0"  TopCommandParameter="Y+" BottomCommandParameter="Y-" LeftCommandParameter="X-" RightCommandParameter="X+" ButtonCommand="{Binding JogCommand}"></local:CustomJogButtonsControl>
-                <local:CustomJogButtonsControl x:Name="GRSCARA" Canvas.Left="160"  TopCommandParameter="Z+" BottomCommandParameter="Z-" LeftCommandParameter="RZ-" RightCommandParameter="RZ+" ButtonCommand="{Binding JogCommand}"></local:CustomJogButtonsControl>
-                <local:CustomJogButtonsControl x:Name="SixAxis" Canvas.Right="150"  IsHalfShifted="False" TopCommandParameter="RY+" BottomCommandParameter="RY-" LeftCommandParameter="RX-" RightCommandParameter="RX+" ButtonCommand="{Binding JogCommand}"></local:CustomJogButtonsControl>
+            <Canvas>
+                <local:CustomJogButtonsControl Canvas.Left="0"  TopCommandParameter="Y+" BottomCommandParameter="Y-" LeftCommandParameter="X-" RightCommandParameter="X+" ButtonCommand="{Binding ElementName=JogController, Path=Command}"></local:CustomJogButtonsControl>
+                <local:CustomJogButtonsControl x:Name="GRSCARA" Canvas.Left="160"  TopCommandParameter="Z+" BottomCommandParameter="Z-" LeftCommandParameter="RZ-" RightCommandParameter="RZ+" ButtonCommand="{Binding ElementName=JogController, Path=Command}"></local:CustomJogButtonsControl>
+                <local:CustomJogButtonsControl x:Name="SixAxis" Canvas.Right="150"  IsHalfShifted="False" TopCommandParameter="RY+" BottomCommandParameter="RY-" LeftCommandParameter="RX-" RightCommandParameter="RX+" ButtonCommand="{Binding ElementName=JogController, Path=Command}"></local:CustomJogButtonsControl>
             </Canvas>
         </StackPanel>
     </ScrollViewer>

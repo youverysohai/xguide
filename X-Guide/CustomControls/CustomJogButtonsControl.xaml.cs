@@ -1,17 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows;
+﻿using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
 using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
 
 namespace X_Guide.CustomControls
 {
@@ -20,9 +9,6 @@ namespace X_Guide.CustomControls
     /// </summary>
     public partial class CustomJogButtonsControl : UserControl
     {
-
-
-
         public bool IsOpen
         {
             get { return (bool)GetValue(IsOpenProperty); }
@@ -32,8 +18,6 @@ namespace X_Guide.CustomControls
         // Using a DependencyProperty as the backing store for IsOpen.  This enables animation, styling, binding, etc...
         public static readonly DependencyProperty IsOpenProperty =
             DependencyProperty.Register("IsOpen", typeof(bool), typeof(CustomJogButtonsControl), new PropertyMetadata(true));
-
-
 
         public bool IsHalfShifted
         {
@@ -45,8 +29,6 @@ namespace X_Guide.CustomControls
         public static readonly DependencyProperty IsHalfShiftedProperty =
             DependencyProperty.Register("IsHalfShifted", typeof(bool), typeof(CustomJogButtonsControl), new PropertyMetadata(true));
 
-
-
         public ICommand ButtonCommand
         {
             get { return (ICommand)GetValue(ButtonCommandProperty); }
@@ -57,8 +39,6 @@ namespace X_Guide.CustomControls
         public static readonly DependencyProperty ButtonCommandProperty =
             DependencyProperty.Register("ButtonCommand", typeof(ICommand), typeof(CustomJogButtonsControl), new PropertyMetadata(null));
 
-
-
         public string TopCommandParameter
         {
             get { return (string)GetValue(TopCommandParameterProperty); }
@@ -68,7 +48,6 @@ namespace X_Guide.CustomControls
         // Using a DependencyProperty as the backing store for TopCommandParameter.  This enables animation, styling, binding, etc...
         public static readonly DependencyProperty TopCommandParameterProperty =
             DependencyProperty.Register("TopCommandParameter", typeof(string), typeof(CustomJogButtonsControl), new PropertyMetadata(""));
-
 
         public string BottomCommandParameter
         {
@@ -99,9 +78,6 @@ namespace X_Guide.CustomControls
         // Using a DependencyProperty as the backing store for RightCommandParameter.  This enables animation, styling, binding, etc...
         public static readonly DependencyProperty RightCommandParameterProperty =
             DependencyProperty.Register("RightCommandParameter", typeof(string), typeof(CustomJogButtonsControl), new PropertyMetadata(""));
-
-
-
 
         public CustomJogButtonsControl()
         {
