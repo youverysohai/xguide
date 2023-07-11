@@ -1,8 +1,12 @@
 ﻿/*using VM.Core;*/
 
+using CalibrationProvider;
 using CommunityToolkit.Mvvm.Messaging;
 using ManipulatorTcp;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
+using System.Diagnostics;
+using System.Runtime.Versioning;
 using System.Threading;
 using System.Threading.Tasks;
 using TcpConnectionHandler.Server;
@@ -16,6 +20,7 @@ using X_Guide.State;
 
 namespace X_Guide.MVVM.ViewModel
 {
+    [SupportedOSPlatform("windows")]
     internal class Step5ViewModel : ViewModelBase, IRecipient<ConnectionStatusChanged>
     {
         private readonly CalibrationViewModel _calibrationConfig;
@@ -25,8 +30,11 @@ namespace X_Guide.MVVM.ViewModel
         private readonly IJogService _jogService;
         private readonly IServerTcp _serverService;
         private readonly IVisionService _visionService;
+        private readonly ICalibrationService _calibrationService;
         private ManualResetEventSlim _manual;
         private IVisionViewModel _visionView;
+        public ObservableCollection<bool> NinePointState { get; set; } = new ObservableCollection<bool>(new bool[9]);
+        public RelayCommand TestingCommand { get; set; }
 
         public IVisionViewModel VisionView
         {
@@ -72,19 +80,34 @@ namespace X_Guide.MVVM.ViewModel
         public int TrackedXMove { get; set; }
         public int TrackedYMove { get; set; }
 
-        public Step5ViewModel(CalibrationViewModel calibrationConfig, IServerTcp serverService, IVisionService visionService, IJogService jogService, StateViewModel appState, IMessenger messenger, IVisionViewModel visionView = null)
+        public Step5ViewModel(CalibrationViewModel calibrationConfig, IServerTcp serverService, IVisionService visionService, IJogService jogService, StateViewModel appState, IMessenger messenger, ICalibrationService calibrationService, IVisionViewModel visionView = null)
         {
             _serverService = serverService;
             _visionService = visionService;
+            _calibrationService = calibrationService;
             _calibrationConfig = calibrationConfig;
             AppState = appState;
             _jogService = jogService;
+            TestingCommand = new RelayCommand(Initiate9Point);
             VisionView = visionView;
             VisionView?.SetConfig(_calibrationConfig);
             JogCommand = new RelayCommand(Jog, (o) => _canJog);
             StartJogTrackingCommand = new RelayCommand(StartJogTracking);
             messenger.Register(this);
             VisionView?.StartLiveImage();
+        }
+
+        private async void Initiate9Point(object obj)
+        {
+            Debug.WriteLine("Start calib");
+            var i = await _calibrationService.LookingDownward9PointManipulator(BlockingCall);
+        }
+
+        private Task BlockingCall(int index)
+        {
+            System.Windows.MessageBox.Show("Next?");
+            NinePointState[index] = true;
+            return Task.CompletedTask;
         }
 
         private void StartJogTracking(object obj)
@@ -139,11 +162,6 @@ namespace X_Guide.MVVM.ViewModel
             }
             JogCommand command = new JogCommand().SetX(x).SetY(y).SetZ(z).SetRZ(rz).SetSpeed(_calibrationConfig.Speed).SetAcceleration(_calibrationConfig.Acceleration);
             _jogService.Enqueue(command);
-        }
-
-        public override void Dispose()
-        {
-            base.Dispose();
         }
 
         public void Receive(ConnectionStatusChanged message)

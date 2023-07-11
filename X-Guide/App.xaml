@@ -17,6 +17,7 @@
             </DataTemplate>
             <DataTemplate x:Key="HikViewTemplate" DataType="{x:Type vms:HikViewModel}">
                 <views:HikView />
+                
             </DataTemplate>
 
             <ResourceDictionary.MergedDictionaries>

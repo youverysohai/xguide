@@ -92,7 +92,7 @@ namespace X_Guide.MVVM.ViewModel
 
         private async void Testing(object obj)
         {
-            await _calibService.TopConfig9Point(BlockingCall);
+            await _calibService.TopConfig9PointVision(BlockingCall);
         }
 
         private Task BlockingCall(int index)

@@ -8,7 +8,7 @@
              xmlns:stepsUI="clr-namespace:X_Guide.MVVM.View.CalibrationWizardSteps"
              xmlns:hc="https://handyorg.github.io/handycontrol"
              xmlns:vms="clr-namespace:X_Guide.MVVM.ViewModel"
-                           
+
              mc:Ignorable="d"
              xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
              d:DesignHeight="650" d:DesignWidth="1000">
@@ -34,10 +34,10 @@
                 <stepsUI:Step6 />
             </DataTemplate>
             <DataTemplate DataType="{x:Type vms:OthersVisionCalibrationStep}">
-                <views:CalibrationVisionView/>
+                <views:CalibrationVisionView />
             </DataTemplate>
             <DataTemplate DataType="{x:Type vms:HikVisionCalibrationStep}">
-                <views:HikVisionCalibrationStepView/>
+                <views:HikVisionCalibrationStepView />
             </DataTemplate>
         </Grid.Resources>
         <Grid.ColumnDefinitions>

@@ -4,6 +4,7 @@ using CommunityToolkit.Mvvm.Messaging;
 using HandyControl.Data;
 using System;
 using System.Collections.Generic;
+using System.Runtime.Versioning;
 using System.Threading.Tasks;
 using X_Guide.MessageToken;
 using X_Guide.MVVM.Command;
@@ -14,6 +15,11 @@ using MessageBox = HandyControl.Controls.MessageBox;
 
 namespace X_Guide.MVVM.ViewModel
 {
+    public class CalibrationStep
+    {
+    }
+
+    [SupportedOSPlatform("windows")]
     public class CalibrationMainViewModel : ViewModelBase, IRecipient<CalibrationStateChanged>
     {
         public CalibrationViewModel Calibration { get; set; }
@@ -101,7 +107,6 @@ namespace X_Guide.MVVM.ViewModel
             Calibration = calibration;
             _messenger = messenger;
             messenger.Register(this);
-            //calibration.Manipulator = mapper.Map<ManipulatorViewModel>(manipulatorDb.Get(1));
 
             TypedParameter calibrationConfig = new TypedParameter(typeof(CalibrationViewModel), Calibration);
 

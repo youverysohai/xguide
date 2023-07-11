@@ -69,9 +69,16 @@ namespace CalibrationProvider
             };
         }
 
-        public Task<CalibrationData> Top2D_Calibrate(int XOffset, int YOffset)
+        public Task<CalibrationData> LookingDownward2D_Calibrate(Point[] VisionPoints, Point[] RobotPoints)
         {
-            throw new NotImplementedException();
+            var calibData = VisionProcessor.TopConfig2D_Calib(VisionPoints, RobotPoints, true);
+            return Task.FromResult(new CalibrationData
+            {
+                X = calibData[0],
+                Y = calibData[1],
+                Rz = calibData[2],
+                mm_per_pixel = calibData[3]
+            });
         }
 
         public void SetMotionDelay(int motionDelay)
@@ -79,10 +86,9 @@ namespace CalibrationProvider
             _motionDelay = motionDelay;
         }
 
-        public async Task<(Point[], Point[])> TopConfig9Point(Func<int, Task> BlockingCall)
+        public async Task<Point[]> LookingDownward9PointVision(Func<int, Task> BlockingCall)
         {
             Point[] VisionPoints = new Point[9];
-            Point[] RobotPoints = new Point[9];
 
             for (int i = 0; i < 9; i++)
             {
@@ -92,14 +98,21 @@ namespace CalibrationProvider
                 VisionPoints[i] = point;
             }
 
-            //for (int i = 0; i < 9; i++)
-            //{
-            //    Point? point = _messenger.Send<ManipulatorTcpRequest>();
-            //    if (point is null) throw new Exception();
-            //    RobotPoints[i] = point;
-            //}
+            return VisionPoints;
+        }
 
-            return (VisionPoints, RobotPoints);
+        public async Task<Point[]> LookingDownward9PointManipulator(Func<int, Task> BlockingCall)
+        {
+            Point[] RobotPoints = new Point[9];
+
+            for (int i = 0; i < 9; i++)
+            {
+                await BlockingCall.Invoke(i);
+                Point? point = await _messenger.Send(new ManipulatorTcpRequest(Mode.GLOBAL));
+                if (point is null) throw new Exception();
+                RobotPoints[i] = point;
+            }
+            return RobotPoints;
         }
 
         private async Task<(Point[], Point[])> EyeInHand9PointAuto(int XOffset, int YOffset)
@@ -138,6 +151,11 @@ namespace CalibrationProvider
         }
 
         public Task<CalibrationData> LookingDownward2D_Calibrate(Func<int, Task> action)
+        {
+            throw new NotImplementedException();
+        }
+
+        public Task<(Point[], Point[])> TopConfig9PointVision(Func<int, Task> action)
         {
             throw new NotImplementedException();
         }

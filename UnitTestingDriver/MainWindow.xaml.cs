@@ -23,6 +23,7 @@ namespace UnitTestingDriver
         private readonly ServerTcp serverTcp;
         private readonly IClientTcp clientTcp;
         private readonly WeakReferenceMessenger messenger;
+        private readonly ManipulatorTcpHandler handler;
 
         public MainWindow()
         {
@@ -46,12 +47,12 @@ namespace UnitTestingDriver
             jogService = new JogService(serverTcp);
             visionService = new TcpVisionService(clientTcp, messenger);
             calibrationService = new CalibrationService(visionService, jogService, messenger);
+            handler = new ManipulatorTcpHandler(serverTcp, messenger);
             InitializeComponent();
         }
 
         private async void Button_Click(object sender, RoutedEventArgs e)
         {
-            await calibrationService.TopConfig9Point(BlockingCall);
         }
 
         private Task BlockingCall(int i)
