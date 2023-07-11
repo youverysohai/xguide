@@ -52,9 +52,10 @@
         <hc:FlexPanel Margin="0 20 0 0" JustifyContent="Center" AlignContent="Center" FlexDirection="Row">
 
             <!--VM Camara-->
-            <ContentControl hc:FlexPanel.FlexBasis="720" Height="500" Content="{Binding VisionView}" VerticalAlignment="Top">
+            <!--<ContentControl hc:FlexPanel.FlexBasis="720" Height="500" Content="{Binding VisionView}" VerticalAlignment="Top">
                 
-            </ContentControl>
+            </ContentControl>-->
+            <Release:VmRenderControl  hc:FlexPanel.FlexBasis="720" Height="500" Margin="10 0" />
 
             <ContentControl hc:FlexPanel.FlexBasis="390"  Content="{Binding Calibration}" ContentTemplateSelector="{StaticResource MyTemplateSelector}">
                 <ContentControl.Resources>

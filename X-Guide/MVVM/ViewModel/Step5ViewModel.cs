@@ -78,7 +78,7 @@ namespace X_Guide.MVVM.ViewModel
         {
             TestCommand = new RelayCommand(Test);
         }
-        public Step5ViewModel(CalibrationViewModel calibrationConfig, IServerTcp serverService, IVisionService visionService, IJogService jogService, StateViewModel appState, IMessenger messenger, IVisionViewModel visionView = null)
+        public Step5ViewModel(CalibrationViewModel calibrationConfig, IServerTcp serverService, IVisionService visionService, IJogService jogService, StateViewModel appState, IMessenger messenger, IVisionViewModel visionView)
         {
             _serverService = serverService;
             _visionService = visionService;

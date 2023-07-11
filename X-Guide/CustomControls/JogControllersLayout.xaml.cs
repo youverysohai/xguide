@@ -100,22 +100,25 @@ namespace X_Guide.CustomControls
             {
                 new RadialMenuItem
                 {
-                    Content = new TextBlock { Text = "Item 1" },
-                    ArrowBackground = Brushes.Transparent,
-                    Command = vm.JogCommand
+                    Content = new TextBlock { Text = "Y+" }, 
+                    Command = vm.TestCommand
 
                 },
                 new RadialMenuItem
                 {
-                    Content = new TextBlock { Text = "Item 2" },
-                    ArrowBackground = Brushes.Transparent,
-                    Command = vm.JogCommand
+                    Content = new TextBlock { Text = "X+" }, 
+                    Command = vm.TestCommand
                 },
                 new RadialMenuItem
                 {
-                    Command = vm.JogCommand,
-                    Content = new TextBlock { Text = "Sub Menu" ,
-
+                    Command = vm.TestCommand,
+                    Content = new TextBlock { Text = "Y-" ,
+                    }
+                },
+                new RadialMenuItem
+                {
+                    Command = vm.TestCommand,
+                    Content = new TextBlock { Text = "X-" ,
                     }
                 }
             };
