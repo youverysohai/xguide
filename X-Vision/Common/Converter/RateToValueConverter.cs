@@ -6,7 +6,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Data;
 
-namespace X_Vision.Converter
+namespace X_Vision.Common.Converter
 {
     public class RateToValueConverter : IMultiValueConverter
     {

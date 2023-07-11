@@ -224,6 +224,7 @@
     <Page Remove="MVVM\View\CalibrationWizardSteps\JogRobotView.xaml" />
   </ItemGroup>
   <ItemGroup>
+    <Folder Include="Extension\Model\" />
     <Folder Include="VisionMaster\" />
   </ItemGroup>
 </Project>

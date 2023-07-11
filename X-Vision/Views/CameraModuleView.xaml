@@ -3,10 +3,35 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
-             xmlns:local="clr-namespace:X_Vision.Views"
+             xmlns:local="clr-namespace:X_Vision.Views" xmlns:ui="http://schemas.modernwpf.com/2019"
              mc:Ignorable="d" 
+             xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
              d:DesignHeight="450" d:DesignWidth="800">
-    <Grid>
-        <TextBlock Text="This is Camera Page" FontSize="70" HorizontalAlignment="Center"/>
+    <Grid Margin="10">
+        <TabControl  Style="{DynamicResource MaterialDesignFilledTabControl}">
+            <TabItem Header="Device 1" Style="{DynamicResource MaterialDesignTabItem}">
+                <ui:SimpleStackPanel Width="300">
+                    <ComboBox Margin="10">
+                        <ComboBoxItem>Camera 1</ComboBoxItem>
+                        <ComboBoxItem>Camera 2</ComboBoxItem>
+                    </ComboBox>
+
+                    <ui:NumberBox Header="Exposure" Margin="10 0 0 10" SpinButtonPlacementMode="Inline"/>
+
+                    <ui:SimpleStackPanel Orientation="Horizontal" Margin="10 0 0 10" >
+                    <ui:NumberBox Header="Focus" SpinButtonPlacementMode="Inline" Width="200"/>
+                    <Button Content="Focus" VerticalAlignment="Bottom" Margin="5 0"/>
+                   
+                    </ui:SimpleStackPanel>
+                      <Button Content="Connect" VerticalAlignment="Bottom" Margin="10" HorizontalAlignment="Center"/>
+                    <ui:SimpleStackPanel Orientation="Horizontal" HorizontalAlignment="Center">
+                        <Button Content="Save" VerticalAlignment="Bottom" Margin="10" HorizontalAlignment="Center"/>
+                        <Button Content="Cancel" VerticalAlignment="Bottom" Margin="10" HorizontalAlignment="Center"/>
+                    </ui:SimpleStackPanel>
+                </ui:SimpleStackPanel> 
+
+            </TabItem>
+            <TabItem Header="Device 2" Style="{DynamicResource MaterialDesignTabItem}"></TabItem>
+        </TabControl>
     </Grid>
 </UserControl>

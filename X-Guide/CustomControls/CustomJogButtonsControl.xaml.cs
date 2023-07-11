@@ -23,6 +23,30 @@ namespace X_Guide.CustomControls
 
 
 
+        public bool IsOpen
+        {
+            get { return (bool)GetValue(IsOpenProperty); }
+            set { SetValue(IsOpenProperty, value); }
+        }
+
+        // Using a DependencyProperty as the backing store for IsOpen.  This enables animation, styling, binding, etc...
+        public static readonly DependencyProperty IsOpenProperty =
+            DependencyProperty.Register("IsOpen", typeof(bool), typeof(CustomJogButtonsControl), new PropertyMetadata(true));
+
+
+
+        public bool IsHalfShifted
+        {
+            get { return (bool)GetValue(IsHalfShiftedProperty); }
+            set { SetValue(IsHalfShiftedProperty, value); }
+        }
+
+        // Using a DependencyProperty as the backing store for IsHalfShifted.  This enables animation, styling, binding, etc...
+        public static readonly DependencyProperty IsHalfShiftedProperty =
+            DependencyProperty.Register("IsHalfShifted", typeof(bool), typeof(CustomJogButtonsControl), new PropertyMetadata(true));
+
+
+
         public ICommand ButtonCommand
         {
             get { return (ICommand)GetValue(ButtonCommandProperty); }
@@ -31,7 +55,7 @@ namespace X_Guide.CustomControls
 
         // Using a DependencyProperty as the backing store for ButtonCommand.  This enables animation, styling, binding, etc...
         public static readonly DependencyProperty ButtonCommandProperty =
-            DependencyProperty.Register("ButtonCommand", typeof(ICommand), typeof(CustomJogButtonsControl), new PropertyMetadata(0));
+            DependencyProperty.Register("ButtonCommand", typeof(ICommand), typeof(CustomJogButtonsControl), new PropertyMetadata(null));
 
 
 

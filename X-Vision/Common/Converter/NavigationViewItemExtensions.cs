@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 using System.Windows.Input;
 using System.Windows;
 
-namespace X_Vision.Converter
+namespace X_Vision.Common.Converter
 {
     public static class NavigationViewItemExtensions
     {

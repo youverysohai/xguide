@@ -13,6 +13,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using X_Vision.Common.Models;
 using X_Vision.Event;
 
 namespace X_Vision.Views
@@ -21,7 +22,7 @@ namespace X_Vision.Views
     /// Interaction logic for ProcessModuleView.xaml
     /// </summary>
     public partial class ProcessModuleView : UserControl
-    {
+    {          
         public ProcessModuleView(IEventAggregator aggregator)
         {
             InitializeComponent();

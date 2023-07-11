@@ -21,5 +21,6 @@ namespace X_Guide.MVVM.View.CalibrationWizardSteps
         private void RadialMenuItem_Click(object sender, System.Windows.RoutedEventArgs e)
         {
         }
+
     }
 }
