@@ -82,9 +82,6 @@
                             </i:DataTrigger>
                         </i:Interaction.Triggers>
                     </local:CustomJogButtonsControl>
- 
-
-
                 </Canvas>
                     <Canvas Grid.Row="2" Grid.Column="2"  HorizontalAlignment="Center">
                     <Canvas.RenderTransform>
@@ -97,16 +94,16 @@
                     <local:CustomJogButtonsControl x:Name="GRSCARA" TopCommandParameter="Z+" BottomCommandParameter="Z-" LeftCommandParameter="RZ-" RightCommandParameter="RZ+" ButtonCommand="{Binding ElementName=JogController, Path=Command}">
                         <i:Interaction.Triggers>
                             <i:DataTrigger Binding="{Binding Calibration.Manipulator.Type}" Value="{x:Static enums:ManipulatorType.GantrySystemWR}">
-                                <i:ChangePropertyAction PropertyName="Visibility" Value="Visible" />
+                                <i:ChangePropertyAction PropertyName="Visibility" Value="Collapsed" />
                             </i:DataTrigger>
                             <i:DataTrigger Binding="{Binding Calibration.Manipulator.Type}" Value="{x:Static enums:ManipulatorType.GantrySystemR}">
-                                <i:ChangePropertyAction PropertyName="Visibility" Value="Collapsed" />
+                                <i:ChangePropertyAction PropertyName="Visibility" Value="Visible" />
                             </i:DataTrigger>
                             <i:DataTrigger Binding="{Binding Calibration.Manipulator.Type}" Value="{x:Static enums:ManipulatorType.SCARA}">
-                                <i:ChangePropertyAction PropertyName="Visibility" Value="Collapsed" />
+                                <i:ChangePropertyAction PropertyName="Visibility" Value="Visible" />
                             </i:DataTrigger>
                             <i:DataTrigger Binding="{Binding Calibration.Manipulator.Type}" Value="{x:Static enums:ManipulatorType.SixAxis}">
-                                <i:ChangePropertyAction PropertyName="Visibility" Value="Collapsed" />
+                                <i:ChangePropertyAction PropertyName="Visibility" Value="Visible" />
                             </i:DataTrigger>
                         </i:Interaction.Triggers>
 
