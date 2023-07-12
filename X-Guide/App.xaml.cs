@@ -53,7 +53,8 @@ namespace X_Guide
         private static IContainer BuildDIContainer()
         {
             ContainerBuilder builder = new ContainerBuilder();
-
+            builder.RegisterType<JogControllerViewModel>();
+            builder.RegisterType<NinePointCalibrationViewModel>();
             builder.RegisterType<WeakReferenceMessenger>().As<IMessenger>().SingleInstance();
             builder.RegisterType<DisposeService>().As<IDisposeService>().SingleInstance();
             builder.Register(c => new AuthenticationService(c.Resolve<IRepository>(), c.Resolve<IMessenger>())).SingleInstance();
@@ -171,7 +172,7 @@ namespace X_Guide
                 default: break;
             }
             builder.RegisterType<OthersVisionCalibrationStep>();
-            builder.RegisterType<JogService>().As<IJogService>();
+            builder.RegisterType<JogService>().As<IJogService>().SingleInstance();
             builder.RegisterType<ServerCommand>().As<IServerCommand>().SingleInstance();
             builder.RegisterType<NavigationStore>();
             builder.RegisterType<NavigationService>().As<INavigationService>();

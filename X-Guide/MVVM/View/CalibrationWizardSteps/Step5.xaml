@@ -21,6 +21,7 @@
              xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
              xmlns:enums ="clr-namespace:X_Guide.Enums"
              xmlns:view="clr-namespace:X_Guide.MVVM.View.CalibrationWizardSteps"
+             xmlns:vms="clr-namespace:X_Guide.MVVM.ViewModel"
              d:DesignHeight="600" d:DesignWidth="1300"
              x:Name="Step5View">
     <UserControl.Resources>
@@ -48,6 +49,10 @@
         <c:TypeToBooleanConverter x:Key="TypeToBooleanConverter" />
 
         <ext:TemplateSelector x:Key="MyTemplateSelector" />
+
+        <DataTemplate DataType="{x:Type vms:Step5TopConfigViewModel}">
+            <view:Step5TopConfig />
+        </DataTemplate>
     </UserControl.Resources>
 
     <ScrollViewer HorizontalScrollBarVisibility="Auto">
@@ -58,16 +63,11 @@
 
             <!--<ContentControl hc:FlexPanel.FlexBasis="720" Height="500" Content="{Binding VisionView}" VerticalAlignment="Top">
             </ContentControl>-->
-            <ContentControl hc:FlexPanel.FlexBasis="1000" Content ="{Binding JogImplementation}" ContentTemplateSelector="{StaticResource MyTemplateSelector}">
-                <ContentControl.Resources>
-                    <DataTemplate x:Key="TopConfigView">
-
-                        <view:Step5TopConfig />
-                    </DataTemplate>
-                </ContentControl.Resources>
+            <ContentControl hc:FlexPanel.FlexBasis="1000" Content ="{Binding Step5CalibrationModule}">
             </ContentControl>
 
-            <!--Semi Auto(GWR)--><!--
+            <!--Semi Auto(GWR)-->
+            <!--
             <Button Content="Start Jog Tracking" Command="{Binding StartJogTrackingCommand}" Margin="10 0">
                 <i:Interaction.Triggers>
                     <i:DataTrigger Binding="{Binding Calibration.Manipulator.Type}" Value="{x:Static enums:ManipulatorType.GantrySystemWR}">
@@ -82,9 +82,9 @@
                              CommandParameter="{x:Static Dock.Right}"
                              Style="{DynamicResource MaterialDesignIconForegroundButton}"
                              ToolTip="Jog"
-                    
+
                              ToolTipService.InitialShowDelay="122">
-                <ui:FontIcon Glyph="&#xE759;"/>
+                <ui:FontIcon Glyph="&#xE759;" />
             </Button>-->
         </hc:FlexPanel>
     </ScrollViewer>

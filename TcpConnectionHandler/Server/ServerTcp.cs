@@ -97,7 +97,11 @@ namespace TcpConnectionHandler.Server
 
         public async Task WriteDataAsync(string data)
         {
-            await WriteDataAsync(data, _connectedClient.FirstOrDefault().Value.TcpClient.GetStream());
+            if (_connectedClient.Count < 1) throw new Exception("No connected client");
+            foreach (var client in _connectedClient)
+            {
+                await WriteDataAsync(data, client.Value.TcpClient.GetStream());
+            }
         }
 
         public void SubscribeOnClientConnectionChange(EventHandler<bool> action)

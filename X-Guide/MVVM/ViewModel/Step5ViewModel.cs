@@ -2,12 +2,9 @@
 
 using CalibrationProvider;
 using CommunityToolkit.Mvvm.Messaging;
-using HandyControl.Controls;
 using ManipulatorTcp;
-using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
-using System.Diagnostics;
 using System.Runtime.Versioning;
 using System.Threading;
 using System.Threading.Tasks;
@@ -26,9 +23,8 @@ namespace X_Guide.MVVM.ViewModel
     public class JogImplementationViewModel : ViewModelBase
     {
         public CalibrationViewModel Calibration { get; }
-        public int JogDistance { get; set; }
+
         private readonly IJogService _jogService;
-        public int RotationAngle { get; set; }
         public int TrackedXMove { get; set; }
         public int TrackedYMove { get; set; }
         public RelayCommand JogCommand { get; set; }
@@ -36,35 +32,6 @@ namespace X_Guide.MVVM.ViewModel
         public JogImplementationViewModel(CalibrationViewModel calibration, IJogService jogService)
         {
             Calibration = calibration;
-            _jogService = jogService;
-            JogCommand = new RelayCommand(Jog);
-            _jogService.Start();
-        }
-
-        private void Jog(object parameter)
-        {
-            if (JogDistance == 0) JogDistance = 10;
-            if (RotationAngle == 0) RotationAngle = 10;
-            int x = 0, y = 0, z = 0, rz = 0, rx = 0, ry = 0;
-
-            switch (parameter)
-            {
-                case "Y+": y = JogDistance; Calibration.YMove += JogDistance; break;
-                case "Y-": y = -JogDistance; Calibration.YMove -= JogDistance; break;
-                case "X+": x = JogDistance; Calibration.XMove += JogDistance; break;
-                case "X-": x = -JogDistance; Calibration.XMove -= JogDistance; break;
-                case "Z+": z = JogDistance; break;
-                case "Z-": z = -JogDistance; break;
-                case "RZ+": rz = RotationAngle; break;
-                case "RZ-": rz = -RotationAngle; break;
-                case "RX+": rx = RotationAngle; break;
-                case "RX-": rx = RotationAngle; break;
-                case "RY+": ry = RotationAngle; break;
-                case "RY-": ry = RotationAngle; break;
-                default: break;
-            }
-            JogCommand command = new JogCommand().SetX(x).SetY(y).SetZ(z).SetRZ(rz).SetSpeed(Calibration.Speed).SetAcceleration(Calibration.Acceleration);
-            _jogService.Enqueue(command);
         }
 
         private void StartJogTracking(object obj)
@@ -77,6 +44,7 @@ namespace X_Guide.MVVM.ViewModel
     [SupportedOSPlatform("windows")]
     internal class Step5ViewModel : ViewModelBase, IRecipient<ConnectionStatusChanged>
     {
+        public object Step5CalibrationModule { get; set; }
         public JogImplementationViewModel JogImplementation { get; set; }
         public object AppState { get; }
 
@@ -125,31 +93,20 @@ namespace X_Guide.MVVM.ViewModel
 
         public RelayCommand StartJogTrackingCommand { get; }
 
-        public Step5ViewModel(CalibrationViewModel calibrationConfig, IServerTcp serverService, IVisionService visionService, IJogService jogService, StateViewModel appState, IMessenger messenger, ICalibrationService calibrationService, IVisionViewModel visionView = null)
+        public Step5ViewModel(CalibrationViewModel calibrationConfig, IServerTcp serverService, IVisionService visionService, IJogService jogService, StateViewModel appState, IMessenger messenger, ICalibrationService calibrationService, JogControllerViewModel controller, NinePointCalibrationViewModel ninePoint, IVisionViewModel visionView = null)
         {
+            controller.Calibration = calibrationConfig;
+            Step5CalibrationModule = new Step5TopConfigViewModel(controller, calibrationService, ninePoint, messenger);
+
             JogImplementation = new JogImplementationViewModel(calibrationConfig, jogService);
             _serverService = serverService;
             _visionService = visionService;
             _calibrationService = calibrationService;
             AppState = appState;
             _jogService = jogService;
-            TestingCommand = new RelayCommand(Initiate9Point);
             StartJogTrackingCommand = new RelayCommand(null);
             messenger.Register(this);
             VisionView?.StartLiveImage();
-        }
-
-        private async void Initiate9Point(object obj)
-        {
-            Debug.WriteLine("Start calib");
-            var i = await _calibrationService.LookingDownward9PointManipulator(BlockingCall);
-        }
-
-        private Task BlockingCall(int index)
-        {
-            System.Windows.MessageBox.Show("Next?");
-            NinePointState[index] = true;
-            return Task.CompletedTask;
         }
 
         public async void InitView()

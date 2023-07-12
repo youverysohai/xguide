@@ -44,7 +44,6 @@
         <DataTemplate x:Key="HikViewTemplate" DataType="{x:Type vms:HikViewModel}">
             <views:HikView />
         </DataTemplate>
- 
     </Window.Resources>
     <Grid Name="MainWin">
         <!--Register Dialog-->
@@ -221,6 +220,12 @@
                             </DataTemplate>
                             <DataTemplate DataType="{x:Type vms:LiveCameraViewModel}">
                                 <views:LiveCameraView />
+                            </DataTemplate>
+                            <DataTemplate DataType="{x:Type vms:JogControllerViewModel}">
+                                <xCust:JogControllersLayout />
+                            </DataTemplate>
+                            <DataTemplate DataType="{x:Type vms:NinePointCalibrationViewModel}">
+                                <xCust:NineBoxCalibLayout></xCust:NineBoxCalibLayout>
                             </DataTemplate>
                         </Grid.Resources>
                         <Grid.RowDefinitions>

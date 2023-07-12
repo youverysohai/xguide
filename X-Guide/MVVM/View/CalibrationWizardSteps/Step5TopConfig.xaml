@@ -12,21 +12,14 @@
              d:DesignHeight="450" d:DesignWidth="800"
              x:Name="TopConfig">
     <Grid>
-
-        <!--<Grid.RowDefinitions>
-            <RowDefinition Height="*" />
-            <RowDefinition Height="*" />
-        </Grid.RowDefinitions>-->
         <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="*"/>
-            <ColumnDefinition Width="*"/>
+            <ColumnDefinition Width="*" />
+            <ColumnDefinition Width="*" />
         </Grid.ColumnDefinitions>
-        <Grid  Grid.Column="0">
 
-            <!--<ContentControl hc:FlexPanel.FlexBasis="720" Height="500" Content="{Binding VisionView}" VerticalAlignment="Top">
-            </ContentControl>-->
-            <XCust:JogControllersLayout Type="{Binding Calibration.Manipulator.Type}" Command="{Binding JogCommand}" ></XCust:JogControllersLayout>
-        </Grid>
-        <XCust:NineBoxCalibLayout Grid.Column="1"/>
+        <ContentControl Content="{Binding NinePoint}" />
+        <ContentControl Grid.Column="1" Content="{Binding JogController}" />
+        <Button Grid.Column="2" Command="{Binding StartCommand}">Click me</Button>
+
     </Grid>
 </UserControl>
