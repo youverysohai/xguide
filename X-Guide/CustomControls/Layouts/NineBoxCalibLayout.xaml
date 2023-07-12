@@ -11,10 +11,10 @@
         <Style TargetType="TextBlock">
             <Setter Property="HorizontalAlignment" Value="Center"/>
             <Setter Property="VerticalAlignment" Value="Center"/>
-            
+
         </Style>
-        <Style TargetType="Border"> 
-            <Setter Property="BorderThickness" Value="3"/>
+        <Style TargetType="Border">
+            <Setter Property="BorderThickness" Value="2"/>
         </Style>
     </UserControl.Resources>
 
@@ -33,16 +33,29 @@
                 <RowDefinition Height="auto" />
                 <RowDefinition Height="auto" />
             </Grid.RowDefinitions>
-            <UniformGrid Grid.Row="0" Rows="3" Columns="3">
-                <Border BorderBrush="{DynamicResource PrimaryBlueColor}" Grid.Row="1" Grid.Column="1">
+            <Grid Grid.Row="0">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="*" />
+                    <RowDefinition Height="*" />
+                    <RowDefinition Height="*" />
+                </Grid.RowDefinitions>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="*"/>
+                </Grid.ColumnDefinitions>
+                <Border BorderBrush="{DynamicResource PrimaryBlueColor}" Grid.Row="0" Grid.Column="0">
                     <i:Interaction.Triggers>
                         <i:DataTrigger Binding="{Binding NinePointState[0]}" Value="True">
                             <i:ChangePropertyAction PropertyName="Background" Value="{DynamicResource PrimaryBlueColor}"></i:ChangePropertyAction>
                         </i:DataTrigger>
                     </i:Interaction.Triggers>
-                    <TextBlock Text="1" />
+                    <ui:SimpleStackPanel Orientation="Vertical" VerticalAlignment="Center">
+                        <ui:FontIcon Glyph="&#xEDFB;" Foreground="{DynamicResource PrimaryBlueColor}"/>
+                        <TextBlock Text="1" />
+                    </ui:SimpleStackPanel>
                 </Border>
-                <Border BorderBrush="{DynamicResource PrimaryBlueColor}">
+                <Border BorderBrush="{DynamicResource PrimaryBlueColor}"  Grid.Row="0" Grid.Column="1">
                     <i:Interaction.Triggers>
                         <i:DataTrigger Binding="{Binding NinePointState[1]}" Value="True">
                             <i:ChangePropertyAction PropertyName="Background" Value="{DynamicResource PrimaryBlueColor}"></i:ChangePropertyAction>
@@ -50,7 +63,7 @@
                     </i:Interaction.Triggers>
                     <TextBlock Text="2" />
                 </Border>
-                <Border BorderBrush="{DynamicResource PrimaryBlueColor}">
+                <Border BorderBrush="{DynamicResource PrimaryBlueColor}"  Grid.Row="0" Grid.Column="2">
                     <i:Interaction.Triggers>
                         <i:DataTrigger Binding="{Binding NinePointState[2]}" Value="True">
                             <i:ChangePropertyAction PropertyName="Background" Value="{DynamicResource PrimaryBlueColor}"></i:ChangePropertyAction>
@@ -58,7 +71,7 @@
                     </i:Interaction.Triggers>
                     <TextBlock Text="3" />
                 </Border>
-                <Border BorderBrush="{DynamicResource PrimaryBlueColor}">
+                <Border BorderBrush="{DynamicResource PrimaryBlueColor}" Grid.Row="1" Grid.Column="0">
                     <i:Interaction.Triggers>
                         <i:DataTrigger Binding="{Binding NinePointState[3]}" Value="True">
                             <i:ChangePropertyAction PropertyName="Background" Value="{DynamicResource PrimaryBlueColor}"></i:ChangePropertyAction>
@@ -66,7 +79,7 @@
                     </i:Interaction.Triggers>
                     <TextBlock Text="4" />
                 </Border>
-                <Border BorderBrush="{DynamicResource PrimaryBlueColor}">
+                <Border BorderBrush="{DynamicResource PrimaryBlueColor}" Grid.Row="1" Grid.Column="1">
                     <i:Interaction.Triggers>
                         <i:DataTrigger Binding="{Binding NinePointState[4]}" Value="True">
                             <i:ChangePropertyAction PropertyName="Background" Value="{DynamicResource PrimaryBlueColor}"></i:ChangePropertyAction>
@@ -74,7 +87,7 @@
                     </i:Interaction.Triggers>
                     <TextBlock Text="5" />
                 </Border>
-                <Border BorderBrush="{DynamicResource PrimaryBlueColor}">
+                <Border BorderBrush="{DynamicResource PrimaryBlueColor}" Grid.Row="1" Grid.Column="2">
                     <i:Interaction.Triggers>
                         <i:DataTrigger Binding="{Binding NinePointState[5]}" Value="True">
                             <i:ChangePropertyAction PropertyName="Background" Value="{DynamicResource PrimaryBlueColor}"></i:ChangePropertyAction>
@@ -82,7 +95,7 @@
                     </i:Interaction.Triggers>
                     <TextBlock Text="6" />
                 </Border>
-                <Border BorderBrush="{DynamicResource PrimaryBlueColor}">
+                <Border BorderBrush="{DynamicResource PrimaryBlueColor}" Grid.Row="2" Grid.Column="0">
                     <i:Interaction.Triggers>
                         <i:DataTrigger Binding="{Binding NinePointState[6]}" Value="True">
                             <i:ChangePropertyAction PropertyName="Background" Value="{DynamicResource PrimaryBlueColor}"></i:ChangePropertyAction>
@@ -90,7 +103,7 @@
                     </i:Interaction.Triggers>
                     <TextBlock Text="7" />
                 </Border>
-                <Border BorderBrush="{DynamicResource PrimaryBlueColor}">
+                <Border BorderBrush="{DynamicResource PrimaryBlueColor}" Grid.Row="2" Grid.Column="1">
                     <i:Interaction.Triggers>
                         <i:DataTrigger Binding="{Binding NinePointState[7]}" Value="True">
                             <i:ChangePropertyAction PropertyName="Background" Value="{DynamicResource PrimaryBlueColor}"></i:ChangePropertyAction>
@@ -98,7 +111,7 @@
                     </i:Interaction.Triggers>
                     <TextBlock Text="8" />
                 </Border>
-                <Border BorderBrush="{DynamicResource PrimaryBlueColor}">
+                <Border BorderBrush="{DynamicResource PrimaryBlueColor}" Grid.Row="2" Grid.Column="2">
                     <i:Interaction.Triggers>
                         <i:DataTrigger Binding="{Binding NinePointState[8]}" Value="True">
                             <i:ChangePropertyAction PropertyName="Background" Value="{DynamicResource PrimaryBlueColor}"></i:ChangePropertyAction>
@@ -106,8 +119,17 @@
                     </i:Interaction.Triggers>
                     <TextBlock Text="9" />
                 </Border>
-            </UniformGrid>
-            <Label Content="Instruction: Move End Effector to box accordingly" Style="{DynamicResource DefaultLabelStyle}" Grid.Row="1" HorizontalAlignment="Center"></Label>
+            </Grid>
+            <Label  Style="{DynamicResource DefaultLabelStyle}" Grid.Row="1" HorizontalAlignment="Center" Margin="0 5">
+                <Label.Content>
+                    <ui:SimpleStackPanel Orientation="Horizontal">
+
+                        <TextBlock Text="Instruction: Move End Effector to "/>
+                        <ui:FontIcon Glyph="&#xEDFB;" Foreground="{DynamicResource PrimaryBlueColor}"/>
+                    </ui:SimpleStackPanel>
+
+                </Label.Content>
+            </Label>
             <ui:SimpleStackPanel Orientation="Horizontal" Grid.Row="2" HorizontalAlignment="Center">
                 <Button Content="Start" Margin="5"/>
                 <Button Content="Next" Margin="5"/>

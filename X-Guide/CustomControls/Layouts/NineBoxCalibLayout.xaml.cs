@@ -20,6 +20,19 @@ namespace X_Guide.CustomControls.Layouts
     /// </summary>
     public partial class NineBoxCalibLayout : UserControl
     {
+
+
+        public int CurrentPosition
+        {
+            get { return (int)GetValue(CurrentPositionProperty); }
+            set { SetValue(CurrentPositionProperty, value); }
+        }
+
+        // Using a DependencyProperty as the backing store for CurrentPosition.  This enables animation, styling, binding, etc...
+        public static readonly DependencyProperty CurrentPositionProperty =
+            DependencyProperty.Register("CurrentPosition", typeof(int), typeof(NineBoxCalibLayout), new PropertyMetadata(0));
+
+
         public NineBoxCalibLayout()
         {
             InitializeComponent();
