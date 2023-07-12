@@ -5,7 +5,7 @@ using X_Guide.Enums;
 using X_Guide.MVVM.View.CalibrationWizardSteps;
 using X_Guide.MVVM.ViewModel;
 
-namespace X_Guide.CustomControls
+namespace X_Guide.CustomControls.Layouts
 {
     /// <summary>
     /// Interaction logic for JogControllersLayout.xaml

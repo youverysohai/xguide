@@ -61,31 +61,12 @@
             <ContentControl hc:FlexPanel.FlexBasis="1000" Content ="{Binding JogImplementation}" ContentTemplateSelector="{StaticResource MyTemplateSelector}">
                 <ContentControl.Resources>
                     <DataTemplate x:Key="TopConfigView">
-
+                        
                         <view:Step5TopConfig />
                     </DataTemplate>
                 </ContentControl.Resources>
             </ContentControl>
-
-            <!--Semi Auto(GWR)--><!--
-            <Button Content="Start Jog Tracking" Command="{Binding StartJogTrackingCommand}" Margin="10 0">
-                <i:Interaction.Triggers>
-                    <i:DataTrigger Binding="{Binding Calibration.Manipulator.Type}" Value="{x:Static enums:ManipulatorType.GantrySystemWR}">
-                        <i:ChangePropertyAction PropertyName="Visibility" Value="Visible" />
-                    </i:DataTrigger>
-                    <i:DataTrigger Binding="{Binding Calibration.CalibrationMode}" Value="True">
-                        <i:ChangePropertyAction PropertyName="Visibility" Value="Collapsed" />
-                    </i:DataTrigger>
-                </i:Interaction.Triggers>
-            </Button>-->
-            <!--<Button Grid.Column="2" Grid.Row="3" Command="{x:Static materialDesign:DrawerHost.OpenDrawerCommand}"
-                             CommandParameter="{x:Static Dock.Right}"
-                             Style="{DynamicResource MaterialDesignIconForegroundButton}"
-                             ToolTip="Jog"
-                    
-                             ToolTipService.InitialShowDelay="122">
-                <ui:FontIcon Glyph="&#xE759;"/>
-            </Button>-->
+ 
         </hc:FlexPanel>
     </ScrollViewer>
 </UserControl>

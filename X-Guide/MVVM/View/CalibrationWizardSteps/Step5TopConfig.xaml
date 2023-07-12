@@ -6,17 +6,17 @@
              xmlns:local="clr-namespace:X_Guide.MVVM.View.CalibrationWizardSteps" xmlns:i="http://schemas.microsoft.com/xaml/behaviors"
              xmlns:enums="clr-namespace:X_Guide.Enums" xmlns:XCust="clr-namespace:X_Guide.CustomControls" xmlns:RadialMenu="clr-namespace:RadialMenu.Controls;assembly=RadialMenu"
              xmlns:ui="http://schemas.modernwpf.com/2019"
-             xmlns:cust ="clr-namespace:X_Guide.CustomControls"
+             xmlns:custLayout ="clr-namespace:X_Guide.CustomControls.Layouts"
              mc:Ignorable="d"
              xmlns:hc="https://handyorg.github.io/handycontrol"
              d:DesignHeight="450" d:DesignWidth="800"
              x:Name="TopConfig">
     <Grid>
 
-        <!--<Grid.RowDefinitions>
+        <Grid.RowDefinitions>
             <RowDefinition Height="*" />
-            <RowDefinition Height="*" />
-        </Grid.RowDefinitions>-->
+            <RowDefinition Height="auto" />
+        </Grid.RowDefinitions>
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="*"/>
             <ColumnDefinition Width="*"/>
@@ -25,8 +25,12 @@
 
             <!--<ContentControl hc:FlexPanel.FlexBasis="720" Height="500" Content="{Binding VisionView}" VerticalAlignment="Top">
             </ContentControl>-->
-            <XCust:JogControllersLayout Type="{Binding Calibration.Manipulator.Type}" Command="{Binding JogCommand}" ></XCust:JogControllersLayout>
+            <ui:SimpleStackPanel Orientation="Vertical">
+                <custLayout:JogControllersLayout Type="{Binding Calibration.Manipulator.Type}" Command="{Binding JogCommand}" ></custLayout:JogControllersLayout>
+              
+            </ui:SimpleStackPanel>
+
         </Grid>
-        <XCust:NineBoxCalibLayout Grid.Column="1"/>
+        <custLayout:NineBoxCalibLayout Grid.Column="1" Grid.Row="0"/>
     </Grid>
 </UserControl>

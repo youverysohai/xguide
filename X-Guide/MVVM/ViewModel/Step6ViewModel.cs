@@ -3,6 +3,7 @@
 using AutoMapper;
 using CalibrationProvider;
 using CommunityToolkit.Mvvm.Messaging;
+using ManipulatorTcp;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -21,12 +22,27 @@ using XGuideSQLiteDB.Models;
 
 namespace X_Guide.MVVM.ViewModel
 {
+    public class MockViewModel : ViewModelBase
+    {
+        public CalibrationViewModel Calibration { get; }
+
+
+        public MockViewModel(CalibrationViewModel calibration)
+        {
+            Calibration = calibration;
+
+        }
+
+
+    }
     //TODO: Add tooltip to inform what X and Y Offset is
     [SupportedOSPlatform("windows")]
     internal class Step6ViewModel : ViewModelBase
     {
+        public MockViewModel Mock { get; set; }
         public CalibrationViewModel Calibration { get; set; }
         public CalibrationViewModel NewCalibration { get; set; }
+        public JogImplementationViewModel JogImplementation { get; set; }
 
         public List<int> Order { get; set; } = new List<int>(new int[] { 0, 1, 2, 3, 4, 5, 6, 7, 8 });
         public ObservableCollection<bool> NinePointState { get; set; } = new ObservableCollection<bool>(new bool[9]);
@@ -72,6 +88,7 @@ namespace X_Guide.MVVM.ViewModel
 
         public Step6ViewModel(IServerTcp serverService, CalibrationViewModel calibrationConfig, IRepository repository, ICalibrationService calibService, IMapper mapper, Notifier notifier, IVisionService visionService, IMessenger messenger, IVisionViewModel visionView = null)
         {
+            Mock = new MockViewModel(calibrationConfig);
             _serverService = serverService;
             Calibration = calibrationConfig;
             _repository = repository;

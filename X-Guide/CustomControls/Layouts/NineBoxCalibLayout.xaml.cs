@@ -13,7 +13,7 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 
-namespace X_Guide.CustomControls
+namespace X_Guide.CustomControls.Layouts
 {
     /// <summary>
     /// Interaction logic for NineBoxCalibLayout.xaml
