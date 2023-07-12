@@ -273,7 +273,11 @@
 
 
 
-
+            <!--<Canvas>
+                <local:CustomJogButtonsControl Canvas.Left="0"  TopCommandParameter="Y+" BottomCommandParameter="Y-" LeftCommandParameter="X-" RightCommandParameter="X+" ButtonCommand="{Binding ElementName=JogController, Path=Command}"></local:CustomJogButtonsControl>
+                <local:CustomJogButtonsControl x:Name="GRSCARA" Canvas.Left="160"  TopCommandParameter="Z+" BottomCommandParameter="Z-" LeftCommandParameter="RZ-" RightCommandParameter="RZ+" ButtonCommand="{Binding ElementName=JogController, Path=Command}"></local:CustomJogButtonsControl>
+                <local:CustomJogButtonsControl x:Name="SixAxis" Canvas.Right="150"  IsHalfShifted="False" TopCommandParameter="RY+" BottomCommandParameter="RY-" LeftCommandParameter="RX-" RightCommandParameter="RX+" ButtonCommand="{Binding ElementName=JogController, Path=Command}"></local:CustomJogButtonsControl>
+            </Canvas>-->
         <!--<local:CustomJogButtonsControl  TopCommandParameter="Y+" BottomCommandParameter="Y-" LeftCommandParameter="X-" RightCommandParameter="X+" ButtonCommand="{Binding JogCommand}"></local:CustomJogButtonsControl>
 
             <local:CustomJogButtonsControl  x:Name="GRSCARA" TopCommandParameter="Z+" BottomCommandParameter="Z-" LeftCommandParameter="RZ-" RightCommandParameter="RZ+" ButtonCommand="{Binding JogCommand}"></local:CustomJogButtonsControl>
@@ -281,4 +285,4 @@
 
             <local:CustomJogButtonsControl  x:Name="SixAxis" IsHalfShifted="False" TopCommandParameter="RY+" BottomCommandParameter="RY-" LeftCommandParameter="RX-" RightCommandParameter="RX+" ButtonCommand="{Binding JogCommand}"></local:CustomJogButtonsControl>-->
     </Grid>
-</UserControl>
+

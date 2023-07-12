@@ -18,11 +18,14 @@ namespace ManipulatorTcp
 
         public void Receive(ManipulatorTcpRequest message)
         {
-            message.Reply(GetCurrentPosition().GetAwaiter().GetResult());
+            message.Reply(GetCurrentPosition(message.Mode));
         }
 
-        private async Task<Point?> GetCurrentPosition()
-        => await _serverTcp.RegisterSingleRequestHandler(GetCurrentPos);
+        public async Task<Point?> GetCurrentPosition(Enum Mode)
+        {
+            await _serverTcp.WriteDataAsync($"GETPOSE,{Mode}");
+            return await _serverTcp.RegisterSingleRequestHandler(GetCurrentPos);
+        }
 
         private Point GetCurrentPos(NetworkStreamEventArgs args)
         {
@@ -35,7 +38,13 @@ namespace ManipulatorTcp
         }
     }
 
-    public class ManipulatorTcpRequest : RequestMessage<Point?>
+    public class ManipulatorTcpRequest : AsyncRequestMessage<Point?>
     {
+        public readonly Mode Mode;
+
+        public ManipulatorTcpRequest(Mode mode)
+        {
+            Mode = mode;
+        }
     }
 }

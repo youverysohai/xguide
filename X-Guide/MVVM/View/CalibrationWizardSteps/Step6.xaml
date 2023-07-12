@@ -196,10 +196,6 @@
                                     <TextBlock Text="9" />
                                 </Border>
                             </UniformGrid>
-                            <ui:SimpleStackPanel Orientation="Horizontal" Grid.Row="1">
-                                <Button Content="Start" Command="{Binding }" />
-                                <Button Content="Reset" />
-                            </ui:SimpleStackPanel>
                         </Grid>
                     </GroupBox>
                     <GroupBox MinHeight="350"  Grid.RowSpan="3" Grid.Column="1" Style="{StaticResource GroupBoxTab}" Visibility="Visible">

@@ -111,6 +111,8 @@ namespace X_Guide
             builder.RegisterType<StateViewModel>().SingleInstance();
             builder.RegisterType<Repository>().As<IRepository>();
             builder.RegisterType<MessageBoxService>().As<IMessageBoxService>().SingleInstance();
+
+            builder.RegisterType<ManipulatorTcpHandler>().SingleInstance();
             builder.RegisterInstance(logger).As<ILogger>();
             builder.RegisterType<JsonDb>().As<IJsonDb>();
             builder.Register(c =>
@@ -222,6 +224,9 @@ namespace X_Guide
             _ = _diContainer.Resolve<AuthenticationService>();
             IClientTcp clientTcp = _diContainer.Resolve<IClientTcp>();
             clientTcp.ConnectServer();
+            IServerTcp serverTcp = _diContainer.Resolve<IServerTcp>();
+            _ = _diContainer.Resolve<ManipulatorTcpHandler>();
+            serverTcp.Start();
             Notifier = _diContainer.Resolve<Notifier>();
         }
 
