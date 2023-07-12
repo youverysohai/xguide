@@ -13,19 +13,7 @@
              xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes" xmlns:RadialMenu="clr-namespace:RadialMenu.Controls;assembly=RadialMenu" xmlns:ui="http://schemas.modernwpf.com/2019"
              d:DesignHeight="650" d:DesignWidth="1000">
 
-    <materialDesign:DrawerHost IsRightDrawerOpen="True" >
-        <materialDesign:DrawerHost.RightDrawerContent>
-            <StackPanel Orientation="Vertical">
-                <Button Margin="4"
-                    HorizontalAlignment="Center"
-                    Command="{x:Static materialDesign:DrawerHost.CloseDrawerCommand}"
-                    CommandParameter="{x:Static Dock.Right}"
-                    Content="Close"
-                    Style="{StaticResource MaterialDesignFlatButton}" />
-                <xCust:JogControllersLayout/>
-            </StackPanel>
-
-        </materialDesign:DrawerHost.RightDrawerContent>
+ 
         <Grid Margin="10">
             <Grid.Resources>
                 <DataTemplate DataType="{x:Type vms:Step1ViewModel}">
@@ -55,9 +43,8 @@
             </Grid.Resources>
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="auto" />
-                <ColumnDefinition Width="*" />
-                <ColumnDefinition Width="auto" />
-            </Grid.ColumnDefinitions>
+            <ColumnDefinition Width="*" />
+        </Grid.ColumnDefinitions>
             <Grid.RowDefinitions>
                 <RowDefinition Height="auto" />
                 <RowDefinition Height="auto" />
@@ -107,32 +94,23 @@
             </ContentControl>
 
             <!-- Buttons Next and Prev-->
-            <StackPanel Grid.Row="3" Grid.Column="1" Orientation="Horizontal" HorizontalAlignment="Center">
+        <StackPanel Grid.Row="3" Grid.Column="1" Orientation="Horizontal" HorizontalAlignment="Center">
 
-                <Button Style="{DynamicResource MaterialDesignPaperButton}" Margin="10" Command="{Binding WizPrevCommand}" CommandParameter="{x:Static local:PageName.StepOne}" Width="180">
-                    <Button.Content>
-                        <hc:SimpleStackPanel Orientation="Horizontal">
-                            <materialDesign:PackIcon Kind="ChevronLeft" Style="{DynamicResource IconStyle16}" />
-                            <TextBlock Text="Prev" />
-                        </hc:SimpleStackPanel>
-                    </Button.Content>
-                </Button>
-                <Button Style="{DynamicResource MaterialDesignPaperButton}" Command="{Binding WizNextCommand}" CommandParameter="{x:Static local:PageName.StepTwo}" Width="180">
-                    <StackPanel Orientation="Horizontal">
-                        <TextBlock Text="Next" />
-                        <materialDesign:PackIcon Kind="ChevronRight" Style="{DynamicResource IconStyle16}" />
-                    </StackPanel>
-                </Button>
-                
-            </StackPanel>
-            <Button Grid.Column="2" Grid.Row="3" Command="{x:Static materialDesign:DrawerHost.OpenDrawerCommand}"
-                             CommandParameter="{x:Static Dock.Right}"
-                             Style="{DynamicResource MaterialDesignIconForegroundButton}"
-                             ToolTip="Jog"
-                    
-                             ToolTipService.InitialShowDelay="122">
-                <ui:FontIcon Glyph="&#xE759;"/>
+            <Button Style="{DynamicResource MaterialDesignPaperButton}" Margin="10" Command="{Binding WizPrevCommand}" CommandParameter="{x:Static local:PageName.StepOne}" Width="180">
+                <Button.Content>
+                    <hc:SimpleStackPanel Orientation="Horizontal">
+                        <materialDesign:PackIcon Kind="ChevronLeft" Style="{DynamicResource IconStyle16}" />
+                        <TextBlock Text="Prev" />
+                    </hc:SimpleStackPanel>
+                </Button.Content>
             </Button>
-        </Grid>
-    </materialDesign:DrawerHost>
+            <Button Style="{DynamicResource MaterialDesignPaperButton}" Command="{Binding WizNextCommand}" CommandParameter="{x:Static local:PageName.StepTwo}" Width="180">
+                <StackPanel Orientation="Horizontal">
+                    <TextBlock Text="Next" />
+                    <materialDesign:PackIcon Kind="ChevronRight" Style="{DynamicResource IconStyle16}" />
+                </StackPanel>
+            </Button>
+
+        </StackPanel>
+    </Grid>
 </UserControl>

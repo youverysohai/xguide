@@ -8,19 +8,26 @@
              xmlns:ui="http://schemas.modernwpf.com/2019"
              xmlns:cust ="clr-namespace:X_Guide.CustomControls"
              mc:Ignorable="d"
+             xmlns:hc="https://handyorg.github.io/handycontrol"
              d:DesignHeight="450" d:DesignWidth="800"
              x:Name="TopConfig">
     <Grid>
 
-        <Grid.RowDefinitions>
+        <!--<Grid.RowDefinitions>
             <RowDefinition Height="*" />
             <RowDefinition Height="*" />
-        </Grid.RowDefinitions>
-        <Grid>
+        </Grid.RowDefinitions>-->
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="*"/>
+            <ColumnDefinition Width="*"/>
+        </Grid.ColumnDefinitions>
+        <Grid  Grid.Column="0">
 
+            <!--<ContentControl hc:FlexPanel.FlexBasis="720" Height="500" Content="{Binding VisionView}" VerticalAlignment="Top">
+            </ContentControl>-->
             <XCust:JogControllersLayout Type="{Binding Calibration.Manipulator.Type}" Command="{Binding JogCommand}" ></XCust:JogControllersLayout>
         </Grid>
-        <GroupBox Visibility="Visible" Grid.Row="2" Style="{StaticResource GroupBoxTab}" MinHeight="210">
+        <GroupBox  Grid.Column="1" Visibility="Visible" Grid.Row="2" Style="{StaticResource GroupBoxTab}" MinHeight="210">
             <i:Interaction.Triggers>
                 <i:DataTrigger Binding="{Binding}" Value="{x:Static enums:Orientation.LookDownward}">
                     <i:ChangePropertyAction PropertyName="Visibility" Value="Visible" />

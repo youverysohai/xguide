@@ -7,7 +7,8 @@
              xmlns:enums="clr-namespace:X_Guide.Enums"
              xmlns:c="clr-namespace:X_Guide.Converter"
              mc:Ignorable="d" 
-             d:DesignHeight="450" d:DesignWidth="800">
+             d:DesignHeight="450" d:DesignWidth="800"
+             x:Name="JogController">
     <UserControl.Resources>
         <Style TargetType="RadialMenu:RadialMenuItem" BasedOn="{StaticResource FancyRadialMenuItem}">
 
@@ -53,130 +54,66 @@
                             <TranslateTransform X="-150" Y="-80" />
                         </TransformGroup>
                     </Canvas.RenderTransform>
-                    <RadialMenu:RadialMenu Grid.Row="0" Grid.Column="0" x:Name="RadialMenu" IsOpen="True" HalfShiftedItems="True">
-
-                    </RadialMenu:RadialMenu>
+                    <local:CustomJogButtonsControl Canvas.Left="0"  TopCommandParameter="Y+" BottomCommandParameter="Y-" LeftCommandParameter="X-" RightCommandParameter="X+" ButtonCommand="{Binding ElementName=JogController, Path=Command}"></local:CustomJogButtonsControl>
                 </Canvas>
 
                 <Canvas Grid.Row="2" Grid.Column="2"  HorizontalAlignment="Center">
                     <Canvas.RenderTransform>
                         <TransformGroup>
-                            <RotateTransform Angle="45"></RotateTransform>
-                            <TranslateTransform X="-5" Y="-132" />
+                            <TranslateTransform X="-150" Y="-50" />
                         </TransformGroup>
                     </Canvas.RenderTransform>
 
                     <!-- Z- Z+ -->
 
-                    <RadialMenu:RadialMenu Margin="20 20 0 0">
+                    <local:CustomJogButtonsControl x:Name="GWRJog" TopCommandParameter="Z+" BottomCommandParameter="Z-"  ButtonCommand="{Binding ElementName=JogController, Path=Command}">
                         <i:Interaction.Triggers>
                             <i:DataTrigger Binding="{Binding Calibration.Manipulator.Type}" Value="{x:Static enums:ManipulatorType.GantrySystemWR}">
-                                <i:ChangePropertyAction PropertyName="IsOpen" Value="True" />
+                                <i:ChangePropertyAction PropertyName="Visibility" Value="Visible" />
                             </i:DataTrigger>
                             <i:DataTrigger Binding="{Binding Calibration.Manipulator.Type}" Value="{x:Static enums:ManipulatorType.GantrySystemR}">
-                                <i:ChangePropertyAction PropertyName="IsOpen" Value="False" />
+                                <i:ChangePropertyAction PropertyName="Visibility" Value="Collapsed" />
                             </i:DataTrigger>
                             <i:DataTrigger Binding="{Binding Calibration.Manipulator.Type}" Value="{x:Static enums:ManipulatorType.SCARA}">
-                                <i:ChangePropertyAction PropertyName="IsOpen" Value="False" />
+                                <i:ChangePropertyAction PropertyName="Visibility" Value="Collapsed" />
                             </i:DataTrigger>
                             <i:DataTrigger Binding="{Binding Calibration.Manipulator.Type}" Value="{x:Static enums:ManipulatorType.SixAxis}">
-                                <i:ChangePropertyAction PropertyName="IsOpen" Value="False" />
+                                <i:ChangePropertyAction PropertyName="Visibility" Value="Collapsed" />
                             </i:DataTrigger>
                         </i:Interaction.Triggers>
+                    </local:CustomJogButtonsControl>
+ 
 
-                        <!-- MenuItems Around -->
 
-
-                        <RadialMenu:RadialMenuItem Command="{Binding JogCommand}" CommandParameter="Z-"  Style="{DynamicResource FancyRadialMenuItem}">
-                            <TextBlock Text="Z-">
-                                <TextBlock.LayoutTransform>
-                                    <TransformGroup>
-                                        <RotateTransform Angle="-45"></RotateTransform>
-                                    </TransformGroup>
-                                </TextBlock.LayoutTransform>
-                                <TextBlock.RenderTransform>
-                                    <TranslateTransform X="-6" Y="-6" />
-                                </TextBlock.RenderTransform>
-                            </TextBlock>
-                        </RadialMenu:RadialMenuItem>
-
-                        <RadialMenu:RadialMenuItem  Command="{Binding JogCommand}" CommandParameter="Z+" Style="{DynamicResource FancyRadialMenuItem}">
-                            <TextBlock Text="Z+">
-                                <TextBlock.LayoutTransform>
-                                    <RotateTransform Angle="-45"></RotateTransform>
-                                </TextBlock.LayoutTransform>
-                            </TextBlock>
-                        </RadialMenu:RadialMenuItem>
-                    </RadialMenu:RadialMenu>
-
+                </Canvas>
+                    <Canvas Grid.Row="2" Grid.Column="2"  HorizontalAlignment="Center">
+                    <Canvas.RenderTransform>
+                        <TransformGroup>
+                            <TranslateTransform X="-150" Y="-50" />
+                        </TransformGroup>
+                    </Canvas.RenderTransform>
+ 
                     <!-- Z- Z+ RZ- RZ+-->
-
-                    <RadialMenu:RadialMenu>
+                    <local:CustomJogButtonsControl x:Name="GRSCARA" TopCommandParameter="Z+" BottomCommandParameter="Z-" LeftCommandParameter="RZ-" RightCommandParameter="RZ+" ButtonCommand="{Binding ElementName=JogController, Path=Command}">
                         <i:Interaction.Triggers>
                             <i:DataTrigger Binding="{Binding Calibration.Manipulator.Type}" Value="{x:Static enums:ManipulatorType.GantrySystemWR}">
-                                <i:ChangePropertyAction PropertyName="IsOpen" Value="False" />
+                                <i:ChangePropertyAction PropertyName="Visibility" Value="Visible" />
                             </i:DataTrigger>
                             <i:DataTrigger Binding="{Binding Calibration.Manipulator.Type}" Value="{x:Static enums:ManipulatorType.GantrySystemR}">
-                                <i:ChangePropertyAction PropertyName="IsOpen" Value="True" />
+                                <i:ChangePropertyAction PropertyName="Visibility" Value="Collapsed" />
                             </i:DataTrigger>
                             <i:DataTrigger Binding="{Binding Calibration.Manipulator.Type}" Value="{x:Static enums:ManipulatorType.SCARA}">
-                                <i:ChangePropertyAction PropertyName="IsOpen" Value="True" />
+                                <i:ChangePropertyAction PropertyName="Visibility" Value="Collapsed" />
                             </i:DataTrigger>
                             <i:DataTrigger Binding="{Binding Calibration.Manipulator.Type}" Value="{x:Static enums:ManipulatorType.SixAxis}">
-                                <i:ChangePropertyAction PropertyName="IsOpen" Value="True" />
+                                <i:ChangePropertyAction PropertyName="Visibility" Value="Collapsed" />
                             </i:DataTrigger>
                         </i:Interaction.Triggers>
 
-
-                        <!-- MenuItems Around -->
-
-
-                        <RadialMenu:RadialMenuItem Command="{Binding JogCommand}" CommandParameter="RZ+"  Style="{DynamicResource FancyRadialMenuItem}">
-                            <TextBlock Text="RZ+">
-                                <TextBlock.LayoutTransform>
-                                    <RotateTransform Angle="-45"></RotateTransform>
-                                </TextBlock.LayoutTransform>
-                                <TextBlock.RenderTransform>
-                                    <TranslateTransform X="-5" Y="-9" />
-                                </TextBlock.RenderTransform>
-                            </TextBlock>
-                        </RadialMenu:RadialMenuItem>
-
-                        <RadialMenu:RadialMenuItem Command="{Binding JogCommand}" CommandParameter="Z-"  Style="{DynamicResource FancyRadialMenuItem}">
-                            <TextBlock Text="Z-">
-                                <TextBlock.LayoutTransform>
-                                    <TransformGroup>
-                                        <RotateTransform Angle="-45"></RotateTransform>
-                                    </TransformGroup>
-                                </TextBlock.LayoutTransform>
-                                <TextBlock.RenderTransform>
-                                    <TranslateTransform X="-6" Y="-6" />
-                                </TextBlock.RenderTransform>
-                            </TextBlock>
-                        </RadialMenu:RadialMenuItem>
-
-                        <RadialMenu:RadialMenuItem  Command="{Binding JogCommand}" CommandParameter="RZ-" Style="{DynamicResource FancyRadialMenuItem}">
-                            <TextBlock Text="RZ-">
-                                <TextBlock.LayoutTransform>
-                                    <RotateTransform Angle="-45"></RotateTransform>
-                                </TextBlock.LayoutTransform>
-                                <TextBlock.RenderTransform>
-                                    <TranslateTransform X="0" Y="-10" />
-                                </TextBlock.RenderTransform>
-                            </TextBlock>
-                        </RadialMenu:RadialMenuItem>
-
-                        <RadialMenu:RadialMenuItem  Command="{Binding JogCommand}" CommandParameter="Z+" Style="{DynamicResource FancyRadialMenuItem}">
-                            <TextBlock Text="Z+">
-                                <TextBlock.LayoutTransform>
-                                    <RotateTransform Angle="-45"></RotateTransform>
-                                </TextBlock.LayoutTransform>
-                            </TextBlock>
-                        </RadialMenu:RadialMenuItem>
+                
+                    </local:CustomJogButtonsControl>
 
 
-
-                    </RadialMenu:RadialMenu>
                 </Canvas>
 
                 <!--Inputs -->
@@ -200,47 +137,10 @@
                 <Canvas Grid.Row="2" Grid.Column="0"  HorizontalAlignment="Center">
                     <Canvas.RenderTransform>
                         <TransformGroup>
-                            <TranslateTransform X="-155" Y="-70" />
+                            <TranslateTransform X="-155" Y="-50" />
                         </TransformGroup>
                     </Canvas.RenderTransform>
-                    <RadialMenu:RadialMenu>
-                        <i:Interaction.Triggers>
-                            <i:DataTrigger Binding="{Binding Calibration.Manipulator.Type}" Value="{x:Static enums:ManipulatorType.GantrySystemWR}">
-                                <i:ChangePropertyAction PropertyName="IsOpen" Value="False" />
-                            </i:DataTrigger>
-                            <i:DataTrigger Binding="{Binding Calibration.Manipulator.Type}" Value="{x:Static enums:ManipulatorType.GantrySystemR}">
-                                <i:ChangePropertyAction PropertyName="IsOpen" Value="False" />
-                            </i:DataTrigger>
-                            <i:DataTrigger Binding="{Binding Calibration.Manipulator.Type}" Value="{x:Static enums:ManipulatorType.SCARA}">
-                                <i:ChangePropertyAction PropertyName="IsOpen" Value="False" />
-                            </i:DataTrigger>
-                            <i:DataTrigger Binding="{Binding Calibration.Manipulator.Type}" Value="{x:Static enums:ManipulatorType.SixAxis}">
-                                <i:ChangePropertyAction PropertyName="IsOpen" Value="True" />
-                            </i:DataTrigger>
-                        </i:Interaction.Triggers>
-
-
-                        <!-- MenuItems Around -->
-
-
-                        <RadialMenu:RadialMenuItem Command="{Binding JogCommand}" CommandParameter="RX+" Style="{DynamicResource FancyRadialMenuItem}" ContentRadius="49">
-                            <TextBlock Text="RX+" />
-                        </RadialMenu:RadialMenuItem>
-
-                        <RadialMenu:RadialMenuItem Command="{Binding JogCommand}" CommandParameter="RY-" Style="{DynamicResource FancyRadialMenuItem}" ContentRadius="49">
-                            <TextBlock Text="RY-" />
-                        </RadialMenu:RadialMenuItem>
-
-                        <RadialMenu:RadialMenuItem Command="{Binding JogCommand}" CommandParameter="RY+" Style="{DynamicResource FancyRadialMenuItem}" ContentRadius="49">
-                            <TextBlock Text="RY+" />
-                        </RadialMenu:RadialMenuItem>
-
-                        <RadialMenu:RadialMenuItem Command="{Binding JogCommand}" CommandParameter="RX-" Style="{DynamicResource FancyRadialMenuItem}" ContentRadius="49">
-                            <TextBlock Text="RX-" />
-                        </RadialMenu:RadialMenuItem>
-
-
-                    </RadialMenu:RadialMenu>
+                    <local:CustomJogButtonsControl x:Name="SixAxis" IsHalfShifted="False" TopCommandParameter="RY+" BottomCommandParameter="RY-" LeftCommandParameter="RX-" RightCommandParameter="RX+" ButtonCommand="{Binding ElementName=JogController, Path=Command}"></local:CustomJogButtonsControl>
                 </Canvas>
                 <ui:SimpleStackPanel  Orientation="Vertical" Grid.Row="1" Margin="5 0">
                     <ui:NumberBox
@@ -273,11 +173,8 @@
 
 
 
-            <!--<Canvas>
-                <local:CustomJogButtonsControl Canvas.Left="0"  TopCommandParameter="Y+" BottomCommandParameter="Y-" LeftCommandParameter="X-" RightCommandParameter="X+" ButtonCommand="{Binding ElementName=JogController, Path=Command}"></local:CustomJogButtonsControl>
-                <local:CustomJogButtonsControl x:Name="GRSCARA" Canvas.Left="160"  TopCommandParameter="Z+" BottomCommandParameter="Z-" LeftCommandParameter="RZ-" RightCommandParameter="RZ+" ButtonCommand="{Binding ElementName=JogController, Path=Command}"></local:CustomJogButtonsControl>
-                <local:CustomJogButtonsControl x:Name="SixAxis" Canvas.Right="150"  IsHalfShifted="False" TopCommandParameter="RY+" BottomCommandParameter="RY-" LeftCommandParameter="RX-" RightCommandParameter="RX+" ButtonCommand="{Binding ElementName=JogController, Path=Command}"></local:CustomJogButtonsControl>
-            </Canvas>-->
+        <Canvas>
+</Canvas>
         <!--<local:CustomJogButtonsControl  TopCommandParameter="Y+" BottomCommandParameter="Y-" LeftCommandParameter="X-" RightCommandParameter="X+" ButtonCommand="{Binding JogCommand}"></local:CustomJogButtonsControl>
 
             <local:CustomJogButtonsControl  x:Name="GRSCARA" TopCommandParameter="Z+" BottomCommandParameter="Z-" LeftCommandParameter="RZ-" RightCommandParameter="RZ+" ButtonCommand="{Binding JogCommand}"></local:CustomJogButtonsControl>
@@ -286,3 +183,4 @@
             <local:CustomJogButtonsControl  x:Name="SixAxis" IsHalfShifted="False" TopCommandParameter="RY+" BottomCommandParameter="RY-" LeftCommandParameter="RX-" RightCommandParameter="RX+" ButtonCommand="{Binding JogCommand}"></local:CustomJogButtonsControl>-->
     </Grid>
 
+</UserControl>

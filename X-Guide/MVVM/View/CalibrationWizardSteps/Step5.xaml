@@ -52,13 +52,13 @@
 
     <ScrollViewer HorizontalScrollBarVisibility="Auto">
 
-        <hc:FlexPanel Margin="0 20 0 0" JustifyContent="Center" AlignContent="Center" FlexDirection="Row">
+        <hc:FlexPanel Margin="0 20 0 0" JustifyContent="SpaceAround" AlignContent="Center" FlexDirection="Row">
 
             <!--VM Camara-->
 
-            <ContentControl hc:FlexPanel.FlexBasis="720" Height="500" Content="{Binding VisionView}" VerticalAlignment="Top">
-            </ContentControl>
-            <ContentControl hc:FlexPanel.FlexBasis="390" Content ="{Binding JogImplementation}" ContentTemplateSelector="{StaticResource MyTemplateSelector}">
+            <!--<ContentControl hc:FlexPanel.FlexBasis="720" Height="500" Content="{Binding VisionView}" VerticalAlignment="Top">
+            </ContentControl>-->
+            <ContentControl hc:FlexPanel.FlexBasis="1000" Content ="{Binding JogImplementation}" ContentTemplateSelector="{StaticResource MyTemplateSelector}">
                 <ContentControl.Resources>
                     <DataTemplate x:Key="TopConfigView">
 
@@ -67,7 +67,7 @@
                 </ContentControl.Resources>
             </ContentControl>
 
-            <!--Semi Auto(GWR)-->
+            <!--Semi Auto(GWR)--><!--
             <Button Content="Start Jog Tracking" Command="{Binding StartJogTrackingCommand}" Margin="10 0">
                 <i:Interaction.Triggers>
                     <i:DataTrigger Binding="{Binding Calibration.Manipulator.Type}" Value="{x:Static enums:ManipulatorType.GantrySystemWR}">
@@ -77,21 +77,15 @@
                         <i:ChangePropertyAction PropertyName="Visibility" Value="Collapsed" />
                     </i:DataTrigger>
                 </i:Interaction.Triggers>
-            </Button>
-
-            <GroupBox Grid.Row="0" HorizontalAlignment="Center" Width="390" Style="{StaticResource GroupBoxTab}">
-                <i:Interaction.Triggers>
-                    <i:DataTrigger Binding="{Binding Calibration.CalibrationMode}"  Value="True">
-                        <i:ChangePropertyAction PropertyName="Visibility" Value="Collapsed" />
-                    </i:DataTrigger>
-                </i:Interaction.Triggers>
-                <GroupBox.Header>
-                    <ui:SimpleStackPanel Orientation="Horizontal">
-                        <ui:FontIcon Glyph="&#xECE9;" Margin="3 0" />
-                        <TextBlock  HorizontalAlignment="Center" Style="{DynamicResource TitleTextBlockStyle}" Text="Jog to Vision Center" />
-                    </ui:SimpleStackPanel>
-                </GroupBox.Header>
-            </GroupBox>
+            </Button>-->
+            <!--<Button Grid.Column="2" Grid.Row="3" Command="{x:Static materialDesign:DrawerHost.OpenDrawerCommand}"
+                             CommandParameter="{x:Static Dock.Right}"
+                             Style="{DynamicResource MaterialDesignIconForegroundButton}"
+                             ToolTip="Jog"
+                    
+                             ToolTipService.InitialShowDelay="122">
+                <ui:FontIcon Glyph="&#xE759;"/>
+            </Button>-->
         </hc:FlexPanel>
     </ScrollViewer>
 </UserControl>
