@@ -16,6 +16,8 @@ namespace X_Guide.MVVM.ViewModel
         private readonly ICalibrationService _calibrationService;
         private readonly IMessenger _messenger;
 
+        public int CurrentPosition { get; set; } = 0;
+
         public ObservableCollection<bool> NinePointState { get; set; } = new ObservableCollection<bool>(new bool[9]);
         private SemaphoreSlim _semaphore;
 
@@ -24,10 +26,16 @@ namespace X_Guide.MVVM.ViewModel
 
         public NinePointCalibrationViewModel(ICalibrationService calibrationService, IMessenger messenger)
         {
+            NinePointState.CollectionChanged += NinePointState_CollectionChanged;
             _calibrationService = calibrationService;
             _messenger = messenger;
             _messenger.Register(this);
             NextCommand = new RelayCommand(Continue9Point, (o) => CanNext);
+        }
+
+        private void NinePointState_CollectionChanged(object sender, System.Collections.Specialized.NotifyCollectionChangedEventArgs e)
+        {
+            CurrentPosition = e.NewStartingIndex;
         }
 
         public async Task<Point[]> LookingDownward9PointVision()
@@ -37,7 +45,9 @@ namespace X_Guide.MVVM.ViewModel
 
         public async Task<Point[]> LookingDownward9PointManipulator()
         {
-            return await _calibrationService.LookingDownward9Point(BlockingCall, Provider.Manipulator);
+            var point = await _calibrationService.LookingDownward9Point(BlockingCall, Provider.Manipulator);
+            NinePointState[NinePointState.Count - 1] = true;
+            return point;
         }
 
         private void Continue9Point(object arg)
@@ -80,6 +90,7 @@ namespace X_Guide.MVVM.ViewModel
         public override void Dispose()
         {
             _messenger.UnregisterAll(this);
+            NinePointState.CollectionChanged -= NinePointState_CollectionChanged;
             base.Dispose();
         }
     }

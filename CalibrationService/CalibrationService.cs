@@ -110,7 +110,6 @@ namespace CalibrationProvider
         public async Task<Point[]> LookingDownward9Point(Func<int, Task> BlockingCall, Provider provider)
         {
             Point[] Points = new Point[9];
-            AsyncRequestMessage<Point?> message = new AsyncRequestMessage<Point?>();
 
             for (int i = 0; i < 9; i++)
             {
