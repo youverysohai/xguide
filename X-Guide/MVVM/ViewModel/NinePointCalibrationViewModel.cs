@@ -64,7 +64,9 @@ namespace X_Guide.MVVM.ViewModel
 
         public async Task<Point[]> LookingDownward9PointVision()
         {
-            return await _calibrationService.LookingDownward9Point(BlockingCall, Provider.Vision);
+            var point = await _calibrationService.LookingDownward9Point(BlockingCall, Provider.Vision);
+            NinePointState[NinePointState.Count - 1] = true;
+            return point;
         }
 
         public async Task<Point[]> LookingDownward9PointManipulator()

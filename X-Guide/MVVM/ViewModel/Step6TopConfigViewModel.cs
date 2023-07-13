@@ -1,44 +1,72 @@
-﻿using CalibrationProvider;
+﻿using AutoMapper;
+using CalibrationProvider;
 using CommunityToolkit.Mvvm.Input;
 using CommunityToolkit.Mvvm.Messaging;
 using System;
-using System.Diagnostics;
+using System.Linq;
+using System.Runtime.Versioning;
 using System.Threading.Tasks;
-using Point = VisionGuided.Point;
+using X_Guide.MVVM.ViewModel.CalibrationWizardSteps;
+using XGuideSQLiteDB;
+using XGuideSQLiteDB.Models;
 
 namespace X_Guide.MVVM.ViewModel
 {
+    [SupportedOSPlatform("windows")]
     internal class Step6TopConfigViewModel : ViewModelBase
     {
         public NinePointCalibrationViewModel NinePoint { get; }
 
+        private readonly IMapper _mapper;
         private readonly IMessenger _messenger;
+        public CalibrationViewModel Calibration { get; }
 
-        public RelayCommand StartVisionCalibration { get; private set; }
+
+        public RelayCommand StartVision9PointCommand { get; private set; }
         private readonly ICalibrationService _calibrationService;
-        public RelayCommand VisionCalibrationStartCommand { get; set; }
+        public RelayCommand StartCalibrationCommand { get; set; }
 
-        public Step6TopConfigViewModel(ICalibrationService calibrationService, NinePointCalibrationViewModel ninePoint, IMessenger messenger)
+        public RelayCommand SaveCalibrationCommand { get; set; }
+
+        private readonly IRepository _repository;
+
+        public Step6TopConfigViewModel(ICalibrationService calibrationService, NinePointCalibrationViewModel ninePoint, IMessenger messenger, CalibrationViewModel calibration, IRepository repository, IMapper mapper)
         {
-            StartVisionCalibration = new RelayCommand(VisionCalib);
+            StartVision9PointCommand = new RelayCommand(StartVision9Point);
+            StartCalibrationCommand = new RelayCommand(StartCalibration);
+            SaveCalibrationCommand = new RelayCommand(SaveCalibration);
+            _repository = repository;
             NinePoint = ninePoint;
+            _mapper = mapper;
             _messenger = messenger;
+            Calibration = calibration;
             _calibrationService = calibrationService;
-            VisionCalibrationStartCommand = new RelayCommand(StartVision9Point);
         }
 
-        private async void VisionCalib()
+        private void SaveCalibration()
         {
-            Point[] points = await _messenger.Send(new NinePointData(DataType.Vision));
-            foreach (var point in points)
+            Calibration calibration = _repository.Find<Calibration>(q => q.Id.Equals(Calibration.Id)).FirstOrDefault();
+
+            if (calibration is null)
             {
-                Debug.WriteLine(point);
+                _repository.Create(_mapper.Map<Calibration>(Calibration));
+                //_notifier.ShowSuccess(StrRetriver.Get("SC000"));
+            }
+            else
+            {
+                _repository.Update(_mapper.Map<Calibration>(Calibration));
+                //_notifier.ShowSuccess($"{Calibration.Name} : {StrRetriver.Get("SC001")}");
             }
         }
 
-        private void StartVision9Point()
+        private async void StartVision9Point()
         {
-            _calibrationService.LookingDownward9PointVision(BlockingCall);
+            Calibration.VisionPoints = await NinePoint.LookingDownward9PointVision();
+        }
+
+        private void StartCalibration()
+        {
+            _calibrationService.LookingDownward2D_Calibrate(Calibration.VisionPoints, Calibration.RobotPoints);
         }
 
         private Task BlockingCall(int arg)

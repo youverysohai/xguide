@@ -82,11 +82,12 @@ namespace X_Guide.MVVM.ViewModel
 
         public event EventHandler OnCalibrationChanged;
 
-        public Step6ViewModel(IServerTcp serverService, CalibrationViewModel calibrationConfig, IRepository repository, ICalibrationService calibService, IMapper mapper, Notifier notifier, IVisionService visionService, IMessenger messenger, NinePointCalibrationViewModel ninePoint, IVisionViewModel visionView = null)
+        public Step6ViewModel(IServerTcp serverService, CalibrationViewModel calibration, IRepository repository, ICalibrationService calibService, IMapper mapper, Notifier notifier, IVisionService visionService, IMessenger messenger, NinePointCalibrationViewModel ninePoint, IVisionViewModel visionView = null)
         {
-            Mock = new Step6TopConfigViewModel(calibService, ninePoint, messenger);
+            calibration.CalibrationData = new CalibrationData { Y = 7969 };
+            Mock = new Step6TopConfigViewModel(calibService, ninePoint, messenger, calibration, repository, mapper);
             _serverService = serverService;
-            Calibration = calibrationConfig;
+            Calibration = calibration;
             _repository = repository;
             _calibService = calibService;
             _calibService.SetMotionDelay(Calibration.MotionDelay);
@@ -95,7 +96,7 @@ namespace X_Guide.MVVM.ViewModel
             _visionService = visionService;
             VisionView = visionView;
             _messenger = messenger;
-            VisionView.SetConfig(calibrationConfig);
+            VisionView.SetConfig(calibration);
             TestingCommand = new RelayCommand(Testing);
             CalibrateCommand = RelayCommand.FromAsyncRelayCommand(Calibrate);
             SaveCommand = RelayCommand.FromAsyncRelayCommand(Save);
@@ -121,10 +122,7 @@ namespace X_Guide.MVVM.ViewModel
         {
             if (NewCalibration != null)
             {
-                Calibration.CXOffset = NewCalibration.CXOffset;
-                Calibration.CYOffset = NewCalibration.CYOffset;
-                Calibration.CRZOffset = NewCalibration.CRZOffset;
-                Calibration.Mm_per_pixel = NewCalibration.Mm_per_pixel;
+                Calibration.CalibrationData = NewCalibration.CalibrationData;
             }
         }
 
@@ -140,10 +138,7 @@ namespace X_Guide.MVVM.ViewModel
             int XOffset = Calibration.XOffset;
             int YOffset = Calibration.YOffset;
             CalibrationData calibrationData = await _calibService.EyeInHand2D_Calibrate(XOffset, YOffset, (int)Calibration.JointRotationAngle);
-            Calibration.CXOffset = calibrationData.X;
-            Calibration.CYOffset = calibrationData.Y;
-            Calibration.CRZOffset = calibrationData.Rz;
-            Calibration.Mm_per_pixel = calibrationData.mm_per_pixel;
+            Calibration.CalibrationData = calibrationData;
             IsCalibrationCompleted = true;
         }
 

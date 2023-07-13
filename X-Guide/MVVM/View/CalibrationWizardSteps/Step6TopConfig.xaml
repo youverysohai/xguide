@@ -14,9 +14,10 @@
         </Grid.ColumnDefinitions>
         <!--<ContentControl Grid.Column="0" Content="{Binding VisionView}">
         </ContentControl>-->
-        <custLayout:CalibrationResultLayout Grid.Column="1" Margin="10 0" />
+        <custLayout:CalibrationResultLayout CalibrationData="{Binding Calibration.CalibrationData}" Grid.Column="1" Margin="10 0" SaveCalibrationCommand="{Binding SaveCalibrationCommand}" />
 
         <ContentControl Content="{Binding NinePoint}" Width="500"></ContentControl>
-        <Button Command="{Binding StartVisionCalibration}" VerticalAlignment="Bottom">Start!!!</Button>
+        <Button Command="{Binding StartVision9PointCommand}" VerticalAlignment="Bottom">Start 9 Point!!!</Button>
+        <Button Command="{Binding StartCalibrationCommand}" VerticalAlignment="Bottom" HorizontalAlignment="Right">Start Calib</Button>
     </Grid>
 </UserControl>

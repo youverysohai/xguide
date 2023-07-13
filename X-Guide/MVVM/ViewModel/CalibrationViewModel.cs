@@ -1,4 +1,6 @@
-﻿using X_Guide.Enums;
+﻿using CalibrationProvider;
+using X_Guide.Enums;
+using Point = VisionGuided.Point;
 
 namespace X_Guide.MVVM.ViewModel.CalibrationWizardSteps
 {
@@ -13,14 +15,14 @@ namespace X_Guide.MVVM.ViewModel.CalibrationWizardSteps
         public int XOffset { get; set; }
         public int YOffset { get; set; }
         public double JointRotationAngle { get; set; }
-        public double CXOffset { get; set; }
-        public double CYOffset { get; set; }
-        public double CRZOffset { get; set; }
         public double Speed { get; set; }
         public double Acceleration { get; set; }
         public int MotionDelay { get; set; }
-        public double Mm_per_pixel { get; set; }
         public string Procedure { get; set; }
+        public CalibrationData CalibrationData { get; set; }
+
+        public Point[] VisionPoints { get; set; }
+        public Point[] RobotPoints { get; set; }
 
         public int XMove { get; set; }
         public int YMove { get; set; }
@@ -40,13 +42,9 @@ namespace X_Guide.MVVM.ViewModel.CalibrationWizardSteps
             XOffset = 0;
             YOffset = 0;
             JointRotationAngle = 0.0;
-            CXOffset = 0.0;
-            CYOffset = 0.0;
-            CRZOffset = 0.0;
             Speed = 0.0;
             Acceleration = 0.0;
             MotionDelay = 0;
-            Mm_per_pixel = 0.0;
             Procedure = null;
             XMove = 0;
             YMove = 0;

@@ -1,25 +1,37 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using CalibrationProvider;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
 using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
 
 namespace X_Guide.CustomControls.Layouts
 {
     /// <summary>
     /// Interaction logic for CalibrationResultLayout.xaml
     /// </summary>
+    ///
+
     public partial class CalibrationResultLayout : UserControl
     {
+        public ICommand SaveCalibrationCommand
+        {
+            get { return (ICommand)GetValue(SaveCalibrationCommandProperty); }
+            set { SetValue(SaveCalibrationCommandProperty, value); }
+        }
+
+        // Using a DependencyProperty as the backing store for SaveCalibrationCommand.  This enables animation, styling, binding, etc...
+        public static readonly DependencyProperty SaveCalibrationCommandProperty =
+            DependencyProperty.Register("SaveCalibrationCommand", typeof(ICommand), typeof(CalibrationResultLayout), new PropertyMetadata(null));
+
+        public CalibrationData CalibrationData
+        {
+            get { return (CalibrationData)GetValue(CalibrationProperty); }
+            set { SetValue(CalibrationProperty, value); }
+        }
+
+        // Using a DependencyProperty as the backing store for MyProperty.  This enables animation, styling, binding, etc...
+        public static readonly DependencyProperty CalibrationProperty =
+            DependencyProperty.Register("CalibrationData", typeof(CalibrationData), typeof(CalibrationResultLayout), new PropertyMetadata(null));
+
         public CalibrationResultLayout()
         {
             InitializeComponent();
