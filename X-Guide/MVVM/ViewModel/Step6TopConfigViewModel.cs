@@ -6,6 +6,7 @@ using System;
 using System.Linq;
 using System.Runtime.Versioning;
 using System.Threading.Tasks;
+using System.Windows.Media.Animation;
 using X_Guide.MVVM.ViewModel.CalibrationWizardSteps;
 using XGuideSQLiteDB;
 using XGuideSQLiteDB.Models;
@@ -61,12 +62,13 @@ namespace X_Guide.MVVM.ViewModel
 
         private async void StartVision9Point()
         {
-            Calibration.VisionPoints = await NinePoint.LookingDownward9PointVision();
+            var i = await NinePoint.LookingDownward9PointVision();
+            Calibration.VisionPoints = i;
         }
 
-        private void StartCalibration()
+        private async void StartCalibration()
         {
-            _calibrationService.LookingDownward2D_Calibrate(Calibration.VisionPoints, Calibration.RobotPoints);
+            Calibration.CalibrationData = await _calibrationService.LookingDownward2D_Calibrate(Calibration.VisionPoints, Calibration.RobotPoints);
         }
 
         private Task BlockingCall(int arg)

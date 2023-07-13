@@ -35,7 +35,7 @@ namespace X_Guide.MVVM.View.CalibrationWizardSteps
         }
         private async void DisplayNewCalibrationDialog()
         {
-            await NewCalibrationDialog.ShowAsync();
+            //await NewCalibrationDialog.ShowAsync();
         }
         
         private void ViewModel_PropertyChanged(object sender, PropertyChangedEventArgs e)

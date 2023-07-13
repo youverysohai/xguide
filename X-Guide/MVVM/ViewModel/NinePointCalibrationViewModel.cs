@@ -66,6 +66,8 @@ namespace X_Guide.MVVM.ViewModel
         {
             var point = await _calibrationService.LookingDownward9Point(BlockingCall, Provider.Vision);
             NinePointState[NinePointState.Count - 1] = true;
+            UpdateBorderItemNinePointState(NinePointState.Count - 1);
+
             return point;
         }
 
