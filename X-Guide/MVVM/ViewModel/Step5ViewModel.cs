@@ -93,12 +93,11 @@ namespace X_Guide.MVVM.ViewModel
 
         public RelayCommand StartJogTrackingCommand { get; }
 
-        public Step5ViewModel(CalibrationViewModel calibrationConfig, IServerTcp serverService, IVisionService visionService, IJogService jogService, StateViewModel appState, IMessenger messenger, ICalibrationService calibrationService, JogControllerViewModel controller, NinePointCalibrationViewModel ninePoint, IVisionViewModel visionView = null)
+        public Step5ViewModel(CalibrationViewModel calibration, IServerTcp serverService, IVisionService visionService, IJogService jogService, StateViewModel appState, IMessenger messenger, ICalibrationService calibrationService, JogControllerViewModel controller, NinePointCalibrationViewModel ninePoint, IVisionViewModel visionView = null)
         {
-            controller.Calibration = calibrationConfig;
-            Step5CalibrationModule = new Step5TopConfigViewModel(controller, calibrationService, ninePoint, messenger);
+            Step5CalibrationModule = new Step5TopConfigViewModel(controller, calibrationService, ninePoint, messenger, calibration);
 
-            JogImplementation = new JogImplementationViewModel(calibrationConfig, jogService);
+            JogImplementation = new JogImplementationViewModel(calibration, jogService);
             _serverService = serverService;
             _visionService = visionService;
             _calibrationService = calibrationService;

@@ -17,7 +17,8 @@ namespace XGuideSQLiteDB
             //TODO: Fix database append issue
             using (XGuideDbContext db = new XGuideDbContext())
             {
-                db.Set<T>().Add(entity);
+                db.ChangeTracker.TrackGraph(entity, node => node.Entry.State = !node.Entry.IsKeySet ? EntityState.Added : EntityState.Unchanged);
+                //db.Set<T>().Add(entity);
                 await db.SaveChangesAsync();
             }
         }
