@@ -24,6 +24,6 @@
 
         <ContentControl Content="{Binding NinePoint}" />
         <ContentControl Grid.Column="1" Content="{Binding JogController}" />
-        <Button Command="{Binding StartCommand}" Content="Test" />
+        <Button VerticalAlignment="Bottom" Command="{Binding StartCommand}" Content="Start" />
     </Grid>
 </UserControl>

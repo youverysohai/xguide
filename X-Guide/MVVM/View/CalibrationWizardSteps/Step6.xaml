@@ -42,11 +42,7 @@
         </DataTemplate>
     </UserControl.Resources>
 
-    <Grid>
-        <Grid.RowDefinitions>
-            <RowDefinition />
-        </Grid.RowDefinitions>
-        <ui:ContentDialog Grid.Row="0"   x:Name="NewCalibrationDialog" IsShadowEnabled="True"
+        <!--<ui:ContentDialog Grid.Row="0"   x:Name="NewCalibrationDialog" IsShadowEnabled="True"
                           CloseButtonText="Cancel" CloseButtonStyle="{DynamicResource DateTimePickerFlyoutButtonStyle}" PrimaryButtonText="Confirm" DefaultButton="Primary" Title="New Calibration Results">
 
             <ui:SimpleStackPanel Orientation="Vertical">
@@ -101,18 +97,15 @@
                     </Grid>
                 </Border>
             </ui:SimpleStackPanel>
-        </ui:ContentDialog>
+        </ui:ContentDialog>-->
 
-        <!--Live Processed Image-->
-        <hc:ScrollViewer Grid.Row="0">
-            <hc:FlexPanel JustifyContent="SpaceAround" AlignContent="Center" FlexDirection="Row">
-                <ContentControl   Content ="{Binding Mock}">
-                </ContentControl>
-            </hc:FlexPanel>
+
+           
+            <ContentControl   Content ="{Binding Mock}">
+            </ContentControl>
             <!--<XCust:CustomRenderControl hc:FlexPanel.FlexBasis="640" Height="480" Procedure="{Binding VisProcedure}"></XCust:CustomRenderControl>-->
 
             <!--<XCust:HalconSmartControl Width="640" Height="480" Image="{Binding LiveImage}" Point="{Binding OutputImageParameter}" />
                     <XCust:HalconSmartControl Width="648" Height="488" Image="{Binding OutputImage}" />-->
-        </hc:ScrollViewer>
-    </Grid>
+
 </UserControl>
