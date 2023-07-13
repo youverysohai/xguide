@@ -1,5 +1,4 @@
 ﻿using CalibrationProvider;
-using CommunityToolkit.Mvvm.Input;
 using CommunityToolkit.Mvvm.Messaging;
 using CommunityToolkit.Mvvm.Messaging.Messages;
 using System.Collections.ObjectModel;
@@ -7,6 +6,7 @@ using System.Runtime.Versioning;
 using System.Threading;
 using System.Threading.Tasks;
 using Point = VisionGuided.Point;
+using RelayCommand = X_Guide.MVVM.Command.RelayCommand;
 
 namespace X_Guide.MVVM.ViewModel
 {
@@ -19,6 +19,7 @@ namespace X_Guide.MVVM.ViewModel
         public ObservableCollection<bool> NinePointState { get; set; } = new ObservableCollection<bool>(new bool[9]);
         private SemaphoreSlim _semaphore;
 
+        public bool CanNext { get; set; } = true;
         public RelayCommand NextCommand { get; set; }
 
         public NinePointCalibrationViewModel(ICalibrationService calibrationService, IMessenger messenger)
@@ -26,12 +27,28 @@ namespace X_Guide.MVVM.ViewModel
             _calibrationService = calibrationService;
             _messenger = messenger;
             _messenger.Register(this);
-            NextCommand = new RelayCommand(Continue9Point);
+            NextCommand = new RelayCommand(Continue9Point, (o) => CanNext);
         }
 
-        private void Continue9Point()
+        public async Task<Point[]> LookingDownward9PointVision()
         {
-            _semaphore.Release();
+            return await _calibrationService.LookingDownward9Point(BlockingCall, Provider.Vision);
+        }
+
+        public async Task<Point[]> LookingDownward9PointManipulator()
+        {
+            return await _calibrationService.LookingDownward9Point(BlockingCall, Provider.Manipulator);
+        }
+
+        private void Continue9Point(object arg)
+        {
+            try
+            {
+                _semaphore.Release();
+            }
+            catch
+            {
+            }
         }
 
         public void Receive(NinePointData message)
@@ -47,10 +64,17 @@ namespace X_Guide.MVVM.ViewModel
 
         private async Task BlockingCall(int arg)
         {
+            CanNext = true;
+            if (arg != 0) NinePointState[arg - 1] = true;
+            NextCommand.OnCanExecuteChanged();
+
             using (_semaphore = new SemaphoreSlim(0))
             {
                 await _semaphore.WaitAsync();
             }
+
+            CanNext = false;
+            NextCommand.OnCanExecuteChanged();
         }
 
         public override void Dispose()

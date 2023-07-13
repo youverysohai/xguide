@@ -11,6 +11,7 @@
         xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
         xmlns:c="clr-namespace:X_Guide.Converter"
     xmlns:xCust="clr-namespace:X_Guide.CustomControls"
+         xmlns:xCustLayout="clr-namespace:X_Guide.CustomControls.Layouts"
         mc:Ignorable="d"
         Title="X-Guide"
         Height="720" Width="1280"
@@ -222,10 +223,10 @@
                                 <views:LiveCameraView />
                             </DataTemplate>
                             <DataTemplate DataType="{x:Type vms:JogControllerViewModel}">
-                                <xCust:JogControllersLayout />
+                                <xCustLayout:JogControllersLayout />
                             </DataTemplate>
                             <DataTemplate DataType="{x:Type vms:NinePointCalibrationViewModel}">
-                                <xCust:NineBoxCalibLayout></xCust:NineBoxCalibLayout>
+                                <xCustLayout:NineBoxCalibLayout></xCustLayout:NineBoxCalibLayout>
                             </DataTemplate>
                         </Grid.Resources>
                         <Grid.RowDefinitions>

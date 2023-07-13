@@ -35,13 +35,11 @@ namespace X_Guide.MVVM.ViewModel
 
         private async void Start9Point()
         {
-
-            Point[] points = await _messenger.Send(new NinePointData(DataType.Manipulator));
+            Point[] points = await NinePoint.LookingDownward9PointManipulator();
             foreach (var point in points)
             {
                 Debug.WriteLine(point);
             }
-
         }
     }
 }

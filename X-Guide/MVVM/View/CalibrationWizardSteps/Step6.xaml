@@ -5,6 +5,7 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:local="clr-namespace:X_Guide.MVVM.View.CalibrationWizardSteps"
              xmlns:views="clr-namespace:X_Guide.MVVM.View"
+             xmlns:vms="clr-namespace:X_Guide.MVVM.ViewModel"
              xmlns:XCust="clr-namespace:X_Guide.CustomControls"
              xmlns:gif="https://github.com/XamlAnimatedGif/XamlAnimatedGif"
              xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
@@ -36,6 +37,9 @@
             <Setter Property="FontSize" Value="11" />
         </Style>
         <ext:TemplateSelector x:Key="MyTemplateSelector" />
+        <DataTemplate DataType="{x:Type vms:Step6TopConfigViewModel}">
+            <local:Step6TopConfig />
+        </DataTemplate>
     </UserControl.Resources>
 
     <Grid>
@@ -102,21 +106,13 @@
         <!--Live Processed Image-->
         <hc:ScrollViewer Grid.Row="0">
 
-            <view:Step6TopConfig/>
-            <!--<ContentControl hc:FlexPanel.FlexBasis="1000" Height="700" Content ="{Binding Mock}" ContentTemplateSelector="{StaticResource MyTemplateSelector}">
-                <ContentControl.Resources>
-                    <DataTemplate x:Key="TopConfigView">
-                        
-                        <view:Step6TopConfig />
-                    </DataTemplate>
-                </ContentControl.Resources>
-            </ContentControl>-->
-            
-                <!--<XCust:CustomRenderControl hc:FlexPanel.FlexBasis="640" Height="480" Procedure="{Binding VisProcedure}"></XCust:CustomRenderControl>-->
+            <ContentControl hc:FlexPanel.FlexBasis="1000" Height="700" Content ="{Binding Mock}">
+            </ContentControl>
 
-                <!--<XCust:HalconSmartControl Width="640" Height="480" Image="{Binding LiveImage}" Point="{Binding OutputImageParameter}" />
+            <!--<XCust:CustomRenderControl hc:FlexPanel.FlexBasis="640" Height="480" Procedure="{Binding VisProcedure}"></XCust:CustomRenderControl>-->
+
+            <!--<XCust:HalconSmartControl Width="640" Height="480" Image="{Binding LiveImage}" Point="{Binding OutputImageParameter}" />
                     <XCust:HalconSmartControl Width="648" Height="488" Image="{Binding OutputImage}" />-->
-
         </hc:ScrollViewer>
     </Grid>
 </UserControl>

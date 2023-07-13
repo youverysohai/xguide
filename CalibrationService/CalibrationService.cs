@@ -7,6 +7,12 @@ using Point = VisionGuided.Point;
 
 namespace CalibrationProvider
 {
+    public enum Provider
+    {
+        Vision,
+        Manipulator
+    }
+
     public class CalibrationService : ICalibrationService
     {
         private readonly ManualResetEventSlim _manualResetEvent;
@@ -101,7 +107,28 @@ namespace CalibrationProvider
             return VisionPoints;
         }
 
-        public async Task<Point[]> LookingDownward9PointManipulator(Func<int, Task> BlockingCall)
+        public async Task<Point[]> LookingDownward9Point(Func<int, Task> BlockingCall, Provider provider)
+        {
+            Point[] Points = new Point[9];
+            AsyncRequestMessage<Point?> message = new AsyncRequestMessage<Point?>();
+
+            for (int i = 0; i < 9; i++)
+            {
+                await BlockingCall.Invoke(i);
+                Point? point = default;
+                switch (provider)
+                {
+                    case Provider.Vision: point = await _messenger.Send<VisionCenterRequest>(); break;
+                    case Provider.Manipulator: point = await _messenger.Send(new ManipulatorTcpRequest(Mode.GLOBAL)); break;
+                }
+
+                if (point is null) throw new Exception();
+                Points[i] = point;
+            }
+            return Points;
+        }
+
+        public async Task<Point[]> LookingDownward9Point(Func<int, Task> BlockingCall)
         {
             Point[] RobotPoints = new Point[9];
 
@@ -156,6 +183,11 @@ namespace CalibrationProvider
         }
 
         public Task<(Point[], Point[])> TopConfig9PointVision(Func<int, Task> action)
+        {
+            throw new NotImplementedException();
+        }
+
+        public Task<Point[]> LookingDownward9PointManipulator(Func<int, Task> BlockingCall)
         {
             throw new NotImplementedException();
         }

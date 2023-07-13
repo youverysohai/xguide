@@ -3,7 +3,6 @@
 using AutoMapper;
 using CalibrationProvider;
 using CommunityToolkit.Mvvm.Messaging;
-using ManipulatorTcp;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -26,20 +25,17 @@ namespace X_Guide.MVVM.ViewModel
     {
         public CalibrationViewModel Calibration { get; }
 
-
         public MockViewModel(CalibrationViewModel calibration)
         {
             Calibration = calibration;
-
         }
-
-
     }
+
     //TODO: Add tooltip to inform what X and Y Offset is
     [SupportedOSPlatform("windows")]
     internal class Step6ViewModel : ViewModelBase
     {
-        public MockViewModel Mock { get; set; }
+        public object Mock { get; set; }
         public CalibrationViewModel Calibration { get; set; }
         public CalibrationViewModel NewCalibration { get; set; }
         public JogImplementationViewModel JogImplementation { get; set; }
@@ -86,9 +82,9 @@ namespace X_Guide.MVVM.ViewModel
 
         public event EventHandler OnCalibrationChanged;
 
-        public Step6ViewModel(IServerTcp serverService, CalibrationViewModel calibrationConfig, IRepository repository, ICalibrationService calibService, IMapper mapper, Notifier notifier, IVisionService visionService, IMessenger messenger, IVisionViewModel visionView = null)
+        public Step6ViewModel(IServerTcp serverService, CalibrationViewModel calibrationConfig, IRepository repository, ICalibrationService calibService, IMapper mapper, Notifier notifier, IVisionService visionService, IMessenger messenger, NinePointCalibrationViewModel ninePoint, IVisionViewModel visionView = null)
         {
-            Mock = new MockViewModel(calibrationConfig);
+            Mock = new Step6TopConfigViewModel(calibService, ninePoint, messenger);
             _serverService = serverService;
             Calibration = calibrationConfig;
             _repository = repository;
