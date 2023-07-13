@@ -57,7 +57,7 @@
 
     <ScrollViewer HorizontalScrollBarVisibility="Auto">
 
-        <hc:FlexPanel Margin="0 20 0 0" JustifyContent="SpaceAround" AlignContent="Center" FlexDirection="Row">
+        <hc:FlexPanel JustifyContent="SpaceAround" AlignContent="Center" FlexDirection="Row">
 
             <!--VM Camara-->
 

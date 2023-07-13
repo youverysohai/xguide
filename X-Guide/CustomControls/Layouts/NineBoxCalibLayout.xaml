@@ -6,6 +6,7 @@
              xmlns:local="clr-namespace:X_Guide.CustomControls" xmlns:i="http://schemas.microsoft.com/xaml/behaviors" xmlns:ui="http://schemas.modernwpf.com/2019"
              xmlns:enums="clr-namespace:X_Guide.Enums"
              mc:Ignorable="d"
+             xmlns:c="clr-namespace:X_Guide.Converter"
              d:DesignHeight="450" d:DesignWidth="800"
              x:Name="NBoxCalibLayout">
     <UserControl.Resources>
@@ -13,9 +14,16 @@
             <Setter Property="HorizontalAlignment" Value="Center" />
             <Setter Property="VerticalAlignment" Value="Center" />
         </Style>
-        <Style TargetType="Border">
-            <Setter Property="BorderThickness" Value="2"/>
+        <Style x:Key="BorderStyle" TargetType="Border">
+            <Setter Property="BorderBrush" Value="{DynamicResource PrimaryBlueColor}" />
+            <Setter Property="Margin" Value="10" />
+            <Style.Triggers>
+                <DataTrigger Binding="{Binding NinePointState}" Value="True">
+                    <Setter Property="Background" Value="{DynamicResource PrimaryBlueColor}" />
+                </DataTrigger>
+            </Style.Triggers>
         </Style>
+        <c:IndexToGridConverter x:Key="IndexToGridConverter"/>
     </UserControl.Resources>
 
     <GroupBox  Grid.Column="1" Visibility="Visible" Grid.Row="2" Style="{StaticResource GroupBoxTab}" MinHeight="210">
@@ -25,7 +33,7 @@
             </i:DataTrigger>
         </i:Interaction.Triggers>
         <GroupBox.Header>
-            <TextBlock Text="{Binding ElementName=NBoxCalibLayout, Path=Header}" Style="{StaticResource SubtitleTextBlockStyle}"  HorizontalAlignment="Center" VerticalAlignment="Center" />
+            <TextBlock Text="Top Config Calibration" Style="{StaticResource SubtitleTextBlockStyle}"  HorizontalAlignment="Center" VerticalAlignment="Center" />
         </GroupBox.Header>
         <Grid>
             <Grid.RowDefinitions>
@@ -33,93 +41,47 @@
                 <RowDefinition Height="auto" />
                 <RowDefinition Height="auto" />
             </Grid.RowDefinitions>
-            <Grid Grid.Row="0">
-                <Grid.RowDefinitions>
-                    <RowDefinition Height="*" />
-                    <RowDefinition Height="*" />
-                    <RowDefinition Height="*" />
-                </Grid.RowDefinitions>
-                <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="*"/>
-                    <ColumnDefinition Width="*"/>
-                    <ColumnDefinition Width="*"/>
-                </Grid.ColumnDefinitions>
-                <Border BorderBrush="{DynamicResource PrimaryBlueColor}" Grid.Row="0" Grid.Column="0">
-                    <i:Interaction.Triggers>
-                        <i:DataTrigger Binding="{Binding NinePointState[0]}" Value="True">
-                            <i:ChangePropertyAction PropertyName="Background" Value="{DynamicResource PrimaryBlueColor}"></i:ChangePropertyAction>
-                        </i:DataTrigger>
-                    </i:Interaction.Triggers>
-                    <ui:SimpleStackPanel Orientation="Vertical" VerticalAlignment="Center">
-                        <ui:FontIcon Glyph="&#xEDFB;" Foreground="{DynamicResource PrimaryBlueColor}"/>
-                        <TextBlock Text="1" />
-                    </ui:SimpleStackPanel>
-                </Border>
-                <Border BorderBrush="{DynamicResource PrimaryBlueColor}"  Grid.Row="0" Grid.Column="1">
-                    <i:Interaction.Triggers>
-                        <i:DataTrigger Binding="{Binding NinePointState[1]}" Value="True">
-                            <i:ChangePropertyAction PropertyName="Background" Value="{DynamicResource PrimaryBlueColor}"></i:ChangePropertyAction>
-                        </i:DataTrigger>
-                    </i:Interaction.Triggers>
-                    <TextBlock Text="2" />
-                </Border>
-                <Border BorderBrush="{DynamicResource PrimaryBlueColor}"  Grid.Row="0" Grid.Column="2">
-                    <i:Interaction.Triggers>
-                        <i:DataTrigger Binding="{Binding NinePointState[2]}" Value="True">
-                            <i:ChangePropertyAction PropertyName="Background" Value="{DynamicResource PrimaryBlueColor}"></i:ChangePropertyAction>
-                        </i:DataTrigger>
-                    </i:Interaction.Triggers>
-                    <TextBlock Text="3" />
-                </Border>
-                <Border BorderBrush="{DynamicResource PrimaryBlueColor}" Grid.Row="1" Grid.Column="0">
-                    <i:Interaction.Triggers>
-                        <i:DataTrigger Binding="{Binding NinePointState[3]}" Value="True">
-                            <i:ChangePropertyAction PropertyName="Background" Value="{DynamicResource PrimaryBlueColor}"></i:ChangePropertyAction>
-                        </i:DataTrigger>
-                    </i:Interaction.Triggers>
-                    <TextBlock Text="4" />
-                </Border>
-                <Border BorderBrush="{DynamicResource PrimaryBlueColor}" Grid.Row="1" Grid.Column="1">
-                    <i:Interaction.Triggers>
-                        <i:DataTrigger Binding="{Binding NinePointState[4]}" Value="True">
-                            <i:ChangePropertyAction PropertyName="Background" Value="{DynamicResource PrimaryBlueColor}"></i:ChangePropertyAction>
-                        </i:DataTrigger>
-                    </i:Interaction.Triggers>
-                    <TextBlock Text="5" />
-                </Border>
-                <Border BorderBrush="{DynamicResource PrimaryBlueColor}" Grid.Row="1" Grid.Column="2">
-                    <i:Interaction.Triggers>
-                        <i:DataTrigger Binding="{Binding NinePointState[5]}" Value="True">
-                            <i:ChangePropertyAction PropertyName="Background" Value="{DynamicResource PrimaryBlueColor}"></i:ChangePropertyAction>
-                        </i:DataTrigger>
-                    </i:Interaction.Triggers>
-                    <TextBlock Text="6" />
-                </Border>
-                <Border BorderBrush="{DynamicResource PrimaryBlueColor}" Grid.Row="2" Grid.Column="0">
-                    <i:Interaction.Triggers>
-                        <i:DataTrigger Binding="{Binding NinePointState[6]}" Value="True">
-                            <i:ChangePropertyAction PropertyName="Background" Value="{DynamicResource PrimaryBlueColor}"></i:ChangePropertyAction>
-                        </i:DataTrigger>
-                    </i:Interaction.Triggers>
-                    <TextBlock Text="7" />
-                </Border>
-                <Border BorderBrush="{DynamicResource PrimaryBlueColor}" Grid.Row="2" Grid.Column="1">
-                    <i:Interaction.Triggers>
-                        <i:DataTrigger Binding="{Binding NinePointState[7]}" Value="True">
-                            <i:ChangePropertyAction PropertyName="Background" Value="{DynamicResource PrimaryBlueColor}"></i:ChangePropertyAction>
-                        </i:DataTrigger>
-                    </i:Interaction.Triggers>
-                    <TextBlock Text="8" />
-                </Border>
-                <Border BorderBrush="{DynamicResource PrimaryBlueColor}" Grid.Row="2" Grid.Column="2">
-                    <i:Interaction.Triggers>
-                        <i:DataTrigger Binding="{Binding NinePointState[8]}" Value="True">
-                            <i:ChangePropertyAction PropertyName="Background" Value="{DynamicResource PrimaryBlueColor}"></i:ChangePropertyAction>
-                        </i:DataTrigger>
-                    </i:Interaction.Triggers>
-                    <TextBlock Text="9" />
-                </Border>
-            </Grid>
+            <ItemsControl ItemsSource="{Binding BorderItems}">
+                <ItemsControl.ItemsPanel>
+                    <ItemsPanelTemplate>
+                        <Grid Visibility="Visible">
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="*" />
+                                <RowDefinition Height="*" />
+                                <RowDefinition Height="*" />
+                            </Grid.RowDefinitions>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="*" />
+                                <ColumnDefinition Width="*" />
+                                <ColumnDefinition Width="*" />
+                            </Grid.ColumnDefinitions>
+                        </Grid>
+                    </ItemsPanelTemplate>
+                </ItemsControl.ItemsPanel>
+                <ItemsControl.ItemContainerStyle>
+                    <Style TargetType="ContentPresenter">
+                        <Setter Property="Grid.Row" Value="{Binding Row}" />
+                        <Setter Property="Grid.Column" Value="{Binding Column}" />
+                    </Style>
+                </ItemsControl.ItemContainerStyle>
+                <ItemsControl.ItemTemplate>
+                    <DataTemplate>
+                        <Border BorderBrush="{DynamicResource PrimaryBlueColor}" Margin="10">
+                            <Border.Style>
+                                <Style TargetType="Border">
+                                    <Style.Triggers>
+                                        <DataTrigger Binding="{Binding Status}" Value="True">
+                                            <Setter Property="Background" Value="{DynamicResource PrimaryBlueColor}" />
+                                            <Setter Property="CornerRadius" Value="20"/>
+                                        </DataTrigger>
+                                    </Style.Triggers>
+                                </Style>
+                            </Border.Style>
+                            <TextBlock Text="{Binding Text}" VerticalAlignment="Center" HorizontalAlignment="Center"/>
+                        </Border>
+                    </DataTemplate>
+                </ItemsControl.ItemTemplate>
+            </ItemsControl>
             <Label  Style="{DynamicResource DefaultLabelStyle}" Grid.Row="1" HorizontalAlignment="Center" Margin="0 5">
                 <Label.Content>
                     <ui:SimpleStackPanel Orientation="Horizontal">
@@ -131,7 +93,7 @@
                 </Label.Content>
             </Label>
             <ui:SimpleStackPanel Orientation="Horizontal" Grid.Row="2" HorizontalAlignment="Center">
-                <Button Content="Start" Margin="5" Command="{Binding ElementName=NBoxCalibLayout, Path=StartCommand}" />
+
                 <Button Content="Next" Command="{Binding NextCommand}" Margin="5" />
                 <Button Content="Cancel"  Margin="5" />
             </ui:SimpleStackPanel>

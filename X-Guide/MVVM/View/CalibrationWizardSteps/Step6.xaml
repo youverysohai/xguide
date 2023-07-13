@@ -105,10 +105,10 @@
 
         <!--Live Processed Image-->
         <hc:ScrollViewer Grid.Row="0">
-
-            <ContentControl hc:FlexPanel.FlexBasis="1000" Height="700" Content ="{Binding Mock}">
-            </ContentControl>
-
+            <hc:FlexPanel JustifyContent="SpaceAround" AlignContent="Center" FlexDirection="Row">
+                <ContentControl   Content ="{Binding Mock}">
+                </ContentControl>
+            </hc:FlexPanel>
             <!--<XCust:CustomRenderControl hc:FlexPanel.FlexBasis="640" Height="480" Procedure="{Binding VisProcedure}"></XCust:CustomRenderControl>-->
 
             <!--<XCust:HalconSmartControl Width="640" Height="480" Image="{Binding LiveImage}" Point="{Binding OutputImageParameter}" />

@@ -16,7 +16,7 @@
         </ContentControl>-->
         <custLayout:CalibrationResultLayout Grid.Column="1" Margin="10 0" />
 
-        <ContentControl Content="{Binding NinePoint}"></ContentControl>
+        <ContentControl Content="{Binding NinePoint}" Width="500"></ContentControl>
         <Button Command="{Binding StartVisionCalibration}" VerticalAlignment="Bottom">Start!!!</Button>
     </Grid>
 </UserControl>
