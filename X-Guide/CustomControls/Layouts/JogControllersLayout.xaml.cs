@@ -1,6 +1,6 @@
 ﻿using System.Windows.Controls;
 
-namespace X_Guide.CustomControls
+namespace X_Guide.CustomControls.Layouts
 {
     /// <summary>
     /// Interaction logic for JogControllersLayout.xaml

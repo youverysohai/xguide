@@ -13,6 +13,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using VM.Core;
 using X_Vision.Common.Models;
 using X_Vision.Event;
 
@@ -31,6 +32,12 @@ namespace X_Vision.Views
             {
                 MessageBox.Show($"Received: {arg}");
             });
+        }
+
+        private void Button_Click(object sender, RoutedEventArgs e)
+        {
+            VmSolution.Load("C:\\Users\\dumbchun\\source\\repos\\X-Guide\\pic.sol");
+            VmFrontEnd.LoadFrontendSource();
         }
     }
 }

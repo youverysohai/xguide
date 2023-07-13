@@ -14,8 +14,11 @@
              xmlns:ui="http://schemas.modernwpf.com/2019"
              xmlns:Release="clr-namespace:VMControls.WPF.Release;assembly=VMControls.WPF.Release"
              xmlns:i="http://schemas.microsoft.com/xaml/behaviors"
+             xmlns:ext="clr-namespace:X_Guide.Extension"
              xmlns:enums="clr-namespace:X_Guide.Enums"
              d:DesignHeight="800" d:DesignWidth="1200" d:Foreground="White"
+                xmlns:view="clr-namespace:X_Guide.MVVM.View.CalibrationWizardSteps"
+             xmlns:custLayout="clr-namespace:X_Guide.CustomControls.Layouts"
              x:Name="Step6View">
     <UserControl.Resources>
         <Style TargetType="Label" x:Key="OutputLabel" BasedOn="{StaticResource MaterialDesignLabel}">
@@ -32,6 +35,7 @@
             <Setter Property="VerticalAlignment" Value="Bottom" />
             <Setter Property="FontSize" Value="11" />
         </Style>
+        <ext:TemplateSelector x:Key="MyTemplateSelector" />
     </UserControl.Resources>
 
     <Grid>
@@ -98,171 +102,21 @@
         <!--Live Processed Image-->
         <hc:ScrollViewer Grid.Row="0">
 
-            <hc:FlexPanel JustifyContent="SpaceBetween" FlexWrap="Wrap">
-
+            <view:Step6TopConfig/>
+            <!--<ContentControl hc:FlexPanel.FlexBasis="1000" Height="700" Content ="{Binding Mock}" ContentTemplateSelector="{StaticResource MyTemplateSelector}">
+                <ContentControl.Resources>
+                    <DataTemplate x:Key="TopConfigView">
+                        
+                        <view:Step6TopConfig />
+                    </DataTemplate>
+                </ContentControl.Resources>
+            </ContentControl>-->
+            
                 <!--<XCust:CustomRenderControl hc:FlexPanel.FlexBasis="640" Height="480" Procedure="{Binding VisProcedure}"></XCust:CustomRenderControl>-->
 
-                <ContentControl Width="720" Height="500" Content="{Binding VisionView}">
-                </ContentControl>
                 <!--<XCust:HalconSmartControl Width="640" Height="480" Image="{Binding LiveImage}" Point="{Binding OutputImageParameter}" />
                     <XCust:HalconSmartControl Width="648" Height="488" Image="{Binding OutputImage}" />-->
-                <ui:SimpleStackPanel hc:FlexPanel.FlexBasis="300" Orientation="Vertical">
-                    <GroupBox Visibility="Visible" Style="{StaticResource GroupBoxTab}" MinHeight="210">
-                        <i:Interaction.Triggers>
-                            <i:DataTrigger Binding="{Binding DataContext.Calibration.Orientation,ElementName=Step6View}" Value="{x:Static enums:Orientation.LookDownward}">
-                                <i:ChangePropertyAction PropertyName="Visibility" Value="Visible" />
-                            </i:DataTrigger>
-                        </i:Interaction.Triggers>
-                        <GroupBox.Header>
-                            <TextBlock Text="Top Config Calibration" Style="{StaticResource SubtitleTextBlockStyle}"  HorizontalAlignment="Center" VerticalAlignment="Center" />
-                        </GroupBox.Header>
-                        <Grid>
-                            <Grid.RowDefinitions>
-                                <RowDefinition Height="*" />
-                                <RowDefinition Height="auto" />
-                            </Grid.RowDefinitions>
 
-                            <UniformGrid Rows="3" Columns="3">
-                                <Border BorderBrush="{DynamicResource PrimaryBlueColor}" Grid.Row="1" Grid.Column="1">
-                                    <i:Interaction.Triggers>
-                                        <i:DataTrigger Binding="{Binding NinePointState[0]}" Value="True">
-                                            <i:ChangePropertyAction PropertyName="Background" Value="{DynamicResource PrimaryBlueColor}"></i:ChangePropertyAction>
-                                        </i:DataTrigger>
-                                    </i:Interaction.Triggers>
-                                    <TextBlock Text="1" />
-                                </Border>
-                                <Border BorderBrush="{DynamicResource PrimaryBlueColor}">
-                                    <i:Interaction.Triggers>
-                                        <i:DataTrigger Binding="{Binding NinePointState[1]}" Value="True">
-                                            <i:ChangePropertyAction PropertyName="Background" Value="{DynamicResource PrimaryBlueColor}"></i:ChangePropertyAction>
-                                        </i:DataTrigger>
-                                    </i:Interaction.Triggers>
-                                    <TextBlock Text="2" />
-                                </Border>
-                                <Border BorderBrush="{DynamicResource PrimaryBlueColor}">
-                                    <i:Interaction.Triggers>
-                                        <i:DataTrigger Binding="{Binding NinePointState[2]}" Value="True">
-                                            <i:ChangePropertyAction PropertyName="Background" Value="{DynamicResource PrimaryBlueColor}"></i:ChangePropertyAction>
-                                        </i:DataTrigger>
-                                    </i:Interaction.Triggers>
-                                    <TextBlock Text="3" />
-                                </Border>
-                                <Border BorderBrush="{DynamicResource PrimaryBlueColor}">
-                                    <i:Interaction.Triggers>
-                                        <i:DataTrigger Binding="{Binding NinePointState[3]}" Value="True">
-                                            <i:ChangePropertyAction PropertyName="Background" Value="{DynamicResource PrimaryBlueColor}"></i:ChangePropertyAction>
-                                        </i:DataTrigger>
-                                    </i:Interaction.Triggers>
-                                    <TextBlock Text="4" />
-                                </Border>
-                                <Border>
-                                    <i:Interaction.Triggers>
-                                        <i:DataTrigger Binding="{Binding NinePointState[4]}" Value="True">
-                                            <i:ChangePropertyAction PropertyName="Background" Value="{DynamicResource PrimaryBlueColor}"></i:ChangePropertyAction>
-                                        </i:DataTrigger>
-                                    </i:Interaction.Triggers>
-                                    <TextBlock Text="5" />
-                                </Border>
-                                <Border>
-                                    <i:Interaction.Triggers>
-                                        <i:DataTrigger Binding="{Binding NinePointState[5]}" Value="True">
-                                            <i:ChangePropertyAction PropertyName="Background" Value="{DynamicResource PrimaryBlueColor}"></i:ChangePropertyAction>
-                                        </i:DataTrigger>
-                                    </i:Interaction.Triggers>
-                                    <TextBlock Text="6" />
-                                </Border>
-                                <Border BorderBrush="{DynamicResource PrimaryBlueColor}">
-                                    <i:Interaction.Triggers>
-                                        <i:DataTrigger Binding="{Binding NinePointState[6]}" Value="True">
-                                            <i:ChangePropertyAction PropertyName="Background" Value="{DynamicResource PrimaryBlueColor}"></i:ChangePropertyAction>
-                                        </i:DataTrigger>
-                                    </i:Interaction.Triggers>
-                                    <TextBlock Text="7" />
-                                </Border>
-                                <Border BorderBrush="{DynamicResource PrimaryBlueColor}">
-                                    <i:Interaction.Triggers>
-                                        <i:DataTrigger Binding="{Binding NinePointState[7]}" Value="True">
-                                            <i:ChangePropertyAction PropertyName="Background" Value="{DynamicResource PrimaryBlueColor}"></i:ChangePropertyAction>
-                                        </i:DataTrigger>
-                                    </i:Interaction.Triggers>
-                                    <TextBlock Text="8" />
-                                </Border>
-                                <Border BorderBrush="{DynamicResource PrimaryBlueColor}">
-                                    <i:Interaction.Triggers>
-                                        <i:DataTrigger Binding="{Binding NinePointState[8]}" Value="True">
-                                            <i:ChangePropertyAction PropertyName="Background" Value="{DynamicResource PrimaryBlueColor}"></i:ChangePropertyAction>
-                                        </i:DataTrigger>
-                                    </i:Interaction.Triggers>
-                                    <TextBlock Text="9" />
-                                </Border>
-                            </UniformGrid>
-                        </Grid>
-                    </GroupBox>
-                    <GroupBox MinHeight="350"  Grid.RowSpan="3" Grid.Column="1" Style="{StaticResource GroupBoxTab}" Visibility="Visible">
-
-                        <GroupBox.Header>
-                            <TextBlock  HorizontalAlignment="Center" VerticalAlignment="Center" Style="{DynamicResource TitleTextBlockStyle}" Text="Calibration Results" />
-                        </GroupBox.Header>
-
-                        <ui:SimpleStackPanel Orientation="Vertical">
-
-                            <XCust:CustomConnectionStatus IsConnected="{Binding CanCalibrate}" />
-                            <Grid>
-                                <Grid.RowDefinitions>
-                                    <RowDefinition Height="Auto" />
-                                    <RowDefinition Height="Auto" />
-                                    <RowDefinition Height="Auto" />
-                                    <RowDefinition Height="Auto" />
-                                    <RowDefinition Height="Auto" />
-                                    <RowDefinition Height="Auto" />
-                                    <RowDefinition Height="Auto" />
-                                    <RowDefinition Height="Auto" />
-                                    <RowDefinition Height="Auto" />
-                                    <RowDefinition Height="Auto" />
-                                    <RowDefinition Height="Auto" />
-                                    <RowDefinition Height="*" />
-                                </Grid.RowDefinitions>
-                                <Grid.ColumnDefinitions>
-                                    <ColumnDefinition Width="Auto" />
-                                    <ColumnDefinition Width="*" />
-                                    <ColumnDefinition Width="Auto" />
-                                </Grid.ColumnDefinitions>
-
-                                <Label Content="Camera X Scaling:" Grid.Row="0" Grid.Column="0" Margin="5" />
-                                <TextBlock Text="{Binding Calibration.Mm_per_pixel, StringFormat={}{0:F4}}" Grid.Row="0" Grid.Column="1" Margin="5" Style="{DynamicResource ReadOnlyTextBlock}" />
-                                <Label Content="mm per pixel" Grid.Row="0" Grid.Column="2" Style="{DynamicResource unitStyle}" />
-
-                                <Label Content="Camera Y Scaling:" Grid.Row="1" Grid.Column="0" Margin="5" />
-                                <TextBlock Text="{Binding Calibration.Mm_per_pixel, StringFormat={}{0:F4}}" Grid.Row="1" Grid.Column="1" Margin="5" Style="{DynamicResource ReadOnlyTextBlock}" />
-                                <Label Content="mm per pixel" Grid.Row="1" Grid.Column="2"  Style="{DynamicResource unitStyle}" />
-
-                                <Label Content="X offset:" Grid.Row="2" Grid.Column="0" Margin="5" />
-                                <TextBlock Text="{Binding Calibration.CXOffset, StringFormat={}{0:F4}}" Grid.Row="2" Grid.Column="1" Margin="5" Style="{DynamicResource ReadOnlyTextBlock}" />
-                                <Label Content="mm" Grid.Row="2" Grid.Column="2" Style="{DynamicResource unitStyle}" />
-
-                                <Label Content="Y offset:" Grid.Row="3" Grid.Column="0" Margin="5" />
-                                <TextBlock  Text="{Binding Calibration.CYOffset, StringFormat={}{0:F4}}"  Grid.Row="3" Grid.Column="1" Margin="5" Style="{DynamicResource ReadOnlyTextBlock}" />
-                                <Label Content="mm" Grid.Row="3" Grid.Column="2" Style="{DynamicResource unitStyle}" />
-
-                                <Label Content="RZ offset:" Grid.Row="4" Grid.Column="0" Margin="5" />
-                                <TextBlock Text="{Binding Calibration.CRZOffset, StringFormat={}{0:F4}}" Grid.Row="4" Grid.Column="1" Margin="5" Style="{DynamicResource ReadOnlyTextBlock}" />
-                                <Label Content="°" Grid.Row="4" Grid.Column="2" />
-
-                                <!--<ComboBox Grid.Row="8" ItemsSource="{Binding Modules}">
-                            </ComboBox>-->
-
-                                <ui:SimpleStackPanel Orientation="Horizontal" Grid.Row="10" Grid.ColumnSpan="3">
-
-                                    <!--<Button Grid.Row="5"  Command="{Binding OperationCommand}" >Start Operation</Button>-->
-                                    <Button Grid.Row="6"   Command="{Binding CalibrateCommand}" >Start Calibration</Button>
-                                    <Button Grid.Row="7"   Command="{Binding SaveCommand}" >Save</Button>
-                                    <Button Content="Testing" Command="{Binding TestingCommand}"></Button>
-                                </ui:SimpleStackPanel>
-                            </Grid>
-                        </ui:SimpleStackPanel>
-                    </GroupBox>
-                </ui:SimpleStackPanel>
-            </hc:FlexPanel>
         </hc:ScrollViewer>
     </Grid>
 </UserControl>

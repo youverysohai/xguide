@@ -66,8 +66,7 @@
             <ContentControl hc:FlexPanel.FlexBasis="1000" Content ="{Binding Step5CalibrationModule}">
             </ContentControl>
 
-            <!--Semi Auto(GWR)-->
-            <!--
+            <!--Semi Auto(GWR)--><!--
             <Button Content="Start Jog Tracking" Command="{Binding StartJogTrackingCommand}" Margin="10 0">
                 <i:Interaction.Triggers>
                     <i:DataTrigger Binding="{Binding Calibration.Manipulator.Type}" Value="{x:Static enums:ManipulatorType.GantrySystemWR}">
@@ -82,9 +81,9 @@
                              CommandParameter="{x:Static Dock.Right}"
                              Style="{DynamicResource MaterialDesignIconForegroundButton}"
                              ToolTip="Jog"
-
+                    
                              ToolTipService.InitialShowDelay="122">
-                <ui:FontIcon Glyph="&#xE759;" />
+                <ui:FontIcon Glyph="&#xE759;"/>
             </Button>-->
         </hc:FlexPanel>
     </ScrollViewer>
