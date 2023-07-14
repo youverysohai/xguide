@@ -22,6 +22,7 @@ namespace X_Guide.MVVM.ViewModel
     [SupportedOSPlatform("windows")]
     public class JogImplementationViewModel : ViewModelBase
     {
+        public string Header { get; set; } = "Manipulator Top Config";
         public CalibrationViewModel Calibration { get; }
 
         private readonly IJogService _jogService;

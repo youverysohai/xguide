@@ -16,8 +16,8 @@ namespace X_Guide.MVVM.ViewModel
     {
         private readonly ICalibrationService _calibrationService;
         private readonly IMessenger _messenger;
-
-        public int CurrentPosition { get; set; } = 0;
+        public string Header { get; set; }
+        public int CurrentPosition { get; set; } = 1 ;
 
         public ObservableCollection<bool> NinePointState { get; set; } = new ObservableCollection<bool>(new bool[9]);
         public ObservableCollection<BorderItem> BorderItems { get; set; } = new ObservableCollection<BorderItem>();
@@ -59,7 +59,9 @@ namespace X_Guide.MVVM.ViewModel
 
         private void NinePointState_CollectionChanged(object sender, System.Collections.Specialized.NotifyCollectionChangedEventArgs e)
         {
-            CurrentPosition = e.NewStartingIndex;
+            if (e.NewStartingIndex + 2 < 10)
+                CurrentPosition = e.NewStartingIndex + 2;
+            
         }
 
         public async Task<Point[]> LookingDownward9PointVision()

@@ -31,7 +31,7 @@ namespace X_Guide.MVVM.ViewModel
             _calibrationService = calibrationService;
             _messenger = messenger;
             JogController = controller;
-
+            ninePoint.Header = "Hello chun";
             StartCommand = new RelayCommand(Start9Point);
         }
 

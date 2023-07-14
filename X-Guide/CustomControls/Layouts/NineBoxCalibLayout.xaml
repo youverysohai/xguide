@@ -33,7 +33,7 @@
             </i:DataTrigger>
         </i:Interaction.Triggers>
         <GroupBox.Header>
-            <TextBlock Text="Top Config Calibration" Style="{StaticResource SubtitleTextBlockStyle}"  HorizontalAlignment="Center" VerticalAlignment="Center" />
+            <TextBlock Text="{Binding Header}" Style="{StaticResource SubtitleTextBlockStyle}"  HorizontalAlignment="Center" VerticalAlignment="Center" />
         </GroupBox.Header>
         <Grid>
             <Grid.RowDefinitions>
@@ -66,13 +66,13 @@
                 </ItemsControl.ItemContainerStyle>
                 <ItemsControl.ItemTemplate>
                     <DataTemplate>
-                        <Border BorderBrush="{DynamicResource PrimaryBlueColor}" Margin="10">
+                        <Border BorderBrush="{DynamicResource PrimaryBlueColor}" CornerRadius="10" BorderThickness="2"  Margin="10">
                             <Border.Style>
                                 <Style TargetType="Border">
                                     <Style.Triggers>
                                         <DataTrigger Binding="{Binding Status}" Value="True">
                                             <Setter Property="Background" Value="{DynamicResource PrimaryBlueColor}" />
-                                            <Setter Property="CornerRadius" Value="20"/>
+                                            <Setter Property="CornerRadius" Value="25"/>
                                         </DataTrigger>
                                     </Style.Triggers>
                                 </Style>
@@ -88,10 +88,11 @@
                 <Label.Content>
                     <ui:SimpleStackPanel Orientation="Horizontal">
 
-                        <TextBlock Text="Instruction: Move End Effector to "/>
-                        <ui:FontIcon Glyph="&#xEDFB;" Foreground="{DynamicResource PrimaryBlueColor}"/>
+                        <TextBlock Text="Instruction: Move End Effector to Box "/>
+                        <!--<ui:FontIcon Glyph="&#xEDFB;" Foreground="{DynamicResource PrimaryBlueColor}"/>-->
+                        <TextBlock Text="{Binding CurrentPosition}"/>
                     </ui:SimpleStackPanel>
-
+    
                 </Label.Content>
             </Label>
             <ui:SimpleStackPanel Orientation="Horizontal" Grid.Row="2" HorizontalAlignment="Center">

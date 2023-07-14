@@ -22,6 +22,9 @@ namespace X_Guide.CustomControls.Layouts
     {
 
 
+
+    
+
         public int CurrentPosition
         {
             get { return (int)GetValue(CurrentPositionProperty); }
