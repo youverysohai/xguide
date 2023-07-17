@@ -38,7 +38,6 @@ namespace X_Guide.MVVM.ViewModel
         public object Mock { get; set; }
         public CalibrationViewModel Calibration { get; set; }
         public CalibrationViewModel NewCalibration { get; set; }
-        public JogImplementationViewModel JogImplementation { get; set; }
 
         public List<int> Order { get; set; } = new List<int>(new int[] { 0, 1, 2, 3, 4, 5, 6, 7, 8 });
         public ObservableCollection<bool> NinePointState { get; set; } = new ObservableCollection<bool>(new bool[9]);

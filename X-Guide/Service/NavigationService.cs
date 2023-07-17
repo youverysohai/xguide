@@ -1,6 +1,6 @@
-﻿using Autofac.Core;
+﻿using Autofac;
+using Autofac.Core;
 using CommunityToolkit.Mvvm.Messaging;
-using System.Threading;
 using System.Threading.Tasks;
 using X_Guide.MessageToken;
 using X_Guide.MVVM.Store;
@@ -12,17 +12,21 @@ namespace X_Guide.Service
     public class NavigationService : INavigationService
     {
         private readonly NavigationStore _navigationStore;
-        private readonly IViewModelLocator _viewModelLocator;
         private readonly StateViewModel _viewModelState;
         private readonly IMessenger _messenger;
-        private readonly ManualResetEventSlim _manualResetEvent;
+        private ILifetimeScope _lifeTimeScope;
 
-        public NavigationService(NavigationStore navigationStore, IViewModelLocator viewModelLocator, StateViewModel viewModelState, IMessenger messenger)
+        public NavigationService(NavigationStore navigationStore, ILifetimeScope lifeTimeScope, StateViewModel viewModelState, IMessenger messenger)
         {
             _navigationStore = navigationStore;
-            _viewModelLocator = viewModelLocator;
+            _lifeTimeScope = lifeTimeScope;
             _viewModelState = viewModelState;
             _messenger = messenger;
+        }
+
+        public void SetScope(ILifetimeScope lifetimeScope)
+        {
+            _lifeTimeScope = lifetimeScope;
         }
 
         public NavigationStore GetNavigationStore()
@@ -34,8 +38,8 @@ namespace X_Guide.Service
         {
             _viewModelState.IsLoading = true;
 
-            ViewModelBase viewModel = _viewModelLocator.Create<T>(parameters);
-            await Task.Factory.StartNew(() => _messenger.Send<ReadyRequest>());
+            ViewModelBase viewModel = _lifeTimeScope.Resolve<T>(parameters);
+            await Task.Run(_messenger.Send<ReadyRequest>);
 
             _viewModelState.IsLoading = false;
             SetNavigationState(viewModel, true);
@@ -51,7 +55,7 @@ namespace X_Guide.Service
 
         public ViewModelBase Navigate<T>(params Parameter[] parameters) where T : ViewModelBase
         {
-            ViewModelBase viewModel = _viewModelLocator.Create<T>(parameters);
+            ViewModelBase viewModel = _lifeTimeScope.Resolve<T>(parameters);
             Navigate(viewModel);
             return viewModel;
         }

@@ -30,63 +30,61 @@
         <!--x:Static materialDesign:DrawerHost.CloseDrawerCommand-->
     </UserControl.Resources>
 
-     
-        <materialDesign:DrawerHost OpenMode="Standard">
-            <materialDesign:DrawerHost.LeftDrawerContent>
-                <hc:ScrollViewer VerticalScrollBarVisibility="Visible">
-                    <hc:SimpleStackPanel Orientation="Vertical">
-                        <TextBlock Margin="4"
+    <materialDesign:DrawerHost OpenMode="Standard">
+        <materialDesign:DrawerHost.LeftDrawerContent>
+            <hc:ScrollViewer VerticalScrollBarVisibility="Visible">
+                <hc:SimpleStackPanel Orientation="Vertical">
+                    <TextBlock Margin="4"
                        HorizontalAlignment="Center"
                        Text="Edit" />
-                        <hc:SimplePanel x:Name="ChipsContainer">
-                            <ItemsControl ItemsSource="{Binding Calibrations}" ItemTemplate="{StaticResource ChipTemplate}">
-                            </ItemsControl>
-                        </hc:SimplePanel>
+                    <hc:SimplePanel x:Name="ChipsContainer">
+                        <ItemsControl ItemsSource="{Binding Calibrations}" ItemTemplate="{StaticResource ChipTemplate}">
+                        </ItemsControl>
+                    </hc:SimplePanel>
 
-                        <Button Margin="4"
+                    <Button Margin="4"
                     HorizontalAlignment="Center"
                     Command="{x:Static materialDesign:DrawerHost.CloseDrawerCommand}"
                     CommandParameter="{x:Static Dock.Left}"
                     Content="Close"
                     Style="{StaticResource MaterialDesignFlatButton}" />
-                    </hc:SimpleStackPanel>
-                </hc:ScrollViewer>
-            </materialDesign:DrawerHost.LeftDrawerContent>
+                </hc:SimpleStackPanel>
+            </hc:ScrollViewer>
+        </materialDesign:DrawerHost.LeftDrawerContent>
 
-            <Grid Margin="20">
-                <Grid.RowDefinitions>
-                    <RowDefinition Height="auto" />
-                    <RowDefinition Height="*" />
-                    <RowDefinition Height="auto" />
-                </Grid.RowDefinitions>
-                <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="auto" />
-                    <ColumnDefinition Width="*" />
-                </Grid.ColumnDefinitions>
-                <Button Grid.Column="0" Grid.Row="0" Command="{x:Static materialDesign:DrawerHost.OpenDrawerCommand}"
+        <Grid Margin="20">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="auto" />
+                <RowDefinition Height="*" />
+                <RowDefinition Height="auto" />
+            </Grid.RowDefinitions>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="auto" />
+                <ColumnDefinition Width="*" />
+            </Grid.ColumnDefinitions>
+            <Button Grid.Column="0" Grid.Row="0" Command="{x:Static materialDesign:DrawerHost.OpenDrawerCommand}"
                              CommandParameter="{x:Static Dock.Left}"
                              Style="{DynamicResource MaterialDesignIconForegroundButton}"
                              ToolTip="Edit"
                              ToolTipService.InitialShowDelay="122">
-                    <materialDesign:PackIcon Kind="PlaylistEdit" Style="{DynamicResource IconStyle24}" />
-                </Button>
+                <materialDesign:PackIcon Kind="PlaylistEdit" Style="{DynamicResource IconStyle24}" />
+            </Button>
 
-                <!-- Start Page, Need enter calibration name first-->
-                <StackPanel Grid.Column="1"  Grid.Row="1" Orientation="Vertical" VerticalAlignment="Stretch"  HorizontalAlignment="Stretch" x:Name="StartStepPage">
-                    <TextBlock HorizontalAlignment="Center" FontSize="35" >Calibration Wizard</TextBlock>
-                    <TextBox Width="250" Margin="50"  FontSize="16"  Style="{DynamicResource MaterialDesignFloatingHintTextBox }"
-                         materialDesign:HintAssist.Hint="Enter New Calibration Name" Text="{Binding Name}" x:Name="CalibName" />
+            <!-- Start Page, Need enter calibration name first-->
+            <StackPanel Grid.Column="1"  Grid.Row="1" Orientation="Vertical" VerticalAlignment="Stretch"  HorizontalAlignment="Stretch" x:Name="StartStepPage">
+                <TextBlock HorizontalAlignment="Center" FontSize="35" >Calibration Wizard</TextBlock>
+                <TextBox Width="250" Margin="50"  FontSize="16"  Style="{DynamicResource MaterialDesignFloatingHintTextBox }"
+                         materialDesign:HintAssist.Hint="Enter New Calibration Name" Text="{Binding Calibration.Name,Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" x:Name="CalibName" />
 
-                    <TextBlock Margin="0 0 0 50" HorizontalAlignment="Center" VerticalAlignment="Bottom">Press Start to Begin <materialDesign:PackIcon Kind="ArrowDownBoldOutline"></materialDesign:PackIcon></TextBlock>
+                <TextBlock Margin="0 0 0 50" HorizontalAlignment="Center" VerticalAlignment="Bottom">Press Start to Begin <materialDesign:PackIcon Kind="ArrowDownBoldOutline"></materialDesign:PackIcon></TextBlock>
 
-                    <Button Command="{Binding StartCalibCommand}"  Style="{DynamicResource MaterialDesignPaperButton}" Width="200" Margin="0 0 0 20">Start</Button>
-                </StackPanel>
+                <Button Command="{Binding StartCalibCommand}"  Style="{DynamicResource MaterialDesignPaperButton}" Width="200" Margin="0 0 0 20">Start</Button>
+            </StackPanel>
 
-                <!-- simplest form -->
-                <materialDesign:Snackbar
+            <!-- simplest form -->
+            <materialDesign:Snackbar
                         x:Name="SnackbarMessage" Grid.Row="3"  Grid.Column="1"
                             IsActive="False"   MessageQueue="{materialDesign:MessageQueue}" />
-            </Grid>
-        </materialDesign:DrawerHost>
-     
+        </Grid>
+    </materialDesign:DrawerHost>
 </UserControl>

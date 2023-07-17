@@ -9,7 +9,7 @@ using X_Guide.MVVM.ViewModel.CalibrationWizardSteps;
 namespace X_Guide.MVVM.ViewModel
 {
     [SupportedOSPlatform("windows")]
-    internal class Step5TopConfigViewModel
+    internal class Step5LookDownwardConfig : ViewModelBase
     {
         private readonly ICalibrationService _calibrationService;
         private readonly IMessenger _messenger;
@@ -23,7 +23,7 @@ namespace X_Guide.MVVM.ViewModel
         public RelayCommand NextCommand { get; set; }
         public RelayCommand StartCommand { get; set; }
 
-        public Step5TopConfigViewModel(JogControllerViewModel controller, ICalibrationService calibrationService, NinePointCalibrationViewModel ninePoint, IMessenger messenger, CalibrationViewModel calibration)
+        public Step5LookDownwardConfig(JogControllerViewModel controller, ICalibrationService calibrationService, NinePointCalibrationViewModel ninePoint, IMessenger messenger, CalibrationViewModel calibration)
         {
             controller.Calibration = calibration;
             NinePoint = ninePoint;
