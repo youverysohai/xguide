@@ -51,11 +51,28 @@
     </UserControl.Resources>
 
       <!--VM Camara-->
+    <materialDesign:DrawerHost OpenMode="Standard">
+        <materialDesign:DrawerHost.TopDrawerContent>
+            <Grid>
+                <Release:VmRenderControl Height="400" Width="850"/>
+                <Button Content="^" HorizontalAlignment="Center" VerticalAlignment="Top" Command="{x:Static materialDesign:DrawerHost.CloseDrawerCommand}"/>
+            </Grid>
+        </materialDesign:DrawerHost.TopDrawerContent>
+    <Grid>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="*"/>
+                <RowDefinition Height="auto"/>
+            </Grid.RowDefinitions>
+            <Button Grid.Row="1" Content="Live View" Command="{x:Static materialDesign:DrawerHost.OpenDrawerCommand}"/>
+            <ContentControl Grid.Row="1"  Content ="{Binding Step5CalibrationModule}">
+        </ContentControl>
 
-            <!--<ContentControl hc:FlexPanel.FlexBasis="720" Height="500" Content="{Binding VisionView}" VerticalAlignment="Top">
+    </Grid>
+    </materialDesign:DrawerHost>
+
+    <!--<ContentControl hc:FlexPanel.FlexBasis="720" Height="500" Content="{Binding VisionView}" VerticalAlignment="Top">
             </ContentControl>-->
-            <ContentControl  Content ="{Binding Step5CalibrationModule}">
-            </ContentControl>
+
 
             <!--Semi Auto(GWR)--><!--
             <Button Content="Start Jog Tracking" Command="{Binding StartJogTrackingCommand}" Margin="10 0">

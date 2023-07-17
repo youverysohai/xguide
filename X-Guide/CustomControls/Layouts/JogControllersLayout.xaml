@@ -5,7 +5,9 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:local="clr-namespace:X_Guide.CustomControls"
              xmlns:custLayout="clr-namespace:X_Guide.CustomControls.Layouts"
-             xmlns:RadialMenu="clr-namespace:RadialMenu.Controls;assembly=RadialMenu" xmlns:i="http://schemas.microsoft.com/xaml/behaviors" xmlns:ui="http://schemas.modernwpf.com/2019"
+             xmlns:RadialMenu="clr-namespace:RadialMenu.Controls;assembly=RadialMenu" 
+             xmlns:i="http://schemas.microsoft.com/xaml/behaviors" xmlns:ui="http://schemas.modernwpf.com/2019"
+             xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
              xmlns:enums="clr-namespace:X_Guide.Enums"
              xmlns:c="clr-namespace:X_Guide.Converter"
              mc:Ignorable="d"
@@ -31,89 +33,113 @@
                 </ui:SimpleStackPanel>
             </GroupBox.Header>
 
-            <!-- Title -->
-            <!-- JogButtons and Rotations-->
 
             <Grid>
                 <Grid.RowDefinitions>
-                    <RowDefinition Height="auto" />
-
+                    <RowDefinition Height="120" />
                     <RowDefinition Height="*" />
                     <RowDefinition Height="*" />
-                    <RowDefinition Height="auto" />
                 </Grid.RowDefinitions>
-                <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="*" />
-                    <ColumnDefinition Width="*" />
-                </Grid.ColumnDefinitions>
-                <local:CustomConnectionStatus Grid.Row="0" Grid.ColumnSpan="2" IsConnected="{Binding AppState.IsAnyClientConnected}" ManipulatorType="{Binding Calibration.Manipulator.Type,Converter={StaticResource TypeToDescriptionConverter}}" />
+ 
+                
+                
+                <materialDesign:DrawerHost Grid.Row="0" IsTopDrawerOpen="True" OpenMode="Standard" >
+                    <!-- Jog -->
+                    <Button Content="Jog" VerticalAlignment="Top" 
+                            Command="{x:Static materialDesign:DrawerHost.OpenDrawerCommand}"
+                            CommandParameter="{x:Static Dock.Top}"
+                            ></Button>
+                    <materialDesign:DrawerHost.TopDrawerContent>
+                        <Grid>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="*" />
+                                <ColumnDefinition Width="*" />
+                                <ColumnDefinition Width="*" />
+                            </Grid.ColumnDefinitions>
+                            <Button Content="Jog" VerticalAlignment="Top" 
+                            Command="{x:Static materialDesign:DrawerHost.CloseDrawerCommand}"
+                            CommandParameter="{x:Static Dock.Top}"
+                            ></Button>
+                            <Canvas Grid.Row="0" Grid.Column="0" HorizontalAlignment="Center">
+                                <!-- CustomJogButtonsControl (X,Y) -->
+                                <Canvas.RenderTransform>
+                                    <TransformGroup>
+                                        <TranslateTransform X="-150" Y="-90" />
+                                    </TransformGroup>
+                                </Canvas.RenderTransform>
+                                <local:CustomJogButtonsControl Canvas.Left="0"  TopCommandParameter="Y+" BottomCommandParameter="Y-" LeftCommandParameter="X-" RightCommandParameter="X+" ButtonCommand="{Binding JogCommand}"></local:CustomJogButtonsControl>
+                            </Canvas>
 
-                <!--X+ Y+ -->
+                            <Canvas Grid.Row="0" Grid.Column="1"  HorizontalAlignment="Center">
+                                <!-- CustomJogButtonsControl (Z) -->
+                                <Canvas.RenderTransform>
+                                    <TransformGroup>
+                                        <TranslateTransform X="-150" Y="-90" />
+                                    </TransformGroup>
+                                </Canvas.RenderTransform>
+                                <local:CustomJogButtonsControl x:Name="GWRJog" TopCommandParameter="Z+" BottomCommandParameter="Z-"  ButtonCommand="{Binding JogCommand}">
+                                    <i:Interaction.Triggers>
+                                        <i:DataTrigger Binding="{Binding Calibration.Manipulator.Type}" Value="{x:Static enums:ManipulatorType.GantrySystemWR}">
+                                            <i:ChangePropertyAction PropertyName="Visibility" Value="Visible" />
+                                        </i:DataTrigger>
+                                        <i:DataTrigger Binding="{Binding Calibration.Manipulator.Type}" Value="{x:Static enums:ManipulatorType.GantrySystemR}">
+                                            <i:ChangePropertyAction PropertyName="Visibility" Value="Collapsed" />
+                                        </i:DataTrigger>
+                                        <i:DataTrigger Binding="{Binding Calibration.Manipulator.Type}" Value="{x:Static enums:ManipulatorType.SCARA}">
+                                            <i:ChangePropertyAction PropertyName="Visibility" Value="Collapsed" />
+                                        </i:DataTrigger>
+                                        <i:DataTrigger Binding="{Binding Calibration.Manipulator.Type}" Value="{x:Static enums:ManipulatorType.SixAxis}">
+                                            <i:ChangePropertyAction PropertyName="Visibility" Value="Collapsed" />
+                                        </i:DataTrigger>
+                                    </i:Interaction.Triggers>
+                                </local:CustomJogButtonsControl>
+                            </Canvas>
 
-                <Canvas Grid.Row="1" Grid.Column="2" HorizontalAlignment="Center">
-                    <Canvas.RenderTransform>
-                        <TransformGroup>
-                            <TranslateTransform X="-150" Y="-80" />
-                        </TransformGroup>
-                    </Canvas.RenderTransform>
-                    <local:CustomJogButtonsControl Canvas.Left="0"  TopCommandParameter="Y+" BottomCommandParameter="Y-" LeftCommandParameter="X-" RightCommandParameter="X+" ButtonCommand="{Binding JogCommand}"></local:CustomJogButtonsControl>
-                </Canvas>
 
-                <Canvas Grid.Row="2" Grid.Column="2"  HorizontalAlignment="Center">
-                    <Canvas.RenderTransform>
-                        <TransformGroup>
-                            <TranslateTransform X="-150" Y="-50" />
-                        </TransformGroup>
-                    </Canvas.RenderTransform>
+                            <Canvas Grid.Row="0" Grid.Column="1"  HorizontalAlignment="Center">
+                                <!-- CustomJogButtonsControl (Z,RZ) -->
+                                <Canvas.RenderTransform>
+                                    <TransformGroup>
+                                        <TranslateTransform X="-150" Y="-90" />
+                                    </TransformGroup>
+                                </Canvas.RenderTransform>
 
-                    <!-- Z- Z+ -->
 
-                    <local:CustomJogButtonsControl x:Name="GWRJog" TopCommandParameter="Z+" BottomCommandParameter="Z-"  ButtonCommand="{Binding JogCommand}">
-                        <i:Interaction.Triggers>
-                            <i:DataTrigger Binding="{Binding Calibration.Manipulator.Type}" Value="{x:Static enums:ManipulatorType.GantrySystemWR}">
-                                <i:ChangePropertyAction PropertyName="Visibility" Value="Visible" />
-                            </i:DataTrigger>
-                            <i:DataTrigger Binding="{Binding Calibration.Manipulator.Type}" Value="{x:Static enums:ManipulatorType.GantrySystemR}">
-                                <i:ChangePropertyAction PropertyName="Visibility" Value="Collapsed" />
-                            </i:DataTrigger>
-                            <i:DataTrigger Binding="{Binding Calibration.Manipulator.Type}" Value="{x:Static enums:ManipulatorType.SCARA}">
-                                <i:ChangePropertyAction PropertyName="Visibility" Value="Collapsed" />
-                            </i:DataTrigger>
-                            <i:DataTrigger Binding="{Binding Calibration.Manipulator.Type}" Value="{x:Static enums:ManipulatorType.SixAxis}">
-                                <i:ChangePropertyAction PropertyName="Visibility" Value="Collapsed" />
-                            </i:DataTrigger>
-                        </i:Interaction.Triggers>
-                    </local:CustomJogButtonsControl>
-                </Canvas>
-                <Canvas Grid.Row="2" Grid.Column="2"  HorizontalAlignment="Center">
-                    <Canvas.RenderTransform>
-                        <TransformGroup>
-                            <TranslateTransform X="-150" Y="-50" />
-                        </TransformGroup>
-                    </Canvas.RenderTransform>
+                                <local:CustomJogButtonsControl x:Name="GRSCARA" TopCommandParameter="Z+" BottomCommandParameter="Z-" LeftCommandParameter="RZ-" RightCommandParameter="RZ+" ButtonCommand="{Binding JogCommand}">
+                                    <i:Interaction.Triggers>
+                                        <i:DataTrigger Binding="{Binding Calibration.Manipulator.Type}" Value="{x:Static enums:ManipulatorType.GantrySystemWR}">
+                                            <i:ChangePropertyAction PropertyName="Visibility" Value="Collapsed" />
+                                        </i:DataTrigger>
+                                        <i:DataTrigger Binding="{Binding Calibration.Manipulator.Type}" Value="{x:Static enums:ManipulatorType.GantrySystemR}">
+                                            <i:ChangePropertyAction PropertyName="Visibility" Value="Visible" />
+                                        </i:DataTrigger>
+                                        <i:DataTrigger Binding="{Binding Calibration.Manipulator.Type}" Value="{x:Static enums:ManipulatorType.SCARA}">
+                                            <i:ChangePropertyAction PropertyName="Visibility" Value="Visible" />
+                                        </i:DataTrigger>
+                                        <i:DataTrigger Binding="{Binding Calibration.Manipulator.Type}" Value="{x:Static enums:ManipulatorType.SixAxis}">
+                                            <i:ChangePropertyAction PropertyName="Visibility" Value="Visible" />
+                                        </i:DataTrigger>
+                                    </i:Interaction.Triggers>
+                                </local:CustomJogButtonsControl>
+                            </Canvas>
+                            <Canvas Grid.Row="0" Grid.Column="3"  HorizontalAlignment="Center">
+                                <!-- CustomJogButtonsControl (RX,RY) -->
+                                <Canvas.RenderTransform>
+                                    <TransformGroup>
+                                        <TranslateTransform X="-150" Y="-90" />
+                                    </TransformGroup>
+                                </Canvas.RenderTransform>
+                                <local:CustomJogButtonsControl x:Name="SixAxis" IsHalfShifted="False" TopCommandParameter="RY+" BottomCommandParameter="RY-" LeftCommandParameter="RX-" RightCommandParameter="RX+" ButtonCommand="{Binding JogCommand}"></local:CustomJogButtonsControl>
+                            </Canvas>
 
-                    <!-- Z- Z+ RZ- RZ+-->
-                    <local:CustomJogButtonsControl x:Name="GRSCARA" TopCommandParameter="Z+" BottomCommandParameter="Z-" LeftCommandParameter="RZ-" RightCommandParameter="RZ+" ButtonCommand="{Binding JogCommand}">
-                        <i:Interaction.Triggers>
-                            <i:DataTrigger Binding="{Binding Calibration.Manipulator.Type}" Value="{x:Static enums:ManipulatorType.GantrySystemWR}">
-                                <i:ChangePropertyAction PropertyName="Visibility" Value="Collapsed" />
-                            </i:DataTrigger>
-                            <i:DataTrigger Binding="{Binding Calibration.Manipulator.Type}" Value="{x:Static enums:ManipulatorType.GantrySystemR}">
-                                <i:ChangePropertyAction PropertyName="Visibility" Value="Visible" />
-                            </i:DataTrigger>
-                            <i:DataTrigger Binding="{Binding Calibration.Manipulator.Type}" Value="{x:Static enums:ManipulatorType.SCARA}">
-                                <i:ChangePropertyAction PropertyName="Visibility" Value="Visible" />
-                            </i:DataTrigger>
-                            <i:DataTrigger Binding="{Binding Calibration.Manipulator.Type}" Value="{x:Static enums:ManipulatorType.SixAxis}">
-                                <i:ChangePropertyAction PropertyName="Visibility" Value="Visible" />
-                            </i:DataTrigger>
-                        </i:Interaction.Triggers>
-                    </local:CustomJogButtonsControl>
-                </Canvas>
+                        </Grid>
+                    </materialDesign:DrawerHost.TopDrawerContent>
+                </materialDesign:DrawerHost>
+                <local:CustomConnectionStatus Grid.Row="1" Grid.ColumnSpan="2" IsConnected="{Binding AppState.IsAnyClientConnected}" ManipulatorType="{Binding Calibration.Manipulator.Type,Converter={StaticResource TypeToDescriptionConverter}}" />
 
-                <!--Inputs -->
 
                 <ui:SimpleStackPanel Grid.Row="2" Grid.Column="0" Margin="10">
+                    <!--Inputs -->
                     <ui:SimpleStackPanel.Style>
                         <Style TargetType="ui:SimpleStackPanel">
                             <Setter Property="Visibility" Value="Collapsed" />
@@ -126,16 +152,9 @@
                     </ui:SimpleStackPanel.Style>
                 </ui:SimpleStackPanel>
 
-                <!--RX RY-->
+                
 
-                <Canvas Grid.Row="2" Grid.Column="0"  HorizontalAlignment="Center">
-                    <Canvas.RenderTransform>
-                        <TransformGroup>
-                            <TranslateTransform X="-155" Y="-50" />
-                        </TransformGroup>
-                    </Canvas.RenderTransform>
-                    <local:CustomJogButtonsControl x:Name="SixAxis" IsHalfShifted="False" TopCommandParameter="RY+" BottomCommandParameter="RY-" LeftCommandParameter="RX-" RightCommandParameter="RX+" ButtonCommand="{Binding JogCommand}"></local:CustomJogButtonsControl>
-                </Canvas>
+
                 <ui:SimpleStackPanel  Orientation="Vertical" Grid.Row="1" Margin="5 0">
                     <ui:NumberBox
                               Header="Jog Distance (mm)"
@@ -146,7 +165,6 @@
                     </ui:NumberBox>
                     <ui:ToggleSwitch Header="Mode (Tool/Global)" OnContent="Global" IsOn="{Binding Calibration.JogMode}" OffContent="Tool"></ui:ToggleSwitch>
                     <ui:NumberBox
-
                             Header="Rotation Degree (°)"
                             SpinButtonPlacementMode="Inline"
                             Margin="5"
@@ -162,17 +180,7 @@
                         </ui:NumberBox.Style>
                     </ui:NumberBox>
                 </ui:SimpleStackPanel>
-                <custLayout:P2PAutoLayout Grid.Row="4" />
             </Grid>
         </GroupBox>
-
-        <Canvas>
-        </Canvas>
-        <!--<local:CustomJogButtonsControl  TopCommandParameter="Y+" BottomCommandParameter="Y-" LeftCommandParameter="X-" RightCommandParameter="X+" ButtonCommand="{Binding JogCommand}"></local:CustomJogButtonsControl>
-
-            <local:CustomJogButtonsControl  x:Name="GRSCARA" TopCommandParameter="Z+" BottomCommandParameter="Z-" LeftCommandParameter="RZ-" RightCommandParameter="RZ+" ButtonCommand="{Binding JogCommand}"></local:CustomJogButtonsControl>
-            <local:CustomJogButtonsControl  x:Name="ZAxis" TopCommandParameter="Z+" BottomCommandParameter="Z-" ButtonCommand="{Binding JogCommand}"></local:CustomJogButtonsControl>
-
-            <local:CustomJogButtonsControl  x:Name="SixAxis" IsHalfShifted="False" TopCommandParameter="RY+" BottomCommandParameter="RY-" LeftCommandParameter="RX-" RightCommandParameter="RX+" ButtonCommand="{Binding JogCommand}"></local:CustomJogButtonsControl>-->
     </Grid>
 </UserControl>

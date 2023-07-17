@@ -104,17 +104,17 @@
         <Setter Property="Cursor" Value="Hand"/>
         <!--<Setter Property="Background" Value="{StaticResource SecondaryBlueColor}"/>-->
         <Setter Property="Padding" Value="2"/>
-        <Setter Property="InnerRadius" Value="10"/>
-        <Setter Property="OuterRadius" Value="70"/>
-        <Setter Property="ContentRadius" Value="55"/>
-
+        <Setter Property="InnerRadius" Value="0"/>
+        <Setter Property="OuterRadius" Value="0"/>
+        <Setter Property="ContentRadius" Value="52"/>
+        <Setter Property="FontSize" Value="12"/>
+        <Setter Property="Foreground" Value="{DynamicResource PrimaryBlueColor}"/>
         <!--<Setter Property="EdgeBackground" Value="{StaticResource SuccessColorBrush}"/>-->
-        <Setter Property="EdgePadding" Value="4"/>
-        <Setter Property="EdgeInnerRadius" Value="35"/>
-        <Setter Property="EdgeOuterRadius" Value="75"/>
-
+        <Setter Property="EdgePadding" Value="3"/>
+        <Setter Property="EdgeInnerRadius" Value="15"/>
+        <Setter Property="EdgeOuterRadius" Value="40"/>
         <Setter Property="ArrowBackground" Value="{StaticResource PrimaryBlueColor}"/>
-        <Setter Property="ArrowRadius" Value="67"/>
+        <Setter Property="ArrowRadius" Value="35"/>
 
     </Style>
 

@@ -17,7 +17,7 @@
         Style="{StaticResource MaterialDesignWindow}"
         AllowsTransparency="True"                     
  
-ui:ThemeManager.IsThemeAware="True"
+        ui:ThemeManager.IsThemeAware="True"
         FontFamily="{DynamicResource MaterialDesignFont}"
         Title="MainWindow" Height="768" Width="1280">
     <materialDesign:DialogHost DialogTheme="Inherit"
@@ -68,7 +68,7 @@ ui:ThemeManager.IsThemeAware="True"
                                   DockPanel.Dock="Top"
                                   Background="{DynamicResource PrimaryHueLightBrush}" 
                                   Mode="Standard"
-                                   x:Name="ColorZone"     
+                                   x:Name="colorZone"     
                                    >
                     <Grid>
                         <Grid.ColumnDefinitions>

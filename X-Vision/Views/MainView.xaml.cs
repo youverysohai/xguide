@@ -1,4 +1,5 @@
-﻿using ModernWpf.Controls;
+﻿using MaterialDesignThemes.Wpf;
+using ModernWpf.Controls;
 using ModernWpf.Controls.Primitives;
 using System;
 using System.Collections.Generic;
@@ -55,14 +56,14 @@ namespace X_Vision.Views
                     this.WindowState = WindowState.Maximized;
 
             };
-            ColorZone.MouseMove += (s, e) =>
+            colorZone.MouseMove += (s, e) =>
             {
                 if (e.LeftButton == MouseButtonState.Pressed)
                 {
                     this.DragMove();
                 }
             };
-            ColorZone.MouseDoubleClick += (s, e) =>
+            colorZone.MouseDoubleClick += (s, e) =>
             {
                 if (this.WindowState == WindowState.Normal)
                 {

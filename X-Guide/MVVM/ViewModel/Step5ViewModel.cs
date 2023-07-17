@@ -45,6 +45,14 @@ namespace X_Guide.MVVM.ViewModel
     [SupportedOSPlatform("windows")]
     internal class Step5ViewModel : ViewModelBase, IRecipient<ConnectionStatusChanged>
     {
+        private bool _isDialogOpen;
+
+        public bool IsDialogOpen
+        {
+            get { return _isDialogOpen; }
+            set { _isDialogOpen = value; }
+        }
+
         public object Step5CalibrationModule { get; set; }
         public JogImplementationViewModel JogImplementation { get; set; }
         public object AppState { get; }
