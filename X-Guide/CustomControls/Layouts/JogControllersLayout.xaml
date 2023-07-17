@@ -33,30 +33,18 @@
                 </ui:SimpleStackPanel>
             </GroupBox.Header>
 
-
-            <Grid>
-                <Grid.RowDefinitions>
-                    <RowDefinition Height="120" />
-                    <RowDefinition Height="*" />
-                    <RowDefinition Height="*" />
-                </Grid.RowDefinitions>
  
-                
-                
-                <materialDesign:DrawerHost Grid.Row="0" IsTopDrawerOpen="True" OpenMode="Standard" >
+
+                <materialDesign:DrawerHost IsTopDrawerOpen="True" OpenMode="Standard" >
                     <!-- Jog -->
-                    <Button Content="Jog" VerticalAlignment="Top" 
-                            Command="{x:Static materialDesign:DrawerHost.OpenDrawerCommand}"
-                            CommandParameter="{x:Static Dock.Top}"
-                            ></Button>
                     <materialDesign:DrawerHost.TopDrawerContent>
-                        <Grid>
+                        <Grid Height="120">
                             <Grid.ColumnDefinitions>
                                 <ColumnDefinition Width="*" />
                                 <ColumnDefinition Width="*" />
                                 <ColumnDefinition Width="*" />
                             </Grid.ColumnDefinitions>
-                            <Button Content="Jog" VerticalAlignment="Top" 
+                            <Button Content="^" VerticalAlignment="Top" 
                             Command="{x:Static materialDesign:DrawerHost.CloseDrawerCommand}"
                             CommandParameter="{x:Static Dock.Top}"
                             ></Button>
@@ -134,53 +122,64 @@
 
                         </Grid>
                     </materialDesign:DrawerHost.TopDrawerContent>
-                </materialDesign:DrawerHost>
-                <local:CustomConnectionStatus Grid.Row="1" Grid.ColumnSpan="2" IsConnected="{Binding AppState.IsAnyClientConnected}" ManipulatorType="{Binding Calibration.Manipulator.Type,Converter={StaticResource TypeToDescriptionConverter}}" />
 
+                    <Grid>
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="auto"/>
+                            <RowDefinition Height="*"/>
+                        </Grid.RowDefinitions>
+                        <Button Content="Jog" VerticalAlignment="Top" 
+                                Grid.Row="0"
+                            Command="{x:Static materialDesign:DrawerHost.OpenDrawerCommand}"
+                            CommandParameter="{x:Static Dock.Top}"
+                            ></Button>
+                    <local:CustomConnectionStatus Grid.Row="0" HorizontalAlignment="Center" IsConnected="{Binding AppState.IsAnyClientConnected}" ManipulatorType="{Binding Calibration.Manipulator.Type,Converter={StaticResource TypeToDescriptionConverter}}" />
 
-                <ui:SimpleStackPanel Grid.Row="2" Grid.Column="0" Margin="10">
-                    <!--Inputs -->
-                    <ui:SimpleStackPanel.Style>
-                        <Style TargetType="ui:SimpleStackPanel">
-                            <Setter Property="Visibility" Value="Collapsed" />
-                            <Style.Triggers>
-                                <DataTrigger Binding="{Binding Calibration.Manipulator.Type}" Value="{x:Static enums:ManipulatorType.SixAxis}">
-                                    <Setter Property="Visibility" Value="Visible" />
-                                </DataTrigger>
-                            </Style.Triggers>
-                        </Style>
-                    </ui:SimpleStackPanel.Style>
-                </ui:SimpleStackPanel>
+                    <ui:SimpleStackPanel Grid.Row="2" Grid.Column="0" Margin="10">
+                            <!--Inputs -->
+                            <ui:SimpleStackPanel.Style>
+                                <Style TargetType="ui:SimpleStackPanel">
+                                    <Setter Property="Visibility" Value="Collapsed" />
+                                    <Style.Triggers>
+                                        <DataTrigger Binding="{Binding Calibration.Manipulator.Type}" Value="{x:Static enums:ManipulatorType.SixAxis}">
+                                            <Setter Property="Visibility" Value="Visible" />
+                                        </DataTrigger>
+                                    </Style.Triggers>
+                                </Style>
+                            </ui:SimpleStackPanel.Style>
+                        </ui:SimpleStackPanel>
 
-                
-
-
-                <ui:SimpleStackPanel  Orientation="Vertical" Grid.Row="1" Margin="5 0">
-                    <ui:NumberBox
+                        <Grid Row="1" Margin="5 0">
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="*"/>
+                        </Grid.RowDefinitions>
+                            <ui:NumberBox
                               Header="Jog Distance (mm)"
                               SpinButtonPlacementMode="Inline"
                               Margin="5"
                               x:Name="FormattedNumberBox"
                                 Value="{Binding JogDistance}">
-                    </ui:NumberBox>
-                    <ui:ToggleSwitch Header="Mode (Tool/Global)" OnContent="Global" IsOn="{Binding Calibration.JogMode}" OffContent="Tool"></ui:ToggleSwitch>
-                    <ui:NumberBox
+                            </ui:NumberBox>
+                            <ui:ToggleSwitch Header="Mode (Tool/Global)" OnContent="Global" IsOn="{Binding Calibration.JogMode}" OffContent="Tool"></ui:ToggleSwitch>
+                            <ui:NumberBox
                             Header="Rotation Degree (°)"
                             SpinButtonPlacementMode="Inline"
                             Margin="5"
                             Value="{Binding RotationAngle}">
-                        <ui:NumberBox.Style>
-                            <Style TargetType="ui:NumberBox">
-                                <Style.Triggers>
-                                    <DataTrigger Binding="{Binding Calibration.Manipulator.Type}" Value="{x:Static enums:ManipulatorType.GantrySystemWR}">
-                                        <Setter Property="Visibility" Value="Collapsed" />
-                                    </DataTrigger>
-                                </Style.Triggers>
-                            </Style>
-                        </ui:NumberBox.Style>
-                    </ui:NumberBox>
-                </ui:SimpleStackPanel>
-            </Grid>
+                                <ui:NumberBox.Style>
+                                    <Style TargetType="ui:NumberBox">
+                                        <Style.Triggers>
+                                            <DataTrigger Binding="{Binding Calibration.Manipulator.Type}" Value="{x:Static enums:ManipulatorType.GantrySystemWR}">
+                                                <Setter Property="Visibility" Value="Collapsed" />
+                                            </DataTrigger>
+                                        </Style.Triggers>
+                                    </Style>
+                                </ui:NumberBox.Style>
+                            </ui:NumberBox>
+                        </Grid>
+                    </Grid>
+                </materialDesign:DrawerHost>
+ 
         </GroupBox>
     </Grid>
 </UserControl>
