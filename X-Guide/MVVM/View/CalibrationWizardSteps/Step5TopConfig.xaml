@@ -23,11 +23,42 @@
             </Grid.RowDefinitions>
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="*" />
+                <ColumnDefinition Width="*" />
             </Grid.ColumnDefinitions>
+            <Grid>
+                <Grid.Resources>
+                    <DataTemplate x:Key="Default">
+                        <Button Click="Button_Click" Content="Start" HorizontalAlignment="Center" VerticalAlignment="Center" Panel.ZIndex="1" Command="{Binding StartCommand}">
+                        </Button>
+                    </DataTemplate>
+                    <DataTemplate x:Key="NinePoint">
+                        -->
+    <!--<Button HorizontalAlignment="Center" VerticalAlignment="Center" Panel.ZIndex="1" >Started</Button>-->
+    <!--
+                        <ContentControl Grid.Column="0" Content="{Binding NinePoint}" Margin="10" Width="410"/>
 
-            <materialDesign:DrawerHost OpenMode="Standard" IsTopDrawerOpen="True">
+                    </DataTemplate>
+                </Grid.Resources>
+                <ContentPresenter ContentTemplate="{StaticResource Default}" x:Name="contentPresenter">
+                    <Style TargetType="ContentPresenter">
+                        <Style.Triggers>
+                            <DataTrigger Binding="{Binding ElementName=TopConfig, Path=isStarted}" Value="true">
+                                <Setter Property="ContentTemplate" Value="{StaticResource NinePoint}"/>
+                            </DataTrigger>
+                            <DataTrigger Binding="{Binding ElementName=TopConfig, Path=isStarted}" Value="false">
+                                <Setter Property="ContentTemplate" Value="{StaticResource Default}"/>
+
+                            </DataTrigger>
+
+                        </Style.Triggers>
+                    </Style>
+                </ContentPresenter>
+            </Grid>
+
+            <materialDesign:DrawerHost OpenMode="Standard" IsTopDrawerOpen="True" Grid.Column="1">
                 <materialDesign:DrawerHost.TopDrawerContent >
                     <Grid >
+
                         <Release:VmRenderControl Height="375" Width="935" />
                         <Button Content="^" HorizontalAlignment="Center" VerticalAlignment="Top" Command="{x:Static materialDesign:DrawerHost.CloseDrawerCommand}"/>
                     </Grid>
@@ -64,7 +95,10 @@
         <ScrollViewer>
             <ui:SimpleStackPanel>
                 <Release:VmRenderControl Height="500" Margin="10"/>
-                <ContentControl Content="{Binding NinePoint}" Margin="10" Width="410"/>
+                <Grid>
+                    <ContentControl Content="{Binding NinePoint}" Margin="10" Height="400"/>
+                </Grid>
+
             </ui:SimpleStackPanel>
         </ScrollViewer>
         <ContentControl Grid.Column="1"  Margin="5 0 0 0" Content="{Binding JogController}" />

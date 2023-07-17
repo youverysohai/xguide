@@ -9,6 +9,7 @@ namespace X_Guide.MVVM.View.CalibrationWizardSteps
     /// </summary>
     public partial class Step5TopConfig : UserControl
     {
+        public bool isStarted { get; set; } = false;
         public ICommand JogCommand
         {
             get { return (ICommand)GetValue(JogCommandProperty); }
@@ -32,6 +33,12 @@ namespace X_Guide.MVVM.View.CalibrationWizardSteps
         public Step5TopConfig()
         {
             InitializeComponent();
+        }
+
+        private void Button_Click(object sender, RoutedEventArgs e)
+        {
+            
+            isStarted = true;
         }
     }
 }

@@ -1,6 +1,7 @@
 ﻿using CalibrationProvider;
 using CommunityToolkit.Mvvm.Messaging;
 using CommunityToolkit.Mvvm.Messaging.Messages;
+using System;
 using System.Collections.ObjectModel;
 using System.Runtime.Versioning;
 using System.Threading;
@@ -16,6 +17,8 @@ namespace X_Guide.MVVM.ViewModel
     {
         private readonly ICalibrationService _calibrationService;
         private readonly IMessenger _messenger;
+
+        public Provider provider { get; set; } = Provider.Manipulator;
         public string Header { get; set; }
         public int CurrentPosition { get; set; } = 1 ;
 
@@ -26,6 +29,8 @@ namespace X_Guide.MVVM.ViewModel
 
         public bool CanNext { get; set; } = true;
         public RelayCommand NextCommand { get; set; }
+        public RelayCommand StartCommand { get; set; }
+
 
         public NinePointCalibrationViewModel(ICalibrationService calibrationService, IMessenger messenger)
         {
@@ -34,7 +39,17 @@ namespace X_Guide.MVVM.ViewModel
             _messenger = messenger;
             _messenger.Register(this);
             NextCommand = new RelayCommand(Continue9Point, (o) => CanNext);
+            StartCommand = new RelayCommand(Start9Point);
             CreateBorderItems();
+        }
+
+        private async void Start9Point(object obj)
+        {
+            switch (provider)
+            {
+                case Provider.Manipulator: await LookingDownward9PointManipulator(); break;
+                case Provider.Vision: await LookingDownward9PointVision(); break;
+            }
         }
 
         private void CreateBorderItems()

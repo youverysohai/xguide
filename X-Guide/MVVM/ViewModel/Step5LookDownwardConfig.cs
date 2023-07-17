@@ -27,6 +27,7 @@ namespace X_Guide.MVVM.ViewModel
         {
             controller.Calibration = calibration;
             NinePoint = ninePoint;
+            NinePoint.provider = Provider.Manipulator;
             _calibration = calibration;
             _calibrationService = calibrationService;
             _messenger = messenger;

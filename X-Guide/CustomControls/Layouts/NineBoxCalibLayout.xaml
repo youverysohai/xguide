@@ -96,7 +96,8 @@
                 </Label.Content>
             </Label>
             <ui:SimpleStackPanel Orientation="Horizontal" Grid.Row="2" HorizontalAlignment="Center">
-
+                <Button  Content="Start" Command="{Binding StartCommand}">
+                </Button>
                 <Button Content="Next" Command="{Binding NextCommand}" Margin="5" />
                 <Button Content="Cancel"  Margin="5" />
             </ui:SimpleStackPanel>

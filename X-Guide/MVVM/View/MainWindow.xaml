@@ -25,6 +25,7 @@
         ui:WindowHelper.UseModernWindowStyle="True">
 
     <Window.Resources>
+
         <ContentPresenter x:Key="template1">
             <ContentPresenter.Content>
                 <StackPanel
