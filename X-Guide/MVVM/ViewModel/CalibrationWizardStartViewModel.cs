@@ -4,6 +4,7 @@ using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
+using System.Runtime.Versioning;
 using X_Guide.MVVM.Command;
 using X_Guide.MVVM.ViewModel.CalibrationWizardSteps;
 using X_Guide.Service;
@@ -12,12 +13,12 @@ using XGuideSQLiteDB.Models;
 
 namespace X_Guide.MVVM.ViewModel
 {
+    [SupportedOSPlatform("windows")]
     internal class CalibrationWizardStartViewModel : ViewModelBase
     {
         private readonly IMapper _mapper;
         private readonly IRepository _repository;
         private readonly INavigationService _navigationService;
-        private string _name;
 
         private ObservableCollection<CalibrationViewModel> _calibrations;
 
@@ -31,13 +32,8 @@ namespace X_Guide.MVVM.ViewModel
             }
         }
 
-        public string Name
-        {
-            get { return _name; }
-            set { _name = value; OnPropertyChanged(); }
-        }
-
         private bool _isStarted;
+        private readonly ILifetimeScope _calibrationScope;
 
         public bool IsStarted
         {
@@ -45,11 +41,14 @@ namespace X_Guide.MVVM.ViewModel
             set { _isStarted = value; OnPropertyChanged(); }
         }
 
+        private readonly ILifetimeScope _scope;
+
+        public CalibrationViewModel Calibration { get; }
         public RelayCommand StartCalibCommand { get; set; }
         public RelayCommand LoadCalibCommand { get; private set; }
         public RelayCommand DeleteCalibCommand { get; private set; }
 
-        public CalibrationWizardStartViewModel(INavigationService navigationService, IMapper mapper, IRepository repository)
+        public CalibrationWizardStartViewModel(INavigationService navigationService, IMapper mapper, IRepository repository, ILifetimeScope lifetimeScope)
         {
             StartCalibCommand = new RelayCommand(StartCalibration);
             LoadCalibCommand = new RelayCommand(LoadCalibration);
@@ -58,10 +57,6 @@ namespace X_Guide.MVVM.ViewModel
             _mapper = mapper;
             _repository = repository;
             GetCalibrations();
-            TypedParameter calib = new TypedParameter(typeof(CalibrationViewModel), new CalibrationViewModel
-            {
-                Name = Name,
-            });
         }
 
         private void GetCalibrations()
@@ -78,12 +73,13 @@ namespace X_Guide.MVVM.ViewModel
 
         private void StartCalibration(object obj)
         {
-            TypedParameter calib = new TypedParameter(typeof(CalibrationViewModel), new CalibrationViewModel
-            {
-                Name = Name,
-            });
+            _navigationService.Navigate<CalibrationMainViewModel>();
+        }
 
-            _navigationService.Navigate<CalibrationMainViewModel>(calib);
+        public override void Dispose()
+        {
+            _scope?.Dispose();
+            base.Dispose();
         }
 
         public async void DeleteCalibration(object obj)

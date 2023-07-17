@@ -25,6 +25,7 @@ using X_Guide.MappingConfiguration;
 using X_Guide.MVVM.Model;
 using X_Guide.MVVM.Store;
 using X_Guide.MVVM.ViewModel;
+using X_Guide.MVVM.ViewModel.CalibrationWizardSteps;
 using X_Guide.Service;
 using X_Guide.Service.Communation;
 using X_Guide.Service.Communication;
@@ -53,7 +54,10 @@ namespace X_Guide
         private static IContainer BuildDIContainer()
         {
             ContainerBuilder builder = new ContainerBuilder();
+
+            builder.RegisterType<CalibrationViewModel>().InstancePerLifetimeScope();
             builder.RegisterType<JogControllerViewModel>();
+
             builder.RegisterType<NinePointCalibrationViewModel>();
             builder.RegisterType<WeakReferenceMessenger>().As<IMessenger>().SingleInstance();
             builder.RegisterType<DisposeService>().As<IDisposeService>().SingleInstance();
@@ -102,6 +106,11 @@ namespace X_Guide
             builder.RegisterType<Step3ViewModel>();
             builder.RegisterType<Step4ViewModel>();
             builder.RegisterType<Step5ViewModel>();
+            builder.RegisterType<Step5LookDownwardConfig>();
+            builder.RegisterType<Step5MountedOnJoint2Config>();
+            builder.RegisterType<Step5EyeOnHandConfig>();
+            builder.RegisterType<Step5LookUpwardConfig>();
+
             builder.RegisterType<Step6ViewModel>();
 
             builder.RegisterType<SettingViewModel>();
