@@ -2,7 +2,6 @@
 using System.Windows;
 using System.Windows.Controls;
 using X_Guide.Enums;
-using Orientation = X_Guide.Enums.Orientation;
 
 namespace X_Guide.CustomControls
 {
@@ -21,20 +20,15 @@ namespace X_Guide.CustomControls
         public static readonly DependencyProperty ItemSourceProperty =
             DependencyProperty.Register("ItemSource", typeof(IEnumerable<ValueDescription>), typeof(CustomRadioControl), new PropertyMetadata(null));
 
-        public Orientation SelectedValue
+        public object SelectedValue
         {
-            get { return (Orientation)GetValue(SelectedValueProperty); }
+            get { return GetValue(SelectedValueProperty); }
             set { SetValue(SelectedValueProperty, value); }
         }
 
         // Using a DependencyProperty as the backing store for SelectedValue.  This enables animation, styling, binding, etc...
         public static readonly DependencyProperty SelectedValueProperty =
-            DependencyProperty.Register("SelectedValue", typeof(object), typeof(CustomRadioControl), new FrameworkPropertyMetadata(Orientation.EyeOnHand, FrameworkPropertyMetadataOptions.BindsTwoWayByDefault, OnSelectedPropertiesChanged));
-
-        private static void OnSelectedPropertiesChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
-        {
-            var a = d as CustomRadioControl;
-        }
+            DependencyProperty.Register("SelectedValue", typeof(object), typeof(CustomRadioControl), new FrameworkPropertyMetadata(default, FrameworkPropertyMetadataOptions.BindsTwoWayByDefault));
 
         public CustomRadioControl()
         {
@@ -47,7 +41,7 @@ namespace X_Guide.CustomControls
             if (radioButton != null)
             {
                 object tag = radioButton.Tag;
-                SelectedValue = (Orientation)tag;
+                SelectedValue = tag;
             }
         }
     }

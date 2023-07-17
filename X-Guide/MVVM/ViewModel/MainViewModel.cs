@@ -6,6 +6,7 @@ using System.Security;
 using System.Windows;
 using System.Windows.Input;
 using TcpConnectionHandler.Server;
+using X_Guide.Enums;
 using X_Guide.MVVM.Command;
 using X_Guide.MVVM.Store;
 using X_Guide.Service;

@@ -75,7 +75,7 @@
         <ui:NavigationView x:Name="SideMenuNavigation"
                        IsTitleBarAutoPaddingEnabled="True"
                        IsBackButtonVisible="Collapsed"
-                       CompactModeThresholdWidth="720"
+                       PaneDisplayMode="LeftCompact"
                        IsSettingsVisible="False">
             <!-- Header Side Menu -->
 

@@ -48,8 +48,6 @@
         <c:TypeToDescriptionConverter x:Key="TypeToDescriptionConverter" />
         <c:TypeToBooleanConverter x:Key="TypeToBooleanConverter" />
 
-        <ext:TemplateSelector x:Key="MyTemplateSelector" />
-
         <DataTemplate DataType="{x:Type vms:Step5LookDownwardConfig}">
             <view:Step5TopConfig />
         </DataTemplate>

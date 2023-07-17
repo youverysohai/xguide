@@ -6,7 +6,7 @@
              xmlns:local="clr-namespace:X_Guide.CustomControls"
              xmlns:custLayout="clr-namespace:X_Guide.CustomControls.Layouts"
              xmlns:RadialMenu="clr-namespace:RadialMenu.Controls;assembly=RadialMenu" xmlns:i="http://schemas.microsoft.com/xaml/behaviors" xmlns:ui="http://schemas.modernwpf.com/2019"
-             xmlns:enums="clr-namespace:X_Guide.Enums"
+             xmlns:enums="clr-namespace:XGuideSQLiteDB.Models;assembly=XGuideSQLiteDB"
              xmlns:c="clr-namespace:X_Guide.Converter"
              mc:Ignorable="d"
              d:DesignHeight="450" d:DesignWidth="800"

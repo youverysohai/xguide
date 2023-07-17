@@ -1,11 +1,7 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Globalization;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Data;
-using X_Guide.Enums;
+using XGuideSQLiteDB.Models;
 
 namespace X_Guide.Converter
 {
@@ -17,8 +13,9 @@ namespace X_Guide.Converter
             //    return Visibility.Visible;
             //else
             //    return (parameter is Visibility) ? parameter : Visibility.Collapsed;
-            switch (value) {
-                case (int)ManipulatorType.SixAxis: return true; 
+            switch (value)
+            {
+                case (int)ManipulatorType.SixAxis: return true;
                 case (int)ManipulatorType.GantrySystemWR: return true;
                 default: return false;
             }
@@ -29,6 +26,7 @@ namespace X_Guide.Converter
             throw new NotImplementedException();
         }
     }
+
     public class InverseTypeToBooleanConverter : IValueConverter
     {
         public object Convert(object value, Type targetType, object parameter, CultureInfo culture)

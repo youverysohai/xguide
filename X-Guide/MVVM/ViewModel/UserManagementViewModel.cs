@@ -6,6 +6,7 @@ using System.Collections.ObjectModel;
 using System.Linq;
 using System.Security;
 using System.Windows;
+using X_Guide.Enums;
 using X_Guide.MVVM.Command;
 using X_Guide.Service;
 using XGuideSQLiteDB;
