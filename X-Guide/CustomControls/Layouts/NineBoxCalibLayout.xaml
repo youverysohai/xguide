@@ -26,7 +26,7 @@
         <c:IndexConverter x:Key="IndexConverter"/>
     </UserControl.Resources>
 
-    <GroupBox Width="500" Grid.Column="1" Visibility="Visible" Grid.Row="2" Style="{StaticResource GroupBoxTab}" MinHeight="210">
+    <GroupBox Margin="10 0 10 0"   Grid.Column="1" Visibility="Visible" Grid.Row="2" Style="{StaticResource GroupBoxTab}" >
         <i:Interaction.Triggers>
             <i:DataTrigger Binding="{Binding}" Value="{x:Static enums:Orientation.LookDownward}">
                 <i:ChangePropertyAction PropertyName="Visibility" Value="Visible" />

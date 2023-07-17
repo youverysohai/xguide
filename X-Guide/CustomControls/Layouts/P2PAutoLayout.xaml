@@ -4,23 +4,25 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:X_Guide.CustomControls.Layouts" xmlns:i="http://schemas.microsoft.com/xaml/behaviors"
-             xmlns:enums="clr-namespace:X_Guide.Enums"
+             xmlns:enums="clr-namespace:X_Guide.Enums" xmlns:ui="http://schemas.modernwpf.com/2019"
              mc:Ignorable="d" 
              d:DesignHeight="100" d:DesignWidth="300">
-    <Grid>
-        <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="*"/>
-            <ColumnDefinition Width="*"/>
-            <ColumnDefinition Width="auto"/>
-        </Grid.ColumnDefinitions>
-        <Grid.RowDefinitions>
-            <RowDefinition Height="auto"/>
-            <RowDefinition Height="*"/>
-        </Grid.RowDefinitions>
-        <TextBlock Text="{Binding XMove}" Grid.Column="0" Grid.Row="1"/>
-        <TextBlock Text="{Binding YMove}" Grid.Column="1" Grid.Row="1"/>
 
-        <Button Grid.Column="2" Content="Start Jog Tracking" Command="{Binding StartJogTrackingCommand}" Margin="10 0" Grid.Row="1">
-        </Button> 
-    </Grid>
+    <GroupBox  Style="{StaticResource GroupBoxTab}">
+        <GroupBox.Header>
+            <ui:SimpleStackPanel Orientation="Horizontal">
+                <ui:FontIcon Glyph="&#xECE9;" Margin="3 0" />
+                <TextBlock  HorizontalAlignment="Center" Style="{DynamicResource TitleTextBlockStyle}" Text="P2P Distance" />
+            </ui:SimpleStackPanel>
+        </GroupBox.Header>
+        <ui:SimpleStackPanel Orientation="Vertical">
+            <Label Content="X Distance " Style="{DynamicResource DefaultLabelStyle}"/>
+            <TextBlock  Text="{Binding XMove}" Style="{StaticResource ReadOnlyTextBlock}" />
+            <Label Content="Y Distance " Style="{DynamicResource DefaultLabelStyle}"/>
+            <TextBlock  Text="{Binding YMove}" Style="{StaticResource ReadOnlyTextBlock}" />
+
+            <Button   Content="Start Jog Tracking" Command="{Binding StartJogTrackingCommand}" Margin="10 0" Grid.Row="1">
+            </Button>
+        </ui:SimpleStackPanel>
+    </GroupBox>
 </UserControl>
