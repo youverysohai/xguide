@@ -130,6 +130,14 @@
                             Command="{x:Static materialDesign:DrawerHost.OpenDrawerCommand}"
                             CommandParameter="{x:Static Dock.Top}"
                             ></Button>
+                <Button  VerticalAlignment="Top" Margin="10 3 0 0" FontSize="11"  Content="Start Top Calib">
+                    <i:Interaction.Triggers>
+                        <i:EventTrigger EventName="Click">
+                            <i:InvokeCommandAction Command="{Binding StartCommand}" />
+                            <i:InvokeCommandAction Command="{x:Static materialDesign:DrawerHost.OpenDrawerCommand}" />
+                        </i:EventTrigger>
+                    </i:Interaction.Triggers>
+                </Button>
                 <local:CustomConnectionStatus Grid.Row="0" HorizontalAlignment="Center" IsConnected="{Binding AppState.IsAnyClientConnected}" ManipulatorType="{Binding Calibration.Manipulator.Type,Converter={StaticResource TypeToDescriptionConverter}}" />
 
                 <ui:SimpleStackPanel Grid.Row="2" Grid.Column="0" Margin="10">

@@ -11,47 +11,58 @@
              xmlns:hc="https://handyorg.github.io/handycontrol" xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes" xmlns:Release="clr-namespace:VMControls.WPF.Release;assembly=VMControls.WPF.Release"
              d:DesignHeight="450" d:DesignWidth="800"
              x:Name="TopConfig">
-    <Grid>
-
-        <Grid.RowDefinitions>
-            <RowDefinition Height="*" />
-            <RowDefinition Height="auto" />
-        </Grid.RowDefinitions>
-        <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="500" />
-            <ColumnDefinition Width="*" />
-        </Grid.ColumnDefinitions>
-
-
+    <materialDesign:DrawerHost OpenMode="Standard" IsTopDrawerOpen="True">
+        <materialDesign:DrawerHost.RightDrawerContent>
+            <ContentControl Content="{Binding NinePoint}" Margin="10" Width="410"/>
+        </materialDesign:DrawerHost.RightDrawerContent>
         <Grid>
-            <ContentControl Content="{Binding NinePoint}" Margin="10"/>
-            <Button VerticalAlignment="Bottom" Margin="30 0 0 20" Command="{Binding StartCommand}" Content="Start" />
-        </Grid>
-        <materialDesign:DrawerHost Grid.Column="1" OpenMode="Standard" IsTopDrawerOpen="True">
-            <materialDesign:DrawerHost.TopDrawerContent >
-                <Grid >
-                    <Release:VmRenderControl Height="375" Width="935" />
-                    <Button Content="^" HorizontalAlignment="Center" VerticalAlignment="Top" Command="{x:Static materialDesign:DrawerHost.CloseDrawerCommand}"/>
+
+            <Grid.RowDefinitions>
+                <RowDefinition Height="*" />
+                <RowDefinition Height="auto" />
+            </Grid.RowDefinitions>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*" />
+            </Grid.ColumnDefinitions>
+
+            <materialDesign:DrawerHost OpenMode="Standard" IsTopDrawerOpen="True">
+                <materialDesign:DrawerHost.TopDrawerContent >
+                    <Grid >
+                        <Release:VmRenderControl Height="375" Width="935" />
+                        <Button Content="^" HorizontalAlignment="Center" VerticalAlignment="Top" Command="{x:Static materialDesign:DrawerHost.CloseDrawerCommand}"/>
+                    </Grid>
+                </materialDesign:DrawerHost.TopDrawerContent>
+
+                <Grid Margin="5">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="2*"/>
+                        <ColumnDefinition Width="*"/>
+                    </Grid.ColumnDefinitions>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="*"/>
+                        <RowDefinition Height="auto"/>
+                    </Grid.RowDefinitions>
+                    <custLayout:P2PAutoLayout Grid.Column="1"/>
+                    <ContentControl Grid.Column="0"  Margin="5 0 0 0" Content="{Binding JogController}" />
+                    <ui:SimpleStackPanel Orientation="Horizontal">
+                        <Button VerticalAlignment="Top" Margin="10 3 0 0" Grid.Row="0" Grid.Column="0" Command="{x:Static materialDesign:DrawerHost.OpenDrawerCommand}">
+                            <ui:FontIcon Glyph="&#xEC80;" FontSize="14"></ui:FontIcon>
+                        </Button>
+                        <Button  VerticalAlignment="Top" Margin="10 3 0 0" FontSize="11"  Content="Start Top Calib">
+                            <i:Interaction.Triggers>
+                                <i:EventTrigger EventName="Click">
+                                    <i:InvokeCommandAction Command="{Binding StartCommand}" />
+                                    <i:InvokeCommandAction Command="{x:Static materialDesign:DrawerHost.OpenDrawerCommand}" />
+                                </i:EventTrigger>
+                            </i:Interaction.Triggers>
+                        </Button>
+                    </ui:SimpleStackPanel>
+
+
                 </Grid>
-            </materialDesign:DrawerHost.TopDrawerContent>
+            </materialDesign:DrawerHost>
 
-            <Grid Margin="5">
-                <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="2*"/>
-                    <ColumnDefinition Width="*"/>
-                </Grid.ColumnDefinitions>
-                <Grid.RowDefinitions>
-                    <RowDefinition Height="*"/>
-                    <RowDefinition Height="auto"/>
-                </Grid.RowDefinitions>
-                <custLayout:P2PAutoLayout Grid.Column="1"/>
-                <ContentControl Grid.Column="0"  Margin="5 0 0 0" Content="{Binding JogController}" />
-                <Button VerticalAlignment="Top" Margin="10 3 0 0" Grid.Row="0" Grid.Column="0" Command="{x:Static materialDesign:DrawerHost.OpenDrawerCommand}">
-                    <ui:FontIcon Glyph="&#xEC80;" FontSize="14"></ui:FontIcon>
-                </Button>
+        </Grid>
 
-            </Grid>
-        </materialDesign:DrawerHost>
-
-    </Grid>
+    </materialDesign:DrawerHost>
 </UserControl>
