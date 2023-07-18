@@ -38,6 +38,7 @@ namespace X_Guide.MVVM.ViewModel
             SaveCalibrationCommand = new RelayCommand(SaveCalibration);
             _repository = repository;
             NinePoint = ninePoint;
+            ninePoint.provider = Provider.Vision;
             ninePoint.Header = "Vision Calibration";
             _mapper = mapper;
             _messenger = messenger;

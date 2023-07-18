@@ -4,20 +4,30 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:local="clr-namespace:X_Guide.MVVM.View.CalibrationWizardSteps"
-             xmlns:custLayout ="clr-namespace:X_Guide.CustomControls.Layouts"
+             xmlns:custLayout ="clr-namespace:X_Guide.CustomControls.Layouts" xmlns:release="clr-namespace:VMControls.WPF.Release;assembly=VMControls.WPF.Release"
              mc:Ignorable="d"
              d:DesignHeight="450" d:DesignWidth="800">
     <Grid>
         <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="*" />
-            <ColumnDefinition Width="*" />
+            <ColumnDefinition Width="7*" />
+            <ColumnDefinition Width="3*" />
         </Grid.ColumnDefinitions>
-        <!--<ContentControl Grid.Column="0" Content="{Binding VisionView}">
+        <Grid Grid.Column="1" >
+            <custLayout:CalibrationResultLayout CalibrationData="{Binding Calibration.CalibrationData}" Margin="0 0" SaveCalibrationCommand="{Binding SaveCalibrationCommand}" />
+            <Button Command="{Binding StartCalibrationCommand}" HorizontalAlignment="Center" Margin="0 40 0 0" >Start Calibration</Button>
+        </Grid>
+        <ScrollViewer>
+            <StackPanel>
+                <!--<ContentControl Grid.Column="0" Content="{Binding VisionView}">
         </ContentControl>-->
-        <custLayout:CalibrationResultLayout CalibrationData="{Binding Calibration.CalibrationData}" Grid.Column="1" Margin="10 0" SaveCalibrationCommand="{Binding SaveCalibrationCommand}" />
+                <release:VmRenderControl Height="500" Margin="10"></release:VmRenderControl>
+                <Grid Margin="10">
+                    <ContentControl Content="{Binding NinePoint}" Height="400" Width="500"></ContentControl>
+                </Grid>
+                <!--<Button Command="{Binding StartVision9PointCommand}" VerticalAlignment="Bottom">Start 9 Point!!!</Button>-->
 
-        <ContentControl Content="{Binding NinePoint}" Width="500"></ContentControl>
-        <Button Command="{Binding StartVision9PointCommand}" VerticalAlignment="Bottom">Start 9 Point!!!</Button>
-        <Button Command="{Binding StartCalibrationCommand}" VerticalAlignment="Bottom" HorizontalAlignment="Right">Start Calib</Button>
+            </StackPanel>
+        </ScrollViewer>
+
     </Grid>
 </UserControl>

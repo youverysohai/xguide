@@ -95,8 +95,8 @@
         <ScrollViewer>
             <ui:SimpleStackPanel>
                 <Release:VmRenderControl Height="500" Margin="10"/>
-                <Grid>
-                    <ContentControl Content="{Binding NinePoint}" Margin="10" Height="400"/>
+                <Grid Margin="10">
+                    <ContentControl Content="{Binding NinePoint}"  Height="400"  Width="500"/>
                 </Grid>
 
             </ui:SimpleStackPanel>

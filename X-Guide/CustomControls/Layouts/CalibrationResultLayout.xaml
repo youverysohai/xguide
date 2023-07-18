@@ -9,7 +9,7 @@
              x:Name="CResultLayout"
              mc:Ignorable="d"
              d:DesignHeight="550" d:DesignWidth="800">
-    <Grid Width="300" >
+
         <GroupBox Margin="0 0 0 10"  Grid.RowSpan="3" Grid.Column="1" Style="{StaticResource GroupBoxTab}" Visibility="Visible">
 
             <GroupBox.Header>
@@ -66,12 +66,10 @@
                     <ui:SimpleStackPanel Orientation="Horizontal" Grid.Row="10" Grid.ColumnSpan="3">
 
                         <!--<Button Grid.Row="5"  Command="{Binding OperationCommand}" >Start Operation</Button>-->
-                        <Button Grid.Row="6">Start Calibration</Button>
                         <Button Grid.Row="7"   Command="{Binding ElementName=CResultLayout, Path=SaveCalibrationCommand}" >Save</Button>
-                        <Button Content="Testing" Command="{Binding TestingCommand}"></Button>
                     </ui:SimpleStackPanel>
                 </Grid>
             </ui:SimpleStackPanel>
         </GroupBox>
-    </Grid>
+
 </UserControl>

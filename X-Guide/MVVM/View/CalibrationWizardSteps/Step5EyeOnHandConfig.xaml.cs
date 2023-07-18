@@ -18,9 +18,9 @@ namespace X_Guide.MVVM.View.CalibrationWizardSteps
     /// <summary>
     /// Interaction logic for Step5EyeInHandConfig.xaml
     /// </summary>
-    public partial class Step5EyeInHandConfig : UserControl
+    public partial class Step5EyeOnHandConfig : UserControl
     {
-        public Step5EyeInHandConfig()
+        public Step5EyeOnHandConfig()
         {
             InitializeComponent();
         }
