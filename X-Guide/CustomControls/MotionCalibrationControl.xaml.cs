@@ -1,21 +1,6 @@
-﻿using ModernWpf.Controls;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows;
+﻿using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
-using X_Guide.Enums;
-using X_Guide.MVVM.ViewModel;
-using X_Guide.MVVM.ViewModel.CalibrationWizardSteps;
+using XGuideSQLiteDB.Models;
 using Orientation = X_Guide.Enums.Orientation;
 
 namespace X_Guide.CustomControls
@@ -25,8 +10,6 @@ namespace X_Guide.CustomControls
     /// </summary>
     public partial class MotionCalibrationControl : UserControl
     {
-
-
         public int Speed
         {
             get { return (int)GetValue(SpeedProperty); }
@@ -36,8 +19,6 @@ namespace X_Guide.CustomControls
         // Using a DependencyProperty as the backing store for Speed.  This enables animation, styling, binding, etc...
         public static readonly DependencyProperty SpeedProperty =
             DependencyProperty.Register("Speed", typeof(int), typeof(MotionCalibrationControl), new PropertyMetadata(0));
-
-
 
         public int Acceleration
         {
@@ -49,8 +30,6 @@ namespace X_Guide.CustomControls
         public static readonly DependencyProperty AccelerationProperty =
             DependencyProperty.Register("Acceleration", typeof(int), typeof(MotionCalibrationControl), new PropertyMetadata(0));
 
-
-
         public int MotionDelay
         {
             get { return (int)GetValue(MotionDelayProperty); }
@@ -61,8 +40,6 @@ namespace X_Guide.CustomControls
         public static readonly DependencyProperty MotionDelayProperty =
             DependencyProperty.Register("MotionDelay", typeof(int), typeof(MotionCalibrationControl), new PropertyMetadata(0));
 
-
-
         public int XOffset
         {
             get { return (int)GetValue(XOffsetProperty); }
@@ -72,6 +49,7 @@ namespace X_Guide.CustomControls
         // Using a DependencyProperty as the backing store for XOffset.  This enables animation, styling, binding, etc...
         public static readonly DependencyProperty XOffsetProperty =
             DependencyProperty.Register("XOffset", typeof(int), typeof(MotionCalibrationControl), new FrameworkPropertyMetadata(0, FrameworkPropertyMetadataOptions.BindsTwoWayByDefault));
+
         public int YOffset
         {
             get { return (int)GetValue(YOffsetProperty); }
@@ -81,8 +59,6 @@ namespace X_Guide.CustomControls
         // Using a DependencyProperty as the backing store for XOffset.  This enables animation, styling, binding, etc...
         public static readonly DependencyProperty YOffsetProperty =
             DependencyProperty.Register("YOffset", typeof(int), typeof(MotionCalibrationControl), new FrameworkPropertyMetadata(0, FrameworkPropertyMetadataOptions.BindsTwoWayByDefault));
-
-
 
         public int JointRotationAngle
         {
@@ -94,8 +70,6 @@ namespace X_Guide.CustomControls
         public static readonly DependencyProperty JointRotationAngleProperty =
             DependencyProperty.Register("JointRotationAngle", typeof(int), typeof(MotionCalibrationControl), new FrameworkPropertyMetadata(0, FrameworkPropertyMetadataOptions.BindsTwoWayByDefault));
 
-
-
         public ManipulatorType ManipulatorType
         {
             get { return (ManipulatorType)GetValue(ManipulatorTypeProperty); }
@@ -105,10 +79,6 @@ namespace X_Guide.CustomControls
         // Using a DependencyProperty as the backing store for ManipulatorType.  This enables animation, styling, binding, etc...
         public static readonly DependencyProperty ManipulatorTypeProperty =
             DependencyProperty.Register("ManipulatorType", typeof(ManipulatorType), typeof(MotionCalibrationControl), new FrameworkPropertyMetadata(ManipulatorType.GantrySystemWR, FrameworkPropertyMetadataOptions.BindsTwoWayByDefault));
-
-
-
-
 
         public Orientation CalibOrientation
         {
@@ -120,10 +90,6 @@ namespace X_Guide.CustomControls
         public static readonly DependencyProperty CalibOrientationProperty =
             DependencyProperty.Register("CalibOrientation", typeof(Orientation), typeof(MotionCalibrationControl), new PropertyMetadata(Orientation.LookDownward));
 
-
-
-
-
         public bool IsManual
         {
             get { return (bool)GetValue(IsManualProperty); }
@@ -133,10 +99,6 @@ namespace X_Guide.CustomControls
         // Using a DependencyProperty as the backing store for IsManual.  This enables animation, styling, binding, etc...
         public static readonly DependencyProperty IsManualProperty =
             DependencyProperty.Register("IsManual", typeof(bool), typeof(MotionCalibrationControl), new FrameworkPropertyMetadata(false, FrameworkPropertyMetadataOptions.BindsTwoWayByDefault, OnEnabledChanged));
-
-
-
-
 
         private static void OnEnabledChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
         {
@@ -154,7 +116,6 @@ namespace X_Guide.CustomControls
 
         public MotionCalibrationControl()
         {
-
             InitializeComponent();
         }
 
@@ -166,6 +127,7 @@ namespace X_Guide.CustomControls
                 SpeedValue.Text = ((int)e.NewValue).ToString();
             }
         }
+
         private void Slider_AccelerationValueChanged(object sender, RoutedPropertyChangedEventArgs<double> e)
         {
             if (AccelerationAngle != null)

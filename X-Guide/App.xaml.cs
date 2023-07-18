@@ -20,7 +20,6 @@ using ToastNotifications;
 using ToastNotifications.Lifetime;
 using ToastNotifications.Position;
 using VisionProvider.Interfaces;
-using X_Guide.Enums;
 using X_Guide.MappingConfiguration;
 using X_Guide.MVVM.Model;
 using X_Guide.MVVM.Store;
@@ -32,6 +31,7 @@ using X_Guide.Service.Communication;
 using X_Guide.Service.DatabaseProvider;
 using X_Guide.State;
 using XGuideSQLiteDB;
+using XGuideSQLiteDB.Models;
 using ILogger = Serilog.ILogger;
 using IPAddress = System.Net.IPAddress;
 

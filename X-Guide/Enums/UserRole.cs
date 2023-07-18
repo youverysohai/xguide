@@ -1,18 +1,15 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.ComponentModel;
 
-namespace X_Guide
+namespace X_Guide.Enums
 {
     public enum UserRole
     {
         [Description("Admin")]
         Admin = 0,
+
         [Description("Operator")]
         Operator = 1,
+
         [Description("Guest")]
         Guest = 2,
     }

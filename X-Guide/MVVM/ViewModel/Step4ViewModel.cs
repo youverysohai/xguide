@@ -2,6 +2,7 @@
 using System.Diagnostics;
 using X_Guide.MessageToken;
 using X_Guide.MVVM.ViewModel.CalibrationWizardSteps;
+using XGuideSQLiteDB.Models;
 
 namespace X_Guide.MVVM.ViewModel
 {
@@ -23,10 +24,9 @@ namespace X_Guide.MVVM.ViewModel
 
         private void CheckState()
         {
-
             bool isCalibrationValid = _calibration.XOffset > 0 && _calibration.JointRotationAngle > 0 && _calibration.YOffset > 0;
 
-            if (_calibration.Manipulator.Type == Enums.ManipulatorType.GantrySystemWR)
+            if (_calibration.Manipulator.Type == ManipulatorType.GantrySystemWR)
             {
                 isCalibrationValid = isCalibrationValid || (_calibration.XOffset > 0 && _calibration.YOffset > 0);
             }

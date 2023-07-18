@@ -1,24 +1,25 @@
 ﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
                     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-                          xmlns:e="clr-namespace:X_Guide.Enums">
-    <ObjectDataProvider x:Key="ManiType" MethodName="GetAllValuesAndDescriptions" ObjectType="{x:Type e:EnumHelperClass}">
+                          xmlns:e="clr-namespace:XGuideSQLiteDB.Models;assembly=XGuideSQLiteDB"
+                    xmlns:enum="clr-namespace:X_Guide.Enums">
+    <ObjectDataProvider x:Key="ManiType" MethodName="GetAllValuesAndDescriptions" ObjectType="{x:Type enum:EnumHelperClass}">
         <ObjectDataProvider.MethodParameters>
-            <x:Type TypeName="e:ManipulatorType"/>
+            <x:Type TypeName="e:ManipulatorType" />
         </ObjectDataProvider.MethodParameters>
     </ObjectDataProvider>
-    <ObjectDataProvider x:Key="TermiType" MethodName="GetAllValuesAndDescriptions" ObjectType="{x:Type e:EnumHelperClass}">
+    <ObjectDataProvider x:Key="TermiType" MethodName="GetAllValuesAndDescriptions" ObjectType="{x:Type enum:EnumHelperClass}">
         <ObjectDataProvider.MethodParameters>
-            <x:Type TypeName="e:Terminator"/>
+            <x:Type TypeName="enum:Terminator" />
         </ObjectDataProvider.MethodParameters>
     </ObjectDataProvider>
-    <ObjectDataProvider x:Key="SoftwareType" MethodName="GetAllIntAndDescriptions" ObjectType="{x:Type e:EnumHelperClass}">
+    <ObjectDataProvider x:Key="SoftwareType" MethodName="GetAllIntAndDescriptions" ObjectType="{x:Type enum:EnumHelperClass}">
         <ObjectDataProvider.MethodParameters>
-            <x:Type TypeName="e:VisionSoftware"/>
+            <x:Type TypeName="enum:VisionSoftware" />
         </ObjectDataProvider.MethodParameters>
     </ObjectDataProvider>
-    <ObjectDataProvider x:Key="UserRole" MethodName="GetAllIntAndDescriptions" ObjectType="{x:Type e:EnumHelperClass}">
+    <ObjectDataProvider x:Key="UserRole" MethodName="GetAllIntAndDescriptions" ObjectType="{x:Type enum:EnumHelperClass}">
         <ObjectDataProvider.MethodParameters>
-            <x:Type TypeName="e:UserRole"/>
+            <x:Type TypeName="enum:UserRole" />
         </ObjectDataProvider.MethodParameters>
     </ObjectDataProvider>
 </ResourceDictionary>

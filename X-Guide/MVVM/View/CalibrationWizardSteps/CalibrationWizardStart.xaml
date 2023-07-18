@@ -78,7 +78,7 @@
 
                 <TextBlock Margin="0 0 0 50" HorizontalAlignment="Center" VerticalAlignment="Bottom">Press Start to Begin <materialDesign:PackIcon Kind="ArrowDownBoldOutline"></materialDesign:PackIcon></TextBlock>
 
-                <Button Command="{Binding StartCalibCommand}"  Style="{DynamicResource MaterialDesignPaperButton}" Width="200" Margin="0 0 0 20">Start</Button>
+                <Button Command="{Binding StartCalibCommand}"  Style="{DynamicResource MaterialDesignPaperButton}" Width="200" Margin="0 0 0 20" >Start</Button>
             </StackPanel>
 
             <!-- simplest form -->
