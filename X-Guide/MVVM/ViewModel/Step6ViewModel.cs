@@ -84,8 +84,11 @@ namespace X_Guide.MVVM.ViewModel
         public event EventHandler OnCalibrationChanged;
         public object Step6CalibrationModule { get; set; }
 
-        public Step6ViewModel(ILifetimeScope lifeTimeScope,IServerTcp serverService, CalibrationViewModel calibration, IRepository repository, ICalibrationService calibService, IMapper mapper, Notifier notifier, IVisionService visionService, IMessenger messenger, NinePointCalibrationViewModel ninePoint, IVisionViewModel visionView = null)
+        public Step6ViewModel(ILifetimeScope lifeTimeScope, IServerTcp serverService, CalibrationViewModel calibration, IRepository repository, ICalibrationService calibService, IMapper mapper, Notifier notifier, IVisionService visionService, IMessenger messenger, NinePointCalibrationViewModel ninePoint, IVisionViewModel visionView)
         {
+            VisionView = visionView;
+            VisionView.SetConfig(calibration);
+            VisionView.ShowOutputImage();
             calibration.CalibrationData = new CalibrationData { Y = 7969 };
             //Mock = new Step6LookDownwardViewModel(calibService, ninePoint, messenger, calibration, repository, mapper);
             _serverService = serverService;
@@ -96,14 +99,14 @@ namespace X_Guide.MVVM.ViewModel
             _mapper = mapper;
             _notifier = notifier;
             _visionService = visionService;
-            VisionView = visionView;
+
             _messenger = messenger;
-            VisionView.SetConfig(calibration);
+
             TestingCommand = new RelayCommand(Testing);
             CalibrateCommand = RelayCommand.FromAsyncRelayCommand(Calibrate);
             SaveCommand = RelayCommand.FromAsyncRelayCommand(Save);
             ConfirmCalibDataCommand = new RelayCommand(ConfirmCalibData);
-            VisionView.ShowOutputImage();
+
             switch (calibration.Orientation)
             {
                 case Enums.Orientation.LookDownward: Step6CalibrationModule = lifeTimeScope.Resolve<Step6LookDownwardViewModel>(); break;

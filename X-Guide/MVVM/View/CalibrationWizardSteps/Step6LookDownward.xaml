@@ -4,18 +4,11 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:local="clr-namespace:X_Guide.MVVM.View.CalibrationWizardSteps"
-             xmlns:custLayout ="clr-namespace:X_Guide.CustomControls.Layouts" xmlns:release="clr-namespace:VMControls.WPF.Release;assembly=VMControls.WPF.Release"
+             
              mc:Ignorable="d"
              d:DesignHeight="450" d:DesignWidth="800">
-    <Grid >
 
-        <!--<ContentControl Grid.Column="0" Content="{Binding VisionView}">
-        </ContentControl>-->
 
         <ContentControl Content="{Binding NinePoint}"   ></ContentControl>
 
-        <!--<Button Command="{Binding StartVision9PointCommand}" VerticalAlignment="Bottom">Start 9 Point!!!</Button>-->
-
-
-    </Grid>
 </UserControl>

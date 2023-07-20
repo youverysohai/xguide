@@ -152,7 +152,7 @@ namespace X_Guide
                     builder.RegisterType<HikViewModel>().As<IVisionViewModel>();
                     builder.RegisterType<HikVisionCalibrationStep>().As<IVisionCalibrationStep>();
                     builder.RegisterType<HikOperationService>().As<IOperationService>();
-                    builder.RegisterType<HikVisionCalibrationStep>().As<IVisionCalibrationStep>();
+         
 
                     break;
 
@@ -173,9 +173,8 @@ namespace X_Guide
                     break;
 
                 case 4:
-                    builder.Register<object>(_ => null).As<IVisionViewModel>();
+                    builder.RegisterType<NullVisionViewModel>().As<IVisionViewModel>();
                     builder.RegisterType<TcpVisionService>().As<IVisionService>().SingleInstance();
-                    builder.RegisterType<SmartCamViewModel>().As<IVisionViewModel>();
                     builder.RegisterType<SmartCamOperationService>().As<IOperationService>();
                     builder.RegisterType<OthersVisionCalibrationStep>().As<IVisionCalibrationStep>();
                     break;

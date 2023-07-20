@@ -40,12 +40,7 @@
                 </StackPanel>
             </ContentPresenter.Content>
         </ContentPresenter>
-        <DataTemplate x:Key="HalconViewTemplate" DataType="{x:Type vms:HalconViewModel}">
-            <views:HalconView />
-        </DataTemplate>
-        <DataTemplate x:Key="HikViewTemplate" DataType="{x:Type vms:HikViewModel}">
-            <views:HikView />
-        </DataTemplate>
+  
     </Window.Resources>
     <Grid Name="MainWin">
         <!--Register Dialog-->
@@ -231,7 +226,13 @@
                             </DataTemplate>
                             <DataTemplate DataType="{x:Type vms:NinePointCalibrationViewModel}">
                                 <xCustLayout:NineBoxCalibLayout></xCustLayout:NineBoxCalibLayout>
-                            </DataTemplate> 
+                            </DataTemplate>
+                            <DataTemplate DataType="{x:Type vms:HalconViewModel}">
+                                <views:HalconView />
+                            </DataTemplate>
+                            <DataTemplate DataType="{x:Type vms:HikViewModel}">
+                                <views:HikView />
+                            </DataTemplate>
                         </Grid.Resources>
                         <Grid.RowDefinitions>
                             <RowDefinition Height="59*" />

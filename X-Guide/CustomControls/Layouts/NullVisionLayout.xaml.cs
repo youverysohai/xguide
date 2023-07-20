@@ -16,11 +16,11 @@ using System.Windows.Shapes;
 namespace X_Guide.CustomControls.Layouts
 {
     /// <summary>
-    /// Interaction logic for LiveViewLayout.xaml
+    /// Interaction logic for NullVisionLayout.xaml
     /// </summary>
-    public partial class LiveViewLayout : UserControl
+    public partial class NullVisionLayout : UserControl
     {
-        public LiveViewLayout()
+        public NullVisionLayout()
         {
             InitializeComponent();
         }
