@@ -1,23 +1,9 @@
-﻿using HandyControl.Controls;
-using MaterialDesignThemes.Wpf;
+﻿using MaterialDesignThemes.Wpf;
 using System;
-using System.Collections.Generic;
-using System.Diagnostics;
-using System.Globalization;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
-using X_Guide.MVVM.ViewModel.CalibrationWizardSteps;
 using X_Guide.MVVM.ViewModel;
+using X_Guide.MVVM.ViewModel.CalibrationWizardSteps;
 
 namespace X_Guide.MVVM.View.CalibrationWizardSteps
 {
@@ -26,20 +12,14 @@ namespace X_Guide.MVVM.View.CalibrationWizardSteps
     /// </summary>
     public partial class CalibrationWizardStart : UserControl
     {
-        private SnackbarMessageQueue messageQueue = new SnackbarMessageQueue();
-
-
+        private readonly SnackbarMessageQueue messageQueue = new SnackbarMessageQueue();
 
         public CalibrationWizardStart()
         {
             InitializeComponent();
 
-
-
             SnackbarMessage.MessageQueue = messageQueue;
-
         }
-
 
         private void Chip_DeleteClick(object sender, RoutedEventArgs e)
         {
@@ -51,7 +31,6 @@ namespace X_Guide.MVVM.View.CalibrationWizardSteps
                 true,
                 TimeSpan.FromSeconds(1.55));
 
-
             if (chip != null && chip.DataContext is CalibrationViewModel calibration)
             {
                 var viewModel = DataContext as CalibrationWizardStartViewModel;
@@ -60,12 +39,6 @@ namespace X_Guide.MVVM.View.CalibrationWizardSteps
                     viewModel.DeleteCalibration(calibration);
                 }
             }
-
-
-
         }
     }
-
-
-
 }

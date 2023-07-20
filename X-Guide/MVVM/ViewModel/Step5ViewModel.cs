@@ -17,9 +17,9 @@ namespace X_Guide.MVVM.ViewModel
             switch (calibration.Orientation)
             {
                 case Orientation.LookDownward: Step5CalibrationModule = lifeTimeScope.Resolve<Step5LookDownwardConfig>(); break;
-                case Orientation.EyeOnHand: lifeTimeScope.Resolve<Step5EyeOnHandConfig>(); break;
-                case Orientation.MountedOnJoint2: lifeTimeScope.Resolve<Step5MountedOnJoint2Config>(); break;
-                case Orientation.LookUpward: lifeTimeScope.Resolve<Step5LookUpwardConfig>(); break;
+                case Orientation.EyeOnHand: Step5CalibrationModule = lifeTimeScope.Resolve<Step5EyeOnHandConfig>(); break;
+                case Orientation.MountedOnJoint2: Step5CalibrationModule = lifeTimeScope.Resolve<Step5MountedOnJoint2Config>(); break;
+                case Orientation.LookUpward: Step5CalibrationModule = lifeTimeScope.Resolve<Step5LookUpwardConfig>(); break;
             }
         }
     }

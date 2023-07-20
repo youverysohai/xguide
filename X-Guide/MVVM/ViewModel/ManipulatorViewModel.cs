@@ -1,13 +1,5 @@
-﻿using AutoMapper;
-using System;
-using System.Collections.Generic;
-using System.Collections.ObjectModel;
-using System.Linq;
-using System.Runtime.InteropServices;
-using System.Text;
-using System.Threading.Tasks;
-using X_Guide.Enums;
-using X_Guide.MVVM.Model;
+﻿using System;
+using XGuideSQLiteDB.Models;
 
 namespace X_Guide.MVVM.ViewModel
 {
@@ -20,7 +12,6 @@ namespace X_Guide.MVVM.ViewModel
 
         public string Description { get; set; }
 
-
         public ManipulatorType Type { get; set; }
 
         public object Clone()
@@ -32,18 +23,10 @@ namespace X_Guide.MVVM.ViewModel
                 Description = Description,
                 Type = Type,
             };
-
         }
 
         public ManipulatorViewModel()
         {
-            
         }
-
-
-
-
-
-
     }
 }

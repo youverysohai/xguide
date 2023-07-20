@@ -1,5 +1,4 @@
 ﻿using CommunityToolkit.Mvvm.Messaging;
-using System;
 using System.Collections.Generic;
 using System.Linq;
 using X_Guide.Enums;
@@ -32,19 +31,11 @@ namespace X_Guide.MVVM.ViewModel
         }
 
         public RelayCommand OrientationCommand { get; set; }
-        public Action<bool> OnStateChanged { get; private set; }
 
         public Step2ViewModel(CalibrationViewModel calibration, IMessenger messenger)
         {
             _messenger = messenger;
             _calibration = calibration;
-            switch (calibration.Manipulator.Type)
-            {
-                case ManipulatorType.GantrySystemR:
-                case ManipulatorType.GantrySystemWR: _orientationType = _orientationType.GetRange(0, 3); break;
-                case ManipulatorType.SCARA: _orientationType.RemoveAt(4); break;
-                case ManipulatorType.SixAxis: _orientationType.RemoveAt(3); break;
-            }
         }
     }
 }
