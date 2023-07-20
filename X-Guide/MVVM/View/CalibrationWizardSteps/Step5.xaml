@@ -56,25 +56,23 @@
 
     <!--VM Camara-->
 
-
     <Grid Margin="0 10">
         <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="2*"/>
-            <ColumnDefinition Width="5*"/>
-            <ColumnDefinition Width="3*"/>
+            <ColumnDefinition Width="2*" />
+            <ColumnDefinition Width="5*" />
+            <ColumnDefinition Width="3*" />
         </Grid.ColumnDefinitions>
         <ContentControl Grid.Column="0"  Content ="{Binding Step5CalibrationModule}">
         </ContentControl>
-        <ContentControl Grid.Column="0"  Content ="{Binding Step5CalibrationModule}">
+        <ContentControl Grid.Column="0"  Content ="{Binding VisionView}">
         </ContentControl>
-        <ui:SimpleStackPanel Grid.Column="2" Orientation="Vertical" >
-            <ContentControl Content="{Binding JogController}"  />
-            <ContentControl Content="{Binding JogTracking}"/>
+        <ui:SimpleStackPanel Grid.Column="2" Orientation="Vertical">
+            <ContentControl Content="{Binding JogController}" />
+            <ContentControl Content="{Binding JogTracking}" />
         </ui:SimpleStackPanel>
     </Grid>
     <!--<ContentControl hc:FlexPanel.FlexBasis="720" Height="500" Content="{Binding VisionView}" VerticalAlignment="Top">
             </ContentControl>-->
-
 
     <!--Semi Auto(GWR)-->
     <!--
@@ -96,5 +94,4 @@
                              ToolTipService.InitialShowDelay="122">
                 <ui:FontIcon Glyph="&#xE759;" />
             </Button>-->
-
 </UserControl>

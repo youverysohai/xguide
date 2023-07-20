@@ -116,12 +116,10 @@ namespace X_Guide
             builder.RegisterType<Step6EyeOnHandConfig>();
             builder.RegisterType<Step6LookDownwardViewModel>();
 
-
             builder.RegisterType<SettingViewModel>();
             builder.RegisterType<UserManagementViewModel>();
             builder.RegisterType<CalibrationMainViewModel>();
             builder.RegisterType<JogRobotViewModel>();
-            builder.RegisterType<LiveCameraViewModel>();
             builder.RegisterType<StateViewModel>().SingleInstance();
             builder.RegisterType<Repository>().As<IRepository>();
             builder.RegisterType<MessageBoxService>().As<IMessageBoxService>().SingleInstance();
@@ -175,7 +173,7 @@ namespace X_Guide
                     break;
 
                 case 4:
-
+                    builder.Register<object>(_ => null).As<IVisionViewModel>();
                     builder.RegisterType<TcpVisionService>().As<IVisionService>().SingleInstance();
                     builder.RegisterType<SmartCamViewModel>().As<IVisionViewModel>();
                     builder.RegisterType<SmartCamOperationService>().As<IOperationService>();

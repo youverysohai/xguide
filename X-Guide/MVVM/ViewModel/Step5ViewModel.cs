@@ -1,16 +1,9 @@
 ﻿/*using VM.Core;*/
 
 using Autofac;
-using CommunityToolkit.Mvvm.Input;
-using CommunityToolkit.Mvvm.Messaging;
-using ManipulatorTcp;
-using System;
-using System.Diagnostics;
 using System.Runtime.Versioning;
-using System.Windows;
 using X_Guide.Enums;
 using X_Guide.MVVM.ViewModel.CalibrationWizardSteps;
-using X_Guide.State;
 
 namespace X_Guide.MVVM.ViewModel
 {
@@ -19,14 +12,15 @@ namespace X_Guide.MVVM.ViewModel
     {
         public object Step5CalibrationModule { get; set; }
         public JogControllerViewModel JogController { get; set; }
-
+        public IVisionViewModel VisionView { get; set; }
         public JogTrackingViewModel JogTracking { get; set; }
 
-        public Step5ViewModel(CalibrationViewModel calibration, ILifetimeScope lifeTimeScope, JogControllerViewModel controller, JogTrackingViewModel tracker)
+        public Step5ViewModel(CalibrationViewModel calibration, ILifetimeScope lifeTimeScope, JogControllerViewModel controller, JogTrackingViewModel tracker, IVisionViewModel visionView)
         {
+            VisionView = visionView;
             tracker.JogTrackingEnabled = !calibration.CalibrationMode;
-            JogTracking = tracker; 
-            
+            JogTracking = tracker;
+
             switch (calibration.Orientation)
             {
                 case Orientation.LookDownward: Step5CalibrationModule = lifeTimeScope.Resolve<Step5LookDownwardConfig>(); break;
@@ -37,7 +31,5 @@ namespace X_Guide.MVVM.ViewModel
             controller.Calibration = calibration;
             JogController = controller;
         }
-
-
     }
 }

@@ -2,13 +2,14 @@
 
 namespace X_Guide.MVVM.ViewModel
 {
-    internal interface IVisionViewModel
+    public interface IVisionViewModel
     {
         void SetConfig(CalibrationViewModel calibrationViewModel);
 
         void StartLiveImage();
 
         void ShowOutputImage();
+
         void StopLiveImage();
     }
 }
