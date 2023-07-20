@@ -14,7 +14,7 @@ using XGuideSQLiteDB.Models;
 namespace X_Guide.MVVM.ViewModel
 {
     [SupportedOSPlatform("windows")]
-    internal class Step6TopConfigViewModel : ViewModelBase
+    internal class Step6LookDownwardViewModel : ViewModelBase
     {
         public NinePointCalibrationViewModel NinePoint { get; }
 
@@ -27,15 +27,12 @@ namespace X_Guide.MVVM.ViewModel
         private readonly ICalibrationService _calibrationService;
         public RelayCommand StartCalibrationCommand { get; set; }
 
-        public RelayCommand SaveCalibrationCommand { get; set; }
-
         private readonly IRepository _repository;
 
-        public Step6TopConfigViewModel(ICalibrationService calibrationService, NinePointCalibrationViewModel ninePoint, IMessenger messenger, CalibrationViewModel calibration, IRepository repository, IMapper mapper)
+        public Step6LookDownwardViewModel(ICalibrationService calibrationService, NinePointCalibrationViewModel ninePoint, IMessenger messenger, CalibrationViewModel calibration, IRepository repository, IMapper mapper)
         {
             StartVision9PointCommand = new RelayCommand(StartVision9Point);
             StartCalibrationCommand = new RelayCommand(StartCalibration);
-            SaveCalibrationCommand = new RelayCommand(SaveCalibration);
             _repository = repository;
             NinePoint = ninePoint;
             ninePoint.provider = Provider.Vision;
@@ -44,22 +41,6 @@ namespace X_Guide.MVVM.ViewModel
             _messenger = messenger;
             Calibration = calibration;
             _calibrationService = calibrationService;
-        }
-
-        private void SaveCalibration()
-        {
-            Calibration calibration = _repository.Find<Calibration>(q => q.Id.Equals(Calibration.Id)).FirstOrDefault();
-
-            if (calibration is null)
-            {
-                _repository.Create(_mapper.Map<Calibration>(Calibration));
-                //_notifier.ShowSuccess(StrRetriver.Get("SC000"));
-            }
-            else
-            {
-                _repository.Update(_mapper.Map<Calibration>(Calibration));
-                //_notifier.ShowSuccess($"{Calibration.Name} : {StrRetriver.Get("SC001")}");
-            }
         }
 
         private async void StartVision9Point()

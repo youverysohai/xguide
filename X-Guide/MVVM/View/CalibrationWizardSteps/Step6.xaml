@@ -37,8 +37,8 @@
             <Setter Property="FontSize" Value="11" />
         </Style>
         <ext:TemplateSelector x:Key="MyTemplateSelector" />
-        <DataTemplate DataType="{x:Type vms:Step6TopConfigViewModel}">
-            <local:Step6TopConfig />
+        <DataTemplate DataType="{x:Type vms:Step6LookDownwardViewModel}">
+            <local:Step6LookDownward />
         </DataTemplate>
     </UserControl.Resources>
 
@@ -100,10 +100,18 @@
         </ui:ContentDialog>-->
 
 
-           
-            <ContentControl   Content ="{Binding Mock}">
-            </ContentControl>
-            <!--<XCust:CustomRenderControl hc:FlexPanel.FlexBasis="640" Height="480" Procedure="{Binding VisProcedure}"></XCust:CustomRenderControl>-->
+
+    <Grid Margin="0 10">
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="2*"/>
+            <ColumnDefinition Width="5*"/>
+            <ColumnDefinition Width="3*"/>
+        </Grid.ColumnDefinitions>
+        <ContentControl  Content ="{Binding Step6CalibrationModule}">
+        </ContentControl>
+        <custLayout:CalibrationResultLayout Grid.Column="2"   CalibrationData="{Binding Calibration.CalibrationData}" SaveCalibrationCommand="{Binding SaveCommand}" StartCalibrationCommand="{Binding CalibrateCommand}"/>
+    </Grid>
+    <!--<XCust:CustomRenderControl hc:FlexPanel.FlexBasis="640" Height="480" Procedure="{Binding VisProcedure}"></XCust:CustomRenderControl>-->
 
             <!--<XCust:HalconSmartControl Width="640" Height="480" Image="{Binding LiveImage}" Point="{Binding OutputImageParameter}" />
                     <XCust:HalconSmartControl Width="648" Height="488" Image="{Binding OutputImage}" />-->

@@ -7,7 +7,7 @@ namespace X_Guide.MVVM.View.CalibrationWizardSteps
     /// <summary>
     /// Interaction logic for Step5TopConfig.xaml
     /// </summary>
-    public partial class Step5TopConfig : UserControl
+    public partial class Step5LookDownward : UserControl
     {
         public bool isStarted { get; set; } = false;
         public ICommand JogCommand
@@ -18,7 +18,7 @@ namespace X_Guide.MVVM.View.CalibrationWizardSteps
 
         // Using a DependencyProperty as the backing store for JogCommand.  This enables animation, styling, binding, etc...
         public static readonly DependencyProperty JogCommandProperty =
-            DependencyProperty.Register("JogCommand", typeof(ICommand), typeof(Step5TopConfig), new PropertyMetadata(null));
+            DependencyProperty.Register("JogCommand", typeof(ICommand), typeof(Step5LookDownward), new PropertyMetadata(null));
 
         public ICommand ButtonCommand
         {
@@ -28,9 +28,9 @@ namespace X_Guide.MVVM.View.CalibrationWizardSteps
 
         // Using a DependencyProperty as the backing store for ButtonCommand.  This enables animation, styling, binding, etc...
         public static readonly DependencyProperty ButtonCommandProperty =
-            DependencyProperty.Register("ButtonCommand", typeof(ICommand), typeof(Step5TopConfig), new PropertyMetadata(null));
+            DependencyProperty.Register("ButtonCommand", typeof(ICommand), typeof(Step5LookDownward), new PropertyMetadata(null));
 
-        public Step5TopConfig()
+        public Step5LookDownward()
         {
             InitializeComponent();
         }

@@ -10,10 +10,11 @@ namespace TcpConnectionHandler.Client
         private NetworkStream? _stream;
         private CancellationTokenSource? cts;
         public string Flowname = "";
-        private readonly IMessenger _messenger = new WeakReferenceMessenger();
+        private readonly IMessenger _messenger;
 
-        public ClientTcp(TcpConfiguration configuration) : base(configuration)
+        public ClientTcp(TcpConfiguration configuration, IMessenger messenger) : base(configuration)
         {
+            _messenger = messenger;
         }
 
         public bool IsConnected => _stream != null;
@@ -28,16 +29,16 @@ namespace TcpConnectionHandler.Client
                 _client.Connect(_configuration!.IPAddress, _configuration.Port);
                 _stream = _client.GetStream();
 
-                _messenger.Send(new ClientTcpStatusUpdate(true));
+                _messenger.Send(new ClientStatusChanged(true));
 
                 cts = new CancellationTokenSource();
                 await RecieveDataAsync(_stream, cts.Token);
+                _messenger.Send(new ClientStatusChanged(false));
 
-                _messenger.Send(new ClientTcpStatusUpdate(false));
             }
             catch (Exception ex)
             {
-                _messenger.Send(new ClientTcpStatusUpdate(false));
+                _messenger.Send(new ClientStatusChanged(false));
                 Debug.WriteLine("An error occurred: " + ex.Message);
             }
         }

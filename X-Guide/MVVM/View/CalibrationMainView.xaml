@@ -59,7 +59,7 @@
             </Button>
             <TextBox materialDesign:TextFieldAssist.HasClearButton="True"
                      Cursor="Hand"
-                     Text="{Binding Calibration.Name}"
+                     Text="{Binding Calibration.Name, Mode=TwoWay}"
                      Grid.ColumnSpan="2" Width="300"
                      Style="{DynamicResource InputMaterialDesignTextBox}"
 

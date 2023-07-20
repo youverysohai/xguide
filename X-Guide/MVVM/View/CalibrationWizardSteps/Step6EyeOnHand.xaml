@@ -1,0 +1,23 @@
+﻿<UserControl x:Class="X_Guide.MVVM.View.CalibrationWizardSteps.Step6EyeOnHand"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:X_Guide.MVVM.View.CalibrationWizardSteps"
+             xmlns:custLayout="clr-namespace:X_Guide.CustomControls.Layouts" xmlns:release="clr-namespace:VMControls.WPF.Release;assembly=VMControls.WPF.Release"
+             mc:Ignorable="d" 
+             d:DesignHeight="450" d:DesignWidth="800">
+    <Grid>
+        <!--<Grid Grid.Column="2" Margin="0 10">
+            <custLayout:CalibrationResultLayout CalibrationData="{Binding Calibration.CalibrationData}" Margin="0 0" SaveCalibrationCommand="{Binding SaveCalibrationCommand}" />
+            <Button Command="{Binding StartCalibrationCommand}" HorizontalAlignment="Center" Margin="0 40 0 0" >Start Calibration</Button>
+        </Grid>-->
+        <release:VmRenderControl Grid.ColumnSpan="2"  Margin="10"></release:VmRenderControl>
+
+        <!--<ContentControl Grid.Column="0" Content="{Binding VisionView}">
+        </ContentControl>--> 
+        <!--<Button Command="{Binding StartVision9PointCommand}" VerticalAlignment="Bottom">Start 9 Point!!!</Button>-->
+
+
+    </Grid>
+</UserControl>

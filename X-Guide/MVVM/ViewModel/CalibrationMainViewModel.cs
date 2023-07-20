@@ -101,7 +101,7 @@ namespace X_Guide.MVVM.ViewModel
             _lifeTimeScope = lifeTimeScope.BeginLifetimeScope();
 
             _navigationService = navigationService;
-            _navigationService.SetScope(lifeTimeScope);
+            _navigationService.SetScope(_lifeTimeScope);
             _navigationStore = _navigationService.GetNavigationStore();
             _navigationStore.CurrentViewModelChanged += OnCurrentViewModelChanged;
             _viewModelLocator = viewModelLocator;

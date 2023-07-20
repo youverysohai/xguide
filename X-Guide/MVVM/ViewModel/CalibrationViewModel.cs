@@ -34,7 +34,7 @@ namespace X_Guide.MVVM.ViewModel.CalibrationWizardSteps
 
             // Reset other properties to null or default values
             Id = 0;
-            Name = null;
+            Name = "Default Calib";
             Manipulator = currentManipulator; // Restore the saved Manipulator value
             JogMode = false;
             CalibrationMode = false;

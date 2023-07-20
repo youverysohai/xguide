@@ -1,0 +1,103 @@
+﻿<UserControl x:Class="X_Guide.CustomControls.Layouts.JogTrackingLayout"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:X_Guide.CustomControls.Layouts" xmlns:i="http://schemas.microsoft.com/xaml/behaviors"
+             xmlns:enums="clr-namespace:X_Guide.Enums" xmlns:ui="http://schemas.modernwpf.com/2019"
+             mc:Ignorable="d" 
+             x:Name="DistanceLayout"
+             d:DesignHeight="300" d:DesignWidth="300">
+    <UserControl.Resources>
+        <i:DataTrigger x:Key="CalibrationModeTrueTrigger" Binding="{Binding Calibration.CalibrationMode}" Value="True">
+            <i:ChangePropertyAction PropertyName="Visibility" Value="Collapsed" />
+        </i:DataTrigger>
+        <i:DataTrigger x:Key="CalibrationModeFalseTrigger" Binding="{Binding Calibration.CalibrationMode}" Value="False">
+            <i:ChangePropertyAction PropertyName="Visibility" Value="Visible" />
+        </i:DataTrigger>
+        <i:DataTrigger x:Key="CalibrationModeInverseTrueTrigger" Binding="{Binding Calibration.CalibrationMode}" Value="True">
+            <i:ChangePropertyAction PropertyName="Visibility" Value="Visible" />
+        </i:DataTrigger>
+        <i:DataTrigger x:Key="CalibrationModeInverseFalseTrigger" Binding="{Binding Calibration.CalibrationMode}" Value="False">
+            <i:ChangePropertyAction PropertyName="Visibility" Value="Collapsed" />
+        </i:DataTrigger>
+
+    </UserControl.Resources>
+
+    <GroupBox  Style="{StaticResource GroupBoxTab}">
+        <GroupBox.Header>
+            <ui:SimpleStackPanel Orientation="Horizontal">
+                <ui:FontIcon Glyph="&#xECC6;" Margin="8 0" />
+                <TextBlock  HorizontalAlignment="Center" Style="{DynamicResource TitleTextBlockStyle}" Text="Distance" />
+            </ui:SimpleStackPanel>
+        </GroupBox.Header>
+        <ui:SimpleStackPanel Orientation="Vertical">
+            <Label Content="X Distance " Style="{DynamicResource DefaultLabelStyle}"/>
+            <TextBlock  Text="{Binding TrackedXMove}" Style="{StaticResource ReadOnlyTextBlock}" >
+                <i:Interaction.Triggers> 
+                    <!-- Reusing the DataTrigger defined as resources -->
+                    <i:DataTrigger  Binding="{Binding Calibration.CalibrationMode}" Value="True">
+                        <i:ChangePropertyAction PropertyName="Visibility" Value="Collapsed" />
+                    </i:DataTrigger>
+                    <i:DataTrigger  Binding="{Binding Calibration.CalibrationMode}" Value="False">
+                        <i:ChangePropertyAction PropertyName="Visibility" Value="Visible" />
+                    </i:DataTrigger>
+                </i:Interaction.Triggers>
+            </TextBlock>
+            <TextBox Text="{Binding TrackedXMove}" Style="{StaticResource DefaultTextBoxStyle}">
+                <i:Interaction.Triggers>
+                    <i:DataTrigger Binding="{Binding Calibration.CalibrationMode}" Value="True">
+                        <i:ChangePropertyAction PropertyName="Visibility" Value="Visible" />
+                    </i:DataTrigger>
+                    <i:DataTrigger Binding="{Binding Calibration.CalibrationMode}" Value="False">
+                        <i:ChangePropertyAction PropertyName="Visibility" Value="Collapsed" />
+                    </i:DataTrigger>
+                </i:Interaction.Triggers>
+            </TextBox>
+            <Label Content="Y Distance " Style="{DynamicResource DefaultLabelStyle}"/>
+            <TextBlock  Text="{Binding TrackedYMove}" Style="{StaticResource ReadOnlyTextBlock}" >
+                <i:Interaction.Triggers>  
+                    <i:DataTrigger  Binding="{Binding Calibration.CalibrationMode}" Value="True">
+                        <i:ChangePropertyAction PropertyName="Visibility" Value="Collapsed" />
+                    </i:DataTrigger>
+                    <i:DataTrigger  Binding="{Binding Calibration.CalibrationMode}" Value="False">
+                        <i:ChangePropertyAction PropertyName="Visibility" Value="Visible" />
+                    </i:DataTrigger>
+                </i:Interaction.Triggers>
+            </TextBlock>
+            <TextBox Text="{Binding TrackedYMove}" Style="{StaticResource DefaultTextBoxStyle}" >
+                <i:Interaction.Triggers>
+                    <i:DataTrigger Binding="{Binding Calibration.CalibrationMode}" Value="True">
+                        <i:ChangePropertyAction PropertyName="Visibility" Value="Visible" />
+                    </i:DataTrigger>
+                    <i:DataTrigger Binding="{Binding Calibration.CalibrationMode}" Value="False">
+                        <i:ChangePropertyAction PropertyName="Visibility" Value="Collapsed" />
+                    </i:DataTrigger>
+                </i:Interaction.Triggers>
+            </TextBox>
+            <Button   Command="{Binding StartJogTrackingCommand}" Margin="0" Grid.Row="1">
+                <i:Interaction.Triggers>
+                    <i:DataTrigger  Binding="{Binding Calibration.CalibrationMode}" Value="True">
+                        <i:ChangePropertyAction PropertyName="Visibility" Value="Collapsed" />
+                    </i:DataTrigger>
+                    <i:DataTrigger  Binding="{Binding Calibration.CalibrationMode}" Value="False">
+                        <i:ChangePropertyAction PropertyName="Visibility" Value="Visible" />
+                    </i:DataTrigger>
+                </i:Interaction.Triggers>
+                <Button.Content>
+
+                    <TextBlock>
+                        <i:Interaction.Triggers>
+                            <i:DataTrigger  Binding="{Binding IsJogTracking}" Value="True">
+                                <i:ChangePropertyAction PropertyName="Text" Value="Stop Jog Tracking" />
+                            </i:DataTrigger>
+                            <i:DataTrigger  Binding="{Binding IsJogTracking}" Value="False">
+                                <i:ChangePropertyAction PropertyName="Text" Value="Start Jog Tracking" />
+                            </i:DataTrigger>
+                        </i:Interaction.Triggers>
+                    </TextBlock>
+                </Button.Content>
+            </Button>
+        </ui:SimpleStackPanel>
+    </GroupBox>
+</UserControl>

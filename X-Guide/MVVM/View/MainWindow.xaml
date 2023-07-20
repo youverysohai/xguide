@@ -226,9 +226,12 @@
                             <DataTemplate DataType="{x:Type vms:JogControllerViewModel}">
                                 <xCustLayout:JogControllersLayout />
                             </DataTemplate>
+                            <DataTemplate DataType="{x:Type vms:JogTrackingViewModel}">
+                                <xCustLayout:JogTrackingLayout/>
+                            </DataTemplate>
                             <DataTemplate DataType="{x:Type vms:NinePointCalibrationViewModel}">
                                 <xCustLayout:NineBoxCalibLayout></xCustLayout:NineBoxCalibLayout>
-                            </DataTemplate>
+                            </DataTemplate> 
                         </Grid.Resources>
                         <Grid.RowDefinitions>
                             <RowDefinition Height="59*" />

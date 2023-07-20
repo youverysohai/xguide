@@ -1,5 +1,6 @@
 ﻿//using ToastNotifications.Messages;
 
+using Autofac;
 using AutoMapper;
 using CalibrationProvider;
 using CommunityToolkit.Mvvm.Messaging;
@@ -9,6 +10,7 @@ using System.Collections.ObjectModel;
 using System.Linq;
 using System.Runtime.Versioning;
 using System.Threading.Tasks;
+using TcpConnectionHandler;
 using TcpConnectionHandler.Server;
 using ToastNotifications;
 using VisionProvider.Interfaces;
@@ -35,7 +37,7 @@ namespace X_Guide.MVVM.ViewModel
     [SupportedOSPlatform("windows")]
     internal class Step6ViewModel : ViewModelBase
     {
-        public object Mock { get; set; }
+
         public CalibrationViewModel Calibration { get; set; }
         public CalibrationViewModel NewCalibration { get; set; }
 
@@ -50,7 +52,7 @@ namespace X_Guide.MVVM.ViewModel
         private readonly IMapper _mapper;
         private readonly Notifier _notifier;
         private readonly IVisionService _visionService;
-        private bool _canCalibrate = true;
+        private bool _canCalibrate;
 
         public bool CanCalibrate
         {
@@ -80,11 +82,12 @@ namespace X_Guide.MVVM.ViewModel
         public RelayCommand ConfirmCalibDataCommand { get; set; }
 
         public event EventHandler OnCalibrationChanged;
+        public object Step6CalibrationModule { get; set; }
 
-        public Step6ViewModel(IServerTcp serverService, CalibrationViewModel calibration, IRepository repository, ICalibrationService calibService, IMapper mapper, Notifier notifier, IVisionService visionService, IMessenger messenger, NinePointCalibrationViewModel ninePoint, IVisionViewModel visionView = null)
+        public Step6ViewModel(ILifetimeScope lifeTimeScope,IServerTcp serverService, CalibrationViewModel calibration, IRepository repository, ICalibrationService calibService, IMapper mapper, Notifier notifier, IVisionService visionService, IMessenger messenger, NinePointCalibrationViewModel ninePoint, IVisionViewModel visionView = null)
         {
             calibration.CalibrationData = new CalibrationData { Y = 7969 };
-            Mock = new Step6TopConfigViewModel(calibService, ninePoint, messenger, calibration, repository, mapper);
+            //Mock = new Step6LookDownwardViewModel(calibService, ninePoint, messenger, calibration, repository, mapper);
             _serverService = serverService;
             Calibration = calibration;
             _repository = repository;
@@ -101,6 +104,11 @@ namespace X_Guide.MVVM.ViewModel
             SaveCommand = RelayCommand.FromAsyncRelayCommand(Save);
             ConfirmCalibDataCommand = new RelayCommand(ConfirmCalibData);
             VisionView.ShowOutputImage();
+            switch (calibration.Orientation)
+            {
+                case Enums.Orientation.LookDownward: Step6CalibrationModule = lifeTimeScope.Resolve<Step6LookDownwardViewModel>(); break;
+                case Enums.Orientation.EyeOnHand: Step6CalibrationModule = lifeTimeScope.Resolve<Step6EyeOnHandConfig>(); break;
+            }
         }
 
         private async void Testing(object obj)

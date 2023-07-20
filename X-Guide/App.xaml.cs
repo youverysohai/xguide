@@ -57,6 +57,7 @@ namespace X_Guide
 
             builder.RegisterType<CalibrationViewModel>().InstancePerLifetimeScope();
             builder.RegisterType<JogControllerViewModel>();
+            builder.RegisterType<JogTrackingViewModel>();
 
             builder.RegisterType<NinePointCalibrationViewModel>();
             builder.RegisterType<WeakReferenceMessenger>().As<IMessenger>().SingleInstance();
@@ -112,6 +113,9 @@ namespace X_Guide
             builder.RegisterType<Step5LookUpwardConfig>();
 
             builder.RegisterType<Step6ViewModel>();
+            builder.RegisterType<Step6EyeOnHandConfig>();
+            builder.RegisterType<Step6LookDownwardViewModel>();
+
 
             builder.RegisterType<SettingViewModel>();
             builder.RegisterType<UserManagementViewModel>();
@@ -134,7 +138,7 @@ namespace X_Guide
                     Port = db.Port,
                     Terminator = db.Terminator
                 };
-                return new ClientTcp(config);
+                return new ClientTcp(config, c.Resolve<IMessenger>());
             }).As<IClientTcp>().SingleInstance();
 
             switch (VisionSoftware)
@@ -195,7 +199,7 @@ namespace X_Guide
                     Port = db.Port,
                     Terminator = db.Terminator,
                 };
-                return new ServerTcp(config);
+                return new ServerTcp(config, c.Resolve<IMessenger>());
             }).As<IServerTcp>().SingleInstance();
 
             return builder.Build();
@@ -232,6 +236,7 @@ namespace X_Guide
             _diContainer = BuildDIContainer();
             _ = _diContainer.Resolve<IMessageBoxService>();
             _ = _diContainer.Resolve<AuthenticationService>();
+            _ = _diContainer.Resolve<StateViewModel>();
             IClientTcp clientTcp = _diContainer.Resolve<IClientTcp>();
             clientTcp.ConnectServer();
             IServerTcp serverTcp = _diContainer.Resolve<IServerTcp>();

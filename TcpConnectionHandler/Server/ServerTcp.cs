@@ -1,4 +1,5 @@
-﻿using System.Collections.Concurrent;
+﻿using CommunityToolkit.Mvvm.Messaging;
+using System.Collections.Concurrent;
 using System.Diagnostics;
 using System.Net.Sockets;
 
@@ -12,7 +13,7 @@ namespace TcpConnectionHandler.Server
         public event EventHandler<NetworkStreamEventArgs>? _dataReceived;
 
         private readonly ConcurrentDictionary<int, TcpClientInfo> _connectedClient = new ConcurrentDictionary<int, TcpClientInfo>();
-
+        private readonly IMessenger _messenger;
         private bool _isAnyClientConnected;
 
         protected bool IsAnyClientConnected
@@ -26,8 +27,9 @@ namespace TcpConnectionHandler.Server
 
         private CancellationTokenSource? cts;
 
-        public ServerTcp(TcpConfiguration configuration) : base(configuration)
+        public ServerTcp(TcpConfiguration configuration, IMessenger messenger) : base(configuration)
         {
+            _messenger = messenger;
         }
 
         public bool Status()
@@ -57,6 +59,7 @@ namespace TcpConnectionHandler.Server
 
                     _connectedClient.TryAdd(client.GetHashCode(), new TcpClientInfo(client));
                     IsAnyClientConnected = true;
+                    _messenger.Send(new ConnectionStatusChanged(IsAnyClientConnected));
                     // Handle the client connection in a separate task.
 #pragma warning disable CS4014 // This warning has to be suppressed to disallow the await keyword from blocking the task
 
@@ -64,7 +67,10 @@ namespace TcpConnectionHandler.Server
                     {
                         await RecieveDataAsync(client.GetStream(), cts.Token);
                         _connectedClient.TryRemove(client.GetHashCode(), out _);
-                        if (_connectedClient.Count == 0) { IsAnyClientConnected = false; }
+                        if (_connectedClient.Count == 0) {
+                            IsAnyClientConnected = false;
+                            _messenger.Send(new ConnectionStatusChanged(IsAnyClientConnected));
+                        }
                     });
 #pragma warning restore CS4014
                 }

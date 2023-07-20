@@ -16,11 +16,11 @@ using System.Windows.Shapes;
 namespace X_Guide.CustomControls.Layouts
 {
     /// <summary>
-    /// Interaction logic for P2PManualLayout.xaml
+    /// Interaction logic for LiveViewLayout.xaml
     /// </summary>
-    public partial class P2PManualLayout : UserControl
+    public partial class LiveViewLayout : UserControl
     {
-        public P2PManualLayout()
+        public LiveViewLayout()
         {
             InitializeComponent();
         }

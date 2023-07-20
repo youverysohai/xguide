@@ -31,7 +31,7 @@
                 <TextBlock  HorizontalAlignment="Center" Style="{DynamicResource TitleTextBlockStyle}" Text="Jog to Vision Center" />
             </ui:SimpleStackPanel>
         </GroupBox.Header>
-        <materialDesign:DrawerHost IsTopDrawerOpen="False" OpenMode="Standard" >
+        <materialDesign:DrawerHost IsTopDrawerOpen="True" OpenMode="Standard" >
             <!-- Jog -->
             <materialDesign:DrawerHost.TopDrawerContent>
                 <Grid Height="120">
@@ -40,10 +40,10 @@
                         <ColumnDefinition Width="*" />
                         <ColumnDefinition Width="*" />
                     </Grid.ColumnDefinitions>
-                    <Button Content="^" VerticalAlignment="Top" 
+                    <!--<Button Content="^" VerticalAlignment="Top" 
                             Command="{x:Static materialDesign:DrawerHost.CloseDrawerCommand}"
                             CommandParameter="{x:Static Dock.Top}"
-                            ></Button>
+                            ></Button>-->
                     <Canvas Grid.Row="0" Grid.Column="0" HorizontalAlignment="Center">
                         <!-- CustomJogButtonsControl (X,Y) -->
                         <Canvas.RenderTransform>
@@ -52,6 +52,7 @@
                             </TransformGroup>
                         </Canvas.RenderTransform>
                         <local:CustomJogButtonsControl Canvas.Left="0"  TopCommandParameter="Y+" BottomCommandParameter="Y-" LeftCommandParameter="X-" RightCommandParameter="X+" ButtonCommand="{Binding JogCommand}"></local:CustomJogButtonsControl>
+
                     </Canvas>
 
                     <Canvas Grid.Row="0" Grid.Column="1"  HorizontalAlignment="Center">
@@ -113,6 +114,20 @@
                                 <TranslateTransform X="-150" Y="-90" />
                             </TransformGroup>
                         </Canvas.RenderTransform>
+                        <i:Interaction.Triggers>
+                            <i:DataTrigger Binding="{Binding Calibration.Manipulator.Type}" Value="{x:Static enums:ManipulatorType.GantrySystemWR}">
+                                <i:ChangePropertyAction PropertyName="Visibility" Value="Collapsed" />
+                            </i:DataTrigger>
+                            <i:DataTrigger Binding="{Binding Calibration.Manipulator.Type}" Value="{x:Static enums:ManipulatorType.GantrySystemR}">
+                                <i:ChangePropertyAction PropertyName="Visibility" Value="Collapsed" />
+                            </i:DataTrigger>
+                            <i:DataTrigger Binding="{Binding Calibration.Manipulator.Type}" Value="{x:Static enums:ManipulatorType.SCARA}">
+                                <i:ChangePropertyAction PropertyName="Visibility" Value="Collapsed" />
+                            </i:DataTrigger>
+                            <i:DataTrigger Binding="{Binding Calibration.Manipulator.Type}" Value="{x:Static enums:ManipulatorType.SixAxis}">
+                                <i:ChangePropertyAction PropertyName="Visibility" Value="Visible" />
+                            </i:DataTrigger>
+                        </i:Interaction.Triggers>
                         <local:CustomJogButtonsControl x:Name="SixAxis" IsHalfShifted="False" TopCommandParameter="RY+" BottomCommandParameter="RY-" LeftCommandParameter="RX-" RightCommandParameter="RX+" ButtonCommand="{Binding JogCommand}"></local:CustomJogButtonsControl>
                     </Canvas>
 
@@ -124,11 +139,11 @@
                     <RowDefinition Height="auto"/>
                     <RowDefinition Height="*"/>
                 </Grid.RowDefinitions>
-                <Button Content="Jog" VerticalAlignment="Top" 
+                <!--<Button Content="Jog" VerticalAlignment="Top" 
                                 Grid.Row="0"
                             Command="{x:Static materialDesign:DrawerHost.OpenDrawerCommand}"
                             CommandParameter="{x:Static Dock.Top}"
-                            ></Button>
+                            ></Button>-->
                 <local:CustomConnectionStatus Grid.Row="0" HorizontalAlignment="Center" IsConnected="{Binding AppState.IsAnyClientConnected}" ManipulatorType="{Binding Calibration.Manipulator.Type,Converter={StaticResource TypeToDescriptionConverter}}" />
 
                 <ui:SimpleStackPanel Grid.Row="2" Grid.Column="0" Margin="10">

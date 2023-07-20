@@ -81,7 +81,6 @@
         public override string ToString()
         {
             string command = $"JOG,{ManipulatorName},{Mode},{X},{Y},{Z},{RZ},{RX},{RY},{Speed},{Acceleration}";
-            ResetCoordinate();
             return command;
         }
     }

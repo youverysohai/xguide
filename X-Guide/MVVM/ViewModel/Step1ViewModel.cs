@@ -84,6 +84,7 @@ namespace X_Guide.MVVM.ViewModel
             _repository = repository;
             _mapper = mapper;
             _calibration = calibration;
+          
             _manipulator = _calibration.Manipulator;
             CheckEnableState();
             GetManipulators();

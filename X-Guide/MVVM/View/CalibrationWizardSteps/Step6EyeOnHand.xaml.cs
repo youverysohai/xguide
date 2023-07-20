@@ -16,11 +16,11 @@ using System.Windows.Shapes;
 namespace X_Guide.MVVM.View.CalibrationWizardSteps
 {
     /// <summary>
-    /// Interaction logic for Step6TopConfig.xaml
+    /// Interaction logic for Step6EyeOnHand.xaml
     /// </summary>
-    public partial class Step6TopConfig : UserControl
+    public partial class Step6EyeOnHand : UserControl
     {
-        public Step6TopConfig()
+        public Step6EyeOnHand()
         {
             InitializeComponent();
         }

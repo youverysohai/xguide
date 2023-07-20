@@ -22,6 +22,20 @@ namespace X_Guide.CustomControls.Layouts
         public static readonly DependencyProperty SaveCalibrationCommandProperty =
             DependencyProperty.Register("SaveCalibrationCommand", typeof(ICommand), typeof(CalibrationResultLayout), new PropertyMetadata(null));
 
+
+
+        public ICommand StartCalibrationCommand
+        {
+            get { return (ICommand)GetValue(StartCalibrationCommandProperty); }
+            set { SetValue(StartCalibrationCommandProperty, value); }
+        }
+
+        // Using a DependencyProperty as the backing store for StartCalibrationCommand.  This enables animation, styling, binding, etc...
+        public static readonly DependencyProperty StartCalibrationCommandProperty =
+            DependencyProperty.Register("StartCalibrationCommand", typeof(ICommand), typeof(CalibrationResultLayout), new PropertyMetadata(null));
+
+
+
         public CalibrationData CalibrationData
         {
             get { return (CalibrationData)GetValue(CalibrationProperty); }

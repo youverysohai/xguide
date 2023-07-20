@@ -16,15 +16,12 @@
              xmlns:c="clr-namespace:X_Guide.Converter"
              xmlns:ui="http://schemas.modernwpf.com/2019"
              FontSize="16"
-             xmlns:ext ="clr-namespace:X_Guide.Extension"
-             xmlns:i ="http://schemas.microsoft.com/xaml/behaviors"
-             xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
-             xmlns:enums ="clr-namespace:X_Guide.Enums"
+             xmlns:custLayout="clr-namespace:X_Guide.CustomControls.Layouts"
              xmlns:view="clr-namespace:X_Guide.MVVM.View.CalibrationWizardSteps"
              xmlns:vms="clr-namespace:X_Guide.MVVM.ViewModel"
              d:DesignHeight="600" d:DesignWidth="1300"
              x:Name="Step5View">
-    <UserControl.Resources> 
+    <UserControl.Resources>
         <Style TargetType="Label" BasedOn="{x:Null}"></Style>
         <Style TargetType="ComboBox" BasedOn="{x:Null}"></Style>
         <Style TargetType="Image" x:Key="GreyDisabledImg">
@@ -44,7 +41,7 @@
         <c:TypeToBooleanConverter x:Key="TypeToBooleanConverter" />
 
         <DataTemplate DataType="{x:Type vms:Step5LookDownwardConfig}">
-            <view:Step5TopConfig />
+            <view:Step5LookDownward />
         </DataTemplate>
         <DataTemplate DataType="{x:Type vms:Step5EyeOnHandConfig}">
             <view:Step5EyeOnHandConfig />
@@ -57,19 +54,30 @@
         </DataTemplate>
     </UserControl.Resources>
 
-      <!--VM Camara-->
+    <!--VM Camara-->
 
-    <Grid>
-        <ContentControl Grid.Row="0"  Content ="{Binding Step5CalibrationModule}">
+
+    <Grid Margin="0 10">
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="2*"/>
+            <ColumnDefinition Width="5*"/>
+            <ColumnDefinition Width="3*"/>
+        </Grid.ColumnDefinitions>
+        <ContentControl Grid.Column="0"  Content ="{Binding Step5CalibrationModule}">
         </ContentControl>
-
-    </Grid> 
+        <ContentControl Grid.Column="0"  Content ="{Binding Step5CalibrationModule}">
+        </ContentControl>
+        <ui:SimpleStackPanel Grid.Column="2" Orientation="Vertical" >
+            <ContentControl Content="{Binding JogController}"  />
+            <ContentControl Content="{Binding JogTracking}"/>
+        </ui:SimpleStackPanel>
+    </Grid>
     <!--<ContentControl hc:FlexPanel.FlexBasis="720" Height="500" Content="{Binding VisionView}" VerticalAlignment="Top">
             </ContentControl>-->
 
 
-            <!--Semi Auto(GWR)-->
-            <!--
+    <!--Semi Auto(GWR)-->
+    <!--
             <Button Content="Start Jog Tracking" Command="{Binding StartJogTrackingCommand}" Margin="10 0">
                 <i:Interaction.Triggers>
                     <i:DataTrigger Binding="{Binding Calibration.Manipulator.Type}" Value="{x:Static enums:ManipulatorType.GantrySystemWR}">
@@ -80,7 +88,7 @@
                     </i:DataTrigger>
                 </i:Interaction.Triggers>
             </Button>-->
-            <!--<Button Grid.Column="2" Grid.Row="3" Command="{x:Static materialDesign:DrawerHost.OpenDrawerCommand}"
+    <!--<Button Grid.Column="2" Grid.Row="3" Command="{x:Static materialDesign:DrawerHost.OpenDrawerCommand}"
                              CommandParameter="{x:Static Dock.Right}"
                              Style="{DynamicResource MaterialDesignIconForegroundButton}"
                              ToolTip="Jog"
@@ -88,5 +96,5 @@
                              ToolTipService.InitialShowDelay="122">
                 <ui:FontIcon Glyph="&#xE759;" />
             </Button>-->
- 
+
 </UserControl>

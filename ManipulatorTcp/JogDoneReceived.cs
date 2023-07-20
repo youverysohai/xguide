@@ -5,11 +5,12 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace X_Guide.MessageToken
+namespace ManipulatorTcp
 {
-    internal class ClientStatusChanged : ValueChangedMessage<bool>
+
+    public class JogDoneReceived : ValueChangedMessage<JogCommand>
     {
-        public ClientStatusChanged(bool value) : base(value)
+        public JogDoneReceived(JogCommand value) : base(value)
         {
         }
     }

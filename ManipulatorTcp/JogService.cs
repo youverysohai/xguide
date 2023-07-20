@@ -1,4 +1,6 @@
-﻿using System.Net.Sockets;
+﻿using CommunityToolkit.Mvvm.Messaging;
+using CommunityToolkit.Mvvm.Messaging.__Internals;
+using System.Net.Sockets;
 using System.Windows;
 using TcpConnectionHandler;
 using TcpConnectionHandler.Server;
@@ -8,12 +10,15 @@ namespace ManipulatorTcp
 {
     public class JogService : IJogService
     {
+        private readonly IMessenger _messenger;
         private readonly IServerTcp _serverService;
         private readonly Queue<JogCommand> _jogQueue = new Queue<JogCommand>();
         private readonly BackgroundService _jogTask;
 
-        public JogService(IServerTcp serverService)
+        public JogService(IServerTcp serverService, IMessenger messenger)
         {
+            _messenger = messenger;
+            
             _serverService = serverService;
             _jogTask = new BackgroundService(StartJog, true);
         }
@@ -48,6 +53,8 @@ namespace ManipulatorTcp
             timer.Start();
 
             bool status = await _serverService.RegisterSingleRequestHandler((e) => ServerJogCommand(e, _serverService.GetConnectedClient().FirstOrDefault().Value.TcpClient.GetStream()), cts.Token);
+            if (status) _messenger.Send(new JogDoneReceived(jogCommand));
+            
             timer.Dispose();
             return status;
         }

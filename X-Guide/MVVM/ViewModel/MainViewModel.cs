@@ -107,7 +107,7 @@ namespace X_Guide.MVVM.ViewModel
             set { _isManipulatorConnected = value; OnPropertyChanged(); }
         }
 
-        private readonly IServerTcp _serverService;
+        
         private readonly AuthenticationService _auth;
         public StateViewModel AppState { get; set; }
         private readonly INavigationService _navigationService;
@@ -115,9 +115,9 @@ namespace X_Guide.MVVM.ViewModel
 
         public ViewModelBase CurrentViewModel => _navigationStore.CurrentViewModel;
         public User CurrentUser => _auth.CurrentUser;
+        public event EventHandler<bool> ClientConnectionStateChanged;
 
-        #endregion CLR properties
-
+        #endregion CLR properties 
         public MainViewModel(INavigationService navigationService, StateViewModel state, IRepository repository, IMessenger messenger)
         {
             _auth = new AuthenticationService(repository, messenger);

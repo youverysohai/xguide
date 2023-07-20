@@ -2,11 +2,12 @@
 using System.Runtime.Versioning;
 using X_Guide.MVVM.Command;
 using X_Guide.MVVM.ViewModel.CalibrationWizardSteps;
+using X_Guide.State;
 
 namespace X_Guide.MVVM.ViewModel
 {
     [SupportedOSPlatform("windows")]
-    internal class JogControllerViewModel
+    public class JogControllerViewModel
     {
         private readonly IJogService _jogService;
 
@@ -15,8 +16,10 @@ namespace X_Guide.MVVM.ViewModel
         public int RotationAngle { get; set; }
         public CalibrationViewModel Calibration { get; set; }
 
-        public JogControllerViewModel(IJogService jogService)
+        public StateViewModel AppState { get; set; }
+        public JogControllerViewModel(IJogService jogService,StateViewModel state)
         {
+            AppState = state;
             _jogService = jogService;
             JogCommand = new RelayCommand(Jog);
             _jogService.Start();

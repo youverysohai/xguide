@@ -11,28 +11,24 @@ namespace X_Guide.MVVM.ViewModel
     [SupportedOSPlatform("windows")]
     internal class Step5LookDownwardConfig : ViewModelBase
     {
-        private readonly ICalibrationService _calibrationService;
-        private readonly IMessenger _messenger;
-        private readonly ManualResetEventSlim manual;
+
         public NinePointCalibrationViewModel NinePoint { get; set; }
 
         private readonly CalibrationViewModel _calibration;
+        public CalibrationViewModel Calibration => _calibration; 
 
-        public JogControllerViewModel JogController { get; set; }
+
         public ObservableCollection<bool> NinePointState { get; set; } = new ObservableCollection<bool>(new bool[9]);
         public RelayCommand NextCommand { get; set; }
         public RelayCommand StartCommand { get; set; }
 
-        public Step5LookDownwardConfig(JogControllerViewModel controller, ICalibrationService calibrationService, NinePointCalibrationViewModel ninePoint, IMessenger messenger, CalibrationViewModel calibration)
+        public Step5LookDownwardConfig(NinePointCalibrationViewModel ninePoint, CalibrationViewModel calibration)
         {
-            controller.Calibration = calibration;
+            
             NinePoint = ninePoint;
             NinePoint.provider = Provider.Manipulator;
             _calibration = calibration;
-            _calibrationService = calibrationService;
-            _messenger = messenger;
-            JogController = controller;
-            ninePoint.Header = "Hello chun";
+            ninePoint.Header = "Camera Look Downward";
             StartCommand = new RelayCommand(Start9Point);
         }
 
