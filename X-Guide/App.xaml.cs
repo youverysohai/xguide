@@ -229,7 +229,7 @@ namespace X_Guide
                 c.AddProfile<VisionProfile>();
             }).CreateMapper();
             IJsonDb jsonDb = new JsonDb();
-            VisionSoftware = jsonDb.Get<GeneralModel>().VisionSoftware;
+            VisionSoftware = jsonDb.Get<GeneralModel>()?.VisionSoftware == null ? 1 : jsonDb.Get<GeneralModel>().VisionSoftware;
             _diContainer = BuildDIContainer();
             _ = _diContainer.Resolve<IMessageBoxService>();
             _ = _diContainer.Resolve<AuthenticationService>();

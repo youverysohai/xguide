@@ -1,4 +1,6 @@
 ﻿using HandyControl.Controls;
+using HikVisionProvider;
+using IMVSCircleFindModuCs;
 using Prism.Commands;
 using Prism.Events;
 using Prism.Mvvm;
@@ -10,6 +12,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
+using VisionProvider.Interfaces;
+using VM.Core;
+using VMControls.Interface;
 using X_Vision.Common.Models;
 using X_Vision.Event;
 
@@ -17,23 +22,76 @@ namespace X_Vision.ViewModels
 {
     public class ProcessModuleViewModel:BindableBase, IConfirmNavigationRequest
     {
-
-        const int increment = 3;
+        VmProcedure vmProcedure;
+        const int increment = 1;
         private readonly IEventAggregator aggregator;
+        
+        private IVmModule _module;
+
+        public IVmModule Module
+        {
+            get { return _module; }
+            set { _module = value; RaisePropertyChanged(); }
+        }
 
         public DelegateCommand StartCommand { get; private set; }
+        public DelegateCommand ContinueCommand { get; private set; }
+        public DelegateCommand StopCommand { get; private set; }
         public DelegateCommand ResetCommand { get; private set; }
 
         public ProcessModuleViewModel(IEventAggregator aggregator)
         {
+           
+            //IVisionService visionService = new HikVisionService(@"C:\Users\tung\Downloads\findCircle.sol",null,null);
             RateResults = new ObservableCollection<RateResult>();
-            StartCommand = new DelegateCommand(StartCapture);
+            //StartCommand = new DelegateCommand(StartCapture);
+            StartCommand = new DelegateCommand(StartRunOnce);
             ResetCommand = new DelegateCommand(ResetResult);
+            ContinueCommand = new DelegateCommand(RunContinuous);
+            StopCommand = new DelegateCommand(StopContinuous);
             CreateRateResult();
             CreateLogData();
             this.aggregator = aggregator;
         }
 
+       
+        private void StartRunOnce()
+        {
+            VmSolution.Load(@"C:\Users\tung\Downloads\findCircle.sol");
+            vmProcedure = (VmProcedure)VmSolution.Instance["Flow1"];
+
+            //IMVSCircleFindModuTool circleTool = (IMVSCircleFindModuTool)VmSolution.Instance["Flow1.Circle Search1"];
+            ////vmProcedure.Run();
+            //var i = circleTool.ModuResult;
+            //Module = vmProcedure;
+        }
+
+        private void RunContinuous()
+        {
+            vmProcedure.Run();
+            Total = (int)vmProcedure.ExecuteCount;
+            IMVSCircleFindModuTool circleTool = (IMVSCircleFindModuTool)VmSolution.Instance["Flow1.Circle Search1"];
+            //vmProcedure.Run();
+            var i = circleTool.ModuResult;
+            if (i.ModuStatus != 1)
+            {
+                RateResults.ElementAt(1).CurrentCount += increment;
+                double val = (double)RateResults.ElementAt(1).CurrentCount / (double)Total * (double)100;
+                RateResults.ElementAt(1).PercentageValue = (int)val;
+
+            }
+            else
+            {
+                RateResults.ElementAt(0).CurrentCount += increment;
+                double val = (double)RateResults.ElementAt(0).CurrentCount / (double)Total * (double)100;
+                RateResults.ElementAt(0).PercentageValue = (int)val;
+            }
+            Module = vmProcedure;
+        }
+        private void StopContinuous()
+        {
+            vmProcedure.ContinuousRunEnable = false;
+        }
         private void ResetResult()
         {
             Total = 0;
@@ -45,6 +103,7 @@ namespace X_Vision.ViewModels
             RateResults.ElementAt(0).CurrentCount = 0;
             Growl.ClearGlobal();
         }
+        
 
         private void StartCapture()
         {
