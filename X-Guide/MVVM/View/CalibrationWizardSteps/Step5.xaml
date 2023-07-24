@@ -54,6 +54,9 @@
         <DataTemplate DataType="{x:Type vms:NullVisionViewModel}">
             <custLayout:NullVisionLayout/>
         </DataTemplate>
+        <DataTemplate x:Key="NoJogModuleLayout">
+            <TextBlock Text="No Jog Controllers"/>
+        </DataTemplate>
     </UserControl.Resources>
 
     <!--VM Camara-->

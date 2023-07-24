@@ -10,7 +10,7 @@ using System.Windows.Data;
 using System.Windows.Markup;
 using X_Guide.Enums;
 using ManipulatorType = XGuideSQLiteDB.Models.ManipulatorType;
-using Orientation = X_Guide.Enums.Orientation;
+using Orientation = XGuideSQLiteDB.Models.Orientation;
 
 namespace X_Guide.CustomControls
 {

@@ -15,18 +15,23 @@ namespace X_Guide.MVVM.ViewModel
         {
             get
             {
-                Debug.WriteLine(_calibration.XOffset);
                 CheckState();
                 Debug.WriteLine("CheckState");
                 return _calibration;
             }
+            
         }
-
+      
         private void CheckState()
         {
             bool isCalibrationValid = _calibration.XOffset > 0 && _calibration.JointRotationAngle > 0 && _calibration.YOffset > 0;
 
-            if (_calibration.Manipulator.Type == ManipulatorType.GantrySystemWR)
+
+            if (_calibration.Orientation == Orientation.LookDownward)
+            {
+                isCalibrationValid = true;
+            }
+            else if (_calibration.Manipulator.Type == ManipulatorType.GantrySystemWR)
             {
                 isCalibrationValid = isCalibrationValid || (_calibration.XOffset > 0 && _calibration.YOffset > 0);
             }

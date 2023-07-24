@@ -95,17 +95,19 @@
             <!--X Y offset Rotation Angle-->
 
             <StackPanel Orientation="Horizontal" Grid.ColumnSpan="2" Grid.Row="3">
-                <!--<i:Interaction.Triggers>
+
+                <i:Interaction.Triggers>
                     <i:DataTrigger Binding="{Binding CalibOrientation, ElementName=MotionCalibrationControlView}" Value="{x:Static enum:Orientation.LookDownward}">
                         <i:ChangePropertyAction PropertyName="Visibility" Value="Hidden" />
                     </i:DataTrigger>
-                </i:Interaction.Triggers>-->
+                </i:Interaction.Triggers>
                 <ui:NumberBox
                               Value="{Binding XOffset, ElementName=MotionCalibrationControlView}"
                             Margin="10 5"
                             SpinButtonPlacementMode="Inline"
                             SmallChange="1"
                             LargeChange="100"
+
                             Padding="10 1"
                             MinWidth="100">
                     <ui:NumberBox.Header>

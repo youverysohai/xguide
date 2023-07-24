@@ -4,7 +4,7 @@ using Autofac;
 using System.Runtime.Versioning;
 using X_Guide.Enums;
 using X_Guide.MVVM.ViewModel.CalibrationWizardSteps;
-
+using Orientation = XGuideSQLiteDB.Models.Orientation;
 namespace X_Guide.MVVM.ViewModel
 {
     [SupportedOSPlatform("windows")]

@@ -5,7 +5,7 @@ using X_Guide.Enums;
 using X_Guide.MessageToken;
 using X_Guide.MVVM.Command;
 using X_Guide.MVVM.ViewModel.CalibrationWizardSteps;
-
+using Orientation = XGuideSQLiteDB.Models.Orientation;
 namespace X_Guide.MVVM.ViewModel
 {
     internal class Step2ViewModel : ViewModelBase
