@@ -3,10 +3,12 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:CustomControl="clr-namespace:X_Vision.Common.CustomUserControl"
              xmlns:local="clr-namespace:X_Vision.Views" xmlns:ui="http://schemas.modernwpf.com/2019" xmlns:hc="https://handyorg.github.io/handycontrol" xmlns:Release="clr-namespace:VMControls.WPF.Release;assembly=VMControls.WPF.Release" xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
              mc:Ignorable="d" 
+             x:Name="ProcessView"
              d:DesignHeight="450" d:DesignWidth="800">
-
+             
     <Grid>
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="7*"/>
@@ -19,8 +21,8 @@
 
 
         <Border BorderThickness="2"  Margin="10" CornerRadius="10">
-            <Release:VmFrontendControl Margin="0" Grid.Row="1" x:Name="VmFrontEnd"></Release:VmFrontendControl>
-
+            <!--<Release:VmRenderControl Margin="0" Grid.Row="1" x:Name="renderControl"></Release:VmRenderControl>-->
+            <CustomControl:CustomRenderControl Procedure="{Binding Module}"/>
             <!--<ui:FontIcon Glyph="&#xEC80;" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="40" Foreground="Orange"/>-->
         </Border>
         <TabControl  Grid.Column="1" Margin="10" Background="Transparent" Style="{DynamicResource MaterialDesignFilledUniformTabControl}">
@@ -77,7 +79,7 @@
                                                 <ui:SimpleStackPanel Orientation="Horizontal" HorizontalAlignment="Center">
                                                     <TextBlock Text="{Binding CurrentCount}" Style="{DynamicResource MaterialDesignCaptionTextBlock}"/>
                                                     <TextBlock Text=" / " Style="{DynamicResource MaterialDesignCaptionTextBlock}"/>
-                                                    <TextBlock Text="{Binding TotalUnit}" Style="{DynamicResource MaterialDesignCaptionTextBlock}"/>
+                                                    <TextBlock Text="{Binding DataContext.Total,ElementName=ProcessView}" Style="{DynamicResource MaterialDesignCaptionTextBlock}"/>
                                                 </ui:SimpleStackPanel>
                                             </ui:SimpleStackPanel>
                                         </StackPanel>
@@ -177,7 +179,9 @@
             <TextBlock Text="Cycle Time: 0 ms" Margin="5 0" Style="{DynamicResource CaptionTextBlockStyle}"/>
             <TextBlock Text="Run Time: 0 ms" Margin="5 0" Style="{DynamicResource CaptionTextBlockStyle}"/>
             <TextBlock Text="Down Time: 0 ms" Margin="5 0" Style="{DynamicResource CaptionTextBlockStyle}"/>
-            <Button Click="Button_Click" Content="Load Solution" HorizontalAlignment="Left" Visibility="Collapsed"/>
+            <Button Margin="10 0" Command="{Binding StartCommand}" Content="Load Solution" HorizontalAlignment="Left" Visibility="Visible"/>
+            <Button Margin="10 0" Command="{Binding ContinueCommand}" Content="Continuouse" HorizontalAlignment="Left" Visibility="Visible"/>
+            <Button Margin="10 0" Command="{Binding StopCommand}" Content="Stop" HorizontalAlignment="Left" Visibility="Visible"/>
         </ui:SimpleStackPanel>
     </Grid>
 
