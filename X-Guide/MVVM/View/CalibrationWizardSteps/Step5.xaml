@@ -15,7 +15,6 @@
              xmlns:xctk="http://schemas.xceed.com/wpf/xaml/toolkit"
              xmlns:c="clr-namespace:X_Guide.Converter"
              xmlns:ui="http://schemas.modernwpf.com/2019"
-             FontSize="16"
              xmlns:custLayout="clr-namespace:X_Guide.CustomControls.Layouts"
              xmlns:view="clr-namespace:X_Guide.MVVM.View.CalibrationWizardSteps"
              xmlns:vms="clr-namespace:X_Guide.MVVM.ViewModel" xmlns:i="http://schemas.microsoft.com/xaml/behaviors"
@@ -54,6 +53,9 @@
         </DataTemplate>
         <DataTemplate DataType="{x:Type vms:NullVisionViewModel}">
             <custLayout:NullVisionLayout/>
+        </DataTemplate>
+        <DataTemplate x:Key="NoJogModuleLayout">
+            <TextBlock Text="No Jog Controllers"/>
         </DataTemplate>
     </UserControl.Resources>
 

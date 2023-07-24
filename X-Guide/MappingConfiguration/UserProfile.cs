@@ -8,8 +8,8 @@ namespace X_Guide.MappingConfiguration
     {
         public UserProfile()
         {
-            CreateMap<User, UserViewModel>();
-            CreateMap<UserViewModel, User>();
+            CreateMap<User, UserViewModel>().ReverseMap();
+       
         }
     }
 }

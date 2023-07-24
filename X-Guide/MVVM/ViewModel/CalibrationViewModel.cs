@@ -1,6 +1,7 @@
 ﻿using CalibrationProvider;
 using X_Guide.Enums;
 using Point = VisionGuided.Point;
+using Orientation = XGuideSQLiteDB.Models.Orientation;
 
 namespace X_Guide.MVVM.ViewModel.CalibrationWizardSteps
 {

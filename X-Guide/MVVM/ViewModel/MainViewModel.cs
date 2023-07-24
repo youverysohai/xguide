@@ -118,20 +118,20 @@ namespace X_Guide.MVVM.ViewModel
         public User CurrentUser => _auth.CurrentUser;
 
         public event EventHandler<bool> ClientConnectionStateChanged;
-        
+
+        private readonly IMessenger _messenger;
         private IClientTcp _client;
 
         #endregion CLR properties
 
         public MainViewModel(IClientTcp clientTcp,INavigationService navigationService, StateViewModel state, IRepository repository, IMessenger messenger)
 
-        {
-            _client = clientTcp;
+        {   _client = clientTcp;
             _auth = new AuthenticationService(repository, messenger);
 
             AppState = state;
             AppState.OnStateChanged = OnLoadingStateChanged;
-
+            
             _navigationService = navigationService;
             _navigationStore = navigationService.GetNavigationStore();
             _navigationStore.CurrentViewModelChanged += OnCurrentViewModelChanged;
@@ -157,15 +157,7 @@ namespace X_Guide.MVVM.ViewModel
         private void OnUserChangeEvent(object obj)
         {
             User = ((UserViewModel)obj).Clone() as UserViewModel;
-            if (User.IsActive)
-            {
-                User.IsActive = false;
-                MessageBox.Show("Log out : " + _auth.CurrentUser.Username);
-            }
-            else
-            {
-                User.IsActive = true;
-            }
+            
         }
 
         private void Logout(object obj)
@@ -175,15 +167,7 @@ namespace X_Guide.MVVM.ViewModel
             _auth.CurrentUser.Equals(null);
         }
 
-        private void OnCurrentUserChanged()
-        {
-            MessageBox.Show("Hi, new user");
-        }
 
-        private void OnConnectionChange(object sender, bool e)
-        {
-            IsManipulatorConnected = e;
-        }
 
         private void OnLoadingStateChanged()
         {

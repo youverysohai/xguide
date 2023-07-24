@@ -109,8 +109,8 @@ namespace X_Guide.MVVM.ViewModel
 
             switch (calibration.Orientation)
             {
-                case Enums.Orientation.LookDownward: Step6CalibrationModule = lifeTimeScope.Resolve<Step6LookDownwardViewModel>(); break;
-                case Enums.Orientation.EyeOnHand: Step6CalibrationModule = lifeTimeScope.Resolve<Step6EyeOnHandConfig>(); break;
+                case Orientation.LookDownward: Step6CalibrationModule = lifeTimeScope.Resolve<Step6LookDownwardViewModel>(); break;
+                case Orientation.EyeOnHand: Step6CalibrationModule = lifeTimeScope.Resolve<Step6EyeOnHandConfig>(); break;
             }
         }
 
@@ -147,7 +147,24 @@ namespace X_Guide.MVVM.ViewModel
         {
             int XOffset = Calibration.XOffset;
             int YOffset = Calibration.YOffset;
-            CalibrationData calibrationData = await _calibService.EyeInHand2D_Calibrate(XOffset, YOffset, (int)Calibration.JointRotationAngle);
+            CalibrationData calibrationData = null;
+            switch (Calibration.Orientation)
+            {
+                case Orientation.LookDownward:
+                    {
+                        await _calibService.LookingDownward2D_Calibrate(Calibration.VisionPoints, Calibration.RobotPoints);
+                        break;
+                    }
+                case Orientation.EyeOnHand:
+                    {
+                        await _calibService.EyeInHand2D_Calibrate(XOffset, YOffset, (int)Calibration.JointRotationAngle);
+                        break;
+                    }
+                case Orientation.LookUpward: break;
+                case Orientation.MountedOnJoint2: break;
+                case Orientation.MountedOnJoint5:break;
+
+            }
             Calibration.CalibrationData = calibrationData;
             IsCalibrationCompleted = true;
         }

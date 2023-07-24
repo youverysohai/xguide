@@ -1,7 +1,8 @@
-﻿using System.Windows;
+﻿using System.Diagnostics;
+using System.Windows;
 using System.Windows.Controls;
 using XGuideSQLiteDB.Models;
-using Orientation = X_Guide.Enums.Orientation;
+using Orientation = XGuideSQLiteDB.Models.Orientation;
 
 namespace X_Guide.CustomControls
 {

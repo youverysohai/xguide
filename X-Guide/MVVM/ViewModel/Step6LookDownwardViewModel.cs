@@ -31,12 +31,11 @@ namespace X_Guide.MVVM.ViewModel
 
         public Step6LookDownwardViewModel(ICalibrationService calibrationService, NinePointCalibrationViewModel ninePoint, IMessenger messenger, CalibrationViewModel calibration, IRepository repository, IMapper mapper)
         {
-            StartVision9PointCommand = new RelayCommand(StartVision9Point);
-            StartCalibrationCommand = new RelayCommand(StartCalibration);
-            _repository = repository;
-            NinePoint = ninePoint;
             ninePoint.provider = Provider.Vision;
             ninePoint.Header = "Vision Calibration";
+            _repository = repository;
+            NinePoint = ninePoint;
+
             _mapper = mapper;
             _messenger = messenger;
             Calibration = calibration;
