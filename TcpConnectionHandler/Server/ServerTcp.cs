@@ -1,4 +1,5 @@
 ﻿using CommunityToolkit.Mvvm.Messaging;
+using Serilog;
 using System.Collections.Concurrent;
 using System.Diagnostics;
 using System.Net.Sockets;
@@ -27,7 +28,7 @@ namespace TcpConnectionHandler.Server
 
         private CancellationTokenSource? cts;
 
-        public ServerTcp(TcpConfiguration configuration, IMessenger messenger) : base(configuration)
+        public ServerTcp(TcpConfiguration configuration, IMessenger messenger, ILogger? logger) : base(configuration, logger)
         {
             _messenger = messenger;
         }
@@ -67,7 +68,8 @@ namespace TcpConnectionHandler.Server
                     {
                         await RecieveDataAsync(client.GetStream(), cts.Token);
                         _connectedClient.TryRemove(client.GetHashCode(), out _);
-                        if (_connectedClient.Count == 0) {
+                        if (_connectedClient.Count == 0)
+                        {
                             IsAnyClientConnected = false;
                             _messenger.Send(new ConnectionStatusChanged(IsAnyClientConnected));
                         }

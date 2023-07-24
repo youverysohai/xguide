@@ -5,7 +5,6 @@ using CalibrationProvider;
 using CommunityToolkit.Mvvm.Messaging;
 using HikVisionProvider;
 using ManipulatorTcp;
-using Microsoft.Extensions.Logging;
 using Serilog;
 using Serilog.Core;
 using System;
@@ -20,6 +19,7 @@ using ToastNotifications;
 using ToastNotifications.Lifetime;
 using ToastNotifications.Position;
 using VisionProvider.Interfaces;
+using X_Guide.Logging;
 using X_Guide.MappingConfiguration;
 using X_Guide.MVVM.Model;
 using X_Guide.MVVM.Store;
@@ -32,7 +32,6 @@ using X_Guide.Service.DatabaseProvider;
 using X_Guide.State;
 using XGuideSQLiteDB;
 using XGuideSQLiteDB.Models;
-using ILogger = Serilog.ILogger;
 using IPAddress = System.Net.IPAddress;
 
 namespace X_Guide
@@ -93,12 +92,6 @@ namespace X_Guide
             })).SingleInstance();
             builder.Register(c => c.Resolve<MapperConfiguration>().CreateMapper()).SingleInstance();
 
-            builder.Register(c => LoggerFactory.Create(b =>
-            {
-                b.AddSerilog(new LoggerConfiguration().WriteTo.Console().CreateLogger());
-            })).As<ILoggerFactory>().SingleInstance();
-            builder.Register(c => c.Resolve<ILoggerFactory>().CreateLogger<App>()).As<Microsoft.Extensions.Logging.ILogger>().SingleInstance();
-
             builder.RegisterType<MainViewModel>();
             builder.RegisterType<CalibrationWizardStartViewModel>();
             builder.RegisterType<OperationViewModel>();
@@ -121,11 +114,14 @@ namespace X_Guide
             builder.RegisterType<CalibrationMainViewModel>();
             builder.RegisterType<JogRobotViewModel>();
             builder.RegisterType<StateViewModel>().SingleInstance();
-            builder.RegisterType<Repository>().As<IRepository>();
+
+            builder.RegisterType<SeriLogLoggerFactory>().As<ILoggerFactory>().SingleInstance();
+            builder.Register(c => new Repository(c.Resolve<ILoggerFactory>().CreateLogger(typeof(Repository)))).As<IRepository>().SingleInstance();
+
             builder.RegisterType<MessageBoxService>().As<IMessageBoxService>().SingleInstance();
 
             builder.RegisterType<ManipulatorTcpHandler>().SingleInstance();
-            builder.RegisterInstance(logger).As<ILogger>();
+
             builder.RegisterType<JsonDb>().As<IJsonDb>();
             builder.Register(c =>
             {
@@ -136,7 +132,7 @@ namespace X_Guide
                     Port = db.Port,
                     Terminator = db.Terminator
                 };
-                return new ClientTcp(config, c.Resolve<IMessenger>());
+                return new ClientTcp(config, c.Resolve<IMessenger>(), c.Resolve<ILoggerFactory>().CreateLogger(typeof(ClientTcp)));
             }).As<IClientTcp>().SingleInstance();
 
             switch (VisionSoftware)
@@ -152,7 +148,6 @@ namespace X_Guide
                     builder.RegisterType<HikViewModel>().As<IVisionViewModel>();
                     builder.RegisterType<HikVisionCalibrationStep>().As<IVisionCalibrationStep>();
                     builder.RegisterType<HikOperationService>().As<IOperationService>();
-         
 
                     break;
 
@@ -196,7 +191,7 @@ namespace X_Guide
                     Port = db.Port,
                     Terminator = db.Terminator,
                 };
-                return new ServerTcp(config, c.Resolve<IMessenger>());
+                return new ServerTcp(config, c.Resolve<IMessenger>(), c.Resolve<ILoggerFactory>().CreateLogger(typeof(ServerTcp)));
             }).As<IServerTcp>().SingleInstance();
 
             return builder.Build();
@@ -247,6 +242,7 @@ namespace X_Guide
         protected override void OnStartup(StartupEventArgs e)
         {
             MainWindow = _diContainer.Resolve<MainWindow>();
+            var i = _diContainer.Resolve<ILoggerFactory>().CreateLogger(typeof(MainWindow));
 
             base.OnStartup(e);
             StateViewModel viewModelState = _diContainer.Resolve<StateViewModel>();

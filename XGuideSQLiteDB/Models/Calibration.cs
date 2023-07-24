@@ -30,13 +30,13 @@ namespace XGuideSQLiteDB.Models
         [ForeignKey(nameof(ManipulatorId))]
         public virtual Manipulator Manipulator { get; set; }
 
-        //public override string ToString()
-        //{
-        //    return $"Calibration [Id: {Id}, Name: {Name}, ManipulatorId: {ManipulatorId}, Orientation: {Orientation}, Speed: {Speed}, " +
-        //           $"Acceleration: {Acceleration}, MotionDelay: {MotionDelay}, XOffset: {XOffset}, YOffset: {YOffset}, " +
-        //           $"MMPerPixel: {MMPerPixel}, CRZOffset: {CRZOffset}, " +
-        //           $"CYOffset: {CYOffset}, CXOffset: {CXOffset}, Procedure: {Procedure}, " +
-        //           $"Mode: {Mode}, JointRotationAngle: {JointRotationAngle}]";
-        //}
+        public override string ToString()
+        {
+            return $"Calibration [Id: {Id}, Name: {Name}, ManipulatorId: {ManipulatorId}, Orientation: {Orientation}, Speed: {Speed}, " +
+                   $"Acceleration: {Acceleration}, MotionDelay: {MotionDelay}, XOffset: {XOffset}, YOffset: {YOffset}, " +
+                   $"MMPerPixel: {MMPerPixel}, CRZOffset: {CRZOffset}, " +
+                   $"CYOffset: {CYOffset}, CXOffset: {CXOffset}, Procedure: {Procedure}, " +
+                   $"Mode: {Mode}, JointRotationAngle: {JointRotationAngle}]";
+        }
     }
 }

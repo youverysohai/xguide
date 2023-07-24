@@ -1,4 +1,5 @@
-﻿using System.Diagnostics;
+﻿using Serilog;
+using System.Diagnostics;
 using System.Net.Sockets;
 using System.Text;
 
@@ -8,10 +9,12 @@ namespace TcpConnectionHandler
     {
         public event EventHandler<NetworkStreamEventArgs>? DataReceived;
 
+        private readonly ILogger _logger;
         protected readonly TcpConfiguration _configuration;
 
-        public Tcp(TcpConfiguration configuration)
+        public Tcp(TcpConfiguration configuration, ILogger? logger)
         {
+            _logger = logger;
             _configuration = configuration;
         }
 
@@ -57,7 +60,7 @@ namespace TcpConnectionHandler
                 int bytes = await stream.ReadAsync(data, 0, data.Length);
                 if (bytes == 0) break;
                 responseData += Encoding.ASCII.GetString(data, 0, bytes);
-                Debug.WriteLine($"Received: {responseData}");
+                _logger.Information($"Received: {responseData}");
                 ProcessServerData(responseData, ',', stream);
                 await Task.Delay(1000);
             }
@@ -69,7 +72,7 @@ namespace TcpConnectionHandler
             byte[] bytes = Encoding.ASCII.GetBytes(data + _configuration.Terminator);
             _ = stream ?? throw new Exception("Can't send data");
             await stream.WriteAsync(bytes, 0, bytes.Length);
-            Debug.WriteLine($"Write: {data}");
+            _logger.Information($"Write: {data}");
         }
 
         private void ProcessServerData(string data, char seperator, NetworkStream stream)

@@ -1,4 +1,5 @@
 ﻿using CommunityToolkit.Mvvm.Messaging;
+using Serilog;
 using System.Diagnostics;
 using System.Net.Sockets;
 
@@ -12,7 +13,7 @@ namespace TcpConnectionHandler.Client
         public string Flowname = "";
         private readonly IMessenger _messenger;
 
-        public ClientTcp(TcpConfiguration configuration, IMessenger messenger) : base(configuration)
+        public ClientTcp(TcpConfiguration configuration, IMessenger messenger, ILogger? logger) : base(configuration, logger)
         {
             _messenger = messenger;
         }
@@ -34,7 +35,6 @@ namespace TcpConnectionHandler.Client
                 cts = new CancellationTokenSource();
                 await RecieveDataAsync(_stream, cts.Token);
                 _messenger.Send(new ClientStatusChanged(false));
-
             }
             catch (Exception ex)
             {

@@ -29,9 +29,9 @@ namespace XGuideSQLiteDB.Models
         public string Name { get; set; }
         public string Description { get; set; }
 
-        //public override string ToString()
-        //{
-        //    return $"Manipulator Id: {Id}, Type: {Type}, Name: {Name}, Description: {Description}";
-        //}
+        public override string ToString()
+        {
+            return $"Manipulator Id: {Id}, Type: {Type}, Name: {Name}, Description: {Description}";
+        }
     }
 }

@@ -1,4 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore;
+using Serilog;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -8,8 +9,11 @@ namespace XGuideSQLiteDB
 {
     public class Repository : IRepository
     {
-        public Repository()
+        private readonly ILogger _logger;
+
+        public Repository(ILogger logger)
         {
+            _logger = logger;
         }
 
         public async void Create<T>(T entity) where T : class
@@ -18,8 +22,9 @@ namespace XGuideSQLiteDB
             using (XGuideDbContext db = new XGuideDbContext())
             {
                 db.ChangeTracker.TrackGraph(entity, node => node.Entry.State = !node.Entry.IsKeySet ? EntityState.Added : EntityState.Unchanged);
-                //db.Set<T>().Add(entity);
+
                 await db.SaveChangesAsync();
+                _logger.Information($"Added {entity.ToString()}");
             }
         }
 
@@ -29,6 +34,7 @@ namespace XGuideSQLiteDB
             {
                 db.Entry(entity).State = EntityState.Modified;
                 await db.SaveChangesAsync();
+                _logger.Information($"Updated {entity.ToString()}");
             }
         }
 
@@ -38,6 +44,8 @@ namespace XGuideSQLiteDB
             {
                 db.Set<T>().Remove(entity);
                 await db.SaveChangesAsync();
+
+                _logger.Information($"Deleted {entity.ToString()}");
             }
         }
 
@@ -49,6 +57,7 @@ namespace XGuideSQLiteDB
                 if (entity is null) return false;
                 db.Set<T>().Remove(entity);
                 await db.SaveChangesAsync();
+                _logger.Information($"Deleted {entity.ToString()}");
                 return true;
             }
         }
