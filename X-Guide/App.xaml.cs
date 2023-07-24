@@ -242,7 +242,7 @@ namespace X_Guide
         protected override void OnStartup(StartupEventArgs e)
         {
             MainWindow = _diContainer.Resolve<MainWindow>();
-            var i = _diContainer.Resolve<ILoggerFactory>().CreateLogger(typeof(MainWindow));
+
 
             base.OnStartup(e);
             StateViewModel viewModelState = _diContainer.Resolve<StateViewModel>();

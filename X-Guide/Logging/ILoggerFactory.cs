@@ -11,6 +11,6 @@ namespace X_Guide.Logging
     public class SeriLogLoggerFactory : ILoggerFactory
     {
         public ILogger CreateLogger(Type type) =>
-            new LoggerConfiguration().WriteTo.File($"{Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments)}/X-Guide/{type}.txt").CreateLogger();
+            new LoggerConfiguration().WriteTo.File($"{Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments)}/X-Guide/logs/{type}.txt").CreateLogger();
     }
 }
