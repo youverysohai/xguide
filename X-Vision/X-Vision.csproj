@@ -17,6 +17,9 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Reference Include="IMVSCircleFindModuCs">
+      <HintPath>..\..\..\..\..\..\Program Files\VisionMaster4.2.0\Development\V4.x\ComControls\Assembly\IMVSCircleFindModuCs.dll</HintPath>
+    </Reference>
     <Reference Include="VM.Core">
       <HintPath>..\..\..\..\..\..\Program Files\VisionMaster4.2.0\Development\V4.x\ComControls\Assembly\VM.Core.dll</HintPath>
     </Reference>
@@ -25,6 +28,9 @@
     </Reference>
     <Reference Include="VMControls.Interface">
       <HintPath>..\..\..\..\..\..\Program Files\VisionMaster4.2.0\Development\V4.x\ComControls\Assembly\VMControls.Interface.dll</HintPath>
+    </Reference>
+    <Reference Include="VMControls.RenderInterface">
+      <HintPath>..\..\..\..\..\..\Program Files\VisionMaster4.2.0\Development\V4.x\ComControls\Assembly\VMControls.RenderInterface.dll</HintPath>
     </Reference>
     <Reference Include="VMControls.WPF.Release">
       <HintPath>..\..\..\..\..\..\Program Files\VisionMaster4.2.0\Development\V4.x\ComControls\Assembly\VMControls.WPF.Release.dll</HintPath>
@@ -37,5 +43,10 @@
 			<SubType>Designer</SubType>
 			<ContainsDesignTimeResources>true</ContainsDesignTimeResources>
 		</Page>
+	</ItemGroup>
+	
+	<ItemGroup>
+	  <ProjectReference Include="..\HikVisionProvider\HikVisionProvider.csproj" />
+	  <ProjectReference Include="..\VisionProvider.Interfaces\VisionProvider.csproj" />
 	</ItemGroup>
 </Project>
