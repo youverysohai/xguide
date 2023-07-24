@@ -1,6 +1,7 @@
 ﻿using CommunityToolkit.Mvvm.Messaging;
 using System.Linq;
 using System.Security;
+using X_Guide.MessageToken;
 using X_Guide.Validation;
 using XGuideSQLiteDB;
 using XGuideSQLiteDB.Models;
@@ -36,6 +37,7 @@ namespace X_Guide.Service
             if (user != null)
             {
                 CurrentUser = user;
+                _messenger.Send(new UserLoginChanged(user));
                 return true;
             }
             return false;

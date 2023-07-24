@@ -147,7 +147,24 @@ namespace X_Guide.MVVM.ViewModel
         {
             int XOffset = Calibration.XOffset;
             int YOffset = Calibration.YOffset;
-            CalibrationData calibrationData = await _calibService.EyeInHand2D_Calibrate(XOffset, YOffset, (int)Calibration.JointRotationAngle);
+            CalibrationData calibrationData = null;
+            switch (Calibration.Orientation)
+            {
+                case Enums.Orientation.LookDownward:
+                    {
+                        await _calibService.LookingDownward2D_Calibrate(Calibration.VisionPoints, Calibration.RobotPoints);
+                        break;
+                    }
+                case Enums.Orientation.EyeOnHand:
+                    {
+                        await _calibService.EyeInHand2D_Calibrate(XOffset, YOffset, (int)Calibration.JointRotationAngle);
+                        break;
+                    }
+                case Enums.Orientation.LookUpward: break;
+                case Enums.Orientation.MountedOnJoint2: break;
+                case Enums.Orientation.MountedOnJoint5:break;
+
+            }
             Calibration.CalibrationData = calibrationData;
             IsCalibrationCompleted = true;
         }

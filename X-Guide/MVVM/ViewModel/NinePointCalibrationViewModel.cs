@@ -7,6 +7,7 @@ using System.Runtime.Versioning;
 using System.Threading;
 using System.Threading.Tasks;
 using X_Guide.Extension.Model;
+using X_Guide.MVVM.ViewModel.CalibrationWizardSteps;
 using Point = VisionGuided.Point;
 using RelayCommand = X_Guide.MVVM.Command.RelayCommand;
 
@@ -17,6 +18,7 @@ namespace X_Guide.MVVM.ViewModel
     {
         private readonly ICalibrationService _calibrationService;
         private readonly IMessenger _messenger;
+        public CalibrationViewModel Calibration { get; set; }
 
         public Provider provider { get; set; } = Provider.Manipulator;
         public string Header { get; set; }
@@ -32,8 +34,9 @@ namespace X_Guide.MVVM.ViewModel
         public RelayCommand StartCommand { get; set; }
 
 
-        public NinePointCalibrationViewModel(ICalibrationService calibrationService, IMessenger messenger)
+        public NinePointCalibrationViewModel(ICalibrationService calibrationService, IMessenger messenger, CalibrationViewModel calibration)
         {
+            Calibration = calibration;
             NinePointState.CollectionChanged += NinePointState_CollectionChanged;
             _calibrationService = calibrationService;
             _messenger = messenger;
@@ -84,7 +87,7 @@ namespace X_Guide.MVVM.ViewModel
             var point = await _calibrationService.LookingDownward9Point(BlockingCall, Provider.Vision);
             NinePointState[NinePointState.Count - 1] = true;
             UpdateBorderItemNinePointState(NinePointState.Count - 1);
-
+            Calibration.VisionPoints = point;
             return point;
         }
 
@@ -93,6 +96,7 @@ namespace X_Guide.MVVM.ViewModel
             var point = await _calibrationService.LookingDownward9Point(BlockingCall, Provider.Manipulator);
             NinePointState[NinePointState.Count - 1] = true;
             UpdateBorderItemNinePointState(NinePointState.Count - 1);
+            Calibration.RobotPoints = point;
             return point;
         }
 

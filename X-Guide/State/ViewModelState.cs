@@ -5,6 +5,7 @@ using TcpConnectionHandler;
 using X_Guide.MessageToken;
 using X_Guide.MVVM.Model;
 using X_Guide.MVVM.ViewModel;
+using XGuideSQLiteDB.Models;
 
 namespace X_Guide.State
 {
