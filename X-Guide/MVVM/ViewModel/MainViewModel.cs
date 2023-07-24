@@ -2,9 +2,11 @@
 using CommunityToolkit.Mvvm.Messaging;
 using System;
 using System.Diagnostics;
+using System.Runtime.Versioning;
 using System.Security;
 using System.Windows;
 using System.Windows.Input;
+using TcpConnectionHandler.Client;
 using X_Guide.Enums;
 using X_Guide.MVVM.Command;
 using X_Guide.MVVM.Store;
@@ -16,7 +18,7 @@ using XGuideSQLiteDB.Models;
 namespace X_Guide.MVVM.ViewModel
 {
     //displaying the current viewmodel of the application
-
+    [SupportedOSPlatform("Windows")]
     public class MainViewModel : ViewModelBase
     {
         #region CLR properties
@@ -51,6 +53,7 @@ namespace X_Guide.MVVM.ViewModel
         public ICommand LogoutCommand { get; }
         public ICommand ServerCommand { get; }
         public ICommand RegisterCommand { get; }
+        public ICommand RefreshCommand { get; }
 
         private string _inputUsername;
 
@@ -115,12 +118,15 @@ namespace X_Guide.MVVM.ViewModel
         public User CurrentUser => _auth.CurrentUser;
 
         public event EventHandler<bool> ClientConnectionStateChanged;
+        
+        private IClientTcp _client;
 
         #endregion CLR properties
 
-        public MainViewModel(INavigationService navigationService, StateViewModel state, IRepository repository, IMessenger messenger)
+        public MainViewModel(IClientTcp clientTcp,INavigationService navigationService, StateViewModel state, IRepository repository, IMessenger messenger)
 
         {
+            _client = clientTcp;
             _auth = new AuthenticationService(repository, messenger);
 
             AppState = state;
@@ -137,9 +143,15 @@ namespace X_Guide.MVVM.ViewModel
 
             CurrentUserCommand = new RelayCommand(OnUserChangeEvent);
             LoginCommand = new RelayCommand(Login);
+            RefreshCommand = new RelayCommand(Refresh);
             LogoutCommand = new RelayCommand(Logout);
             RegisterCommand = new RelayCommand(Register);
             NavigateCommand = new RelayCommand(Navigate);
+        }
+
+        private void Refresh(object obj)
+        {
+             _client.ConnectServer();
         }
 
         private void OnUserChangeEvent(object obj)

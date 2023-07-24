@@ -173,6 +173,7 @@
                         <TextBlock x:Name="TextBoxUsername"  Text="{Binding AppState.CurrentUser.Username}" Margin="5 0 0 0" VerticalAlignment="Center"  FontSize="16" />
                         <TextBlock x:Name="TextBoxUserRole"  Text="{Binding AppState.CurrentUser.Role}" Margin="5 0 0 0" VerticalAlignment="Center"  FontSize="16" />
                     </ui:SimpleStackPanel>
+                    <Button x:Name="RefreshButton" Content="Refresh" Command="{Binding RefreshCommand}" />
                     <Button x:Name="SignUpButton" Content="Sign Up" Click="SignUpButton_Click" />
                     <Button x:Name="LoginButton" Content="Login" Click="LoginButton_Click" />
                     <Button x:Name="LogoutButton" Content="Logout" Command="{Binding LogoutCommand}" />
