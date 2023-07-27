@@ -359,3 +359,6 @@ MigrationBackup/
 
 # Fody - auto-generated XML schema
 FodyWeavers.xsd
+/X-Guide/MVVM/View/test.xaml
+/X-Guide/MVVM/View/test.xaml.cs
+/X-Guide/MVVM/ViewModel/testViewModel.cs
