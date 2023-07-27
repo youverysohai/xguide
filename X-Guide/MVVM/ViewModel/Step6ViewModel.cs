@@ -37,7 +37,6 @@ namespace X_Guide.MVVM.ViewModel
     [SupportedOSPlatform("windows")]
     internal class Step6ViewModel : ViewModelBase
     {
-
         public CalibrationViewModel Calibration { get; set; }
         public CalibrationViewModel NewCalibration { get; set; }
 
@@ -47,7 +46,7 @@ namespace X_Guide.MVVM.ViewModel
 
         private readonly IMessenger _messenger;
         private readonly IServerTcp _serverService;
-        private readonly IRepository _repository;
+        private readonly IRepository<Calibration> _repository;
         private readonly ICalibrationService _calibService;
         private readonly IMapper _mapper;
         private readonly Notifier _notifier;
@@ -82,9 +81,10 @@ namespace X_Guide.MVVM.ViewModel
         public RelayCommand ConfirmCalibDataCommand { get; set; }
 
         public event EventHandler OnCalibrationChanged;
+
         public object Step6CalibrationModule { get; set; }
 
-        public Step6ViewModel(ILifetimeScope lifeTimeScope, IServerTcp serverService, CalibrationViewModel calibration, IRepository repository, ICalibrationService calibService, IMapper mapper, Notifier notifier, IVisionService visionService, IMessenger messenger, NinePointCalibrationViewModel ninePoint, IVisionViewModel visionView)
+        public Step6ViewModel(ILifetimeScope lifeTimeScope, IServerTcp serverService, CalibrationViewModel calibration, IRepository<Calibration> repository, ICalibrationService calibService, IMapper mapper, Notifier notifier, IVisionService visionService, IMessenger messenger, NinePointCalibrationViewModel ninePoint, IVisionViewModel visionView)
         {
             VisionView = visionView;
             VisionView.SetConfig(calibration);
@@ -162,8 +162,7 @@ namespace X_Guide.MVVM.ViewModel
                     }
                 case Orientation.LookUpward: break;
                 case Orientation.MountedOnJoint2: break;
-                case Orientation.MountedOnJoint5:break;
-
+                case Orientation.MountedOnJoint5: break;
             }
             Calibration.CalibrationData = calibrationData;
             IsCalibrationCompleted = true;
@@ -172,7 +171,7 @@ namespace X_Guide.MVVM.ViewModel
         [ExceptionHandlingAspect]
         private async Task Save(object param)
         {
-            Calibration calibration = _repository.Find<Calibration>(q => q.Id.Equals(Calibration.Id)).FirstOrDefault();
+            Calibration calibration = _repository.Find(q => q.Id.Equals(Calibration.Id)).FirstOrDefault();
 
             if (calibration is null)
             {

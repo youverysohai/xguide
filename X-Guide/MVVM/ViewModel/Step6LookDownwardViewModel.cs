@@ -3,13 +3,9 @@ using CalibrationProvider;
 using CommunityToolkit.Mvvm.Input;
 using CommunityToolkit.Mvvm.Messaging;
 using System;
-using System.Linq;
 using System.Runtime.Versioning;
 using System.Threading.Tasks;
-using System.Windows.Media.Animation;
 using X_Guide.MVVM.ViewModel.CalibrationWizardSteps;
-using XGuideSQLiteDB;
-using XGuideSQLiteDB.Models;
 
 namespace X_Guide.MVVM.ViewModel
 {
@@ -22,18 +18,15 @@ namespace X_Guide.MVVM.ViewModel
         private readonly IMessenger _messenger;
         public CalibrationViewModel Calibration { get; }
 
-
         public RelayCommand StartVision9PointCommand { get; private set; }
         private readonly ICalibrationService _calibrationService;
         public RelayCommand StartCalibrationCommand { get; set; }
 
-        private readonly IRepository _repository;
-
-        public Step6LookDownwardViewModel(ICalibrationService calibrationService, NinePointCalibrationViewModel ninePoint, IMessenger messenger, CalibrationViewModel calibration, IRepository repository, IMapper mapper)
+        public Step6LookDownwardViewModel(ICalibrationService calibrationService, NinePointCalibrationViewModel ninePoint, IMessenger messenger, CalibrationViewModel calibration, IMapper mapper)
         {
             ninePoint.provider = Provider.Vision;
             ninePoint.Header = "Vision Calibration";
-            _repository = repository;
+
             NinePoint = ninePoint;
 
             _mapper = mapper;

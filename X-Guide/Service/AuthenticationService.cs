@@ -10,7 +10,7 @@ namespace X_Guide.Service
 {
     public class AuthenticationService
     {
-        private readonly IRepository _repository;
+        private readonly IRepository<User> _repository;
         private readonly IMessenger _messenger;
         private User userModel;
 
@@ -25,7 +25,7 @@ namespace X_Guide.Service
 
         public bool IsLoggedIn => CurrentUser != null;
 
-        public AuthenticationService(IRepository repository, IMessenger messenger)
+        public AuthenticationService(IRepository<User> repository, IMessenger messenger)
         {
             _repository = repository;
             _messenger = messenger;
@@ -45,7 +45,7 @@ namespace X_Guide.Service
 
         private User Authenticate(string username, SecureString password)
         {
-            User user = _repository.Find<User>(r => r.Username.Equals(username)).FirstOrDefault();
+            User user = _repository.Find(r => r.Username.Equals(username)).FirstOrDefault();
             return user;
         }
 
@@ -58,7 +58,7 @@ namespace X_Guide.Service
 
         public async void Delete(int id)
         {
-            await _repository.DeleteById<User>(id);
+            await _repository.DeleteById(id);
         }
     }
 }

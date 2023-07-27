@@ -8,8 +8,7 @@ namespace X_Guide.MappingConfiguration
     {
         public ManipulatorProfile()
         {
-            CreateMap<Manipulator, ManipulatorViewModel>();
-            CreateMap<ManipulatorViewModel, Manipulator>();
+            CreateMap<Manipulator, ManipulatorViewModel>().ReverseMap();
         }
     }
 }

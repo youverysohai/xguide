@@ -9,16 +9,21 @@ namespace XGuideSQLiteDB.Models
     {
         [Description("Look Downward")]
         LookDownward = 1,
+
         [Description("Look Upward")]
         LookUpward = 2,
+
         [Description("Eye On Hand")]
         EyeOnHand = 3,
+
         [Description("Mounted On Joint 2")]
         MountedOnJoint2 = 4,
+
         [Description("Mounted On Joint 5")]
         MountedOnJoint5 = 5,
     }
-    public class Calibration
+
+    public class Calibration : IEntity
     {
         [Key]
         public int Id { get; set; }

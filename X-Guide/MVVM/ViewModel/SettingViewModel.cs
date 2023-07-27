@@ -33,7 +33,7 @@ namespace X_Guide.MVVM.ViewModel
         public RelayCommand OperationCommand { get; set; }
         public RelayCommand SaveGeneralCommand { get; set; }
 
-        private readonly IRepository _repository;
+        private readonly IRepository<Manipulator> _repository;
         private readonly IMapper _mapper;
         private readonly IJsonDb _jsonDb;
 
@@ -49,7 +49,7 @@ namespace X_Guide.MVVM.ViewModel
 
         public string LogFilePath { get; set; }
 
-        public SettingViewModel(IRepository repository, IMapper mapper, IJsonDb jsonDb)
+        public SettingViewModel(IRepository<Manipulator> repository, IMapper mapper, IJsonDb jsonDb)
         {
             _repository = repository;
             _mapper = mapper;
@@ -130,7 +130,7 @@ namespace X_Guide.MVVM.ViewModel
 
         private async void GetManipulators()
         {
-            List<Manipulator> models = _repository.GetAll<Manipulator>();
+            List<Manipulator> models = _repository.GetAll();
             Manipulator = null;
             Manipulators.Clear();
 
