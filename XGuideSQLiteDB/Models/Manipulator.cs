@@ -20,7 +20,7 @@ namespace XGuideSQLiteDB.Models
     }
 
     [Serializable]
-    public class Manipulator
+    public class Manipulator : IEntity
     {
         [Key]
         public int Id { get; set; }

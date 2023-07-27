@@ -11,7 +11,7 @@ namespace X_Guide.Service.Communication
 {
     internal class SmartCamOperationService : OperationService, IOperationService
     {
-        public SmartCamOperationService(IRepository repository, IVisionService visionService, IServerTcp serverService) : base(repository, visionService, serverService)
+        public SmartCamOperationService(IRepository<Calibration> repository, IVisionService visionService, IServerTcp serverService) : base(repository, visionService, serverService)
         {
         }
 
@@ -25,7 +25,7 @@ namespace X_Guide.Service.Communication
             try
             {
                 if (parameter.Length < 1) throw new Exception(StrRetriver.Get("OP000"));
-                calib = _repository.Find<Calibration>(q => q.Name.Equals(parameter[1])).FirstOrDefault() ?? throw new Exception(StrRetriver.Get("OP001"));
+                calib = _repository.Find(q => q.Name.Equals(parameter[1])).FirstOrDefault() ?? throw new Exception(StrRetriver.Get("OP001"));
 
                 VisCenter = await _visionService.GetVisCenter();
                 if (VisCenter is null) throw new Exception(StrRetriver.Get("VI000"));

@@ -1,12 +1,11 @@
 ﻿//using ToastNotifications.Messages;
 using Autofac;
+using Autofac.Extras.DynamicProxy;
 using AutoMapper;
 using CalibrationProvider;
 using CommunityToolkit.Mvvm.Messaging;
 using HikVisionProvider;
 using ManipulatorTcp;
-using Serilog;
-using Serilog.Core;
 using System;
 using System.Configuration;
 using System.Runtime.Versioning;
@@ -45,7 +44,6 @@ namespace X_Guide
     {
         private static IContainer _diContainer;
         public static Notifier Notifier;
-        private static readonly Logger logger = new LoggerConfiguration().WriteTo.File($"{Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments)}/X-Guide/Error_Log.txt").CreateLogger();
 
         //TODO: Add logger
         public static int VisionSoftware = 1;
@@ -61,7 +59,8 @@ namespace X_Guide
             builder.RegisterType<NinePointCalibrationViewModel>();
             builder.RegisterType<WeakReferenceMessenger>().As<IMessenger>().SingleInstance();
             builder.RegisterType<DisposeService>().As<IDisposeService>().SingleInstance();
-            builder.Register(c => new AuthenticationService(c.Resolve<IRepository>(), c.Resolve<IMessenger>())).SingleInstance();
+            builder.RegisterType<DbLoggingInterceptor>();
+            builder.Register(c => new AuthenticationService(c.Resolve<IRepository<User>>(), c.Resolve<IMessenger>())).SingleInstance();
             builder.Register(c => new ViewModelLocator(_diContainer)).As<IViewModelLocator>().SingleInstance();
 
             builder.Register(c => new MainWindow()
@@ -116,8 +115,7 @@ namespace X_Guide
             builder.RegisterType<StateViewModel>().SingleInstance();
 
             builder.RegisterType<SeriLogLoggerFactory>().As<ILoggerFactory>().SingleInstance();
-            builder.Register(c => new Repository(c.Resolve<ILoggerFactory>().CreateLogger(typeof(Repository)))).As<IRepository>().SingleInstance();
-
+            builder.RegisterGeneric(typeof(Repository<>)).As(typeof(IRepository<>)).EnableInterfaceInterceptors().InterceptedBy(typeof(DbLoggingInterceptor));
             builder.RegisterType<MessageBoxService>().As<IMessageBoxService>().SingleInstance();
 
             builder.RegisterType<ManipulatorTcpHandler>().SingleInstance();
@@ -132,7 +130,7 @@ namespace X_Guide
                     Port = db.Port,
                     Terminator = db.Terminator
                 };
-                return new ClientTcp(config, c.Resolve<IMessenger>(), c.Resolve<ILoggerFactory>().CreateLogger(typeof(ClientTcp)));
+                return new ClientTcp(config, c.Resolve<IMessenger>(), c.Resolve<ILoggerFactory>().CreateLogger(nameof(ClientTcp)));
             }).As<IClientTcp>().SingleInstance();
 
             switch (VisionSoftware)
@@ -191,7 +189,7 @@ namespace X_Guide
                     Port = db.Port,
                     Terminator = db.Terminator,
                 };
-                return new ServerTcp(config, c.Resolve<IMessenger>(), c.Resolve<ILoggerFactory>().CreateLogger(typeof(ServerTcp)));
+                return new ServerTcp(config, c.Resolve<IMessenger>(), c.Resolve<ILoggerFactory>().CreateLogger(nameof(ServerTcp)));
             }).As<IServerTcp>().SingleInstance();
 
             return builder.Build();
@@ -208,7 +206,7 @@ namespace X_Guide
 
         private void CurrentDomain_UnhandledException(object sender, UnhandledExceptionEventArgs e)
         {
-            logger.Error(e.ExceptionObject.ToString());
+            //logger.Error(e.ExceptionObject.ToString());
             if (e.ExceptionObject is CriticalErrorException ex)
             {
                 HandyControl.Controls.MessageBox.Show(ex.Message, "Error", MessageBoxButton.OK, MessageBoxImage.Error);
@@ -242,7 +240,6 @@ namespace X_Guide
         protected override void OnStartup(StartupEventArgs e)
         {
             MainWindow = _diContainer.Resolve<MainWindow>();
-
 
             base.OnStartup(e);
             StateViewModel viewModelState = _diContainer.Resolve<StateViewModel>();

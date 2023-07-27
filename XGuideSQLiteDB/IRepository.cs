@@ -1,23 +1,27 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq.Expressions;
 using System.Threading.Tasks;
+using XGuideSQLiteDB.Models;
 
 namespace XGuideSQLiteDB
 {
-    public interface IRepository
+    public interface IRepository<T> where T : class, IEntity
     {
-        void Create<T>(T entity) where T : class;
+        void Create(T entity);
 
-        void Delete<T>(T entity) where T : class;
+        void Delete(T entity);
 
-        Task<bool> DeleteById<T>(int id) where T : class;
+        Task<bool> DeleteById(int id);
 
-        List<T> Find<T>(Func<T, bool> predicate) where T : class;
+        List<T> Find(Func<T, bool> predicate);
 
-        List<T> GetAll<T>() where T : class;
+        List<T> GetAll(IEnumerable<Expression<Func<T, object>>> includeProperty = null);
 
-        Task<T> GetById<T>(int id) where T : class;
+        Task<T> GetById(int id);
 
-        void Update<T>(T entity) where T : class;
+        Task<T> GetById(int id, IEnumerable<Expression<Func<T, object>>> includeProperty);
+
+        void Update(T entity);
     }
 }

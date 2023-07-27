@@ -74,7 +74,7 @@
             <StackPanel Grid.Column="1"  Grid.Row="1" Orientation="Vertical" VerticalAlignment="Stretch"  HorizontalAlignment="Stretch" x:Name="StartStepPage">
                 <TextBlock HorizontalAlignment="Center" FontSize="35" >Calibration Wizard</TextBlock>
                 <TextBox Width="250" Margin="50"  FontSize="16"  Style="{DynamicResource MaterialDesignFloatingHintTextBox }"
-                         materialDesign:HintAssist.Hint="Enter New Calibration Name" Text="{Binding Calibration.Name,Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" x:Name="CalibName" />
+                         materialDesign:HintAssist.Hint="Enter New Calibration Name" Text="{Binding Name,Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" x:Name="CalibName" />
 
                 <TextBlock Margin="0 0 0 50" HorizontalAlignment="Center" VerticalAlignment="Bottom">Press Start to Begin <materialDesign:PackIcon Kind="ArrowDownBoldOutline"></materialDesign:PackIcon></TextBlock>
 

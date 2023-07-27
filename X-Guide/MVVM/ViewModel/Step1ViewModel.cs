@@ -45,7 +45,7 @@ namespace X_Guide.MVVM.ViewModel
             }
         }
 
-        private readonly IRepository _repository;
+        private readonly IRepository<Manipulator> _maniRepository;
 
         private IMapper _mapper { get; }
         public IServerTcp _serverService { get; }
@@ -77,14 +77,14 @@ namespace X_Guide.MVVM.ViewModel
             _messenger.Send(new CalibrationStateChanged(state));
         }
 
-        public Step1ViewModel(IRepository repository, IMapper mapper, CalibrationViewModel calibration, IDisposeService disposeService, IMessenger messenger)
+        public Step1ViewModel(IRepository<Manipulator> maniRepository, IMapper mapper, CalibrationViewModel calibration, IDisposeService disposeService, IMessenger messenger)
         {
             _messenger = messenger;
             disposeService.Add(this);
-            _repository = repository;
+
+            _maniRepository = maniRepository;
             _mapper = mapper;
             _calibration = calibration;
-          
             _manipulator = _calibration.Manipulator;
             CheckEnableState();
             GetManipulators();
@@ -92,7 +92,7 @@ namespace X_Guide.MVVM.ViewModel
 
         private void GetManipulators()
         {
-            var models = _repository.GetAll<Manipulator>();
+            var models = _maniRepository.GetAll();
             var viewModels = models.Select(x => _mapper.Map<ManipulatorViewModel>(x));
             Manipulators = new ObservableCollection<ManipulatorViewModel>(viewModels);
             OnPropertyChanged(nameof(Manipulator));

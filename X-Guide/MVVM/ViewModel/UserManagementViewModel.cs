@@ -43,7 +43,7 @@ namespace X_Guide.MVVM.ViewModel
 
         public ObservableCollection<UserRole> UserRoles { get; } = new ObservableCollection<UserRole>(Enum.GetValues(typeof(UserRole)).Cast<UserRole>());
 
-        public UserManagementViewModel(IMapper mapper, IRepository repository, IMessenger messenger)
+        public UserManagementViewModel(IMapper mapper, IRepository<User> repository, IMessenger messenger)
         {
             _auth = new AuthenticationService(repository, messenger);
             _mapper = mapper;

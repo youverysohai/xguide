@@ -120,18 +120,19 @@ namespace X_Guide.MVVM.ViewModel
         public event EventHandler<bool> ClientConnectionStateChanged;
 
         private readonly IMessenger _messenger;
-        private IClientTcp _client;
+        private readonly IClientTcp _client;
 
         #endregion CLR properties
 
-        public MainViewModel(IClientTcp clientTcp,INavigationService navigationService, StateViewModel state, IRepository repository, IMessenger messenger)
+        public MainViewModel(IClientTcp clientTcp, INavigationService navigationService, StateViewModel state, IRepository<User> repository, IMessenger messenger)
 
-        {   _client = clientTcp;
+        {
+            _client = clientTcp;
             _auth = new AuthenticationService(repository, messenger);
 
             AppState = state;
             AppState.OnStateChanged = OnLoadingStateChanged;
-            
+
             _navigationService = navigationService;
             _navigationStore = navigationService.GetNavigationStore();
             _navigationStore.CurrentViewModelChanged += OnCurrentViewModelChanged;
@@ -151,13 +152,12 @@ namespace X_Guide.MVVM.ViewModel
 
         private void Refresh(object obj)
         {
-             _client.ConnectServer();
+            _client.ConnectServer();
         }
 
         private void OnUserChangeEvent(object obj)
         {
             User = ((UserViewModel)obj).Clone() as UserViewModel;
-            
         }
 
         private void Logout(object obj)
@@ -166,8 +166,6 @@ namespace X_Guide.MVVM.ViewModel
             CurrentUserRole = "";
             _auth.CurrentUser.Equals(null);
         }
-
-
 
         private void OnLoadingStateChanged()
         {

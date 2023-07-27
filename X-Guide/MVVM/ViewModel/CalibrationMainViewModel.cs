@@ -4,6 +4,7 @@ using CommunityToolkit.Mvvm.Messaging;
 using HandyControl.Data;
 using System;
 using System.Collections.Generic;
+using System.Linq.Expressions;
 using System.Runtime.Versioning;
 using System.Threading.Tasks;
 using X_Guide.MessageToken;
@@ -11,6 +12,8 @@ using X_Guide.MVVM.Command;
 using X_Guide.MVVM.Store;
 using X_Guide.MVVM.ViewModel.CalibrationWizardSteps;
 using X_Guide.Service;
+using XGuideSQLiteDB;
+using XGuideSQLiteDB.Models;
 using MessageBox = HandyControl.Controls.MessageBox;
 
 namespace X_Guide.MVVM.ViewModel
@@ -25,10 +28,11 @@ namespace X_Guide.MVVM.ViewModel
         public CalibrationViewModel Calibration { get; set; }
 
         private readonly IMessenger _messenger;
-        private readonly ILifetimeScope _lifeTimeScope;
+        private ILifetimeScope _lifeTimeScope;
 
         public List<string> StepBarContent { get; set; }
 
+        private readonly IMapper _mapper;
         private bool _canExecuteNext;
 
         public bool CanExecuteNext
@@ -61,6 +65,7 @@ namespace X_Guide.MVVM.ViewModel
         public NavigationStore _navigationStore;
 
         private readonly INavigationService _navigationService;
+        private readonly IRepository<Calibration> _repository;
         private readonly IViewModelLocator _viewModelLocator;
 
         public RelayCommand WizNextCommand { get; set; }
@@ -69,19 +74,9 @@ namespace X_Guide.MVVM.ViewModel
 
         public ViewModelBase CurrentViewModel => _navigationStore.CurrentViewModel;
 
-        private int _stepIndex;
+        public int StepIndex { get; set; }
 
         private int _currentStep;
-
-        public int StepIndex
-        {
-            get { return _stepIndex; }
-            set
-            {
-                _stepIndex = value;
-                OnPropertyChanged();
-            }
-        }
 
         public int CurrentStep
         {
@@ -95,25 +90,23 @@ namespace X_Guide.MVVM.ViewModel
 
         public LinkedListNode<ViewModelBase> CurrentNode { get; set; }
 
-        public CalibrationMainViewModel(INavigationService navigationService, IViewModelLocator viewModelLocator, IMapper mapper, IMessenger messenger, ILifetimeScope lifeTimeScope)
+        public CalibrationMainViewModel(INavigationService navigationService, IViewModelLocator viewModelLocator, IMessenger messenger, ILifetimeScope lifeTimeScope, IRepository<Calibration> repository, IMapper mapper, string name = "Lorem Ipsum", int cid = -1)
         {
             StepBarContent = new List<string>(new string[] { "Manipulator", "Orientation" + Environment.NewLine + "& Mounting", "Vision Flow", "Motion", "Jog", "Calibration", });
-            _lifeTimeScope = lifeTimeScope.BeginLifetimeScope();
-
+            _mapper = mapper;
             _navigationService = navigationService;
-            _navigationService.SetScope(_lifeTimeScope);
+            _repository = repository;
             _navigationStore = _navigationService.GetNavigationStore();
             _navigationStore.CurrentViewModelChanged += OnCurrentViewModelChanged;
             _viewModelLocator = viewModelLocator;
             WizNextCommand = new RelayCommand(WizNext, (o) => CanExecuteNext);
             WizPrevCommand = new RelayCommand(WizPrev, (o) => CanExecutePrev);
             CancelCommand = new RelayCommand(CancelCalib);
-            Calibration = _lifeTimeScope.Resolve<CalibrationViewModel>();
             _messenger = messenger;
             messenger.Register(this);
+            _lifeTimeScope = lifeTimeScope;
 
-            _navigationService.Navigate<Step1ViewModel>();
-            CurrentNode = _navigationHistory.AddLast(CurrentViewModel);
+            LoadCalibSetting(cid);
         }
 
         private void OnStateChanged(bool obj)
@@ -139,13 +132,26 @@ namespace X_Guide.MVVM.ViewModel
             base.Dispose();
         }
 
-        public void LoadCalibSetting(TypedParameter calib)
+        public async void LoadCalibSetting(int cid)
         {
-            _navigationHistory.AddLast(_viewModelLocator.Create<Step2ViewModel>());
-            _navigationHistory.AddLast(_viewModelLocator.Create<Step3ViewModel>());
-            _navigationHistory.AddLast(_viewModelLocator.Create<Step4ViewModel>());
-            _navigationHistory.AddLast(_viewModelLocator.Create<Step5ViewModel>());
-            _navigationHistory.AddLast(_viewModelLocator.Create<Step6ViewModel>());
+            if (cid != -1)
+            {
+                var i = await _repository.GetById(cid, new Expression<Func<Calibration, object>>[] {
+                c=> c.Manipulator
+            });
+                Calibration = _mapper.Map<CalibrationViewModel>(i);
+                _lifeTimeScope = _lifeTimeScope.BeginLifetimeScope(builder =>
+               {
+                   builder.RegisterInstance(Calibration).As<CalibrationViewModel>();
+               });
+            }
+            else
+            {
+                _lifeTimeScope = _lifeTimeScope.BeginLifetimeScope();
+            }
+            _navigationService.SetScope(_lifeTimeScope);
+            _navigationService.Navigate<Step1ViewModel>();
+            CurrentNode = _navigationHistory.AddLast(CurrentViewModel);
         }
 
         public void OnIndexChanged(FunctionEventArgs<int> e)

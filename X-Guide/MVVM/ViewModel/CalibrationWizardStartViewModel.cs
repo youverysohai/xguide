@@ -17,38 +17,23 @@ namespace X_Guide.MVVM.ViewModel
     internal class CalibrationWizardStartViewModel : ViewModelBase
     {
         private readonly IMapper _mapper;
-        private readonly IRepository _repository;
+        private readonly IRepository<Calibration> _repository;
         private readonly INavigationService _navigationService;
 
-        private ObservableCollection<CalibrationViewModel> _calibrations;
+        public ObservableCollection<CalibrationViewModel> Calibrations { get; set; }
 
-        public ObservableCollection<CalibrationViewModel> Calibrations
-        {
-            get { return _calibrations; }
-            set
-            {
-                _calibrations = value;
-                OnPropertyChanged();
-            }
-        }
+        public bool IsStarted { get; set; }
 
-        private bool _isStarted;
         private readonly ILifetimeScope _calibrationScope;
-
-        public bool IsStarted
-        {
-            get { return _isStarted; }
-            set { _isStarted = value; OnPropertyChanged(); }
-        }
 
         private readonly ILifetimeScope _scope;
 
-        public CalibrationViewModel Calibration { get; }
+        public string Name { get; set; }
         public RelayCommand StartCalibCommand { get; set; }
         public RelayCommand LoadCalibCommand { get; private set; }
         public RelayCommand DeleteCalibCommand { get; private set; }
 
-        public CalibrationWizardStartViewModel(INavigationService navigationService, IMapper mapper, IRepository repository, ILifetimeScope lifetimeScope)
+        public CalibrationWizardStartViewModel(INavigationService navigationService, IMapper mapper, IRepository<Calibration> repository, ILifetimeScope lifetimeScope)
         {
             StartCalibCommand = new RelayCommand(StartCalibration);
             LoadCalibCommand = new RelayCommand(LoadCalibration);
@@ -61,19 +46,21 @@ namespace X_Guide.MVVM.ViewModel
 
         private void GetCalibrations()
         {
-            List<Calibration> calibModels = _repository.GetAll<Calibration>();
+            List<Calibration> calibModels = _repository.GetAll();
             Calibrations = new ObservableCollection<CalibrationViewModel>(calibModels.Select(x => _mapper.Map<CalibrationViewModel>(x)));
         }
 
         private async void LoadCalibration(object obj)
         {
-            TypedParameter calib = new TypedParameter(typeof(CalibrationViewModel), obj);
-            CalibrationMainViewModel calibMain = await _navigationService.NavigateAsync<CalibrationMainViewModel>(calib) as CalibrationMainViewModel;
+            CalibrationViewModel calibration = obj as CalibrationViewModel;
+
+            NamedParameter calib = new NamedParameter("cid", calibration.Id);
+            await _navigationService.NavigateAsync<CalibrationMainViewModel>(calib);
         }
 
         private void StartCalibration(object obj)
         {
-            _navigationService.Navigate<CalibrationMainViewModel>();
+            _navigationService.Navigate<CalibrationMainViewModel>(new NamedParameter("name", Name));
         }
 
         public override void Dispose()
@@ -85,7 +72,7 @@ namespace X_Guide.MVVM.ViewModel
         public async void DeleteCalibration(object obj)
         {
             CalibrationViewModel vmodel = obj as CalibrationViewModel;
-            if (await _repository.DeleteById<Calibration>(vmodel.Id))
+            if (await _repository.DeleteById(vmodel.Id))
             {
                 Calibrations.Remove(vmodel);
             }

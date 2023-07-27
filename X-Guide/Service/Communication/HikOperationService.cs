@@ -18,7 +18,7 @@ namespace X_Guide.Service.Communication
     {
         private readonly IMessenger _messenger;
 
-        public HikOperationService(IRepository repository, IVisionService visionService, IServerTcp serverService, IMessenger messenger) : base(repository, visionService, serverService)
+        public HikOperationService(IRepository<Calibration> repository, IVisionService visionService, IServerTcp serverService, IMessenger messenger) : base(repository, visionService, serverService)
         {
             _messenger = messenger;
         }
@@ -38,7 +38,7 @@ namespace X_Guide.Service.Communication
             try
             {
                 if (parameter.Length < 2) throw new Exception(StrRetriver.Get("OP000"));
-                calib = _repository.Find<Calibration>(q => q.Name.Equals(parameter[1])).FirstOrDefault() ?? throw new Exception(StrRetriver.Get("OP001"));
+                calib = _repository.Find(q => q.Name.Equals(parameter[1])).FirstOrDefault() ?? throw new Exception(StrRetriver.Get("OP001"));
 
                 procedure = parameter[2];
 
