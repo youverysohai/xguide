@@ -31,9 +31,17 @@
                 <TextBlock  HorizontalAlignment="Center" Style="{DynamicResource TitleTextBlockStyle}" Text="Distance" />
             </ui:SimpleStackPanel>
         </GroupBox.Header>
-        <ui:SimpleStackPanel Orientation="Vertical">
-            <Label Content="X Distance " Style="{DynamicResource DefaultLabelStyle}"/>
-            <TextBlock  Text="{Binding TrackedXMove}" Style="{StaticResource ReadOnlyTextBlock}" >
+        <Grid>
+            <Grid.RowDefinitions> 
+                <RowDefinition Height="100"/> 
+                <RowDefinition Height="*"/> 
+            </Grid.RowDefinitions>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="*"/>
+            </Grid.ColumnDefinitions>
+            <Label Content="X Distance " Style="{DynamicResource DefaultLabelStyle}" VerticalAlignment="Top" HorizontalAlignment="Center"/>
+            <TextBlock  Text="{Binding TrackedXMove}" Style="{StaticResource ReadOnlyTextBlock}" Grid.Row="0" Grid.Column="0" VerticalAlignment="Center" HorizontalAlignment="Center">
                 <i:Interaction.Triggers> 
                     <!-- Reusing the DataTrigger defined as resources -->
                     <i:DataTrigger  Binding="{Binding Calibration.CalibrationMode}" Value="True">
@@ -44,7 +52,7 @@
                     </i:DataTrigger>
                 </i:Interaction.Triggers>
             </TextBlock>
-            <TextBox Text="{Binding TrackedXMove}" Style="{StaticResource DefaultTextBoxStyle}">
+            <TextBox Text="{Binding TrackedXMove}" Style="{StaticResource DefaultTextBoxStyle}"   Grid.Column="0" VerticalAlignment="Center" HorizontalAlignment="Center">
                 <i:Interaction.Triggers>
                     <i:DataTrigger Binding="{Binding Calibration.CalibrationMode}" Value="True">
                         <i:ChangePropertyAction PropertyName="Visibility" Value="Visible" />
@@ -54,8 +62,8 @@
                     </i:DataTrigger>
                 </i:Interaction.Triggers>
             </TextBox>
-            <Label Content="Y Distance " Style="{DynamicResource DefaultLabelStyle}"/>
-            <TextBlock  Text="{Binding TrackedYMove}" Style="{StaticResource ReadOnlyTextBlock}" >
+            <Label Content="Y Distance " Style="{DynamicResource DefaultLabelStyle}" Grid.Row="0" Grid.Column="1" VerticalAlignment="Top" HorizontalAlignment="Center"/>
+            <TextBlock  Text="{Binding TrackedYMove}" Style="{StaticResource ReadOnlyTextBlock}" Grid.Row="0" Grid.Column="1" VerticalAlignment="Center" HorizontalAlignment="Center" >
                 <i:Interaction.Triggers>  
                     <i:DataTrigger  Binding="{Binding Calibration.CalibrationMode}" Value="True">
                         <i:ChangePropertyAction PropertyName="Visibility" Value="Collapsed" />
@@ -65,7 +73,7 @@
                     </i:DataTrigger>
                 </i:Interaction.Triggers>
             </TextBlock>
-            <TextBox Text="{Binding TrackedYMove}" Style="{StaticResource DefaultTextBoxStyle}" >
+            <TextBox Text="{Binding TrackedYMove}" Style="{StaticResource DefaultTextBoxStyle}"  Grid.Row="0" Grid.Column="1" VerticalAlignment="Center" HorizontalAlignment="Center"  >
                 <i:Interaction.Triggers>
                     <i:DataTrigger Binding="{Binding Calibration.CalibrationMode}" Value="True">
                         <i:ChangePropertyAction PropertyName="Visibility" Value="Visible" />
@@ -75,7 +83,7 @@
                     </i:DataTrigger>
                 </i:Interaction.Triggers>
             </TextBox>
-            <Button   Command="{Binding StartJogTrackingCommand}" Margin="0" Grid.Row="1">
+            <Button   Command="{Binding StartJogTrackingCommand}" Margin="0 0 0 0" Grid.Row="1" Grid.ColumnSpan="2" HorizontalAlignment="Center" VerticalAlignment="Center"> 
                 <i:Interaction.Triggers>
                     <i:DataTrigger  Binding="{Binding Calibration.CalibrationMode}" Value="True">
                         <i:ChangePropertyAction PropertyName="Visibility" Value="Collapsed" />
@@ -98,6 +106,6 @@
                     </TextBlock>
                 </Button.Content>
             </Button>
-        </ui:SimpleStackPanel>
+        </Grid>
     </GroupBox>
 </UserControl>

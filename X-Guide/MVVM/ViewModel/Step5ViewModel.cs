@@ -15,11 +15,13 @@ namespace X_Guide.MVVM.ViewModel
         public IVisionViewModel VisionView { get; set; }
         public JogTrackingViewModel JogTracking { get; set; }
 
+        public CalibrationViewModel Calibration { get; set; }
+
         public bool isHikLiveView { get; set; } = false;
         public Step5ViewModel(IVisionViewModel visionView, CalibrationViewModel calibration, JogControllerViewModel controller, JogTrackingViewModel tracker, ILifetimeScope lifeTimeScope)
         {
             VisionView = visionView;
-
+            Calibration = calibration;
             tracker.JogTrackingEnabled = !calibration.CalibrationMode;
             JogTracking = tracker;
 

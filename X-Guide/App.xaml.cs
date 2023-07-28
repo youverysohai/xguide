@@ -60,6 +60,7 @@ namespace X_Guide
             builder.RegisterType<JogTrackingViewModel>();
 
             builder.RegisterType<NinePointCalibrationViewModel>();
+            builder.RegisterType<ManualNinePointCalibrationViewModel>();
             builder.RegisterType<WeakReferenceMessenger>().As<IMessenger>().SingleInstance();
             builder.RegisterType<DisposeService>().As<IDisposeService>().SingleInstance();
             builder.Register(c => new AuthenticationService(c.Resolve<IRepository>(), c.Resolve<IMessenger>())).SingleInstance();

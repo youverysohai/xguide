@@ -1,6 +1,7 @@
 ﻿using CommunityToolkit.Mvvm.Messaging;
 using CommunityToolkit.Mvvm.Messaging.Messages;
 using ManipulatorTcp;
+using System.Collections.ObjectModel;
 using VisionGuided;
 using VisionProvider.Interfaces;
 using Point = VisionGuided.Point;
@@ -107,14 +108,15 @@ namespace CalibrationProvider
             return VisionPoints;
         }
 
-        public async Task<Point[]> LookingDownward9Point(Func<int, Task> BlockingCall, Provider provider)
+        public async Task LookingDownward9Point(ObservableCollection<Point> Points, Func<int, Task> BlockingCall, Provider provider)
         {
-            Point[] Points = new Point[9];
+      
 
             for (int i = 0; i < 9; i++)
             {
-                await BlockingCall.Invoke(i);
                 Point? point = default;
+                await BlockingCall.Invoke(i);
+  
                 switch (provider)
                 {
                     case Provider.Vision: point = await _messenger.Send<VisionCenterRequest>(); break;
@@ -124,7 +126,7 @@ namespace CalibrationProvider
                 if (point is null) throw new Exception();
                 Points[i] = point;
             }
-            return Points;
+            return;
         }
 
         public async Task<Point[]> LookingDownward9Point(Func<int, Task> BlockingCall)
@@ -186,7 +188,7 @@ namespace CalibrationProvider
             throw new NotImplementedException();
         }
 
-        public Task<Point[]> LookingDownward9PointManipulator(Func<int, Task> BlockingCall)
+        public Task LookingDownward9PointManipulator(ObservableCollection<Point> Points, Func<int, Task> BlockingCall)
         {
             throw new NotImplementedException();
         }

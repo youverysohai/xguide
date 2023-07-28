@@ -2,9 +2,17 @@
 using X_Guide.Enums;
 using Point = VisionGuided.Point;
 using Orientation = XGuideSQLiteDB.Models.Orientation;
+using System.Collections.ObjectModel;
+using System.Linq;
+using System.Security.Permissions;
 
 namespace X_Guide.MVVM.ViewModel.CalibrationWizardSteps
 {
+
+    public class PointViewModel : ViewModelBase
+    {
+        public Point Point { get; set; }
+    }
     public class CalibrationViewModel : ViewModelBase
     {
         public int Id { get; set; }
@@ -22,9 +30,11 @@ namespace X_Guide.MVVM.ViewModel.CalibrationWizardSteps
         public string Procedure { get; set; }
         public CalibrationData CalibrationData { get; set; }
 
-        public Point[] VisionPoints { get; set; }
-        public Point[] RobotPoints { get; set; }
 
+
+        public ObservableCollection<Point> VisionPoints { get; set; } = new ObservableCollection<Point>(Enumerable.Range(0, 9).Select(_ => new Point()));
+
+        public ObservableCollection<Point> RobotPoints { get; set; } = new ObservableCollection<Point>(new Point[] { null, null, null, null, null, null, null, null, null });
         public int XMove { get; set; }
         public int YMove { get; set; }
 
@@ -39,7 +49,7 @@ namespace X_Guide.MVVM.ViewModel.CalibrationWizardSteps
             Manipulator = currentManipulator; // Restore the saved Manipulator value
             JogMode = false;
             CalibrationMode = false;
-            Orientation = Orientation.EyeOnHand;
+            Orientation = Orientation.LookDownward;
             XOffset = 0;
             YOffset = 0;
             JointRotationAngle = 0.0;

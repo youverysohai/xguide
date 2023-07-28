@@ -15,16 +15,16 @@ namespace X_Guide.MVVM.ViewModel
         private readonly CalibrationViewModel _calibration;
         private readonly IMessenger _messenger;
 
-        public JogControllerViewModel JogController { get; }
+        public JogTrackingViewModel JogTracking { get; }
 
-        public Step5EyeOnHandConfig(JogControllerViewModel controller,  IMessenger messenger, CalibrationViewModel calibration)
+        public Step5EyeOnHandConfig(JogTrackingViewModel jogTracking,  IMessenger messenger, CalibrationViewModel calibration)
         {
-            controller.Calibration = calibration;
+            
             
             _calibration = calibration;
            
             _messenger = messenger;
-            JogController = controller;   
+            JogTracking = jogTracking;
         }
 
     }

@@ -152,7 +152,7 @@ namespace X_Guide.MVVM.ViewModel
             {
                 case Orientation.LookDownward:
                     {
-                        await _calibService.LookingDownward2D_Calibrate(Calibration.VisionPoints, Calibration.RobotPoints);
+                        await _calibService.LookingDownward2D_Calibrate(Calibration.VisionPoints.ToArray(), Calibration.RobotPoints.Select(x=> x).ToArray());
                         break;
                     }
                 case Orientation.EyeOnHand:

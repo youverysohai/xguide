@@ -11,8 +11,24 @@
              xmlns:hc="https://handyorg.github.io/handycontrol" xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes" xmlns:Release="clr-namespace:VMControls.WPF.Release;assembly=VMControls.WPF.Release"
              d:DesignHeight="450" d:DesignWidth="800"
              x:Name="TopConfig">
- 
-        <ContentControl   Content="{Binding NinePoint}"/>
- 
-  
+    <UserControl.Resources>
+        <Style TargetType="ContentControl" x:Key="ContentControlStyle">
+            <Style.Triggers>
+                <DataTrigger Binding="{Binding Calibration.CalibrationMode}" Value="True">
+                    <Setter Property="Content" Value="{Binding ManualNinePoint}" />
+                </DataTrigger>
+                <DataTrigger Binding="{Binding Calibration.CalibrationMode}" Value="False">
+                    <Setter Property="Content" Value="{Binding NinePoint}" />
+                </DataTrigger>
+            </Style.Triggers>
+        </Style>
+    </UserControl.Resources>
+    <Grid>
+        <custLayout:NineBoxCalibLayout NinePoint="{Binding Calibration.RobotPoints}" DockPanel.Dock="Top"/>
+        <ui:SimpleStackPanel Orientation="Horizontal" VerticalAlignment="Bottom" HorizontalAlignment="Center" >
+            <Button Command="{Binding StartCommand}" Content="Start" Margin="5"/>
+            
+            <Button Command="{Binding NextCommand}" Content="Next"/>
+        </ui:SimpleStackPanel>
+    </Grid>
 </UserControl>

@@ -1,4 +1,5 @@
-﻿using VisionGuided;
+﻿using System.Collections.ObjectModel;
+using VisionGuided;
 
 namespace CalibrationProvider
 {
@@ -12,7 +13,7 @@ namespace CalibrationProvider
 
         Task<CalibrationData> LookingDownward2D_Calibrate(Point[] VisionPoints, Point[] RobotPoints);
 
-        Task<Point[]> LookingDownward9PointManipulator(Func<int, Task> BlockingCall);
+        Task LookingDownward9PointManipulator(ObservableCollection<Point> Points, Func<int, Task> BlockingCall);
 
         Task<Point[]> LookingDownward9PointVision(Func<int, Task> BlockingCall);
 
@@ -20,6 +21,6 @@ namespace CalibrationProvider
 
         Task<(Point[], Point[])> TopConfig9PointVision(Func<int, Task> action);
 
-        Task<Point[]> LookingDownward9Point(Func<int, Task> BlockingCall, Provider provider);
+        Task LookingDownward9Point(ObservableCollection<Point> Points, Func<int, Task> BlockingCall, Provider provider);
     }
 }
