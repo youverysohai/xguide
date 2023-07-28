@@ -3,13 +3,14 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
-             xmlns:local="clr-namespace:X_Guide.CustomControls.Layouts"
+             xmlns:local="clr-namespace:X_Guide.CustomControls.Layouts" xmlns:ui="http://schemas.modernwpf.com/2019"
              mc:Ignorable="d" 
              d:DesignHeight="450" d:DesignWidth="800">
-    <Grid>
-        <TextBlock 
-            HorizontalAlignment="Center" VerticalAlignment="Center"
-            Text="No Camera Module :(" 
-            Panel.ZIndex="1" Style="{StaticResource SubtitleTextBlockStyle}" Foreground="{StaticResource DisconnectedColor}"/>
-    </Grid>
+    <Border Margin="10 0 10 0" BorderBrush="{StaticResource DisconnectedColor}" BorderThickness="2" CornerRadius="12" >
+        <Grid > 
+                <ui:FontIcon Glyph="&#xE722;" FontSize="60" Foreground="{StaticResource DisconnectedColor}"/>
+            <ui:FontIcon Glyph="&#xEA83;" FontSize="80" HorizontalAlignment="Center"  Foreground="{StaticResource ErrorColor}" />
+        
+        </Grid>
+    </Border>
 </UserControl>

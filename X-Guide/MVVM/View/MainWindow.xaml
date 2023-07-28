@@ -21,7 +21,7 @@
         Background="{ui:ThemeResource ResourceKey=NavigationViewExpandedPaneBackground}"
         ui:TitleBar.Background="{ui:ThemeResource ResourceKey=NavigationViewExpandedPaneBackground}"
        x:Name="m_AppWindow"
-        xmlns:ui="http://schemas.modernwpf.com/2019"
+        xmlns:ui="http://schemas.modernwpf.com/2019" xmlns:i="http://schemas.microsoft.com/xaml/behaviors"
         ui:WindowHelper.UseModernWindowStyle="True">
 
     <Window.Resources>
@@ -156,6 +156,44 @@
             <ui:NavigationView.PaneFooter>
 
                 <ui:SimpleStackPanel>
+                    <!-- Profile Picture and Username-->
+                    <ui:SimpleStackPanel Grid.Row="1" Orientation="Horizontal"  HorizontalAlignment="Left" Margin="4 10 0 10">
+                        <ui:PersonPicture Width="30"  >
+                        </ui:PersonPicture>
+                        <TextBlock x:Name="TextBoxUsername"  Text="{Binding AppState.CurrentUser.Username}" Margin="5 0 0 0" VerticalAlignment="Center"  FontSize="16" />
+                        <TextBlock x:Name="TextBoxUserRole"  Text="{Binding AppState.CurrentUser.Role}" Margin="5 0 0 0" VerticalAlignment="Center"  FontSize="16" />
+                    </ui:SimpleStackPanel>
+                    <Button x:Name="SignUpButton" ToolTip="SignUp"   Click="SignUpButton_Click" Width="330" HorizontalAlignment="Left" Background="Transparent"   HorizontalContentAlignment="Left">
+                        <ui:SimpleStackPanel Orientation="Horizontal">
+                            <ui:FontIcon Glyph="&#xE8FA;"/>
+
+                            <TextBlock VerticalAlignment="Center" Margin="10 0" Text=" Sign Up" />
+                        </ui:SimpleStackPanel>
+                    </Button>
+                    <Button x:Name="LoginButton"  Click="LoginButton_Click"  Width="330" HorizontalAlignment="Left" Background="Transparent"   HorizontalContentAlignment="Left">
+                        <ui:SimpleStackPanel Orientation="Horizontal">
+                            <ui:FontIcon Glyph="&#xE77B;"/>
+
+                            <TextBlock VerticalAlignment="Center" Margin="10 0" Text=" Login" />
+                        </ui:SimpleStackPanel>
+                    </Button>
+                    <Button x:Name="LogoutButton" Content="Logout" Command="{Binding LogoutCommand}" >
+                        <i:Interaction.Triggers>
+                            <i:DataTrigger Binding="{Binding AppState.CurrentUser}" Value="{x:Null}">
+                                <i:ChangePropertyAction PropertyName="Visibility" Value="Collapsed"/>
+                            </i:DataTrigger>
+                        </i:Interaction.Triggers>
+                    </Button>
+
+
+                    <xCust:CustomConnectionStatus HorizontalAlignment="Left" ShowTitle="Collapsed" IsConnected="{Binding AppState.IsAnyClientConnected}"  IsVisionConnected="{Binding AppState.IsConnectedToServer}" ShowVisionStatus="Visible" />
+                    <Button x:Name="RefreshButton" Command="{Binding RefreshCommand}" ToolTip="Reconnect Vision" Background="Transparent"  HorizontalContentAlignment="Left" Width="330">
+                        <ui:SimpleStackPanel Orientation="Horizontal">
+                            <ui:FontIcon Glyph="&#xE72C;"/>
+                            <TextBlock VerticalAlignment="Center" Margin="10 0" Text=" Reconnect Vision" />
+                        </ui:SimpleStackPanel>
+                    </Button>
+
                     <Button Click="ToggleAppThemeHandler" Background="Transparent" x:Name="toggleSwitch" Width="330" HorizontalAlignment="Left" Margin="-10 0 0 0" HorizontalContentAlignment="Left">
 
                         <ui:SimpleStackPanel Orientation="Horizontal">
@@ -164,26 +202,13 @@
                             <TextBlock VerticalAlignment="Center" Margin="10 0" Text=" Theme" />
                         </ui:SimpleStackPanel>
                     </Button>
-                    <xCust:CustomConnectionStatus HorizontalAlignment="Left" ShowTitle="Collapsed" IsConnected="{Binding AppState.IsAnyClientConnected}"  IsVisionConnected="{Binding AppState.IsConnectedToServer}" ShowVisionStatus="Visible" />
-
-                    <!-- Profile Picture and Username-->
-                    <ui:SimpleStackPanel Grid.Row="1" Orientation="Horizontal"  HorizontalAlignment="Left" Margin="4 10 0 10">
-                        <ui:PersonPicture Width="30" DisplayName="{Binding AppState.CurrentUser.Username}">
-                        </ui:PersonPicture>
-                        <TextBlock x:Name="TextBoxUsername"  Text="{Binding AppState.CurrentUser.Username}" Margin="5 0 0 0" VerticalAlignment="Center"  FontSize="16" />
-                        <TextBlock x:Name="TextBoxUserRole"  Text="{Binding AppState.CurrentUser.Role}" Margin="5 0 0 0" VerticalAlignment="Center"  FontSize="16" />
-                    </ui:SimpleStackPanel>
-                    <Button x:Name="RefreshButton" Content="Refresh" Command="{Binding RefreshCommand}" />
-                    <Button x:Name="SignUpButton" Content="Sign Up" Click="SignUpButton_Click" />
-                    <Button x:Name="LoginButton" Content="Login" Click="LoginButton_Click" />
-                    <Button x:Name="LogoutButton" Content="Logout" Command="{Binding LogoutCommand}" />
                 </ui:SimpleStackPanel>
             </ui:NavigationView.PaneFooter>
 
             <!-- CONTENT -->
             <ui:NavigationView.Content>
 
-                <hc:Card Margin="2 8 0 0" hc:BorderElement.CornerRadius="8 0 0 0" Background="{ui:ThemeResource ResourceKey=PersonPictureEllipseBadgeFillThemeBrush}">
+                <hc:Card Margin="3 0 0 0" hc:BorderElement.CornerRadius="10 0 0 0" Background="{ui:ThemeResource ResourceKey=PersonPictureEllipseBadgeFillThemeBrush}">
                     <!--<ui:Frame x:Name="contentFrame" />-->
 
                     <Grid x:Name="UserControlContent">
@@ -227,6 +252,9 @@
                             </DataTemplate>
                             <DataTemplate DataType="{x:Type vms:NinePointCalibrationViewModel}">
                                 <xCustLayout:NineBoxCalibLayout></xCustLayout:NineBoxCalibLayout>
+                            </DataTemplate>
+                            <DataTemplate DataType="{x:Type vms:ManualNinePointCalibrationViewModel}">
+                                <xCustLayout:ManualNineBoxCalibLayout></xCustLayout:ManualNineBoxCalibLayout>
                             </DataTemplate>
                             <DataTemplate DataType="{x:Type vms:HalconViewModel}">
                                 <views:HalconView />

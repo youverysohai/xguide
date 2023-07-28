@@ -3,8 +3,9 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
-             xmlns:local="clr-namespace:X_Guide.CustomControls" xmlns:i="http://schemas.microsoft.com/xaml/behaviors" xmlns:ui="http://schemas.modernwpf.com/2019"
+             xmlns:local="clr-namespace:X_Guide.CustomControls.Layouts" xmlns:i="http://schemas.microsoft.com/xaml/behaviors" xmlns:ui="http://schemas.modernwpf.com/2019"
              xmlns:enums="clr-namespace:XGuideSQLiteDB.Models;assembly=XGuideSQLiteDB"
+             xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
              mc:Ignorable="d"
              xmlns:c="clr-namespace:X_Guide.Converter"
              d:DesignHeight="450" d:DesignWidth="800"
@@ -18,36 +19,42 @@
             <Setter Property="BorderBrush" Value="{DynamicResource PrimaryBlueColor}" />
             <Setter Property="Margin" Value="10" />
             <Style.Triggers>
-                <DataTrigger Binding="{Binding NinePointState}" Value="True">
+                <DataTrigger Binding="{Binding DataContext.NinePointState}" Value="True">
                     <Setter Property="Background" Value="{DynamicResource PrimaryBlueColor}" />
                 </DataTrigger>
             </Style.Triggers>
         </Style>
         <c:IndexConverter x:Key="IndexConverter"/>
+        
     </UserControl.Resources>
 
     <GroupBox  Grid.Column="1" Visibility="Visible" Grid.Row="2" Style="{StaticResource GroupBoxTab}" >
-        <i:Interaction.Triggers>
-            <i:DataTrigger Binding="{Binding}" Value="{x:Static enums:Orientation.LookDownward}">
-                <i:ChangePropertyAction PropertyName="Visibility" Value="Visible" />
-            </i:DataTrigger>
-        </i:Interaction.Triggers>
         <GroupBox.Header>
             <TextBlock Text="{Binding Header}" Style="{StaticResource SubtitleTextBlockStyle}"  HorizontalAlignment="Center" VerticalAlignment="Center" />
         </GroupBox.Header>
         <Grid>
             <Grid.RowDefinitions>
-                <RowDefinition Height="*" />
+                <RowDefinition Height="auto" />
+                <RowDefinition Height="auto" />
                 <RowDefinition Height="auto" />
                 <RowDefinition Height="auto" />
             </Grid.RowDefinitions>
-            <ItemsControl ItemsSource="{Binding BorderItems}">
+            
+            
+            
+            <ItemsControl Grid.Row="1" ItemsSource="{Binding Path=NinePoint, ElementName=NBoxCalibLayout}" AlternationCount="100">
+           
+                <ItemsControl.Resources>
+                    <c:IntToGridConverter x:Key="IntToGridConverter"/>
+
+                </ItemsControl.Resources>
                 <ItemsControl.ItemsPanel>
                     <ItemsPanelTemplate>
                         <Grid Visibility="Visible">
                             <Grid.RowDefinitions>
-                                <RowDefinition Height="*" />
-                                <RowDefinition Height="*" />
+                                <RowDefinition Height="100" />
+                                <RowDefinition Height="100" />
+                                <RowDefinition Height="100" />
                                 <RowDefinition Height="*" />
                             </Grid.RowDefinitions>
                             <Grid.ColumnDefinitions>
@@ -60,46 +67,80 @@
                 </ItemsControl.ItemsPanel>
                 <ItemsControl.ItemContainerStyle>
                     <Style TargetType="ContentPresenter">
-                        <Setter Property="Grid.Row" Value="{Binding Row}" />
-                        <Setter Property="Grid.Column" Value="{Binding Column}" />
+                        <!--Text="{Binding RelativeSource={RelativeSource Mode=TemplatedParent}, Path=(ItemsControl.AlternationIndex)}"-->
+                        <Setter Property="Grid.Row" Value="{Binding RelativeSource={RelativeSource Mode=Self}, Path=(ItemsControl.AlternationIndex), Converter={local:IndexToGridConverter}, ConverterParameter=row}"/>
+                        <Setter Property="Grid.Column" Value="{Binding RelativeSource={RelativeSource Mode=Self}, Path=(ItemsControl.AlternationIndex), Converter={local:IndexToGridConverter}, ConverterParameter=col}"/>
+
+                        <!--<Setter Property="Grid.Column" />-->
                     </Style>
                 </ItemsControl.ItemContainerStyle>
                 <ItemsControl.ItemTemplate>
                     <DataTemplate>
-                        <Border BorderBrush="{DynamicResource PrimaryBlueColor}" CornerRadius="10" Height="80" BorderThickness="2"  Margin="10">
-                            <Border.Style>
-                                <Style TargetType="Border">
-                                    <Style.Triggers>
-                                        <DataTrigger Binding="{Binding Status}" Value="True">
-                                            <Setter Property="Background" Value="{DynamicResource PrimaryBlueColor}" />
-                                            <Setter Property="CornerRadius" Value="25"/>
-                                        </DataTrigger>
-                                    </Style.Triggers>
-                                </Style>
-                            </Border.Style>
- 
-                            <TextBlock Text="{Binding Text}" VerticalAlignment="Center" HorizontalAlignment="Center"/>
- 
+                        <Border BorderBrush="{DynamicResource PrimaryBlueColor}" CornerRadius="10" BorderThickness="2"  Margin="10">
+
+                                <i:Interaction.Triggers>
+                                    <i:DataTrigger Binding="{Binding Converter={c:NullToBooleanConverter}}" Value="true">
+                                        <i:ChangePropertyAction PropertyName="Background" Value="{DynamicResource PrimaryBlueColor}"/>
+                                        <i:ChangePropertyAction PropertyName="CornerRadius" Value="10"/>
+                                    <i:ChangePropertyAction PropertyName="BorderThickness" Value="3"/>
+                                    <i:ChangePropertyAction PropertyName="BorderBrush" Value="{DynamicResource DisconnectedColor}"/>
+                                    </i:DataTrigger>
+                                </i:Interaction.Triggers>
+                                <Grid  Margin="5" >
+                                <Grid.RowDefinitions>
+                                    <RowDefinition Height="*"/>
+                                    <RowDefinition Height="2*"/>
+                                </Grid.RowDefinitions>
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="*"/>
+                                    <ColumnDefinition Width="*"/>
+                                </Grid.ColumnDefinitions>
+                                <TextBlock Text="{Binding RelativeSource={RelativeSource Mode=TemplatedParent}, Path=(ItemsControl.AlternationIndex)}" FontSize="14" VerticalAlignment="Top" HorizontalAlignment="Center" Grid.ColumnSpan="2"/>
+                                <TextBox Grid.Row="1" Text="{Binding Point.X}" VerticalAlignment="Center" HorizontalAlignment="Center"  Style="{StaticResource MaterialDesignFloatingHintTextBox}" materialDesign:HintAssist.Hint="X" Width="30" >
+                                    <i:Interaction.Triggers>
+                                        <i:DataTrigger Binding="{Binding DataContext.Calibration.CalibrationMode, RelativeSource={RelativeSource AncestorType={x:Type UserControl}}}" Value="False">
+                                            <i:ChangePropertyAction PropertyName="Visibility" Value="Collapsed"/>
+                                        </i:DataTrigger>
+                                    </i:Interaction.Triggers>
+                                </TextBox>
+                                <TextBox  Grid.Row="1" Grid.Column="1" Text="{Binding Point.Y}"  Style="{StaticResource MaterialDesignFloatingHintTextBox}" materialDesign:HintAssist.Hint="Y"  Width="30" >
+                                    <i:Interaction.Triggers>
+                                        <i:DataTrigger Binding="{Binding DataContext.Calibration.CalibrationMode, RelativeSource={RelativeSource AncestorType={x:Type UserControl}}}" Value="False">
+                                            <i:ChangePropertyAction PropertyName="Visibility" Value="Collapsed"/>
+                                        </i:DataTrigger>
+                                    </i:Interaction.Triggers>
+                                </TextBox>
+                            </Grid>
                         </Border>
                     </DataTemplate>
                 </ItemsControl.ItemTemplate>
             </ItemsControl>
-            <Label  Style="{DynamicResource DefaultLabelStyle}" Grid.Row="1" HorizontalAlignment="Center" Margin="0 5">
+            
+            
+            
+            
+            
+            
+            <Label  Style="{DynamicResource DefaultLabelStyle}" Grid.Row="0" HorizontalAlignment="Center" Margin="0 5">
                 <Label.Content>
                     <ui:SimpleStackPanel Orientation="Horizontal">
 
-                        <TextBlock Text="Instruction: Move End Effector to Box "/>
+                        <TextBlock Text="Instruction: Move End Effector to Box accordingly."/>
                         <!--<ui:FontIcon Glyph="&#xEDFB;" Foreground="{DynamicResource PrimaryBlueColor}"/>-->
-                        <TextBlock Text="{Binding CurrentPosition}"/>
+                        <!--<TextBlock Text="{Binding CurrentPosition}"/>-->
                     </ui:SimpleStackPanel>
-    
+
                 </Label.Content>
             </Label>
             <ui:SimpleStackPanel Orientation="Horizontal" Grid.Row="2" HorizontalAlignment="Center">
-                <Button  Content="Start" Command="{Binding StartCommand}">
+               
+                <Button Content="Save"  Margin="5" Command="{Binding SaveManipulatorNinePointCommand}">
+                    <i:Interaction.Triggers>
+                        <i:DataTrigger Binding="{Binding Calibration.CalibrationMode}" Value="False">
+                            <i:ChangePropertyAction PropertyName="Visibility" Value="Hidden"/>
+                        </i:DataTrigger>
+                    </i:Interaction.Triggers>
                 </Button>
-                <Button Content="Next" Command="{Binding NextCommand}" Margin="5" />
-                <Button Content="Cancel"  Margin="5" />
             </ui:SimpleStackPanel>
         </Grid>
     </GroupBox>

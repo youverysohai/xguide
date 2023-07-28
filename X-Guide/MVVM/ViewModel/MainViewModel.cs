@@ -4,6 +4,7 @@ using System;
 using System.Diagnostics;
 using System.Runtime.Versioning;
 using System.Security;
+using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Input;
 using TcpConnectionHandler.Client;
@@ -14,12 +15,13 @@ using X_Guide.Service;
 using X_Guide.State;
 using XGuideSQLiteDB;
 using XGuideSQLiteDB.Models;
+using static X_Guide.Service.Communication.HikOperationService;
 
 namespace X_Guide.MVVM.ViewModel
 {
     //displaying the current viewmodel of the application
     [SupportedOSPlatform("Windows")]
-    public class MainViewModel : ViewModelBase
+    public class MainViewModel : ViewModelBase,IRecipient<UserViewModel>
     {
         #region CLR properties
 
@@ -129,7 +131,7 @@ namespace X_Guide.MVVM.ViewModel
         {
             _client = clientTcp;
             _auth = new AuthenticationService(repository, messenger);
-
+            _messenger = messenger;
             AppState = state;
             AppState.OnStateChanged = OnLoadingStateChanged;
 
@@ -205,9 +207,10 @@ namespace X_Guide.MVVM.ViewModel
         private void Login(object obj)
         {
             bool status = _auth.Login(InputUsername, InputPassword);
-
+            
             if (status)
             {
+                
                 MessageBox.Show($"Welcome back! {_auth.CurrentUser.Username}");
                 CurrentUsername = _auth.CurrentUser.Username;
                 CurrentUserRole = Enum.GetName(typeof(UserRole), _auth.CurrentUser.Role);
@@ -227,6 +230,12 @@ namespace X_Guide.MVVM.ViewModel
         public override void Dispose()
         {
             base.Dispose();
+        }
+
+        public  void Receive(UserViewModel message)
+        {
+
+           Debug.WriteLine(message.Username);
         }
     }
 }

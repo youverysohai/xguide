@@ -12,8 +12,7 @@
             <custLayout:CalibrationResultLayout CalibrationData="{Binding Calibration.CalibrationData}" Margin="0 0" SaveCalibrationCommand="{Binding SaveCalibrationCommand}" />
             <Button Command="{Binding StartCalibrationCommand}" HorizontalAlignment="Center" Margin="0 40 0 0" >Start Calibration</Button>
         </Grid>-->
-        <release:VmRenderControl Grid.ColumnSpan="2"  Margin="10"></release:VmRenderControl>
-
+        
         <!--<ContentControl Grid.Column="0" Content="{Binding VisionView}">
         </ContentControl>--> 
         <!--<Button Command="{Binding StartVision9PointCommand}" VerticalAlignment="Bottom">Start 9 Point!!!</Button>-->

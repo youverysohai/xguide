@@ -3,8 +3,12 @@ using CalibrationProvider;
 using CommunityToolkit.Mvvm.Input;
 using CommunityToolkit.Mvvm.Messaging;
 using System;
+using System.Collections.ObjectModel;
+using System.Linq;
 using System.Runtime.Versioning;
 using System.Threading.Tasks;
+using System.Windows.Media.Animation;
+using VisionGuided;
 using X_Guide.MVVM.ViewModel.CalibrationWizardSteps;
 
 namespace X_Guide.MVVM.ViewModel
@@ -24,26 +28,27 @@ namespace X_Guide.MVVM.ViewModel
 
         public Step6LookDownwardViewModel(ICalibrationService calibrationService, NinePointCalibrationViewModel ninePoint, IMessenger messenger, CalibrationViewModel calibration, IMapper mapper)
         {
+            Calibration = calibration;
+
             ninePoint.provider = Provider.Vision;
             ninePoint.Header = "Vision Calibration";
 
             NinePoint = ninePoint;
-
+            //NinePoint.NinePoint = Calibration.VisionPoints;
             _mapper = mapper;
             _messenger = messenger;
-            Calibration = calibration;
             _calibrationService = calibrationService;
         }
 
         private async void StartVision9Point()
         {
-            var i = await NinePoint.LookingDownward9PointVision();
-            Calibration.VisionPoints = i;
+            //var i = await NinePoint.LookingDownward9PointVision();
+            //Calibration.VisionPoints = new ObservableCollection<Point>(i);
         }
 
         private async void StartCalibration()
         {
-            Calibration.CalibrationData = await _calibrationService.LookingDownward2D_Calibrate(Calibration.VisionPoints, Calibration.RobotPoints);
+            Calibration.CalibrationData = await _calibrationService.LookingDownward2D_Calibrate(Calibration.VisionPoints.ToArray(), Calibration.RobotPoints.Select(x=> x).ToArray());
         }
 
         private Task BlockingCall(int arg)
